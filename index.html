@@ -105,6 +105,7 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
     <a href="#media">Media</a>
     <a href="#languages">Languages</a>
     <a href="#about">About</a>
+    <a href="#contact">Contact</a>
   </div>
   <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn">
     <svg id="sunIcon" width="15" height="15" viewBox="0 0 15 15" fill="none" style="display:none"><circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 1v1.5M7.5 12.5V14M1 7.5h1.5M12.5 7.5H14M3.05 3.05l1.06 1.06M10.89 10.89l1.06 1.06M3.05 11.95l1.06-1.06M10.89 4.11l1.06-1.06" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
@@ -407,6 +408,58 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
   </div>
 </section>
 
+<!-- CONTACT -->
+<section id="contact" class="scroll-reveal" style="padding:80px 40px;max-width:700px;margin:0 auto">
+  <p class="section-label">Contact</p>
+  <h2>Ministry inquiries & research collaboration</h2>
+  <p class="body">For pastors, researchers, journalists, ministry partners, and anyone who wants to implement Governed Logic in their context. All messages are read personally.</p>
+
+  <form id="contactForm" style="margin-top:36px" onsubmit="handleSubmit(event)">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div>
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Name</label>
+        <input type="text" name="name" required placeholder="Your name" style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr);-webkit-appearance:none" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Email</label>
+        <input type="email" name="email" required placeholder="your@email.com" style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr);-webkit-appearance:none" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Inquiry type</label>
+      <select name="inquiry_type" required style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr);-webkit-appearance:none;cursor:pointer" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'">
+        <option value="" disabled selected>Select inquiry type</option>
+        <option value="ministry">Ministry partnership</option>
+        <option value="research">Research collaboration</option>
+        <option value="media">Media / press</option>
+        <option value="church">Church implementation</option>
+        <option value="ai">AI development</option>
+        <option value="general">General inquiry</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Organization <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text3);font-size:11px">— optional</span></label>
+      <input type="text" name="organization" placeholder="Church, ministry, university, company..." style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr);-webkit-appearance:none" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
+    </div>
+
+    <div style="margin-bottom:28px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Message</label>
+      <textarea name="message" required rows="5" placeholder="Tell me about your context and how you'd like to engage with Governed Logic..." style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;resize:vertical;transition:border-color var(--tr),background var(--tr);display:block;min-height:120px" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <button type="submit" id="submitBtn" class="btn-teal" style="display:inline-flex;align-items:center;gap:8px">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Send message
+      </button>
+      <p id="formStatus" style="font-size:13px;color:var(--text3);display:none"></p>
+    </div>
+  </form>
+</section>
+<hr class="divider">
+
 <!-- FOOTER -->
 <footer style="padding:36px 40px;text-align:center;border-top:0.5px solid var(--border)">
   <p style="font-size:12px;color:var(--text3)">governedlogic.com — truth is non-contingent</p>
@@ -489,6 +542,23 @@ function copyAnchor(){
       if(c)c.textContent='Copy the anchor';
     },2000);
   });
+}
+function handleSubmit(e){
+  e.preventDefault();
+  const form=document.getElementById('contactForm');
+  const name=form.querySelector('[name="name"]').value;
+  const email=form.querySelector('[name="email"]').value;
+  const type=form.querySelector('[name="inquiry_type"]').value;
+  const org=form.querySelector('[name="organization"]').value;
+  const msg=form.querySelector('[name="message"]').value;
+  const subject=encodeURIComponent('Governed Logic — '+type+' inquiry from '+name);
+  const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\nInquiry type: '+type+'\n'+(org?'Organization: '+org+'\n':'')+'\nMessage:\n'+msg);
+  window.location.href='mailto:paul.couchoud@gmail.com?subject='+subject+'&body='+body;
+  const status=document.getElementById('formStatus');
+  status.textContent='Opening your email client...';
+  status.style.color='var(--teal)';
+  status.style.display='block';
+  status.style.fontSize='13px';
 }
 function copyLang(btn,text){
   navigator.clipboard.writeText(text).then(function(){
