@@ -77,6 +77,11 @@ blockquote cite{font-size:12px;color:var(--text3);font-style:normal;font-weight:
 .fol-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .fol-ring{transform-origin:50% 50%}
 .fol-c{fill:none;stroke:var(--teal);stroke-width:0.6;opacity:0.22}
+[data-theme="dark"] .fol-c{opacity:0.32}
+@media(max-width:768px){
+  #sol-group{transform-origin:400px 300px;animation:solPulse 7s ease-in-out infinite}
+  @keyframes solPulse{0%,100%{opacity:0.22;transform:scale(1)}50%{opacity:0.45;transform:scale(1.04)}}
+}
 .fol-outer{fill:none;stroke:var(--teal);stroke-width:0.35;opacity:0.1}
 .hero-content{position:relative;z-index:1;max-width:640px;width:100%}
 .word-reveal{display:block;overflow:hidden;line-height:1.06}
@@ -177,54 +182,16 @@ h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacin
 <!-- HERO with ANIMATED FLOWER OF LIFE -->
 <div class="hero-wrap">
   <svg class="fol-canvas" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <radialGradient id="fadeOut" cx="50%" cy="50%" r="50%">
-        <stop offset="40%" stop-color="white" stop-opacity="1"/>
-        <stop offset="100%" stop-color="white" stop-opacity="0"/>
-      </radialGradient>
-      <mask id="vignette"><rect width="800" height="600" fill="url(#fadeOut)"/></mask>
-    </defs>
-    <g mask="url(#vignette)">
-      <!-- Outer slow-spinning rings -->
-      <g class="fol-outer" style="transform-origin:400px 300px;animation:spinSlow 120s linear infinite">
-        <circle cx="400" cy="300" r="240" class="fol-outer"/>
-        <circle cx="400" cy="300" r="290" class="fol-outer"/>
-        <line x1="400" y1="10" x2="400" y2="590" class="fol-outer"/>
-        <line x1="10" y1="300" x2="790" y2="300" class="fol-outer"/>
-        <line x1="92" y1="60" x2="708" y2="540" class="fol-outer"/>
-        <line x1="708" y1="60" x2="92" y2="540" class="fol-outer"/>
-      </g>
-      <!-- Flower of Life — main group, counter-rotates slowly -->
-      <g style="transform-origin:400px 300px;animation:spinCounterSlow 80s linear infinite">
-        <!-- Center circle -->
-        <circle cx="400" cy="300" r="80" class="fol-c"/>
-        <!-- 6 petal circles -->
-        <circle cx="400" cy="220" r="80" class="fol-c"/>
-        <circle cx="469.28" cy="260" r="80" class="fol-c"/>
-        <circle cx="469.28" cy="340" r="80" class="fol-c"/>
-        <circle cx="400" cy="380" r="80" class="fol-c"/>
-        <circle cx="330.72" cy="340" r="80" class="fol-c"/>
-        <circle cx="330.72" cy="260" r="80" class="fol-c"/>
-        <!-- 6 outer ring circles -->
-        <circle cx="400" cy="140" r="80" class="fol-c" style="opacity:0.1"/>
-        <circle cx="538.56" cy="220" r="80" class="fol-c" style="opacity:0.1"/>
-        <circle cx="538.56" cy="380" r="80" class="fol-c" style="opacity:0.1"/>
-        <circle cx="400" cy="460" r="80" class="fol-c" style="opacity:0.1"/>
-        <circle cx="261.44" cy="380" r="80" class="fol-c" style="opacity:0.1"/>
-        <circle cx="261.44" cy="220" r="80" class="fol-c" style="opacity:0.1"/>
-        <!-- Containing rings -->
-        <circle cx="400" cy="300" r="160" class="fol-c" style="opacity:0.15"/>
-      </g>
-      <!-- Glow dot — pulses -->
-      <circle cx="400" cy="300" r="4" fill="#1D9E75" style="animation:pulse 3s ease-in-out infinite"/>
-      <circle cx="400" cy="300" r="12" fill="none" stroke="#1D9E75" stroke-width="0.8" style="opacity:0.35;animation:pulseFade 3s ease-in-out infinite"/>
+    <g id="sol-group">
+      <circle cx="400" cy="300" r="80" class="fol-c"/>
+      <circle cx="400" cy="220" r="80" class="fol-c"/>
+      <circle cx="469.28" cy="260" r="80" class="fol-c"/>
+      <circle cx="469.28" cy="340" r="80" class="fol-c"/>
+      <circle cx="400" cy="380" r="80" class="fol-c"/>
+      <circle cx="330.72" cy="340" r="80" class="fol-c"/>
+      <circle cx="330.72" cy="260" r="80" class="fol-c"/>
+      <circle cx="400" cy="300" r="160" class="fol-c" style="opacity:0.6"/>
     </g>
-    <style>
-      @keyframes spinSlow{to{transform:rotate(360deg)}}
-      @keyframes spinCounterSlow{to{transform:rotate(-360deg)}}
-      @keyframes pulse{0%,100%{r:4;opacity:0.7}50%{r:6;opacity:1}}
-      @keyframes pulseFade{0%,100%{opacity:0.2}50%{opacity:0.5}}
-    </style>
   </svg>
 
   <div class="hero-content">
