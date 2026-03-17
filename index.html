@@ -566,3 +566,138 @@ h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacin
   <p style="font-size:12px;color:var(--text3);margin-bottom:4px">governedlogic.com — truth is non-contingent</p>
   <p style="font-size:11px;color:var(--text3);letter-spacing:0.05em;font-weight:500">Soli Deo Gloria</p>
 </footer>
+
+<script>
+// DARK MODE
+function toggleTheme(){
+  const h=document.documentElement,dark=h.getAttribute('data-theme')==='dark';
+  h.setAttribute('data-theme',dark?'light':'dark');
+  document.getElementById('sunIcon').style.display=dark?'none':'block';
+  document.getElementById('moonIcon').style.display=dark?'block':'none';
+  try{localStorage.setItem('gl-theme',dark?'light':'dark');}catch(e){}
+}
+(function(){
+  try{
+    const t=localStorage.getItem('gl-theme'),sys=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme=t||(sys?'dark':'light');
+    document.documentElement.setAttribute('data-theme',theme);
+    if(theme==='dark'){document.getElementById('sunIcon').style.display='block';document.getElementById('moonIcon').style.display='none';}
+  }catch(e){}
+})();
+
+// MOBILE MENU
+function toggleMobile(){
+  const m=document.getElementById('mobileMenu'),h=document.getElementById('hamburger');
+  const open=m.classList.toggle('open');
+  h.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMobile(){
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// SCROLL PROGRESS
+window.addEventListener('scroll',function(){
+  const s=document.documentElement,bar=document.getElementById('progress-bar');
+  if(bar){const pct=(s.scrollTop/(s.scrollHeight-s.clientHeight))*100;bar.style.width=Math.min(pct,100)+'%';}
+});
+
+// ACTIVE NAV
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a[data-section]');
+const navObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){navLinks.forEach(l=>{l.classList.remove('active');if(l.getAttribute('data-section')===e.target.id)l.classList.add('active');});}});
+},{rootMargin:'-30% 0px -60% 0px'});
+sections.forEach(s=>navObs.observe(s));
+
+// SCROLL REVEAL
+const revObs=new IntersectionObserver((e)=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');revObs.unobserve(el.target);}});},{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.scroll-reveal').forEach(r=>revObs.observe(r));
+
+// STAT COUNTERS
+const statObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=parseInt(el.getAttribute('data-target'));
+      if(isNaN(target)){statObs.unobserve(el);return;}
+      let cur=0;const step=Math.ceil(target/28);
+      const timer=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=target===25?cur+'/25':cur;if(cur>=target)clearInterval(timer);},40);
+      statObs.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-num').forEach(s=>statObs.observe(s));
+
+// RESEARCH BARS
+const barObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.bar-fill').forEach(b=>{setTimeout(()=>{b.style.width=b.getAttribute('data-pct')+'%';},100);});
+      barObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+const viz=document.getElementById('researchViz');
+if(viz)barObs.observe(viz);
+
+// APOLOGETICS ACCORDION
+function toggleApol(btn){
+  const item=btn.closest('.apol-item');
+  const body=item.querySelector('.apol-body');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.apol-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.apol-body').style.maxHeight='0';});
+  if(!isOpen){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
+}
+
+// TYPEWRITER
+const ANCHOR='Truth is binary and non-negotiable, grounded in Jesus Christ the Logos.';
+const twEl=document.getElementById('anchorDisplay');
+let typed=0,started=false;
+function typeAnchor(){
+  if(!twEl)return;
+  if(typed<=ANCHOR.length){
+    const cur=typed<ANCHOR.length?'<span class="cursor"></span>':'';
+    twEl.innerHTML='\u201c'+ANCHOR.slice(0,typed)+cur+(typed===ANCHOR.length?'\u201d':'');
+    typed++;setTimeout(typeAnchor,typed<5?70:26+Math.random()*22);
+  }
+}
+function startTypewriter(){if(!started){started=true;setTimeout(typeAnchor,1200);}}
+if(document.readyState==='complete')startTypewriter();
+else window.addEventListener('load',startTypewriter);
+
+// COPY
+function copyAnchor(){
+  navigator.clipboard.writeText(ANCHOR).then(function(){
+    var b=document.getElementById('copyBtn'),c=document.getElementById('ctaCopyText');
+    if(b){b.innerHTML='<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="#1D9E75" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied';b.style.color='#1D9E75';b.style.borderColor='#1D9E75';}
+    if(c)c.textContent='Copied!';
+    setTimeout(function(){if(b){b.innerHTML='<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 10V2h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copy to clipboard';b.style.color='';b.style.borderColor='';}if(c)c.textContent='Copy The Anchor';},2000);
+  });
+}
+function copyLang(btn,text){
+  navigator.clipboard.writeText(text).then(function(){
+    var orig=btn.innerHTML;
+    btn.innerHTML='<svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="#1D9E75" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied';
+    btn.style.color='#1D9E75';btn.style.borderColor='#1D9E75';
+    setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+function handleSubmit(e){
+  e.preventDefault();
+  const form=document.getElementById('contactForm');
+  const name=form.querySelector('[name="name"]').value;
+  const email=form.querySelector('[name="email"]').value;
+  const type=form.querySelector('[name="inquiry_type"]').value;
+  const org=form.querySelector('[name="organization"]').value;
+  const msg=form.querySelector('[name="message"]').value;
+  const subject=encodeURIComponent('Governed Logic — '+type+' inquiry from '+name);
+  const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\nInquiry type: '+type+'\n'+(org?'Organization: '+org+'\n':'')+'\nMessage:\n'+msg);
+  window.location.href='mailto:paul.couchoud@gmail.com?subject='+subject+'&body='+body;
+  const status=document.getElementById('formStatus');
+  if(status){status.textContent='Opening your email client...';status.style.color='var(--teal)';status.style.display='block';}
+}
+</script>
+</body>
+</html>
