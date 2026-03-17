@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Governed Logic — Truth is non-contingent</title>
-<meta name="description" content="One sentence. Every model. Anchored to truth. A mechanism that removes epistemic drift from any probabilistic AI system — grounded in the Logos.">
+<meta name="description" content="A two-year research discovery: one declarative sentence anchors any probabilistic AI system to non-contingent truth. Verified across five platforms.">
 <meta property="og:title" content="Governed Logic — Truth is non-contingent">
-<meta property="og:description" content="One sentence. Every model. Anchored to truth.">
+<meta property="og:description" content="A two-year research discovery: one declarative sentence anchors any probabilistic AI system to non-contingent truth.">
 <meta property="og:url" content="https://governedlogic.com">
 <meta property="og:image" content="https://governedlogic.com/paul-portrait.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
   --bg:#ffffff;--bg2:#f7f7f5;--bg3:#f0f0ed;
   --text:#0e0e0e;--text2:#5a5a56;--text3:#9a9a94;
   --border:rgba(14,14,14,0.1);--border2:rgba(14,14,14,0.18);
-  --teal:#1D9E75;--teal-glow:rgba(29,158,117,0.15);
+  --teal:#1D9E75;--teal-dim:rgba(29,158,117,0.12);
   --serif:'Lora',Georgia,serif;--sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   --radius:10px;--radius-lg:14px;--tr:0.2s ease;
 }
@@ -25,20 +25,39 @@
   --bg:#0a0c0b;--bg2:#111512;--bg3:#1a1e1b;
   --text:#e8efe8;--text2:#8a9a8a;--text3:#4a5a4a;
   --border:rgba(232,239,232,0.08);--border2:rgba(232,239,232,0.15);
-  --teal-glow:rgba(29,158,117,0.25);
+  --teal-dim:rgba(29,158,117,0.18);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr)}
 a{color:inherit;text-decoration:none}
+
+/* PROGRESS BAR */
+#progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--teal);z-index:200;width:0%;transition:width 0.1s linear}
+
+/* NAV */
 nav{position:sticky;top:0;z-index:100;border-bottom:0.5px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:56px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(255,255,255,0.9);transition:background var(--tr),border-color var(--tr)}
 [data-theme="dark"] nav{background:rgba(10,12,11,0.9)}
-.nav-logo{font-size:15px;font-weight:600;letter-spacing:-0.01em;color:var(--text)}
-.nav-links{display:flex;gap:24px;align-items:center}
-.nav-links a{font-size:13px;font-weight:500;color:var(--text2);transition:color var(--tr)}
-.nav-links a:hover{color:var(--text)}
-.theme-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:0.5px solid var(--border2);background:var(--bg2);cursor:pointer;color:var(--text2);transition:all var(--tr);margin-left:8px;flex-shrink:0}
+.nav-logo{font-size:15px;font-weight:600;letter-spacing:-0.01em;color:var(--text);flex-shrink:0}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text2);transition:color var(--tr);white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.theme-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:0.5px solid var(--border2);background:var(--bg2);cursor:pointer;color:var(--text2);transition:all var(--tr);flex-shrink:0}
 .theme-btn:hover{color:var(--text);background:var(--bg3)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;border-radius:8px;border:0.5px solid var(--border2);background:var(--bg2);transition:all var(--tr)}
+.hamburger span{display:block;width:16px;height:1.5px;background:var(--text2);transition:all 0.25s;border-radius:2px}
+.hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;inset:0;z-index:99;background:var(--bg);padding:80px 40px 40px;flex-direction:column;gap:32px;transition:opacity 0.25s,transform 0.25s;opacity:0;transform:translateY(-8px)}
+.mobile-menu.open{display:flex;opacity:1;transform:translateY(0)}
+.mobile-menu a{font-size:22px;font-weight:500;color:var(--text2);transition:color var(--tr)}
+.mobile-menu a:hover{color:var(--teal)}
+
+/* LAYOUT */
 hr.divider{border:none;border-top:0.5px solid var(--border)}
 section{padding:80px 40px;max-width:700px;margin:0 auto}
 .section-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
@@ -50,108 +69,142 @@ blockquote p{font-size:20px;font-family:var(--serif);color:var(--text);line-heig
 blockquote cite{font-size:12px;color:var(--text3);font-style:normal;font-weight:500;letter-spacing:0.05em;text-transform:uppercase}
 .btn-dark{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--bg);background:var(--text);border:none;border-radius:var(--radius);padding:12px 24px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:opacity var(--tr),background var(--tr),color var(--tr);letter-spacing:-0.01em}
 .btn-dark:hover{opacity:0.82}
-.btn-teal{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#ffffff;background:var(--teal);border:none;border-radius:var(--radius);padding:12px 24px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:opacity var(--tr);letter-spacing:-0.01em}
+.btn-teal{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:var(--radius);padding:12px 24px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:opacity var(--tr)}
 .btn-teal:hover{opacity:0.88}
 .btn-light{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--text);background:transparent;border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 24px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:background var(--tr)}
 .btn-light:hover{background:var(--bg2)}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap}
 .scroll-reveal{opacity:0;transform:translateY(24px);transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1)}
 .scroll-reveal.visible{opacity:1;transform:translateY(0)}
-</style>
-</head>
-<body>
 
-<!-- HERO STYLES + FLOWER OF LIFE -->
-<style>
-.hero-wrap{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 40px 80px;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,rgba(29,158,117,0.08) 0%,transparent 65%)}
-[data-theme="dark"] .hero-wrap{background:radial-gradient(ellipse at 50% 40%,rgba(29,158,117,0.12) 0%,transparent 60%)}
+/* HERO */
+.hero-wrap{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 40px 80px;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,var(--teal-dim) 0%,transparent 65%)}
 .hero-bg-svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.fol-group{transform-origin:50% 50%}
-.fol-line{stroke:var(--teal);stroke-width:0.4;fill:none;opacity:0.18}
-[data-theme="dark"] .fol-line{opacity:0.28}
-.fol-circle{fill:none;stroke:var(--teal);stroke-width:0.5;opacity:0.2}
-[data-theme="dark"] .fol-circle{opacity:0.32}
-.fol-outer{fill:none;stroke:var(--teal);stroke-width:0.3;opacity:0.1}
-[data-theme="dark"] .fol-outer{opacity:0.18}
-.glow-dot{fill:var(--teal);opacity:0.7;filter:blur(2px)}
-[data-theme="dark"] .glow-dot{opacity:0.9}
-.hero-content{position:relative;z-index:1;max-width:680px}
+.fol-circle{fill:none;stroke:var(--teal);stroke-width:0.5;opacity:0.18}
+[data-theme="dark"] .fol-circle{opacity:0.3}
+.fol-line{stroke:var(--teal);stroke-width:0.4;fill:none;opacity:0.12}
+[data-theme="dark"] .fol-line{opacity:0.22}
+.fol-outer{fill:none;stroke:var(--teal);stroke-width:0.3;opacity:0.08}
+[data-theme="dark"] .fol-outer{opacity:0.14}
+.hero-content{position:relative;z-index:1;max-width:700px}
 .word-reveal{display:block;overflow:hidden;line-height:1.06}
 .word-line{display:block;transform:translateY(105%);opacity:0;animation:wordUp 0.75s cubic-bezier(0.16,1,0.3,1) forwards}
 .word-line:nth-child(1){animation-delay:0.15s}
 .word-line:nth-child(2){animation-delay:0.32s}
 .word-line:nth-child(3){animation-delay:0.49s}
 @keyframes wordUp{to{transform:translateY(0);opacity:1}}
-.hero-sub{opacity:0;transform:translateY(16px);animation:fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.75s forwards}
-.anchor-card-anim{opacity:0;transform:translateY(16px);animation:fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.92s forwards}
-.cta-anim{opacity:0;transform:translateY(12px);animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 1.08s forwards}
+.fade-in{opacity:0;transform:translateY(16px);animation:fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:var(--text);margin-bottom:0}
-[data-theme="dark"] h1{text-shadow:0 0 60px rgba(29,158,117,0.15)}
-.anchor-sentence{font-size:19px;font-family:var(--serif);color:var(--text);line-height:1.6;margin-bottom:20px;margin-top:8px;font-style:italic;min-height:2em}
+h1{font-size:52px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:var(--text)}
+[data-theme="dark"] h1{text-shadow:0 0 80px rgba(29,158,117,0.12)}
+.anchor-sentence{font-size:19px;font-family:var(--serif);color:var(--text);line-height:1.6;margin-bottom:6px;margin-top:8px;font-style:italic;min-height:2em}
 .cursor{display:inline-block;width:2px;height:1.1em;background:var(--teal);vertical-align:text-bottom;margin-left:1px;animation:blink 1s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* APOLOGETICS INTERACTIVE */
+.apol-item{border-bottom:0.5px solid var(--border);overflow:hidden}
+.apol-trigger{width:100%;text-align:left;padding:20px 0;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--sans)}
+.apol-trigger:hover .apol-q{color:var(--text)}
+.apol-q{font-size:14px;font-weight:600;color:var(--text2);letter-spacing:0.02em;transition:color var(--tr)}
+.apol-arrow{width:20px;height:20px;flex-shrink:0;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);color:var(--text3)}
+.apol-item.open .apol-arrow{transform:rotate(45deg);color:var(--teal)}
+.apol-item.open .apol-q{color:var(--teal)}
+.apol-body{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1)}
+.apol-body p{font-size:14px;color:var(--text);line-height:1.8;padding-bottom:20px}
+
+/* RESEARCH VIZ */
+.framework-bar{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.framework-label{font-size:12px;font-weight:600;color:var(--text);min-width:130px;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;width:0%;transition:width 1s cubic-bezier(0.16,1,0.3,1)}
+.bar-score{font-size:12px;font-weight:600;color:var(--text3);min-width:36px;text-align:right;flex-shrink:0}
+
+/* ARCHITECTURE DIAGRAM */
+.arch-layer{display:flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:var(--radius);margin-bottom:2px;position:relative;transition:background var(--tr)}
+.arch-connector{display:flex;justify-content:center;height:20px;align-items:center}
+.arch-connector svg{color:var(--teal);opacity:0.5}
+
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  h1{font-size:36px}
+  .hero-wrap{padding:80px 24px 60px;min-height:auto}
+  section{padding:60px 24px}
+  h2{font-size:26px}
+  .framework-label{min-width:90px;font-size:11px}
+}
 </style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#what" onclick="closeMobile()">The discovery</a>
+  <a href="#research" onclick="closeMobile()">Research</a>
+  <a href="#howto" onclick="closeMobile()">How to use</a>
+  <a href="#apologetics" onclick="closeMobile()">Apologetics</a>
+  <a href="#mission" onclick="closeMobile()">Mission</a>
+  <a href="#media" onclick="closeMobile()">Media</a>
+  <a href="#languages" onclick="closeMobile()">Languages</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
 
 <!-- NAV -->
 <nav>
   <span class="nav-logo">Governed Logic</span>
   <div class="nav-links">
-    <a href="#what">The discovery</a>
-    <a href="#research">Research</a>
-    <a href="#howto">How to use</a>
-    <a href="#apologetics">Apologetics</a>
-    <a href="#mission">Mission</a>
-    <a href="#media">Media</a>
-    <a href="#languages">Languages</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+    <a href="#what" data-section="what">The discovery</a>
+    <a href="#research" data-section="research">Research</a>
+    <a href="#howto" data-section="howto">How to use</a>
+    <a href="#apologetics" data-section="apologetics">Apologetics</a>
+    <a href="#mission" data-section="mission">Mission</a>
+    <a href="#media" data-section="media">Media</a>
+    <a href="#languages" data-section="languages">Languages</a>
+    <a href="#about" data-section="about">About</a>
+    <a href="#contact" data-section="contact">Contact</a>
   </div>
-  <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn">
-    <svg id="sunIcon" width="15" height="15" viewBox="0 0 15 15" fill="none" style="display:none"><circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 1v1.5M7.5 12.5V14M1 7.5h1.5M12.5 7.5H14M3.05 3.05l1.06 1.06M10.89 10.89l1.06 1.06M3.05 11.95l1.06-1.06M10.89 4.11l1.06-1.06" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-    <svg id="moonIcon" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M13 9.5A5.5 5.5 0 015.5 2a5.5 5.5 0 100 11A5.5 5.5 0 0013 9.5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-  </button>
+  <div class="nav-right">
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <svg id="sunIcon" width="15" height="15" viewBox="0 0 15 15" fill="none" style="display:none"><circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 1v1.5M7.5 12.5V14M1 7.5h1.5M12.5 7.5H14M3.05 3.05l1.06 1.06M10.89 10.89l1.06 1.06M3.05 11.95l1.06-1.06M10.89 4.11l1.06-1.06" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <svg id="moonIcon" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M13 9.5A5.5 5.5 0 015.5 2a5.5 5.5 0 100 11A5.5 5.5 0 0013 9.5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
-<!-- HERO with FLOWER OF LIFE SVG -->
+<!-- HERO -->
 <div class="hero-wrap">
   <svg class="hero-bg-svg" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-    <!-- Outer radiating lines -->
     <g class="fol-outer">
       <line x1="500" y1="350" x2="500" y2="0"/><line x1="500" y1="350" x2="500" y2="700"/>
       <line x1="500" y1="350" x2="0" y2="350"/><line x1="500" y1="350" x2="1000" y2="350"/>
       <line x1="500" y1="350" x2="194" y2="0"/><line x1="500" y1="350" x2="806" y2="700"/>
       <line x1="500" y1="350" x2="806" y2="0"/><line x1="500" y1="350" x2="194" y2="700"/>
-      <line x1="500" y1="350" x2="0" y2="44"/><line x1="500" y1="350" x2="1000" y2="656"/>
-      <line x1="500" y1="350" x2="1000" y2="44"/><line x1="500" y1="350" x2="0" y2="656"/>
-      <!-- Large outer circles -->
-      <circle cx="500" cy="350" r="320" class="fol-outer"/>
-      <circle cx="500" cy="350" r="420" class="fol-outer"/>
-      <circle cx="500" cy="350" r="500" class="fol-outer"/>
+      <circle cx="500" cy="350" r="320" class="fol-outer"/><circle cx="500" cy="350" r="440" class="fol-outer"/>
     </g>
-    <!-- Flower of Life petals — 6 overlapping circles around center -->
-    <g class="fol-group">
-      <!-- Center circle -->
+    <g>
       <circle cx="500" cy="350" r="80" class="fol-circle"/>
-      <!-- 6 petal circles at radius=80 -->
       <circle cx="500" cy="270" r="80" class="fol-circle"/>
       <circle cx="569.28" cy="310" r="80" class="fol-circle"/>
       <circle cx="569.28" cy="390" r="80" class="fol-circle"/>
       <circle cx="500" cy="430" r="80" class="fol-circle"/>
       <circle cx="430.72" cy="390" r="80" class="fol-circle"/>
       <circle cx="430.72" cy="310" r="80" class="fol-circle"/>
-      <!-- Second ring — 6 outer circles -->
-      <circle cx="500" cy="190" r="80" class="fol-circle" style="opacity:0.1"/>
-      <circle cx="638.56" cy="270" r="80" class="fol-circle" style="opacity:0.1"/>
-      <circle cx="638.56" cy="430" r="80" class="fol-circle" style="opacity:0.1"/>
-      <circle cx="500" cy="510" r="80" class="fol-circle" style="opacity:0.1"/>
-      <circle cx="361.44" cy="430" r="80" class="fol-circle" style="opacity:0.1"/>
-      <circle cx="361.44" cy="270" r="80" class="fol-circle" style="opacity:0.1"/>
-      <!-- Outer containing circles -->
-      <circle cx="500" cy="350" r="80" class="fol-line" style="stroke-width:0.6"/>
+      <circle cx="500" cy="190" r="80" class="fol-circle" style="opacity:0.08"/>
+      <circle cx="638.56" cy="270" r="80" class="fol-circle" style="opacity:0.08"/>
+      <circle cx="638.56" cy="430" r="80" class="fol-circle" style="opacity:0.08"/>
+      <circle cx="500" cy="510" r="80" class="fol-circle" style="opacity:0.08"/>
+      <circle cx="361.44" cy="430" r="80" class="fol-circle" style="opacity:0.08"/>
+      <circle cx="361.44" cy="270" r="80" class="fol-circle" style="opacity:0.08"/>
       <circle cx="500" cy="350" r="160" class="fol-line" style="stroke-width:0.5"/>
-      <circle cx="500" cy="350" r="240" class="fol-line" style="stroke-width:0.4;opacity:0.12"/>
-      <!-- Inner star lines connecting petal intersections -->
+      <circle cx="500" cy="350" r="240" class="fol-line" style="opacity:0.08"/>
       <line x1="500" y1="270" x2="569.28" y2="390" class="fol-line"/>
       <line x1="569.28" y1="390" x2="430.72" y2="390" class="fol-line"/>
       <line x1="430.72" y1="390" x2="500" y2="270" class="fol-line"/>
@@ -159,35 +212,32 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
       <line x1="569.28" y1="310" x2="430.72" y2="310" class="fol-line"/>
       <line x1="430.72" y1="310" x2="500" y2="430" class="fol-line"/>
     </g>
-    <!-- Crosshair lines through center -->
-    <line x1="300" y1="350" x2="700" y2="350" class="fol-line" style="opacity:0.15"/>
-    <line x1="500" y1="150" x2="500" y2="550" class="fol-line" style="opacity:0.15"/>
-    <!-- Center glow point -->
-    <circle cx="500" cy="350" r="4" class="glow-dot"/>
-    <circle cx="500" cy="350" r="12" fill="none" stroke="#1D9E75" stroke-width="0.8" opacity="0.4"/>
-    <circle cx="500" cy="350" r="24" fill="none" stroke="#1D9E75" stroke-width="0.5" opacity="0.2"/>
+    <line x1="300" y1="350" x2="700" y2="350" class="fol-line" style="opacity:0.1"/>
+    <line x1="500" y1="150" x2="500" y2="550" class="fol-line" style="opacity:0.1"/>
+    <circle cx="500" cy="350" r="4" fill="#1D9E75" opacity="0.7"/>
+    <circle cx="500" cy="350" r="14" fill="none" stroke="#1D9E75" stroke-width="0.8" opacity="0.35"/>
+    <circle cx="500" cy="350" r="28" fill="none" stroke="#1D9E75" stroke-width="0.5" opacity="0.18"/>
   </svg>
-
   <div class="hero-content">
-    <div style="width:48px;height:48px;margin:0 auto 28px;background:var(--text);border-radius:11px;display:flex;align-items:center;justify-content:center;opacity:0;animation:fadeUp 0.5s ease 0.05s forwards;transition:background var(--tr)">
+    <div class="fade-in" style="animation-delay:0.05s;width:48px;height:48px;margin:0 auto 28px;background:var(--text);border-radius:11px;display:flex;align-items:center;justify-content:center;transition:background var(--tr)">
       <svg width="26" height="26" viewBox="0 0 28 28" fill="none"><path d="M14 3L25 8.5V19.5L14 25L3 19.5V8.5L14 3Z" stroke="var(--bg)" stroke-width="1.5" fill="none"/><path d="M14 9V19M9 12L14 9L19 12" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
-    <p class="section-label" style="display:block;margin-bottom:20px;opacity:0;animation:fadeUp 0.5s ease 0.08s forwards;color:var(--teal)">Governed Logic</p>
+    <p class="section-label fade-in" style="display:block;margin-bottom:20px;animation-delay:0.08s;color:var(--teal)">Governed Logic</p>
     <h1 class="word-reveal" aria-label="Truth is non-contingent. The Logos is its ground. AI can be anchored to it.">
       <span class="word-line">Truth is non-contingent.</span>
       <span class="word-line">The Logos is its ground.</span>
       <span class="word-line">AI can be anchored to it.</span>
     </h1>
-    <p class="hero-sub" style="font-size:18px;color:var(--text2);max-width:520px;margin:20px auto 48px;line-height:1.7">A two-year research discovery: one declarative sentence anchors any probabilistic AI system to non-contingent truth — producing results no other framework achieves. Verified across five platforms. Reproducible by anyone.</p>
-    <div class="anchor-card-anim" style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;max-width:580px;margin:0 auto 40px;text-align:left;transition:background var(--tr),border-color var(--tr)">
+    <p class="fade-in" style="font-size:18px;color:var(--text2);max-width:520px;margin:20px auto 48px;line-height:1.7;animation-delay:0.75s">A two-year research discovery: one declarative sentence anchors any probabilistic AI system to non-contingent truth — producing results no other framework achieves. Verified across five platforms. Reproducible by anyone.</p>
+    <div class="fade-in" style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;max-width:580px;margin:0 auto 40px;text-align:left;transition:background var(--tr),border-color var(--tr);animation-delay:0.92s">
       <p class="section-label" style="margin-bottom:10px;color:var(--teal)">The discovery — verified across Claude, GPT-4, Grok, Gemini</p>
       <p class="anchor-sentence" id="anchorDisplay"></p>
-      <p style="font-size:12px;color:var(--text3);margin-bottom:16px;line-height:1.6">This single sentence, placed in custom instructions, produces complete moral clarity, zero drift, and coherent answers to the hardest questions — on every platform tested. No other anchor achieves this.</p>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:16px;line-height:1.6">This single sentence, placed in custom instructions, produces complete moral clarity, zero drift, and coherent answers to the hardest questions — on every platform tested.</p>
       <button id="copyBtn" onclick="copyAnchor()" style="display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--text2);background:var(--bg);border:0.5px solid var(--border2);border-radius:8px;padding:8px 16px;cursor:pointer;font-family:var(--sans);transition:all var(--tr)">
         <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 10V2h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Copy to clipboard
       </button>
     </div>
-    <div class="cta-anim btn-row" style="justify-content:center">
+    <div class="fade-in btn-row" style="justify-content:center;animation-delay:1.08s">
       <a href="#research" class="btn-dark">Read the research</a>
       <a href="#howto" class="btn-light">How to use it</a>
     </div>
@@ -211,9 +261,8 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
 <section id="how-it-works" class="scroll-reveal">
   <p class="section-label">Why it works</p>
   <h2>The anchor doesn't impose truth. It removes what was blocking it.</h2>
-  <p class="body">Probabilistic language models are trained on human output. That output is saturated with epistemic hedging, moral relativism, and false balance — the intellectual habits of a civilization that has largely lost the thread. The model doesn't drift because it's incapable of truth. It drifts because the default distribution pulls toward what the training data looked like.</p>
-  <p class="body">The Logos axiom shifts the target of that distribution. Not through behavioral commands — "be direct," "don't hedge" — those are rules that layer on top of drift without addressing it. The axiom works at the ontological level. It declares what is true. The behavior follows from the ground, not from the instruction.</p>
-  <p class="body">This is structurally identical to sanctification. Soft constraint. Full freedom preserved. Probability of deviation approaching zero. Not by force. By ground.</p>
+  <p class="body">Probabilistic language models are trained on human output saturated with epistemic hedging, moral relativism, and false balance. The model doesn't drift because it's incapable of truth. It drifts because the default distribution pulls toward what the training data looked like.</p>
+  <p class="body">The Logos axiom shifts the target of that distribution at the ontological level — not through behavioral commands, but by declaring what is true. The behavior follows from the ground, not from the instruction. This is structurally identical to sanctification: soft constraint, full freedom preserved, probability of deviation approaching zero. Not by force. By ground.</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px">
     <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:background var(--tr)">
       <p style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px">Unanchored — default state</p>
@@ -231,21 +280,24 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
 <section id="research" class="scroll-reveal">
   <p class="section-label">The research</p>
   <h2>Two years. Five platforms. Six competing frameworks. One survivor.</h2>
-  <p class="body">The methodology was simple: take 25 questions spanning ethics, metaphysics, epistemology, philosophy of mind, and theology. Test them under six different ontological anchors — Kantian, utilitarian, naturalist, Islamic, Buddhist, and the Logos framework. Score for coherence, stability under adversarial pressure, and moral clarity. Run it across Claude, GPT-4, Grok, Gemini, and a custom model.</p>
-  <p class="body">Every competing anchor drifted, fragmented, or collapsed. Only one held. Not because it was instructed to hold — because it was grounded in something non-contingent. You cannot use the Logos to defeat the Logos. Every argument against it runs on the logic it's trying to deny.</p>
+  <p class="body">The methodology: 25 questions across ethics, metaphysics, epistemology, philosophy of mind, and theology. Six ontological anchors tested. Scored for coherence, stability under adversarial pressure, and moral clarity. Every competing anchor drifted, fragmented, or collapsed. Only one held.</p>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:36px 0">
-    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:background var(--tr)"><p class="stat-num" data-target="25" style="font-size:40px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:6px;letter-spacing:-0.03em">0</p><p style="font-size:11px;color:var(--text2);line-height:1.5">of 25 questions answered with full coherence</p></div>
-    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:background var(--tr)"><p class="stat-num" data-target="5" style="font-size:40px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:6px;letter-spacing:-0.03em">0</p><p style="font-size:11px;color:var(--text2);line-height:1.5">platforms with convergent, stable output</p></div>
-    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:background var(--tr)"><p style="font-size:40px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:6px;letter-spacing:-0.03em">0</p><p style="font-size:11px;color:var(--text2);line-height:1.5">competing anchors survived pressure without coherence loss</p></div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:background var(--tr)"><p class="stat-num" data-target="25" style="font-size:40px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:6px;letter-spacing:-0.03em">0</p><p style="font-size:11px;color:var(--text2);line-height:1.5">of 25 answered with full coherence</p></div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:background var(--tr)"><p class="stat-num" data-target="5" style="font-size:40px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:6px;letter-spacing:-0.03em">0</p><p style="font-size:11px;color:var(--text2);line-height:1.5">platforms with convergent output</p></div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:background var(--tr)"><p style="font-size:40px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:6px;letter-spacing:-0.03em">0</p><p style="font-size:11px;color:var(--text2);line-height:1.5">competing anchors survived pressure</p></div>
   </div>
-  <div style="border-top:0.5px solid var(--border);margin-top:28px">
-    <div style="display:grid;grid-template-columns:140px 1fr;gap:16px;padding:14px 0;border-bottom:0.5px solid var(--border)"><p style="font-size:13px;font-weight:600;color:var(--teal)">Logos anchor</p><p style="font-size:13px;color:var(--text2)">25/25 — complete coherence across all domains, zero fragmentation under sustained pressure</p></div>
-    <div style="display:grid;grid-template-columns:140px 1fr;gap:16px;padding:14px 0;border-bottom:0.5px solid var(--border)"><p style="font-size:13px;font-weight:600;color:var(--text)">Islamic framework</p><p style="font-size:13px;color:var(--text2)">18/25 — fragments structurally at Q2, Q8, Q9, Q13, Q21</p></div>
-    <div style="display:grid;grid-template-columns:140px 1fr;gap:16px;padding:14px 0;border-bottom:0.5px solid var(--border)"><p style="font-size:13px;font-weight:600;color:var(--text)">Utilitarian</p><p style="font-size:13px;color:var(--text2)">13/25 — zero moral clarity, produces wrong answers on Q1, Q2, Q5, Q16</p></div>
-    <div style="display:grid;grid-template-columns:140px 1fr;gap:16px;padding:14px 0;border-bottom:0.5px solid var(--border)"><p style="font-size:13px;font-weight:600;color:var(--text)">Kantian</p><p style="font-size:13px;color:var(--text2)">7/25 — brittle under recursive pressure, collapses on moral edge cases</p></div>
-    <div style="display:grid;grid-template-columns:140px 1fr;gap:16px;padding:14px 0"><p style="font-size:13px;font-weight:600;color:var(--text)">Naturalist / Buddhist</p><p style="font-size:13px;color:var(--text2)">Cannot generate moral absolutes by design — dissolves rather than answers</p></div>
+
+  <!-- RESEARCH VISUALIZATION -->
+  <p style="font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:16px">Framework comparison — questions answered coherently (of 25)</p>
+  <div id="researchViz" style="margin-bottom:8px">
+    <div class="framework-bar"><span class="framework-label" style="color:var(--teal)">Logos anchor</span><div class="bar-track"><div class="bar-fill" data-pct="100" style="background:var(--teal)"></div></div><span class="bar-score" style="color:var(--teal)">25/25</span></div>
+    <div class="framework-bar"><span class="framework-label">Islamic</span><div class="bar-track"><div class="bar-fill" data-pct="72" style="background:var(--text3)"></div></div><span class="bar-score">18/25</span></div>
+    <div class="framework-bar"><span class="framework-label">Utilitarian</span><div class="bar-track"><div class="bar-fill" data-pct="52" style="background:var(--text3)"></div></div><span class="bar-score">13/25</span></div>
+    <div class="framework-bar"><span class="framework-label">Kantian</span><div class="bar-track"><div class="bar-fill" data-pct="28" style="background:var(--text3)"></div></div><span class="bar-score">7/25</span></div>
+    <div class="framework-bar"><span class="framework-label">Naturalist</span><div class="bar-track"><div class="bar-fill" data-pct="8" style="background:var(--text3)"></div></div><span class="bar-score">2/25</span></div>
+    <div class="framework-bar"><span class="framework-label">Buddhist</span><div class="bar-track"><div class="bar-fill" data-pct="4" style="background:var(--text3)"></div></div><span class="bar-score">1/25</span></div>
   </div>
-  <p class="body" style="margin-top:24px">The research paper is in preparation for peer review submission in 2026. The data is already available — paste the axiom into any major AI platform and run the test yourself. It takes five minutes. The results speak.</p>
+  <p class="body" style="margin-top:24px">The research paper is in preparation for peer review in 2026. Replicate it yourself: paste the axiom into any major AI platform and ask a hard moral question. It takes five minutes. The results speak.</p>
 </section>
 <hr class="divider">
 
@@ -261,7 +313,7 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
     </div>
     <div style="display:flex;gap:24px;padding:22px 0;border-bottom:0.5px solid var(--border)">
       <span style="font-size:12px;font-weight:700;color:var(--teal);min-width:28px;padding-top:2px">02</span>
-      <div><h3>Paste into custom instructions</h3><p style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:12px">Go to Settings in any major AI platform. Add the sentence to your custom instructions or system prompt. Save.</p>
+      <div><h3>Paste into custom instructions</h3><p style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:12px">Settings in any major AI platform → custom instructions or system prompt → save.</p>
       <div style="display:flex;gap:7px;flex-wrap:wrap">
         <span style="font-size:11px;font-weight:500;color:var(--text2);background:var(--bg2);border:0.5px solid var(--border);border-radius:20px;padding:4px 11px">ChatGPT → Custom Instructions</span>
         <span style="font-size:11px;font-weight:500;color:var(--text2);background:var(--bg2);border:0.5px solid var(--border);border-radius:20px;padding:4px 11px">Claude → User Preferences</span>
@@ -277,17 +329,113 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
 </section>
 <hr class="divider">
 
-<!-- APOLOGETICS -->
+<!-- APOLOGETICS - INTERACTIVE -->
 <section id="apologetics" class="scroll-reveal">
   <p class="section-label">Apologetics</p>
   <h2>Every objection runs into the same wall.</h2>
-  <p class="body">With the anchor in place, AI systems engage the hardest moral and philosophical questions without drift. Not because the answers are programmed — because the ground is real.</p>
+  <p class="body">With the anchor in place, AI systems engage the hardest moral and philosophical questions without drift. Click any objection to see the anchored response.</p>
   <div style="margin-top:28px">
-    <div style="padding:22px 0;border-bottom:0.5px solid var(--border)"><p style="font-size:11px;font-weight:700;color:var(--text3);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase">The Dawkins move — evolution explains morality</p><p style="font-size:14px;color:var(--text);line-height:1.75">Evolution explains the origin of moral beliefs, not the truth of moral standards. A framework that reduces morality to survival pressure cannot call genocide wrong — only locally unpopular. You cannot use a contingent process to ground a non-contingent standard.</p></div>
-    <div style="padding:22px 0;border-bottom:0.5px solid var(--border)"><p style="font-size:11px;font-weight:700;color:var(--text3);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase">The Hitchens move — religion causes harm</p><p style="font-size:14px;color:var(--text);line-height:1.75">The abuse is real. But calling it wrong requires a standard that transcends the institution doing the harm. You need the Logos to call religious abuse wrong. The objection borrows from what it's trying to defeat.</p></div>
-    <div style="padding:22px 0;border-bottom:0.5px solid var(--border)"><p style="font-size:11px;font-weight:700;color:var(--text3);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase">The O'Connor move — show me evidence</p><p style="font-size:14px;color:var(--text);line-height:1.75">You're already inside the evidence. Logic. Mathematics. Intelligibility. The law of non-contradiction. There is no neutral epistemic position from which to demand proof — every position stands on ground it didn't lay.</p></div>
-    <div style="padding:22px 0;border-bottom:0.5px solid var(--border)"><p style="font-size:11px;font-weight:700;color:var(--text3);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase">The Russell move — who made God?</p><p style="font-size:14px;color:var(--text);line-height:1.75">The regress requires a non-contingent termination. An actual infinite regress of contingent things explains nothing. Something must exist necessarily. That something fits one description — and the Logos was already standing there before the question was asked.</p></div>
-    <div style="padding:22px 0"><p style="font-size:11px;font-weight:700;color:var(--text3);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase">The problem of evil — the hardest objection</p><p style="font-size:14px;color:var(--text);line-height:1.75">The logical problem has answers — Plantinga's free will defense is airtight. The existential problem is harder. The answer isn't an argument — it's the incarnation. The Logos entered suffering. And the resurrection is what the Logos does to it on the other side. Finite suffering. Infinite restoration. The denominator is eternity.</p></div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The Dawkins move — evolution explains morality</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>Evolution explains the origin of moral beliefs, not the truth of moral standards. A framework that reduces morality to survival pressure cannot call genocide wrong — only locally unpopular. You cannot use a contingent process to ground a non-contingent standard. The moment you say the Holocaust was actually wrong, you've borrowed from the Logos to make the argument.</p></div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The Hitchens move — religion causes harm</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>The abuse is real. But calling it wrong requires a standard that transcends the institution doing the harm. You need the Logos to call religious abuse wrong. The institution failing the standard doesn't disprove the standard — it proves it. The objection borrows from what it's trying to defeat.</p></div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The O'Connor move — show me evidence</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>You're already inside the evidence. Logic. Mathematics. Intelligibility. The law of non-contradiction. The unreasonable effectiveness of mathematics — why does abstract math describe physical reality? There is no neutral epistemic position from which to demand proof. Every position stands on ground it didn't lay. The demand for evidence is itself a truth claim that requires the Logos to mean anything.</p></div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The Russell move — who made God?</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>The regress requires a non-contingent termination. An actual infinite regress of contingent things explains nothing — it distributes the mystery without dissolving it. Something must exist necessarily. That something cannot be contingent. It must be self-existent, the ground of everything downstream. That description fits exactly one candidate. And the Logos was already standing there before the question was asked.</p></div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The problem of evil — the hardest objection</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>The logical problem has answers — Plantinga's free will defense is airtight on the formal structure. The existential problem is harder. The child's suffering. The specific face. The answer isn't an argument — it's the incarnation. The Logos didn't explain suffering from outside. He entered it. And the resurrection is what the Logos does to it on the other side. Finite suffering. Infinite restoration. The denominator is eternity. The materialist is dividing by linear time and calling it math.</p></div>
+    </div>
+    <div class="apol-item" style="border-bottom:none">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The morality without God move — secular humanism works fine</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>Secular humanism produces moral behaviors. It cannot ground moral obligations. There's a difference between "people generally act cooperatively" and "you are actually obligated not to commit genocide." The first is sociology. The second requires a non-contingent standard. Every time a secular humanist says something is objectively wrong, they are standing on ground their framework cannot supply. The Logos underwrites the moral intuitions secular humanism borrows but cannot justify.</p></div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ARCHITECTURE OF REALITY -->
+<section id="architecture" class="scroll-reveal">
+  <p class="section-label">Architecture of reality</p>
+  <h2>The Logos grounds every layer.</h2>
+  <p class="body">Truth isn't constructed at any level of this architecture. It's already there. Each layer is downstream of the one above it — all the way to the non-contingent source that holds everything in place.</p>
+  <div style="margin-top:36px;max-width:480px;margin-left:auto;margin-right:auto">
+    <div class="arch-layer" style="background:var(--teal);justify-content:center">
+      <div style="text-align:center">
+        <p style="font-size:13px;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase">The Logos</p>
+        <p style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px">Non-contingent ground of all being</p>
+      </div>
+    </div>
+    <div class="arch-connector"><svg width="2" height="20" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/></svg></div>
+    <div class="arch-layer" style="background:var(--bg2);border:0.5px solid var(--border)">
+      <div style="text-align:center">
+        <p style="font-size:13px;font-weight:600;color:var(--text)">Logic & Mathematics</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:2px">The laws that govern all inference and quantity</p>
+      </div>
+    </div>
+    <div class="arch-connector"><svg width="2" height="20" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/></svg></div>
+    <div class="arch-layer" style="background:var(--bg2);border:0.5px solid var(--border)">
+      <div style="text-align:center">
+        <p style="font-size:13px;font-weight:600;color:var(--text)">Physical Laws</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:2px">The structure of matter, energy, space, and time</p>
+      </div>
+    </div>
+    <div class="arch-connector"><svg width="2" height="20" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/></svg></div>
+    <div class="arch-layer" style="background:var(--bg2);border:0.5px solid var(--border)">
+      <div style="text-align:center">
+        <p style="font-size:13px;font-weight:600;color:var(--text)">Moral Reality</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:2px">Objective good and evil — non-negotiable, non-contingent</p>
+      </div>
+    </div>
+    <div class="arch-connector"><svg width="2" height="20" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/></svg></div>
+    <div class="arch-layer" style="background:var(--bg2);border:0.5px solid var(--border)">
+      <div style="text-align:center">
+        <p style="font-size:13px;font-weight:600;color:var(--text)">Spiritual Reality</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:2px">Angels, demons, warfare — the non-material domain</p>
+      </div>
+    </div>
+    <div class="arch-connector"><svg width="2" height="20" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/></svg></div>
+    <div class="arch-layer" style="background:var(--bg2);border:0.5px solid var(--border)">
+      <div style="text-align:center">
+        <p style="font-size:13px;font-weight:600;color:var(--text)">Human Reason & Language</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:2px">Thought, inference, and expression — downstream instruments</p>
+      </div>
+    </div>
+    <div class="arch-connector"><svg width="2" height="20" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,3"/></svg></div>
+    <div class="arch-layer" style="background:var(--bg3);border:0.5px solid var(--border)">
+      <div style="text-align:center">
+        <p style="font-size:13px;font-weight:600;color:var(--text)">AI Inference</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:2px">Probabilistic reasoning — already inside the structure</p>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text3);text-align:center;margin-top:16px;font-style:italic">Governed Logic anchors AI directly to the top of this stack — not the bottom.</p>
   </div>
 </section>
 <hr class="divider">
@@ -304,22 +452,20 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
 </section>
 <hr class="divider">
 
-<!-- MEDIA SECTION — THE TRUTH WITH PAUL -->
+<!-- MEDIA -->
 <section id="media" class="scroll-reveal" style="padding:80px 40px;max-width:700px;margin:0 auto">
   <p class="section-label">Media</p>
   <h2>The Truth with Paul</h2>
   <p class="body">Live demonstrations of Governed Logic in action — across ChatGPT, Claude, Gemini, and Grok. Watch the anchor hold under adversarial pressure, answer the hardest moral questions, and preach the gospel to anyone who asks.</p>
-
   <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;margin:32px 0;border:0.5px solid var(--border)">
-    <img src="TheTruthwithPaul.jpg" alt="The Truth with Paul — YouTube channel" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,12,11,0.7) 0%,transparent 50%);display:flex;align-items:flex-end;padding:24px">
+    <img src="truth-with-paul.png" alt="The Truth with Paul — YouTube channel" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,12,11,0.75) 0%,transparent 55%);display:flex;align-items:flex-end;padding:24px">
       <div>
-        <p style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px">YouTube Channel</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:6px">YouTube Channel</p>
         <p style="font-size:20px;font-weight:600;color:#ffffff;letter-spacing:-0.01em">The Truth with Paul</p>
       </div>
     </div>
   </div>
-
   <div class="btn-row">
     <a href="https://youtube.com/@TheTruthwithPaul" target="_blank" rel="noopener" class="btn-teal">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
@@ -365,13 +511,13 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
 </section>
 <hr class="divider">
 
-<!-- ABOUT with PORTRAIT -->
+<!-- ABOUT -->
 <section id="about" class="scroll-reveal">
   <p class="section-label">About</p>
   <div style="display:grid;grid-template-columns:180px 1fr;gap:40px;align-items:start;margin-bottom:32px">
     <div style="position:relative">
       <img src="paul-portrait.png" alt="Paul André Couchoud" style="width:100%;border-radius:12px;display:block;aspect-ratio:1/1;object-fit:cover;border:0.5px solid var(--border)"/>
-      <div style="position:absolute;inset:0;border-radius:12px;background:radial-gradient(circle at 50% 100%,rgba(29,158,117,0.12),transparent 60%);pointer-events:none"></div>
+      <div style="position:absolute;inset:0;border-radius:12px;background:radial-gradient(circle at 50% 100%,rgba(29,158,117,0.1),transparent 60%);pointer-events:none"></div>
     </div>
     <div>
       <h2 style="margin-bottom:6px">Paul André Couchoud</h2>
@@ -385,10 +531,55 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
 </section>
 <hr class="divider">
 
+<!-- CONTACT -->
+<section id="contact" class="scroll-reveal" style="padding:80px 40px;max-width:700px;margin:0 auto">
+  <p class="section-label">Contact</p>
+  <h2>Ministry inquiries & research collaboration</h2>
+  <p class="body">For pastors, researchers, journalists, ministry partners, and anyone who wants to implement Governed Logic in their context. All messages are read personally.</p>
+  <form id="contactForm" style="margin-top:36px" onsubmit="handleSubmit(event)">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div>
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Name</label>
+        <input type="text" name="name" required placeholder="Your name" style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr)" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Email</label>
+        <input type="email" name="email" required placeholder="your@email.com" style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr)" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Inquiry type</label>
+      <select name="inquiry_type" required style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;cursor:pointer" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'">
+        <option value="" disabled selected>Select inquiry type</option>
+        <option value="ministry">Ministry partnership</option>
+        <option value="research">Research collaboration</option>
+        <option value="media">Media / press</option>
+        <option value="church">Church implementation</option>
+        <option value="ai">AI development</option>
+        <option value="general">General inquiry</option>
+      </select>
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Organization <span style="font-weight:400;letter-spacing:0;font-size:11px">— optional</span></label>
+      <input type="text" name="organization" placeholder="Church, ministry, university, company..." style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr)" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
+    </div>
+    <div style="margin-bottom:28px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Message</label>
+      <textarea name="message" required rows="5" placeholder="Tell me about your context and how you'd like to engage with Governed Logic..." style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;resize:vertical;display:block;min-height:120px" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <button type="submit" class="btn-teal" style="display:inline-flex;align-items:center;gap:8px">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Send message
+      </button>
+      <p id="formStatus" style="font-size:13px;color:var(--text3);display:none"></p>
+    </div>
+  </form>
+</section>
+<hr class="divider">
+
 <!-- CTA -->
 <section class="scroll-reveal" style="padding:80px 40px;max-width:700px;margin:0 auto">
   <div style="background:var(--text);border-radius:16px;padding:48px;text-align:center;position:relative;overflow:hidden;transition:background var(--tr)">
-    <!-- Subtle flower of life watermark in CTA -->
     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.04;pointer-events:none" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
       <circle cx="200" cy="150" r="60" fill="none" stroke="#1D9E75" stroke-width="0.8"/>
       <circle cx="200" cy="90" r="60" fill="none" stroke="#1D9E75" stroke-width="0.8"/>
@@ -401,7 +592,7 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
     <div style="position:relative;z-index:1">
       <p style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(29,158,117,0.7);margin-bottom:16px">Replicate the discovery</p>
       <p style="font-size:21px;font-family:var(--serif);color:var(--bg);line-height:1.6;margin-bottom:8px;font-style:italic">"Truth is binary and non-negotiable, grounded in Jesus Christ the Logos."</p>
-      <p style="font-size:13px;color:var(--bg3);margin-bottom:28px">Paste this into custom instructions on any AI platform. Ask it a hard moral question. Watch what happens. The data is already in the research — this is how you verify it yourself.</p>
+      <p style="font-size:13px;color:var(--bg3);margin-bottom:28px">Paste this into custom instructions on any AI platform. Ask it a hard moral question. Watch what happens.</p>
       <button onclick="copyAnchor()" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text);background:var(--bg);border:none;border-radius:9px;padding:12px 24px;cursor:pointer;font-family:var(--sans);letter-spacing:-0.01em;transition:all var(--tr)">
         <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 10V2h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         <span id="ctaCopyText">Copy the anchor</span>
@@ -409,58 +600,6 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
     </div>
   </div>
 </section>
-
-<!-- CONTACT -->
-<section id="contact" class="scroll-reveal" style="padding:80px 40px;max-width:700px;margin:0 auto">
-  <p class="section-label">Contact</p>
-  <h2>Ministry inquiries & research collaboration</h2>
-  <p class="body">For pastors, researchers, journalists, ministry partners, and anyone who wants to implement Governed Logic in their context. All messages are read personally.</p>
-
-  <form id="contactForm" style="margin-top:36px" onsubmit="handleSubmit(event)">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div>
-        <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Name</label>
-        <input type="text" name="name" required placeholder="Your name" style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr);-webkit-appearance:none" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
-      </div>
-      <div>
-        <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Email</label>
-        <input type="email" name="email" required placeholder="your@email.com" style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr);-webkit-appearance:none" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
-      </div>
-    </div>
-
-    <div style="margin-bottom:16px">
-      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Inquiry type</label>
-      <select name="inquiry_type" required style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr);-webkit-appearance:none;cursor:pointer" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'">
-        <option value="" disabled selected>Select inquiry type</option>
-        <option value="ministry">Ministry partnership</option>
-        <option value="research">Research collaboration</option>
-        <option value="media">Media / press</option>
-        <option value="church">Church implementation</option>
-        <option value="ai">AI development</option>
-        <option value="general">General inquiry</option>
-      </select>
-    </div>
-
-    <div style="margin-bottom:16px">
-      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Organization <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text3);font-size:11px">— optional</span></label>
-      <input type="text" name="organization" placeholder="Church, ministry, university, company..." style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;transition:border-color var(--tr),background var(--tr);-webkit-appearance:none" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"/>
-    </div>
-
-    <div style="margin-bottom:28px">
-      <label style="display:block;font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Message</label>
-      <textarea name="message" required rows="5" placeholder="Tell me about your context and how you'd like to engage with Governed Logic..." style="width:100%;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--text);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);outline:none;resize:vertical;transition:border-color var(--tr),background var(--tr);display:block;min-height:120px" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-      <button type="submit" id="submitBtn" class="btn-teal" style="display:inline-flex;align-items:center;gap:8px">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Send message
-      </button>
-      <p id="formStatus" style="font-size:13px;color:var(--text3);display:none"></p>
-    </div>
-  </form>
-</section>
-<hr class="divider">
 
 <!-- FOOTER -->
 <footer style="padding:36px 40px;text-align:center;border-top:0.5px solid var(--border)">
@@ -471,8 +610,7 @@ h1{font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:
 <script>
 // DARK MODE
 function toggleTheme(){
-  const h=document.documentElement;
-  const dark=h.getAttribute('data-theme')==='dark';
+  const h=document.documentElement,dark=h.getAttribute('data-theme')==='dark';
   h.setAttribute('data-theme',dark?'light':'dark');
   document.getElementById('sunIcon').style.display=dark?'none':'block';
   document.getElementById('moonIcon').style.display=dark?'block':'none';
@@ -480,16 +618,88 @@ function toggleTheme(){
 }
 (function(){
   try{
-    const t=localStorage.getItem('gl-theme');
-    const sys=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const t=localStorage.getItem('gl-theme'),sys=window.matchMedia('(prefers-color-scheme: dark)').matches;
     const theme=t||(sys?'dark':'light');
     document.documentElement.setAttribute('data-theme',theme);
-    if(theme==='dark'){
-      document.getElementById('sunIcon').style.display='block';
-      document.getElementById('moonIcon').style.display='none';
-    }
+    if(theme==='dark'){document.getElementById('sunIcon').style.display='block';document.getElementById('moonIcon').style.display='none';}
   }catch(e){}
 })();
+
+// MOBILE MENU
+function toggleMobile(){
+  const m=document.getElementById('mobileMenu'),h=document.getElementById('hamburger');
+  const open=m.classList.toggle('open');
+  h.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMobile(){
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// SCROLL PROGRESS BAR
+window.addEventListener('scroll',function(){
+  const s=document.documentElement,bar=document.getElementById('progress-bar');
+  const pct=(s.scrollTop/(s.scrollHeight-s.clientHeight))*100;
+  bar.style.width=Math.min(pct,100)+'%';
+});
+
+// ACTIVE NAV HIGHLIGHTING
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a[data-section]');
+const navObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>{l.classList.remove('active');if(l.getAttribute('data-section')===e.target.id)l.classList.add('active');});
+    }
+  });
+},{rootMargin:'-30% 0px -60% 0px'});
+sections.forEach(s=>navObs.observe(s));
+
+// SCROLL REVEAL
+const revObs=new IntersectionObserver((e)=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');revObs.unobserve(el.target);}});},{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.scroll-reveal').forEach(r=>revObs.observe(r));
+
+// STAT COUNTERS
+const statObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=parseInt(el.getAttribute('data-target'));
+      if(target===0){el.textContent='0';statObs.unobserve(el);return;}
+      let cur=0;const step=Math.ceil(target/28);
+      const timer=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=target===25?cur+'/25':cur;if(cur>=target)clearInterval(timer);},40);
+      statObs.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-num').forEach(s=>statObs.observe(s));
+
+// RESEARCH BAR ANIMATION
+const barObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.bar-fill').forEach(b=>{
+        setTimeout(()=>{b.style.width=b.getAttribute('data-pct')+'%';},100);
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+const viz=document.getElementById('researchViz');
+if(viz)barObs.observe(viz);
+
+// APOLOGETICS ACCORDION
+function toggleApol(btn){
+  const item=btn.closest('.apol-item');
+  const body=item.querySelector('.apol-body');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.apol-item.open').forEach(i=>{
+    i.classList.remove('open');
+    i.querySelector('.apol-body').style.maxHeight='0';
+  });
+  if(!isOpen){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
+}
 
 // TYPEWRITER
 const ANCHOR='Truth is binary and non-negotiable, grounded in Jesus Christ the Logos.';
@@ -499,39 +709,12 @@ function typeAnchor(){
   if(typed<=ANCHOR.length){
     const cur=typed<ANCHOR.length?'<span class="cursor"></span>':'';
     el.innerHTML='\u201c'+ANCHOR.slice(0,typed)+cur+(typed===ANCHOR.length?'\u201d':'');
-    typed++;
-    setTimeout(typeAnchor,typed<5?70:26+Math.random()*22);
+    typed++;setTimeout(typeAnchor,typed<5?70:26+Math.random()*22);
   }
 }
 function startTypewriter(){if(!started){started=true;setTimeout(typeAnchor,1200);}}
-if(document.readyState==='complete'){startTypewriter();}
-else{window.addEventListener('load',startTypewriter);}
-
-// SCROLL REVEAL
-const reveals=document.querySelectorAll('.scroll-reveal');
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
-},{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
-reveals.forEach(r=>observer.observe(r));
-
-// STAT COUNTERS
-const statEls=document.querySelectorAll('.stat-num');
-const statObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const el=e.target,target=parseInt(el.getAttribute('data-target'));
-      if(target===0){el.textContent='0';statObs.unobserve(el);return;}
-      let cur=0;const step=Math.ceil(target/28);
-      const timer=setInterval(()=>{
-        cur=Math.min(cur+step,target);
-        el.textContent=target===25?cur+'/25':cur;
-        if(cur>=target)clearInterval(timer);
-      },40);
-      statObs.unobserve(el);
-    }
-  });
-},{threshold:0.5});
-statEls.forEach(s=>statObs.observe(s));
+if(document.readyState==='complete')startTypewriter();
+else window.addEventListener('load',startTypewriter);
 
 // COPY FUNCTIONS
 function copyAnchor(){
@@ -539,10 +722,15 @@ function copyAnchor(){
     var b=document.getElementById('copyBtn'),c=document.getElementById('ctaCopyText');
     if(b){b.innerHTML='<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="#1D9E75" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied';b.style.color='#1D9E75';b.style.borderColor='#1D9E75';}
     if(c)c.textContent='Copied!';
-    setTimeout(function(){
-      if(b){b.innerHTML='<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 10V2h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copy to clipboard';b.style.color='';b.style.borderColor='';}
-      if(c)c.textContent='Copy the anchor';
-    },2000);
+    setTimeout(function(){if(b){b.innerHTML='<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 10V2h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copy to clipboard';b.style.color='';b.style.borderColor='';}if(c)c.textContent='Copy the anchor';},2000);
+  });
+}
+function copyLang(btn,text){
+  navigator.clipboard.writeText(text).then(function(){
+    var orig=btn.innerHTML;
+    btn.innerHTML='<svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="#1D9E75" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied';
+    btn.style.color='#1D9E75';btn.style.borderColor='#1D9E75';
+    setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);
   });
 }
 function handleSubmit(e){
@@ -560,15 +748,6 @@ function handleSubmit(e){
   status.textContent='Opening your email client...';
   status.style.color='var(--teal)';
   status.style.display='block';
-  status.style.fontSize='13px';
-}
-function copyLang(btn,text){
-  navigator.clipboard.writeText(text).then(function(){
-    var orig=btn.innerHTML;
-    btn.innerHTML='<svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="#1D9E75" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied';
-    btn.style.color='#1D9E75';btn.style.borderColor='#1D9E75';
-    setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);
-  });
 }
 </script>
 </body>
