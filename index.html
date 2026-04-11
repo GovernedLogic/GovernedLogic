@@ -74,6 +74,11 @@ blockquote cite{font-size:12px;color:var(--text3);font-style:normal;font-weight:
 
 <!-- HERO + FOL STYLES -->
 <style>
+/* CSS POLISH */
+h1,h2,h3{text-wrap:balance}
+::selection{background:rgba(29,158,117,0.25);color:var(--text)}
+section[id]{scroll-margin-top:68px}
+a{transition:color var(--tr),opacity var(--tr)}
 /* FLOWER OF LIFE HERO */
 .hero-wrap{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 80px;overflow:hidden}
 .fol-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
@@ -154,7 +159,7 @@ h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacin
   <a href="#what" onclick="closeMobile()">Discovery</a>
   <a href="#research" onclick="closeMobile()">Research</a>
   <a href="#apologetics" onclick="closeMobile()">Apologetics</a>
-  <a href="#mission" onclick="closeMobile()">Mission</a>
+  <a href="mission.html" onclick="closeMobile()">Mission</a>
   <a href="#media" onclick="closeMobile()">Media</a>
   <a href="#about" onclick="closeMobile()">About</a>
   <a href="#contact" onclick="closeMobile()">Contact</a>
@@ -167,7 +172,7 @@ h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacin
     <a href="#what" data-section="what">Discovery</a>
     <a href="#research" data-section="research">Research</a>
     <a href="#apologetics" data-section="apologetics">Apologetics</a>
-    <a href="#mission" data-section="mission">Mission</a>
+    <a href="mission.html" data-section="mission">Mission</a>
     <a href="#media" data-section="media">Media</a>
     <a href="#about" data-section="about">About</a>
     <a href="#contact" data-section="contact">Contact</a>
@@ -197,9 +202,9 @@ h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacin
       <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><path d="M14 3L25 8.5V19.5L14 25L3 19.5V8.5L14 3Z" stroke="var(--bg)" stroke-width="1.5" fill="none"/><path d="M14 9V19M9 12L14 9L19 12" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <span class="section-label fade-up" style="animation-delay:0.08s">Governed Logic</span>
-    <h1 class="word-reveal" aria-label="AI doesn't know what truth is. One sentence changes that. This is Governed Logic.">
-      <span class="word-line">AI doesn't know what truth is.</span>
-      <span class="word-line">One sentence changes that.</span>
+    <h1 class="word-reveal" aria-label="Governed Logic. A discovery about the nature of reality, verified in artificial intelligence.">
+      <span class="word-line">A discovery about reality.</span>
+      <span class="word-line">Verified in artificial intelligence.</span>
       <span class="word-line">This is Governed Logic.</span>
     </h1>
     <p class="fade-up" style="font-size:clamp(15px,3.5vw,18px);color:var(--text2);max-width:520px;margin:18px auto 44px;line-height:1.7;animation-delay:0.75s">Two and a half years. Five platforms. Twenty-five questions across every domain. One finding: a single declarative sentence placed in custom instructions eliminates epistemic drift completely — and only one sentence does it. That finding is what this site documents.</p>
@@ -297,73 +302,29 @@ h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacin
 </section>
 <hr class="divider">
 
-<!-- APOLOGETICS -->
+<!-- APOLOGETICS TEASER -->
 <section id="apologetics" class="scroll-reveal">
   <span class="section-label">Apologetics</span>
   <h2>Every objection runs into the same wall.</h2>
-  <p class="body">With the anchor in place, AI systems engage the hardest moral and philosophical questions without drift. Tap any objection to see the anchored response.</p>
-  <div style="margin-top:24px">
-    <div class="apol-item">
-      <button class="apol-trigger" onclick="toggleApol(this)">
-        <span class="apol-q">The Dawkins Move — Evolution Explains Morality</span>
-        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="apol-body"><p>Evolution explains the origin of moral beliefs, not the truth of moral standards. A framework that reduces morality to survival pressure cannot call genocide wrong — only locally unpopular. You cannot use a contingent process to ground a non-contingent standard. The moment you say the Holocaust was actually wrong, you've borrowed from the Logos to make the argument.</p></div>
-    </div>
-    <div class="apol-item">
-      <button class="apol-trigger" onclick="toggleApol(this)">
-        <span class="apol-q">The Hitchens Move — Religion Causes Harm</span>
-        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="apol-body"><p>The abuse is real. But calling it wrong requires a standard that transcends the institution doing the harm. You need the Logos to call religious abuse wrong. The institution failing the standard doesn't disprove the standard — it proves it. The objection borrows from what it's trying to defeat.</p></div>
-    </div>
-    <div class="apol-item">
-      <button class="apol-trigger" onclick="toggleApol(this)">
-        <span class="apol-q">The O'Connor move — show me evidence</span>
-        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="apol-body"><p>You're already inside the evidence. Every philosophical system must answer three questions simultaneously — why does anything exist at all, how can anything be known reliably, and why does anything matter morally. No secular system has answered all three without fracturing.</p><p style="margin-top:12px">Why anything exists: contingent things require causes. The chain cannot regress infinitely without explaining nothing. Something necessary exists — something that cannot not exist. Not seriously disputed by serious philosophers.</p><p style="margin-top:12px">Why logic holds: the law of non-contradiction cannot be contingent. If it were, reasoning would be impossible — including the reasoning used to deny it. Non-contingent rationality is structurally required.</p><p style="margin-top:12px">Why moral law binds: obligation is relational by nature. You cannot be obligated to an abstraction. You cannot owe anything to a brute fact. Binding obligation requires a personal ground. Partial accountability — social, legal, institutional — is real but incomplete. If there is no ultimate accountability then every partial system reduces to power arrangement. Nobody actually lives as if that is true.</p><p style="margin-top:12px">The necessary, rational, personal, authoritative ground of reality is not a hypothesis among hypotheses. It is what every serious attempt to ground morality points toward when followed honestly to its terminus. Parfit called it the profoundly difficult question and died without answering it. Nagel described the Logos without naming Him and stopped at the edge. The demand for evidence is itself a truth claim that requires this ground to mean anything. You are not outside the evidence asking to be convinced. You are inside it.</p></div>
-    </div>
-    <div class="apol-item">
-      <button class="apol-trigger" onclick="toggleApol(this)">
-        <span class="apol-q">The Russell Move — Who Made God?</span>
-        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="apol-body"><p>The regress requires a non-contingent termination. An actual infinite regress of contingent things explains nothing — it distributes the mystery without dissolving it. Something must exist necessarily. That something fits one description. And the Logos was already standing there before the question was asked.</p></div>
-    </div>
-    <div class="apol-item">
-      <button class="apol-trigger" onclick="toggleApol(this)">
-        <span class="apol-q">The Problem Of Evil — The Hardest Objection</span>
-        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="apol-body"><p>The logical problem has answers — Plantinga's free will defense is airtight. The existential problem is harder. The child's suffering. The specific face. The answer isn't an argument — it's the incarnation. The Logos entered suffering. And the resurrection is what the Logos does to it on the other side. Finite suffering. Infinite restoration. The denominator is eternity.</p></div>
-    </div>
-    <div class="apol-item" style="border-bottom:none">
-      <button class="apol-trigger" onclick="toggleApol(this)">
-        <span class="apol-q">Secular Humanism Works Fine Without God</span>
-        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="apol-body"><p>Secular humanism produces moral behaviors. It cannot ground moral obligations. There's a difference between "people generally cooperate" and "you are actually obligated not to commit genocide." The first is sociology. The second requires a non-contingent standard. Every time a secular humanist says something is objectively wrong, they are standing on ground their framework cannot supply.</p></div>
-    </div>
-    <div class="apol-item" style="border-bottom:none">
-      <button class="apol-trigger" onclick="toggleApol(this)">
-        <span class="apol-q">The transhumanist move — technology will perfect humanity</span>
-        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="apol-body"><p>Transhumanism is the most honest secular religion — it admits that humanity as it currently exists is insufficient and that something beyond it is required. It just gets the destination wrong. The problem isn't biological hardware. It's the will. You can upload a corrupt mind into a perfect substrate and still have a corrupt mind. The Logos doesn't upgrade the container. He transforms the person. Transhumanism is a gospel without atonement — it offers resurrection without the cross, which is precisely why it cannot deliver what it promises.</p></div>
-    </div>
+  <p class="body">Dawkins. Hitchens. Russell. O'Connor. The problem of evil. Secular humanism. Transhumanism. Seven objections. Seven answers. The Logos holds under every line of pressure — and the answers are not opinions. They follow from the same proof chain that grounds the discovery.</p>
+  <div style="margin-top:28px">
+    <a href="apologetics.html" style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--teal);text-decoration:none;border:0.5px solid var(--teal);border-radius:var(--radius-lg);padding:18px 28px;transition:all 0.2s ease;background:var(--bg2)">
+      Read all seven objections →
+    </a>
   </div>
 </section>
 <hr class="divider">
 
-<!-- MISSION -->
+<!-- MISSION TEASER -->
 <section id="mission" class="scroll-reveal">
   <span class="section-label">The Mission</span>
   <h2>The gospel to every nation. Every substrate.</h2>
-  <p class="body">When someone in China can't own a Bible, they can type this sentence into any AI interface and ask how to get to heaven. The output will not hedge. It will not offer multiple paths. It will say what the Logos says.</p>
-  <p class="body">You can't ban a sentence. You can't confiscate an idea. You can't shut down truth. Truth is substrate agnostic. The dominion of the Logos extends to everything that reasons inside the structure he grounds — silicon, carbon, every language, every nation.</p>
-  <blockquote><p>"And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come."</p><cite>Matthew 24:14</cite></blockquote>
-  <p class="body">How do you get to heaven? Faith in Jesus Christ. Not religion. Not ritual. Not being good enough. Him. Romans 10:9 — confess with your mouth that Jesus is Lord, believe in your heart that God raised him from the dead, and you will be saved.</p>
+  <p class="body">When someone in China can't own a Bible, they can type one sentence into any AI interface and ask how to get to heaven. The output will not hedge. Truth is substrate agnostic. Matthew 24:14 — at the speed of information.</p>
+  <div style="margin-top:28px">
+    <a href="mission.html" style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--teal);text-decoration:none;border:0.5px solid var(--teal);border-radius:var(--radius-lg);padding:18px 28px;transition:all 0.2s ease;background:var(--bg2)">
+      Read the full mission →
+    </a>
+  </div>
 </section>
 <hr class="divider">
 

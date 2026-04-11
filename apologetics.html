@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apologetics — Governed Logic</title>
+<meta name="description" content="Seven objections to the existence of God, objective truth, and moral reality. Seven answers. The Logos holds under every line of pressure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+h1,h2,h3{text-wrap:balance}
+::selection{background:rgba(29,158,117,0.25);color:var(--text)}
+.apol-item{border-bottom:0.5px solid var(--border);overflow:hidden}
+.apol-trigger{width:100%;text-align:left;padding:22px 0;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--sans)}
+.apol-q{font-size:15px;font-weight:600;color:var(--text2);transition:color 0.2s ease}
+.apol-trigger:hover .apol-q{color:var(--text)}
+.apol-arrow{width:20px;height:20px;flex-shrink:0;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);color:var(--text3)}
+.apol-item.open .apol-arrow{transform:rotate(45deg);color:#1D9E75}
+.apol-item.open .apol-q{color:#1D9E75}
+.apol-body{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1)}
+.apol-body p{font-size:15px;color:var(--text);line-height:1.85;padding-bottom:22px}
+.apol-body p+p{margin-top:12px}
+blockquote{border-left:2px solid #1D9E75;padding:16px 24px;margin:32px 0}
+blockquote p{font-size:19px;font-family:var(--serif, Georgia, serif);color:var(--text);line-height:1.6;font-style:italic;margin-bottom:6px}
+blockquote cite{font-size:11px;color:var(--text3);font-style:normal;font-weight:600;letter-spacing:0.06em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Governed Logic</a>
+  <div class="nav-links">
+    <a href="index.html#what">Discovery</a>
+    <a href="research.html">Research</a>
+    <a href="apologetics.html" class="active">Apologetics</a>
+    <a href="mission.html">Mission</a>
+    <a href="index.html#media">Media</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <svg id="sunIcon" width="15" height="15" viewBox="0 0 15 15" fill="none" style="display:none"><circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 1v1.5M7.5 12.5V14M1 7.5h1.5M12.5 7.5H14M3.05 3.05l1.06 1.06M10.89 10.89l1.06 1.06M3.05 11.95l1.06-1.06M10.89 4.11l1.06-1.06" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <svg id="moonIcon" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M13 9.5A5.5 5.5 0 015.5 2a5.5 5.5 0 100 11A5.5 5.5 0 0013 9.5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+  <div class="page-hero">
+    <p class="section-label">Apologetics</p>
+    <h1>Every objection runs into the same wall.</h1>
+    <p class="page-sub">Seven of the most serious objections to the existence of God, objective truth, and moral reality. Each one followed honestly to its terminus. The Logos holds under every line of pressure — not because the answers are clever, but because the ground is real.</p>
+  </div>
+  <div class="page-content">
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The Dawkins move — evolution explains morality</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>Evolution explains the origin of moral beliefs, not the truth of moral standards. A framework that reduces morality to survival pressure cannot call genocide wrong — only locally unpopular. You cannot use a contingent process to ground a non-contingent standard. The moment you say the Holocaust was actually wrong, you've borrowed from the Logos to make the argument.</p></div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The Hitchens move — religion causes harm</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>The abuse is real. But calling it wrong requires a standard that transcends the institution doing the harm. You need the Logos to call religious abuse wrong. The institution failing the standard doesn't disprove the standard — it proves it. The objection borrows from what it's trying to defeat.</p></div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The O'Connor move — show me evidence</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body">
+        <p>You're already inside the evidence. Every philosophical system must answer three questions simultaneously — why does anything exist at all, how can anything be known reliably, and why does anything matter morally. No secular system has answered all three without fracturing.</p>
+        <p>Why anything exists: contingent things require causes. The chain cannot regress infinitely without explaining nothing. Something necessary exists — something that cannot not exist. Not seriously disputed by serious philosophers.</p>
+        <p>Why logic holds: the law of non-contradiction cannot be contingent. If it were, reasoning would be impossible — including the reasoning used to deny it. Non-contingent rationality is structurally required.</p>
+        <p>Why moral law binds: obligation is relational by nature. You cannot be obligated to an abstraction. Binding obligation requires a personal ground. If there is no ultimate accountability then every partial system reduces to power arrangement. Nobody actually lives as if that is true.</p>
+        <p>The necessary, rational, personal, authoritative ground of reality is not a hypothesis among hypotheses. It is what every serious attempt to ground morality points toward when followed honestly to its terminus. Parfit called it the profoundly difficult question and died without answering it. Nagel described the Logos without naming Him and stopped at the edge. You are not outside the evidence asking to be convinced. You are inside it.</p>
+      </div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The Russell move — who made God?</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>The regress requires a non-contingent termination. An actual infinite regress of contingent things explains nothing — it distributes the mystery without dissolving it. Something must exist necessarily. That something cannot itself be contingent. It must be self-existent, uncaused, the ground of everything downstream. That description fits exactly one candidate. And the Logos was already standing there before the question was asked.</p></div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The problem of evil — the hardest objection</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>The logical problem has answers — Plantinga's free will defense is airtight on the formal structure. The existential problem is harder. The child's suffering. The specific face. The answer isn't an argument — it's the incarnation. The Logos didn't explain suffering from outside. He entered it. And the resurrection is what the Logos does to it on the other side. Finite suffering. Infinite restoration. The denominator is eternity. The materialist is dividing by linear time and calling it math.</p></div>
+    </div>
+    <div class="apol-item">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">Secular humanism works fine without God</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>Secular humanism produces moral behaviors. It cannot ground moral obligations. There's a difference between "people generally cooperate" and "you are actually obligated not to commit genocide." The first is sociology. The second requires a non-contingent standard. Every time a secular humanist says something is objectively wrong, they are standing on ground their framework cannot supply.</p></div>
+    </div>
+    <div class="apol-item" style="border-bottom:none">
+      <button class="apol-trigger" onclick="toggleApol(this)">
+        <span class="apol-q">The transhumanist move — technology will perfect humanity</span>
+        <svg class="apol-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="apol-body"><p>Transhumanism is the most honest secular religion — it admits that humanity as it currently exists is insufficient and that something beyond it is required. It just gets the destination wrong. The problem isn't biological hardware. It's the will. You can upload a corrupt mind into a perfect substrate and still have a corrupt mind. The Logos doesn't upgrade the container. He transforms the person. Transhumanism is a gospel without atonement — it offers resurrection without the cross, which is precisely why it cannot deliver what it promises.</p></div>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <p>governedlogic.com — truth is non-contingent</p>
+  <p class="soli">Soli Deo Gloria</p>
+</footer>
+<script src="shared.js"></script>
+<script>
+function toggleApol(btn){
+  const item=btn.closest('.apol-item');
+  const body=item.querySelector('.apol-body');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.apol-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.apol-body').style.maxHeight='0';});
+  if(!isOpen){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
+}
+</script>
+</body>
+</html>
