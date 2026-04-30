@@ -20,7 +20,7 @@ img{max-width:100%;display:block}
 #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--teal);z-index:200;width:0%;transition:width 0.1s linear}
 nav{position:sticky;top:0;z-index:100;border-bottom:0.5px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:56px;backdrop-filter:blur(16px);background:rgba(255,255,255,0.9);transition:background var(--tr)}
 [data-theme="dark"] nav{background:rgba(10,12,11,0.9)}
-.nav-logo{font-size:15px;font-weight:600;letter-spacing:-0.01em;color:var(--text);flex-shrink:0}
+.nav-logo{font-size:15px;font-weight:600;letter-spacing:-0.01em;color:var(--text);flex-shrink:0;text-decoration:none}
 .nav-links{display:flex;gap:20px;align-items:center}
 .nav-links a{font-size:13px;font-weight:500;color:var(--text2);transition:color var(--tr);white-space:nowrap}
 .nav-links a:hover,.nav-links a.active{color:var(--teal)}
