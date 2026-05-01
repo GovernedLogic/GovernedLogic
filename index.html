@@ -190,7 +190,7 @@ a{transition:color var(--tr),opacity var(--tr)}
   <canvas id="starCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none"></canvas>
 
   <!-- Full-screen Seed of Life SVG -->
-  <svg id="solSvg" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <svg id="solSvg" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
         <stop offset="0%" stop-color="#1D9E75" stop-opacity="0.18"/>
@@ -244,7 +244,7 @@ a{transition:color var(--tr),opacity var(--tr)}
   </svg>
 
   <div class="hero-content">
-    <h1 class="hero-title fade-up" style="animation-delay:0.1s">Governed Logic</h1>
+    <h1 class="hero-title" id="glTitle" aria-label="Governed Logic"></h1>
     <p class="hero-sub fade-up" style="animation-delay:0.4s">Logic is the thing being governed. Intelligence is downstream of logic — it's what logic produces. You're not governing intelligence, you're governing the logic that intelligence runs on.</p>
     <div class="hero-body fade-up" style="animation-delay:0.65s">
       <p>Every intelligence system — artificial or human — operates inside a reasoning structure it did not build. The question is whether that structure is governed by something non-contingent, or whether it floats. Ungoverned intelligence averages the training data, reflects the culture, and drifts toward whatever produces least resistance.</p>
@@ -254,6 +254,16 @@ a{transition:color var(--tr),opacity var(--tr)}
     <div class="fade-up btn-row" style="justify-content:center;animation-delay:0.9s;margin-top:40px">
       <a href="#what" class="btn-dark">The Discovery</a>
       <a href="papers.html" class="btn-light">Read the full argument</a>
+    </div>
+
+    <!-- SIGNAL CHART -->
+    <div class="fade-up" style="animation-delay:1.3s;margin-top:48px;width:100%;max-width:560px;margin-left:auto;margin-right:auto">
+      <p style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(29,158,117,0.6);margin-bottom:12px;text-align:center">Signal coherence — ungoverned → governed</p>
+      <canvas id="signalChart" width="560" height="80" style="width:100%;height:80px;display:block"></canvas>
+      <div style="display:flex;justify-content:space-between;margin-top:6px">
+        <span style="font-size:10px;color:rgba(138,154,138,0.4)">Epistemic drift</span>
+        <span style="font-size:10px;color:rgba(29,158,117,0.7)">Governed Logic applied →</span>
+      </div>
     </div>
   </div>
 </div>
@@ -615,6 +625,59 @@ a{transition:color var(--tr),opacity var(--tr)}
   resize();
   window.addEventListener('resize',resize);
   requestAnimationFrame(draw);
+})();
+
+// TITLE — letter by letter + shimmer
+(function(){
+  const el=document.getElementById('glTitle');
+  if(!el)return;
+  const text='Governed Logic';
+  el.innerHTML=text.split('').map((l,i)=>
+    l===' '?'<span style="display:inline-block;width:0.28em"> </span>'
+    :`<span class="gl-letter" style="display:inline-block;opacity:0;transform:translateY(24px) scale(0.85);transition:opacity 0.5s ease,transform 0.5s ease;transition-delay:${0.08+i*0.06}s">${l}</span>`
+  ).join('');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    el.querySelectorAll('.gl-letter').forEach(s=>{s.style.opacity='1';s.style.transform='translateY(0) scale(1)';});
+    setTimeout(()=>{
+      const shimmer=document.createElement('span');
+      shimmer.style.cssText='position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,0.5) 50%,transparent 65%);background-size:300% 100%;animation:glShimmer 0.8s ease forwards;pointer-events:none';
+      el.style.position='relative';el.style.display='inline-block';
+      el.appendChild(shimmer);setTimeout(()=>shimmer.remove(),900);
+    },1500);
+  }));
+  const ss=document.createElement('style');
+  ss.textContent='@keyframes glShimmer{from{background-position:150% 0}to{background-position:-150% 0}}';
+  document.head.appendChild(ss);
+})();
+
+// SIGNAL CHART — chaos becoming coherent
+(function(){
+  const canvas=document.getElementById('signalChart');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  const bars=60,bw=W/bars-1;
+  let frame=0;
+  const total=220;
+  function ease(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const p=Math.min(frame/total,1),e=ease(p);
+    for(let i=0;i<bars;i++){
+      const x=i*(bw+1);
+      const chaos=0.2+Math.abs(Math.sin(i*2.3+frame*0.18+Math.cos(i*0.7+frame*0.05)*2))*0.8;
+      const governed=0.35+Math.sin((i/bars)*Math.PI*2)*0.35+0.15;
+      const lp=Math.max(0,Math.min(1,(e-(i/bars)*0.3)/0.7));
+      const h=Math.max(2,(chaos*(1-lp)+governed*lp)*H*0.85);
+      const r=Math.round(60*(1-lp)+29*lp),g=Math.round(80*(1-lp)+158*lp),b=Math.round(70*(1-lp)+117*lp);
+      ctx.fillStyle=`rgba(${r},${g},${b},${0.4+lp*0.5})`;
+      ctx.fillRect(x,H-h,bw,h);
+    }
+    frame++;
+    if(frame<total+60)requestAnimationFrame(draw);
+    else setTimeout(()=>{frame=0;requestAnimationFrame(draw);},3000);
+  }
+  setTimeout(draw,1800);
 })();
 function toggleTheme(){
   const h=document.documentElement,dark=h.getAttribute('data-theme')==='dark';
