@@ -79,45 +79,32 @@ h1,h2,h3{text-wrap:balance}
 ::selection{background:rgba(29,158,117,0.25);color:var(--text)}
 section[id]{scroll-margin-top:68px}
 a{transition:color var(--tr),opacity var(--tr)}
-/* HERO TITLE */
-.hero-title{font-size:clamp(52px,12vw,120px);font-weight:600;letter-spacing:-0.04em;line-height:0.95;color:var(--text);margin-bottom:32px;text-align:center}
-.hero-sub{font-size:clamp(16px,2.5vw,21px);color:var(--text2);max-width:640px;margin:0 auto 32px;line-height:1.6;text-align:center;font-family:var(--serif);font-style:italic}
-.hero-body{max-width:620px;margin:0 auto;text-align:left}
-.hero-body p{font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:16px}
+
+/* HERO */
+.hero-wrap{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;overflow:hidden;background:#040806}
+.hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
+.hero-content{position:relative;z-index:2;max-width:680px;width:100%}
+
+/* TITLE */
+.hero-title{font-size:clamp(56px,11vw,130px);font-weight:600;letter-spacing:-0.04em;line-height:0.92;color:#ffffff;margin-bottom:28px;text-align:center;text-shadow:0 0 80px rgba(29,158,117,0.35),0 2px 4px rgba(0,0,0,0.5)}
+.hero-sub{font-size:clamp(15px,2.2vw,20px);color:rgba(200,218,200,0.7);max-width:600px;margin:0 auto 28px;line-height:1.65;text-align:center;font-family:var(--serif);font-style:italic}
+.hero-body{max-width:580px;margin:0 auto;text-align:left}
+.hero-body p{font-size:14px;color:rgba(138,154,138,0.8);line-height:1.9;margin-bottom:14px}
 .hero-body p:last-child{margin-bottom:0}
-/* FLOWER OF LIFE DEPTH */
-.fol-c{fill:none;stroke:var(--teal);stroke-width:0.7;opacity:0.25}
-[data-theme="dark"] .fol-c{opacity:0.35}
-.hero-bg-svg{filter:drop-shadow(0 0 40px rgba(29,158,117,0.15))}
-[data-theme="dark"] .hero-bg-svg{filter:drop-shadow(0 0 60px rgba(29,158,117,0.25))}
-@media(max-width:768px){
-  .hero-title{font-size:clamp(44px,14vw,80px)}
-  .hero-sub{font-size:16px}
-  .hero-body p{font-size:14px}
-}
-.hero-wrap{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 80px;overflow:hidden}
-.fol-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.fol-ring{transform-origin:50% 50%}
-.fol-c{fill:none;stroke:var(--teal);stroke-width:0.6;opacity:0.22}
-[data-theme="dark"] .fol-c{opacity:0.32}
-@media(max-width:768px){
-  #sol-group{transform-origin:400px 300px;animation:solPulse 7s ease-in-out infinite}
-  @keyframes solPulse{0%,100%{opacity:0.22;transform:scale(1)}50%{opacity:0.45;transform:scale(1.04)}}
-}
-.fol-outer{fill:none;stroke:var(--teal);stroke-width:0.35;opacity:0.1}
-.hero-content{position:relative;z-index:1;max-width:640px;width:100%}
-.word-reveal{display:block;overflow:hidden;line-height:1.06}
-.word-line{display:block;transform:translateY(110%);opacity:0;animation:wordUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards}
-.word-line:nth-child(1){animation-delay:0.1s}
-.word-line:nth-child(2){animation-delay:0.28s}
-.word-line:nth-child(3){animation-delay:0.46s}
-@keyframes wordUp{to{transform:translateY(0);opacity:1}}
-.fade-up{opacity:0;transform:translateY(16px);animation:fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(18px);animation:fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacing:-0.03em;color:var(--text);text-shadow:0 0 80px rgba(29,158,117,0.1)}
 .anchor-sentence{font-size:clamp(16px,4vw,19px);font-family:var(--serif);color:var(--text);line-height:1.6;margin-bottom:6px;margin-top:8px;font-style:italic;min-height:2em}
 .cursor{display:inline-block;width:2px;height:1.1em;background:var(--teal);vertical-align:text-bottom;margin-left:1px;animation:blink 1s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* SEED OF LIFE ANIMATIONS */
+@keyframes solBreathe{0%,100%{opacity:1}50%{opacity:0.75}}
+@keyframes outerOrbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes outerOrbitCCW{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+@keyframes starFade{0%,100%{opacity:0.15}50%{opacity:0.7}}
+@keyframes centerPulse{0%,100%{r:3;opacity:0.9}50%{r:5;opacity:1}}
 
 /* APOLOGETICS */
 .apol-item{border-bottom:0.5px solid var(--border);overflow:hidden}
@@ -197,33 +184,63 @@ h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacin
   </button>
 </nav>
 
-<!-- HERO with ANIMATED FLOWER OF LIFE -->
+<!-- HERO -->
 <div class="hero-wrap">
-  <svg class="fol-canvas" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-    <!-- Depth rings — recession effect -->
-    <circle cx="400" cy="300" r="280" fill="none" stroke="#1D9E75" stroke-width="0.3" opacity="0.05"/>
-    <circle cx="400" cy="300" r="230" fill="none" stroke="#1D9E75" stroke-width="0.3" opacity="0.07"/>
-    <circle cx="400" cy="300" r="180" fill="none" stroke="#1D9E75" stroke-width="0.4" opacity="0.1"/>
-    <circle cx="400" cy="300" r="130" fill="none" stroke="#1D9E75" stroke-width="0.5" opacity="0.14"/>
-    <!-- Radial glow -->
-    <defs><radialGradient id="glowGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1D9E75" stop-opacity="0.14"/><stop offset="100%" stop-color="#1D9E75" stop-opacity="0"/></radialGradient></defs>
-    <circle cx="400" cy="300" r="160" fill="url(#glowGrad)"/>
-    <!-- Seed of Life — 7 circles -->
-    <g id="sol-group">
-      <circle cx="400" cy="300" r="80" class="fol-c"/>
-      <circle cx="400" cy="220" r="80" class="fol-c"/>
-      <circle cx="469.28" cy="260" r="80" class="fol-c"/>
-      <circle cx="469.28" cy="340" r="80" class="fol-c"/>
-      <circle cx="400" cy="380" r="80" class="fol-c"/>
-      <circle cx="330.72" cy="340" r="80" class="fol-c"/>
-      <circle cx="330.72" cy="260" r="80" class="fol-c"/>
-      <!-- Outer ring -->
-      <circle cx="400" cy="300" r="160" fill="none" stroke="#1D9E75" stroke-width="0.6" opacity="0.35"/>
+  <!-- Star field canvas — fills the black void with depth -->
+  <canvas id="starCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none"></canvas>
+
+  <!-- Full-screen Seed of Life SVG -->
+  <svg id="solSvg" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1D9E75" stop-opacity="0.18"/>
+        <stop offset="60%" stop-color="#1D9E75" stop-opacity="0.06"/>
+        <stop offset="100%" stop-color="#1D9E75" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="outerGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1D9E75" stop-opacity="0.04"/>
+        <stop offset="100%" stop-color="#1D9E75" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Deep background glow — creates the sense that light comes from the center -->
+    <circle cx="500" cy="500" r="480" fill="url(#outerGlow)"/>
+    <circle cx="500" cy="500" r="240" fill="url(#centerGlow)"/>
+
+    <!-- Outer cosmos rings — very faint, give the void depth -->
+    <circle cx="500" cy="500" r="490" fill="none" stroke="#1D9E75" stroke-width="0.4" opacity="0.04"/>
+    <circle cx="500" cy="500" r="450" fill="none" stroke="#1D9E75" stroke-width="0.4" opacity="0.05"/>
+    <circle cx="500" cy="500" r="400" fill="none" stroke="#1D9E75" stroke-width="0.5" opacity="0.06"/>
+    <circle cx="500" cy="500" r="350" fill="none" stroke="#1D9E75" stroke-width="0.5" opacity="0.08"/>
+    <circle cx="500" cy="500" r="300" fill="none" stroke="#1D9E75" stroke-width="0.6" opacity="0.1"/>
+
+    <!-- Slowly rotating outer geometry ring -->
+    <g style="transform-origin:500px 500px;animation:outerOrbit 180s linear infinite">
+      <circle cx="500" cy="500" r="260" fill="none" stroke="#1D9E75" stroke-width="0.6" opacity="0.12" stroke-dasharray="8,12"/>
     </g>
-    <!-- Center glow point -->
-    <circle cx="400" cy="300" r="3" fill="#1D9E75" opacity="0.8"/>
-    <circle cx="400" cy="300" r="9" fill="none" stroke="#1D9E75" stroke-width="0.8" opacity="0.4"/>
-    <circle cx="400" cy="300" r="20" fill="none" stroke="#1D9E75" stroke-width="0.5" opacity="0.18"/>
+    <g style="transform-origin:500px 500px;animation:outerOrbitCCW 240s linear infinite">
+      <circle cx="500" cy="500" r="230" fill="none" stroke="#1D9E75" stroke-width="0.4" opacity="0.08" stroke-dasharray="4,20"/>
+    </g>
+
+    <!-- Seed of Life — 7 circles, large radius, breathing -->
+    <g id="sol-group" style="transform-origin:500px 500px;animation:solBreathe 8s ease-in-out infinite">
+      <!-- Center circle -->
+      <circle cx="500" cy="500" r="160" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.35"/>
+      <!-- 6 petal circles at r=160 -->
+      <circle cx="500" cy="340" r="160" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.35"/>
+      <circle cx="638.56" cy="420" r="160" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.35"/>
+      <circle cx="638.56" cy="580" r="160" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.35"/>
+      <circle cx="500" cy="660" r="160" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.35"/>
+      <circle cx="361.44" cy="580" r="160" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.35"/>
+      <circle cx="361.44" cy="420" r="160" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.35"/>
+      <!-- Outer containing ring -->
+      <circle cx="500" cy="500" r="320" fill="none" stroke="#1D9E75" stroke-width="1.2" opacity="0.28"/>
+    </g>
+
+    <!-- Center glow point — pulses -->
+    <circle cx="500" cy="500" r="4" fill="#1D9E75" opacity="0.9" style="animation:solBreathe 4s ease-in-out infinite"/>
+    <circle cx="500" cy="500" r="14" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.4" style="animation:solBreathe 4s ease-in-out infinite 0.5s"/>
+    <circle cx="500" cy="500" r="28" fill="none" stroke="#1D9E75" stroke-width="0.6" opacity="0.2" style="animation:solBreathe 4s ease-in-out infinite 1s"/>
   </svg>
 
   <div class="hero-content">
@@ -559,7 +576,46 @@ h1{font-size:clamp(36px,8vw,56px);font-weight:600;line-height:1.04;letter-spacin
 </footer>
 
 <script>
-// DARK MODE
+// STAR FIELD
+(function(){
+  const canvas=document.getElementById('starCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let stars=[];
+  function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    buildStars();
+  }
+  function buildStars(){
+    stars=[];
+    const count=Math.floor((canvas.width*canvas.height)/4000);
+    for(let i=0;i<count;i++){
+      stars.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*1.2+0.2,
+        base:Math.random()*0.4+0.1,
+        speed:Math.random()*0.004+0.001,
+        phase:Math.random()*Math.PI*2
+      });
+    }
+  }
+  function draw(t){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    stars.forEach(s=>{
+      const alpha=s.base+Math.sin(t*s.speed+s.phase)*s.base*0.6;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(200,230,220,'+alpha+')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize();
+  window.addEventListener('resize',resize);
+  requestAnimationFrame(draw);
+})();
 function toggleTheme(){
   const h=document.documentElement,dark=h.getAttribute('data-theme')==='dark';
   h.setAttribute('data-theme',dark?'light':'dark');
