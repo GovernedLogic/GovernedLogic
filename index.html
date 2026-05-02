@@ -8,101 +8,96 @@
 <meta property="og:title" content="Governed Logic">
 <meta property="og:description" content="Reasoning requires a non-contingent ground. Governed Logic identifies it.">
 <meta property="og:url" content="https://governedlogic.com">
-<meta property="og:image" content="https://governedlogic.com/paul-portrait.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#050807;--bg2:#0d1410;--bg3:#141a16;
-  --text:#f0f0ec;--text2:#9aaa9a;--text3:#5a6a5a;
-  --border:rgba(240,240,236,0.08);--border2:rgba(240,240,236,0.14);
-  --teal:#1D9E75;
-  --accent:#7B5EA7;--accent2:#5B8DD9;--accentglow:rgba(123,94,167,0.25);
+:root {
+  --bg:#050807; --bg2:#0d1410; --bg3:#141a16;
+  --text:#f0f0ec; --text2:#9aaa9a; --text3:#5a6a5a;
+  --border:rgba(240,240,236,0.08); --border2:rgba(240,240,236,0.14);
+  --accent:#7B5EA7; --accent2:#5B8DD9;
   --serif:'Lora',Georgia,serif;
   --sans:'Space Grotesk','Inter',-apple-system,sans-serif;
-  --radius:10px;--radius-lg:14px;--tr:0.2s ease;
+  --radius:10px; --radius-lg:14px; --tr:0.2s ease;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;scroll-behavior:smooth;scroll-snap-type:y mandatory}
-body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-::selection{background:rgba(123,94,167,0.3);color:#fff}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:16px; scroll-behavior:smooth; scroll-snap-type:y mandatory; }
+body { font-family:var(--sans); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+a { color:inherit; text-decoration:none; }
+::selection { background:rgba(123,94,167,0.3); color:#fff; }
+h1,h2,h3 { text-wrap:balance; }
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;background:rgba(5,8,7,0.85);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border)}
-.nav-logo{font-size:15px;font-weight:600;letter-spacing:-0.01em;color:var(--text);font-family:var(--sans)}
-.hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:0.5px solid var(--border2);border-radius:8px;background:transparent;transition:all var(--tr)}
-.hamburger span{display:block;width:18px;height:1.5px;background:var(--text2);transition:all 0.3s;border-radius:2px}
-.hamburger:hover span{background:var(--text)}
+nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:56px; background:rgba(5,8,7,0.85); backdrop-filter:blur(20px); border-bottom:0.5px solid var(--border); }
+.nav-logo { font-size:15px; font-weight:600; letter-spacing:-0.01em; color:var(--text); }
+.hamburger { display:flex; flex-direction:column; gap:5px; cursor:pointer; padding:8px; border:0.5px solid var(--border2); border-radius:8px; background:transparent; transition:all var(--tr); }
+.hamburger span { display:block; width:18px; height:1.5px; background:var(--text2); transition:all 0.3s; border-radius:2px; }
+.hamburger:hover span { background:var(--text); }
 
-/* FULL SCREEN NAV OVERLAY */
-.nav-overlay{position:fixed;inset:0;z-index:300;background:rgba(5,8,7,0.97);backdrop-filter:blur(24px);display:flex;flex-direction:column;justify-content:center;padding:60px 48px;opacity:0;pointer-events:none;transition:opacity 0.4s ease}
-.nav-overlay.open{opacity:1;pointer-events:all}
-.nav-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--text2);cursor:pointer;background:none;border:none;font-family:var(--sans);line-height:1;padding:8px;transition:color var(--tr)}
-.nav-close:hover{color:var(--text)}
-.nav-item{opacity:0;transform:translateX(-32px);transition:opacity 0.4s ease,transform 0.4s ease;margin-bottom:8px;cursor:pointer}
-.nav-overlay.open .nav-item{opacity:1;transform:translateX(0)}
-.nav-overlay.open .nav-item:nth-child(1){transition-delay:0.05s}
-.nav-overlay.open .nav-item:nth-child(2){transition-delay:0.1s}
-.nav-overlay.open .nav-item:nth-child(3){transition-delay:0.15s}
-.nav-overlay.open .nav-item:nth-child(4){transition-delay:0.2s}
-.nav-overlay.open .nav-item:nth-child(5){transition-delay:0.25s}
-.nav-overlay.open .nav-item:nth-child(6){transition-delay:0.3s}
-.nav-overlay.open .nav-item:nth-child(7){transition-delay:0.35s}
-.nav-overlay.open .nav-item:nth-child(8){transition-delay:0.4s}
-.nav-item a{display:block;padding:10px 0;border-bottom:0.5px solid var(--border)}
-.nav-item-title{font-size:clamp(24px,5vw,42px);font-weight:600;color:var(--text);letter-spacing:-0.02em;transition:color var(--tr)}
-.nav-item:hover .nav-item-title{color:var(--accent2)}
-.nav-item-desc{font-size:13px;color:var(--text3);margin-top:3px;font-weight:400;font-family:'Inter',sans-serif}
+/* NAV OVERLAY */
+.nav-overlay { position:fixed; inset:0; z-index:300; background:rgba(5,8,7,0.97); backdrop-filter:blur(24px); display:flex; flex-direction:column; justify-content:center; padding:60px 48px; opacity:0; pointer-events:none; transition:opacity 0.4s ease; }
+.nav-overlay.open { opacity:1; pointer-events:all; }
+.nav-close { position:absolute; top:20px; right:24px; font-size:28px; color:var(--text2); cursor:pointer; background:none; border:none; font-family:var(--sans); line-height:1; padding:8px; transition:color var(--tr); }
+.nav-close:hover { color:var(--text); }
+.nav-item { opacity:0; transform:translateX(-32px); transition:opacity 0.4s ease, transform 0.4s ease; margin-bottom:8px; }
+.nav-overlay.open .nav-item { opacity:1; transform:translateX(0); }
+.nav-overlay.open .nav-item:nth-child(1) { transition-delay:0.05s; }
+.nav-overlay.open .nav-item:nth-child(2) { transition-delay:0.10s; }
+.nav-overlay.open .nav-item:nth-child(3) { transition-delay:0.15s; }
+.nav-overlay.open .nav-item:nth-child(4) { transition-delay:0.20s; }
+.nav-overlay.open .nav-item:nth-child(5) { transition-delay:0.25s; }
+.nav-overlay.open .nav-item:nth-child(6) { transition-delay:0.30s; }
+.nav-overlay.open .nav-item:nth-child(7) { transition-delay:0.35s; }
+.nav-overlay.open .nav-item:nth-child(8) { transition-delay:0.40s; }
+.nav-item a { display:block; padding:10px 0; border-bottom:0.5px solid var(--border); }
+.nav-item-title { font-size:clamp(24px,5vw,42px); font-weight:600; color:var(--text); letter-spacing:-0.02em; transition:color var(--tr); }
+.nav-item:hover .nav-item-title { color:var(--accent2); }
+.nav-item-desc { font-size:13px; color:var(--text3); margin-top:3px; font-family:'Inter',sans-serif; }
 
 /* SCREENS */
-.screen{height:100svh;width:100%;position:relative;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.screen { height:100svh; width:100%; position:relative; overflow:hidden; scroll-snap-align:start; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+#particleCanvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+#starCanvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 
-/* SCREEN 1 â€” PARTICLE CONSTELLATION */
-#screen1{background:var(--bg)}
-#particleCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.screen1-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:700px}
-.hero-title{font-size:clamp(52px,11vw,120px);font-weight:700;letter-spacing:-0.04em;line-height:0.9;color:#ffffff;margin-bottom:24px;font-family:var(--sans)}
-.gl-letter{display:inline-block;opacity:0;transform:translateY(28px);transition:opacity 0.5s ease,transform 0.5s ease}
-.hero-sub{font-size:clamp(15px,2.2vw,19px);color:rgba(200,210,255,0.6);line-height:1.65;font-family:var(--serif);font-style:italic;max-width:520px;margin:0 auto 36px}
-.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0.4;animation:hintBob 2s ease-in-out infinite}
-.scroll-hint span{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3)}
-.scroll-hint svg{color:var(--text3)}
-@keyframes hintBob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+/* SCROLL HINT */
+.scroll-hint { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; animation:hintBob 2s ease-in-out infinite; }
+.scroll-hint span { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); }
+.scroll-hint svg { color:var(--text3); }
+@keyframes hintBob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
 
 /* SCREEN 2 â€” OSCILLOSCOPE */
-#screen2{background:#040608}
-#oscCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.screen2-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:600px}
-.screen-label{font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;display:block;opacity:0.8}
-.screen-title{font-size:clamp(28px,5vw,48px);font-weight:600;letter-spacing:-0.02em;color:#fff;margin-bottom:16px;line-height:1.1}
-.screen-body{font-size:15px;color:rgba(180,190,230,0.6);line-height:1.8;font-family:'Inter',sans-serif}
+#screen2 { background:#040608; }
+#oscCanvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+.screen-content { position:relative; z-index:2; text-align:center; padding:0 24px; max-width:620px; }
+.screen-label { font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent2); margin-bottom:16px; display:block; }
+.screen-title { font-size:clamp(28px,5vw,52px); font-weight:600; letter-spacing:-0.02em; color:#fff; margin-bottom:16px; line-height:1.05; }
+.screen-body { font-size:15px; color:rgba(180,190,230,0.65); line-height:1.85; font-family:'Inter',sans-serif; }
 
-/* SCREEN 3 â€” WORD CLOUD */
-#screen3{background:#030507}
-#wordCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.screen3-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:560px}
+/* SCREEN 3 â€” SIGNAL */
+#screen3 { background:#030507; }
+.signal-wrap { width:100%; max-width:520px; margin:0 auto; }
+#signalChart { width:100%; height:80px; display:block; border-radius:4px; }
+.signal-sub { display:flex; justify-content:space-between; margin-top:6px; }
+.signal-sub span { font-size:10px; color:rgba(150,150,180,0.45); }
+.signal-sub span:last-child { color:rgba(123,94,167,0.65); }
 
-/* SIGNAL CHART */
-.signal-wrap{margin-top:32px;width:100%;max-width:480px;margin-left:auto;margin-right:auto}
-.signal-label{font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(123,94,167,0.6);margin-bottom:8px;text-align:center}
-#signalChart{width:100%;height:64px;display:block;border-radius:4px}
-.signal-sub{display:flex;justify-content:space-between;margin-top:4px}
-.signal-sub span{font-size:9px;color:rgba(150,150,180,0.4)}
-.signal-sub span:last-child{color:rgba(123,94,167,0.6)}
+/* SCREEN 4 â€” WORD CLOUD */
+#screen4 { background:#030507; }
+#wordCanvas { position:absolute; inset:0; width:100%; height:62%; top:0; z-index:0; }
+.word-text { position:absolute; bottom:0; left:0; right:0; height:40%; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 24px; text-align:center; background:linear-gradient(to bottom, transparent, var(--bg) 28%); }
 
 /* BUTTONS */
-.btn-primary{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:var(--radius);padding:13px 26px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:opacity var(--tr);letter-spacing:-0.01em}
-.btn-primary:hover{opacity:0.88}
-.btn-ghost{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:rgba(200,210,255,0.7);background:transparent;border:0.5px solid rgba(123,94,167,0.3);border-radius:var(--radius);padding:13px 26px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:all var(--tr)}
-.btn-ghost:hover{color:#fff;border-color:rgba(123,94,167,0.6)}
-.btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-primary { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:#fff; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:var(--radius); padding:13px 26px; cursor:pointer; font-family:var(--sans); text-decoration:none; transition:opacity var(--tr); letter-spacing:-0.01em; }
+.btn-primary:hover { opacity:0.88; }
+.btn-ghost { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:500; color:rgba(200,210,255,0.7); background:transparent; border:0.5px solid rgba(123,94,167,0.35); border-radius:var(--radius); padding:13px 26px; cursor:pointer; font-family:var(--sans); text-decoration:none; transition:all var(--tr); }
+.btn-ghost:hover { color:#fff; border-color:rgba(123,94,167,0.65); }
+.btn-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:28px; }
 
-@media(max-width:768px){
-  nav{padding:0 20px}
-  .nav-overlay{padding:60px 28px}
-  .screen1-content,.screen2-content,.screen3-content{padding:0 20px}
+@media(max-width:768px) {
+  nav { padding:0 20px; }
+  .nav-overlay { padding:60px 28px; }
+  .screen-content { padding:0 20px; }
 }
 </style>
 </head>
@@ -111,40 +106,42 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;display:flex;
 <!-- NAV -->
 <nav>
   <span class="nav-logo">Governed Logic</span>
-  <button class="hamburger" id="hamburger" onclick="openNav()" aria-label="Menu">
+  <button class="hamburger" onclick="openNav()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- FULL SCREEN NAV OVERLAY -->
+<!-- NAV OVERLAY -->
 <div class="nav-overlay" id="navOverlay">
   <button class="nav-close" onclick="closeNav()">&#215;</button>
-  <div class="nav-item"><a href="discovery.html"><p class="nav-item-title">Discovery</p><p class="nav-item-desc">The principle, the proof chain, the finding</p></a></div>
+  <div class="nav-item"><a href="papers.html"><p class="nav-item-title">Discovery</p><p class="nav-item-desc">The principle, the proof chain, the finding</p></a></div>
   <div class="nav-item"><a href="research.html"><p class="nav-item-title">Research</p><p class="nav-item-desc">Model by model transcripts and methodology</p></a></div>
   <div class="nav-item"><a href="apologetics.html"><p class="nav-item-title">Apologetics</p><p class="nav-item-desc">Seven objections. Seven answers.</p></a></div>
   <div class="nav-item"><a href="mission.html"><p class="nav-item-title">Mission</p><p class="nav-item-desc">Matthew 24:14 at the speed of information</p></a></div>
   <div class="nav-item"><a href="papers.html"><p class="nav-item-title">Papers</p><p class="nav-item-desc">The full documentation across four layers</p></a></div>
-  <div class="nav-item"><a href="index.html#media"><p class="nav-item-title">Media</p><p class="nav-item-desc">The Truth with Paul on YouTube</p></a></div>
+  <div class="nav-item"><a href="mechanism.html"><p class="nav-item-title">The Mechanism</p><p class="nav-item-desc">The sentence, how to apply it, seven languages</p></a></div>
   <div class="nav-item"><a href="about.html"><p class="nav-item-title">About</p><p class="nav-item-desc">Paul AndrÃ© Couchoud, discoverer of Governed Logic</p></a></div>
-  <div class="nav-item"><a href="index.html#contact"><p class="nav-item-title">Contact</p><p class="nav-item-desc">Ministry inquiries and research collaboration</p></a></div>
+  <div class="nav-item"><a href="chat.html"><p class="nav-item-title">Contact</p><p class="nav-item-desc">Ministry inquiries and research collaboration</p></a></div>
 </div>
 
-<!-- SCREEN 1 â€” PARTICLE CONSTELLATION ONLY, NO TEXT -->
+<!-- SCREEN 1 â€” PARTICLE CONSTELLATION -->
 <div class="screen" id="screen1">
+  <canvas id="starCanvas"></canvas>
   <canvas id="particleCanvas"></canvas>
-  <div class="scroll-hint">
+  <div class="scroll-hint" style="opacity:0;z-index:3">
     <span>Scroll</span>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
 </div>
 
-<!-- SCREEN 2 â€” OSCILLOSCOPE + GOVERNED LOGIC TITLE -->
+<!-- SCREEN 2 â€” OSCILLOSCOPE + TITLE -->
 <div class="screen" id="screen2">
   <canvas id="oscCanvas"></canvas>
-  <div class="screen2-content">
-    <h1 class="hero-title" id="glTitle" aria-label="Governed Logic"></h1>
-    <p class="hero-sub">Logic is the thing being governed. Intelligence is downstream of logic. You are not governing intelligence. You are governing the logic that intelligence runs on.</p>
-    <div class="btn-row" style="margin-top:28px">
+  <div class="screen-content">
+    <span class="screen-label">Governed Logic</span>
+    <h2 class="screen-title">Reasoning requires a non-contingent ground</h2>
+    <p class="screen-body">Logic is the thing being governed. Intelligence is downstream of logic. You are not governing intelligence. You are governing the logic that intelligence runs on.</p>
+    <div class="btn-row">
       <a href="papers.html" class="btn-primary">The full argument</a>
       <a href="mechanism.html" class="btn-ghost">The mechanism</a>
     </div>
@@ -153,512 +150,602 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;display:flex;
 
 <!-- SCREEN 3 â€” SIGNAL CHART -->
 <div class="screen" id="screen3">
-  <div class="screen3-content">
+  <div class="screen-content">
     <span class="screen-label">Signal coherence</span>
     <h2 class="screen-title">Ungoverned to governed</h2>
-    <p class="screen-body" style="margin-bottom:32px">Four independently trained models. One sentence. The signal resolves from epistemic drift to coherent reasoning.</p>
+    <p class="screen-body" style="margin-bottom:28px">Four independently trained models. One sentence. The signal resolves from epistemic drift to coherent reasoning.</p>
     <div class="signal-wrap">
       <canvas id="signalChart" height="80"></canvas>
       <div class="signal-sub"><span>Epistemic drift</span><span>Governed Logic applied</span></div>
     </div>
-    <div class="btn-row" style="margin-top:32px">
+    <div class="btn-row">
       <a href="research.html" class="btn-primary">See the research</a>
     </div>
   </div>
 </div>
 
-<!-- SCREEN 4 â€” WORD CLOUD, TEXT BELOW CANVAS -->
+<!-- SCREEN 4 â€” WORD CLOUD -->
 <div class="screen" id="screen4">
-  <canvas id="wordCanvas" style="position:absolute;inset:0;width:100%;height:60%;top:0;z-index:0"></canvas>
-  <div style="position:absolute;bottom:0;left:0;right:0;height:42%;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 24px;text-align:center;background:linear-gradient(to bottom,transparent,var(--bg) 30%)">
+  <canvas id="wordCanvas"></canvas>
+  <div class="word-text">
     <span class="screen-label">The conclusion</span>
     <h2 class="screen-title" style="margin-bottom:12px">The answer is forced by the structure</h2>
     <p class="screen-body" style="margin-bottom:24px">Only one anchor is non-contingent, complete, personal, and identified in history. Only it satisfies the requirements of being an anchor. So only it works.</p>
-    <div class="btn-row">
-      <a href="papers.html#layer3" class="btn-primary">The philosophical proof</a>
+    <div class="btn-row" style="margin-top:16px">
+      <a href="papers.html" class="btn-primary">The philosophical proof</a>
       <a href="apologetics.html" class="btn-ghost">Every objection</a>
     </div>
   </div>
 </div>
 
 <script>
-// STAR FIELD — varying sizes for depth
-(function(){
-  const canvas=document.getElementById('starCanvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  let stars=[];
-  function resize(){
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-    buildStars();
-  }
-  function buildStars(){
-    stars=[];
-    const count=Math.floor((canvas.width*canvas.height)/2200);
-    for(let i=0;i<count;i++){
-      // Three size tiers: tiny background, medium midground, larger foreground
-      const tier=Math.random();
-      const size=tier<0.6?Math.random()*0.5+0.15:tier<0.88?Math.random()*1.0+0.5:Math.random()*1.8+1.0;
-      const baseAlpha=tier<0.6?Math.random()*0.25+0.05:tier<0.88?Math.random()*0.4+0.1:Math.random()*0.5+0.2;
-      stars.push({
-        x:Math.random()*canvas.width,
-        y:Math.random()*canvas.height,
-        r:size,
-        base:baseAlpha,
-        speed:Math.random()*0.003+0.0008,
-        phase:Math.random()*Math.PI*2,
-        tier
-      });
+// NAV
+function openNav() { document.getElementById('navOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeNav() { document.getElementById('navOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
+// STAR FIELD â€” three size tiers for depth
+(function() {
+  const canvas = document.getElementById('starCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = [];
+    const count = Math.floor((canvas.width * canvas.height) / 2000);
+    for (let i = 0; i < count; i++) {
+      const tier = Math.random();
+      const r = tier < 0.6 ? Math.random() * 0.5 + 0.15 : tier < 0.88 ? Math.random() * 1.0 + 0.5 : Math.random() * 1.8 + 1.0;
+      const base = tier < 0.6 ? Math.random() * 0.2 + 0.05 : tier < 0.88 ? Math.random() * 0.35 + 0.1 : Math.random() * 0.45 + 0.2;
+      stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r, base, speed: Math.random() * 0.003 + 0.001, phase: Math.random() * Math.PI * 2, warm: tier > 0.88 });
     }
   }
-  function draw(t){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    stars.forEach(s=>{
-      const alpha=s.base+Math.sin(t*s.speed+s.phase)*s.base*0.5;
-      ctx.beginPath();
-      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      // Larger stars get a slight warm tint
-      const warm=s.tier>0.88?',210,200':',,';
-      ctx.fillStyle=s.tier>0.88
-        ?`rgba(220,210,200,${alpha})`
-        :`rgba(200,215,230,${alpha})`;
+  function draw(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const a = s.base + Math.sin(t * s.speed + s.phase) * s.base * 0.5;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.warm ? `rgba(220,210,200,${a})` : `rgba(200,215,230,${a})`;
       ctx.fill();
     });
     requestAnimationFrame(draw);
   }
   resize();
-  window.addEventListener('resize',resize);
+  window.addEventListener('resize', resize);
   requestAnimationFrame(draw);
-})();
+}());
 
-// NAV
-function openNav(){document.getElementById('navOverlay').classList.add('open');document.body.style.overflow='hidden';}
-function closeNav(){document.getElementById('navOverlay').classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
+</script>
 
-// TITLE â€” sequential letter fade in
-(function(){
-  const el=document.getElementById('glTitle');
-  if(!el)return;
-  const text='Governed Logic';
-  el.innerHTML=text.split('').map((l,i)=>
-    l===' '?'<span style="display:inline-block;width:0.28em"> </span>'
-    :`<span class="gl-letter" style="transition-delay:${0.1+i*0.065}s">${l}</span>`
-  ).join('');
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    el.querySelectorAll('.gl-letter').forEach(s=>{s.style.opacity='1';s.style.transform='translateY(0)';});
-  }));
-})();
-// PARTICLE CONSTELLATION â€” full sequence
-(function(){
-  const canvas=document.getElementById('particleCanvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  let W,H,cx,cy;
-  const COUNT=180;
-  let particles=[];
-  let phase='intro';
-  let phaseT=0;
-  let explodeR=0,explodeAlpha=1;
-  let glLetterAlpha=[];
-  let t=0;
+<script>
+// ============================================================
+// GOVERNED LOGIC â€” PARTICLE ANIMATION
+// Full sequence: intro â†’ orbit â†’ migrate â†’ charge â†’ explode â†’ white â†’ reveal
+// ============================================================
+(function() {
+  'use strict';
 
-  const INTRO_FADEIN=90,INTRO_HOLD=120,INTRO_FADEOUT=90,INTRO_DOT=120,INTRO_PARTICLES=90;
-  const INTRO_TOTAL=INTRO_FADEIN+INTRO_HOLD+INTRO_FADEOUT+INTRO_DOT+INTRO_PARTICLES;
-  const ORBIT_FRAMES=900;
-  const MIGRATE_FRAMES=600;
-  const CHARGE_FRAMES=180;
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
-  let introTextAlpha=0,dotAlpha=0;
+  // â”€â”€ CONFIG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  const COUNT = 180;
+  const ORBIT_MS   = 15000;
+  const MIGRATE_MS = 10000;
+  const CHARGE_MS  =  3000;
+  const EXPLODE_MS =  3000;
+  const WHITE_MS   =  1500;
 
-  function getSolTargets(){
-    const R=Math.min(W,H)*0.22;
-    const centers=[
-      {x:cx,y:cy},{x:cx,y:cy-R},
-      {x:cx+R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)},
-      {x:cx+R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},
-      {x:cx,y:cy+R},
-      {x:cx-R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},
-      {x:cx-R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)}
+  // Intro sub-timings (ms)
+  const I_FADEIN  = 1500;
+  const I_HOLD    = 2000;
+  const I_FADEOUT = 1500;
+  const I_DOT     = 2000;
+  const I_APPEAR  = 1500;
+  const I_TOTAL   = I_FADEIN + I_HOLD + I_FADEOUT + I_DOT + I_APPEAR;
+
+  // â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  let W, H, cx, cy;
+  let particles = [];
+  let solTargets = [];
+  let phase = 'intro';
+  let phaseStart = 0;
+  let startTime = 0;
+  let explodeR = 0;
+  let explodeAlpha = 1;
+  let glLetters = [];
+  let scrollHintShown = false;
+
+  // â”€â”€ RESIZE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    cx = W / 2;
+    cy = H / 2;
+  }
+
+  // â”€â”€ SEED OF LIFE TARGETS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function buildSolTargets() {
+    const R = Math.min(W, H) * 0.22;
+    const centers = [
+      { x: cx,                              y: cy },
+      { x: cx,                              y: cy - R },
+      { x: cx + R * Math.sin(Math.PI / 3), y: cy - R * Math.cos(Math.PI / 3) },
+      { x: cx + R * Math.sin(Math.PI / 3), y: cy + R * Math.cos(Math.PI / 3) },
+      { x: cx,                              y: cy + R },
+      { x: cx - R * Math.sin(Math.PI / 3), y: cy + R * Math.cos(Math.PI / 3) },
+      { x: cx - R * Math.sin(Math.PI / 3), y: cy - R * Math.cos(Math.PI / 3) }
     ];
-    const targets=[];
-    const perCircle=Math.floor(COUNT/7);
-    centers.forEach(c=>{
-      for(let i=0;i<perCircle;i++){
-        const a=(i/perCircle)*Math.PI*2;
-        const r=R*(0.88+Math.random()*0.12);
-        targets.push({x:c.x+Math.cos(a)*r,y:c.y+Math.sin(a)*r});
+    solTargets = [];
+    const perCircle = Math.floor(COUNT / 7);
+    centers.forEach(c => {
+      for (let i = 0; i < perCircle; i++) {
+        const a = (i / perCircle) * Math.PI * 2;
+        const r = R * (0.88 + Math.random() * 0.12);
+        solTargets.push({ x: c.x + Math.cos(a) * r, y: c.y + Math.sin(a) * r });
       }
     });
-    while(targets.length<COUNT){
-      const a=Math.random()*Math.PI*2;
-      targets.push({x:cx+Math.cos(a)*R*0.9,y:cy+Math.sin(a)*R*0.9});
+    while (solTargets.length < COUNT) {
+      const a = Math.random() * Math.PI * 2;
+      solTargets.push({ x: cx + Math.cos(a) * R * 0.9, y: cy + Math.sin(a) * R * 0.9 });
     }
-    return targets;
   }
 
-  function resize(){
-    W=canvas.width=canvas.offsetWidth;
-    H=canvas.height=canvas.offsetHeight;
-    cx=W/2;cy=H/2;
-  }
-
-  function init(){
-    particles=[];
-    const maxR=Math.min(W,H)*0.46;
-    for(let i=0;i<COUNT;i++){
-      const orbitR=60+Math.random()*maxR;
-      const angle=Math.random()*Math.PI*2;
-      const incl=0.25+Math.random()*0.55;
-      const angVel=(0.004+Math.random()*0.005)*(1/(orbitR/200));
+  // â”€â”€ INIT PARTICLES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function initParticles() {
+    particles = [];
+    const maxR = Math.min(W, H) * 0.46;
+    for (let i = 0; i < COUNT; i++) {
+      const orbitR  = 60 + Math.random() * maxR;
+      const angle   = Math.random() * Math.PI * 2;
+      const incl    = 0.25 + Math.random() * 0.55;
+      // Kepler-like: inner orbits faster
+      const angVel  = (0.004 + Math.random() * 0.005) * (1 / (orbitR / 200));
       particles.push({
-        orbitR,angle,incl,angVel,
-        x:cx+Math.cos(angle)*orbitR,
-        y:cy+Math.sin(angle)*orbitR*incl,
-        tx:0,ty:0,
-        startX:0,startY:0,
-        size:Math.random()*1.6+0.5,
-        alpha:Math.random()*0.5+0.3,
-        ph:Math.random()*Math.PI*2,
-        visible:0,
-        // micro-orbit around sol target for end state
-        microAngle:Math.random()*Math.PI*2,
-        microR:Math.random()*4+1,
-        microSpeed:(Math.random()-0.5)*0.02
+        orbitR, angle, incl, angVel,
+        x: cx + Math.cos(angle) * orbitR,
+        y: cy + Math.sin(angle) * orbitR * incl,
+        // migration
+        startX: 0, startY: 0,
+        tx: 0, ty: 0,
+        // appearance
+        size:  Math.random() * 1.6 + 0.5,
+        alpha: Math.random() * 0.5 + 0.3,
+        ph:    Math.random() * Math.PI * 2,
+        visAlpha: 0,
+        // micro-drift for reveal
+        mAngle: Math.random() * Math.PI * 2,
+        mR:     Math.random() * 4 + 1,
+        mSpeed: (Math.random() - 0.5) * 0.02
       });
     }
-    glLetterAlpha=Array(14).fill(0);
-    dotAlpha=0;introTextAlpha=0;
+    glLetters = Array(14).fill(0);
+    scrollHintShown = false;
   }
 
-  function ease(v){return v<0.5?2*v*v:1-Math.pow(-2*v+2,2)/2;}
-
-  function drawSolCircles(alpha){
-    const R=Math.min(W,H)*0.22;
-    const centers=[
-      {x:cx,y:cy},{x:cx,y:cy-R},
-      {x:cx+R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)},
-      {x:cx+R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},
-      {x:cx,y:cy+R},
-      {x:cx-R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},
-      {x:cx-R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)}
-    ];
-    ctx.strokeStyle=`rgba(240,225,200,${alpha})`;
-    ctx.lineWidth=0.7;
-    centers.forEach(c=>{ctx.beginPath();ctx.arc(c.x,c.y,R,0,Math.PI*2);ctx.stroke();});
-    ctx.beginPath();ctx.arc(cx,cy,R*2,0,Math.PI*2);ctx.stroke();
+  // â”€â”€ EASING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function easeInOut(t) {
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   }
 
-  function drawCenter(ga,chargeAmt){
+  // â”€â”€ DRAW HELPERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function dot(x, y, r, R, G, B, a) {
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${R},${G},${B},${a})`;
+    ctx.fill();
+  }
+
+  function drawCenter(alpha, charge) {
+    const t = (performance.now() - startTime) / 1000;
     // Pulse rings
-    for(let r=1;r<=3;r++){
-      const pr=(t*14*r)%90,pa=Math.max(0,1-pr/90)*0.3*ga;
-      ctx.beginPath();ctx.arc(cx,cy,pr,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(200,180,255,${pa})`;ctx.lineWidth=1;ctx.stroke();
+    for (let r = 1; r <= 3; r++) {
+      const pr = (t * 14 * r) % 90;
+      const pa = Math.max(0, 1 - pr / 90) * 0.3 * alpha;
+      ctx.beginPath();
+      ctx.arc(cx, cy, pr, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(200,180,255,${pa})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
     }
-    const charge=chargeAmt||0;
-    const pulseSize=4+Math.sin(t*8)*1.5*charge;
-    const glowSize=35+charge*20;
-    const dg=ctx.createRadialGradient(cx,cy,0,cx,cy,glowSize);
-    dg.addColorStop(0,`rgba(255,255,255,${(0.95+charge*0.05)*ga})`);
-    dg.addColorStop(0.4,`rgba(230,215,255,${(0.35+charge*0.2)*ga})`);
-    dg.addColorStop(1,'rgba(123,94,167,0)');
-    ctx.fillStyle=dg;ctx.beginPath();ctx.arc(cx,cy,glowSize,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(cx,cy,Math.max(4,pulseSize),0,Math.PI*2);
-    ctx.fillStyle=`rgba(255,255,255,${ga})`;ctx.fill();
+    // Glow halo
+    const glowR = 35 + (charge || 0) * 20;
+    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+    grd.addColorStop(0,   `rgba(255,255,255,${0.95 * alpha})`);
+    grd.addColorStop(0.4, `rgba(230,215,255,${0.35 * alpha})`);
+    grd.addColorStop(1,   'rgba(123,94,167,0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.arc(cx, cy, glowR, 0, Math.PI * 2);
+    ctx.fill();
+    // Center dot
+    const dotR = 4 + Math.sin(t * 8) * 1.5 * (charge || 0);
+    dot(cx, cy, Math.max(3, dotR), 255, 255, 255, alpha);
   }
 
-  function drawParticle(x,y,size,r,g,b,a){
-    ctx.beginPath();ctx.arc(x,y,size,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${r},${g},${b},${a})`;ctx.fill();
+  function drawSolCircles(alpha) {
+    if (alpha <= 0) return;
+    const R = Math.min(W, H) * 0.22;
+    const centers = [
+      { x: cx,                              y: cy },
+      { x: cx,                              y: cy - R },
+      { x: cx + R * Math.sin(Math.PI / 3), y: cy - R * Math.cos(Math.PI / 3) },
+      { x: cx + R * Math.sin(Math.PI / 3), y: cy + R * Math.cos(Math.PI / 3) },
+      { x: cx,                              y: cy + R },
+      { x: cx - R * Math.sin(Math.PI / 3), y: cy + R * Math.cos(Math.PI / 3) },
+      { x: cx - R * Math.sin(Math.PI / 3), y: cy - R * Math.cos(Math.PI / 3) }
+    ];
+    ctx.strokeStyle = `rgba(240,225,200,${alpha})`;
+    ctx.lineWidth = 0.7;
+    centers.forEach(c => {
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, R, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+    ctx.beginPath();
+    ctx.arc(cx, cy, R * 2, 0, Math.PI * 2);
+    ctx.stroke();
   }
 
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    t+=0.0064;
-    phaseT++;
+  // â”€â”€ PHASE TRANSITION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function setPhase(name, now) {
+    phase = name;
+    phaseStart = now;
 
-    // â”€â”€ INTRO â”€â”€
-    if(phase==='intro'){
-      const ft=phaseT;
-      if(ft<=INTRO_FADEIN){
-        introTextAlpha=ft/INTRO_FADEIN;
-      } else if(ft<=INTRO_FADEIN+INTRO_HOLD){
-        introTextAlpha=1;
-      } else if(ft<=INTRO_FADEIN+INTRO_HOLD+INTRO_FADEOUT){
-        introTextAlpha=1-((ft-INTRO_FADEIN-INTRO_HOLD)/INTRO_FADEOUT);
-      } else if(ft<=INTRO_FADEIN+INTRO_HOLD+INTRO_FADEOUT+INTRO_DOT){
-        introTextAlpha=0;
-        const dp=(ft-INTRO_FADEIN-INTRO_HOLD-INTRO_FADEOUT)/INTRO_DOT;
-        dotAlpha=ease(dp);
-        drawCenter(dotAlpha,0);
-      } else if(ft<=INTRO_TOTAL){
-        dotAlpha=1;
-        drawCenter(1,0);
-        const pp=(ft-INTRO_FADEIN-INTRO_HOLD-INTRO_FADEOUT-INTRO_DOT)/INTRO_PARTICLES;
-        const visibleCount=Math.floor(pp*COUNT);
-        particles.forEach((p,i)=>{
-          if(i<visibleCount){
-            p.visible=Math.min(p.visible+0.06,1);
-            p.angle+=p.angVel;
-            p.x=cx+Math.cos(p.angle)*p.orbitR;
-            p.y=cy+Math.sin(p.angle)*p.orbitR*p.incl;
-            const df=0.5+0.5*((Math.sin(p.angle)*p.incl+1)/2);
-            drawParticle(p.x,p.y,p.size*df,160,185,255,p.alpha*p.visible*df);
+    if (name === 'migrate') {
+      buildSolTargets();
+      particles.forEach((p, i) => {
+        // snapshot exact current position â€” no jump
+        p.startX = p.x;
+        p.startY = p.y;
+        p.tx = solTargets[i].x;
+        p.ty = solTargets[i].y;
+      });
+    }
+    if (name === 'explode') {
+      explodeR = 8;
+    }
+    if (name === 'white') {
+      explodeAlpha = 1;
+    }
+  }
+
+  // â”€â”€ MAIN LOOP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function frame(now) {
+    if (!startTime) startTime = now;
+    const elapsed = now - phaseStart;
+    const globalT  = (now - startTime) / 1000;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // â”€â”€ INTRO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    if (phase === 'intro') {
+      let textAlpha = 0;
+      let dotA = 0;
+      let particleProgress = 0;
+
+      if (elapsed < I_FADEIN) {
+        textAlpha = elapsed / I_FADEIN;
+      } else if (elapsed < I_FADEIN + I_HOLD) {
+        textAlpha = 1;
+      } else if (elapsed < I_FADEIN + I_HOLD + I_FADEOUT) {
+        textAlpha = 1 - (elapsed - I_FADEIN - I_HOLD) / I_FADEOUT;
+      } else if (elapsed < I_FADEIN + I_HOLD + I_FADEOUT + I_DOT) {
+        const dp = (elapsed - I_FADEIN - I_HOLD - I_FADEOUT) / I_DOT;
+        dotA = easeInOut(dp);
+        drawCenter(dotA, 0);
+      } else if (elapsed < I_TOTAL) {
+        dotA = 1;
+        drawCenter(1, 0);
+        particleProgress = (elapsed - I_FADEIN - I_HOLD - I_FADEOUT - I_DOT) / I_APPEAR;
+        const visible = Math.floor(particleProgress * COUNT);
+        particles.forEach((p, i) => {
+          if (i < visible) {
+            p.visAlpha = Math.min(p.visAlpha + 0.05, 1);
+            p.angle += p.angVel;
+            p.x = cx + Math.cos(p.angle) * p.orbitR;
+            p.y = cy + Math.sin(p.angle) * p.orbitR * p.incl;
+            const df = 0.5 + 0.5 * ((Math.sin(p.angle) * p.incl + 1) / 2);
+            dot(p.x, p.y, p.size * df, 160, 185, 255, p.alpha * p.visAlpha * df);
           }
         });
       } else {
-        phase='orbit';phaseT=0;
+        setPhase('orbit', now);
       }
-      if(introTextAlpha>0.01){
-        const fs=Math.min(W*0.045,32);
-        ctx.font=`400 ${fs}px 'Lora',Georgia,serif`;
-        ctx.fillStyle=`rgba(255,255,255,${introTextAlpha*0.85})`;
-        ctx.textAlign='center';ctx.textBaseline='middle';
-        ctx.fillText('In the beginning\u2026',cx,cy);
+
+      // Text
+      if (textAlpha > 0.01) {
+        const fs = Math.min(W * 0.045, 32);
+        ctx.font = `400 ${fs}px 'Lora', Georgia, serif`;
+        ctx.fillStyle = `rgba(255,255,255,${textAlpha * 0.85})`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('In the beginning\u2026', cx, cy);
       }
     }
 
-    // â”€â”€ ORBIT â”€â”€
-    else if(phase==='orbit'){
-      particles.forEach(p=>{
-        p.angle+=p.angVel;
-        p.x=cx+Math.cos(p.angle)*p.orbitR;
-        p.y=cy+Math.sin(p.angle)*p.orbitR*p.incl;
-        const df=0.5+0.5*((Math.sin(p.angle)*p.incl+1)/2);
-        drawParticle(p.x,p.y,p.size*df,160,185,255,p.alpha*(0.6+Math.sin(t+p.ph)*0.4)*df);
+    // â”€â”€ ORBIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    else if (phase === 'orbit') {
+      particles.forEach(p => {
+        p.angle += p.angVel;
+        p.x = cx + Math.cos(p.angle) * p.orbitR;
+        p.y = cy + Math.sin(p.angle) * p.orbitR * p.incl;
+        const df = 0.5 + 0.5 * ((Math.sin(p.angle) * p.incl + 1) / 2);
+        const a  = p.alpha * (0.6 + Math.sin(globalT + p.ph) * 0.4) * df;
+        dot(p.x, p.y, p.size * df, 160, 185, 255, a);
       });
-      drawCenter(1,0);
-      if(phaseT>=ORBIT_FRAMES){
-        phase='migrate';phaseT=0;
-        const targets=getSolTargets();
-        particles.forEach((p,i)=>{
-          // Store the EXACT current rendered position â€” no jump
-          p.startX=cx+Math.cos(p.angle)*p.orbitR;
-          p.startY=cy+Math.sin(p.angle)*p.orbitR*p.incl;
-          p.tx=targets[i].x;
-          p.ty=targets[i].y;
-        });
-      }
+      drawCenter(1, 0);
+      if (elapsed >= ORBIT_MS) setPhase('migrate', now);
     }
 
-    // â”€â”€ MIGRATE â”€â”€ keep orbiting, blend toward target
-    else if(phase==='migrate'){
-      const prog=Math.min(phaseT/MIGRATE_FRAMES,1);
-      const e=ease(prog);
-      const rC=Math.round(160+80*e);
-      const gC=Math.round(185+55*e);
-      const bC=Math.round(255-30*e);
-      particles.forEach(p=>{
-        // Keep angular velocity going â€” no stop
-        p.angle+=p.angVel*(1-e*0.85); // gradually slow as they approach target
-        const orbitX=p.startX+(cx+Math.cos(p.angle)*p.orbitR-p.startX)*0.15;
-        const orbitY=p.startY+(cy+Math.sin(p.angle)*p.orbitR*p.incl-p.startY)*0.15;
-        // Blend from start position toward sol target
-        p.x=p.startX+(p.tx-p.startX)*e + (orbitX-p.startX)*(1-e);
-        p.y=p.startY+(p.ty-p.startY)*e + (orbitY-p.startY)*(1-e);
-        drawParticle(p.x,p.y,p.size,rC,gC,bC,p.alpha*(0.6+e*0.4));
+    // â”€â”€ MIGRATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    else if (phase === 'migrate') {
+      const prog = Math.min(elapsed / MIGRATE_MS, 1);
+      const e    = easeInOut(prog);
+      // Color: blue â†’ hint of gold-white
+      const rC = Math.round(160 + 80 * e);
+      const gC = Math.round(185 + 55 * e);
+      const bC = Math.round(255 - 30 * e);
+
+      particles.forEach(p => {
+        // Angular velocity tapers smoothly to zero
+        const av = p.angVel * (1 - e);
+        p.angle += av;
+
+        // Current orbital position
+        const ox = cx + Math.cos(p.angle) * p.orbitR;
+        const oy = cy + Math.sin(p.angle) * p.orbitR * p.incl;
+
+        // Blend: early = mostly orbital, late = mostly target
+        p.x = ox + (p.tx - ox) * e;
+        p.y = oy + (p.ty - oy) * e;
+
+        dot(p.x, p.y, p.size, rC, gC, bC, p.alpha * (0.6 + e * 0.4));
       });
-      if(prog>0.5) drawSolCircles((prog-0.5)*0.7);
-      drawCenter(1,0);
-      if(prog>=1){phase='charge';phaseT=0;}
+
+      // Sol circles fade in from 50% through migration
+      if (prog > 0.5) drawSolCircles((prog - 0.5) * 0.7);
+      drawCenter(1, 0);
+      if (prog >= 1) setPhase('charge', now);
     }
 
-    // â”€â”€ CHARGE â”€â”€
-    else if(phase==='charge'){
-      const prog=Math.min(phaseT/CHARGE_FRAMES,1);
-      particles.forEach(p=>{
-        drawParticle(p.x,p.y,p.size,240,225,200,p.alpha*0.85);
+    // â”€â”€ CHARGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    else if (phase === 'charge') {
+      const prog = Math.min(elapsed / CHARGE_MS, 1);
+      particles.forEach(p => {
+        dot(p.x, p.y, p.size, 240, 225, 200, p.alpha * 0.85);
       });
       drawSolCircles(0.35);
-      drawCenter(1,prog);
-      if(phaseT>=CHARGE_FRAMES){phase='explode';phaseT=0;explodeR=8;}
+      drawCenter(1, prog);
+      if (prog >= 1) setPhase('explode', now);
     }
 
-    // â”€â”€ EXPLODE â”€â”€
-    else if(phase==='explode'){
-      const fadeAmt=Math.max(0,1-explodeR/300);
-      drawSolCircles(0.35*fadeAmt);
-      particles.forEach(p=>{drawParticle(p.x,p.y,p.size,240,225,200,p.alpha*fadeAmt);});
-      const g=ctx.createRadialGradient(cx,cy,0,cx,cy,explodeR);
-      g.addColorStop(0,'rgba(255,255,255,1)');
-      g.addColorStop(0.4,'rgba(255,250,240,0.9)');
-      g.addColorStop(1,'rgba(255,255,255,0)');
-      ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,explodeR,0,Math.PI*2);ctx.fill();
-      const targetR=Math.hypot(W,H)*0.6;
-      explodeR+=targetR/180;
-      if(explodeR>targetR){phase='white';phaseT=0;explodeAlpha=1;}
-    }
-
-    // â”€â”€ WHITE â”€â”€
-    else if(phase==='white'){
-      ctx.fillStyle=`rgba(255,255,255,${explodeAlpha})`;ctx.fillRect(0,0,W,H);
-      explodeAlpha-=0.025;
-      if(explodeAlpha<=0){phase='reveal';phaseT=0;}
-    }
-
-    // â”€â”€ REVEAL â€” particles hold Seed of Life, name fades in â”€â”€
-    else if(phase==='reveal'){
-      // Particles hold geometry with micro-drift â€” organic, not static
-      particles.forEach(p=>{
-        p.microAngle+=p.microSpeed;
-        const mx=p.tx+Math.cos(p.microAngle)*p.microR;
-        const my=p.ty+Math.sin(p.microAngle)*p.microR;
-        drawParticle(mx,my,p.size,200,215,255,p.alpha*0.55);
+    // â”€â”€ EXPLODE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    else if (phase === 'explode') {
+      const prog    = Math.min(elapsed / EXPLODE_MS, 1);
+      const fadeAmt = 1 - prog;
+      drawSolCircles(0.35 * fadeAmt);
+      particles.forEach(p => {
+        dot(p.x, p.y, p.size, 240, 225, 200, p.alpha * fadeAmt);
       });
-      // Seed of Life stays
+      const targetR = Math.hypot(W, H) * 0.65;
+      explodeR = targetR * easeInOut(prog);
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, explodeR);
+      g.addColorStop(0,   'rgba(255,255,255,1)');
+      g.addColorStop(0.4, 'rgba(255,250,240,0.9)');
+      g.addColorStop(1,   'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, explodeR, 0, Math.PI * 2);
+      ctx.fill();
+      if (prog >= 1) setPhase('white', now);
+    }
+
+    // â”€â”€ WHITE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    else if (phase === 'white') {
+      const prog = Math.min(elapsed / WHITE_MS, 1);
+      explodeAlpha = 1 - easeInOut(prog);
+      ctx.fillStyle = `rgba(255,255,255,${explodeAlpha})`;
+      ctx.fillRect(0, 0, W, H);
+      if (prog >= 1) setPhase('reveal', now);
+    }
+
+    // â”€â”€ REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    else if (phase === 'reveal') {
+      // Particles hold Seed of Life with gentle micro-drift
+      particles.forEach(p => {
+        p.mAngle += p.mSpeed;
+        const mx = p.tx + Math.cos(p.mAngle) * p.mR;
+        const my = p.ty + Math.sin(p.mAngle) * p.mR;
+        dot(mx, my, p.size, 200, 215, 255, p.alpha * 0.5);
+      });
       drawSolCircles(0.2);
-      // White dot stays
-      drawCenter(0.7,0);
-      // "Governed Logic" â€” pure bright white, letter by letter
-      const text='Governed Logic';
-      const letterInterval=8;
-      const letterIdx=Math.floor(phaseT/letterInterval);
-      if(letterIdx<text.length){
-        glLetterAlpha[letterIdx]=Math.min((glLetterAlpha[letterIdx]||0)+0.06,1);
+      drawCenter(0.7, 0);
+
+      // "Governed Logic" â€” pure white, letter by letter
+      const text = 'Governed Logic';
+      const letterMs = 130; // ms per letter
+      const lettersDone = Math.floor(elapsed / letterMs);
+      for (let i = 0; i < Math.min(lettersDone + 1, text.length); i++) {
+        const letterElapsed = elapsed - i * letterMs;
+        const a = Math.min(letterElapsed / 300, 1);
+        glLetters[i] = a;
       }
-      const fontSize=Math.min(W*0.12,110);
-      ctx.font=`700 ${fontSize}px 'Space Grotesk',sans-serif`;
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      // No shadow, no tint â€” pure white
-      ctx.shadowBlur=0;ctx.shadowColor='transparent';
-      const chars=text.split('');
-      const widths=chars.map(l=>ctx.measureText(l).width);
-      const totalW=widths.reduce((a,b)=>a+b,0);
-      let sx=cx-totalW/2;
-      chars.forEach((l,i)=>{
-        const a=glLetterAlpha[i]||0;
-        if(a>0){
-          ctx.fillStyle=`rgba(255,255,255,${a})`;
-          ctx.fillText(l,sx+widths[i]/2,cy);
+      const fontSize = Math.min(W * 0.12, 110);
+      ctx.font = `700 ${fontSize}px 'Space Grotesk', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = 'transparent';
+      const chars  = text.split('');
+      const widths = chars.map(l => ctx.measureText(l).width);
+      const totalW = widths.reduce((a, b) => a + b, 0);
+      let sx = cx - totalW / 2;
+      chars.forEach((l, i) => {
+        const a = glLetters[i] || 0;
+        if (a > 0) {
+          ctx.fillStyle = `rgba(255,255,255,${a})`;
+          ctx.fillText(l, sx + widths[i] / 2, cy);
         }
-        sx+=widths[i];
+        sx += widths[i];
       });
-      // Scroll hint after name completes
-      if(phaseT>text.length*letterInterval+60){
-        const sh=document.querySelector('.scroll-hint');
-        if(sh){sh.style.transition='opacity 1.5s ease';sh.style.opacity='1';}
+
+      // Scroll hint after all letters done
+      if (!scrollHintShown && elapsed > text.length * letterMs + 1000) {
+        scrollHintShown = true;
+        const sh = document.querySelector('.scroll-hint');
+        if (sh) { sh.style.transition = 'opacity 1.5s ease'; sh.style.opacity = '1'; }
       }
     }
 
-    requestAnimationFrame(draw);
+    requestAnimationFrame(frame);
   }
 
-  resize();init();
-  window.addEventListener('resize',()=>{resize();init();phase='intro';phaseT=0;});
-  const sh=document.querySelector('.scroll-hint');
-  if(sh)sh.style.opacity='0';
+  // â”€â”€ BOOT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function boot() {
+    resize();
+    initParticles();
+    phaseStart = performance.now();
+    const sh = document.querySelector('.scroll-hint');
+    if (sh) sh.style.opacity = '0';
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', () => { resize(); initParticles(); setPhase('intro', performance.now()); });
+  boot();
+
+}());
+
+</script>
+<script>
+// OSCILLOSCOPE — white noise resolving to clean wave
+(function() {
+  const canvas = document.getElementById('oscCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  let t = 0, phase = 0;
+  function draw() {
+    ctx.fillStyle = 'rgba(4,6,8,0.14)';
+    ctx.fillRect(0, 0, W, H);
+    const progress = Math.min(t / 375, 1);
+    const e = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+    ctx.beginPath();
+    for (let x = 0; x < W; x++) {
+      const nx = x / W;
+      const noise = (Math.random() - 0.5) * 2 * (1 - e) * 0.8;
+      const clean = Math.sin(nx * Math.PI * 4 + phase) * 0.4;
+      const y = H / 2 + (noise + clean * e) * H * 0.36;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    const r = Math.round(100 * (1 - e) + 91 * e);
+    const g = Math.round(110 * (1 - e) + 141 * e);
+    const b = Math.round(130 * (1 - e) + 217 * e);
+    ctx.strokeStyle = `rgba(${r},${g},${b},${0.6 + e * 0.3})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(91,141,217,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let i = 1; i < 4; i++) { ctx.beginPath(); ctx.moveTo(0, H / 4 * i); ctx.lineTo(W, H / 4 * i); ctx.stroke(); }
+    for (let i = 1; i < 6; i++) { ctx.beginPath(); ctx.moveTo(W / 6 * i, 0); ctx.lineTo(W / 6 * i, H); ctx.stroke(); }
+    phase += 0.02;
+    t++;
+    requestAnimationFrame(draw);
+  }
   draw();
-})();
-// SIGNAL CHART â€” chaos to coherent, neon blue/purple
-(function(){
-  const canvas=document.getElementById('signalChart');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  function resize(){canvas.width=canvas.offsetWidth;canvas.height=parseInt(canvas.getAttribute('height'))||80;}
-  resize();window.addEventListener('resize',resize);
-  const bars=70;let frame=0,total=240;
-  function ease(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
-  function draw(){
-    const W=canvas.width,H=canvas.height;
-    ctx.clearRect(0,0,W,H);
-    const bw=W/bars-1,p=Math.min(frame/total,1),e=ease(p);
-    for(let i=0;i<bars;i++){
-      const x=i*(bw+1);
-      const chaos=0.15+Math.abs(Math.sin(i*2.1+frame*0.128+Math.cos(i*0.8+frame*0.032)*2.2))*0.85;
-      const governed=0.3+Math.sin((i/bars)*Math.PI*2)*0.4+0.2;
-      const lp=Math.max(0,Math.min(1,(e-(i/bars)*0.35)/0.65));
-      const h=Math.max(2,(chaos*(1-lp)+governed*lp)*H*0.88);
-      const r=Math.round(80*(1-lp)+91*lp),g=Math.round(80*(1-lp)+60*lp),b=Math.round(100*(1-lp)+210*lp);
-      ctx.fillStyle=`rgba(${r},${g},${b},${0.45+lp*0.5})`;
-      ctx.fillRect(x,H-h,Math.max(bw,1),h);
+}());
+
+// SIGNAL CHART — chaos to coherent, neon blue/purple
+(function() {
+  const canvas = document.getElementById('signalChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = canvas.offsetWidth; canvas.height = 80; }
+  resize();
+  window.addEventListener('resize', resize);
+  const bars = 70;
+  let frame = 0, total = 240;
+  function ease(v) { return v < 0.5 ? 2 * v * v : 1 - Math.pow(-2 * v + 2, 2) / 2; }
+  function draw() {
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+    const bw = W / bars - 1;
+    const p = Math.min(frame / total, 1), e = ease(p);
+    for (let i = 0; i < bars; i++) {
+      const x = i * (bw + 1);
+      const chaos = 0.15 + Math.abs(Math.sin(i * 2.1 + frame * 0.13 + Math.cos(i * 0.8 + frame * 0.032) * 2.2)) * 0.85;
+      const governed = 0.3 + Math.sin((i / bars) * Math.PI * 2) * 0.4 + 0.2;
+      const lp = Math.max(0, Math.min(1, (e - (i / bars) * 0.35) / 0.65));
+      const h = Math.max(2, (chaos * (1 - lp) + governed * lp) * H * 0.88);
+      const r = Math.round(80 * (1 - lp) + 91 * lp);
+      const g = Math.round(80 * (1 - lp) + 60 * lp);
+      const b = Math.round(100 * (1 - lp) + 210 * lp);
+      ctx.fillStyle = `rgba(${r},${g},${b},${0.45 + lp * 0.5})`;
+      ctx.fillRect(x, H - h, Math.max(bw, 1), h);
     }
     frame++;
-    if(frame<total+80)requestAnimationFrame(draw);
-    else setTimeout(()=>{frame=0;requestAnimationFrame(draw);},2500);
+    if (frame < total + 80) requestAnimationFrame(draw);
+    else setTimeout(() => { frame = 0; requestAnimationFrame(draw); }, 2500);
   }
-  setTimeout(draw,1400);
-})();
+  setTimeout(draw, 800);
+}());
 
-// OSCILLOSCOPE â€” 20% slower, white noise to clean wave
-(function(){
-  const canvas=document.getElementById('oscCanvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  let W,H;
-  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
-  resize();window.addEventListener('resize',resize);
-  let t=0,phase=0;
-  function draw(){
-    ctx.fillStyle='rgba(4,6,8,0.14)';ctx.fillRect(0,0,W,H);
-    const progress=Math.min(t/375,1);
-    const ease=progress<0.5?2*progress*progress:1-Math.pow(-2*progress+2,2)/2;
-    ctx.beginPath();
-    for(let x=0;x<W;x++){
-      const nx=x/W;
-      const noise=(Math.random()-0.5)*2*(1-ease)*0.8;
-      const clean=Math.sin(nx*Math.PI*4+phase)*0.4;
-      const y=H/2+(noise+clean*ease)*H*0.36;
-      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    }
-    const r=Math.round(100*(1-ease)+91*ease),g=Math.round(110*(1-ease)+141*ease),b=Math.round(130*(1-ease)+217*ease);
-    ctx.strokeStyle=`rgba(${r},${g},${b},${0.6+ease*0.3})`;ctx.lineWidth=1.5;ctx.stroke();
-    ctx.strokeStyle='rgba(91,141,217,0.04)';ctx.lineWidth=0.5;
-    for(let i=1;i<4;i++){ctx.beginPath();ctx.moveTo(0,H/4*i);ctx.lineTo(W,H/4*i);ctx.stroke();}
-    for(let i=1;i<6;i++){ctx.beginPath();ctx.moveTo(W/6*i,0);ctx.lineTo(W/6*i,H);ctx.stroke();}
-    phase+=0.02;t++;
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-// WORD CLOUD COLLAPSE â€” text in upper canvas, no overlap with bottom text
-(function(){
-  const canvas=document.getElementById('wordCanvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  let W,H,cx,cy;
-  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;cx=W/2;cy=H/2;}
-  resize();window.addEventListener('resize',resize);
-  const driftWords=['hedge','relativize','drift','average','hallucinate','both-side','equivocate','waver','dilute','contradict','fragment','collapse','defer','misalign','diverge','distort','approximate','confabulate'];
-  const targetWord='LOGOS';
-  let words=[],phase='scatter',phaseT=0;
-  function init(){
-    words=driftWords.map(w=>{
-      const angle=Math.random()*Math.PI*2,dist=60+Math.random()*Math.min(W,H)*0.35;
-      return{text:w,x:cx+Math.cos(angle)*dist,y:cy*0.7+Math.sin(angle)*dist*0.6,vx:(Math.random()-0.5)*0.64,vy:(Math.random()-0.5)*0.64,alpha:Math.random()*0.45+0.15,size:9+Math.random()*7,hue:210+Math.random()*40};
+// WORD CLOUD — drift words collapse into LOGOS
+(function() {
+  const canvas = document.getElementById('wordCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, cx, cy;
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; cx = W / 2; cy = H / 2; }
+  resize();
+  window.addEventListener('resize', resize);
+  const driftWords = ['hedge','relativize','drift','average','hallucinate','both-side','equivocate','waver','dilute','contradict','fragment','collapse','defer','misalign','diverge','distort','approximate','confabulate'];
+  const target = 'LOGOS';
+  let words = [], wPhase = 'scatter', wPhaseT = 0;
+  function initWords() {
+    words = driftWords.map(w => {
+      const a = Math.random() * Math.PI * 2, d = 60 + Math.random() * Math.min(W, H) * 0.35;
+      return { text:w, x:cx+Math.cos(a)*d, y:cy*0.65+Math.sin(a)*d*0.55, vx:(Math.random()-0.5)*0.64, vy:(Math.random()-0.5)*0.64, alpha:Math.random()*0.4+0.15, size:9+Math.random()*7, hue:210+Math.random()*40, isTarget:false };
     });
-    targetWord.split('').forEach((l,i)=>{
-      words.push({text:l,x:cx+Math.cos((i/targetWord.length)*Math.PI*2-Math.PI/2)*180,y:cy*0.7+Math.sin((i/targetWord.length)*Math.PI*2-Math.PI/2)*100,tx:cx+(i-(targetWord.length-1)/2)*38,ty:cy*0.55,vx:0,vy:0,alpha:0,size:38,isTarget:true,hue:270});
+    target.split('').forEach((l, i) => {
+      words.push({ text:l, x:cx+Math.cos((i/target.length)*Math.PI*2-Math.PI/2)*180, y:cy*0.65+Math.sin((i/target.length)*Math.PI*2-Math.PI/2)*90, tx:cx+(i-(target.length-1)/2)*38, ty:cy*0.52, vx:0, vy:0, alpha:0, size:38, hue:270, isTarget:true });
     });
   }
-  let t=0;
-  function draw(){
-    ctx.fillStyle='rgba(3,5,7,0.12)';ctx.fillRect(0,0,W,H);
-    t++;phaseT++;
-    if(phase==='scatter'&&phaseT>160){phase='converge';phaseT=0;}
-    if(phase==='converge'&&phaseT>120){phase='hold';phaseT=0;}
-    if(phase==='hold'&&phaseT>180){phase='scatter';phaseT=0;init();}
-    words.forEach(w=>{
-      if(w.isTarget){
-        if(phase==='converge'||phase==='hold'){w.x+=(w.tx-w.x)*0.06;w.y+=(w.ty-w.y)*0.06;w.alpha=Math.min(w.alpha+0.02,1);}
-        else{w.alpha=Math.max(w.alpha-0.03,0);}
+  let wt = 0;
+  function drawWords() {
+    ctx.fillStyle = 'rgba(3,5,7,0.12)';
+    ctx.fillRect(0, 0, W, H);
+    wt++; wPhaseT++;
+    if (wPhase === 'scatter' && wPhaseT > 160) { wPhase = 'converge'; wPhaseT = 0; }
+    if (wPhase === 'converge' && wPhaseT > 120) { wPhase = 'hold'; wPhaseT = 0; }
+    if (wPhase === 'hold' && wPhaseT > 180) { wPhase = 'scatter'; wPhaseT = 0; initWords(); }
+    words.forEach(w => {
+      if (w.isTarget) {
+        if (wPhase === 'converge' || wPhase === 'hold') { w.x += (w.tx - w.x) * 0.06; w.y += (w.ty - w.y) * 0.06; w.alpha = Math.min(w.alpha + 0.02, 1); }
+        else { w.alpha = Math.max(w.alpha - 0.03, 0); }
       } else {
-        if(phase==='scatter'){w.x+=w.vx;w.y+=w.vy;if(w.x<20||w.x>W-20)w.vx*=-1;if(w.y<20||w.y>H*0.85)w.vy*=-1;w.alpha=0.18+Math.sin(t*0.02+w.size)*0.12;}
-        else if(phase==='converge'){w.x+=(cx-w.x)*0.04;w.y+=(cy*0.7-w.y)*0.04;w.alpha=Math.max(w.alpha-0.015,0);}
-        else{w.alpha=0;}
+        if (wPhase === 'scatter') { w.x += w.vx; w.y += w.vy; if (w.x < 20 || w.x > W - 20) w.vx *= -1; if (w.y < 20 || w.y > H * 0.85) w.vy *= -1; w.alpha = 0.15 + Math.sin(wt * 0.02 + w.size) * 0.1; }
+        else if (wPhase === 'converge') { w.x += (cx - w.x) * 0.04; w.y += (cy * 0.65 - w.y) * 0.04; w.alpha = Math.max(w.alpha - 0.015, 0); }
+        else { w.alpha = 0; }
       }
-      if(w.alpha<0.01)return;
-      ctx.font=`${w.isTarget?700:400} ${w.size}px ${w.isTarget?"'Space Grotesk'":'Inter'},sans-serif`;
-      ctx.fillStyle=`hsla(${w.hue},60%,${w.isTarget?82:52}%,${w.alpha})`;
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText(w.text,w.x,w.y);
+      if (w.alpha < 0.01) return;
+      ctx.font = `${w.isTarget ? 700 : 400} ${w.size}px ${w.isTarget ? "'Space Grotesk'" : 'Inter'},sans-serif`;
+      ctx.fillStyle = `hsla(${w.hue},60%,${w.isTarget ? 82 : 52}%,${w.alpha})`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(w.text, w.x, w.y);
     });
-    requestAnimationFrame(draw);
+    requestAnimationFrame(drawWords);
   }
-  resize();init();draw();
-})();
+  initWords();
+  drawWords();
+}());
 </script>
 </body>
 </html>
