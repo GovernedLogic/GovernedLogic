@@ -184,37 +184,38 @@ function openNav() { document.getElementById('navOverlay').classList.add('open')
 function closeNav() { document.getElementById('navOverlay').classList.remove('open'); document.body.style.overflow = ''; }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
-// STAR FIELD â€” three size tiers for depth
+// STAR FIELD — activates only during reveal phase
 (function() {
   const canvas = document.getElementById('starCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let stars = [];
+  let stars = [], starAlpha = 0;
+  window._starActivate = function() { window._starOn = true; };
   function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     stars = [];
     const count = Math.floor((canvas.width * canvas.height) / 2000);
     for (let i = 0; i < count; i++) {
       const tier = Math.random();
-      const r = tier < 0.6 ? Math.random() * 0.5 + 0.15 : tier < 0.88 ? Math.random() * 1.0 + 0.5 : Math.random() * 1.8 + 1.0;
-      const base = tier < 0.6 ? Math.random() * 0.2 + 0.05 : tier < 0.88 ? Math.random() * 0.35 + 0.1 : Math.random() * 0.45 + 0.2;
-      stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r, base, speed: Math.random() * 0.003 + 0.001, phase: Math.random() * Math.PI * 2, warm: tier > 0.88 });
+      const r = tier < 0.6 ? Math.random()*0.5+0.15 : tier < 0.88 ? Math.random()*1.0+0.5 : Math.random()*1.8+1.0;
+      const base = tier < 0.6 ? Math.random()*0.2+0.05 : tier < 0.88 ? Math.random()*0.35+0.1 : Math.random()*0.45+0.2;
+      stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r, base, speed:Math.random()*0.003+0.001, ph:Math.random()*Math.PI*2, warm:tier>0.88});
     }
   }
   function draw(t) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(s => {
-      const a = s.base + Math.sin(t * s.speed + s.phase) * s.base * 0.5;
-      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = s.warm ? `rgba(220,210,200,${a})` : `rgba(200,215,230,${a})`;
-      ctx.fill();
-    });
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if (window._starOn) starAlpha = Math.min(starAlpha+0.006, 1);
+    if (starAlpha > 0) {
+      stars.forEach(s => {
+        const a = (s.base + Math.sin(t*s.speed+s.ph)*s.base*0.5)*starAlpha;
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fillStyle = s.warm ? `rgba(220,210,200,${a})` : `rgba(200,215,230,${a})`;
+        ctx.fill();
+      });
+    }
     requestAnimationFrame(draw);
   }
-  resize();
-  window.addEventListener('resize', resize);
-  requestAnimationFrame(draw);
+  resize(); window.addEventListener('resize', resize); requestAnimationFrame(draw);
 }());
 
 </script>
@@ -507,7 +508,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
       });
 
       // Sol circles fade in from 50% through migration
-      if (prog > 0.5) drawSolCircles((prog - 0.5) * 0.7);
+      // sol circles removed — particles form geometry
       drawCenter(1, 0);
       if (prog >= 1) setPhase('charge', now);
     }
@@ -518,7 +519,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
       particles.forEach(p => {
         dot(p.x, p.y, p.size, 240, 225, 200, p.alpha * 0.85);
       });
-      drawSolCircles(0.35);
+      // sol circles removed — particles form geometry
       drawCenter(1, prog);
       if (prog >= 1) setPhase('explode', now);
     }
@@ -527,7 +528,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
     else if (phase === 'explode') {
       const prog    = Math.min(elapsed / EXPLODE_MS, 1);
       const fadeAmt = 1 - prog;
-      drawSolCircles(0.35 * fadeAmt);
+      // sol circles removed — particles form geometry
       particles.forEach(p => {
         dot(p.x, p.y, p.size, 240, 225, 200, p.alpha * fadeAmt);
       });
@@ -555,19 +556,37 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
 
     // â”€â”€ REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     else if (phase === 'reveal') {
-      // Particles hold Seed of Life with gentle micro-drift
+      // Activate stars on first frame of reveal
+      if (!window._starOn) window._starActivate();
+      // Connection lines between nearby particles — the geometric alive feel
+      const CONN = 90;
+      for (let i = 0; i < particles.length; i++) {
+        const pi = particles[i];
+        const mix = pi.mAngle !== undefined ? { x: pi.tx + Math.cos(pi.mAngle) * pi.mR, y: pi.ty + Math.sin(pi.mAngle) * pi.mR } : pi;
+        for (let j = i + 1; j < particles.length; j++) {
+          const pj = particles[j];
+          const mjx = pj.tx + Math.cos(pj.mAngle) * pj.mR;
+          const mjy = pj.ty + Math.sin(pj.mAngle) * pj.mR;
+          const dx = mix.x - mjx, dy = mix.y - mjy;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < CONN) {
+            ctx.strokeStyle = `rgba(160,185,255,${(1-d/CONN)*0.22})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath(); ctx.moveTo(mix.x, mix.y); ctx.lineTo(mjx, mjy); ctx.stroke();
+          }
+        }
+      }
+      // Particles with micro-drift
       particles.forEach(p => {
         p.mAngle += p.mSpeed;
         const mx = p.tx + Math.cos(p.mAngle) * p.mR;
         const my = p.ty + Math.sin(p.mAngle) * p.mR;
-        dot(mx, my, p.size, 200, 215, 255, p.alpha * 0.5);
+        dot(mx, my, p.size, 200, 215, 255, p.alpha * 0.55);
       });
-      drawSolCircles(0.2);
       drawCenter(0.7, 0);
-
-      // "Governed Logic" â€” pure white, letter by letter
+      // "Governed Logic" — pure white, letter by letter
       const text = 'Governed Logic';
-      const letterMs = 130; // ms per letter
+      const letterMs = 130;
       const lettersDone = Math.floor(elapsed / letterMs);
       for (let i = 0; i < Math.min(lettersDone + 1, text.length); i++) {
         const letterElapsed = elapsed - i * letterMs;
@@ -576,24 +595,17 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
       }
       const fontSize = Math.min(W * 0.12, 110);
       ctx.font = `700 ${fontSize}px 'Space Grotesk', sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.shadowBlur = 0;
-      ctx.shadowColor = 'transparent';
-      const chars  = text.split('');
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.shadowBlur = 0; ctx.shadowColor = 'transparent';
+      const chars = text.split('');
       const widths = chars.map(l => ctx.measureText(l).width);
       const totalW = widths.reduce((a, b) => a + b, 0);
       let sx = cx - totalW / 2;
       chars.forEach((l, i) => {
         const a = glLetters[i] || 0;
-        if (a > 0) {
-          ctx.fillStyle = `rgba(255,255,255,${a})`;
-          ctx.fillText(l, sx + widths[i] / 2, cy);
-        }
+        if (a > 0) { ctx.fillStyle = `rgba(255,255,255,${a})`; ctx.fillText(l, sx + widths[i]/2, cy); }
         sx += widths[i];
       });
-
-      // Scroll hint after all letters done
       if (!scrollHintShown && elapsed > text.length * letterMs + 1000) {
         scrollHintShown = true;
         const sh = document.querySelector('.scroll-hint');
