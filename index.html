@@ -200,7 +200,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
     el.querySelectorAll('.gl-letter').forEach(s=>{s.style.opacity='1';s.style.transform='translateY(0)';});
   }));
 })();
-// PARTICLE CONSTELLATION â€” orbital swirl â†’ Seed of Life â†’ explosion â†’ Governed Logic
+// PARTICLE CONSTELLATION â€” full sequence
 (function(){
   const canvas=document.getElementById('particleCanvas');
   if(!canvas)return;
@@ -208,15 +208,23 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
   let W,H,cx,cy;
   const COUNT=180;
   let particles=[];
-  let phase='orbit'; // orbit â†’ migrate â†’ explode â†’ reveal
+  let phase='orbit';
   let phaseT=0;
-  let explodeR=0,explodeAlpha=1,explodeDone=false;
-  let glAlpha=0;
+  let explodeR=0,explodeAlpha=1;
+  let glAlpha=0,glLetterAlpha=[];
+  let dotPulse=0;
   let t=0;
 
-  // Seed of Life target positions â€” 7 circles, each made of ~25 particles
+  // 15s orbit = 900 frames at 60fps
+  // 10s migrate = 600 frames
+  // 3s charge = 180 frames
+  // 3s explode to full screen
+  const ORBIT_FRAMES=900;
+  const MIGRATE_FRAMES=600;
+  const CHARGE_FRAMES=180;
+
   function getSolTargets(){
-    const R=Math.min(W,H)*0.22; // radius of each circle
+    const R=Math.min(W,H)*0.22;
     const centers=[
       {x:cx,y:cy},
       {x:cx,y:cy-R},
@@ -231,11 +239,10 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
     centers.forEach(c=>{
       for(let i=0;i<perCircle;i++){
         const a=(i/perCircle)*Math.PI*2;
-        const r=R*(0.85+Math.random()*0.15);
+        const r=R*(0.88+Math.random()*0.12);
         targets.push({x:c.x+Math.cos(a)*r,y:c.y+Math.sin(a)*r});
       }
     });
-    // fill remainder at center circle
     while(targets.length<COUNT){
       const a=Math.random()*Math.PI*2;
       targets.push({x:cx+Math.cos(a)*R*0.9,y:cy+Math.sin(a)*R*0.9});
@@ -253,23 +260,45 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
     particles=[];
     const maxR=Math.min(W,H)*0.46;
     for(let i=0;i<COUNT;i++){
-      // Each particle gets an orbital radius and angular velocity
       const orbitR=60+Math.random()*maxR;
       const angle=Math.random()*Math.PI*2;
-      // Inclination gives 3D depth â€” ellipse ratio varies per particle
       const incl=0.25+Math.random()*0.55;
-      // All orbit same direction, different speeds (closer = faster, like Kepler)
-      const angVel=(0.004+Math.random()*0.006)*(1/(orbitR/200));
+      const angVel=(0.004+Math.random()*0.005)*(1/(orbitR/200));
       particles.push({
         orbitR,angle,incl,angVel,
         x:cx+Math.cos(angle)*orbitR,
         y:cy+Math.sin(angle)*orbitR*incl,
-        tx:0,ty:0, // target for migrate phase
+        tx:0,ty:0,
         size:Math.random()*1.6+0.5,
         alpha:Math.random()*0.5+0.3,
-        phase:Math.random()*Math.PI*2
+        phase:Math.random()*Math.PI*2,
+        // for letter reveal
+        letterIdx:-1
       });
     }
+    glAlpha=0;
+    glLetterAlpha=Array(13).fill(0); // "Governed Logic" = 13 chars
+  }
+
+  function ease(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+
+  function drawCenter(ga,chargeAmt){
+    // Pulse rings from center
+    for(let r=1;r<=3;r++){
+      const pr=(t*14*r)%90,pa=Math.max(0,1-pr/90)*0.3*ga;
+      ctx.beginPath();ctx.arc(cx,cy,pr,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(200,180,255,${pa})`;ctx.lineWidth=1;ctx.stroke();
+    }
+    // White dot â€” pulses harder when charging
+    const pulseSize=4+(Math.sin(t*8)*1.5*chargeAmt);
+    const glowSize=35+(chargeAmt*20);
+    const dg=ctx.createRadialGradient(cx,cy,0,cx,cy,glowSize);
+    dg.addColorStop(0,`rgba(255,255,255,${(0.95+chargeAmt*0.05)*ga})`);
+    dg.addColorStop(0.4,`rgba(230,215,255,${(0.35+chargeAmt*0.2)*ga})`);
+    dg.addColorStop(1,'rgba(123,94,167,0)');
+    ctx.fillStyle=dg;ctx.beginPath();ctx.arc(cx,cy,glowSize,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,pulseSize,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${ga})`;ctx.fill();
   }
 
   function draw(){
@@ -278,152 +307,143 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
     phaseT++;
 
     if(phase==='orbit'){
-      // After 30 seconds (30*60fps = 1800 frames at 60fps, use phaseT)
-      if(phaseT>1800){
-        phase='migrate';
-        phaseT=0;
+      // Update and draw particles â€” no connection lines
+      particles.forEach(p=>{
+        p.angle+=p.angVel;
+        p.x=cx+Math.cos(p.angle)*p.orbitR;
+        p.y=cy+Math.sin(p.angle)*p.orbitR*p.incl;
+        const depthFactor=0.5+0.5*((Math.sin(p.angle)*p.incl+1)/2);
+        const a=(p.alpha*(0.6+Math.sin(t+p.phase)*0.4))*depthFactor;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.size*depthFactor,0,Math.PI*2);
+        ctx.fillStyle=`rgba(160,185,255,${a})`;ctx.fill();
+      });
+      drawCenter(1,0);
+      if(phaseT>=ORBIT_FRAMES){
+        phase='migrate';phaseT=0;
         const targets=getSolTargets();
         particles.forEach((p,i)=>{p.tx=targets[i].x;p.ty=targets[i].y;});
       }
-      drawOrbiting(1);
 
     } else if(phase==='migrate'){
-      // 5-6 seconds to migrate (300-360 frames)
-      const prog=Math.min(phaseT/330,1);
-      const ease=prog<0.5?2*prog*prog:1-Math.pow(-2*prog+2,2)/2;
+      const prog=Math.min(phaseT/MIGRATE_FRAMES,1);
+      const e=ease(prog);
+      // Color shifts from blue to hint of white-gold as they settle
+      const rC=Math.round(160+80*e); // 160â†’240
+      const gC=Math.round(185+55*e); // 185â†’240
+      const bC=Math.round(255-30*e); // 255â†’225
       particles.forEach(p=>{
-        // interpolate from orbital position to target
         const orbitX=cx+Math.cos(p.angle)*p.orbitR;
         const orbitY=cy+Math.sin(p.angle)*p.orbitR*p.incl;
-        p.x=orbitX+(p.tx-orbitX)*ease;
-        p.y=orbitY+(p.ty-orbitY)*ease;
-        // keep orbiting slowly during migration
-        p.angle+=p.angVel*0.3;
+        p.x=orbitX+(p.tx-orbitX)*e;
+        p.y=orbitY+(p.ty-orbitY)*e;
+        p.angle+=p.angVel*0.2;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${rC},${gC},${bC},${p.alpha*(0.6+e*0.4)})`;ctx.fill();
       });
-      drawPositional(1);
-      // Draw faint Seed of Life circles as particles settle
+      // Seed of Life circles fade in from halfway through
       if(prog>0.5){
+        const solA=(prog-0.5)*0.7;
         const R=Math.min(W,H)*0.22;
-        const solCenters=[
-          {x:cx,y:cy},{x:cx,y:cy-R},
-          {x:cx+R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)},
-          {x:cx+R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},
-          {x:cx,y:cy+R},
-          {x:cx-R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},
-          {x:cx-R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)}
-        ];
-        ctx.strokeStyle=`rgba(160,180,255,${(prog-0.5)*0.4})`;
-        ctx.lineWidth=0.6;
-        solCenters.forEach(c=>{
-          ctx.beginPath();ctx.arc(c.x,c.y,R,0,Math.PI*2);ctx.stroke();
-        });
+        const centers=[{x:cx,y:cy},{x:cx,y:cy-R},{x:cx+R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)},{x:cx+R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},{x:cx,y:cy+R},{x:cx-R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},{x:cx-R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)}];
+        ctx.strokeStyle=`rgba(240,225,200,${solA})`;ctx.lineWidth=0.7;
+        centers.forEach(c=>{ctx.beginPath();ctx.arc(c.x,c.y,R,0,Math.PI*2);ctx.stroke();});
         ctx.beginPath();ctx.arc(cx,cy,R*2,0,Math.PI*2);ctx.stroke();
       }
-      if(prog>=1){phase='explode';phaseT=0;}
+      drawCenter(1,0);
+      if(prog>=1){phase='charge';phaseT=0;}
+
+    } else if(phase==='charge'){
+      // Hold the Seed of Life, dot pulses and charges
+      const prog=Math.min(phaseT/CHARGE_FRAMES,1);
+      const R=Math.min(W,H)*0.22;
+      // Draw settled particles in gold
+      particles.forEach(p=>{
+        ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fillStyle=`rgba(240,225,200,${p.alpha*0.8})`;ctx.fill();
+      });
+      // Seed of Life stays visible
+      ctx.strokeStyle='rgba(240,225,200,0.35)';ctx.lineWidth=0.7;
+      const centers=[{x:cx,y:cy},{x:cx,y:cy-R},{x:cx+R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)},{x:cx+R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},{x:cx,y:cy+R},{x:cx-R*Math.sin(Math.PI/3),y:cy+R*Math.cos(Math.PI/3)},{x:cx-R*Math.sin(Math.PI/3),y:cy-R*Math.cos(Math.PI/3)}];
+      centers.forEach(c=>{ctx.beginPath();ctx.arc(c.x,c.y,R,0,Math.PI*2);ctx.stroke();});
+      ctx.beginPath();ctx.arc(cx,cy,R*2,0,Math.PI*2);ctx.stroke();
+      drawCenter(1,prog);
+      if(phaseT>=CHARGE_FRAMES){phase='explode';phaseT=0;explodeR=8;}
 
     } else if(phase==='explode'){
-      drawPositional(Math.max(0,1-explodeR/300));
-      // Expanding white radial
+      // 3 seconds to fill screen = 180 frames
+      // Draw particles fading
+      const fadeAmt=Math.max(0,1-explodeR/300);
+      particles.forEach(p=>{
+        ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fillStyle=`rgba(240,225,200,${p.alpha*fadeAmt})`;ctx.fill();
+      });
       const g=ctx.createRadialGradient(cx,cy,0,cx,cy,explodeR);
       g.addColorStop(0,'rgba(255,255,255,1)');
-      g.addColorStop(0.5,'rgba(255,255,255,0.75)');
+      g.addColorStop(0.4,'rgba(255,250,240,0.9)');
       g.addColorStop(1,'rgba(255,255,255,0)');
       ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,explodeR,0,Math.PI*2);ctx.fill();
-      explodeR+=explodeR<120?6:11;
-      if(explodeR>Math.hypot(W,H)*0.75){phase='white';phaseT=0;explodeAlpha=1;}
+      // 3 seconds: need to reach Math.hypot(W,H)/2 in 180 frames
+      const targetR=Math.hypot(W,H)*0.6;
+      explodeR+=targetR/180;
+      if(explodeR>targetR){phase='white';phaseT=0;explodeAlpha=1;}
 
     } else if(phase==='white'){
-      ctx.fillStyle=`rgba(255,255,255,${explodeAlpha})`;ctx.fillRect(0,0,W,H);
-      explodeAlpha-=0.03;
-      if(explodeAlpha<=0){phase='reveal';phaseT=0;explodeDone=true;}
+      ctx.fillStyle=`rgba(255,255,255,${explodeAlpha})`;
+      ctx.fillRect(0,0,W,H);
+      explodeAlpha-=0.025;
+      if(explodeAlpha<=0){phase='reveal';phaseT=0;}
 
     } else if(phase==='reveal'){
-      // Particles drift gently, Governed Logic fades in
+      // Particles drift gently
       particles.forEach(p=>{
-        p.x+=(Math.random()-0.5)*0.4;
-        p.y+=(Math.random()-0.5)*0.4;
+        p.x+=(Math.random()-0.5)*0.3;
+        p.y+=(Math.random()-0.5)*0.3;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.size*0.7,0,Math.PI*2);
+        ctx.fillStyle=`rgba(160,185,255,${p.alpha*0.35})`;ctx.fill();
       });
-      drawPositional(0.4);
-      glAlpha=Math.min(glAlpha+0.008,1);
-      // Draw "Governed Logic"
-      if(glAlpha>0){
-        ctx.textAlign='center';ctx.textBaseline='middle';
-        ctx.font=`700 ${Math.min(W*0.12,110)}px 'Space Grotesk',sans-serif`;
-        // Subtle glow
-        ctx.shadowColor='rgba(160,180,255,0.4)';
-        ctx.shadowBlur=40;
-        ctx.fillStyle=`rgba(255,255,255,${glAlpha})`;
-        ctx.fillText('Governed Logic',cx,cy);
-        ctx.shadowBlur=0;
+      // Letter by letter reveal â€” one letter every 8 frames
+      const letterInterval=8;
+      const text='Governed Logic';
+      const letterIdx=Math.floor(phaseT/letterInterval);
+      if(letterIdx<text.length){
+        glLetterAlpha[letterIdx]=Math.min((glLetterAlpha[letterIdx]||0)+0.05,1);
+      }
+      // Draw each letter
+      const fontSize=Math.min(W*0.12,110);
+      ctx.font=`700 ${fontSize}px 'Space Grotesk',sans-serif`;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.shadowColor='rgba(160,180,255,0.3)';
+      ctx.shadowBlur=30;
+      let totalW=0;
+      const measured=text.split('').map(l=>{const m=ctx.measureText(l);totalW+=m.width;return m.width;});
+      let startX=cx-totalW/2;
+      text.split('').forEach((l,i)=>{
+        const a=glLetterAlpha[i]||0;
+        if(a>0){
+          ctx.fillStyle=`rgba(255,255,255,${a})`;
+          ctx.fillText(l,startX+measured[i]/2,cy);
+        }
+        startX+=measured[i];
+      });
+      ctx.shadowBlur=0;
+      // Scroll hint fades in after name is fully revealed
+      if(phaseT>text.length*letterInterval+60){
+        const sh=document.querySelector('.scroll-hint');
+        if(sh&&sh.style.opacity!=='1'){
+          sh.style.transition='opacity 1.5s ease';
+          sh.style.opacity='1';
+        }
       }
     }
 
     requestAnimationFrame(draw);
   }
 
-  function drawOrbiting(ga){
-    // Connections between nearby particles
-    for(let i=0;i<particles.length;i++){
-      const px=cx+Math.cos(particles[i].angle)*particles[i].orbitR;
-      const py=cy+Math.sin(particles[i].angle)*particles[i].orbitR*particles[i].incl;
-      particles[i].x=px;particles[i].y=py;
-      for(let j=i+1;j<particles.length;j++){
-        const qx=cx+Math.cos(particles[j].angle)*particles[j].orbitR;
-        const qy=cy+Math.sin(particles[j].angle)*particles[j].orbitR*particles[j].incl;
-        const d=Math.sqrt((px-qx)**2+(py-qy)**2);
-        if(d<140){
-          ctx.strokeStyle=`rgba(91,141,217,${(1-d/140)*0.14*ga})`;
-          ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(qx,qy);ctx.stroke();
-        }
-      }
-      particles[i].angle+=particles[i].angVel;
-      // Depth cue â€” particles "behind" center are smaller/dimmer
-      const depthFactor=0.5+0.5*((Math.sin(particles[i].angle)*particles[i].incl+1)/2);
-      const a=(particles[i].alpha*(0.6+Math.sin(t+particles[i].phase)*0.4))*ga*depthFactor;
-      ctx.beginPath();ctx.arc(px,py,particles[i].size*depthFactor,0,Math.PI*2);
-      ctx.fillStyle=`rgba(160,185,255,${a})`;ctx.fill();
-    }
-    drawCenter(ga);
-  }
-
-  function drawPositional(ga){
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        const d=Math.sqrt((particles[i].x-particles[j].x)**2+(particles[i].y-particles[j].y)**2);
-        if(d<120){
-          ctx.strokeStyle=`rgba(91,141,217,${(1-d/120)*0.15*ga})`;
-          ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();
-        }
-      }
-      ctx.beginPath();ctx.arc(particles[i].x,particles[i].y,particles[i].size,0,Math.PI*2);
-      ctx.fillStyle=`rgba(160,185,255,${particles[i].alpha*ga})`;ctx.fill();
-    }
-    drawCenter(ga);
-  }
-
-  function drawCenter(ga){
-    // Outer glow
-    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,80);
-    g.addColorStop(0,`rgba(200,180,255,${0.3*ga})`);g.addColorStop(1,'rgba(123,94,167,0)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,80,0,Math.PI*2);ctx.fill();
-    // Pulse rings
-    for(let r=1;r<=3;r++){
-      const pr=(t*14*r)%90,pa=Math.max(0,1-pr/90)*0.3*ga;
-      ctx.beginPath();ctx.arc(cx,cy,pr,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(200,180,255,${pa})`;ctx.lineWidth=1;ctx.stroke();
-    }
-    // White center dot
-    const dg=ctx.createRadialGradient(cx,cy,0,cx,cy,35);
-    dg.addColorStop(0,`rgba(255,255,255,${0.95*ga})`);
-    dg.addColorStop(0.4,`rgba(220,210,255,${0.35*ga})`);
-    dg.addColorStop(1,'rgba(123,94,167,0)');
-    ctx.fillStyle=dg;ctx.beginPath();ctx.arc(cx,cy,35,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(cx,cy,4,0,Math.PI*2);
-    ctx.fillStyle=`rgba(255,255,255,${ga})`;ctx.fill();
-  }
-
   resize();init();
   window.addEventListener('resize',()=>{resize();init();phase='orbit';phaseT=0;});
+  // Hide scroll hint initially
+  const sh=document.querySelector('.scroll-hint');
+  if(sh)sh.style.opacity='0';
   draw();
 })();
 // SIGNAL CHART â€” chaos to coherent, neon blue/purple
