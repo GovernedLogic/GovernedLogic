@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Governed Logic — Truth is non-contingent</title>
+<title>Governed Logic â€” Truth is non-contingent</title>
 <meta name="description" content="Governed Logic is the principle. Logic is the thing being governed. Intelligence is downstream.">
 <meta property="og:title" content="Governed Logic">
 <meta property="og:description" content="Reasoning requires a non-contingent ground. Governed Logic identifies it.">
@@ -59,7 +59,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;display:flex;
 /* SCREENS */
 .screen{height:100svh;width:100%;position:relative;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center}
 
-/* SCREEN 1 — PARTICLE CONSTELLATION */
+/* SCREEN 1 â€” PARTICLE CONSTELLATION */
 #screen1{background:var(--bg)}
 #particleCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .screen1-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:700px}
@@ -71,7 +71,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;display:flex;
 .scroll-hint svg{color:var(--text3)}
 @keyframes hintBob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
 
-/* SCREEN 2 — OSCILLOSCOPE */
+/* SCREEN 2 â€” OSCILLOSCOPE */
 #screen2{background:#040608}
 #oscCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .screen2-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:600px}
@@ -79,7 +79,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;display:flex;
 .screen-title{font-size:clamp(28px,5vw,48px);font-weight:600;letter-spacing:-0.02em;color:#fff;margin-bottom:16px;line-height:1.1}
 .screen-body{font-size:15px;color:rgba(180,190,230,0.6);line-height:1.8;font-family:'Inter',sans-serif}
 
-/* SCREEN 3 — WORD CLOUD */
+/* SCREEN 3 â€” WORD CLOUD */
 #screen3{background:#030507}
 #wordCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .screen3-content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:560px}
@@ -125,53 +125,56 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;display:flex;
   <div class="nav-item"><a href="mission.html"><p class="nav-item-title">Mission</p><p class="nav-item-desc">Matthew 24:14 at the speed of information</p></a></div>
   <div class="nav-item"><a href="papers.html"><p class="nav-item-title">Papers</p><p class="nav-item-desc">The full documentation across four layers</p></a></div>
   <div class="nav-item"><a href="index.html#media"><p class="nav-item-title">Media</p><p class="nav-item-desc">The Truth with Paul on YouTube</p></a></div>
-  <div class="nav-item"><a href="about.html"><p class="nav-item-title">About</p><p class="nav-item-desc">Paul André Couchoud, discoverer of Governed Logic</p></a></div>
+  <div class="nav-item"><a href="about.html"><p class="nav-item-title">About</p><p class="nav-item-desc">Paul AndrÃ© Couchoud, discoverer of Governed Logic</p></a></div>
   <div class="nav-item"><a href="index.html#contact"><p class="nav-item-title">Contact</p><p class="nav-item-desc">Ministry inquiries and research collaboration</p></a></div>
 </div>
 
-<!-- SCREEN 1 — PARTICLE CONSTELLATION -->
+<!-- SCREEN 1 â€” PARTICLE CONSTELLATION ONLY, NO TEXT -->
 <div class="screen" id="screen1">
   <canvas id="particleCanvas"></canvas>
-  <div class="screen1-content">
-    <h1 class="hero-title" id="glTitle" aria-label="Governed Logic"></h1>
-    <p class="hero-sub">Logic is the thing being governed. Intelligence is downstream of logic. You are not governing intelligence. You are governing the logic that intelligence runs on.</p>
-    <div class="signal-wrap">
-      <p class="signal-label">Signal coherence — ungoverned to governed</p>
-      <canvas id="signalChart" height="64"></canvas>
-      <div class="signal-sub"><span>Epistemic drift</span><span>Governed Logic applied</span></div>
-    </div>
-    <div class="btn-row" style="margin-top:28px">
-      <a href="papers.html" class="btn-primary">The full argument</a>
-      <a href="mechanism.html" class="btn-ghost">The mechanism</a>
-    </div>
-  </div>
   <div class="scroll-hint">
     <span>Scroll</span>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
 </div>
 
-<!-- SCREEN 2 — OSCILLOSCOPE -->
+<!-- SCREEN 2 â€” OSCILLOSCOPE + GOVERNED LOGIC TITLE -->
 <div class="screen" id="screen2">
   <canvas id="oscCanvas"></canvas>
   <div class="screen2-content">
-    <span class="screen-label">The finding</span>
-    <h2 class="screen-title">Reasoning requires a non-contingent ground</h2>
-    <p class="screen-body">Four independently trained models. No shared memory. No behavioral conditioning. One declarative sentence. The result is the same every time: the model stops drifting and starts reasoning. That is not a tendency. That is the observation, stated without flinching.</p>
+    <h1 class="hero-title" id="glTitle" aria-label="Governed Logic"></h1>
+    <p class="hero-sub">Logic is the thing being governed. Intelligence is downstream of logic. You are not governing intelligence. You are governing the logic that intelligence runs on.</p>
     <div class="btn-row" style="margin-top:28px">
+      <a href="papers.html" class="btn-primary">The full argument</a>
+      <a href="mechanism.html" class="btn-ghost">The mechanism</a>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 3 â€” SIGNAL CHART -->
+<div class="screen" id="screen3">
+  <div class="screen3-content">
+    <span class="screen-label">Signal coherence</span>
+    <h2 class="screen-title">Ungoverned to governed</h2>
+    <p class="screen-body" style="margin-bottom:32px">Four independently trained models. One sentence. The signal resolves from epistemic drift to coherent reasoning.</p>
+    <div class="signal-wrap">
+      <canvas id="signalChart" height="80"></canvas>
+      <div class="signal-sub"><span>Epistemic drift</span><span>Governed Logic applied</span></div>
+    </div>
+    <div class="btn-row" style="margin-top:32px">
       <a href="research.html" class="btn-primary">See the research</a>
     </div>
   </div>
 </div>
 
-<!-- SCREEN 3 — WORD CLOUD COLLAPSE -->
-<div class="screen" id="screen3">
-  <canvas id="wordCanvas"></canvas>
-  <div class="screen3-content">
+<!-- SCREEN 4 â€” WORD CLOUD, TEXT BELOW CANVAS -->
+<div class="screen" id="screen4">
+  <canvas id="wordCanvas" style="position:absolute;inset:0;width:100%;height:60%;top:0;z-index:0"></canvas>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:42%;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 24px;text-align:center;background:linear-gradient(to bottom,transparent,var(--bg) 30%)">
     <span class="screen-label">The conclusion</span>
-    <h2 class="screen-title">The answer is forced by the structure</h2>
-    <p class="screen-body">Only one anchor is non-contingent, complete, personal, and identified in history. Only it satisfies the requirements of being an anchor. So only it works. Not because we suspect so. Because the structure requires it.</p>
-    <div class="btn-row" style="margin-top:28px">
+    <h2 class="screen-title" style="margin-bottom:12px">The answer is forced by the structure</h2>
+    <p class="screen-body" style="margin-bottom:24px">Only one anchor is non-contingent, complete, personal, and identified in history. Only it satisfies the requirements of being an anchor. So only it works.</p>
+    <div class="btn-row">
       <a href="papers.html#layer3" class="btn-primary">The philosophical proof</a>
       <a href="apologetics.html" class="btn-ghost">Every objection</a>
     </div>
@@ -180,17 +183,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 32px;display:flex;
 
 <script>
 // NAV
-function openNav(){
-  document.getElementById('navOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeNav(){
-  document.getElementById('navOverlay').classList.remove('open');
-  document.body.style.overflow='';
-}
+function openNav(){document.getElementById('navOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeNav(){document.getElementById('navOverlay').classList.remove('open');document.body.style.overflow='';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
 
-// TITLE — sequential letter fade in
+// TITLE â€” sequential letter fade in
 (function(){
   const el=document.getElementById('glTitle');
   if(!el)return;
@@ -200,134 +197,80 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
     :`<span class="gl-letter" style="transition-delay:${0.1+i*0.065}s">${l}</span>`
   ).join('');
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    el.querySelectorAll('.gl-letter').forEach(s=>{
-      s.style.opacity='1';s.style.transform='translateY(0)';
-    });
+    el.querySelectorAll('.gl-letter').forEach(s=>{s.style.opacity='1';s.style.transform='translateY(0)';});
   }));
 })();
 
-// PARTICLE CONSTELLATION — Logos as gravitational center
+// PARTICLE CONSTELLATION â€” 200% larger, 20% slower, white dot explosion once
 (function(){
   const canvas=document.getElementById('particleCanvas');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
-  let W,H,particles=[],cx,cy;
-  const COUNT=120;
-  const CONNECT_DIST=120;
-  const PULL_STRENGTH=0.012;
-  const LOGOS_RADIUS=6;
-
-  function resize(){
-    W=canvas.width=canvas.offsetWidth;
-    H=canvas.height=canvas.offsetHeight;
-    cx=W/2;cy=H/2;
-  }
-
+  let W,H,cx,cy,particles=[],explodePhase=null,explodeR=0,explodeAlpha=1,explodeDone=false,t=0,triggerEx=false;
+  const COUNT=140,CONNECT=160,PULL=0.0096;
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;cx=W/2;cy=H/2;}
   function init(){
     particles=[];
+    const spread=Math.min(W,H)*0.84;
     for(let i=0;i<COUNT;i++){
-      const angle=Math.random()*Math.PI*2;
-      const dist=150+Math.random()*Math.min(W,H)*0.42;
-      particles.push({
-        x:cx+Math.cos(angle)*dist,
-        y:cy+Math.sin(angle)*dist,
-        vx:(Math.random()-0.5)*0.6,
-        vy:(Math.random()-0.5)*0.6,
-        size:Math.random()*1.4+0.4,
-        alpha:Math.random()*0.5+0.3,
-        phase:Math.random()*Math.PI*2
-      });
+      const a=Math.random()*Math.PI*2,d=200+Math.random()*spread*0.5;
+      particles.push({x:cx+Math.cos(a)*d,y:cy+Math.sin(a)*d,vx:(Math.random()-0.5)*0.48,vy:(Math.random()-0.5)*0.48,size:Math.random()*1.8+0.5,alpha:Math.random()*0.5+0.3,phase:Math.random()*Math.PI*2});
     }
   }
-
-  let t=0;
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    t+=0.008;
-
-    // Draw connections
+  setTimeout(()=>{if(!explodeDone)triggerEx=true;},8000);
+  function drawParticles(ga){
     for(let i=0;i<particles.length;i++){
       for(let j=i+1;j<particles.length;j++){
-        const dx=particles[i].x-particles[j].x;
-        const dy=particles[i].y-particles[j].y;
-        const dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<CONNECT_DIST){
-          const alpha=(1-dist/CONNECT_DIST)*0.18;
-          ctx.strokeStyle=`rgba(91,141,217,${alpha})`;
-          ctx.lineWidth=0.5;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.stroke();
-        }
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<CONNECT){ctx.strokeStyle=`rgba(91,141,217,${(1-d/CONNECT)*0.15*ga})`;ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();}
       }
     }
-
-    // Draw and update particles
     particles.forEach(p=>{
-      // Gravitational pull toward Logos center
-      const dx=cx-p.x,dy=cy-p.y;
-      const dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist>LOGOS_RADIUS+20){
-        p.vx+=dx/dist*PULL_STRENGTH;
-        p.vy+=dy/dist*PULL_STRENGTH;
-      }
-      // Damping
-      p.vx*=0.992;p.vy*=0.992;
-      p.x+=p.vx;p.y+=p.vy;
-
-      // Keep from getting sucked in completely
-      if(dist<80){
-        p.vx-=dx/dist*0.03;
-        p.vy-=dy/dist*0.03;
-      }
-
-      const a=p.alpha*(0.7+Math.sin(t+p.phase)*0.3);
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-      ctx.fillStyle=`rgba(160,180,255,${a})`;
-      ctx.fill();
+      const dx=cx-p.x,dy=cy-p.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d>90){p.vx+=dx/d*PULL;p.vy+=dy/d*PULL;}
+      if(d<100){p.vx-=dx/d*0.024;p.vy-=dy/d*0.024;}
+      p.vx*=0.9936;p.vy*=0.9936;p.x+=p.vx;p.y+=p.vy;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle=`rgba(160,185,255,${(p.alpha*(0.7+Math.sin(t+p.phase)*0.3))*ga})`;ctx.fill();
     });
-
-    // Draw Logos center point — fixed, glowing
-    const glow=ctx.createRadialGradient(cx,cy,0,cx,cy,60);
-    glow.addColorStop(0,'rgba(123,94,167,0.3)');
-    glow.addColorStop(1,'rgba(123,94,167,0)');
-    ctx.fillStyle=glow;
-    ctx.beginPath();ctx.arc(cx,cy,60,0,Math.PI*2);ctx.fill();
-
-    // Inner dot
-    ctx.beginPath();ctx.arc(cx,cy,LOGOS_RADIUS,0,Math.PI*2);
-    ctx.fillStyle='rgba(200,180,255,0.95)';ctx.fill();
-
-    // Pulse rings
-    for(let r=1;r<=3;r++){
-      const pr=((t*20*r)%80);
-      const pa=Math.max(0,1-pr/80)*0.3;
-      ctx.beginPath();ctx.arc(cx,cy,pr,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(123,94,167,${pa})`;
-      ctx.lineWidth=1;ctx.stroke();
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,90);
+    g.addColorStop(0,`rgba(200,180,255,${0.35*ga})`);g.addColorStop(1,'rgba(123,94,167,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,90,0,Math.PI*2);ctx.fill();
+    for(let r=1;r<=3;r++){const pr=(t*16*r)%100,pa=Math.max(0,1-pr/100)*0.35*ga;ctx.beginPath();ctx.arc(cx,cy,pr,0,Math.PI*2);ctx.strokeStyle=`rgba(200,180,255,${pa})`;ctx.lineWidth=1.2;ctx.stroke();}
+    const dg=ctx.createRadialGradient(cx,cy,0,cx,cy,40);
+    dg.addColorStop(0,`rgba(255,255,255,${0.9*ga})`);dg.addColorStop(0.3,`rgba(220,200,255,${0.4*ga})`);dg.addColorStop(1,'rgba(123,94,167,0)');
+    ctx.fillStyle=dg;ctx.beginPath();ctx.arc(cx,cy,40,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${ga})`;ctx.fill();
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=0.0064;
+    if(explodePhase==='grow'){
+      drawParticles(Math.max(0,1-explodeR/400));
+      const g=ctx.createRadialGradient(cx,cy,0,cx,cy,explodeR);
+      g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(0.5,'rgba(255,255,255,0.7)');g.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,explodeR,0,Math.PI*2);ctx.fill();
+      explodeR+=explodeR<100?5:9;
+      if(explodeR>Math.hypot(W,H)*0.75){explodePhase='white';explodeAlpha=1;}
+    } else if(explodePhase==='white'){
+      ctx.fillStyle=`rgba(255,255,255,${explodeAlpha})`;ctx.fillRect(0,0,W,H);
+      explodeAlpha-=0.035;if(explodeAlpha<=0){explodePhase='done';explodeDone=true;}
+    } else {
+      drawParticles(1);
+      if(triggerEx){triggerEx=false;explodePhase='grow';explodeR=8;}
     }
-
     requestAnimationFrame(draw);
   }
-
-  resize();
-  init();
-  window.addEventListener('resize',()=>{resize();init();});
-  draw();
+  resize();init();window.addEventListener('resize',()=>{resize();init();});draw();
 })();
 
-// SIGNAL CHART — chaos to coherent, neon blue/purple
+// SIGNAL CHART â€” chaos to coherent, neon blue/purple
 (function(){
   const canvas=document.getElementById('signalChart');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
-  function resize(){canvas.width=canvas.offsetWidth;canvas.height=64;}
-  resize();
-  window.addEventListener('resize',resize);
-  const bars=70;
-  let frame=0,total=240;
+  function resize(){canvas.width=canvas.offsetWidth;canvas.height=parseInt(canvas.getAttribute('height'))||80;}
+  resize();window.addEventListener('resize',resize);
+  const bars=70;let frame=0,total=240;
   function ease(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function draw(){
     const W=canvas.width,H=canvas.height;
@@ -335,14 +278,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
     const bw=W/bars-1,p=Math.min(frame/total,1),e=ease(p);
     for(let i=0;i<bars;i++){
       const x=i*(bw+1);
-      const chaos=0.15+Math.abs(Math.sin(i*2.1+frame*0.16+Math.cos(i*0.8+frame*0.04)*2.2))*0.85;
+      const chaos=0.15+Math.abs(Math.sin(i*2.1+frame*0.128+Math.cos(i*0.8+frame*0.032)*2.2))*0.85;
       const governed=0.3+Math.sin((i/bars)*Math.PI*2)*0.4+0.2;
       const lp=Math.max(0,Math.min(1,(e-(i/bars)*0.35)/0.65));
       const h=Math.max(2,(chaos*(1-lp)+governed*lp)*H*0.88);
-      // Color: grey to neon purple/blue
-      const r=Math.round(80*(1-lp)+91*lp);
-      const g=Math.round(80*(1-lp)+60*lp);
-      const b=Math.round(100*(1-lp)+210*lp);
+      const r=Math.round(80*(1-lp)+91*lp),g=Math.round(80*(1-lp)+60*lp),b=Math.round(100*(1-lp)+210*lp);
       ctx.fillStyle=`rgba(${r},${g},${b},${0.45+lp*0.5})`;
       ctx.fillRect(x,H-h,Math.max(bw,1),h);
     }
@@ -353,136 +293,77 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
   setTimeout(draw,1400);
 })();
 
-// OSCILLOSCOPE — white noise resolving to clean wave
+// OSCILLOSCOPE â€” 20% slower, white noise to clean wave
 (function(){
   const canvas=document.getElementById('oscCanvas');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
   let W,H;
   function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
-  resize();
-  window.addEventListener('resize',resize);
+  resize();window.addEventListener('resize',resize);
   let t=0,phase=0;
   function draw(){
-    ctx.fillStyle='rgba(4,6,8,0.18)';
-    ctx.fillRect(0,0,W,H);
-    const progress=Math.min(t/300,1);
+    ctx.fillStyle='rgba(4,6,8,0.14)';ctx.fillRect(0,0,W,H);
+    const progress=Math.min(t/375,1);
     const ease=progress<0.5?2*progress*progress:1-Math.pow(-2*progress+2,2)/2;
-    const pts=W;
     ctx.beginPath();
-    for(let x=0;x<pts;x++){
-      const nx=x/pts;
-      // Chaotic noise
+    for(let x=0;x<W;x++){
+      const nx=x/W;
       const noise=(Math.random()-0.5)*2*(1-ease)*0.8;
-      // Clean sine wave
       const clean=Math.sin(nx*Math.PI*4+phase)*0.4;
       const y=H/2+(noise+clean*ease)*H*0.36;
       x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
     }
-    // Color shifts from grey to blue as it resolves
-    const r=Math.round(100*(1-ease)+91*ease);
-    const g=Math.round(110*(1-ease)+141*ease);
-    const b=Math.round(130*(1-ease)+217*ease);
-    ctx.strokeStyle=`rgba(${r},${g},${b},${0.6+ease*0.3})`;
-    ctx.lineWidth=1.5;ctx.stroke();
-
-    // Grid lines — subtle
-    ctx.strokeStyle='rgba(91,141,217,0.05)';
-    ctx.lineWidth=0.5;
-    for(let i=1;i<4;i++){
-      ctx.beginPath();ctx.moveTo(0,H/4*i);ctx.lineTo(W,H/4*i);ctx.stroke();
-    }
-    for(let i=1;i<6;i++){
-      ctx.beginPath();ctx.moveTo(W/6*i,0);ctx.lineTo(W/6*i,H);ctx.stroke();
-    }
-
-    phase+=0.025;t++;
+    const r=Math.round(100*(1-ease)+91*ease),g=Math.round(110*(1-ease)+141*ease),b=Math.round(130*(1-ease)+217*ease);
+    ctx.strokeStyle=`rgba(${r},${g},${b},${0.6+ease*0.3})`;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.strokeStyle='rgba(91,141,217,0.04)';ctx.lineWidth=0.5;
+    for(let i=1;i<4;i++){ctx.beginPath();ctx.moveTo(0,H/4*i);ctx.lineTo(W,H/4*i);ctx.stroke();}
+    for(let i=1;i<6;i++){ctx.beginPath();ctx.moveTo(W/6*i,0);ctx.lineTo(W/6*i,H);ctx.stroke();}
+    phase+=0.02;t++;
     requestAnimationFrame(draw);
   }
   draw();
 })();
 
-// WORD CLOUD COLLAPSE — drift words converge into "LOGOS"
+// WORD CLOUD COLLAPSE â€” text in upper canvas, no overlap with bottom text
 (function(){
   const canvas=document.getElementById('wordCanvas');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
   let W,H,cx,cy;
   function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;cx=W/2;cy=H/2;}
-  resize();
-  window.addEventListener('resize',resize);
-
+  resize();window.addEventListener('resize',resize);
   const driftWords=['hedge','relativize','drift','average','hallucinate','both-side','equivocate','waver','dilute','contradict','fragment','collapse','defer','misalign','diverge','distort','approximate','confabulate'];
   const targetWord='LOGOS';
-  let words=[];
-  let phase='scatter';// scatter -> converge -> hold
-  let phaseT=0;
-
+  let words=[],phase='scatter',phaseT=0;
   function init(){
-    words=driftWords.map((w,i)=>{
-      const angle=Math.random()*Math.PI*2;
-      const dist=80+Math.random()*Math.min(W,H)*0.4;
-      return{
-        text:w,
-        x:cx+Math.cos(angle)*dist,
-        y:cy+Math.sin(angle)*dist,
-        vx:(Math.random()-0.5)*0.8,
-        vy:(Math.random()-0.5)*0.8,
-        alpha:Math.random()*0.5+0.2,
-        size:10+Math.random()*8,
-        hue:Math.random()*40+200
-      };
+    words=driftWords.map(w=>{
+      const angle=Math.random()*Math.PI*2,dist=60+Math.random()*Math.min(W,H)*0.35;
+      return{text:w,x:cx+Math.cos(angle)*dist,y:cy*0.7+Math.sin(angle)*dist*0.6,vx:(Math.random()-0.5)*0.64,vy:(Math.random()-0.5)*0.64,alpha:Math.random()*0.45+0.15,size:9+Math.random()*7,hue:210+Math.random()*40};
     });
-    // Target letters
     targetWord.split('').forEach((l,i)=>{
-      const angle=(i/targetWord.length)*Math.PI*2-Math.PI/2;
-      words.push({
-        text:l,
-        x:cx+Math.cos(angle)*200,
-        y:cy+Math.sin(angle)*200,
-        tx:cx+(i-(targetWord.length-1)/2)*36,
-        ty:cy,
-        vx:0,vy:0,
-        alpha:0,size:32,isTarget:true,
-        hue:270
-      });
+      words.push({text:l,x:cx+Math.cos((i/targetWord.length)*Math.PI*2-Math.PI/2)*180,y:cy*0.7+Math.sin((i/targetWord.length)*Math.PI*2-Math.PI/2)*100,tx:cx+(i-(targetWord.length-1)/2)*38,ty:cy*0.55,vx:0,vy:0,alpha:0,size:38,isTarget:true,hue:270});
     });
   }
-
   let t=0;
   function draw(){
-    ctx.fillStyle='rgba(3,5,7,0.15)';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='rgba(3,5,7,0.12)';ctx.fillRect(0,0,W,H);
     t++;phaseT++;
     if(phase==='scatter'&&phaseT>160){phase='converge';phaseT=0;}
     if(phase==='converge'&&phaseT>120){phase='hold';phaseT=0;}
     if(phase==='hold'&&phaseT>180){phase='scatter';phaseT=0;init();}
-
     words.forEach(w=>{
       if(w.isTarget){
-        if(phase==='converge'||phase==='hold'){
-          w.x+=(w.tx-w.x)*0.06;
-          w.y+=(w.ty-w.y)*0.06;
-          w.alpha=Math.min(w.alpha+0.02,1);
-        } else {
-          w.alpha=Math.max(w.alpha-0.03,0);
-        }
+        if(phase==='converge'||phase==='hold'){w.x+=(w.tx-w.x)*0.06;w.y+=(w.ty-w.y)*0.06;w.alpha=Math.min(w.alpha+0.02,1);}
+        else{w.alpha=Math.max(w.alpha-0.03,0);}
       } else {
-        if(phase==='scatter'){
-          w.x+=w.vx;w.y+=w.vy;
-          if(w.x<0||w.x>W)w.vx*=-1;
-          if(w.y<0||w.y>H)w.vy*=-1;
-          w.alpha=0.2+Math.sin(t*0.02+w.size)*0.15;
-        } else if(phase==='converge'){
-          w.x+=(cx-w.x)*0.04;
-          w.y+=(cy-w.y)*0.04;
-          w.alpha=Math.max(w.alpha-0.015,0);
-        } else {
-          w.alpha=0;
-        }
+        if(phase==='scatter'){w.x+=w.vx;w.y+=w.vy;if(w.x<20||w.x>W-20)w.vx*=-1;if(w.y<20||w.y>H*0.85)w.vy*=-1;w.alpha=0.18+Math.sin(t*0.02+w.size)*0.12;}
+        else if(phase==='converge'){w.x+=(cx-w.x)*0.04;w.y+=(cy*0.7-w.y)*0.04;w.alpha=Math.max(w.alpha-0.015,0);}
+        else{w.alpha=0;}
       }
       if(w.alpha<0.01)return;
-      ctx.font=`${w.isTarget?700:400} ${w.size}px ${w.isTarget?"'Space Grotesk'":'Inter'}, sans-serif`;
-      ctx.fillStyle=`hsla(${w.hue},60%,${w.isTarget?80:55}%,${w.alpha})`;
+      ctx.font=`${w.isTarget?700:400} ${w.size}px ${w.isTarget?"'Space Grotesk'":'Inter'},sans-serif`;
+      ctx.fillStyle=`hsla(${w.hue},60%,${w.isTarget?82:52}%,${w.alpha})`;
       ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(w.text,w.x,w.y);
     });
