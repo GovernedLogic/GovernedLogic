@@ -219,11 +219,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
 }());
 
 </script>
-
 <script>
 // ============================================================
-// GOVERNED LOGIC â€” PARTICLE ANIMATION
-// Full sequence: intro â†’ orbit â†’ migrate â†’ charge â†’ explode â†’ white â†’ reveal
+// GOVERNED LOGIC â€” PARTICLE ANIMATION v4
+// intro â†’ orbit â†’ migrate â†’ explode â†’ white â†’ reveal
 // ============================================================
 (function() {
   'use strict';
@@ -233,10 +232,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
   const ctx = canvas.getContext('2d');
 
   // â”€â”€ CONFIG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  const COUNT = 180;
+  const COUNT = 333;
   const ORBIT_MS   = 15000;
   const MIGRATE_MS = 10000;
-  const CHARGE_MS  =  3000;
   const EXPLODE_MS =  3000;
   const WHITE_MS   =  1500;
 
@@ -268,9 +266,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
     cy = H / 2;
   }
 
-  // â”€â”€ SEED OF LIFE TARGETS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â”€â”€ SEED OF LIFE TARGETS â€” 333 particles across 7 circles â”€â”€
   function buildSolTargets() {
-    const R = Math.min(W, H) * 0.22;
+    const R = Math.min(W, H) * 0.21;
     const centers = [
       { x: cx,                              y: cy },
       { x: cx,                              y: cy - R },
@@ -285,13 +283,16 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
     centers.forEach(c => {
       for (let i = 0; i < perCircle; i++) {
         const a = (i / perCircle) * Math.PI * 2;
-        const r = R * (0.88 + Math.random() * 0.12);
+        const r = R * (0.85 + Math.random() * 0.15);
         solTargets.push({ x: c.x + Math.cos(a) * r, y: c.y + Math.sin(a) * r });
       }
     });
+    // Fill remainder
     while (solTargets.length < COUNT) {
+      const ci = Math.floor(Math.random() * centers.length);
       const a = Math.random() * Math.PI * 2;
-      solTargets.push({ x: cx + Math.cos(a) * R * 0.9, y: cy + Math.sin(a) * R * 0.9 });
+      const r = R * (0.85 + Math.random() * 0.15);
+      solTargets.push({ x: centers[ci].x + Math.cos(a) * r, y: centers[ci].y + Math.sin(a) * r });
     }
   }
 
@@ -303,24 +304,37 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
       const orbitR  = 60 + Math.random() * maxR;
       const angle   = Math.random() * Math.PI * 2;
       const incl    = 0.25 + Math.random() * 0.55;
-      // Kepler-like: inner orbits faster
       const angVel  = (0.004 + Math.random() * 0.005) * (1 / (orbitR / 200));
+      // Color variation: mostly blue/white, some purple, some bright
+      const colorType = Math.random();
+      let r, g, b;
+      if (colorType < 0.15) {
+        // Purple
+        r = 180 + Math.floor(Math.random() * 60);
+        g = 130 + Math.floor(Math.random() * 40);
+        b = 255;
+      } else if (colorType < 0.25) {
+        // Bright white-blue
+        r = 220; g = 230; b = 255;
+      } else {
+        // Standard blue
+        r = 160; g = 185; b = 255;
+      }
       particles.push({
         orbitR, angle, incl, angVel,
         x: cx + Math.cos(angle) * orbitR,
         y: cy + Math.sin(angle) * orbitR * incl,
-        // migration
         startX: 0, startY: 0,
         tx: 0, ty: 0,
-        // appearance
-        size:  Math.random() * 1.6 + 0.5,
+        size:  Math.random() * 1.8 + 0.4,
         alpha: Math.random() * 0.5 + 0.3,
         ph:    Math.random() * Math.PI * 2,
         visAlpha: 0,
+        cr: r, cg: g, cb: b,
         // micro-drift for reveal
         mAngle: Math.random() * Math.PI * 2,
-        mR:     Math.random() * 4 + 1,
-        mSpeed: (Math.random() - 0.5) * 0.02
+        mR:     Math.random() * 3 + 1,
+        mSpeed: (Math.random() - 0.5) * 0.018
       });
     }
     glLetters = Array(14).fill(0);
@@ -334,13 +348,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
 
   // â”€â”€ DRAW HELPERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function dot(x, y, r, R, G, B, a) {
+    if (a <= 0) return;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(${R},${G},${B},${a})`;
     ctx.fill();
   }
 
-  function drawCenter(alpha, charge) {
+  function drawCenter(alpha) {
     const t = (performance.now() - startTime) / 1000;
     // Pulse rings
     for (let r = 1; r <= 3; r++) {
@@ -352,65 +367,51 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
       ctx.lineWidth = 1;
       ctx.stroke();
     }
-    // Glow halo
-    const glowR = 35 + (charge || 0) * 20;
-    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+    // Glow
+    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 35);
     grd.addColorStop(0,   `rgba(255,255,255,${0.95 * alpha})`);
     grd.addColorStop(0.4, `rgba(230,215,255,${0.35 * alpha})`);
     grd.addColorStop(1,   'rgba(123,94,167,0)');
     ctx.fillStyle = grd;
     ctx.beginPath();
-    ctx.arc(cx, cy, glowR, 0, Math.PI * 2);
+    ctx.arc(cx, cy, 35, 0, Math.PI * 2);
     ctx.fill();
-    // Center dot
-    const dotR = 4 + Math.sin(t * 8) * 1.5 * (charge || 0);
-    dot(cx, cy, Math.max(3, dotR), 255, 255, 255, alpha);
-  }
-
-  function drawSolCircles(alpha) {
-    if (alpha <= 0) return;
-    const R = Math.min(W, H) * 0.22;
-    const centers = [
-      { x: cx,                              y: cy },
-      { x: cx,                              y: cy - R },
-      { x: cx + R * Math.sin(Math.PI / 3), y: cy - R * Math.cos(Math.PI / 3) },
-      { x: cx + R * Math.sin(Math.PI / 3), y: cy + R * Math.cos(Math.PI / 3) },
-      { x: cx,                              y: cy + R },
-      { x: cx - R * Math.sin(Math.PI / 3), y: cy + R * Math.cos(Math.PI / 3) },
-      { x: cx - R * Math.sin(Math.PI / 3), y: cy - R * Math.cos(Math.PI / 3) }
-    ];
-    ctx.strokeStyle = `rgba(240,225,200,${alpha})`;
-    ctx.lineWidth = 0.7;
-    centers.forEach(c => {
-      ctx.beginPath();
-      ctx.arc(c.x, c.y, R, 0, Math.PI * 2);
-      ctx.stroke();
-    });
-    ctx.beginPath();
-    ctx.arc(cx, cy, R * 2, 0, Math.PI * 2);
-    ctx.stroke();
+    dot(cx, cy, 4, 255, 255, 255, alpha);
   }
 
   // â”€â”€ PHASE TRANSITION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function setPhase(name, now) {
     phase = name;
     phaseStart = now;
-
     if (name === 'migrate') {
       buildSolTargets();
       particles.forEach((p, i) => {
-        // snapshot exact current position â€” no jump
         p.startX = p.x;
         p.startY = p.y;
         p.tx = solTargets[i].x;
         p.ty = solTargets[i].y;
       });
     }
-    if (name === 'explode') {
-      explodeR = 8;
-    }
-    if (name === 'white') {
-      explodeAlpha = 1;
+    if (name === 'explode') { explodeR = 8; }
+    if (name === 'white')   { explodeAlpha = 1; }
+  }
+
+  // â”€â”€ CONNECTION LINES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function drawLines(pts, maxDist, baseAlpha) {
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x;
+        const dy = pts[i].y - pts[j].y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < maxDist) {
+          ctx.strokeStyle = `rgba(160,185,255,${(1 - d / maxDist) * baseAlpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.stroke();
+        }
+      }
     }
   }
 
@@ -418,15 +419,12 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
   function frame(now) {
     if (!startTime) startTime = now;
     const elapsed = now - phaseStart;
-    const globalT  = (now - startTime) / 1000;
 
     ctx.clearRect(0, 0, W, H);
 
-    // â”€â”€ INTRO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ INTRO â”€â”€
     if (phase === 'intro') {
       let textAlpha = 0;
-      let dotA = 0;
-      let particleProgress = 0;
 
       if (elapsed < I_FADEIN) {
         textAlpha = elapsed / I_FADEIN;
@@ -436,13 +434,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
         textAlpha = 1 - (elapsed - I_FADEIN - I_HOLD) / I_FADEOUT;
       } else if (elapsed < I_FADEIN + I_HOLD + I_FADEOUT + I_DOT) {
         const dp = (elapsed - I_FADEIN - I_HOLD - I_FADEOUT) / I_DOT;
-        dotA = easeInOut(dp);
-        drawCenter(dotA, 0);
+        drawCenter(easeInOut(dp));
       } else if (elapsed < I_TOTAL) {
-        dotA = 1;
-        drawCenter(1, 0);
-        particleProgress = (elapsed - I_FADEIN - I_HOLD - I_FADEOUT - I_DOT) / I_APPEAR;
-        const visible = Math.floor(particleProgress * COUNT);
+        drawCenter(1);
+        const pp = (elapsed - I_FADEIN - I_HOLD - I_FADEOUT - I_DOT) / I_APPEAR;
+        const visible = Math.floor(pp * COUNT);
         particles.forEach((p, i) => {
           if (i < visible) {
             p.visAlpha = Math.min(p.visAlpha + 0.05, 1);
@@ -450,14 +446,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
             p.x = cx + Math.cos(p.angle) * p.orbitR;
             p.y = cy + Math.sin(p.angle) * p.orbitR * p.incl;
             const df = 0.5 + 0.5 * ((Math.sin(p.angle) * p.incl + 1) / 2);
-            dot(p.x, p.y, p.size * df, 160, 185, 255, p.alpha * p.visAlpha * df);
+            dot(p.x, p.y, p.size * df, p.cr, p.cg, p.cb, p.alpha * p.visAlpha * df);
           }
         });
       } else {
         setPhase('orbit', now);
       }
 
-      // Text
       if (textAlpha > 0.01) {
         const fs = Math.min(W * 0.045, 32);
         ctx.font = `400 ${fs}px 'Lora', Georgia, serif`;
@@ -468,67 +463,45 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
       }
     }
 
-    // â”€â”€ ORBIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ ORBIT â”€â”€
     else if (phase === 'orbit') {
+      const t = (now - startTime) / 1000;
       particles.forEach(p => {
         p.angle += p.angVel;
         p.x = cx + Math.cos(p.angle) * p.orbitR;
         p.y = cy + Math.sin(p.angle) * p.orbitR * p.incl;
         const df = 0.5 + 0.5 * ((Math.sin(p.angle) * p.incl + 1) / 2);
-        const a  = p.alpha * (0.6 + Math.sin(globalT + p.ph) * 0.4) * df;
-        dot(p.x, p.y, p.size * df, 160, 185, 255, a);
+        dot(p.x, p.y, p.size * df, p.cr, p.cg, p.cb, p.alpha * (0.6 + Math.sin(t + p.ph) * 0.4) * df);
       });
-      drawCenter(1, 0);
+      drawCenter(1);
       if (elapsed >= ORBIT_MS) setPhase('migrate', now);
     }
 
-    // â”€â”€ MIGRATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ MIGRATE â€” continuous motion, no stop â”€â”€
     else if (phase === 'migrate') {
       const prog = Math.min(elapsed / MIGRATE_MS, 1);
       const e    = easeInOut(prog);
-      // Color: blue â†’ hint of gold-white
-      const rC = Math.round(160 + 80 * e);
-      const gC = Math.round(185 + 55 * e);
-      const bC = Math.round(255 - 30 * e);
-
+      // Color shift: toward gold-white as they settle
       particles.forEach(p => {
-        // Angular velocity tapers smoothly to zero
-        const av = p.angVel * (1 - e);
-        p.angle += av;
-
-        // Current orbital position
+        p.angle += p.angVel * (1 - e);
         const ox = cx + Math.cos(p.angle) * p.orbitR;
         const oy = cy + Math.sin(p.angle) * p.orbitR * p.incl;
-
-        // Blend: early = mostly orbital, late = mostly target
         p.x = ox + (p.tx - ox) * e;
         p.y = oy + (p.ty - oy) * e;
-
+        const rC = Math.round(p.cr + (240 - p.cr) * e * 0.4);
+        const gC = Math.round(p.cg + (225 - p.cg) * e * 0.4);
+        const bC = Math.round(p.cb + (200 - p.cb) * e * 0.4);
         dot(p.x, p.y, p.size, rC, gC, bC, p.alpha * (0.6 + e * 0.4));
       });
-
-      // Sol circles fade in from 50% through migration
-      // sol circles removed — particles form geometry
-      drawCenter(1, 0);
-      if (prog >= 1) setPhase('charge', now);
-    }
-
-    // â”€â”€ CHARGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    else if (phase === 'charge') {
-      const prog = Math.min(elapsed / CHARGE_MS, 1);
-      particles.forEach(p => {
-        dot(p.x, p.y, p.size, 240, 225, 200, p.alpha * 0.85);
-      });
-      // sol circles removed — particles form geometry
-      drawCenter(1, prog);
+      drawCenter(1);
+      // Trigger explosion the moment migration completes
       if (prog >= 1) setPhase('explode', now);
     }
 
-    // â”€â”€ EXPLODE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ EXPLODE â€” immediate, no charge phase â”€â”€
     else if (phase === 'explode') {
       const prog    = Math.min(elapsed / EXPLODE_MS, 1);
       const fadeAmt = 1 - prog;
-      // sol circles removed — particles form geometry
       particles.forEach(p => {
         dot(p.x, p.y, p.size, 240, 225, 200, p.alpha * fadeAmt);
       });
@@ -545,7 +518,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
       if (prog >= 1) setPhase('white', now);
     }
 
-    // â”€â”€ WHITE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ WHITE â”€â”€
     else if (phase === 'white') {
       const prog = Math.min(elapsed / WHITE_MS, 1);
       explodeAlpha = 1 - easeInOut(prog);
@@ -554,58 +527,61 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
       if (prog >= 1) setPhase('reveal', now);
     }
 
-    // â”€â”€ REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â”€â”€ REVEAL â€” orbital constellation with lines, name high â”€â”€
     else if (phase === 'reveal') {
-      // Activate stars on first frame of reveal
-      if (!window._starOn) window._starActivate();
-      // Connection lines between nearby particles — the geometric alive feel
-      const CONN = 90;
-      for (let i = 0; i < particles.length; i++) {
-        const pi = particles[i];
-        const mix = pi.mAngle !== undefined ? { x: pi.tx + Math.cos(pi.mAngle) * pi.mR, y: pi.ty + Math.sin(pi.mAngle) * pi.mR } : pi;
-        for (let j = i + 1; j < particles.length; j++) {
-          const pj = particles[j];
-          const mjx = pj.tx + Math.cos(pj.mAngle) * pj.mR;
-          const mjy = pj.ty + Math.sin(pj.mAngle) * pj.mR;
-          const dx = mix.x - mjx, dy = mix.y - mjy;
-          const d = Math.sqrt(dx*dx + dy*dy);
-          if (d < CONN) {
-            ctx.strokeStyle = `rgba(160,185,255,${(1-d/CONN)*0.22})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath(); ctx.moveTo(mix.x, mix.y); ctx.lineTo(mjx, mjy); ctx.stroke();
-          }
-        }
-      }
-      // Particles with micro-drift
+      if (!window._starOn) { window._starOn = true; }
+      const t = (now - startTime) / 1000;
+
+      // Particles return to gentle orbit around center
       particles.forEach(p => {
-        p.mAngle += p.mSpeed;
-        const mx = p.tx + Math.cos(p.mAngle) * p.mR;
-        const my = p.ty + Math.sin(p.mAngle) * p.mR;
-        dot(mx, my, p.size, 200, 215, 255, p.alpha * 0.55);
+        p.mAngle += p.mSpeed * 0.4;
+        // Drift slowly back toward orbital feel
+        const targetX = cx + Math.cos(p.mAngle + p.angle) * (p.mR * 8 + 20);
+        const targetY = cy + Math.sin(p.mAngle + p.angle) * (p.mR * 6 + 15);
+        p.x += (targetX - p.x) * 0.002;
+        p.y += (targetY - p.y) * 0.002;
       });
-      drawCenter(0.7, 0);
-      // "Governed Logic" — pure white, letter by letter
+
+      // Connection lines â€” organic geometric tesseract feel
+      const pts = particles.map(p => ({ x: p.x, y: p.y }));
+      drawLines(pts, 85, 0.2);
+
+      // Draw particles with color
+      particles.forEach(p => {
+        dot(p.x, p.y, p.size, p.cr, p.cg, p.cb, p.alpha * 0.55);
+      });
+
+      drawCenter(0.8);
+
+      // "Governed Logic" â€” pure white, letter by letter, positioned HIGH
       const text = 'Governed Logic';
       const letterMs = 130;
       const lettersDone = Math.floor(elapsed / letterMs);
       for (let i = 0; i < Math.min(lettersDone + 1, text.length); i++) {
-        const letterElapsed = elapsed - i * letterMs;
-        const a = Math.min(letterElapsed / 300, 1);
+        const a = Math.min((elapsed - i * letterMs) / 300, 1);
         glLetters[i] = a;
       }
-      const fontSize = Math.min(W * 0.12, 110);
+      const fontSize = Math.min(W * 0.11, 100);
       ctx.font = `700 ${fontSize}px 'Space Grotesk', sans-serif`;
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.shadowBlur = 0; ctx.shadowColor = 'transparent';
-      const chars = text.split('');
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = 'transparent';
+      // Position at 28% from top of screen
+      const textY = H * 0.28;
+      const chars  = text.split('');
       const widths = chars.map(l => ctx.measureText(l).width);
       const totalW = widths.reduce((a, b) => a + b, 0);
       let sx = cx - totalW / 2;
       chars.forEach((l, i) => {
         const a = glLetters[i] || 0;
-        if (a > 0) { ctx.fillStyle = `rgba(255,255,255,${a})`; ctx.fillText(l, sx + widths[i]/2, cy); }
+        if (a > 0) {
+          ctx.fillStyle = `rgba(255,255,255,${a})`;
+          ctx.fillText(l, sx + widths[i] / 2, textY);
+        }
         sx += widths[i];
       });
+
       if (!scrollHintShown && elapsed > text.length * letterMs + 1000) {
         scrollHintShown = true;
         const sh = document.querySelector('.scroll-hint');
@@ -626,11 +602,16 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); 
     requestAnimationFrame(frame);
   }
 
-  window.addEventListener('resize', () => { resize(); initParticles(); setPhase('intro', performance.now()); });
-  boot();
+  window.addEventListener('resize', () => {
+    resize();
+    initParticles();
+    setPhase('intro', performance.now());
+  });
 
+  boot();
 }());
 
+</script>
 </script>
 <script>
 // OSCILLOSCOPE — white noise resolving to clean wave
