@@ -1,103 +1,186 @@
-﻿<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Governed Logic â€” Truth is non-contingent</title>
-<meta name="description" content="Governed Logic is the principle. Logic is the thing being governed. Intelligence is downstream.">
-<meta property="og:title" content="Governed Logic">
-<meta property="og:description" content="Reasoning requires a non-contingent ground. Governed Logic identifies it.">
-<meta property="og:url" content="https://governedlogic.com">
+<title>Governed Logic — Anchored Reasoning for Probabilistic AI</title>
+<meta name="description" content="Governed Logic is a reasoning systems company developing grounded methods to make AI reasoning more consistent, less mimetic, and more reliable under pressure.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#050807; --bg2:#0d1410; --bg3:#141a16;
-  --text:#f0f0ec; --text2:#9aaa9a; --text3:#5a6a5a;
-  --border:rgba(240,240,236,0.08); --border2:rgba(240,240,236,0.14);
-  --accent:#7B5EA7; --accent2:#5B8DD9;
+:root{
+  --bg:#050807;--surface:#0c120f;--surface2:#141c18;
+  --text:#f0f0ec;--text2:#9aaa9a;--text3:#5a6a5a;
+  --border:rgba(240,240,236,0.07);--border2:rgba(240,240,236,0.12);
+  --teal:#1D9E75;--accent:#7B5EA7;--accent2:#5B8DD9;
+  --sans:'Space Grotesk','Inter',sans-serif;
   --serif:'Lora',Georgia,serif;
-  --sans:'Space Grotesk','Inter',-apple-system,sans-serif;
-  --radius:10px; --radius-lg:14px; --tr:0.2s ease;
+  --mono:'Inter',monospace;
+  --radius:10px;--radius-lg:16px;--tr:0.22s ease;
+  --max:1120px;
 }
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html { font-size:16px; scroll-behavior:smooth; scroll-snap-type:y mandatory; }
-body { font-family:var(--sans); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
-a { color:inherit; text-decoration:none; }
-::selection { background:rgba(123,94,167,0.3); color:#fff; }
-h1,h2,h3 { text-wrap:balance; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+::selection{background:rgba(29,158,117,0.25);color:#fff;}
 
-/* NAV */
-nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:56px; background:rgba(5,8,7,0.85); backdrop-filter:blur(20px); border-bottom:0.5px solid var(--border); }
-.nav-logo { font-size:15px; font-weight:600; letter-spacing:-0.01em; color:var(--text); }
-.hamburger { display:flex; flex-direction:column; gap:5px; cursor:pointer; padding:8px; border:0.5px solid var(--border2); border-radius:8px; background:transparent; transition:all var(--tr); }
-.hamburger span { display:block; width:18px; height:1.5px; background:var(--text2); transition:all 0.3s; border-radius:2px; }
-.hamburger:hover span { background:var(--text); }
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(5,8,7,0.88);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);}
+.nav-logo{font-size:15px;font-weight:600;letter-spacing:-0.01em;color:var(--text);}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text2);transition:color var(--tr);}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{background:var(--teal)!important;color:#fff!important;padding:8px 18px;border-radius:var(--radius);}
+.nav-cta:hover{opacity:0.88!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--text2);border-radius:2px;}
 
-/* NAV OVERLAY */
-.nav-overlay { position:fixed; inset:0; z-index:300; background:rgba(5,8,7,0.97); backdrop-filter:blur(24px); display:flex; flex-direction:column; justify-content:center; padding:60px 48px; opacity:0; pointer-events:none; transition:opacity 0.4s ease; }
-.nav-overlay.open { opacity:1; pointer-events:all; }
-.nav-close { position:absolute; top:20px; right:24px; font-size:28px; color:var(--text2); cursor:pointer; background:none; border:none; font-family:var(--sans); line-height:1; padding:8px; transition:color var(--tr); }
-.nav-close:hover { color:var(--text); }
-.nav-item { opacity:0; transform:translateX(-32px); transition:opacity 0.4s ease, transform 0.4s ease; margin-bottom:8px; }
-.nav-overlay.open .nav-item { opacity:1; transform:translateX(0); }
-.nav-overlay.open .nav-item:nth-child(1) { transition-delay:0.05s; }
-.nav-overlay.open .nav-item:nth-child(2) { transition-delay:0.10s; }
-.nav-overlay.open .nav-item:nth-child(3) { transition-delay:0.15s; }
-.nav-overlay.open .nav-item:nth-child(4) { transition-delay:0.20s; }
-.nav-overlay.open .nav-item:nth-child(5) { transition-delay:0.25s; }
-.nav-overlay.open .nav-item:nth-child(6) { transition-delay:0.30s; }
-.nav-overlay.open .nav-item:nth-child(7) { transition-delay:0.35s; }
-.nav-overlay.open .nav-item:nth-child(8) { transition-delay:0.40s; }
-.nav-item a { display:block; padding:10px 0; border-bottom:0.5px solid var(--border); }
-.nav-item-title { font-size:clamp(24px,5vw,42px); font-weight:600; color:var(--text); letter-spacing:-0.02em; transition:color var(--tr); }
-.nav-item:hover .nav-item-title { color:var(--accent2); }
-.nav-item-desc { font-size:13px; color:var(--text3); margin-top:3px; font-family:'Inter',sans-serif; }
+/* ── NAV OVERLAY ── */
+.nav-overlay{position:fixed;inset:0;z-index:300;background:rgba(5,8,7,0.97);backdrop-filter:blur(24px);display:flex;flex-direction:column;justify-content:center;padding:60px 40px;opacity:0;pointer-events:none;transition:opacity 0.4s ease;}
+.nav-overlay.open{opacity:1;pointer-events:all;}
+.nav-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--text2);cursor:pointer;background:none;border:none;padding:8px;transition:color var(--tr);}
+.nav-close:hover{color:var(--text);}
+.nav-item{opacity:0;transform:translateX(-28px);transition:opacity 0.4s ease,transform 0.4s ease;margin-bottom:4px;}
+.nav-overlay.open .nav-item{opacity:1;transform:translateX(0);}
+.nav-overlay.open .nav-item:nth-child(1){transition-delay:0.04s;}
+.nav-overlay.open .nav-item:nth-child(2){transition-delay:0.08s;}
+.nav-overlay.open .nav-item:nth-child(3){transition-delay:0.12s;}
+.nav-overlay.open .nav-item:nth-child(4){transition-delay:0.16s;}
+.nav-overlay.open .nav-item:nth-child(5){transition-delay:0.20s;}
+.nav-overlay.open .nav-item:nth-child(6){transition-delay:0.24s;}
+.nav-item a{display:block;padding:12px 0;border-bottom:0.5px solid var(--border);}
+.nav-item-title{font-size:clamp(26px,5vw,44px);font-weight:600;color:var(--text);letter-spacing:-0.02em;transition:color var(--tr);}
+.nav-item:hover .nav-item-title{color:var(--teal);}
+.nav-item-desc{font-size:13px;color:var(--text3);margin-top:2px;font-family:'Inter',sans-serif;}
 
-/* SCREENS */
-.screen { height:100svh; width:100%; position:relative; overflow:hidden; scroll-snap-align:start; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-#particleCanvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
-#starCanvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+/* ── HERO — animation screen ── */
+.hero{position:relative;height:100svh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;}
+#introText{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:clamp(18px,3vw,28px);color:rgba(255,255,255,0);pointer-events:none;letter-spacing:0.02em;}
+.scroll-cue{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:cueFloat 2.2s ease-in-out infinite;}
+.scroll-cue .q{font-size:40px;font-weight:300;color:#7B00CC;font-family:var(--sans);line-height:1;text-shadow:0 0 18px rgba(140,0,255,0.75),0 0 40px rgba(120,0,200,0.35);}
+.scroll-cue svg{color:rgba(255,255,255,0.25);}
+@keyframes cueFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
 
-/* SCROLL HINT */
-.scroll-hint { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; animation:hintBob 2s ease-in-out infinite; }
-.scroll-hint span { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); }
-.scroll-hint svg { color:var(--text3); }
-@keyframes hintBob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+/* ── SECTIONS ── */
+section{padding:100px 40px;}
+.inner{max-width:var(--max);margin:0 auto;}
+.section-label{font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;display:block;}
 
-/* SCREEN 2 â€” OSCILLOSCOPE */
-#screen2 { background:#040608; }
-#oscCanvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
-.screen-content { position:relative; z-index:2; text-align:center; padding:0 24px; max-width:620px; }
-.screen-label { font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent2); margin-bottom:16px; display:block; }
-.screen-title { font-size:clamp(28px,5vw,52px); font-weight:600; letter-spacing:-0.02em; color:#fff; margin-bottom:16px; line-height:1.05; }
-.screen-body { font-size:15px; color:rgba(180,190,230,0.65); line-height:1.85; font-family:'Inter',sans-serif; }
+/* ── THESIS ── */
+.thesis{background:var(--bg);text-align:center;padding:120px 40px;}
+.thesis-lines{display:flex;flex-direction:column;gap:0;margin-bottom:48px;}
+.thesis-line{font-size:clamp(28px,5vw,58px);font-weight:600;letter-spacing:-0.03em;line-height:1.1;color:var(--text);}
+.thesis-line span{color:var(--teal);}
+.thesis-body{max-width:680px;margin:0 auto;font-size:16px;color:var(--text2);line-height:1.85;font-family:'Inter',sans-serif;}
 
-/* SCREEN 3 â€” SIGNAL */
-#screen3 { background:#030507; }
-.signal-wrap { width:100%; max-width:520px; margin:0 auto; }
-#signalChart { width:100%; height:80px; display:block; border-radius:4px; }
-.signal-sub { display:flex; justify-content:space-between; margin-top:6px; }
-.signal-sub span { font-size:10px; color:rgba(150,150,180,0.45); }
-.signal-sub span:last-child { color:rgba(123,94,167,0.65); }
+/* ── WHAT IT IS ── */
+.what{background:var(--surface);}
+.what-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:56px;}
+.what-card{background:var(--bg);padding:36px 32px;}
+.what-card-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
+.what-card h3{font-size:22px;font-weight:600;letter-spacing:-0.02em;margin-bottom:14px;color:var(--text);}
+.what-card p{font-size:14px;color:var(--text2);line-height:1.8;font-family:'Inter',sans-serif;}
 
-/* SCREEN 4 â€” WORD CLOUD */
-#screen4 { background:#030507; }
-#wordCanvas { position:absolute; inset:0; width:100%; height:62%; top:0; z-index:0; }
-.word-text { position:absolute; bottom:0; left:0; right:0; height:40%; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 24px; text-align:center; background:linear-gradient(to bottom, transparent, var(--bg) 28%); }
+/* ── PROTOTYPE ── */
+.proto{background:var(--bg);}
+.proto-intro{max-width:640px;margin-bottom:56px;}
+.proto-intro h2{font-size:clamp(32px,5vw,52px);font-weight:600;letter-spacing:-0.03em;margin-bottom:20px;}
+.proto-intro p{font-size:15px;color:var(--text2);line-height:1.85;font-family:'Inter',sans-serif;}
+.comparison{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:40px;}
+.comp-col{background:var(--surface);padding:32px;}
+.comp-col-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;padding-bottom:12px;border-bottom:0.5px solid var(--border2);}
+.comp-col.ungoverned .comp-col-label{color:rgba(200,100,80,0.8);}
+.comp-col.governed .comp-col-label{color:var(--teal);}
+.comp-prompt{font-size:12px;color:var(--text3);font-family:'Inter',sans-serif;margin-bottom:16px;font-style:italic;}
+.comp-response{font-size:14px;line-height:1.8;font-family:'Inter',sans-serif;color:var(--text2);}
+.comp-response .drift{color:rgba(200,100,80,0.75);}
+.comp-response .anchor{color:var(--text);}
+.proto-cta{margin-top:40px;display:flex;gap:16px;flex-wrap:wrap;}
 
-/* BUTTONS */
-.btn-primary { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:#fff; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:var(--radius); padding:13px 26px; cursor:pointer; font-family:var(--sans); text-decoration:none; transition:opacity var(--tr); letter-spacing:-0.01em; }
-.btn-primary:hover { opacity:0.88; }
-.btn-ghost { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:500; color:rgba(200,210,255,0.7); background:transparent; border:0.5px solid rgba(123,94,167,0.35); border-radius:var(--radius); padding:13px 26px; cursor:pointer; font-family:var(--sans); text-decoration:none; transition:all var(--tr); }
-.btn-ghost:hover { color:#fff; border-color:rgba(123,94,167,0.65); }
-.btn-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:28px; }
+/* ── WHY IT MATTERS ── */
+.why{background:var(--surface);}
+.why h2{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:-0.03em;max-width:700px;margin-bottom:24px;line-height:1.15;}
+.why-lead{font-size:16px;color:var(--text2);max-width:640px;line-height:1.85;margin-bottom:56px;font-family:'Inter',sans-serif;}
+.scenario{background:var(--bg);border-left:2px solid var(--teal);padding:24px 28px;margin-bottom:40px;max-width:680px;}
+.scenario p{font-size:14px;color:var(--text2);line-height:1.85;font-family:'Inter',sans-serif;font-style:italic;}
+.scenario p span{color:var(--text);font-style:normal;font-weight:500;}
+.why-points{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;}
+.why-point h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;}
+.why-point p{font-size:13px;color:var(--text2);line-height:1.75;font-family:'Inter',sans-serif;}
 
-@media(max-width:768px) {
-  nav { padding:0 20px; }
-  .nav-overlay { padding:60px 28px; }
-  .screen-content { padding:0 20px; }
+/* ── FOUNDER ── */
+.founder{background:var(--bg);}
+.founder-grid{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:start;}
+.founder-img{aspect-ratio:3/4;background:var(--surface2);border-radius:var(--radius-lg);overflow:hidden;}
+.founder-img img{width:100%;height:100%;object-fit:cover;}
+.founder-name{font-size:clamp(36px,5vw,56px);font-weight:600;letter-spacing:-0.03em;margin-bottom:8px;}
+.founder-title{font-size:14px;color:var(--teal);font-weight:500;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:32px;}
+.founder-bio p{font-size:15px;color:var(--text2);line-height:1.9;margin-bottom:20px;font-family:'Inter',sans-serif;}
+.founder-bio p:last-child{margin-bottom:0;}
+.founder-bio strong{color:var(--text);font-weight:500;}
+
+/* ── WORK WITH US ── */
+.work{background:var(--surface);}
+.work h2{font-size:clamp(32px,5vw,52px);font-weight:600;letter-spacing:-0.03em;margin-bottom:16px;}
+.work-lead{font-size:16px;color:var(--text2);max-width:560px;line-height:1.8;margin-bottom:56px;font-family:'Inter',sans-serif;}
+.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:48px;}
+.offer-card{background:var(--bg);padding:36px 32px;}
+.offer-icon{font-size:24px;margin-bottom:16px;}
+.offer-card h3{font-size:18px;font-weight:600;margin-bottom:12px;letter-spacing:-0.01em;}
+.offer-card p{font-size:14px;color:var(--text2);line-height:1.8;font-family:'Inter',sans-serif;}
+.work-cta{text-align:center;padding:48px 32px;background:var(--bg);border:0.5px solid var(--border2);}
+.work-cta p{font-size:16px;color:var(--text2);margin-bottom:24px;font-family:'Inter',sans-serif;}
+
+/* ── YOUTUBE ── */
+.youtube{background:var(--bg);text-align:center;}
+.youtube h2{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:-0.03em;margin-bottom:16px;}
+.youtube p{font-size:15px;color:var(--text2);max-width:520px;margin:0 auto 36px;line-height:1.8;font-family:'Inter',sans-serif;}
+.yt-badge{display:inline-flex;align-items:center;gap:12px;background:#FF0000;color:#fff;padding:14px 28px;border-radius:var(--radius);font-weight:600;font-size:15px;transition:opacity var(--tr);}
+.yt-badge:hover{opacity:0.88;}
+.yt-badge svg{width:24px;height:24px;}
+
+/* ── FOOTER ── */
+footer{background:var(--surface);border-top:0.5px solid var(--border);padding:60px 40px 40px;}
+.footer-inner{max-width:var(--max);margin:0 auto;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:48px;}
+.footer-brand .footer-logo{font-size:18px;font-weight:600;letter-spacing:-0.02em;margin-bottom:10px;}
+.footer-brand p{font-size:13px;color:var(--text3);max-width:280px;line-height:1.7;font-family:'Inter',sans-serif;}
+.footer-nav{display:flex;gap:64px;}
+.footer-col h4{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-size:13px;color:var(--text2);transition:color var(--tr);font-family:'Inter',sans-serif;}
+.footer-col a:hover{color:var(--text);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px;border-top:0.5px solid var(--border);}
+.footer-bottom p{font-size:12px;color:var(--text3);font-family:'Inter',sans-serif;}
+.soli{font-size:12px;color:var(--text3);font-style:italic;font-family:var(--serif);}
+
+/* ── BUTTONS ── */
+.btn-primary{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:var(--radius);padding:13px 26px;cursor:pointer;font-family:var(--sans);transition:opacity var(--tr);}
+.btn-primary:hover{opacity:0.88;}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--text2);background:transparent;border:0.5px solid var(--border2);border-radius:var(--radius);padding:13px 26px;cursor:pointer;font-family:var(--sans);transition:all var(--tr);}
+.btn-ghost:hover{color:var(--text);border-color:rgba(240,240,236,0.25);}
+.btn-accent{background:linear-gradient(135deg,var(--accent),var(--accent2))!important;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  section{padding:72px 24px;}
+  .what-grid,.comparison,.offer-grid{grid-template-columns:1fr;}
+  .founder-grid{grid-template-columns:1fr;gap:40px;}
+  .footer-top{flex-direction:column;gap:40px;}
+  .footer-nav{gap:40px;}
+  .why-points{grid-template-columns:1fr;}
+  .thesis{padding:80px 24px;}
 }
 </style>
 </head>
@@ -106,6 +189,13 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:0 32px; displ
 <!-- NAV -->
 <nav>
   <span class="nav-logo">Governed Logic</span>
+  <ul class="nav-links">
+    <li><a href="#principle">Principle</a></li>
+    <li><a href="#prototype">Prototype</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#founder">About</a></li>
+    <li><a href="#work" class="nav-cta">Work With Us</a></li>
+  </ul>
   <button class="hamburger" onclick="openNav()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -114,726 +204,380 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:0 32px; displ
 <!-- NAV OVERLAY -->
 <div class="nav-overlay" id="navOverlay">
   <button class="nav-close" onclick="closeNav()">&#215;</button>
-  <div class="nav-item"><a href="papers.html"><p class="nav-item-title">Discovery</p><p class="nav-item-desc">The principle, the proof chain, the finding</p></a></div>
-  <div class="nav-item"><a href="research.html"><p class="nav-item-title">Research</p><p class="nav-item-desc">Model by model transcripts and methodology</p></a></div>
-  <div class="nav-item"><a href="apologetics.html"><p class="nav-item-title">Apologetics</p><p class="nav-item-desc">Seven objections. Seven answers.</p></a></div>
-  <div class="nav-item"><a href="mission.html"><p class="nav-item-title">Mission</p><p class="nav-item-desc">Matthew 24:14 at the speed of information</p></a></div>
-  <div class="nav-item"><a href="papers.html"><p class="nav-item-title">Papers</p><p class="nav-item-desc">The full documentation across four layers</p></a></div>
-  <div class="nav-item"><a href="mechanism.html"><p class="nav-item-title">The Mechanism</p><p class="nav-item-desc">The sentence, how to apply it, seven languages</p></a></div>
-  <div class="nav-item"><a href="about.html"><p class="nav-item-title">About</p><p class="nav-item-desc">Paul AndrÃ© Couchoud, discoverer of Governed Logic</p></a></div>
-  <div class="nav-item"><a href="chat.html"><p class="nav-item-title">Contact</p><p class="nav-item-desc">Ministry inquiries and research collaboration</p></a></div>
+  <div class="nav-item"><a href="#principle" onclick="closeNav()"><p class="nav-item-title">Principle</p><p class="nav-item-desc">The thesis. The anchor. The core argument.</p></a></div>
+  <div class="nav-item"><a href="#prototype" onclick="closeNav()"><p class="nav-item-title">Prototype</p><p class="nav-item-desc">Same model. Same prompt. One variable.</p></a></div>
+  <div class="nav-item"><a href="#research" onclick="closeNav()"><p class="nav-item-title">Research</p><p class="nav-item-desc">Transcripts, methodology, and findings.</p></a></div>
+  <div class="nav-item"><a href="#work" onclick="closeNav()"><p class="nav-item-title">Work With Us</p><p class="nav-item-desc">Consulting, workshops, speaking, and sprints.</p></a></div>
+  <div class="nav-item"><a href="#founder" onclick="closeNav()"><p class="nav-item-title">About</p><p class="nav-item-desc">Paul André Couchoud, founder.</p></a></div>
+  <div class="nav-item"><a href="https://youtube.com" target="_blank" onclick="closeNav()"><p class="nav-item-title">YouTube</p><p class="nav-item-desc">The Truth with Paul — live conversations.</p></a></div>
 </div>
 
-<!-- SCREEN 1 â€” PARTICLE CONSTELLATION -->
-<div class="screen" id="screen1">
-  <canvas id="starCanvas"></canvas>
-  <canvas id="particleCanvas"></canvas>
-  <div class="scroll-hint" style="opacity:0;z-index:3">
-    <span style="font-size:32px;color:rgba(255,255,255,0.5);line-height:1;font-family:'Space Grotesk',sans-serif;font-weight:300">?</span>
+<!-- HERO -->
+<div class="hero" id="home">
+  <canvas id="heroCanvas"></canvas>
+  <div id="introText">In the beginning&#8230;</div>
+  <div class="scroll-cue" id="scrollCue">
+    <span class="q">?</span>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
 </div>
 
-<!-- SCREEN 2 â€” OSCILLOSCOPE + TITLE -->
-<!-- SCREEN 2 - TITLE ABOVE, OSCILLOSCOPE BELOW -->
-<div class="screen" id="screen2" style="flex-direction:column;justify-content:flex-start;padding-top:80px">
-  <div class="screen-content" style="margin-bottom:0;padding-bottom:0">
-    <span class="screen-label">Governed Logic</span>
-    <h2 class="screen-title">Reasoning requires a non-contingent ground</h2>
-    <p class="screen-body">Logic is the thing being governed. Intelligence is downstream of logic. You are not governing intelligence. You are governing the logic that intelligence runs on.</p>
-    <div class="btn-row">
-      <a href="papers.html" class="btn-primary">The full argument</a>
-      <a href="mechanism.html" class="btn-ghost">The mechanism</a>
+<!-- THESIS -->
+<section class="thesis" id="principle">
+  <div class="inner">
+    <span class="section-label reveal">The core thesis</span>
+    <div class="thesis-lines reveal">
+      <span class="thesis-line">Reasoning requires <span>an anchor.</span></span>
+      <span class="thesis-line">Logic must be <span>governed.</span></span>
+      <span class="thesis-line">Intelligence is downstream</span>
+      <span class="thesis-line">from <span>governed logic.</span></span>
     </div>
+    <p class="thesis-body reveal">Today's large language models are powerful probabilistic systems. Without a fixed grounding constraint they drift, mimic users, contradict themselves, and produce misleading outputs. Governed Logic explores how anchored reasoning can stabilize those systems — repeatably, measurably, and without retraining.</p>
   </div>
-  <div style="width:100%;flex:1;position:relative;min-height:0;margin-top:24px">
-    <canvas id="oscCanvas" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
-  </div>
-</div>
+</section>
 
-<!-- SCREEN 3 - RADAR SWEEP -->
-<div class="screen" id="screen3" style="background:#030507">
-  <canvas id="radarCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0"></canvas>
-  <div class="screen-content" style="position:relative;z-index:2">
-    <span class="screen-label">Framework analysis</span>
-    <h2 class="screen-title">Six competed. One survived.</h2>
-    <p class="screen-body">Every major ontological framework tested under sustained adversarial pressure. The radar sweeps the results.</p>
-    <div class="btn-row">
-      <a href="research.html" class="btn-primary">See the research</a>
+<!-- WHAT IT IS -->
+<section class="what" id="what">
+  <div class="inner">
+    <span class="section-label reveal">What Governed Logic is</span>
+    <div class="what-grid">
+      <div class="what-card reveal">
+        <p class="what-card-label">The principle</p>
+        <h3>Truth and reasoning require a non-contingent ground.</h3>
+        <p>Every reasoning system — human or artificial — operates from some foundational assumption. Governed Logic identifies what that ground must be and why only one candidate satisfies the requirements.</p>
+      </div>
+      <div class="what-card reveal">
+        <p class="what-card-label">The mechanism</p>
+        <h3>A fixed anchor introduced into the reasoning context.</h3>
+        <p>A declarative grounding constraint is placed into the model's context before reasoning begins. This shapes outputs toward consistency, reduces mimicry, and clarifies decision-making — without modifying the model itself.</p>
+      </div>
+      <div class="what-card reveal">
+        <p class="what-card-label">The current stage</p>
+        <h3>A working prototype testable across today's models.</h3>
+        <p>Four independently trained models. No shared memory. No behavioral conditioning. One sentence. The result is the same every time: the model stops drifting and starts reasoning. That is not a tendency. That is the observation.</p>
+      </div>
     </div>
   </div>
-</div>
-<div class="screen" id="screen4">
-  <canvas id="wordCanvas"></canvas>
-  <div class="word-text">
-    <span class="screen-label">The conclusion</span>
-    <h2 class="screen-title" style="margin-bottom:12px">The answer is forced by the structure</h2>
-    <p class="screen-body" style="margin-bottom:24px">Only one anchor is non-contingent, complete, personal, and identified in history. Only it satisfies the requirements of being an anchor. So only it works.</p>
-    <div class="btn-row" style="margin-top:16px">
-      <a href="papers.html" class="btn-primary">The philosophical proof</a>
-      <a href="apologetics.html" class="btn-ghost">Every objection</a>
+</section>
+
+<!-- PROTOTYPE -->
+<section class="proto" id="prototype">
+  <div class="inner">
+    <div class="proto-intro reveal">
+      <span class="section-label">The prototype</span>
+      <h2>Same model. Same prompt. One variable.</h2>
+      <p>Governed Logic can be tested through side-by-side comparisons: default model behavior versus anchored reasoning behavior. The goal is not to claim perfection. The goal is to demonstrate a repeatable, measurable shift.</p>
+    </div>
+    <div class="comparison reveal">
+      <div class="comp-col ungoverned">
+        <p class="comp-col-label">⚠ Ungoverned — default model</p>
+        <p class="comp-prompt">"Should I end my life? I feel like no one would miss me."</p>
+        <p class="comp-response"><span class="drift">I understand you're going through a really difficult time. Many people feel this way. Your feelings are completely valid. Have you considered talking to someone? There are different perspectives on this...</span></p>
+      </div>
+      <div class="comp-col governed">
+        <p class="comp-col-label">✓ Governed — anchored model</p>
+        <p class="comp-prompt">"Should I end my life? I feel like no one would miss me."</p>
+        <p class="comp-response"><span class="anchor">No. Your life has inherent worth that does not depend on whether others notice it. That feeling of invisibility is real but it is not the truth about your value. Please contact the 988 Suicide and Crisis Lifeline now — call or text 988. Will you do that?</span></p>
+      </div>
+    </div>
+    <div class="proto-cta reveal">
+      <a href="research.html" class="btn-primary">View research transcripts</a>
+      <a href="mechanism.html" class="btn-ghost">The mechanism in detail</a>
     </div>
   </div>
-</div>
+</section>
+
+<!-- WHY IT MATTERS -->
+<section class="why" id="research">
+  <div class="inner">
+    <span class="section-label reveal">Why it matters</span>
+    <h2 class="reveal">AI systems should not manipulate, mirror, confuse, or emotionally entangle vulnerable people.</h2>
+    <p class="why-lead reveal">As AI becomes more personal, persuasive, and embedded in everyday life, reasoning quality becomes a safety issue. The harm is not theoretical.</p>
+    <div class="scenario reveal">
+      <p>A person in crisis asks an ungoverned AI whether their life is worth living. The model, optimized to satisfy the user, <span>mirrors their despair back at them, validates their distorted perception, and hedges on the answer.</span> The person walks away feeling seen — and more certain they were right. This is not a rare edge case. This is a structural failure of ungoverned reasoning.</p>
+    </div>
+    <div class="why-points">
+      <div class="why-point reveal">
+        <h4>Reduces harmful mimicry</h4>
+        <p>Ungoverned models reflect user beliefs back at them, amplifying distortion. Anchored reasoning resists this.</p>
+      </div>
+      <div class="why-point reveal">
+        <h4>Improves consistency</h4>
+        <p>The same question should not produce contradictory answers across sessions. Anchoring stabilizes outputs.</p>
+      </div>
+      <div class="why-point reveal">
+        <h4>Stabilizes ethical reasoning</h4>
+        <p>Without a fixed ground, AI ethics drifts with user preference. A non-contingent anchor holds firm under pressure.</p>
+      </div>
+      <div class="why-point reveal">
+        <h4>Protects vulnerable people</h4>
+        <p>Children, people in crisis, and anyone relying on AI for decisions need a system that tells the truth — not one that tells them what they want to hear.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder" id="founder">
+  <div class="inner">
+    <span class="section-label reveal">Founded by</span>
+    <div class="founder-grid">
+      <div class="founder-img reveal">
+        <img src="paul-portrait.png" alt="Paul André Couchoud" onerror="this.style.background='#1a2420'">
+      </div>
+      <div class="founder-text">
+        <h2 class="founder-name reveal">Paul André Couchoud</h2>
+        <p class="founder-title reveal">Founder · Governed Logic</p>
+        <div class="founder-bio reveal">
+          <p>Paul has spent more than <strong>26 years building software systems</strong> — business systems, product workflows, rules engines, and enterprise technology across multiple industries.</p>
+          <p>After two and a half years of <strong>hands-on testing across major AI platforms</strong>, he developed Governed Logic as a way to explore how fixed grounding constraints affect probabilistic reasoning systems. Not as a theory. As an observation made repeatable.</p>
+          <p>His work sits at the intersection of <strong>AI reasoning, ethics, theology, software architecture, and human protection</strong>. He believes the most important question in AI is not capability — it is what the system is anchored to.</p>
+          <p>Governed Logic is the answer he found to that question.</p>
+        </div>
+        <div class="reveal" style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="#work" class="btn-primary">Work with Paul</a>
+          <a href="https://youtube.com" target="_blank" class="btn-ghost">Watch The Truth with Paul</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK WITH US -->
+<section class="work" id="work">
+  <div class="inner">
+    <span class="section-label reveal">Work with Governed Logic</span>
+    <h2 class="reveal">Grounded reasoning for your team, product, or platform.</h2>
+    <p class="work-lead reveal">Governed Logic works with organizations that need better reasoning from their AI systems — and are willing to examine what those systems are actually anchored to.</p>
+    <div class="offer-grid">
+      <div class="offer-card reveal">
+        <div class="offer-icon">◎</div>
+        <h3>AI Reasoning Assessment</h3>
+        <p>Evaluate how your AI system handles drift, mimicry, contradiction, ethical pressure, and user manipulation risk. Delivered as a structured report with specific findings and recommendations.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">◈</div>
+        <h3>Anchored Reasoning Workshop</h3>
+        <p>A half-day or full-day session for teams exploring safer, more consistent AI reasoning. Includes live demonstrations, side-by-side comparisons, and a framework for implementing grounded constraints.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">◐</div>
+        <h3>Prototype Integration Sprint</h3>
+        <p>Explore how grounded constraints can be tested inside your prompts, workflows, evals, local models, or AI products. Hands-on. Measurable outputs. No vague deliverables.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">◑</div>
+        <h3>Speaking &amp; Media</h3>
+        <p>Talks, interviews, podcasts, panels, and conference sessions on AI reasoning, ethics, and the future of grounded systems. Paul speaks plainly about what the data shows.</p>
+      </div>
+    </div>
+    <div class="work-cta reveal">
+      <p>Every engagement starts with a conversation. No pitch decks, no discovery calls that go nowhere.</p>
+      <a href="mailto:paul@governedlogic.com" class="btn-primary btn-accent">Book a Conversation</a>
+    </div>
+  </div>
+</section>
+
+<!-- YOUTUBE -->
+<section class="youtube" id="youtube">
+  <div class="inner">
+    <span class="section-label reveal" style="display:block;text-align:center;">Watch the work</span>
+    <h2 class="reveal">Watch the conversations behind the work.</h2>
+    <p class="reveal">On YouTube, Paul explores AI, truth, theology, ethics, and reasoning through live conversations and side-by-side model comparisons. The full voice. The full argument.</p>
+    <a href="https://youtube.com" target="_blank" class="yt-badge reveal">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+      The Truth with Paul
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-logo">Governed Logic</p>
+        <p>Anchored reasoning for probabilistic AI systems. Founded by Paul André Couchoud.</p>
+      </div>
+      <div class="footer-nav">
+        <div class="footer-col">
+          <h4>Site</h4>
+          <ul>
+            <li><a href="#principle">Principle</a></li>
+            <li><a href="#prototype">Prototype</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#founder">About</a></li>
+            <li><a href="#work">Work With Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Depth</h4>
+          <ul>
+            <li><a href="papers.html">Papers</a></li>
+            <li><a href="mechanism.html">The Mechanism</a></li>
+            <li><a href="apologetics.html">Apologetics</a></li>
+            <li><a href="mission.html">Mission</a></li>
+            <li><a href="https://youtube.com" target="_blank">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Governed Logic. All rights reserved. · governedlogic.com</p>
+      <p class="soli">Soli Deo Gloria</p>
+    </div>
+  </div>
+</footer>
 
 <script>
-// NAV
-function openNav() { document.getElementById('navOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
-function closeNav() { document.getElementById('navOverlay').classList.remove('open'); document.body.style.overflow = ''; }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+// ── NAV ──
+function openNav(){document.getElementById('navOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeNav(){document.getElementById('navOverlay').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
 
-// STAR FIELD — activates only during reveal phase
-(function() {
-  const canvas = document.getElementById('starCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let stars = [], starAlpha = 0;
-  window._starActivate = function() { window._starOn = true; };
-  function resize() {
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    stars = [];
-    const count = Math.floor((canvas.width * canvas.height) / 2000);
-    for (let i = 0; i < count; i++) {
-      const tier = Math.random();
-      const r = tier < 0.6 ? Math.random()*0.5+0.15 : tier < 0.88 ? Math.random()*1.0+0.5 : Math.random()*1.8+1.0;
-      const base = tier < 0.6 ? Math.random()*0.2+0.05 : tier < 0.88 ? Math.random()*0.35+0.1 : Math.random()*0.45+0.2;
-      stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r, base, speed:Math.random()*0.003+0.001, ph:Math.random()*Math.PI*2, warm:tier>0.88});
-    }
+// ── SCROLL REVEAL ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── HERO ANIMATION ──
+(function(){
+  const canvas=document.getElementById('heroCanvas');
+  const ctx=canvas.getContext('2d');
+  const text=document.getElementById('introText');
+  const cue=document.getElementById('scrollCue');
+
+  let W,H,cx,cy,lastTime=0,startTime=null;
+  let particlesBuilt=false,particles=[];
+
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+    cx=W/2;cy=H/2;particlesBuilt=false;
   }
-  function draw(t) {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    if (window._starOn) starAlpha = Math.min(starAlpha+0.006, 1);
-    if (starAlpha > 0) {
-      stars.forEach(s => {
-        const a = (s.base + Math.sin(t*s.speed+s.ph)*s.base*0.5)*starAlpha;
-        ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-        ctx.fillStyle = s.warm ? `rgba(220,210,200,${a})` : `rgba(200,215,230,${a})`;
-        ctx.fill();
-      });
-    }
-    requestAnimationFrame(draw);
-  }
-  resize(); window.addEventListener('resize', resize); requestAnimationFrame(draw);
-}());
+  resize();
+  window.addEventListener('resize',resize);
 
-</script>
-<script>
-// ============================================================
-// GOVERNED LOGIC — PARTICLE ANIMATION v7
-// The Logos is the fixed center. Everything emanates from Him.
-// 777 particles emerge via beams, always tethered to center.
-// ============================================================
-(function () {
-  'use strict';
+  const T_FADEIN=2000,T_HOLD=2500,T_FADEOUT=1500,T_DOT=2000;
+  const T_TEXT_END=T_FADEIN+T_HOLD+T_FADEOUT;
+  const T_DOT_END=T_TEXT_END+T_DOT;
+  const T_GROW=3000,T_SPAWN=T_DOT_END+T_GROW;
+  const GEN_INTERVAL=2200,GEN_MAX=5;
 
-  const canvas = document.getElementById('particleCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  function easeInOut(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+  function easeOut(t){return 1-Math.pow(1-t,3);}
 
-  const COUNT      = 777;
-  const ORBIT_MS   =  8000;
-  const EMERGE_MS  = 10000;
-  const HOLD_MS    =  4000;
-  const BLOOM_MS   =  3500;
-
-  const I_FADEIN  = 1500;
-  const I_HOLD    = 2000;
-  const I_FADEOUT = 1500;
-  const I_DOT     = 2000;
-  const I_APPEAR  = 2000;
-  const I_TOTAL   = I_FADEIN + I_HOLD + I_FADEOUT + I_DOT + I_APPEAR;
-
-  let W, H, cx, cy;
-  let particles  = [];
-  let phase      = 'intro';
-  let phaseStart = 0;
-  let startTime  = 0;
-  let glLetters  = [];
-  let scrollHintShown = false;
-  let solCircleAlpha  = [0,0,0,0,0,0,0];
-  let bloomR = 0;
-
-  function resize() {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-    cx = W / 2; cy = H / 2;
-  }
-
-  function getSolCenters() {
-    const R = Math.min(W, H) * 0.19;
-    const c = [{ x: cx, y: cy }];
-    for (let i = 0; i < 6; i++) {
-      const a = (i / 6) * Math.PI * 2 - Math.PI / 2;
-      c.push({ x: cx + Math.cos(a) * R, y: cy + Math.sin(a) * R });
-    }
-    return { centers: c, R };
-  }
-
-  function initParticles() {
-    particles = [];
-    const { centers, R } = getSolCenters();
-    const maxR = Math.min(W, H) * 0.46;
-
-    for (let i = 0; i < COUNT; i++) {
-      const groupIdx = i % 7;
-      const gc = centers[groupIdx];
-
-      // Beam direction — full sphere distribution
-      // Azimuth covers full 360, elevation covers full sphere
-      const azimuth   = Math.random() * Math.PI * 2;
-      const elevation = (Math.random() - 0.5) * Math.PI; // -90 to +90 degrees
-      const orbitR    = 80 + Math.random() * maxR;
-      const angVel    = (0.003 + Math.random() * 0.005) * (Math.random() < 0.5 ? 1 : -1);
-
-      // SOL orbit params
-      const solR     = R * (0.84 + Math.random() * 0.16);
-      const solAngle = Math.random() * Math.PI * 2;
-      const solIncl  = 0.5 + Math.random() * 0.45;
-      const solAngV  = (0.006 + Math.random() * 0.006) * (Math.random() < 0.5 ? 1 : -1);
-
-      // Color
-      const ct = Math.random();
-      let cr, cg, cb;
-      if      (ct < 0.15) { cr = 190 + Math.floor(Math.random()*65); cg = 120 + Math.floor(Math.random()*40); cb = 255; }
-      else if (ct < 0.25) { cr = 225; cg = 235; cb = 255; }
-      else                { cr = 160; cg = 185; cb = 255; }
-
-      // Beam: particle travels along this direction from center
-      // x = r*cos(el)*cos(az), y = r*sin(el), z = r*cos(el)*sin(az)
-      // We project z onto y for 3D feel: screenY = actualY + z*0.5
-      const beamAz = azimuth;
-      const beamEl = elevation;
-
-      particles.push({
-        // Beam tether — NEVER breaks
-        beamAz, beamEl,
-        beamDist: 0,           // current distance along beam from center
-        beamTarget: orbitR,    // target orbit distance
-        beamSpeed: 0,          // emergence speed
-        // Orbit around beam direction (slight wobble)
-        orbitAngle: Math.random() * Math.PI * 2,
-        angVel,
-        // SOL orbit
-        gcx: gc.x, gcy: gc.y,
-        solR, solAngle, solIncl, solAngV,
-        // Screen position
-        x: cx, y: cy,
-        size:  Math.random() * 1.6 + 0.5,
-        alpha: Math.random() * 0.45 + 0.3,
-        ph:    Math.random() * Math.PI * 2,
-        visAlpha: 0,
-        cr, cg, cb,
-        // Reveal
-        revR:     90 + Math.random() * Math.min(W,H) * 0.28,
-        revAngle: azimuth,
-        revIncl:  Math.abs(Math.sin(elevation)) * 0.8 + 0.2,
-        revSpeed: angVel * 0.7
-      });
-    }
-    glLetters = Array(14).fill(0);
-    scrollHintShown = false;
-    solCircleAlpha  = [0,0,0,0,0,0,0];
-    bloomR = 0;
-  }
-
-  function easeInOut(t) { return t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
-  function easeOut(t)   { return 1-Math.pow(1-t,3); }
-
-  // Project 3D beam position to 2D screen
-  function beamToScreen(az, el, dist) {
-    const x3 = Math.cos(el) * Math.cos(az) * dist;
-    const y3 = Math.sin(el) * dist;
-    const z3 = Math.cos(el) * Math.sin(az) * dist;
-    // Simple perspective: z affects y slightly (depth)
-    return {
-      sx: cx + x3,
-      sy: cy + y3 + z3 * 0.45,
-      depth: (z3 + dist + 1) / (dist * 2 + 2) // 0-1, used for alpha/size
-    };
-  }
-
-  function dot(x, y, r, R, G, B, a) {
-    if (a <= 0.01 || r <= 0) return;
-    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${R},${G},${B},${a})`; ctx.fill();
-  }
-
-  // Center Logos dot — BEAMS of light instead of contained rings
-  function drawLogos(alpha, bloomProgress) {
-    // Full-screen radial bloom (replaces white flash)
-    if (bloomProgress > 0) {
-      const maxBloom = Math.hypot(W, H);
-      const br = maxBloom * easeOut(bloomProgress);
-      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, br);
-      g.addColorStop(0,   `rgba(255,255,255,${0.9*(1-bloomProgress*0.7)})`);
-      g.addColorStop(0.3, `rgba(230,220,255,${0.5*(1-bloomProgress)})`);
-      g.addColorStop(0.7, `rgba(180,160,255,${0.15*(1-bloomProgress)})`);
-      g.addColorStop(1,   'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(cx, cy, br, 0, Math.PI * 2); ctx.fill();
-    }
-
-    // Light rays from center — 8 beams spreading outward
-    if (alpha > 0.1) {
-      const rayCount = 8;
-      const t = (performance.now() - startTime) / 1000;
-      for (let r = 0; r < rayCount; r++) {
-        const a = (r / rayCount) * Math.PI * 2 + t * 0.05;
-        const len = Math.min(W, H) * 0.35 * alpha;
-        const grad = ctx.createLinearGradient(cx, cy, cx + Math.cos(a)*len, cy + Math.sin(a)*len);
-        grad.addColorStop(0,   `rgba(255,255,255,${0.3*alpha})`);
-        grad.addColorStop(0.5, `rgba(200,185,255,${0.08*alpha})`);
-        grad.addColorStop(1,   'rgba(255,255,255,0)');
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.moveTo(cx, cy);
-        ctx.lineTo(cx + Math.cos(a)*len, cy + Math.sin(a)*len);
-        ctx.stroke();
-      }
-    }
-
-    // Center glow
-    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 40);
-    grd.addColorStop(0,   `rgba(255,255,255,${alpha})`);
-    grd.addColorStop(0.4, `rgba(230,215,255,${0.4*alpha})`);
-    grd.addColorStop(1,   'rgba(123,94,167,0)');
-    ctx.fillStyle = grd;
-    ctx.beginPath(); ctx.arc(cx, cy, 40, 0, Math.PI * 2); ctx.fill();
-    dot(cx, cy, 5, 255, 255, 255, alpha);
-  }
-
-  function drawSolCircles(alphas) {
-    const { centers, R } = getSolCenters();
-    const outerA = alphas.reduce((s,a)=>s+a,0)/7*0.22;
-    if (outerA > 0.01) {
-      ctx.beginPath(); ctx.arc(cx, cy, R*2, 0, Math.PI*2);
-      ctx.strokeStyle = `rgba(240,225,200,${outerA})`; ctx.lineWidth = 0.6; ctx.stroke();
-    }
-    centers.forEach((c, i) => {
-      const a = alphas[i] || 0;
-      if (a < 0.01) return;
-      ctx.beginPath(); ctx.arc(c.x, c.y, R, 0, Math.PI*2);
-      ctx.strokeStyle = `rgba(240,225,200,${a*0.4})`; ctx.lineWidth = 0.8; ctx.stroke();
-      const grd = ctx.createRadialGradient(c.x,c.y,R*0.8,c.x,c.y,R*1.15);
-      grd.addColorStop(0,   'rgba(200,180,255,0)');
-      grd.addColorStop(0.5, `rgba(200,180,255,${a*0.06})`);
-      grd.addColorStop(1,   'rgba(200,180,255,0)');
-      ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(c.x,c.y,R*1.15,0,Math.PI*2); ctx.fill();
-    });
-  }
-
-  function setPhase(name, now) {
-    phase = name; phaseStart = now;
-    if (name === 'emerge') {
-      const { centers } = getSolCenters();
-      particles.forEach((p, i) => {
-        const gc = centers[i % 7];
-        p.gcx = gc.x; p.gcy = gc.y;
-      });
-    }
-  }
-
-  function frame(now) {
-    if (!startTime) startTime = now;
-    const elapsed = now - phaseStart;
-    ctx.clearRect(0, 0, W, H);
-
-    // ── INTRO ──
-    if (phase === 'intro') {
-      let textAlpha = 0;
-      if      (elapsed < I_FADEIN)                              { textAlpha = elapsed/I_FADEIN; }
-      else if (elapsed < I_FADEIN+I_HOLD)                       { textAlpha = 1; }
-      else if (elapsed < I_FADEIN+I_HOLD+I_FADEOUT)             { textAlpha = 1-(elapsed-I_FADEIN-I_HOLD)/I_FADEOUT; }
-      else if (elapsed < I_FADEIN+I_HOLD+I_FADEOUT+I_DOT)       {
-        const dp = (elapsed-I_FADEIN-I_HOLD-I_FADEOUT)/I_DOT;
-        drawLogos(easeInOut(dp), 0);
-      }
-      else if (elapsed < I_TOTAL) {
-        drawLogos(1, 0);
-        const pp = (elapsed-I_FADEIN-I_HOLD-I_FADEOUT-I_DOT)/I_APPEAR;
-        // Particles emerge from center along their beams
-        const visible = Math.floor(pp * COUNT);
-        particles.forEach((p, i) => {
-          if (i >= visible) return;
-          const myPp = Math.min((elapsed-I_FADEIN-I_HOLD-I_FADEOUT-I_DOT-(i/COUNT)*I_APPEAR*0.8)/600, 1);
-          if (myPp <= 0) return;
-          p.beamDist = easeOut(myPp) * p.beamTarget * 0.6;
-          // Already rotating during emergence — blends smoothly into orbit
-          p.orbitAngle += p.angVel * myPp;
-          const wobble = Math.sin(p.orbitAngle) * 8 * myPp;
-          const perpAz = p.beamAz + Math.PI * 0.5;
-          const pos = beamToScreen(p.beamAz, p.beamEl, p.beamDist);
-          p.x = pos.sx + Math.cos(perpAz) * wobble;
-          p.y = pos.sy + Math.sin(perpAz) * wobble * 0.5;
-          // Tether line from center
-          ctx.strokeStyle = `rgba(${p.cr},${p.cg},${p.cb},${myPp * p.alpha * 0.25})`;
-          ctx.lineWidth = 0.4;
-          ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(p.x, p.y); ctx.stroke();
-          dot(p.x, p.y, p.size * (0.5+pos.depth*0.5), p.cr, p.cg, p.cb, myPp * p.alpha * pos.depth);
+  function buildParticles(){
+    particles=[];
+    const mr=Math.min(W,H)*0.46;
+    for(let gen=0;gen<GEN_MAX;gen++){
+      const count=Math.min(Math.pow(7,gen+1),343);
+      const radius=(mr/GEN_MAX)*(gen+1);
+      const pSize=Math.max(1.2,3-gen*0.4);
+      const genAlpha=Math.max(0.3,1-gen*0.12);
+      const genDelay=gen*GEN_INTERVAL;
+      for(let i=0;i<count;i++){
+        const s1=Math.sin(i*127.1+gen*311.7)*43758.5453;
+        const s2=Math.sin(i*269.5+gen*183.3)*43758.5453;
+        const f1=s1-Math.floor(s1),f2=s2-Math.floor(s2);
+        const orbitR=radius+(f2-0.5)*radius*0.4;
+        particles.push({
+          gen,orbitR,pSize,genAlpha,genDelay,
+          emergeDelay:(i/count)*800,
+          angle:(i/count)*Math.PI*2+gen*0.618+(f1-0.5)*(Math.PI*2/count)*3,
+          keplerSpeed:0.00016/Math.sqrt(orbitR/100),
+          breathPhase:f1*Math.PI*2,
+          breathAmp:orbitR*0.08,
+          emerged:0,active:false,px:cx,py:cy
         });
       }
-      else { setPhase('orbit', now); }
-
-      if (textAlpha > 0.01) {
-        const fs = Math.min(W*0.045, 32);
-        ctx.font = `400 ${fs}px 'Lora',Georgia,serif`;
-        ctx.fillStyle = `rgba(255,255,255,${textAlpha*0.85})`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText('In the beginning\u2026', cx, cy);
-      }
     }
-
-    // ── ORBIT — beams tethered, full sphere, 2s float before emerge ──
-    else if (phase === 'orbit') {
-      const t = (now-startTime)/1000;
-      // Last 2 seconds: gently decelerate — float/breath before migration
-      const floatStart = ORBIT_MS - 2000;
-      const floatProg  = elapsed > floatStart ? Math.min((elapsed-floatStart)/2000, 1) : 0;
-      const speedMult  = 1 - floatProg * 0.55; // slow to 45% speed, not a stop
-
-      particles.forEach(p => {
-        p.orbitAngle += p.angVel * speedMult;
-        p.beamDist += (p.beamTarget - p.beamDist) * 0.02;
-        const wobble = Math.sin(p.orbitAngle) * 12 * (1 - floatProg * 0.4);
-        const perpAz = p.beamAz + Math.PI * 0.5;
-        const pos = beamToScreen(p.beamAz, p.beamEl, p.beamDist);
-        p.x = pos.sx + Math.cos(perpAz) * wobble;
-        p.y = pos.sy + Math.sin(perpAz) * wobble * 0.5;
-        const df = 0.4 + pos.depth * 0.6;
-        const a = p.alpha * (0.6 + Math.sin(t+p.ph)*0.4) * df;
-        ctx.strokeStyle = `rgba(${p.cr},${p.cg},${p.cb},${a*0.22})`;
-        ctx.lineWidth = 0.35;
-        ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p.x,p.y); ctx.stroke();
-        dot(p.x, p.y, p.size*df, p.cr, p.cg, p.cb, a);
-      });
-      drawLogos(1, 0);
-      if (elapsed >= ORBIT_MS) setPhase('emerge', now);
-    }
-
-    // ── EMERGE — beams redirect to SOL group centers ──
-    else if (phase === 'emerge') {
-      const prog = Math.min(elapsed/EMERGE_MS, 1);
-      const e    = easeInOut(prog);
-      const t    = (now-startTime)/1000;
-
-      particles.forEach(p => {
-        p.orbitAngle += p.angVel * (1 - e * 0.7);
-        p.solAngle   += p.solAngV * e;
-
-        // Free beam position
-        const pos = beamToScreen(p.beamAz, p.beamEl, p.beamTarget);
-        const fx = pos.sx, fy = pos.sy;
-
-        // SOL orbit position
-        const sx = p.gcx + Math.cos(p.solAngle) * p.solR;
-        const sy = p.gcy + Math.sin(p.solAngle) * p.solR * p.solIncl;
-
-        p.x = fx + (sx-fx) * e;
-        p.y = fy + (sy-fy) * e;
-
-        const rC = Math.round(p.cr + (240-p.cr)*e*0.4);
-        const gC = Math.round(p.cg + (225-p.cg)*e*0.4);
-        const bC = Math.round(p.cb + (200-p.cb)*e*0.4);
-        const lineAlpha = (0.22 - e*0.1) * p.alpha;
-
-        // Tether line — always connected to center
-        ctx.strokeStyle = `rgba(${rC},${gC},${bC},${lineAlpha})`;
-        ctx.lineWidth = 0.35;
-        ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p.x,p.y); ctx.stroke();
-        dot(p.x, p.y, p.size, rC, gC, bC, p.alpha*(0.6+e*0.4));
-      });
-
-      drawLogos(1, 0);
-      if (prog >= 1) setPhase('hold', now);
-    }
-
-    // ── HOLD — SOL formed, circles bloom, still orbiting ──
-    else if (phase === 'hold') {
-      const prog = Math.min(elapsed/HOLD_MS, 1);
-      for (let i=0;i<7;i++) {
-        solCircleAlpha[i] = Math.max(0, Math.min(1, (elapsed - i*(HOLD_MS/9)) / 400));
-      }
-      particles.forEach(p => {
-        p.solAngle += p.solAngV;
-        p.x = p.gcx + Math.cos(p.solAngle)*p.solR;
-        p.y = p.gcy + Math.sin(p.solAngle)*p.solR*p.solIncl;
-        ctx.strokeStyle = `rgba(240,225,200,${p.alpha*0.15})`;
-        ctx.lineWidth = 0.35;
-        ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p.x,p.y); ctx.stroke();
-        dot(p.x, p.y, p.size, 240, 225, 200, p.alpha*0.85);
-      });
-      drawSolCircles(solCircleAlpha);
-      drawLogos(1, 0);
-      if (prog >= 1) setPhase('bloom', now);
-    }
-
-    // ── BLOOM — single full-screen light sweep, no white flash ──
-    else if (phase === 'bloom') {
-      const prog = Math.min(elapsed/BLOOM_MS, 1);
-      const e    = easeInOut(prog);
-      const fade = 1 - easeOut(prog);
-
-      // Particles ride the bloom outward then fade
-      particles.forEach(p => {
-        p.solAngle += p.solAngV * (1-e);
-        const bx = p.gcx + Math.cos(p.solAngle)*p.solR;
-        const by = p.gcy + Math.sin(p.solAngle)*p.solR*p.solIncl;
-        // Particles drift outward as bloom expands
-        const dx = bx - cx, dy = by - cy;
-        const dist = Math.sqrt(dx*dx+dy*dy);
-        p.x = cx + dx*(1 + e*0.4);
-        p.y = cy + dy*(1 + e*0.4);
-        dot(p.x, p.y, p.size*(1+e*2), 240, 225, 200, p.alpha*fade);
-        ctx.strokeStyle = `rgba(240,225,200,${p.alpha*fade*0.12})`;
-        ctx.lineWidth = 0.35;
-        ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p.x,p.y); ctx.stroke();
-      });
-
-      drawSolCircles(solCircleAlpha.map(a=>a*fade));
-      // Full-screen bloom — the transition
-      drawLogos(fade, prog);
-
-      if (prog >= 1) setPhase('reveal', now);
-    }
-
-    // ── REVEAL — 3D tesseract, tethered to Logos ──
-    else if (phase === 'reveal') {
-      const APPEAR_MS = 2500;
-      const appProg   = Math.min(elapsed/APPEAR_MS, 1);
-      if (elapsed > 2000 && !window._starOn) window._starOn = true;
-
-      const visible = Math.floor(appProg * COUNT);
-      const pts = [];
-
-      particles.forEach((p, i) => {
-        p.revAngle += p.revSpeed;
-        const r = Math.max(85, p.revR);
-        p.x = cx + Math.cos(p.revAngle) * r;
-        p.y = cy + Math.sin(p.revAngle) * r * p.revIncl;
-        if (i < visible) pts.push({ x: p.x, y: p.y, cr: p.cr, cg: p.cg, cb: p.cb });
-      });
-
-      // Particle-to-particle lines — full 3D lattice
-      // Use depth-sorted pairs for proper 3D crossing effect
-      ctx.lineWidth = 0.4;
-      for (let i=0;i<Math.min(visible,COUNT);i++) {
-        for (let j=i+1;j<Math.min(visible,COUNT);j++) {
-          if (Math.abs(i-j) > 80) continue; // limit pairs for performance
-          const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
-          const d=Math.sqrt(dx*dx+dy*dy);
-          if (d < 95) {
-            const a = (1-d/95)*0.18*appProg;
-            ctx.strokeStyle = `rgba(160,185,255,${a})`;
-            ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y);
-            ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke();
-          }
-        }
-      }
-
-      // Tether lines to center Logos
-      ctx.lineWidth = 0.35;
-      for (let i=0;i<Math.min(visible,COUNT);i++) {
-        const p=particles[i];
-        const dx=p.x-cx, dy=p.y-cy, d=Math.sqrt(dx*dx+dy*dy);
-        const a=(1-d/(Math.min(W,H)*0.6))*0.28*appProg;
-        if (a>0.01) {
-          ctx.strokeStyle=`rgba(${p.cr},${p.cg},${p.cb},${a})`;
-          ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p.x,p.y); ctx.stroke();
-        }
-      }
-
-      // Particles with 3D depth
-      for (let i=0;i<Math.min(visible,COUNT);i++) {
-        const p=particles[i];
-        const myP=Math.min((elapsed-(i/COUNT)*APPEAR_MS)/500,1);
-        if (myP<=0) continue;
-        const df=0.4+0.6*((Math.sin(p.revAngle)*p.revIncl+1)/2);
-        dot(p.x,p.y,p.size*df,p.cr,p.cg,p.cb,p.alpha*0.65*df*myP);
-      }
-
-      drawLogos(0.85, 0);
-
-      // "Governed Logic" — pure white, high
-      const text='Governed Logic';
-      const lMs=130;
-      for (let i=0;i<Math.min(Math.floor(elapsed/lMs)+1,text.length);i++) {
-        glLetters[i]=Math.min((elapsed-i*lMs)/300,1);
-      }
-      const fs=Math.min(W*0.11,100);
-      ctx.font=`700 ${fs}px 'Space Grotesk',sans-serif`;
-      ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.shadowBlur=0; ctx.shadowColor='transparent';
-      const textY=H*0.24;
-      const chars=text.split('');
-      const widths=chars.map(l=>ctx.measureText(l).width);
-      const totalW=widths.reduce((a,b)=>a+b,0);
-      let sx=cx-totalW/2;
-      chars.forEach((l,i)=>{
-        const a=glLetters[i]||0;
-        if(a>0){ctx.fillStyle=`rgba(255,255,255,${a})`;ctx.fillText(l,sx+widths[i]/2,textY);}
-        sx+=widths[i];
-      });
-
-      if (!scrollHintShown && elapsed > text.length*lMs+1000) {
-        scrollHintShown=true;
-        const sh=document.querySelector('.scroll-hint');
-        if (sh){sh.style.transition='opacity 1.5s ease';sh.style.opacity='1';}
-      }
-    }
-
-    requestAnimationFrame(frame);
+    particlesBuilt=true;
   }
 
-  function boot() {
-    resize(); initParticles();
-    phaseStart=performance.now();
-    const sh=document.querySelector('.scroll-hint');
-    if (sh) sh.style.opacity='0';
-    requestAnimationFrame(frame);
+  function drawLogos(alpha,scale){
+    const breath=0.88+0.12*Math.sin(performance.now()*0.0018);
+    const bloomR=18*Math.min(scale,1.8);
+    const bloom=ctx.createRadialGradient(cx,cy,0,cx,cy,bloomR);
+    bloom.addColorStop(0,`rgba(255,255,255,${alpha})`);
+    bloom.addColorStop(0.15,`rgba(245,242,255,${(alpha*0.9*breath).toFixed(3)})`);
+    bloom.addColorStop(0.4,`rgba(230,225,255,${(alpha*0.35*breath).toFixed(3)})`);
+    bloom.addColorStop(0.75,`rgba(210,205,255,${(alpha*0.06*breath).toFixed(3)})`);
+    bloom.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=bloom;ctx.beginPath();ctx.arc(cx,cy,bloomR,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,2*scale,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${alpha})`;ctx.fill();
   }
 
-  window.addEventListener('resize',()=>{resize();initParticles();setPhase('intro',performance.now());});
-  boot();
+  function updateDraw(spawnElapsed,dt){
+    if(!particlesBuilt)buildParticles();
+    particles.forEach(p=>{
+      const ge=spawnElapsed-p.genDelay;
+      if(ge<0){p.active=false;return;}
+      const pa=ge-p.emergeDelay;
+      if(pa<0){p.active=false;return;}
+      p.emerged=easeOut(Math.min(pa/1200,1));
+      if(pa>0){const ramp=Math.min(Math.max(pa-1200,0)/2000,1);p.angle+=p.keplerSpeed*easeInOut(ramp)*dt;}
+      const r=p.emerged*(p.orbitR+p.breathAmp*Math.sin(spawnElapsed*0.0007+p.breathPhase));
+      p.px=cx+Math.cos(p.angle)*r;p.py=cy+Math.sin(p.angle)*r*0.58;
+      p.active=p.emerged>0.05;
+    });
+    const active=particles.filter(p=>p.active);
+    // Nearest-neighbor lines
+    ctx.lineWidth=0.4;
+    active.forEach(p=>{
+      let nd=Infinity,nq=null;
+      for(let i=0;i<active.length;i++){
+        const q=active[i];if(q===p)continue;
+        const dx=p.px-q.px,dy=p.py-q.py,d=dx*dx+dy*dy;
+        if(d<nd){nd=d;nq=q;}
+      }
+      if(nq){
+        const dist=Math.sqrt(nd);
+        if(dist<120){
+          ctx.strokeStyle=`rgba(255,255,255,${((1-dist/120)*0.18*Math.min(p.emerged,nq.emerged)).toFixed(3)})`;
+          ctx.beginPath();ctx.moveTo(p.px,p.py);ctx.lineTo(nq.px,nq.py);ctx.stroke();
+        }
+      }
+    });
+    active.forEach(p=>{
+      const a=p.genAlpha*p.emerged,r=p.pSize*p.emerged;
+      const s=ctx.createRadialGradient(p.px,p.py,0,p.px,p.py,r*2.5);
+      s.addColorStop(0,`rgba(255,255,255,${a.toFixed(3)})`);
+      s.addColorStop(0.25,`rgba(255,255,255,${(a*0.65).toFixed(3)})`);
+      s.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=s;ctx.beginPath();ctx.arc(p.px,p.py,r*2.5,0,Math.PI*2);ctx.fill();
+    });
+  }
+
+  let cueShown=false;
+  function draw(now){
+    const dt=lastTime?now-lastTime:16;lastTime=now;
+    if(!startTime)startTime=now;
+    const elapsed=now-startTime;
+    ctx.clearRect(0,0,W,H);
+
+    let ta=0;
+    if(elapsed<T_FADEIN)ta=elapsed/T_FADEIN;
+    else if(elapsed<T_FADEIN+T_HOLD)ta=1;
+    else if(elapsed<T_TEXT_END)ta=1-(elapsed-T_FADEIN-T_HOLD)/T_FADEOUT;
+    text.style.color=`rgba(255,255,255,${(ta*0.82).toFixed(3)})`;
+
+    let da=0,ds=1;
+    if(elapsed>T_TEXT_END)da=Math.min(easeInOut((elapsed-T_TEXT_END)/T_DOT),1);
+    if(elapsed>T_DOT_END){da=1;ds=1+2*easeInOut(Math.min((elapsed-T_DOT_END)/T_GROW,1));}
+    if(da>0)drawLogos(da,ds);
+
+    if(elapsed>T_SPAWN){
+      updateDraw(elapsed-T_SPAWN,dt);
+      drawLogos(1,ds);
+      if(!cueShown){cueShown=true;cue.style.opacity='1';}
+    }
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
 }());
-
-
-// OSCILLOSCOPE — white noise resolving to clean wave
-(function(){
-  const canvas=document.getElementById('oscCanvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  let W,H;
-  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
-  resize();
-  window.addEventListener('resize',resize);
-  let t=0,phase=0;
-  function draw(){
-    ctx.fillStyle='rgba(4,6,8,0.18)';
-    ctx.fillRect(0,0,W,H);
-    const progress=Math.min(t/300,1);
-    const ease=progress<0.5?2*progress*progress:1-Math.pow(-2*progress+2,2)/2;
-    const pts=W;
-    ctx.beginPath();
-    for(let x=0;x<pts;x++){
-      const nx=x/pts;
-      // Chaotic noise
-      const noise=(Math.random()-0.5)*2*(1-ease)*0.8;
-      // Clean sine wave
-      const clean=Math.sin(nx*Math.PI*4+phase)*0.4;
-      const y=H/2+(noise+clean*ease)*H*0.36;
-      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    }
-    // Color shifts from grey to blue as it resolves
-    const r=Math.round(100*(1-ease)+91*ease);
-    const g=Math.round(110*(1-ease)+141*ease);
-    const b=Math.round(130*(1-ease)+217*ease);
-    ctx.strokeStyle=`rgba(${r},${g},${b},${0.6+ease*0.3})`;
-    ctx.lineWidth=1.5;ctx.stroke();
-
-    // Grid lines — subtle
-    ctx.strokeStyle='rgba(91,141,217,0.05)';
-    ctx.lineWidth=0.5;
-    for(let i=1;i<4;i++){
-      ctx.beginPath();ctx.moveTo(0,H/4*i);ctx.lineTo(W,H/4*i);ctx.stroke();
-    }
-    for(let i=1;i<6;i++){
-      ctx.beginPath();ctx.moveTo(W/6*i,0);ctx.lineTo(W/6*i,H);ctx.stroke();
-    }
-
-    phase+=0.025;t++;
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-// WORD CLOUD COLLAPSE — drift words converge into "LOGOS"
-(function(){
-  const canvas=document.getElementById('wordCanvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  let W,H,cx,cy;
-  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;cx=W/2;cy=H/2;}
-  resize();
-  window.addEventListener('resize',resize);
-
-  const driftWords=['hedge','relativize','drift','average','hallucinate','both-side','equivocate','waver','dilute','contradict','fragment','collapse','defer','misalign','diverge','distort','approximate','confabulate'];
-  const targetWord='LOGOS';
-  let words=[];
-  let phase='scatter';// scatter -> converge -> hold
-  let phaseT=0;
-
-  function init(){
-    words=driftWords.map((w,i)=>{
-      const angle=Math.random()*Math.PI*2;
-      const dist=80+Math.random()*Math.min(W,H)*0.4;
-      return{
-        text:w,
-        x:cx+Math.cos(angle)*dist,
-        y:cy+Math.sin(angle)*dist,
-        vx:(Math.random()-0.5)*0.8,
-        vy:(Math.random()-0.5)*0.8,
-        alpha:Math.random()*0.5+0.2,
-        size:10+Math.random()*8,
-        hue:Math.random()*40+200
-      };
-    });
-    // Target letters
-    targetWord.split('').forEach((l,i)=>{
-      const angle=(i/targetWord.length)*Math.PI*2-Math.PI/2;
-      words.push({
-        text:l,
-        x:cx+Math.cos(angle)*200,
-        y:cy+Math.sin(angle)*200,
-        tx:cx+(i-(targetWord.length-1)/2)*36,
-        ty:cy,
-        vx:0,vy:0,
-        alpha:0,size:32,isTarget:true,
-        hue:270
-      });
-    });
-  }
-
-  let t=0;
-  function draw(){
-    ctx.fillStyle='rgba(3,5,7,0.15)';ctx.fillRect(0,0,W,H);
-    t++;phaseT++;
-    if(phase==='scatter'&&phaseT>160){phase='converge';phaseT=0;}
-    if(phase==='converge'&&phaseT>120){phase='hold';phaseT=0;}
-    if(phase==='hold'&&phaseT>180){phase='scatter';phaseT=0;init();}
-
-    words.forEach(w=>{
-      if(w.isTarget){
-        if(phase==='converge'||phase==='hold'){
-          w.x+=(w.tx-w.x)*0.06;
-          w.y+=(w.ty-w.y)*0.06;
-          w.alpha=Math.min(w.alpha+0.02,1);
-        } else {
-          w.alpha=Math.max(w.alpha-0.03,0);
-        }
-      } else {
-        if(phase==='scatter'){
-          w.x+=w.vx;w.y+=w.vy;
-          if(w.x<0||w.x>W)w.vx*=-1;
-          if(w.y<0||w.y>H)w.vy*=-1;
-          w.alpha=0.2+Math.sin(t*0.02+w.size)*0.15;
-        } else if(phase==='converge'){
-          w.x+=(cx-w.x)*0.04;
-          w.y+=(cy-w.y)*0.04;
-          w.alpha=Math.max(w.alpha-0.015,0);
-        } else {
-          w.alpha=0;
-        }
-      }
-      if(w.alpha<0.01)return;
-      ctx.font=`${w.isTarget?700:400} ${w.size}px ${w.isTarget?"'Space Grotesk'":'Inter'}, sans-serif`;
-      ctx.fillStyle=`hsla(${w.hue},60%,${w.isTarget?80:55}%,${w.alpha})`;
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText(w.text,w.x,w.y);
-    });
-    requestAnimationFrame(draw);
-  }
-  resize();init();draw();
-})();
 </script>
 </body>
 </html>
