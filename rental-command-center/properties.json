@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23",
+  "updatedAt": "2026-06-24",
   "mission": "Secure long-term rental before June 30 at 9 PM.",
   "hardFilters": [
     "Available now or by July 1 preferred",
@@ -33,41 +33,87 @@
     "Centreville",
     "South Run",
     "Crosspointe",
-    "Lorton"
+    "Lorton",
+    "Vienna",
+    "Annandale"
   ],
   "properties": [
     {
-      "property": "5626 Fort Corloran Dr",
+      "property": "909 Cottage St SW",
+      "city": "Vienna",
+      "status": "New / inquire now",
+      "priority": "High",
+      "price": "Verify",
+      "available": "Available now",
+      "link": "",
+      "lastAction": "Meghan identified June 24. Listing agent Michael Baron, 703-471-4800.",
+      "nextStep": "Andrew/Tiffany to call today; verify detached, pets, yard/privacy, rent, application path, and willingness to review proof of funds."
+    },
+    {
+      "property": "6910 Fern Place",
+      "city": "Annandale",
+      "status": "New / inquire now",
+      "priority": "High",
+      "price": "Verify",
+      "available": "Available now",
+      "link": "",
+      "lastAction": "Meghan identified June 24. Listing agent Anthony Howard, 855-450-0442.",
+      "nextStep": "Andrew/Tiffany to call today; verify detached, pets, yard/privacy, rent, application path, and willingness to review proof of funds."
+    },
+    {
+      "property": "8463 Monarch Ct",
+      "city": "Annandale",
+      "status": "New / inquire now",
+      "priority": "High",
+      "price": "Verify",
+      "available": "Available now",
+      "link": "",
+      "lastAction": "Meghan identified June 24. Listing agent Minh Lofaso, 703-330-2222.",
+      "nextStep": "Andrew/Tiffany to call today; verify detached, pets, yard/privacy, rent, application path, and willingness to review proof of funds."
+    },
+    {
+      "property": "9120 Huber Ct",
       "city": "Burke",
-      "status": "Active / Apply",
+      "status": "Delayed backup",
+      "priority": "Low",
+      "price": "Verify",
+      "available": "July 15",
+      "link": "",
+      "lastAction": "Meghan identified June 24. Listing agent Ray Gernhart, 703-378-8810.",
+      "nextStep": "Backup only because available July 15; do not prioritize unless temporary bridge becomes necessary."
+    },
+    {
+      "property": "5626 Fort Corcoran Dr",
+      "city": "Burke",
+      "status": "Application submitted / follow up today",
       "priority": "Highest",
       "price": "$3,600",
       "available": "Available now / verify",
       "link": "https://www.zillow.com/homedetails/5626-Fort-Corloran-Dr-Burke-VA-22015/51900153_zpid/",
-      "lastAction": "Agent open to terms; standard application required.",
-      "nextStep": "Apply; confirm fully detached/no shared walls, cat + 40 lb dog, fenced/private yard."
+      "lastAction": "Application submitted; Andrew following up June 24.",
+      "nextStep": "Get firm answer today; confirm fully detached/no shared walls, cat + 40 lb dog, fenced/private yard, and proof-of-funds/prepay terms."
     },
     {
       "property": "10123 Eastlake Dr",
       "city": "Fairfax",
-      "status": "Delayed backup",
+      "status": "Application submitted / delayed backup",
       "priority": "Low",
       "price": "Verify",
       "available": "July 16",
       "link": "https://www.zillow.com/homedetails/10123-Eastlake-Dr-Fairfax-VA-22032/51872644_zpid/",
-      "lastAction": "Homeowner-managed; standard Zillow app requested.",
-      "nextStep": "Do not prioritize for immediate move because available July 16."
+      "lastAction": "Application filled out; Andrew following up June 24.",
+      "nextStep": "Follow up only as backup; July 16 availability does not solve immediate housing need."
     },
     {
       "property": "7124 Dryburgh Ct",
       "city": "Springfield",
-      "status": "Waiting",
+      "status": "Waiting / follow up today",
       "priority": "High",
       "price": "$3,550",
       "available": "Verify",
       "link": "https://www.redfin.com/VA/Springfield/7124-Dryburgh-Ct-22152/home/9774641",
       "lastAction": "Property management company; waiting regarding terms.",
-      "nextStep": "Keep active, but do not wait on it."
+      "nextStep": "Andrew/Tiffany should follow up today and get a clear application/approval path."
     },
     {
       "property": "7017 Murray Ln",
