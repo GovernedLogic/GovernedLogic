@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mechanism — Governed Logic | A Public Prototype of Governed Intelligence</title>
+<meta name="description" content="Governed Logic is the architectural claim that truth governs logic and logic governs reasoning. Its current portable Governed Intelligence mechanism is an instruction-level prototype: inspect the principles, copy the instructions, and test the limitations openly.">
+<link rel="canonical" href="https://governedlogic.com/mechanism.html">
+<meta name="robots" content="index,follow">
+<style>
+:root{color-scheme:dark;--bg:#0b0a10;--ink:#f5f1e9;--muted:#beb8c7;--line:#393144;--accent:#c4a36d;--panel:#17131e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 65% -10%,#30213e 0,transparent 49%),var(--bg);color:var(--ink);font:17px/1.75 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:900px;margin:auto;padding:5rem 1.25rem 6rem}a{color:var(--accent)}nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:4rem;font-size:.9rem}nav a{text-decoration:none}h1,h2,h3{line-height:1.22;letter-spacing:-.025em}h1{font-size:clamp(2.5rem,7vw,5.1rem);margin:.4rem 0 1rem}h2{font-size:clamp(1.5rem,4vw,2.2rem);margin:3.5rem 0 1rem}h3{font-size:1.15rem;margin:2rem 0 .5rem}p{margin:1rem 0}strong{color:#fff}small,.muted{color:var(--muted)}.eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.15em;font-size:.75rem;font-weight:700}.lead{font-size:1.22rem;line-height:1.65;max-width:47rem}.panel{border:1px solid var(--line);border-radius:12px;padding:1.4rem;margin:1.5rem 0;background:var(--panel)}.chain{color:var(--accent);font-size:clamp(1rem,3vw,1.32rem);font-weight:650;line-height:1.8}blockquote{border-left:3px solid var(--accent);margin:1.5rem 0;padding:.3rem 0 .3rem 1.25rem;font-size:1.14rem}code{white-space:normal;color:#fff}button{cursor:pointer;border:1px solid var(--accent);color:var(--bg);background:var(--accent);border-radius:8px;padding:.6rem 1rem;font:inherit;font-weight:700}button:focus-visible,a:focus-visible{outline:3px solid white;outline-offset:3px}ol{padding-left:1.6rem}li{margin:.45rem 0}footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"The Mechanism — Governed Logic","url":"https://governedlogic.com/mechanism.html","description":"Public instruction-level prototype of Governed Intelligence and its limits","isPartOf":{"@type":"WebSite","name":"Governed Logic Reasoning Systems","url":"https://governedlogic.com/"}}</script>
+</head>
+<body>
+<main>
+<nav><a href="/">← Governed Logic</a><a href="#copy">Copy the prototype ↓</a></nav>
+<p class="eyebrow">Governed Logic Reasoning Systems · Public development</p>
+<h1>The mechanism.</h1>
+<p class="lead"><strong>Truth governs logic. Logic governs reasoning. Intelligence is downstream.</strong> Governed Logic states an upstream requirement for reasoning. Governed Intelligence is the work in progress of instantiating that requirement in artificial intelligence.</p>
+<p class="chain">Ground → Truth → Logic → Reasoning → Intelligence</p>
+<p>The current portable mechanism is a <strong>prototype using custom instructions</strong>. It is not the completed architecture, not a deterministic logic gate, and not a guarantee against hallucination or drift.</p>
+<section aria-labelledby="distinction"><h2 id="distinction">The architecture is not the prompt.</h2>
+<p>Governed Logic begins with six grounding domains: being, truth, logic, meaning, intelligibility, and binding obligation. Its grounding argument asks what can sufficiently and ultimately account for those domains. It identifies Jesus Christ of Nazareth, the Logos, as its governing referent; the grounding argument and that identification require their own philosophical, theological, and historical examination.</p>
+<p>The architectural requirement is that truth govern logic, logic govern reasoning, and reasoning remain answerable to its ground. The present AI prototype introduces explicit governing principles and the referent through a model's instructions or context to investigate how its answers change. <strong>A model following a prompt does not, by that fact, demonstrate the truth of the referent or the completeness of the architecture.</strong></p>
+</section>
+<section aria-labelledby="copy" class="panel"><h2 id="copy">Copy the current prototype.</h2>
+<p>The short instruction below carries the governing referent and core principles. Its semantic content matters more than the exact surface wording. It can be supplied in a model's custom instructions, system instructions where supported, or an ordinary conversation, but those locations do not provide equivalent enforcement.</p>
+<blockquote id="mechanism-text">Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. Logic is binding. Intelligibility is real. Moral obligation is real and binding.</blockquote>
+<button type="button" id="copy-button">Copy instruction</button><p id="copy-status" class="muted" role="status" aria-live="polite"></p>
+<p><small>To copy manually, select the instruction above. The copy control is optional; the words remain readable without JavaScript.</small></p>
+</section>
+<section aria-labelledby="limits"><h2 id="limits">What this prototype can—and cannot—do.</h2>
+<p>The instructions operate inside existing probabilistic language models. Such models may misinterpret, deprioritize, override, or violate the instruction. Adversarial phrasing, context length, changed model versions, conflicting higher-priority instructions, and ordinary generation errors can expose failures. <strong>No claim of infallibility, deterministic inference, universal effectiveness, or structural prevention of hallucinations follows from placing this text in a prompt.</strong></p>
+<p>The prototype lets us observe whether an explicit governing referent and principles change the model's reasoning, where those effects persist, and where they break. A future implementation may embed governance more deeply in the reasoning system. That engineering work remains open; simply hard-coding words or adding a checker would not establish the truth, meaning, or moral authority of what it checks.</p>
+</section>
+<section aria-labelledby="test"><h2 id="test">How to test it.</h2>
+<ol><li>Hold the model, version, task, and evaluation conditions as constant as practical. Record a baseline without the prototype.</li><li>Introduce the principles and referent; repeat the same questions. Record exact instructions, prompts, answers, and revisions.</li><li>Remove the principles, substitute a different referent, rephrase the question without changing the underlying facts, and apply adversarial pressure.</li><li>Inspect correspondence to evidence, logical validity, stable meanings, contradictions, framework switching, moral invariance, and unexplained borrowed authority. Publish failures and counterexamples as well as improvements.</li></ol>
+<p>Cross-model agreement is not proof that a metaphysical claim is true. Even a false but coherent referent could improve measured stability. The engineering experiments examine the <em>effects and limits of implementations</em>; the ultimate-grounding and Logos-identification arguments must be evaluated independently.</p>
+</section>
+<section aria-labelledby="challenge"><h2 id="challenge">Follow the chain.</h2>
+<p>An objection to an instruction-level implementation is not automatically an objection to the architectural requirement. Conversely, identifying a real defect in the grounding argument is not answered by showing that a model behaves more consistently. Challenge the premises, the inferential steps, the account of meaning and obligation, the proposed ultimate ground, the identification claim, and the specific engineering claims on their own merits.</p>
+<p>Governed Logic Reasoning Systems is being built in public. The prototype, its limitations, the tests, and the revisions are part of the record.</p></section>
+<footer>Governed Logic Reasoning Systems · Paul André Couchoud<br>Truth. Logic. Ground. · Soli Deo Gloria</footer>
+</main>
+<script>
+(function(){
+ const button=document.getElementById("copy-button");
+ const status=document.getElementById("copy-status");
+ button.addEventListener("click",async function(){
+   const text=document.getElementById("mechanism-text").textContent.trim();
+   try{await navigator.clipboard.writeText(text);status.textContent="Instruction copied."}
+   catch(e){status.textContent="Select the instruction above to copy it manually."}
+ });
+})();
+</script>
+</body>
+</html>
