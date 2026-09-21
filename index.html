@@ -100,6 +100,30 @@ html{scroll-behavior:auto}
 *,*:before,*:after{animation:none!important;transition:none!important}
 }
 
+
+/* ALIGNMENT — self-contained cinematic introduction */
+.alignment{position:relative;isolation:isolate;height:100svh;min-height:620px;overflow:hidden;background:#020204;color:#f4f0ff}
+.alignment canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.alignment:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,transparent 60%,#050505)}
+.alignment-top{position:absolute;top:max(28px,env(safe-area-inset-top));left:6%;right:6%;display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.23em;text-transform:uppercase;color:#aaa2bc}
+.alignment-controls{display:flex;gap:10px}
+.alignment-controls button{background:#100c1880;border:1px solid #554069;color:#e3d6ff;border-radius:30px;padding:10px 15px;min-height:44px;font:inherit;cursor:pointer;letter-spacing:.08em}
+.alignment-title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;pointer-events:none;transition:opacity 1.4s,transform 1.4s}
+.alignment.playing .alignment-title{opacity:0;transform:translateY(24px)}
+.alignment-title .alignment-kicker{font:11px/1.4 ui-sans-serif,system-ui;letter-spacing:.38em;color:#c4a7f6;margin:0 0 25px;text-transform:uppercase}
+.alignment-title h2{font:500 clamp(52px,9vw,130px)/.95 Georgia,serif;letter-spacing:-.065em;margin:0;text-shadow:0 0 70px #6e2d9055}
+.alignment-title h2 span{display:block}
+.alignment-title .systems{font:12px/1.4 ui-sans-serif,system-ui;letter-spacing:.52em;text-transform:uppercase;color:#c3b7d3;margin:28px 0 0}
+.alignment-title .wisdom{font:italic 17px/1.5 Georgia,serif;color:#b9aabe;margin-top:26px}
+.alignment-entry{position:absolute;bottom:115px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:18px;color:#eee1ff;text-decoration:none;font-size:10px;text-transform:uppercase;letter-spacing:.25em}
+.alignment-entry svg{width:52px;height:52px;filter:drop-shadow(0 0 14px #a43cff99);transition:transform .3s}
+.alignment-entry:hover svg{transform:translateY(6px)}
+.alignment-caption{position:absolute;left:6%;bottom:40px;font:10px/1.5 ui-monospace,monospace;letter-spacing:.17em;color:#9e8bac;text-transform:uppercase}
+.alignment-count{position:absolute;right:6%;bottom:40px;font:10px/1.5 ui-monospace,monospace;letter-spacing:.17em;color:#9e8bac}
+.alignment~.hero{min-height:auto;padding-top:100px;padding-bottom:100px}
+@media(max-width:720px){.alignment{min-height:580px}.alignment-top{left:20px;right:20px;font-size:8px;letter-spacing:.12em}.alignment-controls{gap:6px}.alignment-controls button{padding:8px 10px}.alignment-title{padding:20px}.alignment-title h2{font-size:clamp(52px,15vw,92px)}.alignment-title .systems{font-size:10px;letter-spacing:.4em}.alignment-entry{bottom:120px;white-space:nowrap}.alignment-caption,.alignment-count{bottom:96px;font-size:8px}.alignment-caption{left:20px}.alignment-count{right:20px}}
+@media(prefers-reduced-motion:reduce){.alignment.playing .alignment-title{opacity:1;transform:none}}
+
 </style>
 <script type="application/ld+json">
 {
@@ -124,6 +148,15 @@ html{scroll-behavior:auto}
 <li><a href="#tests">Test</a></li>
 </ol>
 </nav>
+
+<section class="alignment" id="alignment" aria-label="Alignment: Ancient wisdom. Modern technology.">
+<canvas id="alignment-canvas" aria-hidden="true"></canvas>
+<div class="alignment-top"><span>GL / Alignment</span><div class="alignment-controls"><button type="button" id="alignment-replay">Replay</button><button type="button" id="alignment-pause">Pause motion</button></div></div>
+<div class="alignment-title"><p class="alignment-kicker">Ancient wisdom. Modern technology.</p><h2><span>Governed</span><span>Logic</span></h2><p class="systems">Reasoning Systems</p><p class="wisdom">Truth. Logic. Ground.</p></div>
+<a class="alignment-entry" href="#nucleus"><span>Follow the chain</span><svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="arrow-light" x1="12" y1="8" x2="48" y2="58" gradientUnits="userSpaceOnUse"><stop stop-color="#edcbff"/><stop offset=".5" stop-color="#b354ff"/><stop offset="1" stop-color="#6930ff"/></linearGradient></defs><path d="M32 5V51M12 32L32 54L52 32" stroke="url(#arrow-light)" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/><path d="M22 30L32 41L42 30" stroke="#dfacff" stroke-width="1"/></svg></a>
+<div class="alignment-caption" id="alignment-caption">One operating principle: Alignment</div><div class="alignment-count" aria-hidden="true">01 / Origin</div>
+</section>
+
 <header class="hero">
   <div class="eyebrow">Governed Logic Reasoning Systems</div>
   <h1>Truth governs logic.<br>Logic governs reasoning.<br><span>Intelligence is downstream.</span></h1>
@@ -293,5 +326,67 @@ entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');motio
 document.querySelectorAll('.chain').forEach(e=>motion.observe(e));
 })();
 </script>
+
+<script>
+(()=>{
+const scene=document.getElementById('alignment'),canvas=document.getElementById('alignment-canvas'),ctx=canvas.getContext('2d');
+if(!ctx)return;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const pause=document.getElementById('alignment-pause'),replay=document.getElementById('alignment-replay'),caption=document.getElementById('alignment-caption');
+let w=0,h=0,dpr=1,elapsed=0,last=0,raf=0,paused=reduced.matches,onScreen=true;
+const words=['truth','being','meaning','logic','ground','reason','Logos','order','1','0','∴','→','λ','α','Ω','∞'];
+let seed=19;const random=()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646;};
+const particles=Array.from({length:86},(_,i)=>({x:random(),y:random(),angle:random()*Math.PI*2,r:.15+random()*.7,speed:.13+random()*.28,size:8+random()*6,word:words[i%words.length]}));
+const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x);};
+function resize(){w=scene.clientWidth;h=scene.clientHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
+function line(x1,y1,x2,y2,color,width=1){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+function tesseract(t,alpha){
+const size=Math.min(w*.35,h*.3,245),cx=w*.5,cy=h*.47;
+const points=[];
+for(let n=0;n<16;n++){
+let v=[0,1,2,3].map(k=>(n>>k&1)?1:-1);
+for(const [a,b,angle] of [[0,3,t*.14],[1,2,t*.1],[0,2,.5]]){
+const x=v[a],y=v[b];v[a]=x*Math.cos(angle)-y*Math.sin(angle);v[b]=x*Math.sin(angle)+y*Math.cos(angle);
+}
+const p=2.8/(3.7-v[3]);const z=v[2]*p;const f=3.5/(4.7-z);
+points.push([cx+v[0]*p*f*size,cy+v[1]*p*f*size,z]);
+}
+for(let i=0;i<16;i++)for(let k=0;k<4;k++){const j=i^(1<<k);if(j>i){const a=points[i],b=points[j];line(a[0],a[1],b[0],b[1],'rgba(166,99,247,'+alpha+')',.8);}}
+for(const p of points){ctx.fillStyle='rgba(218,182,255,'+(alpha*1.7)+')';ctx.beginPath();ctx.arc(p[0],p[1],2,0,Math.PI*2);ctx.fill();}
+}
+function draw(){
+const t=elapsed,cx=w*.5,cy=h*.46,r=Math.min(w*.23,h*.17,130);
+ctx.clearRect(0,0,w,h);ctx.fillStyle='#020204';ctx.fillRect(0,0,w,h);
+const bloom=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(w,h)*.65);
+bloom.addColorStop(0,'rgba(86,28,140,'+(t>7?.2:.08)+')');bloom.addColorStop(.5,'rgba(36,13,61,.08)');bloom.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=bloom;ctx.fillRect(0,0,w,h);
+if(t<1.7){const flash=Math.sin(clamp(t/1.7)*Math.PI);const radius=4+ease(t/1.7)*Math.max(w,h)*.65;const g=ctx.createRadialGradient(cx,cy,0,cx,cy,radius);g.addColorStop(0,'rgba(255,246,255,'+flash+')');g.addColorStop(.06,'rgba(217,172,255,'+flash*.8+')');g.addColorStop(.3,'rgba(119,50,232,'+flash*.3+')');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);}
+const align=ease((t-1.6)/3.4),fade=1-ease((t-5.6)/2),appear=ease(t/.65);
+for(let i=0;i<particles.length;i++){
+const p=particles[i],angle=p.angle+t*p.speed;const orbit=r*(.8+p.r*1.8);
+const targetX=cx+Math.cos(angle)*orbit,targetY=cy+Math.sin(angle)*orbit*.62;
+const x=(p.x*w)*(1-align)+targetX*align,y=(p.y*h)*(1-align)+targetY*align;
+ctx.font=p.size+'px ui-monospace,monospace';ctx.fillStyle='rgba('+(i%5===0?'224,193,123':'185,144,240')+','+(fade*appear*(.3+p.r*.5))+')';ctx.fillText(p.word,x,y);
+}
+if(t<7.7){const a=ease(t/.5)*(1-ease((t-6.5)/1.2));ctx.shadowColor='#d7a8ff';ctx.shadowBlur=25;ctx.fillStyle='rgba(255,243,255,'+a+')';ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
+const seedAlpha=ease((t-4.3)/.8)*(1-ease((t-6.2)/1.2));
+if(seedAlpha>0){ctx.strokeStyle='rgba(216,180,255,'+seedAlpha*.8+')';ctx.lineWidth=1;for(let i=-1;i<6;i++){const a=i*Math.PI/3;const x=i<0?cx:cx+Math.cos(a)*r,y=i<0?cy:cy+Math.sin(a)*r;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2*ease((t-4.3)/1.2));ctx.stroke();}}
+if(t>6)tesseract(t,ease((t-6)/2)*.32);
+scene.classList.toggle('playing',t<7);
+caption.textContent=t<1.7?'01 / A point of origin':t<4.7?'02 / Meaning finds its center':t<7?'03 / Order emerges':'One operating principle: Alignment';
+}
+function tick(now){raf=0;if(paused||!onScreen||document.hidden){last=0;return;}if(last)elapsed+=Math.min((now-last)/1000,.05);last=now;draw();raf=requestAnimationFrame(tick);}
+function run(){if(!raf&&!paused&&onScreen&&!document.hidden)raf=requestAnimationFrame(tick);}
+function control(){pause.textContent=paused?'Resume motion':'Pause motion';pause.setAttribute('aria-pressed',String(paused));}
+pause.addEventListener('click',()=>{paused=!paused;last=0;control();run();});
+replay.addEventListener('click',()=>{elapsed=reduced.matches?9:0;paused=reduced.matches;last=0;draw();control();run();});
+reduced.addEventListener('change',()=>{paused=reduced.matches;if(paused)elapsed=9;last=0;draw();control();run();});
+document.addEventListener('visibilitychange',()=>{last=0;run();});
+if('IntersectionObserver'in window)new IntersectionObserver(entries=>{onScreen=entries[0].isIntersecting;last=0;run();}).observe(scene);
+window.addEventListener('resize',resize);
+if(reduced.matches)elapsed=9;
+resize();control();run();
+})();
+</script>
+
 </body>
 </html>
