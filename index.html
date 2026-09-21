@@ -48,6 +48,58 @@ blockquote{font-size:clamp(28px,4vw,43px);line-height:1.18;margin:50px 0;padding
 footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:35px 0 55px}
 footer p{font-size:12px;color:#77737c}
 @media(max-width:720px){.principles,.terms{grid-template-columns:1fr}.chain{display:grid;grid-template-columns:1fr}.chain b{transform:rotate(90deg);text-align:center}section{padding:68px 0}footer{display:block}}
+
+/* Reading and navigation refinement: original editorial content preserved. */
+:root{color-scheme:dark}
+body{padding-bottom:100px}
+.hero{min-height:86svh;max-width:1000px}
+.hero-copy{max-width:36em}
+section{scroll-margin-top:32px}
+section>p,section>h3,section>aside{max-width:72ch}
+h1{text-wrap:balance}h2{text-wrap:pretty}
+p{line-height:1.8}
+a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:5px}
+.button{border-color:var(--violet);border-radius:6px;transition:background .2s,border-color .2s}
+.button:hover{background:rgba(141,120,255,.13);border-color:var(--gold)}
+.skip-link{position:fixed;top:8px;left:12px;z-index:30;background:var(--text);color:var(--bg);padding:10px 16px;transform:translateY(-160%)}
+.skip-link:focus{transform:none}
+.chain-nav{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:20;width:min(640px,calc(100% - 24px));padding:8px;border:1px solid #494153;border-radius:16px;background:rgba(12,12,16,.97);box-shadow:0 12px 48px #0009}
+.chain-nav .nav-label{display:block;padding:2px 8px 6px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.chain-nav ol{display:flex;list-style:none;margin:0;padding:0;gap:3px}
+.chain-nav li{flex:1;min-width:0}
+.chain-nav a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 4px;border-radius:8px;color:#c8c4ca;text-decoration:none;font-size:12px;transition:background .2s,color .2s}
+.chain-nav a:hover{background:#24202d;color:var(--text)}
+.chain-nav a[aria-current="location"]{background:#29213e;color:#fff;box-shadow:inset 0 -2px var(--violet)}
+.principles article{border-radius:8px;border-top-color:#74633e}
+.terms p{border-radius:8px}
+.chain span{border-radius:6px}
+.chain{position:relative}
+.chain.in-view b{animation:chain-pulse 2.4s ease-in-out 2}
+.chain.in-view b:nth-of-type(2){animation-delay:.2s}
+.chain.in-view b:nth-of-type(3){animation-delay:.4s}
+.chain.in-view b:nth-of-type(4){animation-delay:.6s}
+@keyframes chain-pulse{0%,100%{opacity:.45}50%{opacity:1;text-shadow:0 0 14px #d7bb7280}}
+@media(min-width:721px){.principles{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:720px){
+.hero,main,footer{width:calc(100% - 36px)}
+.hero{min-height:82svh;padding:64px 0 48px}
+h1{font-size:clamp(36px,8.8vw,60px);line-height:1.1}
+.hero-copy{font-size:20px}
+section{padding:52px 0}
+h2{font-size:clamp(30px,8vw,42px)}
+.chain{grid-template-columns:1fr;gap:5px;max-width:400px;margin:30px auto}
+.chain span{padding:12px}
+.chain b{font-size:20px;line-height:1.1}
+.principles article,.terms p{padding:20px}
+aside{padding:18px}
+.closing{padding:70px 0}
+.chain-nav a{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+*,*:before,*:after{animation:none!important;transition:none!important}
+}
+
 </style>
 <script type="application/ld+json">
 {
@@ -60,6 +112,18 @@ footer p{font-size:12px;color:#77737c}
 </script>
 </head>
 <body>
+<a class="skip-link" href="#nucleus">Skip to content</a>
+<nav class="chain-nav" aria-label="Follow the chain">
+<span class="nav-label">Follow the chain</span>
+<ol>
+<li><a href="#principles">Principles</a></li>
+<li><a href="#machine">Machine</a></li>
+<li><a href="#reasoning">Reasoning</a></li>
+<li><a href="#ground">Ground</a></li>
+<li><a href="#governance">Govern</a></li>
+<li><a href="#tests">Test</a></li>
+</ol>
+</nav>
 <header class="hero">
   <div class="eyebrow">Governed Logic Reasoning Systems</div>
   <h1>Truth governs logic.<br>Logic governs reasoning.<br><span>Intelligence is downstream.</span></h1>
@@ -76,7 +140,7 @@ footer p{font-size:12px;color:#77737c}
   <p>Governed Logic begins there.</p>
 </section>
 
-<section>
+<section id="principles">
   <div class="label">One</div>
   <h2>Begin with what reasoning presupposes.</h2>
   <p>Reasoning does not begin with artificial intelligence. It begins with realities that a reasoner already relies upon when making, examining, or denying a claim.</p>
@@ -97,7 +161,7 @@ footer p{font-size:12px;color:#77737c}
   </aside>
 </section>
 
-<section>
+<section id="machine">
   <div class="label">Two</div>
   <h2>Examine the machine.</h2>
   <p>Modern large language models are trained to produce outputs from learned relationships among tokens, representations, and contexts. Training, inference, feedback, retrieval, and system instructions can make their answers extraordinarily useful. None of those mechanisms, by itself, establishes an ultimate authority for truth.</p>
@@ -116,7 +180,7 @@ footer p{font-size:12px;color:#77737c}
   <p>The question is not whether an AI system can perform tasks commonly called reasoning. It can. The deeper question is whether it satisfies a fuller requirement: truth-directed reasoning with stable meaning, binding logic, and sufficient grounding.</p>
 </section>
 
-<section>
+<section id="reasoning">
   <div class="label">Three</div>
   <h2>Establish what reasoning requires.</h2>
   <p>An argument can be logically valid and still begin with false premises. Logic determines whether a conclusion follows from its premises; logic alone does not determine whether those premises correspond to reality.</p>
@@ -137,7 +201,7 @@ footer p{font-size:12px;color:#77737c}
   <p>A brute-fact account may reject the demand for an ultimate ground altogether. It is not refuted merely by being called a halt. The disagreement is whether dependent realities and binding claims can be adequately accounted for by an unexplained stopping point. An infinite series of dependent members may explain each member by reference to another while leaving the grounding of the series unresolved. <strong>The requirement for sufficient and ultimate grounding must be argued for, not smuggled in as a definition of an answer.</strong></p>
 </section>
 
-<section>
+<section id="ground">
   <div class="label">Four</div>
   <h2>Follow the chain to its ground.</h2>
   <p>A proposed ground must be <strong>sufficient</strong>: it must bear the explanatory or normative load placed upon it without silently borrowing what it is supposed to explain.</p>
@@ -159,7 +223,7 @@ footer p{font-size:12px;color:#77737c}
   <p><strong>Grounding and identification are distinct arguments.</strong> Both belong to the complete thesis; neither may be used as a substitute for the other.</p>
 </section>
 
-<section>
+<section id="governance">
   <div class="label">Five</div>
   <h2>Govern the reasoning.</h2>
   <p><strong>Governed Logic</strong> is the reasoning-systems architecture that follows from this grounding claim.</p>
@@ -180,7 +244,7 @@ footer p{font-size:12px;color:#77737c}
   <p>A system can become more capable without resolving what ultimately governs its claims. Increasing intelligence does not, by itself, settle the grounding question upstream.</p>
 </section>
 
-<section>
+<section id="tests">
   <div class="label">Six</div>
   <h2>Make the architecture answerable to tests.</h2>
   <p>Hold the underlying model substantially constant. Introduce the governing principles and referent. Remove them. Substitute another referent. Change the wording without changing the facts. Apply adversarial pressure. Ask the same moral question under different framings.</p>
@@ -203,5 +267,31 @@ footer p{font-size:12px;color:#77737c}
   <p>Governed Logic Reasoning Systems · Paul André Couchoud</p>
   <p>Soli Deo Gloria</p>
 </footer>
+<script>
+(()=>{
+const links=[...document.querySelectorAll('.chain-nav a')];
+const sections=links.map(a=>document.querySelector(a.getAttribute('href')));
+if(!('IntersectionObserver' in window))return;
+const visible=new Set();
+const update=()=>{
+let current=null;
+for(const section of sections){if(visible.has(section))current=current||section;}
+if(!current)return;
+for(const a of links){
+if(a.hash==='#'+current.id)a.setAttribute('aria-current','location');
+else a.removeAttribute('aria-current');
+}
+};
+const observer=new IntersectionObserver(entries=>{
+for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}
+update();
+},{rootMargin:'-5% 0px -30% 0px',threshold:0});
+sections.forEach(s=>observer.observe(s));
+const motion=new IntersectionObserver(entries=>{
+entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');motion.unobserve(e.target);}});
+},{threshold:.4});
+document.querySelectorAll('.chain').forEach(e=>motion.observe(e));
+})();
+</script>
 </body>
 </html>
