@@ -1,0 +1,245 @@
+GOVERNED LOGIC REASONING SYSTEMS
+BUSINESS STRATEGY — ADDITIONAL DIRECTION FROM PAUL
+
+Version 1.0
+23 September 2026
+Status: Addendum to the existing website brief.
+
+The previous material concerning the definition of intelligence, the foundational chain, the bidirectional reasoning architecture, the infinity mirror, company identity, research, consulting, publications, transparency, and founder biography remains in effect.
+
+The following additions clarify the actual business Paul intends to build.
+
+
+1. GOVERNED INTELLIGENCE IS A PRODUCT WE ARE BUILDING
+
+Governed Intelligence is the artificial intelligence implementation of Governed Logic.
+
+The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering.
+
+Paul intends to develop Governed Intelligence into an increasingly capable reasoning system governed by the principles and architecture of Governed Logic.
+
+This is an active company objective.
+
+The development process will be public, with concepts, methods, demonstrations, experiments, and engineering progress shared as the work advances.
+
+The website should clearly distinguish the existing prototype from capabilities that are still being designed, implemented, or tested.
+
+
+2. WE ARE BUILDING A REASONING ENGINE AND API
+
+Committed development direction
+
+THE GOVERNED LOGIC REASONING ENGINE
+
+A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles.
+
+The intended architecture follows the established bidirectional Governed Logic process, including premise evaluation, semantic consistency, logical validity, truth-directed reasoning, and sufficient grounding.
+
+Paul intends to develop a reasoning API that makes the architecture available for integration into other software systems and AI applications.
+
+The underlying concept is that developers and organizations should be able to incorporate governed reasoning into their own systems rather than being restricted to a single chatbot interface.
+
+The engine and API are planned engineering deliverables, not currently available production services.
+
+The existing prototype and published mechanism establish the starting point for their development.
+
+The website should communicate this development objective prominently rather than relegating it to a distant list of possible future products.
+
+
+3. THE RESEARCH ARM
+
+Research is a core activity of Governed Logic Reasoning Systems.
+
+Paul's existing archive contains original ideas, reasoning chains, experiments, observations, hypotheses, and concepts developed over several years.
+
+The research workflow will turn that accumulated material into authored publications, reproducible demonstrations, new investigations, and practical engineering requirements.
+
+The research arm will use the established publishing workflow to retrieve archive material, identify the original proposition, reconstruct its development, investigate relevant external work, test the underlying reasoning, and prepare material for public release.
+
+The company will also conduct ongoing research into AI safety, governing frameworks, moral reasoning, semantic stability, and machine decision-making.
+
+Research should not be depicted as merely an academic interest attached to the company.
+
+It is one of the primary activities through which the company's intellectual and technical work develops.
+
+
+4. NOVELTY
+
+New company identity — decided by Paul
+
+NOVELTY
+
+Novelty is the name Paul has chosen for a distinct part of the Governed Logic research and development work.
+
+Paul has a larger concept for Novelty that will be supplied and developed separately.
+
+The website should reserve this identity and recognize it as an intended part of the company's architecture without prematurely defining its complete purpose, scope, methods, or deliverables.
+
+Novelty should not be reduced automatically to conventional prior-art research, novelty assessment, or invention screening.
+
+Those activities may be relevant, but Paul has indicated that the concept extends beyond them.
+
+Its complete definition remains pending his additional source material.
+
+
+5. AUTHORSHIP AND PUBLISHING
+
+Paul is an author as well as the founder of Governed Logic Reasoning Systems.
+
+His articles, treatises, original ideas, research publications, and other authored works are substantive company activities.
+
+They should not all be grouped under the generic label of content marketing.
+
+The publishing function includes original intellectual work, public teaching, research communication, technical explanation, and the development of the company's canonical body of published knowledge.
+
+The existing publishing workflow preserves authorship, provenance, source material, editorial review, and the relationship between articles and companion videos.
+
+Paul will provide or confirm the final name of the publishing division or imprint. Until then, do not invent a new branded name.
+
+The Truth with Paul remains the established public-facing video and teaching channel, connected to but distinct from the company's publishing function.
+
+
+6. MORAL REASONING AND FRAMEWORK EVALUATION
+
+Governed Logic Reasoning Systems intends to evaluate the reasoning of other artificial intelligence systems and governing frameworks.
+
+This includes examining how different systems or frameworks establish moral principles, define harm and obligation, adjudicate conflicting claims, and arrive at conclusions.
+
+Potential evaluation work includes:
+
+- Comparing reasoning systems under controlled changes of governing referent, principles, phrasing, and context.
+
+- Examining whether moral conclusions remain consistent when the underlying facts remain unchanged.
+
+- Identifying semantic drift, incompatible assumptions, borrowed authority, and unresolved conflicts between governing frameworks.
+
+- Testing where reasoning chains terminate and whether the stated governing framework supplies the authority its conclusions require.
+
+- Evaluating how reasoning failures may influence actions taken by an autonomous system.
+
+These directions already appear in the company's earlier testing and audit material.
+
+This evaluation capability may develop into research services, independent assessments, consulting engagements, and tools for organizations developing AI.
+
+Its purpose is to examine reasoning structures and identify their properties, assumptions, limitations, and consequences.
+
+A framework's stated identity should not substitute for examining whether its reasoning actually operates as specified.
+
+
+7. GOVERNED LOGIC BEYOND THE KNOWN REFERENT
+
+The Governed Logic architecture and Paul's particular governing referent must remain conceptually distinguishable.
+
+Paul's governing referent is Jesus Christ, the Logos.
+
+However, the general reasoning architecture need not require every user, organization, or machine-facing interface to know the identity of that referent before the reasoning process can be examined or used.
+
+The architecture can explicitly investigate which principles, properties, and grounding relationships are necessary for a reasoning system to function coherently.
+
+It can also test candidate governing frameworks without disclosing the identity of Paul's preferred referent to the system under evaluation.
+
+This distinction matters for research, independent testing, developer integration, and practical applications.
+
+The website should not suggest that every possible Governed Logic implementation requires users to accept a particular theological conclusion before engaging with its technical methods.
+
+The underlying mechanism is intended for public examination and reproducible testing.
+
+Claims about the performance of referent-independent implementations should remain tied to actual test results as those implementations are developed.
+
+
+8. DOWNSTREAM APPLICATIONS
+
+The following are application areas for Governed Logic, Governed Intelligence, and the proposed reasoning engine.
+
+They illustrate the broader scope of the company and its potential commercial and societal applications.
+
+They are not claims that the company has already deployed solutions in these domains.
+
+AUTONOMOUS VEHICLES AND ROBOTICS
+
+Reasoning about actions, physical consequences, safety constraints, and situations where a machine must reconcile competing instructions or obligations before acting.
+
+AI SAFETY AND AUTONOMOUS AGENTS
+
+Evaluating systems whose reasoning leads to consequential actions, including the relationship between governing principles, decision-making, authorization, and action-level safety controls.
+
+LEGAL REASONING AND SEMANTIC STABILITY
+
+Examining how changes in terminology, definitions, or contextual framing can change the interpretation of a rule while its apparent wording remains familiar.
+
+Potential applications include legal-document analysis, rule interpretation, consistency evaluation, and identifying semantic drift in systems that assist legal professionals.
+
+RESOURCE PLANNING AND ALLOCATION
+
+Investigating decision-support systems that must reason about limited resources, competing priorities, and real-world consequences.
+
+Examples include water distribution, electricity allocation, infrastructure planning, and emergency resource management.
+
+HEALTHCARE AND HIGH-STAKES DECISION SUPPORT
+
+Examining how AI systems represent evidence, uncertainty, clinical priorities, obligations, and competing risks when assisting qualified human decision-makers.
+
+The potential role of governed reasoning is to improve the transparency and reliability of decision support, not to substitute unvalidated systems for professional judgment.
+
+EDUCATION, INSTITUTIONS, AND HUMAN REASONING
+
+Teaching and evaluating the relationships among stable meaning, truth, logic, reasoning, and obligation.
+
+Applications may include AI literacy, critical reasoning, educational tools, and institutional training.
+
+These application areas reflect the company's existing research into delegated machine judgment, resource allocation, moral reasoning, and semantic stability.
+
+The underlying business opportunity is broader than a conversational AI interface.
+
+As systems make more decisions and take more actions, the relationship between reasoning and reality becomes increasingly consequential.
+
+Governed Logic intends to develop and investigate reasoning methods applicable at that point of decision.
+
+
+9. CONSULTING, ASSESSMENTS, EDUCATION, AND SPEAKING
+
+The company will also pursue practical engagements in which its research and technical expertise can provide value.
+
+These include reasoning-system assessments, AI safety evaluations, consulting, educational workshops, speaking engagements, and eventual assistance with reasoning-engine integration.
+
+The website should distinguish commercial services that Paul confirms are currently available from services still being defined or developed.
+
+The company's identity remains Governed Logic Reasoning Systems, regardless of whether the immediate engagement involves research, consulting, training, evaluation, or software development.
+
+
+10. KEEP THE ORIGINAL WEBSITE DIRECTION
+
+None of these additions replaces the original conceptual and visual brief.
+
+The definition of intelligence remains:
+
+Intelligence is the capacity to align representations with reality.
+
+The foundational relationship remains:
+
+Reality → Truth → Logic → Reasoning → Intelligence.
+
+The bidirectional Governed Logic architecture remains central.
+
+The infinity mirror and dodecahedron remain relevant visual and educational elements.
+
+The website remains the canonical public company home, with consistent human-readable and machine-readable representations.
+
+The founder biography remains a required page. Paul will provide its source text separately.
+
+The company is being built publicly and transparently, and the website should reflect both the existing prototype and the actual development work as it progresses.
+
+
+FINAL NOTE TO THE WEBSITE BUILDER
+
+Paul wanted me to send this additional material for your consideration.
+
+The intention is to strengthen the business definition, not redesign the existing website.
+
+Governed Logic Reasoning Systems is a research, development, publishing, education, and technology company. It will build Governed Intelligence and a reasoning engine/API, openly share its underlying mechanism, evaluate other reasoning systems and frameworks, and explore practical applications in domains where reasoning leads to consequential decisions.
+
+Novelty is a newly designated part of the company's work, with its fuller definition to follow.
+
+Please preserve the existing website direction and incorporate these additions wherever they clarify the company's identity, current work, and intended development.
+
+Above all, the website should make clear that Governed Logic Reasoning Systems is building a reasoning architecture and the technology through which that architecture can be applied.

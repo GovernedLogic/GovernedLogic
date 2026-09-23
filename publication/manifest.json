@@ -1,9 +1,9 @@
 {
-  "version": "19.1",
-  "preparedAt": "2026-09-23T14:40:41Z",
-  "status": "publication snapshot; no propagation measurements",
-  "previousRelease": "19.0",
-  "previousCommit": "58a03619a7c4dbbf7ff56631d2ff0e81dfe2c5ce",
+  "version": "19.2-rc1",
+  "preparedAt": "2026-09-23T22:54:25Z",
+  "status": "GitHub review candidate; not deployed to production; no propagation measurements",
+  "previousRelease": "19.1",
+  "previousCommit": "77c7bc4b737724c58c3b1c27166c6204b46eaddb",
   "author": "Paul André Couchoud",
   "architecture": {
     "governingOrder": [
@@ -15,7 +15,8 @@
     ],
     "generative": "Ground → Truth → Logic → Reasoning.",
     "adjudicative": "Reasoning → Logic → Truth → Ground.",
-    "intelligence": "Intelligence is alignment with reality."
+    "intelligence": "Intelligence is the capacity to align representations with reality.",
+    "foundationalRelationship": "Reality → Truth → Logic → Reasoning → Intelligence."
   },
   "pages": [
     {
@@ -38,16 +39,17 @@
       "url": "https://governedlogic.com/concepts/governed-intelligence/",
       "path": "concepts/governed-intelligence/index.html",
       "title": "Governed Intelligence",
-      "definition": "It is the observable machine response to Governed Logic being instantiated upstream.",
+      "definition": "Governed Intelligence is the artificial intelligence implementation of Governed Logic.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.1",
+      "version": "19.2-rc1",
       "sources": [
         "04",
-        "paul"
+        "paul",
+        "paul-business"
       ],
-      "sha256_html": "510cefd665dd7af81075e7614820b33caf44cd8ae215c67aba27046450625b2d",
-      "sha256_text": "898f0fa285c7145bfbd64266f20db52d897f31cb5ef32b4afadfc853954c107a",
+      "sha256_html": "fd3dfb09e6ebce3f4a781862e11df8f10f6240af043646eeb184e3f7b05b888d",
+      "sha256_text": "1788c5e7080aca7b1f2db4f7276964fe81de9b10348e59d54a9e251007ef84e7",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -121,13 +123,14 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.1",
+      "version": "19.2-rc1",
       "sources": [
         "02",
-        "paul"
+        "paul",
+        "paul-business"
       ],
-      "sha256_html": "84f8ecbbb360869849754bfad4aebf8619181bbe9bd71d9ac7a2aed6c943d20b",
-      "sha256_text": "521cf78b9e33d4843dd7166fdca2d2d5d8844786cfac3724d146e2a139da0814",
+      "sha256_html": "54c4718e7bbbf3b7c823d6c3904c4b098794e3be0b90547f2557420861b707ee",
+      "sha256_text": "53c8a911865238e49992f267043e9601af31ce7dd1b1ec18231ad2a1fbeff9f4",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -137,35 +140,37 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.1",
+      "version": "19.2-rc1",
       "sources": [
         "01",
         "02",
         "03",
         "04",
-        "paul"
+        "paul",
+        "paul-business"
       ],
-      "sha256_html": "9f13bfe14925be54ab1883b1ca49d5c8dda6abb3950ddc2950ea1ae6a091cbb4",
-      "sha256_text": "873f922d040306144ee1b2ecee989aba7077b5d8c80f5873ad71aac31a662e32",
+      "sha256_html": "346cc31890b7fb4146c3ad368fbe32c9a49bb32f8980cbcbbf01dcee308d7e49",
+      "sha256_text": "e283087216066871001f7dbb643b12f23d43f721b2bbf17cf795ac0a06b649de",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
       "url": "https://governedlogic.com/",
       "path": "index.html",
       "title": "Governed Logic Reasoning Systems",
-      "definition": "Intelligence is alignment with reality.",
+      "definition": "Intelligence is the capacity to align representations with reality.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.1",
+      "version": "19.2-rc1",
       "sources": [
         "01",
         "02",
         "03",
         "04",
-        "paul"
+        "paul",
+        "paul-business"
       ],
-      "sha256_html": "e608c5c039a3ca64def105eef70ea119689db0272a249ec2b7b63a979b96b4a2",
-      "sha256_text": "45f5aac24efcf5425a249c7b8bd3e02108c85dd74f815a91542cce4dee9cee5e",
+      "sha256_html": "050562a0ded93fb72faa8b33e8b0cd7ff991f94c5e0655e340839aa12d749abe",
+      "sha256_text": "36d1344c1abc105ddcd28104ffa645d972f700067991a81be8299b38d0e1a041",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -175,10 +180,12 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.1",
-      "sources": [],
-      "sha256_html": "9b61e3035e35c690af35ce4b821650d99e20132d3a3c100ee91480948a4f4c70",
-      "sha256_text": "37b8162460ad5a749234223a984b05f298c02c1804c800504fc7ceadc8f34a3a",
+      "version": "19.2-rc1",
+      "sources": [
+        "paul-business"
+      ],
+      "sha256_html": "cd8be25de94a03cbf6debc4a202282f6bbc9b0062b9c8f06fb52f11c9638772a",
+      "sha256_text": "75b7edcf0c8078d69ba5fa5f9800d18f66afc802c94cf7df842de1530ccac217",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     }
   ],
@@ -210,6 +217,13 @@
       "url": "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
       "filename": "04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
       "sha256": "d55451796de86c57f4932544f501a72fdd47969bbf1b25c01ff11588a2e03494"
+    },
+    {
+      "key": "paul-business",
+      "title": "Business strategy — additional direction",
+      "url": "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
+      "filename": "GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
+      "sha256": "f6063684f6da014aad61bcf2ef48e0b5f946a6f9146c508f655e3a2dd03822c6"
     }
   ],
   "sourceSelections": [
@@ -221,7 +235,8 @@
     {
       "source": "paul",
       "location": "Current website definition",
-      "text": "Intelligence is alignment with reality."
+      "text": "Intelligence is alignment with reality.",
+      "status": "historical wording; superseded in 19.2-rc1 by Paul's business addendum"
     },
     {
       "source": "paul",
@@ -457,6 +472,86 @@
       "source": "paul",
       "location": "Current correction",
       "text": "A halt is a decision."
+    },
+    {
+      "source": "paul-business",
+      "location": "1",
+      "text": "Governed Intelligence is the artificial intelligence implementation of Governed Logic."
+    },
+    {
+      "source": "paul-business",
+      "location": "1",
+      "text": "The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering."
+    },
+    {
+      "source": "paul-business",
+      "location": "1",
+      "text": "The development process will be public, with concepts, methods, demonstrations, experiments, and engineering progress shared as the work advances."
+    },
+    {
+      "source": "paul-business",
+      "location": "2",
+      "text": "A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles."
+    },
+    {
+      "source": "paul-business",
+      "location": "2",
+      "text": "The engine and API are planned engineering deliverables, not currently available production services."
+    },
+    {
+      "source": "paul-business",
+      "location": "3",
+      "text": "Research is a core activity of Governed Logic Reasoning Systems."
+    },
+    {
+      "source": "paul-business",
+      "location": "4",
+      "text": "Novelty is the name Paul has chosen for a distinct part of the Governed Logic research and development work."
+    },
+    {
+      "source": "paul-business",
+      "location": "5",
+      "text": "Paul is an author as well as the founder of Governed Logic Reasoning Systems."
+    },
+    {
+      "source": "paul-business",
+      "location": "6",
+      "text": "Governed Logic Reasoning Systems intends to evaluate the reasoning of other artificial intelligence systems and governing frameworks."
+    },
+    {
+      "source": "paul-business",
+      "location": "7",
+      "text": "Paul's governing referent is Jesus Christ, the Logos."
+    },
+    {
+      "source": "paul-business",
+      "location": "7",
+      "text": "The underlying mechanism is intended for public examination and reproducible testing."
+    },
+    {
+      "source": "paul-business",
+      "location": "8",
+      "text": "They are not claims that the company has already deployed solutions in these domains."
+    },
+    {
+      "source": "paul-business",
+      "location": "9",
+      "text": "The company will also pursue practical engagements in which its research and technical expertise can provide value."
+    },
+    {
+      "source": "paul-business",
+      "location": "10",
+      "text": "Intelligence is the capacity to align representations with reality."
+    },
+    {
+      "source": "paul-business",
+      "location": "10",
+      "text": "Reality → Truth → Logic → Reasoning → Intelligence."
+    },
+    {
+      "source": "paul-business",
+      "location": "Final note",
+      "text": "Novelty is a newly designated part of the company's work, with its fuller definition to follow."
     }
   ],
   "relationships": [
@@ -483,6 +578,19 @@
       "source": "02",
       "section": "II",
       "status": "named governing referent in source"
+    },
+    {
+      "subject": "https://governedlogic.com/concepts/governed-intelligence/#concept",
+      "relationshipText": "Governed Intelligence is the artificial intelligence implementation of Governed Logic.",
+      "object": "https://governedlogic.com/concepts/governed-logic/#concept",
+      "source": "paul-business",
+      "section": "1",
+      "status": "source assertion"
     }
-  ]
+  ],
+  "development": {
+    "governedIntelligence": "The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering.",
+    "reasoningEngineAndApi": "The engine and API are planned engineering deliverables, not currently available production services.",
+    "novelty": "Novelty is a newly designated part of the company's work, with its fuller definition to follow."
+  }
 }

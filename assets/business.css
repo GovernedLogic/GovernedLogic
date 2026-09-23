@@ -1,0 +1,18 @@
+/* Business additions only. Existing publication and opening styles are unchanged. */
+.business-section .business-work{margin:38px 0}
+.business-section .business-work article{padding:26px 0;border-top:1px solid var(--line);scroll-margin-top:32px}
+.business-section .business-work article:first-child{border-top-color:var(--gold)}
+.business-section .business-work .label{font-size:10px;margin-bottom:10px}
+.business-section .business-work h3,.business-section .business-detail h3{font-size:clamp(24px,3vw,32px);line-height:1.2}
+.business-section .business-work p,.business-section .business-detail p{max-width:72ch}
+.business-section .business-evaluation{max-width:72ch;padding-left:22px;color:#c0bcc3}
+.business-section .business-evaluation li{padding:6px 0 6px 6px}
+.business-section .business-evaluation li::marker{color:var(--gold)}
+.business-section .business-detail{margin:40px 0 0;padding:28px 0;border-top:1px solid var(--line);scroll-margin-top:32px}
+.business-section .business-applications{margin:38px 0}
+.business-section .business-applications>div{display:grid;grid-template-columns:minmax(190px,.35fr) minmax(0,.65fr);gap:28px;padding:24px 0;border-top:1px solid var(--line)}
+.business-section .business-applications dt{font:400 22px/1.3 Georgia,"Times New Roman",serif;color:var(--text)}
+.business-section .business-applications dd{margin:0;color:#c0bcc3}
+.business-development-status{max-width:72ch;margin:30px 0;padding:24px 0;border-top:1px solid var(--gold);border-bottom:1px solid var(--line)}
+.business-development-status p{font-size:16px}
+@media(max-width:720px){.business-section .business-applications>div{grid-template-columns:1fr;gap:10px}}
