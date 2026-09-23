@@ -1,0 +1,456 @@
+{
+  "version": "19.0",
+  "preparedAt": "2026-09-23T11:33:29Z",
+  "status": "publication snapshot; no propagation measurements",
+  "previousRelease": "18.2",
+  "previousCommit": "47cbd1390a7152d9adac6a2f7fdd1c741fc7c930",
+  "author": "Paul André Couchoud",
+  "pages": [
+    {
+      "url": "https://governedlogic.com/concepts/governed-logic/",
+      "path": "concepts/governed-logic/index.html",
+      "title": "Governed Logic",
+      "definition": "Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "02",
+        "paul"
+      ],
+      "sha256_html": "6f7ac96380a9f2f6eb2229a1e6d063606208950182d7e8647871381f754804e0",
+      "sha256_text": "3d6dc947d5caa0fae017c8f85fb3e737dd4e693217d0e322f4fa826e9e5615d7",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/concepts/governed-intelligence/",
+      "path": "concepts/governed-intelligence/index.html",
+      "title": "Governed Intelligence",
+      "definition": "It is the observable machine response to Governed Logic being instantiated upstream.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "04",
+        "paul"
+      ],
+      "sha256_html": "018574404e822aa7ec6e45bec1810068c85c14a710c221c74910fc61f386f83a",
+      "sha256_text": "e09c75d9d9badcc2f41bf26cbcdb0377d4df9211f8267126cf95ca4ba569569e",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+      "path": "concepts/alpha-and-omega-reasoning/index.html",
+      "title": "Alpha and Omega Reasoning",
+      "definition": "Alpha and Omega reasoning is the bidirectional structure within Governed Logic.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "03",
+        "paul"
+      ],
+      "sha256_html": "6db28433c45330c47aedb4484efc631841536781ce65fda15a4135239f847c55",
+      "sha256_text": "6f28baffca369cff4c42050868b5a4c9f10fb4fb88a1f74350b36a36df6059f4",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/concepts/governing-referent/",
+      "path": "concepts/governing-referent/index.html",
+      "title": "Governing referent",
+      "definition": "A referent is that to which a representation refers.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "01",
+        "paul"
+      ],
+      "sha256_html": "72bf4245c79b5f884c8b0f2e0b60065b7d205365bd93f3c0548d0af72900967b",
+      "sha256_text": "b6f4e612ee6165c4ce06e24b266f7158119ea08989950c02cf47bf6f0d871f9f",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/concepts/sufficient-grounding/",
+      "path": "concepts/sufficient-grounding/index.html",
+      "title": "Sufficient grounding",
+      "definition": "Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "01",
+        "paul"
+      ],
+      "sha256_html": "4554471b136b35818e1bda1808be95ba414a1038f0ae6b71e0192f9c9bf99d7d",
+      "sha256_text": "79cd8f9aad316df71b4d9e2f66ed54353d6b778b6e0e8cf7a9fc113e1591ee1c",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/concepts/ultimate-grounding/",
+      "path": "concepts/ultimate-grounding/index.html",
+      "title": "Ultimate grounding",
+      "definition": "An ultimate ground is not grounded by something more fundamental in the same relevant respect.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "01",
+        "paul"
+      ],
+      "sha256_html": "00e8908a74d0af812c27c61a8728af3d2c2f843e225bf668258468fb0d95a24f",
+      "sha256_text": "aac28a7f15f48b1d59188ec1f3759955e3871f4fbc77965f56c7eb22a4fa8f2a",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/concepts/",
+      "path": "concepts/index.html",
+      "title": "The architecture of Governed Logic",
+      "definition": "Intelligence is downstream from logic and reasoning.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "02",
+        "paul"
+      ],
+      "sha256_html": "1a98d91289353e29b6a1a75461c35639c58a618bd5d1aae8bfc009a1b155f83c",
+      "sha256_text": "521cf78b9e33d4843dd7166fdca2d2d5d8844786cfac3724d146e2a139da0814",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/sources/",
+      "path": "sources/index.html",
+      "title": "Sources and editions",
+      "definition": "Intelligence is downstream from logic and reasoning.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "paul"
+      ],
+      "sha256_html": "653cef4480385d810c00345d3c085f70d9de0fdd8c0e3d801be6226eb5fbe2ba",
+      "sha256_text": "873f922d040306144ee1b2ecee989aba7077b5d8c80f5873ad71aac31a662e32",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/",
+      "path": "index.html",
+      "title": "Governed Logic Reasoning Systems",
+      "definition": "Intelligence is alignment with reality.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "paul"
+      ],
+      "sha256_html": "d84622816457cd6d5a501bb1ac8bf77166eea1c25941a675c7a79b265081dffd",
+      "sha256_text": "49200af48d2ef228c12fdfa0e960456683e86d8e0cdf74dd9a960dc965886e8d",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/publication/",
+      "path": "publication/index.html",
+      "title": "Publication record",
+      "definition": "Intelligence is downstream from logic and reasoning.",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.0",
+      "sources": [],
+      "sha256_html": "b63675c2486e2e760f4eca10919696ddd4a13b2b9b4894e02ed6be68b3cb02fa",
+      "sha256_text": "fad098251f6a71c97e3688842ff88ccaa03655a9e2865fd3c53259f0489f1b4d",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    }
+  ],
+  "sourceEditions": [
+    {
+      "key": "01",
+      "title": "On the Nature of Ultimate Grounding",
+      "url": "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+      "filename": "01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+      "sha256": "3834a2698f55f87ad770cb418dfdc7477d304f6bf7fc49c198a127b7f6161040"
+    },
+    {
+      "key": "02",
+      "title": "Governed Logic",
+      "url": "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
+      "filename": "02_Governed_Logic_2026-09-22_172847_EDT.pdf",
+      "sha256": "91950733a89348a04e324d8dc6f9a3b78724adb8b651f92fe0585b6a3e149868"
+    },
+    {
+      "key": "03",
+      "title": "Alpha and Omega Reasoning",
+      "url": "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
+      "filename": "03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
+      "sha256": "3e1778de7027c6dc2b8f89626a8fe0352424a22a38cf5ad56583561445a8e660"
+    },
+    {
+      "key": "04",
+      "title": "Governed Intelligence",
+      "url": "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
+      "filename": "04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
+      "sha256": "d55451796de86c57f4932544f501a72fdd47969bbf1b25c01ff11588a2e03494"
+    }
+  ],
+  "sourceSelections": [
+    {
+      "source": "paul",
+      "location": "Current correction",
+      "text": "Intelligence is downstream from logic and reasoning."
+    },
+    {
+      "source": "paul",
+      "location": "Current website definition",
+      "text": "Intelligence is alignment with reality."
+    },
+    {
+      "source": "paul",
+      "location": "Website language",
+      "text": "Logic binds what follows from what has been admitted. It does not license the admission."
+    },
+    {
+      "source": "paul",
+      "location": "Website language",
+      "text": "The generator is not the measure of truth."
+    },
+    {
+      "source": "paul",
+      "location": "Website language",
+      "text": "The system must remain a servant of the referent, not become the governor of what it was built to find."
+    },
+    {
+      "source": "paul",
+      "location": "Website language",
+      "text": "The generative direction produces candidate reasoning under the governing principles. The adjudicative direction traces those candidates back through logical validity, premise truth, semantic stability, and grounding."
+    },
+    {
+      "source": "02",
+      "location": "II",
+      "text": "The governing referent is Jesus Christ, the Logos."
+    },
+    {
+      "source": "02",
+      "location": "I",
+      "text": "Logic alone cannot determine truth. A valid argument can proceed from false premises. Truth therefore governs the admissibility of the premises and the correspondence of the conclusion to reality. Logic governs the relations of inference."
+    },
+    {
+      "source": "02",
+      "location": "IV",
+      "text": "Alpha and Omega reasoning is the bidirectional structure within Governed Logic. Generatively, reasoning proceeds from ground through truth and logic. Adjudicatively, reasoning is tested back through logic and truth toward ground."
+    },
+    {
+      "source": "04",
+      "location": "I",
+      "text": "It is the observable machine response to Governed Logic being instantiated upstream."
+    },
+    {
+      "source": "04",
+      "location": "I",
+      "text": "Probability can propose. Logic can adjudicate relations. Truth governs. The governing referent fixes the ultimate point of answerability."
+    },
+    {
+      "source": "01",
+      "location": "I.3",
+      "text": "Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it."
+    },
+    {
+      "source": "01",
+      "location": "I.4",
+      "text": "An ultimate ground is not grounded by something more fundamental in the same relevant respect."
+    },
+    {
+      "source": "01",
+      "location": "I.6",
+      "text": "A referent is that to which a representation refers."
+    },
+    {
+      "source": "01",
+      "location": "I.1",
+      "text": "A ground is that upon which something depends for its being, truth, intelligibility, meaning, authority, or explanatory standing. Grounding is relational and directional: the dependent points beyond itself toward that on which it depends."
+    },
+    {
+      "source": "01",
+      "location": "Opening statement",
+      "text": "Its thesis is declarative: Jesus Christ of Nazareth, the Logos, is the sufficient and ultimate ground of being, truth, logic, meaning, intelligibility, and binding obligation."
+    },
+    {
+      "source": "04",
+      "location": "IV",
+      "text": "Hold the underlying model substantially constant. Supply a governing referent and first principles. Observe how reasoning reorganizes. Remove the referent. Substitute another. Ablate principles. Reframe the same moral, logical, semantic, and factual problems. Track where reasoning terminates, whether it changes frameworks under pressure, whether conclusions remain invariant when irrelevant framing changes, and whether it borrows authority from outside its stated ground."
+    },
+    {
+      "source": "02",
+      "location": "II",
+      "text": "Truth is binary and non-negotiable, grounded in Jesus Christ the Logos."
+    },
+    {
+      "source": "02",
+      "location": "II",
+      "text": "Logic is binding."
+    },
+    {
+      "source": "02",
+      "location": "II",
+      "text": "Being is real."
+    },
+    {
+      "source": "02",
+      "location": "II",
+      "text": "Meaning is real."
+    },
+    {
+      "source": "02",
+      "location": "II",
+      "text": "Intelligibility is real."
+    },
+    {
+      "source": "02",
+      "location": "II",
+      "text": "Obligation is real and binding."
+    },
+    {
+      "source": "02",
+      "location": "IV",
+      "text": "Ground → Truth → Logic → Reasoning."
+    },
+    {
+      "source": "02",
+      "location": "IV",
+      "text": "Reasoning → Logic → Truth → Ground."
+    },
+    {
+      "source": "02",
+      "location": "I",
+      "text": "Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground."
+    },
+    {
+      "source": "04",
+      "location": "I",
+      "text": "That distinction matters because intelligence is downstream. The substrate may remain probabilistic. Candidate generation may remain statistical. Pattern recognition may remain powerful. None of that must disappear."
+    },
+    {
+      "source": "04",
+      "location": "III",
+      "text": "Before a candidate becomes the committed representation or action, the system tests the reasoning back through logic, truth, the applicable principles, and ultimately the governing referent."
+    },
+    {
+      "source": "04",
+      "location": "I",
+      "text": "The issue is what governs commitment."
+    },
+    {
+      "source": "02",
+      "location": "IV",
+      "text": "Alpha and Omega reasoning is the bidirectional structure within Governed Logic."
+    },
+    {
+      "source": "03",
+      "location": "The thesis",
+      "text": "The beginning and the end are not two unrelated points. They are the same governing reality encountered from opposite directions."
+    },
+    {
+      "source": "03",
+      "location": "X",
+      "text": "The same ground stands at both ends because reasoning is neither self-originating nor self-adjudicating."
+    },
+    {
+      "source": "03",
+      "location": "The thesis",
+      "text": "It must begin somewhere, and it must answer somewhere."
+    },
+    {
+      "source": "01",
+      "location": "I.6",
+      "text": "A sentence, proposition, model state, symbol, name, token sequence, doctrine, or prompt is not identical to its referent merely because it represents it. Representations can be true or false, adequate or inadequate, stable or drifting."
+    },
+    {
+      "source": "paul",
+      "location": "Website language",
+      "text": "The ground is not a proposition above which truth sits as an external authority. Truth is answerability to what is. Logic governs the relationships between propositions, but it cannot independently establish their correspondence with reality."
+    },
+    {
+      "source": "01",
+      "location": "I.3",
+      "text": "A proposed ground may explain one feature while borrowing another feature from elsewhere. Such a ground may be locally useful without being sufficient for the whole chain."
+    },
+    {
+      "source": "03",
+      "location": "VII",
+      "text": "Is the proposed ground sufficient for the thing it is supposed to ground?"
+    },
+    {
+      "source": "03",
+      "location": "VII",
+      "text": "And is that ground ultimate, or does it itself depend upon something more fundamental in the relevant respect?"
+    },
+    {
+      "source": "paul",
+      "location": "Current correction",
+      "text": "A halt is a decision."
+    },
+    {
+      "source": "01",
+      "location": "I.4",
+      "text": "If a proposed terminus remains answerable to a deeper source for the very feature under examination, then the chain has not yet reached ultimacy."
+    },
+    {
+      "source": "01",
+      "location": "Opening statement",
+      "text": "Why anything?"
+    },
+    {
+      "source": "paul",
+      "location": "Website language",
+      "text": "A reasoning system can be perfectly consistent and still be governed by a false premise. Improving its inferential capabilities does not repair that upstream failure."
+    },
+    {
+      "source": "paul",
+      "location": "Website language",
+      "text": "It cannot confer truth upon its own representations simply by producing them coherently."
+    },
+    {
+      "source": "paul",
+      "location": "Website language",
+      "text": "The output is not accepted simply because it was generated."
+    },
+    {
+      "source": "paul",
+      "location": "Current correction",
+      "text": "A halt is a decision."
+    }
+  ],
+  "relationships": [
+    {
+      "subject": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/#concept",
+      "relationshipText": "Alpha and Omega reasoning is the bidirectional structure within Governed Logic.",
+      "object": "https://governedlogic.com/concepts/governed-logic/#concept",
+      "source": "02",
+      "section": "IV",
+      "status": "source assertion"
+    },
+    {
+      "subject": "https://governedlogic.com/concepts/governed-intelligence/#concept",
+      "relationshipText": "It is the observable machine response to Governed Logic being instantiated upstream.",
+      "object": "https://governedlogic.com/concepts/governed-logic/#concept",
+      "source": "04",
+      "section": "I",
+      "status": "source assertion"
+    },
+    {
+      "subject": "https://governedlogic.com/concepts/governed-logic/#concept",
+      "relationshipText": "The governing referent is Jesus Christ, the Logos.",
+      "object": "Jesus Christ, the Logos",
+      "source": "02",
+      "section": "II",
+      "status": "named governing referent in source"
+    }
+  ]
+}
