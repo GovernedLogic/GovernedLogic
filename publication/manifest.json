@@ -1,7 +1,7 @@
 {
-  "version": "19.2-rc1",
-  "preparedAt": "2026-09-23T22:54:25Z",
-  "status": "GitHub review candidate; not deployed to production; no propagation measurements",
+  "version": "19.2",
+  "preparedAt": "2026-09-23T22:58:00Z",
+  "status": "publication snapshot; no propagation measurements",
   "previousRelease": "19.1",
   "previousCommit": "77c7bc4b737724c58c3b1c27166c6204b46eaddb",
   "author": "Paul André Couchoud",
@@ -42,14 +42,14 @@
       "definition": "Governed Intelligence is the artificial intelligence implementation of Governed Logic.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.2-rc1",
+      "version": "19.2",
       "sources": [
         "04",
         "paul",
         "paul-business"
       ],
-      "sha256_html": "fd3dfb09e6ebce3f4a781862e11df8f10f6240af043646eeb184e3f7b05b888d",
-      "sha256_text": "1788c5e7080aca7b1f2db4f7276964fe81de9b10348e59d54a9e251007ef84e7",
+      "sha256_html": "0df8f9797fdeb79686792dd52bd905cdda08ae083a47fe88158e223bb10a5ada",
+      "sha256_text": "1b1475a67cf26e72b9739e8bbdca590fe272f0100b83b19b883db2daae673820",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -123,13 +123,13 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.2-rc1",
+      "version": "19.2",
       "sources": [
         "02",
         "paul",
         "paul-business"
       ],
-      "sha256_html": "54c4718e7bbbf3b7c823d6c3904c4b098794e3be0b90547f2557420861b707ee",
+      "sha256_html": "87a6c028f3beae0e0ec02112e55c52f3221669ec9f1cf20449ef66dc323457af",
       "sha256_text": "53c8a911865238e49992f267043e9601af31ce7dd1b1ec18231ad2a1fbeff9f4",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
@@ -140,7 +140,7 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.2-rc1",
+      "version": "19.2",
       "sources": [
         "01",
         "02",
@@ -149,7 +149,7 @@
         "paul",
         "paul-business"
       ],
-      "sha256_html": "346cc31890b7fb4146c3ad368fbe32c9a49bb32f8980cbcbbf01dcee308d7e49",
+      "sha256_html": "93c9c7a03f05b9e95de42539fda6f0e02decfd4d9747abb6c8030d8fc6627791",
       "sha256_text": "e283087216066871001f7dbb643b12f23d43f721b2bbf17cf795ac0a06b649de",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
@@ -160,7 +160,7 @@
       "definition": "Intelligence is the capacity to align representations with reality.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.2-rc1",
+      "version": "19.2",
       "sources": [
         "01",
         "02",
@@ -169,7 +169,7 @@
         "paul",
         "paul-business"
       ],
-      "sha256_html": "050562a0ded93fb72faa8b33e8b0cd7ff991f94c5e0655e340839aa12d749abe",
+      "sha256_html": "4ae854a69f73ed72ea81d9f361d7049fe927783f14afe53711acd42b16ce0a1c",
       "sha256_text": "36d1344c1abc105ddcd28104ffa645d972f700067991a81be8299b38d0e1a041",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
@@ -180,12 +180,12 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.2-rc1",
+      "version": "19.2",
       "sources": [
         "paul-business"
       ],
-      "sha256_html": "cd8be25de94a03cbf6debc4a202282f6bbc9b0062b9c8f06fb52f11c9638772a",
-      "sha256_text": "75b7edcf0c8078d69ba5fa5f9800d18f66afc802c94cf7df842de1530ccac217",
+      "sha256_html": "fde9a061a9eac44d279d8feda9ca79050fee0ace8fcc36c758b8b8423c9672d8",
+      "sha256_text": "434909c8ad3f91e2bc733b9ac7073a709cd844b8ad74c5f1d7ad6659a611c241",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     }
   ],
@@ -236,7 +236,7 @@
       "source": "paul",
       "location": "Current website definition",
       "text": "Intelligence is alignment with reality.",
-      "status": "historical wording; superseded in 19.2-rc1 by Paul's business addendum"
+      "status": "historical wording; superseded in 19.2 by Paul's business addendum"
     },
     {
       "source": "paul",
