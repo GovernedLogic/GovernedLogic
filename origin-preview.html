@@ -114,7 +114,7 @@ html{scroll-behavior:auto}
 .origin-controls{position:absolute;z-index:4;right:clamp(20px,4vw,64px);top:max(22px,env(safe-area-inset-top));display:flex;gap:20px;align-items:center}
 .origin-controls button{background:#0007;color:#9ba6b9;border:0;border-bottom:1px solid #66738966;min-height:44px;padding:8px 3px;font:500 10px/1.4 ui-sans-serif,system-ui;letter-spacing:.12em;cursor:pointer}
 .origin-controls button:hover{color:#fff;border-color:#b7d7ff}
-.origin-kicker{position:absolute;z-index:2;top:19%;left:0;width:100%;text-align:center;color:#e6c17a;font:600 clamp(9px,1vw,12px)/1.6 ui-sans-serif,system-ui;letter-spacing:.47em;text-transform:uppercase;margin:0;padding:0 20px;opacity:var(--arrival);pointer-events:none}
+.origin-kicker{position:absolute;z-index:2;top:19%;left:0;width:100%;max-width:none;text-align:center;color:#e6c17a;font:600 clamp(9px,1vw,12px)/1.6 ui-sans-serif,system-ui;letter-spacing:.47em;text-transform:uppercase;margin:0;padding:0 20px;opacity:var(--arrival);pointer-events:none}
 .origin-enter{position:absolute;z-index:3;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;text-decoration:none;color:#d7ddec;white-space:nowrap;font:600 9px/1.5 ui-sans-serif,system-ui;letter-spacing:.27em;text-transform:uppercase;opacity:var(--arrival)}
 .origin-enter svg{width:42px;height:59px;filter:drop-shadow(0 0 12px #a841ff88);transition:transform .3s}
 .origin-enter:hover svg{transform:translateY(5px);filter:drop-shadow(0 0 18px #a841ff)}
@@ -123,6 +123,13 @@ html{scroll-behavior:auto}
 .origin-path{position:absolute;z-index:2;left:0;width:100%;bottom:151px;display:flex;justify-content:center;align-items:center;gap:18px;color:#97bdd6;font:500 10px/1.5 ui-monospace,monospace;letter-spacing:.12em;opacity:var(--arrival);pointer-events:none}
 .origin-path b{color:#ab85dc;font-weight:400}
 .origin~.hero{min-height:auto;padding-top:100px;padding-bottom:85px}
+.intelligence-definition{font:500 clamp(25px,3.4vw,39px)/1.25 Georgia,serif;margin:12px 0 0;color:#d7e6f3;letter-spacing:-.025em}
+.hero-thesis{font:italic 20px/1.65 Georgia,serif;max-width:42em;color:#c1b4d4;margin:10px 0 35px}
+.architecture-definition{margin:28px 0 12px;padding:30px 0;border-top:1px solid #334051;border-bottom:1px solid #334051}
+.architecture-definition .label{font-size:10px;color:#9fbad1;letter-spacing:.19em}
+.meaning-chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:23px;list-style:none;padding:0;margin:30px 0 0}
+.meaning-chain li{position:relative;min-width:0}.meaning-chain li:not(:last-child):after{content:"→";position:absolute;right:-17px;top:3px;font:15px/1.5 ui-monospace,monospace;color:#9878c7}
+.meaning-chain h3{color:#ebeff7;font-size:22px;margin:0 0 10px}.meaning-chain p{color:#9eafc3;font:13px/1.6 ui-sans-serif,system-ui;margin:0}
 .chain-nav.is-origin{opacity:0;pointer-events:none;visibility:hidden;transform:translate(-50%,20px)}
 .chain-nav{transition:opacity .3s,transform .3s}
 .visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
@@ -139,6 +146,7 @@ html.motion-paused *{animation-play-state:paused!important}
  .origin-bg{width:112%;left:-6%;filter:brightness(1.65) saturate(1.1);transform:translateY(-56%)}
  .origin-path{bottom:180px;gap:7px;font-size:8px;letter-spacing:0}.origin-phase{left:0;bottom:136px;max-width:none;width:100%;text-align:center;font-size:8px;letter-spacing:.1em}
  .origin-enter{bottom:24px;font-size:9px;gap:6px}.origin-enter svg{height:56px}.origin~.hero{padding-top:64px;padding-bottom:64px}
+ .meaning-chain{grid-template-columns:1fr;gap:28px;margin-top:26px;padding-left:17px;border-left:1px solid #413652}.meaning-chain li:not(:last-child):after{content:"↓";right:auto;left:-24px;top:100%;font-size:13px;background:#050505}.meaning-chain h3{font-size:23px;margin-bottom:5px}.meaning-chain p{font-size:14px}.hero-thesis{font-size:18px}.intelligence-definition{font-size:28px}
  .artifact{grid-template-columns:1fr;padding:24px}.artifact img{max-width:300px}
 }
 @media(prefers-reduced-motion:reduce){.brand-sigil img{animation:none}.origin-enter svg{transition:none}}
@@ -186,14 +194,27 @@ html.motion-paused *{animation-play-state:paused!important}
  <p class="origin-kicker">Ancient wisdom · modern technology</p>
  <div class="origin-path" aria-label="Ground, Truth, Logic, Reasoning, Intelligence"><span>Ground</span><b aria-hidden="true">→</b><span>Truth</span><b aria-hidden="true">→</b><span>Logic</span><b aria-hidden="true">→</b><span>Reasoning</span><b aria-hidden="true">→</b><span>Intelligence</span></div>
  <p class="origin-phase" id="origin-phase" aria-hidden="true"></p>
- <a class="origin-enter" href="#nucleus"><span>Follow the chain</span><svg viewBox="0 0 44 70" aria-hidden="true"><defs><linearGradient id="arrow-light" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f1cdff"/><stop offset=".6" stop-color="#b66bff"/><stop offset="1" stop-color="#7631d4"/></linearGradient></defs><path d="M22 4v51M7 41l15 17 15-17" stroke="#a554ed" stroke-width="7" opacity=".22" fill="none"/><path d="M22 4v51M7 41l15 17 15-17" stroke="url(#arrow-light)" stroke-width="2.5" fill="none"/><path d="M13 57l9 10 9-10" stroke="#a865ec" stroke-width="1.1" fill="none"/></svg></a>
+ <a class="origin-enter" href="#architecture"><span>Follow the chain</span><svg viewBox="0 0 44 70" aria-hidden="true"><defs><linearGradient id="arrow-light" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f1cdff"/><stop offset=".6" stop-color="#b66bff"/><stop offset="1" stop-color="#7631d4"/></linearGradient></defs><path d="M22 4v51M7 41l15 17 15-17" stroke="#a554ed" stroke-width="7" opacity=".22" fill="none"/><path d="M22 4v51M7 41l15 17 15-17" stroke="url(#arrow-light)" stroke-width="2.5" fill="none"/><path d="M13 57l9 10 9-10" stroke="#a865ec" stroke-width="1.1" fill="none"/></svg></a>
 </section>
 
 
 <header class="hero" id="architecture">
   <div class="eyebrow">Governed Logic Reasoning Systems</div>
   <h1>Truth governs logic.<br>Logic governs reasoning.<br><span>Intelligence is downstream.</span></h1>
-  <p class="hero-copy">Modern artificial intelligence has a hidden flaw beneath its intelligence: it does not know what truth is.</p>
+  <h2 class="intelligence-definition">Intelligence is alignment with reality.</h2>
+  <p class="hero-copy">Not merely generating convincing answers, but reasoning toward what is true.</p>
+  <p class="hero-thesis">Govern the logic, and you govern what intelligence is built upon.</p>
+
+  <div class="architecture-definition" aria-label="The architecture of Governed Logic">
+    <div class="label">The architecture of Governed Logic</div>
+    <ol class="meaning-chain">
+      <li><h3>What is</h3><p>The ultimate ground · The referent</p></li>
+      <li><h3>Truth</h3><p>Correspondence with what is</p></li>
+      <li><h3>Logic</h3><p>Binding inference</p></li>
+      <li><h3>Reasoning</h3><p>Governed inference and adjudication</p></li>
+      <li><h3>Intelligence</h3><p>Alignment with reality</p></li>
+    </ol>
+  </div>
   <a class="button" href="#nucleus">Follow the chain</a>
 </header>
 <figure class="brand-sigil"><img loading="lazy" decoding="async" src="assets/governed-logic-mark.webp" alt="The Governed Logic infinity mark"><figcaption>Truth · Logic · Ground</figcaption></figure>
@@ -254,6 +275,8 @@ html.motion-paused *{animation-play-state:paused!important}
 <section id="reasoning">
   <div class="label">Three</div>
   <h2>Establish what reasoning requires.</h2>
+  <blockquote>Logic binds what follows from what has been admitted. It does not license the admission.</blockquote>
+  <p>A reasoning system can be perfectly consistent and still be governed by a false premise. Improving its inferential capabilities does not repair that upstream failure.</p>
   <p>An argument can be logically valid and still begin with false premises. Logic determines whether a conclusion follows from its premises; logic alone does not determine whether those premises correspond to reality.</p>
 
   <div class="chain" aria-label="Ground to intelligence">
@@ -261,6 +284,7 @@ html.motion-paused *{animation-play-state:paused!important}
   </div>
 
   <p><strong>Truth must govern logic. Logic must govern reasoning.</strong></p>
+  <p>The ground is not a proposition above which truth sits as an external authority. Truth is answerability to what is. Logic governs the relationships between propositions, but it cannot independently establish their correspondence with reality.</p>
   <p>Meaning must remain stable so that the premises and conclusion concern what they purport to concern. Contradictions, equivocations, circular justifications, and borrowed assumptions must be exposed rather than hidden beneath fluent language.</p>
 
   <blockquote>A halt is a decision to stop. A grounding termination is a completed grounding relation.</blockquote>
@@ -307,6 +331,10 @@ html.motion-paused *{animation-play-state:paused!important}
     <span>Reasoning</span><b>→</b><span>Logic</span><b>→</b><span>Truth</span><b>→</b><span>Ground</span>
   </div>
 
+  <h3>The generator is not the measure of truth.</h3>
+  <p>A system cannot confer truth upon its own representations simply by producing them coherently. The output is not accepted simply because it was generated.</p>
+  <p>Governed Logic operates bidirectionally. The generative direction produces candidate reasoning under the governing principles. The adjudicative direction traces those candidates back through logical validity, premise truth, semantic stability, and grounding. The conclusion is accepted, corrected, rejected, or held pending evidence.</p>
+  <blockquote>The system must remain a servant of the referent, not become the governor of what it was built to find.</blockquote>
   <p>Governed Logic is not a command to produce a predetermined sentence. It is not a safety filter added after generation. It is a proposal about what must govern the structure beneath reasoning and, consequently, the intelligence built upon it.</p>
   <p><strong>Governed Intelligence</strong> is the artificial-intelligence instantiation of that architecture. It is a work in progress, built and tested in public.</p>
   <div class="portable">
@@ -502,7 +530,7 @@ document.querySelectorAll('.chain').forEach(e=>motion.observe(e));
  }
  function loop(now){
   raf=0;if(paused||!active||document.hidden){last=0;return;}
-  if(last)clock+=Math.min((now-last)/1000,.12);last=now;
+  if(last)clock+=Math.max(0,(now-last)/1000);last=now;
   if(now-lastDraw>=(w<720?33:25)){turnX+=(pointerX-turnX)*.03;turnY+=(pointerY-turnY)*.03;draw();lastDraw=now;}
   raf=requestAnimationFrame(loop);
  }
