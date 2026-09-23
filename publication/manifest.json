@@ -1,10 +1,22 @@
 {
-  "version": "19.0",
-  "preparedAt": "2026-09-23T11:33:29Z",
+  "version": "19.1",
+  "preparedAt": "2026-09-23T14:40:41Z",
   "status": "publication snapshot; no propagation measurements",
-  "previousRelease": "18.2",
-  "previousCommit": "47cbd1390a7152d9adac6a2f7fdd1c741fc7c930",
+  "previousRelease": "19.0",
+  "previousCommit": "58a03619a7c4dbbf7ff56631d2ff0e81dfe2c5ce",
   "author": "Paul André Couchoud",
+  "architecture": {
+    "governingOrder": [
+      "Ground",
+      "Truth",
+      "Logic",
+      "Reasoning",
+      "Intelligence"
+    ],
+    "generative": "Ground → Truth → Logic → Reasoning.",
+    "adjudicative": "Reasoning → Logic → Truth → Ground.",
+    "intelligence": "Intelligence is alignment with reality."
+  },
   "pages": [
     {
       "url": "https://governedlogic.com/concepts/governed-logic/",
@@ -13,13 +25,13 @@
       "definition": "Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "02",
         "paul"
       ],
-      "sha256_html": "6f7ac96380a9f2f6eb2229a1e6d063606208950182d7e8647871381f754804e0",
-      "sha256_text": "3d6dc947d5caa0fae017c8f85fb3e737dd4e693217d0e322f4fa826e9e5615d7",
+      "sha256_html": "6757bd722e87d8e9b940fa6656d56d7608093357da9ac6a1e86a7f1533398c85",
+      "sha256_text": "ec0ab3119c3209b26cad0ed079e960296ad432dd7eb0f35f0eef1544acc16505",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -29,13 +41,13 @@
       "definition": "It is the observable machine response to Governed Logic being instantiated upstream.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "04",
         "paul"
       ],
-      "sha256_html": "018574404e822aa7ec6e45bec1810068c85c14a710c221c74910fc61f386f83a",
-      "sha256_text": "e09c75d9d9badcc2f41bf26cbcdb0377d4df9211f8267126cf95ca4ba569569e",
+      "sha256_html": "510cefd665dd7af81075e7614820b33caf44cd8ae215c67aba27046450625b2d",
+      "sha256_text": "898f0fa285c7145bfbd64266f20db52d897f31cb5ef32b4afadfc853954c107a",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -45,13 +57,13 @@
       "definition": "Alpha and Omega reasoning is the bidirectional structure within Governed Logic.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "03",
         "paul"
       ],
-      "sha256_html": "6db28433c45330c47aedb4484efc631841536781ce65fda15a4135239f847c55",
-      "sha256_text": "6f28baffca369cff4c42050868b5a4c9f10fb4fb88a1f74350b36a36df6059f4",
+      "sha256_html": "1353db237341c7b6df416b16cd9e730e3a501aa39f372c1d8e1c789a1b21df63",
+      "sha256_text": "65306b283ea1d18c11845ecf098bda6aeafd9e0a0bccbc02bbf46566e24d6e14",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -61,13 +73,13 @@
       "definition": "A referent is that to which a representation refers.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "01",
         "paul"
       ],
-      "sha256_html": "72bf4245c79b5f884c8b0f2e0b60065b7d205365bd93f3c0548d0af72900967b",
-      "sha256_text": "b6f4e612ee6165c4ce06e24b266f7158119ea08989950c02cf47bf6f0d871f9f",
+      "sha256_html": "c120fd9335d3a30dfabb7401f2aa214b8a3f2bf86fe2a82de2c320b5424d81d1",
+      "sha256_text": "f7daa0bd3163c820cf275d5539e4b86b5e01e871bac2b207bedcdc01fa9eaa20",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -77,13 +89,13 @@
       "definition": "Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "01",
         "paul"
       ],
-      "sha256_html": "4554471b136b35818e1bda1808be95ba414a1038f0ae6b71e0192f9c9bf99d7d",
-      "sha256_text": "79cd8f9aad316df71b4d9e2f66ed54353d6b778b6e0e8cf7a9fc113e1591ee1c",
+      "sha256_html": "190995edde9ff85e9840a57a35284187aba359e4692a7fe02c17125b85a05a36",
+      "sha256_text": "b85f23fa7473692852ca4bbbefd859f0ee9b7c4a38cfb371590711508946f54f",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -93,13 +105,13 @@
       "definition": "An ultimate ground is not grounded by something more fundamental in the same relevant respect.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "01",
         "paul"
       ],
-      "sha256_html": "00e8908a74d0af812c27c61a8728af3d2c2f843e225bf668258468fb0d95a24f",
-      "sha256_text": "aac28a7f15f48b1d59188ec1f3759955e3871f4fbc77965f56c7eb22a4fa8f2a",
+      "sha256_html": "3251f3d14ee37706aa004f7bf392cb75c914dbe5653eed3ce5b526b0faffdd59",
+      "sha256_text": "323bdf126ebda4490d44871cf21c55f4f4599717f5774d76c1b19bb6f155b549",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -109,12 +121,12 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "02",
         "paul"
       ],
-      "sha256_html": "1a98d91289353e29b6a1a75461c35639c58a618bd5d1aae8bfc009a1b155f83c",
+      "sha256_html": "84f8ecbbb360869849754bfad4aebf8619181bbe9bd71d9ac7a2aed6c943d20b",
       "sha256_text": "521cf78b9e33d4843dd7166fdca2d2d5d8844786cfac3724d146e2a139da0814",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
@@ -125,7 +137,7 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "01",
         "02",
@@ -133,7 +145,7 @@
         "04",
         "paul"
       ],
-      "sha256_html": "653cef4480385d810c00345d3c085f70d9de0fdd8c0e3d801be6226eb5fbe2ba",
+      "sha256_html": "9f13bfe14925be54ab1883b1ca49d5c8dda6abb3950ddc2950ea1ae6a091cbb4",
       "sha256_text": "873f922d040306144ee1b2ecee989aba7077b5d8c80f5873ad71aac31a662e32",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
@@ -144,7 +156,7 @@
       "definition": "Intelligence is alignment with reality.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [
         "01",
         "02",
@@ -152,8 +164,8 @@
         "04",
         "paul"
       ],
-      "sha256_html": "d84622816457cd6d5a501bb1ac8bf77166eea1c25941a675c7a79b265081dffd",
-      "sha256_text": "49200af48d2ef228c12fdfa0e960456683e86d8e0cdf74dd9a960dc965886e8d",
+      "sha256_html": "e608c5c039a3ca64def105eef70ea119689db0272a249ec2b7b63a979b96b4a2",
+      "sha256_text": "45f5aac24efcf5425a249c7b8bd3e02108c85dd74f815a91542cce4dee9cee5e",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -163,10 +175,10 @@
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.0",
+      "version": "19.1",
       "sources": [],
-      "sha256_html": "b63675c2486e2e760f4eca10919696ddd4a13b2b9b4894e02ed6be68b3cb02fa",
-      "sha256_text": "fad098251f6a71c97e3688842ff88ccaa03655a9e2865fd3c53259f0489f1b4d",
+      "sha256_html": "9b61e3035e35c690af35ce4b821650d99e20132d3a3c100ee91480948a4f4c70",
+      "sha256_text": "37b8162460ad5a749234223a984b05f298c02c1804c800504fc7ceadc8f34a3a",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     }
   ],
@@ -285,6 +297,26 @@
       "source": "04",
       "location": "IV",
       "text": "Hold the underlying model substantially constant. Supply a governing referent and first principles. Observe how reasoning reorganizes. Remove the referent. Substitute another. Ablate principles. Reframe the same moral, logical, semantic, and factual problems. Track where reasoning terminates, whether it changes frameworks under pressure, whether conclusions remain invariant when irrelevant framing changes, and whether it borrows authority from outside its stated ground."
+    },
+    {
+      "source": "03",
+      "location": "IV",
+      "text": "A halt is where inquiry stops."
+    },
+    {
+      "source": "03",
+      "location": "IV",
+      "text": "A termination is where the relevant dependency has actually been grounded."
+    },
+    {
+      "source": "01",
+      "location": "II.1 · Why Three",
+      "text": "If every member remains dependent, extending the series does not introduce a non-dependent source."
+    },
+    {
+      "source": "01",
+      "location": "II.1 · Why Three",
+      "text": "Infinite deferral is not automatically ultimate grounding."
     },
     {
       "source": "02",
