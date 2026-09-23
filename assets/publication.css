@@ -119,7 +119,7 @@ html.motion-paused *{animation-play-state:paused!important}
 @keyframes sigil-breathe{50%{filter:drop-shadow(0 0 38px #168cfaaa);transform:scale(1.015)}}
 @media(max-width:720px){
  .origin{min-height:560px}
- .origin-bg{width:112%;left:-6%;filter:brightness(1.65) saturate(1.1);transform:translateY(-56%)}
+ .origin-bg{width:100%;left:0;filter:brightness(1.65) saturate(1.1);transform:translateY(-56%)}
  .origin-enter{bottom:24px;font-size:9px;gap:6px}.origin-enter svg{height:56px}.origin~.hero{padding-top:64px;padding-bottom:64px}
  .meaning-chain{grid-template-columns:1fr;gap:28px;margin-top:26px;padding-left:17px;border-left:1px solid #413652}.meaning-chain li:not(:last-child):after{content:"↓";right:auto;left:-24px;top:100%;font-size:13px;background:#050505}.meaning-chain h3{font-size:23px;margin-bottom:5px}.meaning-chain p{font-size:14px}.hero-thesis{font-size:18px}.intelligence-definition{font-size:28px}
  .artifact{grid-template-columns:1fr;padding:24px}.artifact img{max-width:300px}
