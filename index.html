@@ -124,6 +124,37 @@ html{scroll-behavior:auto}
 @media(max-width:720px){.alignment{min-height:580px}.alignment-top{left:20px;right:20px;font-size:8px;letter-spacing:.12em}.alignment-controls{gap:6px}.alignment-controls button{padding:8px 10px}.alignment-title{padding:20px}.alignment-title h2{font-size:clamp(52px,15vw,92px)}.alignment-title .systems{font-size:10px;letter-spacing:.4em}.alignment-entry{bottom:120px;white-space:nowrap}.alignment-caption,.alignment-count{bottom:96px;font-size:8px}.alignment-caption{left:20px}.alignment-count{right:20px}}
 @media(prefers-reduced-motion:reduce){.alignment.playing .alignment-title{opacity:1;transform:none}}
 
+
+/* Art direction derived from Paul Couchoud's Governed Logic visual system. */
+:root{--steel:#dcecff;--electric:#24b8ff;--void:#020307;--gold:#d8a94c}
+.origin{position:relative;min-height:100svh;overflow:hidden;background:var(--void);isolation:isolate;color:#fff}
+.origin::before{content:"";position:absolute;inset:0;z-index:-3;background:radial-gradient(circle at 50% 47%,#163a5669 0,transparent 24%),linear-gradient(90deg,#020307 0,transparent 25%,transparent 75%,#020307 100%)}
+.origin-bg{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.2) saturate(.7) contrast(1.15);transform:scale(1.075);transition:filter 2.8s ease,transform 7s cubic-bezier(.16,.84,.26,1)}
+.origin--reveal .origin-bg{filter:brightness(1) saturate(1.06) contrast(1.08);transform:scale(1)}
+.origin-canvas{position:absolute;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen}
+.origin-top{position:absolute;top:max(24px,env(safe-area-inset-top));left:clamp(20px,5vw,76px);right:clamp(20px,5vw,76px);display:flex;align-items:center;justify-content:space-between;z-index:2;font:600 10px/1 ui-sans-serif,system-ui;letter-spacing:.24em;text-transform:uppercase;color:#bcd9ed}
+.origin-top button{min-height:42px;padding:0 14px;border:1px solid #5ba7d266;background:#07111eb5;color:#dbeeff;border-radius:0;font:inherit;letter-spacing:.14em;cursor:pointer}
+.origin-kicker{position:absolute;top:23%;left:50%;transform:translateX(-50%);z-index:1;white-space:nowrap;margin:0;font:600 clamp(9px,1vw,12px)/1 ui-sans-serif,system-ui;letter-spacing:.62em;text-transform:uppercase;color:#e1bc6c;opacity:0;transition:opacity .8s}
+.origin--reveal .origin-kicker{opacity:1;transition-delay:1.1s}
+.origin-node{position:absolute;z-index:1;font:600 10px/1 ui-monospace,monospace;letter-spacing:.24em;text-transform:uppercase;color:#a7e4ff;opacity:0;transition:opacity .7s,transform .9s}
+.origin-node:before{content:"";display:inline-block;width:5px;height:5px;margin:0 8px 2px 0;border:1px solid #b8efff;border-radius:50%;box-shadow:0 0 12px #27bcff}
+.origin--reveal .origin-node{opacity:.8}
+.node-ground{left:13%;top:54%;transform:translateX(-12px)}.node-truth{left:24%;top:70%;transform:translateX(-12px)}.node-logic{right:24%;top:70%;transform:translateX(12px)}.node-reason{right:13%;top:54%;transform:translateX(12px)}.node-intelligence{left:50%;bottom:11%;transform:translateX(-50%) translateY(12px)}
+.origin--reveal .node-ground,.origin--reveal .node-truth{transform:none}.origin--reveal .node-logic,.origin--reveal .node-reason{transform:none}.origin--reveal .node-intelligence{transform:translateX(-50%)}
+.origin-enter{position:absolute;z-index:2;left:50%;bottom:max(34px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:12px 16px 12px 20px;color:#eaf6ff;text-decoration:none;border:1px solid #416d88;background:#06101aa8;font:600 10px/1 ui-sans-serif,system-ui;letter-spacing:.22em;text-transform:uppercase;transition:border-color .2s,background .2s}
+.origin-enter:hover{border-color:#d8a94c;background:#101a20}
+.origin-enter .arrow{width:26px;height:26px;display:grid;place-items:center;color:#b742ff;font:26px/1 Georgia,serif;text-shadow:0 0 14px #a740ff}
+.artifact{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:clamp(28px,5vw,64px);align-items:center;margin:58px 0 0;padding:clamp(22px,4vw,44px);border:1px solid #293543;background:linear-gradient(135deg,#101411,#040508)}
+.artifact img{display:block;width:100%;max-width:440px;margin:auto;box-shadow:0 24px 60px #000b}
+.artifact p{margin:0}.artifact .label{margin-bottom:16px}.artifact h3{font-size:clamp(30px,4vw,48px);line-height:1.05;margin:0 0 16px;color:#f3e4c6}.artifact h3 span{display:block;color:var(--gold)}
+@media(max-width:720px){.origin{min-height:100svh}.origin-bg{object-fit:contain;filter:brightness(.14) saturate(.6)}.origin--reveal .origin-bg{filter:brightness(.92) saturate(1)}.origin-kicker{top:30%;font-size:8px;letter-spacing:.35em}.origin-node{font-size:8px;letter-spacing:.14em}.node-ground{left:6%;top:55%}.node-truth{left:11%;top:72%}.node-logic{right:11%;top:72%}.node-reason{right:6%;top:55%}.node-intelligence{bottom:18%}.artifact{grid-template-columns:1fr;padding:24px}.artifact img{max-width:300px}}
+@media(prefers-reduced-motion:reduce){.origin-bg{filter:brightness(1) saturate(1);transform:none}.origin-kicker,.origin-node{opacity:1;transform:none}.node-intelligence{transform:translateX(-50%)}.origin-canvas{display:none}}
+
+.brand-sigil{margin:0;padding:0 20px 28px;background:#050505;text-align:center}
+.brand-sigil img{display:block;width:min(620px,90vw);margin:auto;filter:drop-shadow(0 0 22px #168cff55);animation:sigil-breathe 7s ease-in-out infinite}
+.brand-sigil figcaption{margin-top:0;color:#91b9d4;font:600 10px/1.5 ui-sans-serif,system-ui;letter-spacing:.31em;text-transform:uppercase}
+@keyframes sigil-breathe{50%{filter:drop-shadow(0 0 38px #168cffe0);transform:scale(1.015)}}
+@media(prefers-reduced-motion:reduce){.brand-sigil img{animation:none}}
 </style>
 <script type="application/ld+json">
 {
@@ -149,12 +180,14 @@ html{scroll-behavior:auto}
 </ol>
 </nav>
 
-<section class="alignment" id="alignment" aria-label="Alignment: Ancient wisdom. Modern technology.">
-<canvas id="alignment-canvas" aria-hidden="true"></canvas>
-<div class="alignment-top"><span>GL / Alignment</span><div class="alignment-controls"><button type="button" id="alignment-replay">Replay</button><button type="button" id="alignment-pause">Pause motion</button></div></div>
-<div class="alignment-title"><p class="alignment-kicker">Ancient wisdom. Modern technology.</p><h2><span>Governed</span><span>Logic</span></h2><p class="systems">Reasoning Systems</p><p class="wisdom">Truth. Logic. Ground.</p></div>
-<a class="alignment-entry" href="#nucleus"><span>Follow the chain</span><svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="arrow-light" x1="12" y1="8" x2="48" y2="58" gradientUnits="userSpaceOnUse"><stop stop-color="#edcbff"/><stop offset=".5" stop-color="#b354ff"/><stop offset="1" stop-color="#6930ff"/></linearGradient></defs><path d="M32 5V51M12 32L32 54L52 32" stroke="url(#arrow-light)" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/><path d="M22 30L32 41L42 30" stroke="#dfacff" stroke-width="1"/></svg></a>
-<div class="alignment-caption" id="alignment-caption">One operating principle: Alignment</div><div class="alignment-count" aria-hidden="true">01 / Origin</div>
+
+<section class="origin" id="origin" aria-label="Governed Logic introduction">
+  <img class="origin-bg" src="assets/gl-reasoning-systems.webp" alt="" fetchpriority="high">
+  <canvas class="origin-canvas" id="origin-canvas" aria-hidden="true"></canvas>
+  <div class="origin-top"><span>Governed Logic / Origin</span><button type="button" id="origin-replay">Replay intro</button></div>
+  <p class="origin-kicker">Ancient wisdom · modern technology</p>
+  <span class="origin-node node-ground">Ground</span><span class="origin-node node-truth">Truth</span><span class="origin-node node-logic">Logic</span><span class="origin-node node-reason">Reasoning</span><span class="origin-node node-intelligence">Intelligence</span>
+  <a class="origin-enter" href="#nucleus"><span>Enter the architecture</span><span class="arrow">↓</span></a>
 </section>
 
 <header class="hero">
@@ -163,11 +196,16 @@ html{scroll-behavior:auto}
   <p class="hero-copy">Modern artificial intelligence has a hidden flaw beneath its intelligence: it does not know what truth is.</p>
   <a class="button" href="#nucleus">Follow the chain</a>
 </header>
+<figure class="brand-sigil"><img src="assets/governed-logic-mark.webp" alt="The Governed Logic infinity mark"><figcaption>Truth · Logic · Ground</figcaption></figure>
 
 <main id="nucleus">
 <section>
   <h2>Governed Logic</h2>
   <p>A reasoning systems company founded by Paul André Couchoud.</p>
+  <div class="artifact">
+    <div><div class="label">The treatise</div><h3>The Groundless <span>Machine</span></h3><p>The hidden flaw beneath modern AI begins before intelligence: it lacks a governing ground for truth-directed reasoning.</p></div>
+    <img src="assets/the-groundless-machine.webp" alt="The Groundless Machine: The Hidden Flaw Beneath Modern AI, by Paul André Couchoud">
+  </div>
   <p>A large language model can produce factual answers, valid arguments, useful discoveries, persuasive explanations, and language that resembles human thought. It can also produce falsehoods with the same fluency. Its ability to generate a coherent answer does not establish that the answer corresponds to reality, that its terms retain their meaning, or that its conclusion follows from sufficiently grounded premises.</p>
   <p>This is not merely a problem of occasional factual mistakes. It is a problem upstream of intelligence: <strong>what governs the reasoning?</strong></p>
   <p>Governed Logic begins there.</p>
@@ -324,67 +362,6 @@ const motion=new IntersectionObserver(entries=>{
 entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');motion.unobserve(e.target);}});
 },{threshold:.4});
 document.querySelectorAll('.chain').forEach(e=>motion.observe(e));
-})();
-</script>
-
-<script>
-(()=>{
-const scene=document.getElementById('alignment'),canvas=document.getElementById('alignment-canvas'),ctx=canvas.getContext('2d');
-if(!ctx)return;
-const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-const pause=document.getElementById('alignment-pause'),replay=document.getElementById('alignment-replay'),caption=document.getElementById('alignment-caption');
-let w=0,h=0,dpr=1,elapsed=0,last=0,raf=0,paused=reduced.matches,onScreen=true;
-const words=['truth','being','meaning','logic','ground','reason','Logos','order','1','0','∴','→','λ','α','Ω','∞'];
-let seed=19;const random=()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646;};
-const particles=Array.from({length:86},(_,i)=>({x:random(),y:random(),angle:random()*Math.PI*2,r:.15+random()*.7,speed:.13+random()*.28,size:8+random()*6,word:words[i%words.length]}));
-const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x);};
-function resize(){w=scene.clientWidth;h=scene.clientHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
-function line(x1,y1,x2,y2,color,width=1){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
-function tesseract(t,alpha){
-const size=Math.min(w*.35,h*.3,245),cx=w*.5,cy=h*.47;
-const points=[];
-for(let n=0;n<16;n++){
-let v=[0,1,2,3].map(k=>(n>>k&1)?1:-1);
-for(const [a,b,angle] of [[0,3,t*.14],[1,2,t*.1],[0,2,.5]]){
-const x=v[a],y=v[b];v[a]=x*Math.cos(angle)-y*Math.sin(angle);v[b]=x*Math.sin(angle)+y*Math.cos(angle);
-}
-const p=2.8/(3.7-v[3]);const z=v[2]*p;const f=3.5/(4.7-z);
-points.push([cx+v[0]*p*f*size,cy+v[1]*p*f*size,z]);
-}
-for(let i=0;i<16;i++)for(let k=0;k<4;k++){const j=i^(1<<k);if(j>i){const a=points[i],b=points[j];line(a[0],a[1],b[0],b[1],'rgba(166,99,247,'+alpha+')',.8);}}
-for(const p of points){ctx.fillStyle='rgba(218,182,255,'+(alpha*1.7)+')';ctx.beginPath();ctx.arc(p[0],p[1],2,0,Math.PI*2);ctx.fill();}
-}
-function draw(){
-const t=elapsed,cx=w*.5,cy=h*.46,r=Math.min(w*.23,h*.17,130);
-ctx.clearRect(0,0,w,h);ctx.fillStyle='#020204';ctx.fillRect(0,0,w,h);
-const bloom=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(w,h)*.65);
-bloom.addColorStop(0,'rgba(86,28,140,'+(t>7?.2:.08)+')');bloom.addColorStop(.5,'rgba(36,13,61,.08)');bloom.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=bloom;ctx.fillRect(0,0,w,h);
-if(t<1.7){const flash=Math.sin(clamp(t/1.7)*Math.PI);const radius=4+ease(t/1.7)*Math.max(w,h)*.65;const g=ctx.createRadialGradient(cx,cy,0,cx,cy,radius);g.addColorStop(0,'rgba(255,246,255,'+flash+')');g.addColorStop(.06,'rgba(217,172,255,'+flash*.8+')');g.addColorStop(.3,'rgba(119,50,232,'+flash*.3+')');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);}
-const align=ease((t-1.6)/3.4),fade=1-ease((t-5.6)/2),appear=ease(t/.65);
-for(let i=0;i<particles.length;i++){
-const p=particles[i],angle=p.angle+t*p.speed;const orbit=r*(.8+p.r*1.8);
-const targetX=cx+Math.cos(angle)*orbit,targetY=cy+Math.sin(angle)*orbit*.62;
-const x=(p.x*w)*(1-align)+targetX*align,y=(p.y*h)*(1-align)+targetY*align;
-ctx.font=p.size+'px ui-monospace,monospace';ctx.fillStyle='rgba('+(i%5===0?'224,193,123':'185,144,240')+','+(fade*appear*(.3+p.r*.5))+')';ctx.fillText(p.word,x,y);
-}
-if(t<7.7){const a=ease(t/.5)*(1-ease((t-6.5)/1.2));ctx.shadowColor='#d7a8ff';ctx.shadowBlur=25;ctx.fillStyle='rgba(255,243,255,'+a+')';ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
-const seedAlpha=ease((t-4.3)/.8)*(1-ease((t-6.2)/1.2));
-if(seedAlpha>0){ctx.strokeStyle='rgba(216,180,255,'+seedAlpha*.8+')';ctx.lineWidth=1;for(let i=-1;i<6;i++){const a=i*Math.PI/3;const x=i<0?cx:cx+Math.cos(a)*r,y=i<0?cy:cy+Math.sin(a)*r;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2*ease((t-4.3)/1.2));ctx.stroke();}}
-if(t>6)tesseract(t,ease((t-6)/2)*.32);
-scene.classList.toggle('playing',t<7);
-caption.textContent=t<1.7?'01 / A point of origin':t<4.7?'02 / Meaning finds its center':t<7?'03 / Order emerges':'One operating principle: Alignment';
-}
-function tick(now){raf=0;if(paused||!onScreen||document.hidden){last=0;return;}if(last)elapsed+=Math.min((now-last)/1000,.05);last=now;draw();raf=requestAnimationFrame(tick);}
-function run(){if(!raf&&!paused&&onScreen&&!document.hidden)raf=requestAnimationFrame(tick);}
-function control(){pause.textContent=paused?'Resume motion':'Pause motion';pause.setAttribute('aria-pressed',String(paused));}
-pause.addEventListener('click',()=>{paused=!paused;last=0;control();run();});
-replay.addEventListener('click',()=>{elapsed=reduced.matches?9:0;paused=reduced.matches;last=0;draw();control();run();});
-reduced.addEventListener('change',()=>{paused=reduced.matches;if(paused)elapsed=9;last=0;draw();control();run();});
-document.addEventListener('visibilitychange',()=>{last=0;run();});
-if('IntersectionObserver'in window)new IntersectionObserver(entries=>{onScreen=entries[0].isIntersecting;last=0;run();}).observe(scene);
-window.addEventListener('resize',resize);
-if(reduced.matches)elapsed=9;
-resize();control();run();
 })();
 </script>
 
