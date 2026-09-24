@@ -12,7 +12,7 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
       "sourcePath": "concepts/alpha-and-omega-reasoning/index.html",
-      "sha256_html": "836ccc333572ba37d513cbca010ff61b22620e3c38946798dd19bae60fb7da8f",
+      "sha256_html": "1353db237341c7b6df416b16cd9e730e3a501aa39f372c1d8e1c789a1b21df63",
       "sha256_text": "65306b283ea1d18c11845ecf098bda6aeafd9e0a0bccbc02bbf46566e24d6e14",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -50,7 +50,7 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/governed-intelligence/",
       "sourcePath": "concepts/governed-intelligence/index.html",
-      "sha256_html": "593a0ab6c73ea7597e1e26281220ebf6d985ac0401e3c0c73816cdffa4679c0b",
+      "sha256_html": "0df8f9797fdeb79686792dd52bd905cdda08ae083a47fe88158e223bb10a5ada",
       "sha256_text": "1b1475a67cf26e72b9739e8bbdca590fe272f0100b83b19b883db2daae673820",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -90,7 +90,7 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/governed-logic/",
       "sourcePath": "concepts/governed-logic/index.html",
-      "sha256_html": "761a528986d6f47b1c6af408bea008f7e3d5bcbf909d4cd1db710d58cd90ed7e",
+      "sha256_html": "6757bd722e87d8e9b940fa6656d56d7608093357da9ac6a1e86a7f1533398c85",
       "sha256_text": "ec0ab3119c3209b26cad0ed079e960296ad432dd7eb0f35f0eef1544acc16505",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -128,7 +128,7 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/governing-referent/",
       "sourcePath": "concepts/governing-referent/index.html",
-      "sha256_html": "6077418969db8e7c62990369184a8d1743443d4905b660c3d970b849235e0bad",
+      "sha256_html": "c120fd9335d3a30dfabb7401f2aa214b8a3f2bf86fe2a82de2c320b5424d81d1",
       "sha256_text": "f7daa0bd3163c820cf275d5539e4b86b5e01e871bac2b207bedcdc01fa9eaa20",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -166,7 +166,7 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/concepts/",
       "sourcePath": "concepts/index.html",
-      "sha256_html": "f7245ec129d391860a081d6ef9b96478890c2b3f609de2141cd4b75e73b2eb5a",
+      "sha256_html": "87a6c028f3beae0e0ec02112e55c52f3221669ec9f1cf20449ef66dc323457af",
       "sha256_text": "53c8a911865238e49992f267043e9601af31ce7dd1b1ec18231ad2a1fbeff9f4",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -198,7 +198,7 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/sufficient-grounding/",
       "sourcePath": "concepts/sufficient-grounding/index.html",
-      "sha256_html": "ad33e2e447b51f20cf43e711e9c033f95ba35a375411dee769524d12cf98219a",
+      "sha256_html": "190995edde9ff85e9840a57a35284187aba359e4692a7fe02c17125b85a05a36",
       "sha256_text": "b85f23fa7473692852ca4bbbefd859f0ee9b7c4a38cfb371590711508946f54f",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -236,7 +236,7 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/ultimate-grounding/",
       "sourcePath": "concepts/ultimate-grounding/index.html",
-      "sha256_html": "5765691ffe7cf58ce519d53d03b060833549122240d71d838e79428dedcc0165",
+      "sha256_html": "3251f3d14ee37706aa004f7bf392cb75c914dbe5653eed3ce5b526b0faffdd59",
       "sha256_text": "323bdf126ebda4490d44871cf21c55f4f4599717f5774d76c1b19bb6f155b549",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -275,7 +275,7 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/",
       "sourcePath": "index.html",
-      "sha256_html": "be949036ed781f1e7a7b4bcf5723c4c714ce040140d7ab4d4ea7954ab2292354",
+      "sha256_html": "4ae854a69f73ed72ea81d9f361d7049fe927783f14afe53711acd42b16ce0a1c",
       "sha256_text": "36d1344c1abc105ddcd28104ffa645d972f700067991a81be8299b38d0e1a041",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -530,7 +530,7 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/mechanism.html",
       "sourcePath": "mechanism.html",
-      "sha256_html": "f34e82412750035ce2ca81c2c04e460f6cd88a3729c740832d8392924bb20e5f",
+      "sha256_html": "475c614001ab22e928acbe345be4b6f18d691784b5af12bf4a9492e7749a5d94",
       "sha256_text": "52c37903a1c8deb0f7219a1bc46f13b3833eb72fd86fb29cfc0f1fb3d5420ca6",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -554,7 +554,7 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/publication/",
       "sourcePath": "publication/index.html",
-      "sha256_html": "85f0b685eb5c621eecef8b2a122c85d645c38e4db3ff3da3827ee6edcd754c32",
+      "sha256_html": "fde9a061a9eac44d279d8feda9ca79050fee0ace8fcc36c758b8b8423c9672d8",
       "sha256_text": "434909c8ad3f91e2bc733b9ac7073a709cd844b8ad74c5f1d7ad6659a611c241",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
@@ -590,7 +590,7 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/sources/",
       "sourcePath": "sources/index.html",
-      "sha256_html": "ca3f1b548dae68e801a71c5fa479a6d03ef01068142ced5a27c4dfe87ae613fa",
+      "sha256_html": "93c9c7a03f05b9e95de42539fda6f0e02decfd4d9747abb6c8030d8fc6627791",
       "sha256_text": "e283087216066871001f7dbb643b12f23d43f721b2bbf17cf795ac0a06b649de",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
