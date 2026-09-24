@@ -16,7 +16,7 @@
   const sections = sectionTargets
     .map(target => {
       const heading = target.matches('h1,h2') ? target : target.querySelector(':scope > h1, :scope > h2, :scope > article > h1');
-      return heading ? { target, heading, title: normalize(heading.textContent), url: '#' + encodeURIComponent(target.id), type: 'section' } : null;
+      return heading ? { target, heading, title: normalize(heading.innerText || heading.textContent), url: '#' + encodeURIComponent(target.id), type: 'section' } : null;
     }).filter(Boolean);
   const origin = document.getElementById('origin');
   const root = document.createElement('div');
@@ -394,6 +394,12 @@
   trigger.addEventListener('click', () => open());
   find('.gl-close').addEventListener('click', () => close());
   dialog.addEventListener('cancel', cancelScrub);
+  dialog.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    event.preventDefault();
+    cancelScrub();
+    close();
+  }, true);
   dialog.addEventListener('close', () => {
     ++motionRequest;
     motionWanted = false;
