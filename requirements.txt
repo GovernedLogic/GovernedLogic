@@ -1,0 +1,87 @@
+GOVERNEDLOGIC.COM REQUIREMENTS CONTRACT
+Revision: review/v17-separated
+Date: 2026-09-24
+
+1. GOVERNANCE AND BASELINE
+
+- Protected production baseline: branch `main`, commit `77d4969e0666e0aac1d824054d1bc5ab9943dbe0`.
+- All current work belongs on `review/v17-separated` until Paul approves the rendered result.
+- V17 (commit `4b053b5a65f5c47a7db0d9fa6f07be0d80060efd`) is the visual-experience reference: blackness, depth, restrained tokens, spatial motion, energy, and discovery. It is not the information architecture.
+- The uploaded `01-index-backup.html` is a source of proven motion primitives only. It is not a page shell, copy source, navigation model, or restoration target.
+- Production may not be changed or deployed from this review work without Paul's explicit approval of the actual desktop and mobile rendering.
+
+2. CANONICAL AND MACHINE-FIRST CONTENT
+
+- One canonical HTML source owns each substantive passage or artifact. Other views link to or derive from that source; they do not maintain independent copies.
+- Paul's canonical words, definitions, capitalization, citations, provenance, authorship, dates, canonical URLs, and structured-data meaning remain exact unless Paul explicitly authorizes a named edit.
+- Presentation may change; meaning may not be paraphrased, condensed, supplemented, or silently recategorized.
+- Human pages, metadata, JSON-LD, indexes, feeds, search data, and sitemaps must agree about canonical identity and relationships.
+- Moved content must retain a compatible old URL/fragment path or an explicit redirect, and must declare its canonical destination.
+
+3. PAGE MAP
+
+Primary human routes:
+
+- `/` — cinematic opening, exact introductory statement, and a small set of clear destinations; not the entire corpus.
+- `/concepts/` — canonical definitions and concept index.
+- `/concepts/governed-logic/` — Governed Logic.
+- `/concepts/ultimate-grounding/` — existing canonical Ultimate Grounding concept material.
+- `/works/on-the-nature-of-ultimate-grounding/` — source-faithful complete work when its publishable text is approved.
+- `/concepts/governed-intelligence/` — Governed Intelligence.
+- `/company/` — company identity, active work, products in development, application areas, and confirmed services.
+- `/research/` — research program, evaluation work, tests, and published research pathways.
+
+Quiet canonical infrastructure:
+
+- `/library/` — artifact library and discovery.
+- `/publication/` — publication record and workflow-facing index.
+- `/sources/` — sources and provenance.
+- `/mechanism.html` — established technical mechanism route; preserve its stable URL.
+
+Approval holds:
+
+- Founder biography page: hold until Paul supplies or approves the source text.
+- Full Novelty page or definition: hold; retain only already-approved limited mentions.
+- New findings pages, performance claims, or conclusions: hold until the underlying findings and wording are approved.
+- Full Ultimate Grounding work: do not promote a working draft as final.
+
+4. HUMAN EXPERIENCE: OPENING
+
+- Begin in a predominantly pure-black void. Preserve blackness and negative space throughout.
+- `/assets/origin-radial.png` marks the fixed governing center. Its visual center stays within 2 CSS pixels of the viewport center while the scene is active; it is not a floating title or word token.
+- Render these six labels exactly and distinctly as real HTML text: `BEING`, `TRUTH`, `LOGIC`, `MEANING`, `INTELLIGIBILITY`, `OBLIGATION`.
+- Use sparse, legible word tokens at varied scale and depth: no more than 24 ambient word tokens visible on desktop or 12 on mobile. Do not substitute generic space dust, repeated symbols, or decorative label clouds.
+- Semantic connection lines may represent only relationships recorded in `/assets/origin-scene.json`. Decorative geometry must remain visually subordinate and must not imply additional relationships.
+- Present the reasoning sequence exactly as `GROUND → TRUTH → LOGIC → REASONING → INTELLIGENCE`.
+- Motion must travel forward through that sequence and visibly return along the same path. Return motion is traversal, not a reversed semantic claim.
+- The final state must settle into the first reading screen so the opening becomes the page rather than ending on a separate title card.
+- Do not show a giant company-name/logo title card, a floating `LOGOS` token, Alpha/Omega tokens, binary-symbol clutter, an `Explore` mode, explanatory captions, or playback controls.
+- Use native vertical scrolling and normal thumb input. Do not call `preventDefault` for wheel/touch navigation, force scroll position, trap focus, or use mandatory scroll snapping.
+- Pointer or device-orientation input may add slight parallax only; it cannot be required to reveal content or navigate.
+- Under `prefers-reduced-motion: reduce`, render a legible static final composition without timed reveals, autoplay, or a running animation loop.
+- Pause animation work while the scene is offscreen or the document is hidden. Resize and orientation changes must preserve the fixed center and readable labels.
+
+5. NAVIGATION AND SEPARATION
+
+- The homepage exposes no more than five primary content destinations before its footer.
+- Navigation must be understandable without following a conceptual puzzle or a prescribed chain.
+- Every primary destination is reachable by an ordinary link and usable by keyboard, mouse, touch, and one-handed thumb scrolling.
+- Pages share visual identity and navigation but keep their canonical material separated. Do not rebuild V17's mixed single-page information architecture.
+- Alpha/Omega or other unfinished/archival material may retain a stable direct URL, but it is not promoted in primary navigation unless Paul explicitly approves it.
+
+6. ACCEPTANCE TESTS
+
+The review is eligible for Paul's approval only when all applicable checks pass:
+
+- `python3 scripts/check-origin.py` passes, enforcing the exact labels, token limits, semantic-edge ledger, prohibited elements, native scrolling, reduced-motion state, and failure fallback.
+- Repository build and existing automated tests pass with no unexpected generated-file drift.
+- HTML, CSS, JavaScript, and `/assets/origin-scene.json` validate; the browser console has zero uncaught errors.
+- Internal-link scan reports zero broken published routes; every page declares the correct canonical URL.
+- A canonical-copy comparison reports no unauthorized textual change, omission, or duplicate authoritative passage.
+- The six exact principle labels and the five exact reasoning-sequence labels are present in accessible HTML.
+- Automated inspection finds none of the prohibited opening elements or scroll-blocking behavior.
+- Keyboard focus order, visible focus, landmarks, headings, link names, contrast, and reduced-motion behavior are checked.
+- Rendered review is visually inspected at minimum at 1440x900 desktop, 768x1024 tablet, and 390x844 phone sizes.
+- Thumb scrolling reaches the first reading screen and all primary routes without a gesture mode, hidden control, or trapped viewport.
+- Animation stops when offscreen/hidden, remains centered after resize/orientation change, and causes no material layout shift in the reading content.
+- The production baseline remains unchanged until Paul reviews and explicitly approves the preview.

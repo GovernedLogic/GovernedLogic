@@ -1,9 +1,10 @@
 {
   "version": "19.2",
-  "preparedAt": "2026-09-23T22:58:00Z",
-  "status": "publication snapshot; no propagation measurements",
-  "previousRelease": "19.1",
-  "previousCommit": "77c7bc4b737724c58c3b1c27166c6204b46eaddb",
+  "preparedAt": "2026-09-24T12:11:16Z",
+  "status": "review build; production baseline remains main at 77d4969e0666e0aac1d824054d1bc5ab9943dbe0; no propagation measurements",
+  "releaseChannel": "review",
+  "previousRelease": "19.2",
+  "previousCommit": "77d4969e0666e0aac1d824054d1bc5ab9943dbe0",
   "author": "Paul André Couchoud",
   "architecture": {
     "governingOrder": [
@@ -31,8 +32,8 @@
         "02",
         "paul"
       ],
-      "sha256_html": "6757bd722e87d8e9b940fa6656d56d7608093357da9ac6a1e86a7f1533398c85",
-      "sha256_text": "ec0ab3119c3209b26cad0ed079e960296ad432dd7eb0f35f0eef1544acc16505",
+      "sha256_html": "a5a86497d9748245c648b28207e3f1f8eebefc14dd97e4751111b1368ef6f0db",
+      "sha256_text": "c05e048a831074d315e80a842075bc6a4b7a4b0c62160b3aa2d0cc2950c8a169",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -48,8 +49,8 @@
         "paul",
         "paul-business"
       ],
-      "sha256_html": "0df8f9797fdeb79686792dd52bd905cdda08ae083a47fe88158e223bb10a5ada",
-      "sha256_text": "1b1475a67cf26e72b9739e8bbdca590fe272f0100b83b19b883db2daae673820",
+      "sha256_html": "85cace401541e6a95810ff3a7494ea711b3797d73d74d849b86c8d0f07a01cd1",
+      "sha256_text": "296a783b284c7f8bd171667fc0aecd9d873af89bcad182fd1f31313391b25dd7",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -64,8 +65,8 @@
         "03",
         "paul"
       ],
-      "sha256_html": "1353db237341c7b6df416b16cd9e730e3a501aa39f372c1d8e1c789a1b21df63",
-      "sha256_text": "65306b283ea1d18c11845ecf098bda6aeafd9e0a0bccbc02bbf46566e24d6e14",
+      "sha256_html": "a3c5a82db295f8a24a406f6375c74e0369b5ca79e2c05d12a93a830f9c8138ee",
+      "sha256_text": "d95a8bcbe692044536b20f49a904b808b230a4af4300319d5d255108698e802d",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -80,8 +81,8 @@
         "01",
         "paul"
       ],
-      "sha256_html": "c120fd9335d3a30dfabb7401f2aa214b8a3f2bf86fe2a82de2c320b5424d81d1",
-      "sha256_text": "f7daa0bd3163c820cf275d5539e4b86b5e01e871bac2b207bedcdc01fa9eaa20",
+      "sha256_html": "673883d761ef873d6453b3b9f6dd5699111f7a1d1156f2539648e7b5988f77ed",
+      "sha256_text": "0cd66a82bb9b41ca84a21e619db789943b71960ba4d5bc5fa275a82839c4c19c",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -96,8 +97,8 @@
         "01",
         "paul"
       ],
-      "sha256_html": "190995edde9ff85e9840a57a35284187aba359e4692a7fe02c17125b85a05a36",
-      "sha256_text": "b85f23fa7473692852ca4bbbefd859f0ee9b7c4a38cfb371590711508946f54f",
+      "sha256_html": "cd0393e5993540f27c0e9c9d41d9dcfa3b358663b18cf371634d931dca518db0",
+      "sha256_text": "3409fdb0d2c1d5a98654cc884d5221960f397eeb2e3933d84b0bb979cca46c72",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -112,25 +113,25 @@
         "01",
         "paul"
       ],
-      "sha256_html": "3251f3d14ee37706aa004f7bf392cb75c914dbe5653eed3ce5b526b0faffdd59",
-      "sha256_text": "323bdf126ebda4490d44871cf21c55f4f4599717f5774d76c1b19bb6f155b549",
+      "sha256_html": "7f8073c7ee4184b23b8854f98c841e6b0815cbe8f963be280e8a403e43a95b1c",
+      "sha256_text": "21dc027704e1e717e7269c90a1e3607b6b9772c566ad17996d70632f74bbfea4",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
       "url": "https://governedlogic.com/concepts/",
       "path": "concepts/index.html",
-      "title": "The architecture of Governed Logic",
+      "title": "Canonical definitions",
       "definition": "Intelligence is downstream from logic and reasoning.",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
+      "dateModified": "2026-09-24",
       "version": "19.2",
       "sources": [
         "02",
         "paul",
         "paul-business"
       ],
-      "sha256_html": "87a6c028f3beae0e0ec02112e55c52f3221669ec9f1cf20449ef66dc323457af",
-      "sha256_text": "53c8a911865238e49992f267043e9601af31ce7dd1b1ec18231ad2a1fbeff9f4",
+      "sha256_html": "5d997c8915df18869098c519d24efd831b071d9c0f00064aee14bd20dcd9f0e5",
+      "sha256_text": "429010c23e6a5f37cf7f0bd2d7904bb5cc0cf25a8847cf150e5c377704cfc700",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -149,7 +150,7 @@
         "paul",
         "paul-business"
       ],
-      "sha256_html": "93c9c7a03f05b9e95de42539fda6f0e02decfd4d9747abb6c8030d8fc6627791",
+      "sha256_html": "0bd7f4976d11d5f2f0a25d331bfec8d73e8313be58cd20b865b9a50801792212",
       "sha256_text": "e283087216066871001f7dbb643b12f23d43f721b2bbf17cf795ac0a06b649de",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
@@ -160,7 +161,7 @@
       "definition": "Intelligence is the capacity to align representations with reality.",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "version": "19.2",
+      "version": "19.2-review",
       "sources": [
         "01",
         "02",
@@ -169,23 +170,23 @@
         "paul",
         "paul-business"
       ],
-      "sha256_html": "4dbd831ce08ede22522a9c9388ed318b042afa5398eb3181559157cb6d9ab017",
-      "sha256_text": "36d1344c1abc105ddcd28104ffa645d972f700067991a81be8299b38d0e1a041",
+      "sha256_html": "f711692a686d0486d436adfb9643af6bd9e5940caef862a1860bb75061d1956b",
+      "sha256_text": "d4650bce687de13567faec50c4fa54fd45c429c4afa625623fb9f0f5e0127472",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
       "url": "https://governedlogic.com/publication/",
       "path": "publication/index.html",
       "title": "Publication record",
-      "definition": "Intelligence is downstream from logic and reasoning.",
+      "definition": "This review separates the human experience from the canonical content architecture.",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
-      "version": "19.2",
+      "dateModified": "2026-09-24",
+      "version": "19.2-review",
       "sources": [
         "paul-business"
       ],
-      "sha256_html": "fde9a061a9eac44d279d8feda9ca79050fee0ace8fcc36c758b8b8423c9672d8",
-      "sha256_text": "434909c8ad3f91e2bc733b9ac7073a709cd844b8ad74c5f1d7ad6659a611c241",
+      "sha256_html": "c467766f70be600af2c9d302f3f39a4bcc377940ebf655a79e4a474d7bafcb5b",
+      "sha256_text": "30baddd4362d1d39ccbf768aa9a635aef4578aa9b8cd9c1e6e9de94642db35d6",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
@@ -195,6 +196,34 @@
       "sha256_html": "475c614001ab22e928acbe345be4b6f18d691784b5af12bf4a9492e7749a5d94",
       "sha256_text": "52c37903a1c8deb0f7219a1bc46f13b3833eb72fd86fb29cfc0f1fb3d5420ca6",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
+    },
+    {
+      "url": "https://governedlogic.com/company/",
+      "path": "company/index.html",
+      "title": "What we are building",
+      "sha256_html": "ab0534e6b05656100e09b27d512c32baa2aad4dff8f9d9f019063afc6483ac07",
+      "sha256_text": "e144631b8d87a2305a022841fa8b3dd8309c92990cdffa1c2c8bb582100f7fe0",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "datePublished": "2026-09-24T12:11:16Z",
+      "dateModified": "2026-09-24T12:11:16Z",
+      "version": "19.2",
+      "definition": "Governed Logic Reasoning Systems is a research, development, publishing, education, and technology company.",
+      "status": "approved",
+      "approvalReference": "Paul's explicit business direction and approval of separated HTML pages · 24 September 2026"
+    },
+    {
+      "url": "https://governedlogic.com/research/",
+      "path": "research/index.html",
+      "title": "Research",
+      "sha256_html": "e83163160da373746ed326e792bded4f6fe123f8fa18896372c4407b0a7615a4",
+      "sha256_text": "01e50d101d2f716fabe6b8c8284b4f110a31ff87816dc9dc0f023db92e81fc39",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "datePublished": "2026-09-24T12:11:16Z",
+      "dateModified": "2026-09-24T12:11:16Z",
+      "version": "19.2",
+      "definition": "Research is a core activity of Governed Logic Reasoning Systems.",
+      "status": "approved",
+      "approvalReference": "Paul's explicit business direction and approval of separated HTML pages · 24 September 2026"
     }
   ],
   "sourceEditions": [
@@ -604,31 +633,31 @@
   "discovery": {
     "generator": "scripts/build-corpus.py v1",
     "contentVersion": "19.2",
-    "releaseChannel": "production",
+    "releaseChannel": "review",
     "catalog": "https://governedlogic.com/publication/catalog.json",
     "searchIndex": "https://governedlogic.com/publication/search-index.json",
     "library": "https://governedlogic.com/library/",
-    "recordCount": 32,
+    "recordCount": 18,
     "generatedFiles": [
       {
         "path": "library/index.html",
-        "sha256": "0ba8844635c5f877cc9f8bd0ea96f9c61e44b7f15782d936227b3378400bac02"
+        "sha256": "95942ea4f946093101d448a76aef9b60089a4b42e765a0ea6ac94db511a32e43"
       },
       {
         "path": "publication/catalog.json",
-        "sha256": "c4a45b6c1daaaf8063e90bdf08464a139fb8f7278ddba83425684de3e7ee012b"
+        "sha256": "f31ebef35acb3e9c58acdc7c8dbe10d3d5f79ecb1026b190d16fe6623f489883"
       },
       {
         "path": "publication/search-index.json",
-        "sha256": "7f44a6efa3718d6d063c51e9dc1f60f1b4e67c680f179beb55aae9929f90744d"
+        "sha256": "dff9f626b379579bd07c5fa359a5a6c81b407a4c0178d1bd70431920583c37a2"
       },
       {
         "path": "feed.xml",
-        "sha256": "f2b1514cab25a34b2f16ba34adca1162a8abccdb5bb8146a196e5dbc6e06b3dd"
+        "sha256": "1e8841e4c1295c2f4176f8972f260659b52c1385b7614f728a011beaa76fafc8"
       },
       {
         "path": "sitemap.xml",
-        "sha256": "c70e1bc2da8b8cd947a9bef2be0f99810a9d328af419803c205c299109123f71"
+        "sha256": "83c307726357150181a01d680120d04f9f41a4266f802024319674851c206164"
       }
     ]
   }
