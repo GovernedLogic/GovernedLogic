@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""Check canonical discovery, actual local links, and one-file publication intake.
+
+No network or browser simulation. Fixture publications exist only in an isolated
+temporary copy and are deleted afterwards. Run after build-corpus.py.
+"""
+from __future__ import annotations
+
+import argparse
+import importlib.util
+import json
+from pathlib import Path
+import shutil
+import tempfile
+from urllib.parse import unquote, urljoin, urlsplit
+import xml.etree.ElementTree as ET
+
+SPEC = importlib.util.spec_from_file_location("corpus", Path(__file__).with_name("build-corpus.py"))
+corpus = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(corpus)
+
+
+def require(condition, message):
+    if not condition:
+        raise AssertionError(message)
+
+
+def write_outputs(root):
+    generated, _ = corpus.outputs(root)
+    for path, raw in generated.items():
+        file = root / path
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_bytes(raw)
+    return generated
+
+
+def link_checks(root, pages):
+    html_paths = {page["record"]["sourcePath"] for page in pages} | corpus.GENERATED_PATHS
+    documents = {path: corpus.Document((root / path).read_text(encoding="utf-8")) for path in html_paths}
+    checked, external = 0, set()
+    for path, document in documents.items():
+        ids = [node.attrs["id"] for node in document.root.walk() if node.attrs.get("id")]
+        require(len(ids) == len(set(ids)), f"Duplicate HTML IDs in {path}")
+        corpus.json_nodes(document)  # Parse every published JSON-LD block.
+        canonical = [node.attrs.get("href") for node in document.root.walk()
+                     if node.tag == "link" and "canonical" in node.attrs.get("rel", "").split()]
+        require(canonical == [corpus.SITE + corpus.route(path)], f"Canonical count/path mismatch in {path}: {canonical}")
+        for node in document.root.walk():
+            for attr in ("href", "src", "poster", "data"):
+                raw_url = node.attrs.get(attr)
+                if not raw_url:
+                    continue
+                url = urljoin(corpus.SITE + corpus.route(path), raw_url)
+                target = corpus.local_path(root, url)
+                if target is None:
+                    if urlsplit(url).scheme in {"http", "https"}:
+                        external.add(url)
+                    continue
+                require(target.is_file(), f"Missing local target: {path} {attr}={raw_url}")
+                target_path = target.relative_to(root).as_posix()
+                if target.suffix.lower() == ".html":
+                    require(target_path in html_paths, f"Public link reaches draft/unapproved page: {path} → {target_path}")
+                    fragment = unquote(urlsplit(url).fragment)
+                    if fragment:
+                        destination = documents[target_path]
+                        require(any(child.attrs.get("id") == fragment or child.attrs.get("name") == fragment
+                                    for child in destination.root.walk()), f"Missing HTML fragment: {path} → {raw_url}")
+                checked += 1
+    for file in (root / "assets").glob("*.css"):
+        for url in corpus.referenced_urls(file.read_text(encoding="utf-8"), corpus.SITE + "/" + file.relative_to(root).as_posix()):
+            target = corpus.local_path(root, url)
+            if target:
+                require(target.is_file(), f"Missing CSS asset in {file.name}: {url}")
+                checked += 1
+    return checked, sorted(external)
+
+
+def intake_fixture(root):
+    with tempfile.TemporaryDirectory(prefix="gl-corpus-check-") as temporary:
+        work = Path(temporary) / "source"
+        shutil.copytree(root, work, ignore=shutil.ignore_patterns(".git", "__pycache__", "node_modules"))
+        baseline = write_outputs(work)
+        # A different presentation asset must produce a different fetch URL even
+        # while old URLs remain cached. Exercise the temporary root, not ROOT.
+        asset_paths = ["assets/navigation.js", "assets/navigation.css", "assets/library.js", "assets/library.css"]
+        original_assets = {path: (work / path).read_bytes() for path in asset_paths}
+        for path, raw in original_assets.items():
+            (work / path).write_bytes(raw + b"\n/* isolated cache-invalidation fixture */\n")
+        cache_changed = write_outputs(work)
+        library = cache_changed["library/index.html"].decode()
+        for path, raw in original_assets.items():
+            before = corpus.digest(raw)[:16]
+            after = corpus.digest((work / path).read_bytes())[:16]
+            require(f"/{path}?v={after}" in library, "Changed asset URL was not versioned from the active root: " + path)
+            require(f"/{path}?v={before}" not in library, "Old cached URL survived asset change: " + path)
+        for path, raw in original_assets.items():
+            (work / path).write_bytes(raw)
+        require(write_outputs(work) == baseline, "Restoring assets did not restore generated bytes")
+        article = work / "articles/intake-check/index.html"
+        article.parent.mkdir(parents=True)
+        canonical = corpus.SITE + "/articles/intake-check/"
+        description = "Isolated fixture for a publication intake check."
+        ld = {"@context": "https://schema.org", "@type": "Article", "url": canonical,
+              "name": "Publication intake fixture", "description": description,
+              "author": {"@type": "Person", "name": "Test author"},
+              "datePublished": "2026-09-23T12:00:00Z", "dateModified": "2026-09-23T12:00:00Z",
+              "isPartOf": {"@id": corpus.SITE + "/#website"}}
+        source = f'''<!doctype html><html lang="en"><head><title>Publication intake fixture</title>
+<meta name="author" content="Test author"><meta name="description" content="{description}">
+<meta name="gl-status" content="approved"><meta name="gl-type" content="article">
+<meta name="gl-approval" content="isolated test fixture; never a public approval">
+<link rel="canonical" href="{canonical}"><script type="application/ld+json">{json.dumps(ld)}</script>
+</head><body><main><article><h1>Publication intake fixture</h1><p>{description}</p><p>Test author</p>
+<time datetime="2026-09-23T12:00:00Z">23 September 2026</time><a href="/concepts/">Concepts</a></article></main></body></html>'''
+        article.write_text(source, encoding="utf-8")
+        draft = work / "draft-check.html"
+        draft.write_text(source.replace('content="approved"', 'content="draft"').replace("Publication intake fixture", "UNPUBLISHED_DRAFT_SENTINEL"), encoding="utf-8")
+        loose_asset = work / "assets/unapproved-check.txt"
+        loose_asset.write_text("UNPUBLISHED_ASSET_SENTINEL", encoding="utf-8")
+        generated = write_outputs(work)
+        require(canonical in json.loads(generated["publication/catalog.json"])["records"][-1].get("url", "") or
+                any(record["url"] == canonical for record in json.loads(generated["publication/catalog.json"])["records"]), "Approved article missing from catalog")
+        for path in ["publication/catalog.json", "publication/search-index.json", "library/index.html", "sitemap.xml", "feed.xml", "publication/manifest.json"]:
+            require(canonical.encode() in generated[path], f"Approved fixture missing from {path}")
+            require(b"UNPUBLISHED_DRAFT_SENTINEL" not in generated[path], f"Draft leaked into {path}")
+        require("/assets/navigation.js" in article.read_text(), "One-file publication did not receive navigation")
+        stage = Path(temporary) / "public"
+        staged_count = corpus.stage_site(work, stage)
+        require((stage / "articles/intake-check/index.html").is_file(), "Approved article missing from deployment stage")
+        require(not (stage / "draft-check.html").exists(), "Draft entered deployable output")
+        require(not (stage / "assets/unapproved-check.txt").exists(), "Unreferenced/unapproved asset entered deployable output")
+        require(not (stage / "scripts").exists(), "Build source entered deployable output")
+        for file in stage.rglob("*"):
+            if file.is_file():
+                require(b"UNPUBLISHED_DRAFT_SENTINEL" not in file.read_bytes(), f"Draft text leaked into stage: {file}")
+        second, _ = corpus.outputs(work)
+        require(generated == second, "Successive builds produce different bytes")
+        # Missing metadata must be an error, never a fabricated author/date.
+        article.write_text(source.replace('<meta name="author" content="Test author">', ''), encoding="utf-8")
+        try:
+            corpus.outputs(work)
+        except ValueError as error:
+            require("author" in str(error), f"Wrong missing-author error: {error}")
+        else:
+            raise AssertionError("Approved artifact without author was accepted")
+        # Filename/canonical disagreements cannot silently overwrite a known identity.
+        article.write_text(source.replace(canonical, corpus.SITE + "/other/"), encoding="utf-8")
+        try:
+            corpus.outputs(work)
+        except ValueError as error:
+            require("canonical" in str(error), f"Wrong canonical-path error: {error}")
+        else:
+            raise AssertionError("Mismatched canonical route was accepted")
+        article.unlink(); draft.unlink(); loose_asset.unlink()
+        restored = write_outputs(work)
+        require(restored == baseline, "Removing fixture did not restore all derived output bytes")
+        return {"approvedIntoAllViews": True, "draftExcludedFromStage": True, "unapprovedAssetExcluded": True,
+                "metadataFailureDetected": True, "canonicalMismatchDetected": True,
+                "assetCacheInvalidation": True,
+                "deterministic": True, "removalRestoresOutputs": True, "stagedFileCountWithFixture": staged_count}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=corpus.ROOT)
+    parser.add_argument("--skip-intake", action="store_true")
+    args = parser.parse_args()
+    root = args.root.resolve()
+    generated, report = corpus.outputs(root)
+    stale = [path for path, raw in generated.items() if not (root / path).is_file() or (root / path).read_bytes() != raw]
+    require(not stale, "Stale outputs; run build-corpus.py: " + ", ".join(stale))
+    again, _ = corpus.outputs(root)
+    require(generated == again, "Read-only repeated generation was not deterministic")
+    pages, _, _ = corpus.load_pages(root)
+    checked, external = link_checks(root, pages)
+    search = json.loads(generated["publication/search-index.json"])
+    catalog = json.loads(generated["publication/catalog.json"])
+    ids = [record["id"] for record in search["records"]]
+    require(len(ids) == len(set(ids)), "Duplicate discovery IDs")
+    require([{key: value for key, value in record.items() if key != "text"} for record in search["records"]] == catalog["records"], "Catalog and search diverge")
+    for page in pages:
+        record = page["record"]
+        require(record["sha256_html"] == corpus.digest((root / record["sourcePath"]).read_bytes()), "HTML hash mismatch")
+    for edition in json.loads(generated["publication/manifest.json"])["sourceEditions"]:
+        require(corpus.digest((root / "sources" / edition["filename"]).read_bytes()) == edition["sha256"], "Source edition changed: " + edition["filename"])
+    ET.fromstring(generated["feed.xml"]); ET.fromstring(generated["sitemap.xml"])
+    report.update({"passed": True, "localLinksChecked": checked, "externalLinksNotNetworkChecked": external,
+                   "catalogSearchAgree": True, "canonicalAndSourceHashesAgree": True})
+    if not args.skip_intake:
+        report["intake"] = intake_fixture(root)
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()

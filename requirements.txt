@@ -1,0 +1,164 @@
+GOVERNED LOGIC WEBSITE — REQUIREMENTS CONTRACT
+Revision: 2026-09-24; navigation and canonical discovery release
+Owner: Paul André Couchoud
+Content/visual baseline: 8f6c9425632ae29327d3104c571478cd5bb5e915 (v19.2)
+Current production: main 2a99f11225049eb6f8bb35cf6577532a004bc10f
+Status: released under Paul’s explicit commit/push authorization. The first
+37-file public package was committed as 0cb86d6; 43d8d15 corrects heading spacing
+and first-Escape handling found in live browser review. Mobile rendering and
+physical-device verification remain pending; release does not imply those passed.
+
+1. GOVERNING INTENT
+G01. This website is the public company home, canonical public corpus, publishing
+destination, machine-readable knowledge system, and human experience of Governed
+Logic Reasoning Systems. Ancient wisdom. Modern technology. Alignment.
+G02. One canonical source of meaning, many downstream presentations. Presentation
+must follow source meaning. Those three creative directions do not introduce copy.
+G03. Authority order: latest explicit Paul instruction; canonical content; approved
+requirements/Definition of Done; approved live experience; engineering decisions.
+G04. Scope of this increment: adaptive corpus navigation and the minimum publishing
+build needed to make the existing corpus discoverable and future approvals easy
+to ingest. Do not invent publications, biography, products, services, or findings.
+
+2. CANONICAL CONTENT
+C01. Preserve every existing canonical content block exactly, including HTML
+within main, homepage hero, opening scene, source editions, definitions, source
+links, JSON-LD claims, URLs, and dates. Navigation controls are presentation.
+C02. New indexes/excerpts/search data must be derived from those source files.
+No separately maintained copy or newly written summary of canonical content.
+C03. Preserve existing authored source PDFs/TXT and historical publication data.
+C04. Do not change conceptual hierarchy or rename any core concept. Page navigation
+follows existing document order and heading text. Search ranking is retrieval,
+not an assertion of ontological priority.
+C05. Existing content conflicts, missing authorship material, unclear provenance,
+and unprovided publications are recorded for Paul; they are not filled by the build.
+
+3. HUMAN EXPERIENCE
+H01. Keep original origin.js, base styles, artwork, intro markup, and reading layout.
+H02. Add a compact reachable Explore control with an explicit left/right preference.
+Phone controls occupy the lower area; tablet and desktop controls sit at an edge.
+No mandatory top-screen reach, hover-only action, or custom page-scroll interception.
+H03. Opening Explore shows the current location, a route through existing page
+headings, and corpus search. Page and Library are navigation scopes, not new doctrine.
+H04. Offer optional dragging through chapter positions with a labelled preview.
+Commit navigation on release only; cancel on pointercancel/Escape. Equivalent
+single-click links, previous/next controls, and keyboard input remain available.
+H05. Phone movement may provide restrained, opt-in visual depth only. Content,
+selection, navigation, and the governing point must not depend on sensors. Reduced
+motion disables this enhancement; lack/denial of sensors preserves all functions.
+H06. Do not claim the interaction has never been invented. Evaluate its usefulness
+and distinctiveness here; no novelty claim follows from implementing it.
+H07. Back/forward, link fragments, ordinary scrolling, modified clicks, and zoom
+continue to work. New navigation must not obscure focused content or the page end.
+
+4. MACHINE READABILITY
+M01. Full canonical text remains in static HTML independent of animation/JavaScript.
+M02. Generate the corpus catalog, search index, sitemap, feed and integrity records
+from actual canonical HTML and its metadata. Preserve stable identities.
+M03. Use exact visible names and sourced excerpts. Preserve documented relationships,
+authorship, source links and dates; do not infer philosophical edges from proximity.
+M04. Publish only real routes; no draft, reserved, example, or empty future pages in
+public indexes. Keep preview/test tools outside the production route catalog.
+M05. Derived outputs must be reproducible. Check URLs, internal fragments, sources,
+JSON-LD, HTML hashes, and source-to-generated agreement. No propagation claims.
+
+5. PUBLISHING WORKFLOW
+P01. Governing source: PublishingWorkflow_v2026-09-23.txt, retrieved 2026-09-23 from
+/Publishing; preserve the complete workflow and approval/video/provenance gates.
+Its recorded v18.2 state is historical; canonical content remains v19.2 with the
+navigation/discovery release identified by the production commit above.
+P02. A newly approved HTML artifact carries its own title, stable canonical URL,
+author, type, publication/revision dates, approval status/reference and relationships.
+One command derives discovery outputs. No manual redesign or duplicate registry.
+P03. Draft content must not leak through public output. The build is not an approval
+mechanism and cannot grant itself permission to publish. Missing required metadata
+must produce a useful build error, not fabricated defaults for authored work.
+P04. Treat article/video/transcript/test/quote/thought/presentation/research/treatise
+as supported metadata types. No populated examples are public publications.
+P05. Distribution remains downstream. No social posting, email, calendar event,
+external model query, or publication experiment is initiated by this increment.
+
+6. TECHNICAL
+T01. Preserve GitHub Pages/static hosting; no CMS/database/framework introduced.
+T02. Native HTML links and a usable static corpus index remain if JS fails.
+T03. Progressive enhancement, dependency-free production JS and Python standard
+library build. Navigation only hides the previous bar once initialized successfully.
+T04. Escape/encode generated text and validate same-site URLs; no innerHTML for
+search data, analytics, tracking, external font or third-party runtime request.
+T05. Cache only the hand preference locally; no stored reading history or sensor data.
+T06. Keep scripts and requirements traceable on source/canonical-publishing,
+separate from the production main branch. Keep private review and QA records out
+of the public source snapshot. Stage only approved public files for deployment.
+T07. Main remains the Pages deployment branch. The build command is not an
+automatic Pages workflow: build and verify locally, then copy the staged public
+package to main only for an explicitly authorized release. Do not merge the whole
+build-source branch into main or publish private drafts on either public branch.
+T08. Generate deterministic content-hash query versions for navigation.js,
+navigation.css, library.js and library.css references. An asset-byte change must
+change its fetch URL; unchanged bytes retain the same URL. Preserve original asset
+references and canonical content. Verify fresh runtime behavior after deployment;
+a successful commit or HTML reload alone does not prove the updated script ran.
+
+7. ACCESSIBILITY AND PERFORMANCE
+A01. New targets >=44 by 44 CSS pixels; keyboard equivalence; focus visible; modal
+focus contained; Escape closes; focus returns to invoking control.
+A02. Search has a visible label and result status. Every meaningful control has an
+accessible name; selected/current states exposed. Do not move focus on scrolling.
+A03. Check layouts at 320, 390, 768, 1024 and 1348 CSS px; portrait/landscape heights;
+no horizontal overflow or unreachable panel content. Preserve pinch zoom.
+A04. Respect reduced motion. Device motion is off by default and requests access
+only after a click when supported. Physical sensor comfort requires a real device.
+A05. Contrast targets: normal text 4.5:1, large text 3:1, UI focus/control borders
+3:1 where required. Test newly introduced UI; report inherited issues separately.
+A06. Added navigation assets <=35 KB raw combined; no new continuous animation loop;
+load search data on first demand; work stops when panel/page inactive.
+A07. Report measured payload/layout results. Never claim mobile hardware, full WCAG
+certification, screen-reader testing, or performance benchmarks that were not run.
+
+8. ACCEPTANCE TESTS
+AT01 -> C01/H01: compare source blocks/JSON-LD and original asset hashes with GitHub
+baseline. Account for every changed file. Preserve all old canonical URLs and IDs.
+AT02 -> H02-H04/A01-A03: open/close, hand preference, keyboard, Escape/focus return,
+list navigation, previous/next, scrub preview/release/cancel at phone/tablet/desktop.
+AT03 -> M01/T02: static corpus links remain available without enhanced navigation.
+AT04 -> M02-M05/P02-P04: build twice identically; approved artifact addition enters
+all indexes; draft excluded; missing metadata rejected; removal restores outputs.
+AT05 -> M05: check every local published href/fragment/src; JSON-LD parses;
+catalog/search canonical sources and hashes match; no missing routes.
+AT06 -> A04: reduced-motion behavior and unsupported sensor path inspected; physical
+tilt ergonomics explicitly pending real-device testing unless actually verified.
+AT07 -> A05-A06: inspect text/focus contrast, new payload budget, no console errors
+from site, and no layout overflow in tested browser viewports.
+AT08 -> G04/P03: keep build sources and private working material separate from
+production. This revision’s commit/push was explicitly authorized by Paul. A
+future release or external communication requires its own applicable authorization.
+
+9. DEFINITION OF DONE
+The navigation and discovery capability works in the actual rendered website;
+AT01-AT08 have concrete recorded results; source meaning remains exact; visual
+identity and original animation remain intact; responsive, link, metadata,
+accessibility and payload checks pass; publishing input/output is demonstrated;
+requirements map to files and tests; any true blocker or untested hardware case
+is stated precisely. The release is deployed; remaining responsive and hardware
+checks stay open until verified. Approval of future publication content and
+authorization for future deployments remain separate gates.
+
+REMAINING VERIFICATION
+Live cloud-browser review found and corrected heading spacing and first-Escape
+handling. Do not infer mobile viewport, physical tilt, touch ergonomics, or
+screen-reader certification from desktop browser or static checks. AT02, A03,
+and physical-device aspects of AT06 require their actual rendered/device checks
+before full cross-device acceptance can be asserted.
+
+PRIMARY TECHNICAL REFERENCES (checked 2026-09-23)
+https://www.w3.org/TR/WCAG22/
+https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/
+https://www.w3.org/WAI/WCAG22/Understanding/pointer-gestures.html
+https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced/
+https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/requestPermission_static
+
+KNOWN CONTENT HOLDS (not technical permission requests)
+Founder biography source and full Novelty definition have not been supplied for
+this increment. No new article/video/publication is approved by implementing the
+ingestion mechanism. Existing core definition/Alpha and Omega wording is retained;
+any semantic revision belongs to Paul's specific content approval.
