@@ -82,7 +82,7 @@ def intake_fixture(root):
         baseline = write_outputs(work)
         # A different presentation asset must produce a different fetch URL even
         # while old URLs remain cached. Exercise the temporary root, not ROOT.
-        asset_paths = ["assets/navigation.js", "assets/navigation.css", "assets/library.js", "assets/library.css"]
+        asset_paths = ["assets/library.js", "assets/library.css"]
         original_assets = {path: (work / path).read_bytes() for path in asset_paths}
         for path, raw in original_assets.items():
             (work / path).write_bytes(raw + b"\n/* isolated cache-invalidation fixture */\n")
@@ -123,7 +123,7 @@ def intake_fixture(root):
         for path in ["publication/catalog.json", "publication/search-index.json", "library/index.html", "sitemap.xml", "feed.xml", "publication/manifest.json"]:
             require(canonical.encode() in generated[path], f"Approved fixture missing from {path}")
             require(b"UNPUBLISHED_DRAFT_SENTINEL" not in generated[path], f"Draft leaked into {path}")
-        require("/assets/navigation.js" in article.read_text(), "One-file publication did not receive navigation")
+        require("/assets/navigation.js" not in article.read_text(), "Retired navigation returned to a new publication")
         stage = Path(temporary) / "public"
         staged_count = corpus.stage_site(work, stage)
         require((stage / "articles/intake-check/index.html").is_file(), "Approved article missing from deployment stage")

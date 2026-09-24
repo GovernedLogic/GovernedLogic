@@ -167,25 +167,13 @@ def relative_url(url):
     return parsed.path + ("?" + parsed.query if parsed.query else "") + ("#" + parsed.fragment if parsed.fragment else "")
 
 
-def enhance_navigation(source, root=ROOT):
-    """Add presentation only, outside original canonical reading blocks."""
-    if not re.search(r'''<link\b[^>]*href=["']/assets/navigation\.css(?:\?[^"']*)?["']''', source):
-        source = source.replace('</head>', '<link rel="stylesheet" href="/assets/navigation.css"></head>', 1)
-    if not re.search(r'''<script\b[^>]*src=["']/assets/navigation\.js(?:\?[^"']*)?["']''', source):
-        source = source.replace('</body>', '<script src="/assets/navigation.js" defer></script></body>', 1)
-    fallback = '<a class="gl-library-fallback" href="/library/">Library</a>'
-    if fallback not in source:
-        if '</footer>' in source and source.index('</footer>') > source.rfind('</main>'):
-            source = source.replace('</footer>', fallback + '</footer>', 1)
-        else:
-            source = source.replace('</body>', '<footer class="gl-fallback-footer">' + fallback + '</footer></body>', 1)
-    # Content-derived URLs invalidate browser/CDN caches only when these new
-    # presentation assets change. Original assets and canonical text are untouched.
+def version_library_assets(source, root=ROOT):
+    """Version only the library's optional search assets on generated pages."""
     def version_asset(match):
         asset = match.group("asset")
         version = digest((root / "assets" / asset).read_bytes())[:16]
         return match.group("prefix") + "/assets/" + asset + "?v=" + version + match.group("quote")
-    return re.sub(r'''(?P<prefix>\b(?:src|href)=["'])/assets/(?P<asset>(?:navigation|library)\.(?:css|js))(?:\?[^"']*)?(?P<quote>["'])''', version_asset, source)
+    return re.sub(r'''(?P<prefix>\b(?:src|href)=["'])/assets/(?P<asset>library\.(?:css|js))(?:\?[^"']*)?(?P<quote>["'])''', version_asset, source)
 
 
 def load_pages(root):
@@ -207,7 +195,7 @@ def load_pages(root):
             continue
         if status == "legacy-published" and path not in LEGACY_PATHS:
             raise ValueError(f"{path}: legacy-published is reserved for the inspected v19.2 baseline")
-        source = enhance_navigation(source, root)
+        source = version_library_assets(source, root)
         doc = Document(source)
         canonical = next((node.attrs.get("href") for node in doc.root.walk()
                           if node.tag == "link" and "canonical" in node.attrs.get("rel", "").split()), None)
@@ -354,8 +342,8 @@ def library_html(records, root=ROOT):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Library — Governed Logic</title>
 <meta name="theme-color" content="#050505"><meta name="gl-generated" content="{GENERATOR}"><link rel="canonical" href="{SITE}/library/">
 <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Governed Logic publications"><link rel="alternate" type="application/json" href="/publication/catalog.json" title="Canonical catalog">
-<link rel="stylesheet" href="/assets/publication.css"><link rel="stylesheet" href="/assets/library.css"><link rel="stylesheet" href="/assets/navigation.css">
-<script type="application/ld+json">{payload}</script><script defer src="/assets/library.js"></script><script defer src="/assets/navigation.js"></script></head>
+<link rel="stylesheet" href="/assets/publication.css"><link rel="stylesheet" href="/assets/library.css">
+<script type="application/ld+json">{payload}</script><script defer src="/assets/library.js"></script></head>
 <body class="document-page library-page"><a class="skip-link" href="#library-main">Skip to content</a>
 <header class="document-header"><a href="/">Governed Logic<br>Reasoning Systems</a><a href="/concepts/">Follow the chain →</a></header>
 <main class="document-main library-main" id="library-main"><div class="eyebrow">Governed Logic Reasoning Systems</div><h1>Library</h1>
@@ -366,7 +354,7 @@ def library_html(records, root=ROOT):
 </main><footer class="document-footer"><span>Governed Logic Reasoning Systems</span><span><a href="/sources/">Sources</a> · <a href="/publication/">Publication record</a> · <a href="/publication/catalog.json">Catalog</a></span></footer>
 </body></html>
 '''
-    return enhance_navigation(source, root).encode("utf-8")
+    return version_library_assets(source, root).encode("utf-8")
 
 
 def feed_bytes(root, pages):
