@@ -1,164 +1,150 @@
 GOVERNED LOGIC WEBSITE — REQUIREMENTS CONTRACT
-Revision: 2026-09-24; navigation and canonical discovery release
+Revision: 2026-09-24; human-experience recovery
 Owner: Paul André Couchoud
-Content/visual baseline: 8f6c9425632ae29327d3104c571478cd5bb5e915 (v19.2)
-Current production: main 2a99f11225049eb6f8bb35cf6577532a004bc10f
-Status: released under Paul’s explicit commit/push authorization. The first
-37-file public package was committed as 0cb86d6; 43d8d15 corrects heading spacing
-and first-Escape handling found in live browser review. Mobile rendering and
-physical-device verification remain pending; release does not imply those passed.
+Canonical content baseline: v19.2
+Current production: main 77d4969e0666e0aac1d824054d1bc5ab9943dbe0
+Publishing generator: source/canonical-publishing 7b02e1a2002f747ff4c2364e2649219369abc0a0
+Status: Explore and the fixed chain bar are removed. Canonical discovery remains.
+The current opening is retained only as the production baseline; its replacement
+has not been designed, approved, or published.
 
 1. GOVERNING INTENT
-G01. This website is the public company home, canonical public corpus, publishing
-destination, machine-readable knowledge system, and human experience of Governed
-Logic Reasoning Systems. Ancient wisdom. Modern technology. Alignment.
-G02. One canonical source of meaning, many downstream presentations. Presentation
-must follow source meaning. Those three creative directions do not introduce copy.
-G03. Authority order: latest explicit Paul instruction; canonical content; approved
-requirements/Definition of Done; approved live experience; engineering decisions.
-G04. Scope of this increment: adaptive corpus navigation and the minimum publishing
-build needed to make the existing corpus discoverable and future approvals easy
-to ingest. Do not invent publications, biography, products, services, or findings.
+G01. The website is the public company home, canonical corpus, publishing destination,
+machine-readable knowledge system, and human experience of Governed Logic Reasoning
+Systems. Ancient wisdom. Modern technology. Alignment.
+G02. One canonical source of meaning, many downstream presentations. Canonical HTML
+is primary. Visual layers express the same meaning without altering Paul's words.
+G03. The human experience is black, spatial, sparse, exact, and meaning-driven.
+Navigation uses normal thumb scrolling, wheel, trackpad, keyboard, and ordinary links.
+G04. No modal navigation, hand setting, scrubber, page/library tabs, floating Explore
+control, or persistent fixed navigation bar may return.
+G05. The Library, catalog, search index, feed, sitemap, citations, and structured data
+remain available as quiet canonical infrastructure rather than the main presentation.
 
 2. CANONICAL CONTENT
-C01. Preserve every existing canonical content block exactly, including HTML
-within main, homepage hero, opening scene, source editions, definitions, source
-links, JSON-LD claims, URLs, and dates. Navigation controls are presentation.
-C02. New indexes/excerpts/search data must be derived from those source files.
-No separately maintained copy or newly written summary of canonical content.
-C03. Preserve existing authored source PDFs/TXT and historical publication data.
-C04. Do not change conceptual hierarchy or rename any core concept. Page navigation
-follows existing document order and heading text. Search ranking is retrieval,
-not an assertion of ontological priority.
-C05. Existing content conflicts, missing authorship material, unclear provenance,
-and unprovided publications are recorded for Paul; they are not filled by the build.
+C01. Preserve canonical text, definitions, names, URLs, IDs, citations, source files,
+publication/revision dates, JSON-LD, and provenance exactly unless Paul approves a
+specific semantic change.
+C02. Do not condense, paraphrase, simplify, reorder, or invent canonical meaning.
+C03. Alpha and Omega reasoning is the bidirectional action within Governed Logic.
+Presentation must not imply that it is an independent product or framework.
+C04. The architecture chain is exactly:
+Reality → Truth → Logic → Reasoning → Intelligence.
+C05. The six first principles appear exactly once in the opening:
+BEING · TRUTH · LOGIC · MEANING · INTELLIGIBILITY · OBLIGATION.
 
-3. HUMAN EXPERIENCE
-H01. Keep original origin.js, base styles, artwork, intro markup, and reading layout.
-H02. Add a compact reachable Explore control with an explicit left/right preference.
-Phone controls occupy the lower area; tablet and desktop controls sit at an edge.
-No mandatory top-screen reach, hover-only action, or custom page-scroll interception.
-H03. Opening Explore shows the current location, a route through existing page
-headings, and corpus search. Page and Library are navigation scopes, not new doctrine.
-H04. Offer optional dragging through chapter positions with a labelled preview.
-Commit navigation on release only; cancel on pointercancel/Escape. Equivalent
-single-click links, previous/next controls, and keyboard input remain available.
-H05. Phone movement may provide restrained, opt-in visual depth only. Content,
-selection, navigation, and the governing point must not depend on sensors. Reduced
-motion disables this enhancement; lack/denial of sensors preserves all functions.
-H06. Do not claim the interaction has never been invented. Evaluate its usefulness
-and distinctiveness here; no novelty claim follows from implementing it.
-H07. Back/forward, link fragments, ordinary scrolling, modified clicks, and zoom
-continue to work. New navigation must not obscure focused content or the page end.
+3. OPENING EXPERIENCE
+H01. At least 90 percent of each opening frame remains true black.
+H02. The attached radial Governed Logic mark is the single fixed visual center. It is
+small, restrained, and invariant. It is not a giant title reveal or a floating word.
+H03. Begin with void, then center, sparse tokens, six principles, alignment, documented
+architecture, and a direct handoff into the real HTML reading screen.
+H04. Named concepts never repeat as decorative filler. Do not use repeated Logos,
+alpha/omega symbols, binary digits, theorem symbols, arrows, or generic space dust.
+H05. Use 20–40 total sparse tokens at varied depth. No more than eight word tokens are
+readable simultaneously on desktop or five on mobile.
+H06. Hyperreal depth comes from near/middle/far planes, perspective, scale, occlusion,
+focal softness, restrained bloom, velocity, and physically coherent motion.
+H07. Tokens travel on deterministic, authored paths. The field may swirl; it may not
+be a static random sphere rotated as one object.
+H08. Every semantic relationship line must be documented in a relationship ledger.
+No nearest-neighbor, proximity-generated, or decorative Bézier semantic edges.
+H09. The outward and returning paths traverse the same documented structure and make
+Alpha and Omega reasoning visible as action within Governed Logic.
+H10. The final architecture resolves as:
+REALITY → TRUTH → LOGIC → REASONING → INTELLIGENCE.
+H11. The final visual coordinates align with the actual HTML architecture below.
+The canvas/visual overlay fades while the canonical HTML remains: the animation
+becomes the page. No corporate title card or chrome/cyan circuit-board banner.
+H12. Target duration is 11–13 seconds when allowed to play. Early scrolling quickly
+advances or reverses the story without trapping the page.
 
-4. MACHINE READABILITY
-M01. Full canonical text remains in static HTML independent of animation/JavaScript.
-M02. Generate the corpus catalog, search index, sitemap, feed and integrity records
-from actual canonical HTML and its metadata. Preserve stable identities.
-M03. Use exact visible names and sourced excerpts. Preserve documented relationships,
-authorship, source links and dates; do not infer philosophical edges from proximity.
-M04. Publish only real routes; no draft, reserved, example, or empty future pages in
-public indexes. Keep preview/test tools outside the production route catalog.
-M05. Derived outputs must be reproducible. Check URLs, internal fragments, sources,
-JSON-LD, HTML hashes, and source-to-generated agreement. No propagation claims.
+4. INPUT AND DEVICE BEHAVIOR
+I01. Native vertical scrolling is the primary control. One thumb swipe works without
+instruction, configuration, a menu, or a special gesture vocabulary.
+I02. The existing downward cue is the single explicit opening target. A tap advances
+smoothly. Any user scroll/touch interrupts automatic movement and takes control.
+I03. Scroll progress drives and reverses the authored sequence. The experience must
+not hijack, lock, or fight ordinary scrolling.
+I04. Laptop pointer movement may add slight camera parallax. Phone orientation may
+add restrained parallax to the semantic field after any required user permission.
+I05. Device motion changes presentation only. It never selects, navigates, changes
+meaning, or moves the fixed center. Denial/unavailability changes no core function.
+I06. Reduced motion renders a legible settled composition immediately.
 
-5. PUBLISHING WORKFLOW
-P01. Governing source: PublishingWorkflow_v2026-09-23.txt, retrieved 2026-09-23 from
-/Publishing; preserve the complete workflow and approval/video/provenance gates.
-Its recorded v18.2 state is historical; canonical content remains v19.2 with the
-navigation/discovery release identified by the production commit above.
-P02. A newly approved HTML artifact carries its own title, stable canonical URL,
-author, type, publication/revision dates, approval status/reference and relationships.
-One command derives discovery outputs. No manual redesign or duplicate registry.
-P03. Draft content must not leak through public output. The build is not an approval
-mechanism and cannot grant itself permission to publish. Missing required metadata
-must produce a useful build error, not fabricated defaults for authored work.
-P04. Treat article/video/transcript/test/quote/thought/presentation/research/treatise
-as supported metadata types. No populated examples are public publications.
-P05. Distribution remains downstream. No social posting, email, calendar event,
-external model query, or publication experiment is initiated by this increment.
+5. PAGE RHYTHM
+R01. Retain the strong black/gold editorial typography and readable line lengths.
+R02. Replace the long repeated heading/paragraph/border/link rhythm with a small number
+of authored visual events whose motion expresses the adjacent canonical meaning.
+R03. The principles form one spatial composition rather than six generic cards.
+R04. Bidirectional reasoning uses two opposing traces through one structure.
+R05. Ultimate Grounding visualizes dependencies converging rather than deferring.
+R06. Governed Intelligence visualizes representations aligning with fixed structure.
+R07. The Groundless Machine artwork is an immersive publication moment.
+R08. Business sections remain factual and quieter. Add graphics only where they make
+the architecture or status clearer.
+R09. Reduce visible link gardens. Use one quiet Sources/endnote disclosure per major
+section where practical while retaining every URL and citation in canonical HTML.
 
-6. TECHNICAL
-T01. Preserve GitHub Pages/static hosting; no CMS/database/framework introduced.
-T02. Native HTML links and a usable static corpus index remain if JS fails.
-T03. Progressive enhancement, dependency-free production JS and Python standard
-library build. Navigation only hides the previous bar once initialized successfully.
-T04. Escape/encode generated text and validate same-site URLs; no innerHTML for
-search data, analytics, tracking, external font or third-party runtime request.
-T05. Cache only the hand preference locally; no stored reading history or sensor data.
-T06. Keep scripts and requirements traceable on source/canonical-publishing,
-separate from the production main branch. Keep private review and QA records out
-of the public source snapshot. Stage only approved public files for deployment.
-T07. Main remains the Pages deployment branch. The build command is not an
-automatic Pages workflow: build and verify locally, then copy the staged public
-package to main only for an explicitly authorized release. Do not merge the whole
-build-source branch into main or publish private drafts on either public branch.
-T08. Generate deterministic content-hash query versions for navigation.js,
-navigation.css, library.js and library.css references. An asset-byte change must
-change its fetch URL; unchanged bytes retain the same URL. Preserve original asset
-references and canonical content. Verify fresh runtime behavior after deployment;
-a successful commit or HTML reload alone does not prove the updated script ran.
+6. MACHINE READABILITY AND PUBLISHING
+M01. Full canonical content remains static semantic HTML independent of JavaScript,
+canvas, WebGL, animation, device sensors, and visual state.
+M02. Canvas/WebGL is decorative and aria-hidden. Important words that must remain
+crisp or become the page use real HTML.
+M03. Generate catalog, search index, Library, sitemap, feed, integrity records, and
+any future scene data from canonical sources. No duplicate editorial registry.
+M04. Any origin-scene data is a derived presentation contract. It must validate the
+six principles exactly once, the architecture chain exactly once, and all semantic
+edges against the relationship ledger.
+M05. Drafts and unapproved artifacts remain outside public output. The build is not
+an approval mechanism.
+M06. Main contains only the approved staged public package. Build sources remain on
+source/canonical-publishing. A raw authoring tree must never be deployed.
 
-7. ACCESSIBILITY AND PERFORMANCE
-A01. New targets >=44 by 44 CSS pixels; keyboard equivalence; focus visible; modal
-focus contained; Escape closes; focus returns to invoking control.
-A02. Search has a visible label and result status. Every meaningful control has an
-accessible name; selected/current states exposed. Do not move focus on scrolling.
-A03. Check layouts at 320, 390, 768, 1024 and 1348 CSS px; portrait/landscape heights;
-no horizontal overflow or unreachable panel content. Preserve pinch zoom.
-A04. Respect reduced motion. Device motion is off by default and requests access
-only after a click when supported. Physical sensor comfort requires a real device.
-A05. Contrast targets: normal text 4.5:1, large text 3:1, UI focus/control borders
-3:1 where required. Test newly introduced UI; report inherited issues separately.
-A06. Added navigation assets <=35 KB raw combined; no new continuous animation loop;
-load search data on first demand; work stops when panel/page inactive.
-A07. Report measured payload/layout results. Never claim mobile hardware, full WCAG
-certification, screen-reader testing, or performance benchmarks that were not run.
+7. ACCESSIBILITY, PERFORMANCE, AND FALLBACKS
+A01. The page is complete with JavaScript disabled. A static final opening composition
+may be shown, but canonical content and navigation remain available.
+A02. Preserve pinch zoom, back/forward, fragments, native links, keyboard scrolling,
+and focus visibility.
+A03. Verify continuous motion and settled layouts at 320, 390, 768, 1024, and desktop
+widths, including short landscape heights. No clipped words or horizontal overflow.
+A04. Test text/control contrast and readable token sizes. Animated important labels
+must not rely on tiny 8–13 pixel canvas text.
+A05. Stop visual rendering after settlement or when the opening leaves the viewport.
+Avoid continuous background animation that consumes resources without meaning.
+A06. No third-party runtime, analytics, tracking, external font, or speculative
+framework is introduced solely for the effect.
+A07. Physical phone review is required for thumb comfort and optional motion comfort.
+Do not claim those checks from desktop emulation.
 
-8. ACCEPTANCE TESTS
-AT01 -> C01/H01: compare source blocks/JSON-LD and original asset hashes with GitHub
-baseline. Account for every changed file. Preserve all old canonical URLs and IDs.
-AT02 -> H02-H04/A01-A03: open/close, hand preference, keyboard, Escape/focus return,
-list navigation, previous/next, scrub preview/release/cancel at phone/tablet/desktop.
-AT03 -> M01/T02: static corpus links remain available without enhanced navigation.
-AT04 -> M02-M05/P02-P04: build twice identically; approved artifact addition enters
-all indexes; draft excluded; missing metadata rejected; removal restores outputs.
-AT05 -> M05: check every local published href/fragment/src; JSON-LD parses;
-catalog/search canonical sources and hashes match; no missing routes.
-AT06 -> A04: reduced-motion behavior and unsupported sensor path inspected; physical
-tilt ergonomics explicitly pending real-device testing unless actually verified.
-AT07 -> A05-A06: inspect text/focus contrast, new payload budget, no console errors
-from site, and no layout overflow in tested browser viewports.
-AT08 -> G04/P03: keep build sources and private working material separate from
-production. This revision’s commit/push was explicitly authorized by Paul. A
-future release or external communication requires its own applicable authorization.
+8. ACCEPTANCE CHECKLIST
+AT01. First frame is almost entirely black; no floating control or company title.
+AT02. Exactly one radial center mark; it stays fixed.
+AT03. Exactly six readable principles, each appearing once.
+AT04. Exactly one documented architecture chain.
+AT05. No repeated named tokens, generic dust, random semantic edges, or word collisions.
+AT06. Every visible semantic edge maps to the ledger; decorative depth repetitions
+are identified separately and cannot imply new meaning.
+AT07. Native thumb scrolling advances and reverses; tap advances; input interruption
+works; the page never traps the user.
+AT08. Optional tilt affects parallax only; reduced-motion and denied-sensor paths work.
+AT09. Final visual state becomes the actual HTML statement without a title-card cut.
+AT10. Canonical main content, metadata, JSON-LD, citations, URLs, and sources remain
+exact except for mechanically required integrity/release records.
+AT11. No-JavaScript and reduced-motion presentations are complete and intelligible.
+AT12. Record and review the continuous beginning, middle, outward path, return path,
+and final handoff on a real phone, tablet, and laptop. Passing code checks or still
+screenshots cannot approve the experience.
+AT13. Paul reviews the actual rendered continuous experience before publication.
 
 9. DEFINITION OF DONE
-The navigation and discovery capability works in the actual rendered website;
-AT01-AT08 have concrete recorded results; source meaning remains exact; visual
-identity and original animation remain intact; responsive, link, metadata,
-accessibility and payload checks pass; publishing input/output is demonstrated;
-requirements map to files and tests; any true blocker or untested hardware case
-is stated precisely. The release is deployed; remaining responsive and hardware
-checks stay open until verified. Approval of future publication content and
-authorization for future deployments remain separate gates.
+The replacement is done only when the semantic story is visually exact, blackness
+and restraint remain dominant, the six principles and architecture are unmistakable,
+thumb scrolling feels natural on a real phone, the final scene becomes the canonical
+HTML, machine-readable outputs remain exact, all checklist evidence is recorded,
+and Paul approves the rendered experience for release.
 
-REMAINING VERIFICATION
-Live cloud-browser review found and corrected heading spacing and first-Escape
-handling. Do not infer mobile viewport, physical tilt, touch ergonomics, or
-screen-reader certification from desktop browser or static checks. AT02, A03,
-and physical-device aspects of AT06 require their actual rendered/device checks
-before full cross-device acceptance can be asserted.
-
-PRIMARY TECHNICAL REFERENCES (checked 2026-09-23)
-https://www.w3.org/TR/WCAG22/
-https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/
-https://www.w3.org/WAI/WCAG22/Understanding/pointer-gestures.html
-https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced/
-https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/requestPermission_static
-
-KNOWN CONTENT HOLDS (not technical permission requests)
-Founder biography source and full Novelty definition have not been supplied for
-this increment. No new article/video/publication is approved by implementing the
-ingestion mechanism. Existing core definition/Alpha and Omega wording is retained;
-any semantic revision belongs to Paul's specific content approval.
+KNOWN HOLDS
+Founder biography source and the full Novelty definition remain pending. Their
+absence does not authorize invented copy. The current production opening remains
+visually rejected and must not be treated as the approved replacement baseline.

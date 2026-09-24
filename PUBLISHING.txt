@@ -1,146 +1,58 @@
 CANONICAL PUBLICATION INTAKE — BUILD-SOURCE CONTRACT
-Scope: requirements.txt P01–P04, M01–M05, AT03–AT05.
-Status: navigation/discovery released under Paul’s explicit commit/push approval.
-Initial public package: 0cb86d6 (37 files).
-Current production: 2a99f11225049eb6f8bb35cf6577532a004bc10f, including heading-spacing
-and first-Escape corrections identified in live browser inspection.
-Build-source destination: source/canonical-publishing; production branch: main.
-No future authored publication is approved by this technical release.
+Revision: 2026-09-24; post-Explore recovery
+Production: main 77d4969e0666e0aac1d824054d1bc5ab9943dbe0
+Build source: source/canonical-publishing 7b02e1a2002f747ff4c2364e2649219369abc0a0
 
-AUTHORITY
-Paul's current instructions and PublishingWorkflow_v2026-09-23.txt govern the
-authored words, provenance, review, companion video, and release gates. This file
-documents only website ingestion. It does not replace that publishing workflow.
-The workflow's recorded v18.2 state is historical; the inspected baseline is v19.2
-at 8f6c9425632ae29327d3104c571478cd5bb5e915.
+Paul's current instructions and PublishingWorkflow_v2026-09-23.txt govern authored
+words, provenance, review, companion video, and release approval. This file only
+documents website ingestion.
 
 ONE SOURCE, ONE BUILD
-Maintain one canonical HTML file for a newly approved artifact. Its title, exact
-description, author, dates, approval reference, type, and relationships belong in
-that file alongside the visible work. Do not separately edit the catalog, search
-index, library, sitemap, feed, or file hashes.
+A newly approved artifact has one canonical HTML source containing its exact words,
+title, author, stable URL, type, dates, approval reference, citations, and supplied
+relationships. Do not separately edit the Library, catalog, search index, feed,
+sitemap, or integrity hashes.
 
-From the authoring repository:
+Run:
   python scripts/build-corpus.py
   python scripts/check-corpus.py
-
-The build adds shared navigation outside the original reading blocks, then derives:
-  library/index.html                  Static links and enhanced full-text search
-  publication/catalog.json            Canonical metadata and existing relationships
-  publication/search-index.json       Exact searchable source text
-  sitemap.xml                         Actual eligible page URLs
-  feed.xml                            Source publication/revision events
-  publication/manifest.json           Existing source records and current hashes
-
-The catalog has pages, homepage sections with existing IDs, and source downloads
-derived from sources/index.html. It does not infer philosophical relationships
-from adjacency. The generated library is a view, not a new authored publication.
-Search text is normalized for whitespace; it is not rewritten or summarized.
-
-NEW ARTIFACT CONTRACT
-One HTML file must supply:
-  - One self-canonical HTTPS URL matching its actual file route.
-  - A visible h1 matching its JSON-LD name exactly.
-  - meta name="author", matching the JSON-LD author or referenced Person name.
-  - meta name="description", using an exact sentence in the visible work.
-  - meta name="gl-status" content="approved" (or "published" only after release).
-  - meta name="gl-approval", referencing Paul's real approval of that exact work.
-  - meta name="gl-type", choosing the actual artifact type.
-  - JSON-LD WebPage, Article, ScholarlyArticle, CreativeWork, or VideoObject with
-    its canonical url, name, author, datePublished, and dateModified.
-  - Actual publication and revision event timestamps with timezone. Do not use
-    the current build time as a substitute. Composition dates are distinct.
-  - Source citations and relationship links where supplied and approved.
-
-Supported gl-type labels: article, video, transcript, definition, principle, quote,
-thought, demonstration, test, research, visualization, presentation, treatise,
-business, product, service, page, concept. These are format labels, not new content
-hierarchies or a claim that works of every type already exist.
-
-Dates may be declared directly in JSON-LD. If gl-date-published/gl-date-modified
-metadata is also supplied, it must agree. Optional gl-version records a content
-version. Use visible authorship, dates and source references as appropriate to the
-work; keep machine representations consistent with those visible facts.
-
-New files without approval status, or with draft status, are excluded. Approved
-files with missing author/date/type/approval/canonical metadata fail with a specific
-error. The eleven previously published HTML routes are explicitly grandfathered
-without inventing missing historical metadata. No new route receives that exception.
-
-DRAFT-SAFE PACKAGING
-Excluding a draft from an index does not make a public repository private. Never
-push private working drafts to this public GitHub repository, even on a branch.
-Never deploy the entire authoring directory. Use a fresh, empty staging directory
-outside the repository:
   python scripts/build-corpus.py --stage ../governedlogic-public-candidate
 
-Only this staged package may be used as deployment input after explicit
-authorization. The released navigation/discovery revision used that boundary. It contains approved/legacy HTML, generated discovery, directly
-referenced files, production scripts/styles, CNAME, robots.txt, and the previously
-published assets/source editions. It excludes unapproved HTML, unreferenced new
-assets, scripts, tests, requirements, drafts, and workflow notes. A public link to
-unapproved HTML causes staging to fail. A nonempty staging target is rejected to
-prevent old files surviving into a later package.
+The build derives the Library, catalog, full-text search, sitemap, feed, manifest,
+and integrity records. It injects no Explore interface, fixed navigation bar,
+pervasive Library link, or presentation copy into canonical pages.
 
-The current production configuration is NOT wired to this command. Read-only
-GitHub inspection confirmed run 35931181829 uses the dynamic Pages workflow on
-main, actions/jekyll-build-pages with source "." and destination "./_site", then
-uploads and deploys that artifact. No repository-authored workflow exists in the
-inspected 29-file baseline. Therefore a raw push of the authoring tree to main
-would bypass the staging boundary. At an authorized release, deploy the staged
-bytes through the existing publishing branch, or explicitly configure an Actions
-artifact workflow using this stage. The authorized navigation/discovery release
-copied only the 37 staged public files to main; build scripts and requirements
-belong on source/canonical-publishing. Do not merge that whole source branch into
-main. No automatic build/deploy workflow was installed by this implementation.
-Verify the staging boundary again before each authorized deployment.
+PUBLICATION METADATA
+New approved HTML requires a route-matching HTTPS canonical URL, visible h1,
+author, exact visible description, gl-status, gl-approval, gl-type, and consistent
+JSON-LD with real publication/revision dates. Missing required metadata fails.
+Draft or unapproved content is excluded. Previously published v19.2 routes remain
+explicitly grandfathered without invented historical metadata.
 
-REPRODUCIBILITY AND RELEASE EVENTS
+STAGING BOUNDARY
+Never deploy the authoring directory or commit private drafts to the public repo.
+Only a fresh staged package may be copied to main after explicit release approval.
+The stage contains approved canonical HTML, derived machine-readable outputs,
+directly referenced public assets, CNAME, robots, and existing source editions.
+It excludes scripts, requirements, tests, drafts, review records, and unreferenced
+files. A public link to unapproved HTML causes staging to fail.
+
+HUMAN EXPERIENCE BOUNDARY
+Machine-readable discovery remains underneath the presentation. Publication intake
+must not redesign the human experience or automatically expose every relationship
+as visible navigation. Visual scene data, if introduced, must be derived from
+canonical sources and must pass the human-experience requirements contract.
+
+REPRODUCIBILITY
   python scripts/build-corpus.py --check
-This is read-only and fails if generated bytes or navigation includes are stale.
+fails if derived bytes are stale. check-corpus.py checks deterministic output,
+canonical routes, duplicate IDs, local links/fragments, JSON-LD, catalog/search
+agreement, source and HTML hashes, approved intake, metadata rejection, draft
+exclusion, and restoration after removing a fixture.
 
-The four new navigation/library JS and CSS references carry ?v=<content hash>,
-derived deterministically from their bytes in the active source root. Rebuilding
-after an asset change refreshes these URLs and dependent file hashes, so old
-browser/CDN cache entries do not mask a released correction. Unchanged assets keep
-their URLs. Original approved animation and style references remain unchanged.
-After deployment, verify the versioned URLs and the actual corrected interaction.
-
-Legacy publication dates, revision dates, content versions, and feed event times
-remain unchanged by presentation builds. The v1 canonical-text hash algorithm is
-preserved. Exact HTML hashes include the new navigation assets/fallback links.
-Historical architecture, source selections, and documentary manifest fields are
-retained; they are not newly authored by the generator. Discovery now records
-releaseChannel=production. This label identifies its release channel, not evidence
-of crawling, indexing, training inclusion, or propagation.
-
-Release assertions must remain tied to actual authorization and deployment
-evidence. The current deployed revision is identified above; existing v19.2
-content dates and historical source editions remain unchanged. Build time must
-never replace a publication or substantive-revision event.
-
-CHECKS IMPLEMENTED
-check-corpus.py checks deterministic output, canonical routes, duplicate IDs,
-local asset links and fragments, JSON-LD parsing and metadata agreement, generated
-catalog/search correspondence, source and HTML hashes, and isolated intake tests.
-The intake test adds one approved HTML fixture, verifies all generated views,
-excludes a draft and an unreferenced asset from the deployment package, detects
-missing metadata and canonical mismatch, then removes the fixture and verifies
-that all generated bytes return exactly to baseline. Fixtures live only in a
-temporary copy; they are never actual publications.
-
-INHERITED METADATA HOLDS
-mechanism.html has different HTML and JSON-LD descriptions; its HTML description
-is not an exact visible passage. publication/index.html also has a description
-absent from its visible main content. These existing descriptions remain unchanged
-pending semantic authorization. Discovery omits those excerpts. All other checks
-do not turn these recorded legacy mismatches into newly invented prose.
-
-LIMITS OF THIS CHECK
-These commands do not check external network targets or claim browser layout,
-screen-reader, mobile hardware, or sensor verification. Live desktop browser
-inspection was performed for the authorized release, including corrections to
-heading spacing and first-Escape behavior. Rendered mobile layouts and physical
-phone/tablet interaction remain explicit acceptance gates. The scripts themselves
-never send communications, create calendar events, conduct model experiments,
-or deploy the site.
+RELEASE EVENTS
+Presentation builds do not create publication or substantive-revision dates.
+Build time never replaces an authored release event. Claims of deployment, indexing,
+training inclusion, propagation, device validation, or accessibility remain tied to
+actual evidence. Existing inherited metadata mismatches remain recorded rather than
+repaired with invented prose.
