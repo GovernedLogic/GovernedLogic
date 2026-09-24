@@ -1,0 +1,671 @@
+{
+  "version": 1,
+  "corpusVersion": "19.2",
+  "generator": "scripts/build-corpus.py v1",
+  "source": "Canonical HTML; generated views are not editorial sources.",
+  "records": [
+    {
+      "id": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+      "title": "Alpha and Omega Reasoning",
+      "url": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+      "path": "/concepts/alpha-and-omega-reasoning/",
+      "type": "concept",
+      "canonicalUrl": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+      "sourcePath": "concepts/alpha-and-omega-reasoning/index.html",
+      "sha256_html": "8caa5aefd45d8c55f5f27d9700d678e3122faf5076f46cfecfbdd99911acadc6",
+      "sha256_text": "65306b283ea1d18c11845ecf098bda6aeafd9e0a0bccbc02bbf46566e24d6e14",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
+        "https://governedlogic.com/sources/#paul-2026-09-23",
+        "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf#page=3"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.1",
+      "description": "Alpha and Omega reasoning is the bidirectional structure within Governed Logic.",
+      "relationships": {
+        "citation": [
+          "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
+          "https://governedlogic.com/sources/#paul-2026-09-23"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        },
+        "mainEntity": {
+          "@id": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/#concept"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/concepts/governed-intelligence/",
+      "title": "Governed Intelligence",
+      "url": "https://governedlogic.com/concepts/governed-intelligence/",
+      "path": "/concepts/governed-intelligence/",
+      "type": "concept",
+      "canonicalUrl": "https://governedlogic.com/concepts/governed-intelligence/",
+      "sourcePath": "concepts/governed-intelligence/index.html",
+      "sha256_html": "fad031ce2f97315f66b5006efd5ef88e2f179ac8844366c18d0326d4f26664bb",
+      "sha256_text": "1b1475a67cf26e72b9739e8bbdca590fe272f0100b83b19b883db2daae673820",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/#building",
+        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+        "https://governedlogic.com/concepts/governed-intelligence/",
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=2",
+        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.2",
+      "description": "Governed Intelligence is the artificial intelligence implementation of Governed Logic.",
+      "relationships": {
+        "citation": [
+          "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
+          "https://governedlogic.com/sources/#paul-2026-09-23",
+          "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        },
+        "mainEntity": {
+          "@id": "https://governedlogic.com/concepts/governed-intelligence/#concept"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/concepts/governed-logic/",
+      "title": "Governed Logic",
+      "url": "https://governedlogic.com/concepts/governed-logic/",
+      "path": "/concepts/governed-logic/",
+      "type": "concept",
+      "canonicalUrl": "https://governedlogic.com/concepts/governed-logic/",
+      "sourcePath": "concepts/governed-logic/index.html",
+      "sha256_html": "39649ce52c0b3ec5bc5fea44f8e427ee0b88ac15aaa4b9201bdf636ff3774a5d",
+      "sha256_text": "ec0ab3119c3209b26cad0ed079e960296ad432dd7eb0f35f0eef1544acc16505",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+        "https://governedlogic.com/concepts/governed-intelligence/",
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/sources/#paul-2026-09-23",
+        "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf#page=2"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.1",
+      "description": "Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground.",
+      "relationships": {
+        "citation": [
+          "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
+          "https://governedlogic.com/sources/#paul-2026-09-23"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        },
+        "mainEntity": {
+          "@id": "https://governedlogic.com/concepts/governed-logic/#concept"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/concepts/governing-referent/",
+      "title": "Governing referent",
+      "url": "https://governedlogic.com/concepts/governing-referent/",
+      "path": "/concepts/governing-referent/",
+      "type": "concept",
+      "canonicalUrl": "https://governedlogic.com/concepts/governing-referent/",
+      "sourcePath": "concepts/governing-referent/index.html",
+      "sha256_html": "13c2740b2e8a8089d658e5c114a6e83a9528a74ca71a68a373e26fc836ef254b",
+      "sha256_text": "f7daa0bd3163c820cf275d5539e4b86b5e01e871bac2b207bedcdc01fa9eaa20",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/concepts/sufficient-grounding/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
+        "https://governedlogic.com/sources/#paul-2026-09-23",
+        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=5"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.1",
+      "description": "A referent is that to which a representation refers.",
+      "relationships": {
+        "citation": [
+          "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+          "https://governedlogic.com/sources/#paul-2026-09-23"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        },
+        "mainEntity": {
+          "@id": "https://governedlogic.com/concepts/governing-referent/#concept"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/concepts/",
+      "title": "The architecture of Governed Logic",
+      "url": "https://governedlogic.com/concepts/",
+      "path": "/concepts/",
+      "type": "page",
+      "canonicalUrl": "https://governedlogic.com/concepts/",
+      "sourcePath": "concepts/index.html",
+      "sha256_html": "8d15c232ebc1f27bef7133338afce24226f1a581728135def765377c52d12e4c",
+      "sha256_text": "53c8a911865238e49992f267043e9601af31ce7dd1b1ec18231ad2a1fbeff9f4",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+        "https://governedlogic.com/concepts/governed-intelligence/",
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/concepts/sufficient-grounding/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
+        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.2",
+      "description": "Intelligence is downstream from logic and reasoning.",
+      "relationships": {
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/concepts/sufficient-grounding/",
+      "title": "Sufficient grounding",
+      "url": "https://governedlogic.com/concepts/sufficient-grounding/",
+      "path": "/concepts/sufficient-grounding/",
+      "type": "concept",
+      "canonicalUrl": "https://governedlogic.com/concepts/sufficient-grounding/",
+      "sourcePath": "concepts/sufficient-grounding/index.html",
+      "sha256_html": "e765a8e170f0639fb895f100792fa131717dca956a35a8644221ca6de1a55ef7",
+      "sha256_text": "b85f23fa7473692852ca4bbbefd859f0ee9b7c4a38cfb371590711508946f54f",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/concepts/sufficient-grounding/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
+        "https://governedlogic.com/sources/#paul-2026-09-23",
+        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=4"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.1",
+      "description": "Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it.",
+      "relationships": {
+        "citation": [
+          "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+          "https://governedlogic.com/sources/#paul-2026-09-23"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        },
+        "mainEntity": {
+          "@id": "https://governedlogic.com/concepts/sufficient-grounding/#concept"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/concepts/ultimate-grounding/",
+      "title": "Ultimate grounding",
+      "url": "https://governedlogic.com/concepts/ultimate-grounding/",
+      "path": "/concepts/ultimate-grounding/",
+      "type": "concept",
+      "canonicalUrl": "https://governedlogic.com/concepts/ultimate-grounding/",
+      "sourcePath": "concepts/ultimate-grounding/index.html",
+      "sha256_html": "37395450ae714de1046dd588c23aaaf832b7fd918765c4eccd6760d315877f55",
+      "sha256_text": "323bdf126ebda4490d44871cf21c55f4f4599717f5774d76c1b19bb6f155b549",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/concepts/sufficient-grounding/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
+        "https://governedlogic.com/sources/#paul-2026-09-23",
+        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=5",
+        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=7"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.1",
+      "description": "An ultimate ground is not grounded by something more fundamental in the same relevant respect.",
+      "relationships": {
+        "citation": [
+          "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+          "https://governedlogic.com/sources/#paul-2026-09-23"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        },
+        "mainEntity": {
+          "@id": "https://governedlogic.com/concepts/ultimate-grounding/#concept"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/",
+      "title": "Governed Logic Reasoning Systems",
+      "url": "https://governedlogic.com/",
+      "path": "/",
+      "type": "page",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "sha256_html": "ea07964e858f322e326844d9f5c40577ab55d1ba3b396af853d24e053557a83d",
+      "sha256_text": "36d1344c1abc105ddcd28104ffa645d972f700067991a81be8299b38d0e1a041",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+        "https://governedlogic.com/concepts/governed-intelligence/",
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/concepts/sufficient-grounding/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
+        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=4",
+        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=7",
+        "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf#page=2",
+        "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf#page=3",
+        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=2",
+        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=4",
+        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.2",
+      "description": "Intelligence is the capacity to align representations with reality.",
+      "relationships": {
+        "about": [
+          {
+            "@id": "https://governedlogic.com/concepts/governed-logic/#concept"
+          },
+          {
+            "@id": "https://governedlogic.com/concepts/governed-intelligence/#concept"
+          },
+          {
+            "@id": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/#concept"
+          },
+          {
+            "@id": "https://governedlogic.com/concepts/governing-referent/#concept"
+          },
+          {
+            "@id": "https://governedlogic.com/concepts/sufficient-grounding/#concept"
+          },
+          {
+            "@id": "https://governedlogic.com/concepts/ultimate-grounding/#concept"
+          },
+          {
+            "@id": "https://governedlogic.com/#governed-intelligence-development"
+          },
+          {
+            "@id": "https://governedlogic.com/#reasoning-engine"
+          },
+          {
+            "@id": "https://governedlogic.com/#reasoning-api"
+          },
+          {
+            "@id": "https://governedlogic.com/#research"
+          },
+          {
+            "@id": "https://governedlogic.com/#evaluation"
+          },
+          {
+            "@id": "https://governedlogic.com/#novelty"
+          }
+        ],
+        "citation": [
+          "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#nucleus",
+      "url": "https://governedlogic.com/#nucleus",
+      "path": "/#nucleus",
+      "title": "Governed Logic",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "nucleus",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#governance",
+      "url": "https://governedlogic.com/#governance",
+      "path": "/#governance",
+      "title": "Alpha and Omega Reasoning",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "governance",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#principles",
+      "url": "https://governedlogic.com/#principles",
+      "path": "/#principles",
+      "title": "Principles and governing referent",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "principles",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#ground",
+      "url": "https://governedlogic.com/#ground",
+      "path": "/#ground",
+      "title": "On the Nature of Ultimate Grounding",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "ground",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#machine",
+      "url": "https://governedlogic.com/#machine",
+      "path": "/#machine",
+      "title": "Governed Intelligence",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "machine",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#building",
+      "url": "https://governedlogic.com/#building",
+      "path": "/#building",
+      "title": "What we are building",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "building",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#governed-intelligence-development",
+      "url": "https://governedlogic.com/#governed-intelligence-development",
+      "path": "/#governed-intelligence-development",
+      "title": "Governed Intelligence",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "governed-intelligence-development",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#reasoning-engine",
+      "url": "https://governedlogic.com/#reasoning-engine",
+      "path": "/#reasoning-engine",
+      "title": "The Governed Logic Reasoning Engine",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "reasoning-engine",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#reasoning-api",
+      "url": "https://governedlogic.com/#reasoning-api",
+      "path": "/#reasoning-api",
+      "title": "Reasoning API",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "reasoning-api",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#research",
+      "url": "https://governedlogic.com/#research",
+      "path": "/#research",
+      "title": "Research, publishing, and Novelty",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "research",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#publishing",
+      "url": "https://governedlogic.com/#publishing",
+      "path": "/#publishing",
+      "title": "Authorship and publishing",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "publishing",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#novelty",
+      "url": "https://governedlogic.com/#novelty",
+      "path": "/#novelty",
+      "title": "Novelty",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "novelty",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#evaluation",
+      "url": "https://governedlogic.com/#evaluation",
+      "path": "/#evaluation",
+      "title": "Moral reasoning and framework evaluation",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "evaluation",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#applications",
+      "url": "https://governedlogic.com/#applications",
+      "path": "/#applications",
+      "title": "Where reasoning leads to action",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "applications",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#prototype",
+      "url": "https://governedlogic.com/#prototype",
+      "path": "/#prototype",
+      "title": "Principles and governing referent",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "prototype",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/#tests",
+      "url": "https://governedlogic.com/#tests",
+      "path": "/#tests",
+      "title": "The testable consequence",
+      "type": "section",
+      "canonicalUrl": "https://governedlogic.com/",
+      "sourcePath": "index.html",
+      "fragment": "tests",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/mechanism.html",
+      "title": "The Mechanism — Governed Logic",
+      "url": "https://governedlogic.com/mechanism.html",
+      "path": "/mechanism.html",
+      "type": "page",
+      "canonicalUrl": "https://governedlogic.com/mechanism.html",
+      "sourcePath": "mechanism.html",
+      "sha256_html": "bca6c9b98299e5f987a0997c553e7e6005e0a89d25fdecd8c714407baac4d3c2",
+      "sha256_text": "52c37903a1c8deb0f7219a1bc46f13b3833eb72fd86fb29cfc0f1fb3d5420ca6",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/",
+        "https://governedlogic.com/mechanism.html#copy"
+      ],
+      "relationships": {
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Governed Logic Reasoning Systems",
+          "url": "https://governedlogic.com/"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/publication/",
+      "title": "Publication record",
+      "url": "https://governedlogic.com/publication/",
+      "path": "/publication/",
+      "type": "page",
+      "canonicalUrl": "https://governedlogic.com/publication/",
+      "sourcePath": "publication/index.html",
+      "sha256_html": "d10d5ea36dd4e0896e219b3078c937f5a32243752d38e32f5966a317e4acdfd4",
+      "sha256_text": "434909c8ad3f91e2bc733b9ac7073a709cd844b8ad74c5f1d7ad6659a611c241",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/",
+        "https://governedlogic.com/concepts/",
+        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+        "https://governedlogic.com/concepts/governed-intelligence/",
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/governing-referent/",
+        "https://governedlogic.com/concepts/sufficient-grounding/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
+        "https://governedlogic.com/feed.xml",
+        "https://governedlogic.com/publication/manifest.json",
+        "https://governedlogic.com/sources/",
+        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.2",
+      "relationships": {
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/sources/",
+      "title": "Sources and editions",
+      "url": "https://governedlogic.com/sources/",
+      "path": "/sources/",
+      "type": "page",
+      "canonicalUrl": "https://governedlogic.com/sources/",
+      "sourcePath": "sources/index.html",
+      "sha256_html": "e47be33b3250a24ca739b96147709ac70135e41bc0d8edc51505c15678de9e43",
+      "sha256_text": "e283087216066871001f7dbb643b12f23d43f721b2bbf17cf795ac0a06b649de",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+        "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
+        "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
+        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
+        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-23",
+      "dateModified": "2026-09-23",
+      "version": "19.2",
+      "description": "Intelligence is downstream from logic and reasoning.",
+      "relationships": {
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        }
+      },
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+      "url": "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+      "path": "/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+      "title": "On the Nature of Ultimate Grounding",
+      "type": "source",
+      "canonicalUrl": "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
+      "recordUrl": "https://governedlogic.com/sources/#source-01",
+      "sourcePath": "sources/index.html",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
+      "url": "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
+      "path": "/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
+      "title": "Governed Logic",
+      "type": "source",
+      "canonicalUrl": "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
+      "recordUrl": "https://governedlogic.com/sources/#source-02",
+      "sourcePath": "sources/index.html",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
+      "url": "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
+      "path": "/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
+      "title": "Alpha and Omega Reasoning",
+      "type": "source",
+      "canonicalUrl": "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
+      "recordUrl": "https://governedlogic.com/sources/#source-03",
+      "sourcePath": "sources/index.html",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
+      "url": "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
+      "path": "/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
+      "title": "Governed Intelligence",
+      "type": "source",
+      "canonicalUrl": "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
+      "recordUrl": "https://governedlogic.com/sources/#source-04",
+      "sourcePath": "sources/index.html",
+      "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
+      "url": "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
+      "path": "/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
+      "title": "Business strategy — additional direction",
+      "type": "source",
+      "canonicalUrl": "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
+      "recordUrl": "https://governedlogic.com/sources/#paul-business-2026-09-23",
+      "sourcePath": "sources/index.html",
+      "status": "published"
+    }
+  ]
+}
