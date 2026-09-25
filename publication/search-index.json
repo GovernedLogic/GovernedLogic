@@ -4,6 +4,44 @@
   "generator": "scripts/build-corpus.py v1",
   "records": [
     {
+      "id": "https://governedlogic.com/company/",
+      "title": "What we are building",
+      "url": "https://governedlogic.com/company/",
+      "path": "/company/",
+      "type": "business",
+      "canonicalUrl": "https://governedlogic.com/company/",
+      "sourcePath": "company/index.html",
+      "text": "Governed Logic Reasoning Systems What we are building Governed Logic Reasoning Systems is a research, development, publishing, education, and technology company. Existing prototype · Active development Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering. Paul intends to develop Governed Intelligence into an increasingly capable reasoning system governed by the principles and architecture of Governed Logic. This is an active company objective. The development process will be public, with concepts, methods, demonstrations, experiments, and engineering progress shared as the work advances. Governed Intelligence → Committed development direction Reasoning engine and API The Governed Logic Reasoning Engine A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles. The intended architecture follows the established bidirectional Governed Logic process, including premise evaluation, semantic consistency, logical validity, truth-directed reasoning, and sufficient grounding. Planned engineering deliverable Reasoning API Paul intends to develop a reasoning API that makes the architecture available for integration into other software systems and AI applications. The underlying concept is that developers and organizations should be able to incorporate governed reasoning into their own systems rather than being restricted to a single chatbot interface. The engine and API are planned engineering deliverables, not currently available production services. The existing prototype and published mechanism establish the starting point for their development. Paul André Couchoud · Business strategy addendum · §§ 1–2 Downstream applications Where reasoning leads to action The following are application areas for Governed Logic, Governed Intelligence, and the proposed reasoning engine. They illustrate the broader scope of the company and its potential commercial and societal applications. They are not claims that the company has already deployed solutions in these domains. Autonomous vehicles and robotics Reasoning about actions, physical consequences, safety constraints, and situations where a machine must reconcile competing instructions or obligations before acting. AI safety and autonomous agents Evaluating systems whose reasoning leads to consequential actions, including the relationship between governing principles, decision-making, authorization, and action-level safety controls. Legal reasoning and semantic stability Examining how changes in terminology, definitions, or contextual framing can change the interpretation of a rule while its apparent wording remains familiar. Potential applications include legal-document analysis, rule interpretation, consistency evaluation, and identifying semantic drift in systems that assist legal professionals. Resource planning and allocation Investigating decision-support systems that must reason about limited resources, competing priorities, and real-world consequences. Examples include water distribution, electricity allocation, infrastructure planning, and emergency resource management. Healthcare and high-stakes decision support Examining how AI systems represent evidence, uncertainty, clinical priorities, obligations, and competing risks when assisting qualified human decision-makers. The potential role of governed reasoning is to improve the transparency and reliability of decision support, not to substitute unvalidated systems for professional judgment. Education, institutions, and human reasoning Teaching and evaluating the relationships among stable meaning, truth, logic, reasoning, and obligation. Applications may include AI literacy, critical reasoning, educational tools, and institutional training. These application areas reflect the company's existing research into delegated machine judgment, resource allocation, moral reasoning, and semantic stability. The underlying business opportunity is broader than a conversational AI interface. As systems make more decisions and take more actions, the relationship between reasoning and reality becomes increasingly consequential. Governed Logic intends to develop and investigate reasoning methods applicable at that point of decision. Practical engagements Consulting, assessments, education, and speaking The company will also pursue practical engagements in which its research and technical expertise can provide value. These include reasoning-system assessments, AI safety evaluations, consulting, educational workshops, speaking engagements, and eventual assistance with reasoning-engine integration. The company's identity remains Governed Logic Reasoning Systems, regardless of whether the immediate engagement involves research, consulting, training, evaluation, or software development. Paul André Couchoud · Business strategy addendum · §§ 8–9 Authorship and publishing Authorship and publishing Paul is an author as well as the founder of Governed Logic Reasoning Systems. His articles, treatises, original ideas, research publications, and other authored works are substantive company activities. They should not all be grouped under the generic label of content marketing. The publishing function includes original intellectual work, public teaching, research communication, technical explanation, and the development of the company's canonical body of published knowledge. The existing publishing workflow preserves authorship, provenance, source material, editorial review, and the relationship between articles and companion videos. Paul will provide or confirm the final name of the publishing division or imprint. Until then, do not invent a new branded name. The Truth with Paul remains the established public-facing video and teaching channel, connected to but distinct from the company's publishing function. New company identity — decided by Paul Novelty Novelty is the name Paul has chosen for a distinct part of the Governed Logic research and development work. Paul has a larger concept for Novelty that will be supplied and developed separately. The website should reserve this identity and recognize it as an intended part of the company's architecture without prematurely defining its complete purpose, scope, methods, or deliverables. Novelty should not be reduced automatically to conventional prior-art research, novelty assessment, or invention screening. Those activities may be relevant, but Paul has indicated that the concept extends beyond them. Its complete definition remains pending his additional source material. Paul André Couchoud · Business strategy addendum · §§ 4–5 Sources and version Author Paul André Couchoud Source edition Business strategy — additional direction from Paul · version 1.0 · 23 September 2026 Published / modified 24 September 2026 Version 19.2 Canonical URL https://governedlogic.com/company/",
+      "sha256_html": "ab0534e6b05656100e09b27d512c32baa2aad4dff8f9d9f019063afc6483ac07",
+      "sha256_text": "e144631b8d87a2305a022841fa8b3dd8309c92990cdffa1c2c8bb582100f7fe0",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/",
+        "https://governedlogic.com/company/",
+        "https://governedlogic.com/concepts/governed-intelligence/",
+        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-24T12:11:16Z",
+      "dateModified": "2026-09-24T12:11:16Z",
+      "version": "19.2",
+      "approvalReference": "Paul's explicit business direction and approval of separated HTML pages · 24 September 2026",
+      "description": "Governed Logic Reasoning Systems is a research, development, publishing, education, and technology company.",
+      "relationships": {
+        "about": {
+          "@id": "https://governedlogic.com/#organization"
+        },
+        "citation": [
+          "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
+          "https://governedlogic.com/concepts/governed-intelligence/"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        }
+      },
+      "status": "approved"
+    },
+    {
       "id": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
       "title": "Alpha and Omega Reasoning",
       "url": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
@@ -11,15 +49,12 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
       "sourcePath": "concepts/alpha-and-omega-reasoning/index.html",
-      "text": "Governed Logic · Concepts Alpha and Omega Reasoning Alpha and Omega reasoning is the bidirectional structure within Governed Logic. It must begin somewhere, and it must answer somewhere. The generative direction produces candidate reasoning under the governing principles. The adjudicative direction traces those candidates back through logical validity, premise truth, semantic stability, and grounding. The beginning and the end are not two unrelated points. They are the same governing reality encountered from opposite directions. The same ground stands at both ends because reasoning is neither self-originating nor self-adjudicating. Generative GroundTruthLogicReasoning Adjudicative ReasoningLogicTruthGround Governed Logic →Governing referent →Ultimate grounding → Sources and version Author Paul André Couchoud Source edition Alpha and Omega Reasoning · p. 3 · 22 September 2026 · The thesis; IV; X Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
-      "sha256_html": "1353db237341c7b6df416b16cd9e730e3a501aa39f372c1d8e1c789a1b21df63",
-      "sha256_text": "65306b283ea1d18c11845ecf098bda6aeafd9e0a0bccbc02bbf46566e24d6e14",
+      "text": "Governed Logic · Concepts Alpha and Omega Reasoning Alpha and Omega reasoning is the bidirectional structure within Governed Logic. Generatively, reasoning proceeds from ground through truth and logic. Adjudicatively, reasoning is tested back through logic and truth toward ground. It must begin somewhere, and it must answer somewhere. The generative direction produces candidate reasoning under the governing principles. The adjudicative direction traces those candidates back through logical validity, premise truth, semantic stability, and grounding. The beginning and the end are not two unrelated points. They are the same governing reality encountered from opposite directions. The same ground stands at both ends because reasoning is neither self-originating nor self-adjudicating. Generative GroundTruthLogicReasoning Adjudicative ReasoningLogicTruthGround Sources and version Author Paul André Couchoud Source edition Alpha and Omega Reasoning · p. 3 · 22 September 2026 · The thesis; IV; X Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+      "sha256_html": "a3c5a82db295f8a24a406f6375c74e0369b5ca79e2c05d12a93a830f9c8138ee",
+      "sha256_text": "d95a8bcbe692044536b20f49a904b808b230a4af4300319d5d255108698e802d",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
         "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
-        "https://governedlogic.com/concepts/governed-logic/",
-        "https://governedlogic.com/concepts/governing-referent/",
-        "https://governedlogic.com/concepts/ultimate-grounding/",
         "https://governedlogic.com/sources/#paul-2026-09-23",
         "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf#page=3"
       ],
@@ -50,16 +85,12 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/governed-intelligence/",
       "sourcePath": "concepts/governed-intelligence/index.html",
-      "text": "Governed Logic · Concepts Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. It is the observable machine response to Governed Logic being instantiated upstream. Existing prototype · Active development The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering. Paul intends to develop Governed Intelligence into an increasingly capable reasoning system governed by the principles and architecture of Governed Logic. The development process will be public, with concepts, methods, demonstrations, experiments, and engineering progress shared as the work advances. The engine and API are planned engineering deliverables, not currently available production services. The reasoning engine and API → The issue is what governs commitment. That distinction matters because intelligence is downstream. The substrate may remain probabilistic. Candidate generation may remain statistical. Pattern recognition may remain powerful. None of that must disappear. Probability can propose. Logic can adjudicate relations. Truth governs. The governing referent fixes the ultimate point of answerability. Before a candidate becomes the committed representation or action, the system tests the reasoning back through logic, truth, the applicable principles, and ultimately the governing referent. Governed Logic →Alpha and Omega Reasoning →Governing referent → Sources and version Author Paul André Couchoud Source edition Governed Intelligence · p. 2 · 22 September 2026 · I–III Current wording Paul’s business strategy addendum · 23 September 2026 · §§ 1–2 Published / modified 23 September 2026 Version 19.2 Canonical URL https://governedlogic.com/concepts/governed-intelligence/",
-      "sha256_html": "0df8f9797fdeb79686792dd52bd905cdda08ae083a47fe88158e223bb10a5ada",
-      "sha256_text": "1b1475a67cf26e72b9739e8bbdca590fe272f0100b83b19b883db2daae673820",
+      "text": "Governed Logic · Concepts Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. It is the observable machine response to Governed Logic being instantiated upstream. Existing prototype · Active development The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering. Paul intends to develop Governed Intelligence into an increasingly capable reasoning system governed by the principles and architecture of Governed Logic. The development process will be public, with concepts, methods, demonstrations, experiments, and engineering progress shared as the work advances. The engine and API are planned engineering deliverables, not currently available production services. The issue is what governs commitment. That distinction matters because intelligence is downstream. The substrate may remain probabilistic. Candidate generation may remain statistical. Pattern recognition may remain powerful. None of that must disappear. Probability can propose. Logic can adjudicate relations. Truth governs. The governing referent fixes the ultimate point of answerability. Before a candidate becomes the committed representation or action, the system tests the reasoning back through logic, truth, the applicable principles, and ultimately the governing referent. Sources and version Author Paul André Couchoud Source edition Governed Intelligence · p. 2 · 22 September 2026 · I–III Current wording Paul’s business strategy addendum · 23 September 2026 · §§ 1–2 Published / modified 23 September 2026 Version 19.2 Canonical URL https://governedlogic.com/concepts/governed-intelligence/",
+      "sha256_html": "85cace401541e6a95810ff3a7494ea711b3797d73d74d849b86c8d0f07a01cd1",
+      "sha256_text": "296a783b284c7f8bd171667fc0aecd9d873af89bcad182fd1f31313391b25dd7",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
-        "https://governedlogic.com/#building",
-        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
         "https://governedlogic.com/concepts/governed-intelligence/",
-        "https://governedlogic.com/concepts/governed-logic/",
-        "https://governedlogic.com/concepts/governing-referent/",
         "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=2",
         "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
       ],
@@ -91,15 +122,12 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/governed-logic/",
       "sourcePath": "concepts/governed-logic/index.html",
-      "text": "Governed Logic · Concepts Governed Logic Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground. Logic binds what follows from what has been admitted. It does not license the admission. Logic alone cannot determine truth. A valid argument can proceed from false premises. Truth therefore governs the admissibility of the premises and the correspondence of the conclusion to reality. Logic governs the relations of inference. Intelligence is downstream from logic and reasoning. The generative direction produces candidate reasoning under the governing principles. The adjudicative direction traces those candidates back through logical validity, premise truth, semantic stability, and grounding. Generative GroundTruthLogicReasoning Adjudicative ReasoningLogicTruthGround Alpha and Omega Reasoning →Governing referent →Governed Intelligence → Sources and version Author Paul André Couchoud Source edition Governed Logic · p. 2 · 22 September 2026 · I–IV Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/governed-logic/",
-      "sha256_html": "6757bd722e87d8e9b940fa6656d56d7608093357da9ac6a1e86a7f1533398c85",
-      "sha256_text": "ec0ab3119c3209b26cad0ed079e960296ad432dd7eb0f35f0eef1544acc16505",
+      "text": "Governed Logic · Concepts Governed Logic Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground. Logic binds what follows from what has been admitted. It does not license the admission. Logic alone cannot determine truth. A valid argument can proceed from false premises. Truth therefore governs the admissibility of the premises and the correspondence of the conclusion to reality. Logic governs the relations of inference. Intelligence is downstream from logic and reasoning. The generative direction produces candidate reasoning under the governing principles. The adjudicative direction traces those candidates back through logical validity, premise truth, semantic stability, and grounding. Generative GroundTruthLogicReasoning Adjudicative ReasoningLogicTruthGround Sources and version Author Paul André Couchoud Source edition Governed Logic · p. 2 · 22 September 2026 · I–IV Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/governed-logic/",
+      "sha256_html": "a5a86497d9748245c648b28207e3f1f8eebefc14dd97e4751111b1368ef6f0db",
+      "sha256_text": "c05e048a831074d315e80a842075bc6a4b7a4b0c62160b3aa2d0cc2950c8a169",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
-        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
-        "https://governedlogic.com/concepts/governed-intelligence/",
         "https://governedlogic.com/concepts/governed-logic/",
-        "https://governedlogic.com/concepts/governing-referent/",
         "https://governedlogic.com/sources/#paul-2026-09-23",
         "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf#page=2"
       ],
@@ -130,15 +158,12 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/governing-referent/",
       "sourcePath": "concepts/governing-referent/index.html",
-      "text": "Governed Logic · Concepts Governing referent A referent is that to which a representation refers. The system must remain a servant of the referent, not become the governor of what it was built to find. A sentence, proposition, model state, symbol, name, token sequence, doctrine, or prompt is not identical to its referent merely because it represents it. Representations can be true or false, adequate or inadequate, stable or drifting. The governing referent is Jesus Christ, the Logos. The ground is not a proposition above which truth sits as an external authority. Truth is answerability to what is. Logic governs the relationships between propositions, but it cannot independently establish their correspondence with reality. Governed Logic →Ultimate grounding →Sufficient grounding → Sources and version Author Paul André Couchoud Source edition On the Nature of Ultimate Grounding · p. 5 · 22 September 2026 · I.6 Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/governing-referent/",
-      "sha256_html": "c120fd9335d3a30dfabb7401f2aa214b8a3f2bf86fe2a82de2c320b5424d81d1",
-      "sha256_text": "f7daa0bd3163c820cf275d5539e4b86b5e01e871bac2b207bedcdc01fa9eaa20",
+      "text": "Governed Logic · Concepts Governing referent A referent is that to which a representation refers. The system must remain a servant of the referent, not become the governor of what it was built to find. A sentence, proposition, model state, symbol, name, token sequence, doctrine, or prompt is not identical to its referent merely because it represents it. Representations can be true or false, adequate or inadequate, stable or drifting. The governing referent is Jesus Christ, the Logos. The ground is not a proposition above which truth sits as an external authority. Truth is answerability to what is. Logic governs the relationships between propositions, but it cannot independently establish their correspondence with reality. Sources and version Author Paul André Couchoud Source edition On the Nature of Ultimate Grounding · p. 5 · 22 September 2026 · I.6 Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/governing-referent/",
+      "sha256_html": "673883d761ef873d6453b3b9f6dd5699111f7a1d1156f2539648e7b5988f77ed",
+      "sha256_text": "0cd66a82bb9b41ca84a21e619db789943b71960ba4d5bc5fa275a82839c4c19c",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
-        "https://governedlogic.com/concepts/governed-logic/",
         "https://governedlogic.com/concepts/governing-referent/",
-        "https://governedlogic.com/concepts/sufficient-grounding/",
-        "https://governedlogic.com/concepts/ultimate-grounding/",
         "https://governedlogic.com/sources/#paul-2026-09-23",
         "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=5"
       ],
@@ -163,28 +188,27 @@
     },
     {
       "id": "https://governedlogic.com/concepts/",
-      "title": "The architecture of Governed Logic",
+      "title": "Canonical definitions",
       "url": "https://governedlogic.com/concepts/",
       "path": "/concepts/",
-      "type": "page",
+      "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/",
       "sourcePath": "concepts/index.html",
-      "text": "Follow the chain The architecture of Governed Logic Intelligence is downstream from logic and reasoning. Governed Logic Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground.Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic.Alpha and Omega Reasoning Alpha and Omega reasoning is the bidirectional structure within Governed Logic.Governing referent A referent is that to which a representation refers.Sufficient grounding Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it.Ultimate grounding An ultimate ground is not grounded by something more fundamental in the same relevant respect. Governed Intelligence wording: Paul’s business strategy addendum · § 1",
-      "sha256_html": "87a6c028f3beae0e0ec02112e55c52f3221669ec9f1cf20449ef66dc323457af",
-      "sha256_text": "53c8a911865238e49992f267043e9601af31ce7dd1b1ec18231ad2a1fbeff9f4",
+      "text": "Governed Logic Canonical definitions Intelligence is downstream from logic and reasoning. Governed Logic Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground. Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. Governing referent A referent is that to which a representation refers. Sufficient grounding Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it. Ultimate grounding An ultimate ground is not grounded by something more fundamental in the same relevant respect. First principles Principles and governing referent Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. Logic is binding. Being is real. Meaning is real. Intelligibility is real. Obligation is real and binding. The governing referent is Jesus Christ, the Logos. Governed Logic · p. 2 · Section II",
+      "sha256_html": "5d997c8915df18869098c519d24efd831b071d9c0f00064aee14bd20dcd9f0e5",
+      "sha256_text": "429010c23e6a5f37cf7f0bd2d7904bb5cc0cf25a8847cf150e5c377704cfc700",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
-        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
         "https://governedlogic.com/concepts/governed-intelligence/",
         "https://governedlogic.com/concepts/governed-logic/",
         "https://governedlogic.com/concepts/governing-referent/",
         "https://governedlogic.com/concepts/sufficient-grounding/",
         "https://governedlogic.com/concepts/ultimate-grounding/",
-        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+        "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf#page=2"
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
+      "dateModified": "2026-09-24",
       "version": "19.2",
       "description": "Intelligence is downstream from logic and reasoning.",
       "relationships": {
@@ -202,15 +226,12 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/sufficient-grounding/",
       "sourcePath": "concepts/sufficient-grounding/index.html",
-      "text": "Governed Logic · Concepts Sufficient grounding Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it. A halt is a decision. A proposed ground may explain one feature while borrowing another feature from elsewhere. Such a ground may be locally useful without being sufficient for the whole chain. Is the proposed ground sufficient for the thing it is supposed to ground? And is that ground ultimate, or does it itself depend upon something more fundamental in the relevant respect? Ultimate grounding →Governed Logic →Governing referent → Sources and version Author Paul André Couchoud Source edition On the Nature of Ultimate Grounding · p. 4 · 22 September 2026 · I.3 Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/sufficient-grounding/",
-      "sha256_html": "190995edde9ff85e9840a57a35284187aba359e4692a7fe02c17125b85a05a36",
-      "sha256_text": "b85f23fa7473692852ca4bbbefd859f0ee9b7c4a38cfb371590711508946f54f",
+      "text": "Governed Logic · Concepts Sufficient grounding Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it. A halt is a decision. A proposed ground may explain one feature while borrowing another feature from elsewhere. Such a ground may be locally useful without being sufficient for the whole chain. Is the proposed ground sufficient for the thing it is supposed to ground? And is that ground ultimate, or does it itself depend upon something more fundamental in the relevant respect? Sources and version Author Paul André Couchoud Source edition On the Nature of Ultimate Grounding · p. 4 · 22 September 2026 · I.3 Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/sufficient-grounding/",
+      "sha256_html": "cd0393e5993540f27c0e9c9d41d9dcfa3b358663b18cf371634d931dca518db0",
+      "sha256_text": "3409fdb0d2c1d5a98654cc884d5221960f397eeb2e3933d84b0bb979cca46c72",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
-        "https://governedlogic.com/concepts/governed-logic/",
-        "https://governedlogic.com/concepts/governing-referent/",
         "https://governedlogic.com/concepts/sufficient-grounding/",
-        "https://governedlogic.com/concepts/ultimate-grounding/",
         "https://governedlogic.com/sources/#paul-2026-09-23",
         "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=4"
       ],
@@ -241,14 +262,11 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/ultimate-grounding/",
       "sourcePath": "concepts/ultimate-grounding/index.html",
-      "text": "Governed Logic · Concepts Ultimate grounding An ultimate ground is not grounded by something more fundamental in the same relevant respect. Why anything? A ground is that upon which something depends for its being, truth, intelligibility, meaning, authority, or explanatory standing. Grounding is relational and directional: the dependent points beyond itself toward that on which it depends. If a proposed terminus remains answerable to a deeper source for the very feature under examination, then the chain has not yet reached ultimacy. A halt is where inquiry stops. A termination is where the relevant dependency has actually been grounded. If every member remains dependent, extending the series does not introduce a non-dependent source. Infinite deferral is not automatically ultimate grounding. Its thesis is declarative: Jesus Christ of Nazareth, the Logos, is the sufficient and ultimate ground of being, truth, logic, meaning, intelligibility, and binding obligation. Sufficient grounding →Governing referent →Governed Logic → Sources and version Author Paul André Couchoud Source edition On the Nature of Ultimate Grounding · p. 5 · On the Nature of Ultimate Grounding · p. 7 · 22 September 2026 · I.1–I.4; II.1; opening statement Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/ultimate-grounding/",
-      "sha256_html": "3251f3d14ee37706aa004f7bf392cb75c914dbe5653eed3ce5b526b0faffdd59",
-      "sha256_text": "323bdf126ebda4490d44871cf21c55f4f4599717f5774d76c1b19bb6f155b549",
+      "text": "Governed Logic · Concepts Ultimate grounding An ultimate ground is not grounded by something more fundamental in the same relevant respect. Why anything? A ground is that upon which something depends for its being, truth, intelligibility, meaning, authority, or explanatory standing. Grounding is relational and directional: the dependent points beyond itself toward that on which it depends. If a proposed terminus remains answerable to a deeper source for the very feature under examination, then the chain has not yet reached ultimacy. A halt is where inquiry stops. A termination is where the relevant dependency has actually been grounded. If every member remains dependent, extending the series does not introduce a non-dependent source. Infinite deferral is not automatically ultimate grounding. Its thesis is declarative: Jesus Christ of Nazareth, the Logos, is the sufficient and ultimate ground of being, truth, logic, meaning, intelligibility, and binding obligation. Sources and version Author Paul André Couchoud Source edition On the Nature of Ultimate Grounding · p. 5 · On the Nature of Ultimate Grounding · p. 7 · 22 September 2026 · I.1–I.4; II.1; opening statement Current wording Paul’s website language · 23 September 2026 Published / modified 23 September 2026 Version 19.1 Canonical URL https://governedlogic.com/concepts/ultimate-grounding/",
+      "sha256_html": "7f8073c7ee4184b23b8854f98c841e6b0815cbe8f963be280e8a403e43a95b1c",
+      "sha256_text": "21dc027704e1e717e7269c90a1e3607b6b9772c566ad17996d70632f74bbfea4",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
-        "https://governedlogic.com/concepts/governed-logic/",
-        "https://governedlogic.com/concepts/governing-referent/",
-        "https://governedlogic.com/concepts/sufficient-grounding/",
         "https://governedlogic.com/concepts/ultimate-grounding/",
         "https://governedlogic.com/sources/#paul-2026-09-23",
         "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=5",
@@ -281,29 +299,23 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/",
       "sourcePath": "index.html",
-      "text": "Governed Logic Reasoning Systems Truth governs logic. Logic governs reasoning. Intelligence is downstream. Intelligence is the capacity to align representations with reality. Not merely generating convincing answers, but reasoning toward what is true. Govern the logic, and you govern what intelligence is built upon. The architecture of Governed Logic Reality The ultimate ground · The referent Truth Correspondence with what is Logic Binding inference Reasoning Governed inference and adjudication Intelligence Capacity to align representations with reality Follow the chain The architecture of Governed Logic →What we are building →Research and publishing → Governed Logic Reasoning Systems Governed Logic Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground. Logic binds what follows from what has been admitted. It does not license the admission. Logic alone cannot determine truth. A valid argument can proceed from false premises. Truth therefore governs the admissibility of the premises and the correspondence of the conclusion to reality. Logic governs the relations of inference. A reasoning system can be perfectly consistent and still be governed by a false premise. Improving its inferential capabilities does not repair that upstream failure. Governed Logic · p. 2 Governed Logic → Alpha and Omega Reasoning Alpha and Omega reasoning is the bidirectional structure within Governed Logic. Generatively, reasoning proceeds from ground through truth and logic. Adjudicatively, reasoning is tested back through logic and truth toward ground. Generative GroundTruthLogicReasoning Adjudicative ReasoningLogicTruthGround The generator is not the measure of truth. It cannot confer truth upon its own representations simply by producing them coherently. The output is not accepted simply because it was generated. The system must remain a servant of the referent, not become the governor of what it was built to find. Alpha and Omega Reasoning · p. 3 Alpha and Omega Reasoning →Governing referent → Principles and governing referent Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. Logic is binding. Being is real. Meaning is real. Intelligibility is real. Obligation is real and binding. The governing referent is Jesus Christ, the Logos. Governed Logic · p. 2 On the Nature of Ultimate Grounding A ground is that upon which something depends for its being, truth, intelligibility, meaning, authority, or explanatory standing. Grounding is relational and directional: the dependent points beyond itself toward that on which it depends. Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it. An ultimate ground is not grounded by something more fundamental in the same relevant respect. A halt is a decision. A halt is where inquiry stops. A termination is where the relevant dependency has actually been grounded. If every member remains dependent, extending the series does not introduce a non-dependent source. Infinite deferral is not automatically ultimate grounding. Its thesis is declarative: Jesus Christ of Nazareth, the Logos, is the sufficient and ultimate ground of being, truth, logic, meaning, intelligibility, and binding obligation. On the Nature of Ultimate Grounding · p. 4 · On the Nature of Ultimate Grounding · p. 7 Sufficient grounding →Ultimate grounding → Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. It is the observable machine response to Governed Logic being instantiated upstream. Probability can propose. Logic can adjudicate relations. Truth governs. The governing referent fixes the ultimate point of answerability. Governed Intelligence · p. 2 Governed Intelligence → The Groundless Machine The Hidden Flaw Beneath Modern AI Governed Logic Reasoning Systems What we are building Governed Logic Reasoning Systems is a research, development, publishing, education, and technology company. The development process will be public, with concepts, methods, demonstrations, experiments, and engineering progress shared as the work advances. Existing prototype Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering. Paul intends to develop Governed Intelligence into an increasingly capable reasoning system governed by the principles and architecture of Governed Logic. Committed development direction The Governed Logic Reasoning Engine A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles. The intended architecture follows the established bidirectional Governed Logic process, including premise evaluation, semantic consistency, logical validity, truth-directed reasoning, and sufficient grounding. Planned engineering deliverable Reasoning API Paul intends to develop a reasoning API that makes the architecture available for integration into other software systems and AI applications. The underlying concept is that developers and organizations should be able to incorporate governed reasoning into their own systems rather than being restricted to a single chatbot interface. The engine and API are planned engineering deliverables, not currently available production services. Paul André Couchoud · Business strategy addendum · §§ 1–2 Research and authorship Research, publishing, and Novelty Research Research is a core activity of Governed Logic Reasoning Systems. Paul's existing archive contains original ideas, reasoning chains, experiments, observations, hypotheses, and concepts developed over several years. The research workflow will turn that accumulated material into authored publications, reproducible demonstrations, new investigations, and practical engineering requirements. The company will also conduct ongoing research into AI safety, governing frameworks, moral reasoning, semantic stability, and machine decision-making. Authorship and publishing Paul is an author as well as the founder of Governed Logic Reasoning Systems. The publishing function includes original intellectual work, public teaching, research communication, technical explanation, and the development of the company's canonical body of published knowledge. The existing publishing workflow preserves authorship, provenance, source material, editorial review, and the relationship between articles and companion videos. The Truth with Paul remains the established public-facing video and teaching channel, connected to but distinct from the company's publishing function. Novelty Novelty is a newly designated part of the company's work, with its fuller definition to follow. Paul André Couchoud · Business strategy addendum · §§ 3–5 and final note Independent examination Moral reasoning and framework evaluation Governed Logic Reasoning Systems intends to evaluate the reasoning of other artificial intelligence systems and governing frameworks. This includes examining how different systems or frameworks establish moral principles, define harm and obligation, adjudicate conflicting claims, and arrive at conclusions. Comparing reasoning systems under controlled changes of governing referent, principles, phrasing, and context. Examining whether moral conclusions remain consistent when the underlying facts remain unchanged. Identifying semantic drift, incompatible assumptions, borrowed authority, and unresolved conflicts between governing frameworks. Testing where reasoning chains terminate and whether the stated governing framework supplies the authority its conclusions require. Evaluating how reasoning failures may influence actions taken by an autonomous system. This evaluation capability may develop into research services, independent assessments, consulting engagements, and tools for organizations developing AI. The architecture and the governing referent Paul's governing referent is Jesus Christ, the Logos. However, the general reasoning architecture need not require every user, organization, or machine-facing interface to know the identity of that referent before the reasoning process can be examined or used. The architecture can explicitly investigate which principles, properties, and grounding relationships are necessary for a reasoning system to function coherently. It can also test candidate governing frameworks without disclosing the identity of Paul's preferred referent to the system under evaluation. The underlying mechanism is intended for public examination and reproducible testing. Claims about the performance of referent-independent implementations should remain tied to actual test results as those implementations are developed. Paul André Couchoud · Business strategy addendum · §§ 6–7 Downstream applications Where reasoning leads to action The following are application areas for Governed Logic, Governed Intelligence, and the proposed reasoning engine. They are not claims that the company has already deployed solutions in these domains. Autonomous vehicles and robotics Reasoning about actions, physical consequences, safety constraints, and situations where a machine must reconcile competing instructions or obligations before acting. AI safety and autonomous agents Evaluating systems whose reasoning leads to consequential actions, including the relationship between governing principles, decision-making, authorization, and action-level safety controls. Legal reasoning and semantic stability Examining how changes in terminology, definitions, or contextual framing can change the interpretation of a rule while its apparent wording remains familiar. Resource planning and allocation Investigating decision-support systems that must reason about limited resources, competing priorities, and real-world consequences. Healthcare and high-stakes decision support Examining how AI systems represent evidence, uncertainty, clinical priorities, obligations, and competing risks when assisting qualified human decision-makers. The potential role of governed reasoning is to improve the transparency and reliability of decision support, not to substitute unvalidated systems for professional judgment. Education, institutions, and human reasoning Teaching and evaluating the relationships among stable meaning, truth, logic, reasoning, and obligation. Consulting, assessments, education, and speaking The company will also pursue practical engagements in which its research and technical expertise can provide value. These include reasoning-system assessments, AI safety evaluations, consulting, educational workshops, speaking engagements, and eventual assistance with reasoning-engine integration. The company's identity remains Governed Logic Reasoning Systems, regardless of whether the immediate engagement involves research, consulting, training, evaluation, or software development. Paul André Couchoud · Business strategy addendum · §§ 8–9 Principles and governing referent Governing instructions Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. Logic is binding. Being is real. Meaning is real. Intelligibility is real. Obligation is real and binding. The governing referent is Jesus Christ, the Logos. Ground → Truth → Logic → Reasoning. Reasoning → Logic → Truth → Ground. Governed Logic · p. 2 · Sections II and IV The testable consequence Hold the underlying model substantially constant. Supply a governing referent and first principles. Observe how reasoning reorganizes. Remove the referent. Substitute another. Ablate principles. Reframe the same moral, logical, semantic, and factual problems. Track where reasoning terminates, whether it changes frameworks under pressure, whether conclusions remain invariant when irrelevant framing changes, and whether it borrows authority from outside its stated ground. Governed Intelligence · p. 4 Truth governs logic. Logic governs reasoning. Intelligence is downstream from logic and reasoning. Follow the chain. Truth. Logic. Ground. Governed Logic →Governed Intelligence →",
-      "sha256_html": "4dbd831ce08ede22522a9c9388ed318b042afa5398eb3181559157cb6d9ab017",
-      "sha256_text": "36d1344c1abc105ddcd28104ffa645d972f700067991a81be8299b38d0e1a041",
+      "text": "Governed Logic Reasoning Systems Truth governs logic. Logic governs reasoning. Intelligence is downstream. Intelligence is the capacity to align representations with reality. Not merely generating convincing answers, but reasoning toward what is true. Govern the logic, and you govern what intelligence is built upon. The architecture of Governed Logic Ground The ultimate ground · The referent Truth Correspondence with what is Logic Binding inference Reasoning Governed inference and adjudication Intelligence Capacity to align representations with reality Ancient wisdom · Modern technology · Alignment Begin with the meaning. Governed Intelligence The Groundless Machine The Hidden Flaw Beneath Modern AI Governed Intelligence Canonical public corpus One source of meaning. The website is the canonical public library and living knowledge architecture of Governed Logic. Canonical definitions Library Publication record Sources and editions",
+      "sha256_html": "f711692a686d0486d436adfb9643af6bd9e5940caef862a1860bb75061d1956b",
+      "sha256_text": "d4650bce687de13567faec50c4fa54fd45c429c4afa625623fb9f0f5e0127472",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
-        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
+        "https://governedlogic.com/company/",
+        "https://governedlogic.com/concepts/",
         "https://governedlogic.com/concepts/governed-intelligence/",
         "https://governedlogic.com/concepts/governed-logic/",
-        "https://governedlogic.com/concepts/governing-referent/",
-        "https://governedlogic.com/concepts/sufficient-grounding/",
         "https://governedlogic.com/concepts/ultimate-grounding/",
-        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=4",
-        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=7",
-        "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf#page=2",
-        "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf#page=3",
-        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=2",
-        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=4",
-        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+        "https://governedlogic.com/library/",
+        "https://governedlogic.com/publication/",
+        "https://governedlogic.com/research/",
+        "https://governedlogic.com/sources/"
       ],
       "author": "Paul André Couchoud",
-      "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
-      "version": "19.2",
+      "version": "19.2-review",
       "description": "Intelligence is the capacity to align representations with reality.",
       "relationships": {
         "about": [
@@ -311,238 +323,16 @@
             "@id": "https://governedlogic.com/concepts/governed-logic/#concept"
           },
           {
-            "@id": "https://governedlogic.com/concepts/governed-intelligence/#concept"
-          },
-          {
-            "@id": "https://governedlogic.com/concepts/alpha-and-omega-reasoning/#concept"
-          },
-          {
-            "@id": "https://governedlogic.com/concepts/governing-referent/#concept"
-          },
-          {
-            "@id": "https://governedlogic.com/concepts/sufficient-grounding/#concept"
-          },
-          {
             "@id": "https://governedlogic.com/concepts/ultimate-grounding/#concept"
           },
           {
-            "@id": "https://governedlogic.com/#governed-intelligence-development"
-          },
-          {
-            "@id": "https://governedlogic.com/#reasoning-engine"
-          },
-          {
-            "@id": "https://governedlogic.com/#reasoning-api"
-          },
-          {
-            "@id": "https://governedlogic.com/#research"
-          },
-          {
-            "@id": "https://governedlogic.com/#evaluation"
-          },
-          {
-            "@id": "https://governedlogic.com/#novelty"
+            "@id": "https://governedlogic.com/concepts/governed-intelligence/#concept"
           }
-        ],
-        "citation": [
-          "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
         ],
         "isPartOf": {
           "@id": "https://governedlogic.com/#website"
         }
       },
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#nucleus",
-      "url": "https://governedlogic.com/#nucleus",
-      "path": "/#nucleus",
-      "title": "Governed Logic",
-      "type": "section",
-      "text": "Governed Logic Reasoning Systems Governed Logic Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground. Logic binds what follows from what has been admitted. It does not license the admission. Logic alone cannot determine truth. A valid argument can proceed from false premises. Truth therefore governs the admissibility of the premises and the correspondence of the conclusion to reality. Logic governs the relations of inference. A reasoning system can be perfectly consistent and still be governed by a false premise. Improving its inferential capabilities does not repair that upstream failure. Governed Logic · p. 2 Governed Logic →",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "nucleus",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#governance",
-      "url": "https://governedlogic.com/#governance",
-      "path": "/#governance",
-      "title": "Alpha and Omega Reasoning",
-      "type": "section",
-      "text": "Alpha and Omega Reasoning Alpha and Omega reasoning is the bidirectional structure within Governed Logic. Generatively, reasoning proceeds from ground through truth and logic. Adjudicatively, reasoning is tested back through logic and truth toward ground. Generative GroundTruthLogicReasoning Adjudicative ReasoningLogicTruthGround The generator is not the measure of truth. It cannot confer truth upon its own representations simply by producing them coherently. The output is not accepted simply because it was generated. The system must remain a servant of the referent, not become the governor of what it was built to find. Alpha and Omega Reasoning · p. 3 Alpha and Omega Reasoning →Governing referent →",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "governance",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#principles",
-      "url": "https://governedlogic.com/#principles",
-      "path": "/#principles",
-      "title": "Principles and governing referent",
-      "type": "section",
-      "text": "Principles and governing referent Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. Logic is binding. Being is real. Meaning is real. Intelligibility is real. Obligation is real and binding. The governing referent is Jesus Christ, the Logos. Governed Logic · p. 2",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "principles",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#ground",
-      "url": "https://governedlogic.com/#ground",
-      "path": "/#ground",
-      "title": "On the Nature of Ultimate Grounding",
-      "type": "section",
-      "text": "On the Nature of Ultimate Grounding A ground is that upon which something depends for its being, truth, intelligibility, meaning, authority, or explanatory standing. Grounding is relational and directional: the dependent points beyond itself toward that on which it depends. Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it. An ultimate ground is not grounded by something more fundamental in the same relevant respect. A halt is a decision. A halt is where inquiry stops. A termination is where the relevant dependency has actually been grounded. If every member remains dependent, extending the series does not introduce a non-dependent source. Infinite deferral is not automatically ultimate grounding. Its thesis is declarative: Jesus Christ of Nazareth, the Logos, is the sufficient and ultimate ground of being, truth, logic, meaning, intelligibility, and binding obligation. On the Nature of Ultimate Grounding · p. 4 · On the Nature of Ultimate Grounding · p. 7 Sufficient grounding →Ultimate grounding →",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "ground",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#machine",
-      "url": "https://governedlogic.com/#machine",
-      "path": "/#machine",
-      "title": "Governed Intelligence",
-      "type": "section",
-      "text": "Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. It is the observable machine response to Governed Logic being instantiated upstream. Probability can propose. Logic can adjudicate relations. Truth governs. The governing referent fixes the ultimate point of answerability. Governed Intelligence · p. 2 Governed Intelligence → The Groundless Machine The Hidden Flaw Beneath Modern AI",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "machine",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#building",
-      "url": "https://governedlogic.com/#building",
-      "path": "/#building",
-      "title": "What we are building",
-      "type": "section",
-      "text": "Governed Logic Reasoning Systems What we are building Governed Logic Reasoning Systems is a research, development, publishing, education, and technology company. The development process will be public, with concepts, methods, demonstrations, experiments, and engineering progress shared as the work advances. Existing prototype Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering. Paul intends to develop Governed Intelligence into an increasingly capable reasoning system governed by the principles and architecture of Governed Logic. Committed development direction The Governed Logic Reasoning Engine A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles. The intended architecture follows the established bidirectional Governed Logic process, including premise evaluation, semantic consistency, logical validity, truth-directed reasoning, and sufficient grounding. Planned engineering deliverable Reasoning API Paul intends to develop a reasoning API that makes the architecture available for integration into other software systems and AI applications. The underlying concept is that developers and organizations should be able to incorporate governed reasoning into their own systems rather than being restricted to a single chatbot interface. The engine and API are planned engineering deliverables, not currently available production services. Paul André Couchoud · Business strategy addendum · §§ 1–2",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "building",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#governed-intelligence-development",
-      "url": "https://governedlogic.com/#governed-intelligence-development",
-      "path": "/#governed-intelligence-development",
-      "title": "Governed Intelligence",
-      "type": "section",
-      "text": "Existing prototype Governed Intelligence Governed Intelligence is the artificial intelligence implementation of Governed Logic. The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering. Paul intends to develop Governed Intelligence into an increasingly capable reasoning system governed by the principles and architecture of Governed Logic.",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "governed-intelligence-development",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#reasoning-engine",
-      "url": "https://governedlogic.com/#reasoning-engine",
-      "path": "/#reasoning-engine",
-      "title": "The Governed Logic Reasoning Engine",
-      "type": "section",
-      "text": "Committed development direction The Governed Logic Reasoning Engine A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles. The intended architecture follows the established bidirectional Governed Logic process, including premise evaluation, semantic consistency, logical validity, truth-directed reasoning, and sufficient grounding.",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "reasoning-engine",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#reasoning-api",
-      "url": "https://governedlogic.com/#reasoning-api",
-      "path": "/#reasoning-api",
-      "title": "Reasoning API",
-      "type": "section",
-      "text": "Planned engineering deliverable Reasoning API Paul intends to develop a reasoning API that makes the architecture available for integration into other software systems and AI applications. The underlying concept is that developers and organizations should be able to incorporate governed reasoning into their own systems rather than being restricted to a single chatbot interface.",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "reasoning-api",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#research",
-      "url": "https://governedlogic.com/#research",
-      "path": "/#research",
-      "title": "Research, publishing, and Novelty",
-      "type": "section",
-      "text": "Research and authorship Research, publishing, and Novelty Research Research is a core activity of Governed Logic Reasoning Systems. Paul's existing archive contains original ideas, reasoning chains, experiments, observations, hypotheses, and concepts developed over several years. The research workflow will turn that accumulated material into authored publications, reproducible demonstrations, new investigations, and practical engineering requirements. The company will also conduct ongoing research into AI safety, governing frameworks, moral reasoning, semantic stability, and machine decision-making. Authorship and publishing Paul is an author as well as the founder of Governed Logic Reasoning Systems. The publishing function includes original intellectual work, public teaching, research communication, technical explanation, and the development of the company's canonical body of published knowledge. The existing publishing workflow preserves authorship, provenance, source material, editorial review, and the relationship between articles and companion videos. The Truth with Paul remains the established public-facing video and teaching channel, connected to but distinct from the company's publishing function. Novelty Novelty is a newly designated part of the company's work, with its fuller definition to follow. Paul André Couchoud · Business strategy addendum · §§ 3–5 and final note",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "research",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#publishing",
-      "url": "https://governedlogic.com/#publishing",
-      "path": "/#publishing",
-      "title": "Authorship and publishing",
-      "type": "section",
-      "text": "Authorship and publishing Paul is an author as well as the founder of Governed Logic Reasoning Systems. The publishing function includes original intellectual work, public teaching, research communication, technical explanation, and the development of the company's canonical body of published knowledge. The existing publishing workflow preserves authorship, provenance, source material, editorial review, and the relationship between articles and companion videos. The Truth with Paul remains the established public-facing video and teaching channel, connected to but distinct from the company's publishing function.",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "publishing",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#novelty",
-      "url": "https://governedlogic.com/#novelty",
-      "path": "/#novelty",
-      "title": "Novelty",
-      "type": "section",
-      "text": "Novelty Novelty is a newly designated part of the company's work, with its fuller definition to follow.",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "novelty",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#evaluation",
-      "url": "https://governedlogic.com/#evaluation",
-      "path": "/#evaluation",
-      "title": "Moral reasoning and framework evaluation",
-      "type": "section",
-      "text": "Independent examination Moral reasoning and framework evaluation Governed Logic Reasoning Systems intends to evaluate the reasoning of other artificial intelligence systems and governing frameworks. This includes examining how different systems or frameworks establish moral principles, define harm and obligation, adjudicate conflicting claims, and arrive at conclusions. Comparing reasoning systems under controlled changes of governing referent, principles, phrasing, and context. Examining whether moral conclusions remain consistent when the underlying facts remain unchanged. Identifying semantic drift, incompatible assumptions, borrowed authority, and unresolved conflicts between governing frameworks. Testing where reasoning chains terminate and whether the stated governing framework supplies the authority its conclusions require. Evaluating how reasoning failures may influence actions taken by an autonomous system. This evaluation capability may develop into research services, independent assessments, consulting engagements, and tools for organizations developing AI. The architecture and the governing referent Paul's governing referent is Jesus Christ, the Logos. However, the general reasoning architecture need not require every user, organization, or machine-facing interface to know the identity of that referent before the reasoning process can be examined or used. The architecture can explicitly investigate which principles, properties, and grounding relationships are necessary for a reasoning system to function coherently. It can also test candidate governing frameworks without disclosing the identity of Paul's preferred referent to the system under evaluation. The underlying mechanism is intended for public examination and reproducible testing. Claims about the performance of referent-independent implementations should remain tied to actual test results as those implementations are developed. Paul André Couchoud · Business strategy addendum · §§ 6–7",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "evaluation",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#applications",
-      "url": "https://governedlogic.com/#applications",
-      "path": "/#applications",
-      "title": "Where reasoning leads to action",
-      "type": "section",
-      "text": "Downstream applications Where reasoning leads to action The following are application areas for Governed Logic, Governed Intelligence, and the proposed reasoning engine. They are not claims that the company has already deployed solutions in these domains. Autonomous vehicles and robotics Reasoning about actions, physical consequences, safety constraints, and situations where a machine must reconcile competing instructions or obligations before acting. AI safety and autonomous agents Evaluating systems whose reasoning leads to consequential actions, including the relationship between governing principles, decision-making, authorization, and action-level safety controls. Legal reasoning and semantic stability Examining how changes in terminology, definitions, or contextual framing can change the interpretation of a rule while its apparent wording remains familiar. Resource planning and allocation Investigating decision-support systems that must reason about limited resources, competing priorities, and real-world consequences. Healthcare and high-stakes decision support Examining how AI systems represent evidence, uncertainty, clinical priorities, obligations, and competing risks when assisting qualified human decision-makers. The potential role of governed reasoning is to improve the transparency and reliability of decision support, not to substitute unvalidated systems for professional judgment. Education, institutions, and human reasoning Teaching and evaluating the relationships among stable meaning, truth, logic, reasoning, and obligation. Consulting, assessments, education, and speaking The company will also pursue practical engagements in which its research and technical expertise can provide value. These include reasoning-system assessments, AI safety evaluations, consulting, educational workshops, speaking engagements, and eventual assistance with reasoning-engine integration. The company's identity remains Governed Logic Reasoning Systems, regardless of whether the immediate engagement involves research, consulting, training, evaluation, or software development. Paul André Couchoud · Business strategy addendum · §§ 8–9",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "applications",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#prototype",
-      "url": "https://governedlogic.com/#prototype",
-      "path": "/#prototype",
-      "title": "Principles and governing referent",
-      "type": "section",
-      "text": "Principles and governing referent Governing instructions Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. Logic is binding. Being is real. Meaning is real. Intelligibility is real. Obligation is real and binding. The governing referent is Jesus Christ, the Logos. Ground → Truth → Logic → Reasoning. Reasoning → Logic → Truth → Ground. Governed Logic · p. 2 · Sections II and IV",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "prototype",
-      "status": "published"
-    },
-    {
-      "id": "https://governedlogic.com/#tests",
-      "url": "https://governedlogic.com/#tests",
-      "path": "/#tests",
-      "title": "The testable consequence",
-      "type": "section",
-      "text": "The testable consequence Hold the underlying model substantially constant. Supply a governing referent and first principles. Observe how reasoning reorganizes. Remove the referent. Substitute another. Ablate principles. Reframe the same moral, logical, semantic, and factual problems. Track where reasoning terminates, whether it changes frameworks under pressure, whether conclusions remain invariant when irrelevant framing changes, and whether it borrows authority from outside its stated ground. Governed Intelligence · p. 4",
-      "canonicalUrl": "https://governedlogic.com/",
-      "sourcePath": "index.html",
-      "fragment": "tests",
       "status": "published"
     },
     {
@@ -578,12 +368,12 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/publication/",
       "sourcePath": "publication/index.html",
-      "text": "v19.2 Publication record 23 September 2026 · Paul André Couchoud Content and source manifest →Publication feed →Source editions → Business development update Version 19.2 · 23 September 2026. This release incorporates Paul André Couchoud’s supplied business strategy: the existing Governed Intelligence prototype, planned reasoning engine and API, research, publishing, Novelty, framework evaluation, and potential applications. The v19.1 opening animation and existing visual design are preserved. Business strategy source → Canonical pages Governed Logic Governed Intelligence Alpha and Omega Reasoning Governing referent Sufficient grounding Ultimate grounding The architecture of Governed Logic Sources and editions Governed Logic Reasoning Systems Observation status No crawl, indexing, corpus-inclusion, or model-response results are reported in this release.",
-      "sha256_html": "fde9a061a9eac44d279d8feda9ca79050fee0ace8fcc36c758b8b8423c9672d8",
-      "sha256_text": "434909c8ad3f91e2bc733b9ac7073a709cd844b8ad74c5f1d7ad6659a611c241",
+      "text": "Review build Publication record 24 September 2026 · Paul André Couchoud This review separates the human experience from the canonical content architecture. Content and source manifest → Canonical catalog → Publication feed → Source editions → Current review The production baseline remains version 19.2 while the rendered result is reviewed. V17 is the visual-experience reference. The supplied animation backup contributes fixed-center, relationship-line, and convergence motion primitives. Company and research material now have separate canonical HTML pages. Primary pages Governed Logic Ultimate grounding Governed Intelligence Company Research Canonical definitions Stable records Existing canonical routes remain available even when they are not promoted in primary human navigation. Alpha and Omega Reasoning Governing referent Sufficient grounding The mechanism Observation status No crawl, indexing, corpus-inclusion, or model-response results are reported in this review.",
+      "sha256_html": "c467766f70be600af2c9d302f3f39a4bcc377940ebf655a79e4a474d7bafcb5b",
+      "sha256_text": "30baddd4362d1d39ccbf768aa9a635aef4578aa9b8cd9c1e6e9de94642db35d6",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
-        "https://governedlogic.com/",
+        "https://governedlogic.com/company/",
         "https://governedlogic.com/concepts/",
         "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
         "https://governedlogic.com/concepts/governed-intelligence/",
@@ -592,20 +382,69 @@
         "https://governedlogic.com/concepts/sufficient-grounding/",
         "https://governedlogic.com/concepts/ultimate-grounding/",
         "https://governedlogic.com/feed.xml",
+        "https://governedlogic.com/mechanism.html",
+        "https://governedlogic.com/publication/catalog.json",
         "https://governedlogic.com/publication/manifest.json",
-        "https://governedlogic.com/sources/",
-        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+        "https://governedlogic.com/research/",
+        "https://governedlogic.com/sources/"
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
-      "version": "19.2",
+      "dateModified": "2026-09-24",
+      "version": "19.2-review",
+      "description": "This review separates the human experience from the canonical content architecture.",
       "relationships": {
         "isPartOf": {
           "@id": "https://governedlogic.com/#website"
         }
       },
       "status": "published"
+    },
+    {
+      "id": "https://governedlogic.com/research/",
+      "title": "Research",
+      "url": "https://governedlogic.com/research/",
+      "path": "/research/",
+      "type": "research",
+      "canonicalUrl": "https://governedlogic.com/research/",
+      "sourcePath": "research/index.html",
+      "text": "Research and authorship Research Research is a core activity of Governed Logic Reasoning Systems. The research arm Paul's existing archive contains original ideas, reasoning chains, experiments, observations, hypotheses, and concepts developed over several years. The research workflow will turn that accumulated material into authored publications, reproducible demonstrations, new investigations, and practical engineering requirements. The research arm will use the established publishing workflow to retrieve archive material, identify the original proposition, reconstruct its development, investigate relevant external work, test the underlying reasoning, and prepare material for public release. The company will also conduct ongoing research into AI safety, governing frameworks, moral reasoning, semantic stability, and machine decision-making. Research should not be depicted as merely an academic interest attached to the company. It is one of the primary activities through which the company's intellectual and technical work develops. Paul André Couchoud · Business strategy addendum · § 3 Independent examination Moral reasoning and framework evaluation Governed Logic Reasoning Systems intends to evaluate the reasoning of other artificial intelligence systems and governing frameworks. This includes examining how different systems or frameworks establish moral principles, define harm and obligation, adjudicate conflicting claims, and arrive at conclusions. Comparing reasoning systems under controlled changes of governing referent, principles, phrasing, and context. Examining whether moral conclusions remain consistent when the underlying facts remain unchanged. Identifying semantic drift, incompatible assumptions, borrowed authority, and unresolved conflicts between governing frameworks. Testing where reasoning chains terminate and whether the stated governing framework supplies the authority its conclusions require. Evaluating how reasoning failures may influence actions taken by an autonomous system. These directions already appear in the company's earlier testing and audit material. This evaluation capability may develop into research services, independent assessments, consulting engagements, and tools for organizations developing AI. Its purpose is to examine reasoning structures and identify their properties, assumptions, limitations, and consequences. A framework's stated identity should not substitute for examining whether its reasoning actually operates as specified. The architecture and the governing referent The Governed Logic architecture and Paul's particular governing referent must remain conceptually distinguishable. Paul's governing referent is Jesus Christ, the Logos. However, the general reasoning architecture need not require every user, organization, or machine-facing interface to know the identity of that referent before the reasoning process can be examined or used. The architecture can explicitly investigate which principles, properties, and grounding relationships are necessary for a reasoning system to function coherently. It can also test candidate governing frameworks without disclosing the identity of Paul's preferred referent to the system under evaluation. This distinction matters for research, independent testing, developer integration, and practical applications. The website should not suggest that every possible Governed Logic implementation requires users to accept a particular theological conclusion before engaging with its technical methods. The underlying mechanism is intended for public examination and reproducible testing. Claims about the performance of referent-independent implementations should remain tied to actual test results as those implementations are developed. Paul André Couchoud · Business strategy addendum · §§ 6–7 Testable consequence The testable consequence Hold the underlying model substantially constant. Supply a governing referent and first principles. Observe how reasoning reorganizes. Remove the referent. Substitute another. Ablate principles. Reframe the same moral, logical, semantic, and factual problems. Track where reasoning terminates, whether it changes frameworks under pressure, whether conclusions remain invariant when irrelevant framing changes, and whether it borrows authority from outside its stated ground. Governed Intelligence · p. 4 Governed Logic →Governed Intelligence →Company → Sources and version Author Paul André Couchoud Business source Business strategy — additional direction from Paul · version 1.0 · 23 September 2026 Research source Governed Intelligence · p. 4 · 22 September 2026 Published / modified 24 September 2026 Version 19.2 Canonical URL https://governedlogic.com/research/",
+      "sha256_html": "e83163160da373746ed326e792bded4f6fe123f8fa18896372c4407b0a7615a4",
+      "sha256_text": "01e50d101d2f716fabe6b8c8284b4f110a31ff87816dc9dc0f023db92e81fc39",
+      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
+      "links": [
+        "https://governedlogic.com/",
+        "https://governedlogic.com/company/",
+        "https://governedlogic.com/concepts/governed-intelligence/",
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/research/",
+        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=4",
+        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+      ],
+      "author": "Paul André Couchoud",
+      "datePublished": "2026-09-24T12:11:16Z",
+      "dateModified": "2026-09-24T12:11:16Z",
+      "version": "19.2",
+      "approvalReference": "Paul's explicit business direction and approval of separated HTML pages · 24 September 2026",
+      "description": "Research is a core activity of Governed Logic Reasoning Systems.",
+      "relationships": {
+        "about": [
+          {
+            "@id": "https://governedlogic.com/research/#research"
+          },
+          {
+            "@id": "https://governedlogic.com/research/#evaluation"
+          }
+        ],
+        "citation": [
+          "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
+          "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf"
+        ],
+        "isPartOf": {
+          "@id": "https://governedlogic.com/#website"
+        }
+      },
+      "status": "approved"
     },
     {
       "id": "https://governedlogic.com/sources/",
@@ -616,7 +455,7 @@
       "canonicalUrl": "https://governedlogic.com/sources/",
       "sourcePath": "sources/index.html",
       "text": "Publication sources Sources and editions The September 22 PDFs preserve their original wording. The current concept pages incorporate Paul’s September 23 corrections and website language. On the Nature of Ultimate Grounding Paul André Couchoud · 22 September 2026 Read the source PDF → 01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf Governed Logic Paul André Couchoud · 22 September 2026 Read the source PDF → 02_Governed_Logic_2026-09-22_172847_EDT.pdf Alpha and Omega Reasoning Paul André Couchoud · 22 September 2026 Read the source PDF → 03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf Governed Intelligence Paul André Couchoud · 22 September 2026 Read the source PDF → 04_Governed_Intelligence_2026-09-22_172847_EDT.pdf Paul André Couchoud — website language 23 September 2026 · Selected supplied text and corrections Truth governs logic. Logic governs reasoning. Intelligence is downstream. Intelligence is downstream from logic and reasoning. Intelligence is alignment with reality. Not merely generating convincing answers, but reasoning toward what is true. Govern the logic, and you govern what intelligence is built upon. Logic binds what follows from what has been admitted. It does not license the admission. A reasoning system can be perfectly consistent and still be governed by a false premise. Improving its inferential capabilities does not repair that upstream failure. The ground is not a proposition above which truth sits as an external authority. Truth is answerability to what is. Logic governs the relationships between propositions, but it cannot independently establish their correspondence with reality. The generator is not the measure of truth. It cannot confer truth upon its own representations simply by producing them coherently. The generative direction produces candidate reasoning under the governing principles. The adjudicative direction traces those candidates back through logical validity, premise truth, semantic stability, and grounding. The output is not accepted simply because it was generated. The system must remain a servant of the referent, not become the governor of what it was built to find. A halt is a decision. WHAT IS The ultimate ground · The referent TRUTH Correspondence with what is LOGIC Binding inference REASONING Governed inference and adjudication INTELLIGENCE Alignment with reality Follow the chain. Truth. Logic. Ground. Business strategy — additional direction Paul André Couchoud · 23 September 2026 Governed Logic Reasoning Systems is a research, development, publishing, education, and technology company. Governed Intelligence is the artificial intelligence implementation of Governed Logic. The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering. The engine and API are planned engineering deliverables, not currently available production services. Novelty is a newly designated part of the company's work, with its fuller definition to follow. Intelligence is the capacity to align representations with reality. Reality → Truth → Logic → Reasoning → Intelligence. Read the complete supplied addendum →",
-      "sha256_html": "93c9c7a03f05b9e95de42539fda6f0e02decfd4d9747abb6c8030d8fc6627791",
+      "sha256_html": "0bd7f4976d11d5f2f0a25d331bfec8d73e8313be58cd20b865b9a50801792212",
       "sha256_text": "e283087216066871001f7dbb643b12f23d43f721b2bbf17cf795ac0a06b649de",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [

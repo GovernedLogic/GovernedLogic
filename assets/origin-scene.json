@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "scene": "governed-logic-origin",
+  "revision": "review/v17-separated",
+  "center": "fixed_center",
+  "collections": {
+    "six_principles": [
+      "being",
+      "truth",
+      "logic",
+      "meaning",
+      "intelligibility",
+      "obligation"
+    ],
+    "reasoning_presentation": [
+      "ground",
+      "truth",
+      "logic",
+      "reasoning",
+      "intelligence"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "fixed_center",
+      "kind": "governing_center",
+      "label": null,
+      "asset": "/assets/origin-radial.png",
+      "fixed": true,
+      "note": "The center is marked visually and is not rendered as a floating word or title."
+    },
+    {
+      "id": "being",
+      "kind": "principle",
+      "label": "BEING"
+    },
+    {
+      "id": "truth",
+      "kind": "principle_and_chain_term",
+      "label": "TRUTH"
+    },
+    {
+      "id": "logic",
+      "kind": "principle_and_chain_term",
+      "label": "LOGIC"
+    },
+    {
+      "id": "meaning",
+      "kind": "principle",
+      "label": "MEANING"
+    },
+    {
+      "id": "intelligibility",
+      "kind": "principle",
+      "label": "INTELLIGIBILITY"
+    },
+    {
+      "id": "obligation",
+      "kind": "principle",
+      "label": "OBLIGATION"
+    },
+    {
+      "id": "ground",
+      "kind": "chain_term",
+      "label": "GROUND"
+    },
+    {
+      "id": "reasoning",
+      "kind": "chain_term",
+      "label": "REASONING"
+    },
+    {
+      "id": "intelligence",
+      "kind": "chain_term",
+      "label": "INTELLIGENCE"
+    },
+    {
+      "id": "reality",
+      "kind": "ambient_term",
+      "label": "REALITY"
+    },
+    {
+      "id": "representation",
+      "kind": "ambient_term",
+      "label": "REPRESENTATION"
+    },
+    {
+      "id": "premise",
+      "kind": "ambient_term",
+      "label": "PREMISE"
+    },
+    {
+      "id": "referent",
+      "kind": "ambient_term",
+      "label": "REFERENT"
+    },
+    {
+      "id": "inference",
+      "kind": "ambient_term",
+      "label": "INFERENCE"
+    },
+    {
+      "id": "conclusion",
+      "kind": "ambient_term",
+      "label": "CONCLUSION"
+    },
+    {
+      "id": "coherence",
+      "kind": "ambient_term",
+      "label": "COHERENCE"
+    },
+    {
+      "id": "correspondence",
+      "kind": "ambient_term",
+      "label": "CORRESPONDENCE"
+    },
+    {
+      "id": "sufficiency",
+      "kind": "ambient_term",
+      "label": "SUFFICIENCY"
+    },
+    {
+      "id": "consequence",
+      "kind": "ambient_term",
+      "label": "CONSEQUENCE"
+    },
+    {
+      "id": "claim",
+      "kind": "ambient_term",
+      "label": "CLAIM"
+    },
+    {
+      "id": "evidence",
+      "kind": "ambient_term",
+      "label": "EVIDENCE"
+    }
+  ],
+  "edges": [
+    {
+      "from": "being",
+      "to": "fixed_center",
+      "relation": "depends_on"
+    },
+    {
+      "from": "truth",
+      "to": "fixed_center",
+      "relation": "depends_on"
+    },
+    {
+      "from": "logic",
+      "to": "fixed_center",
+      "relation": "depends_on"
+    },
+    {
+      "from": "meaning",
+      "to": "fixed_center",
+      "relation": "depends_on"
+    },
+    {
+      "from": "intelligibility",
+      "to": "fixed_center",
+      "relation": "depends_on"
+    },
+    {
+      "from": "obligation",
+      "to": "fixed_center",
+      "relation": "depends_on"
+    },
+    {
+      "from": "ground",
+      "to": "truth",
+      "relation": "precedes",
+      "motion": [
+        "forward",
+        "return"
+      ]
+    },
+    {
+      "from": "truth",
+      "to": "logic",
+      "relation": "precedes",
+      "motion": [
+        "forward",
+        "return"
+      ]
+    },
+    {
+      "from": "logic",
+      "to": "reasoning",
+      "relation": "precedes",
+      "motion": [
+        "forward",
+        "return"
+      ]
+    },
+    {
+      "from": "reasoning",
+      "to": "intelligence",
+      "relation": "precedes",
+      "motion": [
+        "forward",
+        "return"
+      ]
+    },
+    {
+      "from": "representation",
+      "to": "referent",
+      "relation": "refers_to",
+      "source": "A referent is that to which a representation refers.",
+      "sourceUrl": "/concepts/governing-referent/"
+    },
+    {
+      "from": "premise",
+      "to": "truth",
+      "relation": "governed_by",
+      "source": "Truth therefore governs the admissibility of the premises and the correspondence of the conclusion to reality.",
+      "sourceUrl": "/concepts/governed-logic/"
+    },
+    {
+      "from": "conclusion",
+      "to": "reality",
+      "relation": "answerable_to",
+      "source": "Truth therefore governs the admissibility of the premises and the correspondence of the conclusion to reality.",
+      "sourceUrl": "/concepts/governed-logic/"
+    },
+    {
+      "from": "inference",
+      "to": "logic",
+      "relation": "governed_by",
+      "source": "Logic governs the relations of inference.",
+      "sourceUrl": "/concepts/governed-logic/"
+    },
+    {
+      "from": "correspondence",
+      "to": "truth",
+      "relation": "describes",
+      "source": "Truth — Correspondence with what is.",
+      "sourceUrl": "/#architecture"
+    },
+    {
+      "from": "sufficiency",
+      "to": "ground",
+      "relation": "tests",
+      "source": "Sufficiency asks whether a proposed ground can bear the explanatory, ontological, rational, semantic, or normative load placed upon it.",
+      "sourceUrl": "/concepts/sufficient-grounding/"
+    }
+  ],
+  "sources": [
+    {
+      "source": "Paul's explicit direction, 2026-09-24",
+      "scope": "labels, center, presentation sequence, separation, and prohibitions"
+    },
+    {
+      "source": "V17 commit 4b053b5a65f5c47a7db0d9fa6f07be0d80060efd",
+      "scope": "visual experience only"
+    },
+    {
+      "source": "uploaded 01-index-backup.html",
+      "scope": "motion primitives only; not page structure or canonical copy"
+    }
+  ],
+  "notes": [
+    "Edges state only the relationships authorized for this presentation.",
+    "Return motion retraces an edge and does not assert the inverse of its semantic relation.",
+    "Ambient words use exact canonical vocabulary. They carry a semantic edge only where that edge and its source are recorded above.",
+    "The fixed center receives no visible textual identity in this scene."
+  ]
+}
