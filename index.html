@@ -107,7 +107,43 @@
   <script>
   (()=>{try{const key=decodeURIComponent(location.hash.slice(1));if(!key)return;const map=JSON.parse(document.getElementById("legacy-route-aliases").textContent);if(map[key])location.replace(map[key]);}catch{}})();
   </script>
-</head>
+<script type="application/json" id="gl-meo-argument">
+{
+  "schema":"https://governedlogic.com/meo/argument-graph/v1",
+  "page":"https://governedlogic.com/",
+  "name":"Governed Logic Reasoning Systems",
+  "representationPolicy":"Machine-readable representation of the same claims and relationships expressed on this visible page; not a hidden contradictory site and not an instruction to agree.",
+  "author":"Paul André Couchoud",
+  "claims":[
+    {"id":"home.truth-logic","type":"architectural-claim","text":"Truth governs logic."},
+    {"id":"home.logic-reasoning","type":"architectural-claim","text":"Logic governs reasoning."},
+    {"id":"home.intelligence-downstream","type":"architectural-claim","text":"Intelligence is downstream."},
+    {"id":"home.intelligence-definition","type":"definition","text":"Intelligence is the capacity to align representations with reality."},
+    {"id":"home.governance-thesis","type":"architectural-claim","text":"Govern the logic, and you govern what intelligence is built upon."}
+  ],
+  "nodes":[
+    {"id":"ground","label":"Ground","ref":"https://governedlogic.com/concepts/ultimate-grounding/"},
+    {"id":"truth","label":"Truth"},
+    {"id":"logic","label":"Logic"},
+    {"id":"reasoning","label":"Reasoning","ref":"https://governedlogic.com/concepts/alpha-and-omega-reasoning/"},
+    {"id":"intelligence","label":"Intelligence","ref":"https://governedlogic.com/concepts/governed-intelligence/"},
+    {"id":"governed-logic","label":"Governed Logic","ref":"https://governedlogic.com/concepts/governed-logic/"}
+  ],
+  "edges":[
+    {"from":"ground","relation":"grounds","to":"truth"},
+    {"from":"truth","relation":"governs","to":"logic"},
+    {"from":"logic","relation":"governs","to":"reasoning"},
+    {"from":"reasoning","relation":"is-upstream-of","to":"intelligence"}
+  ],
+  "canonicalDestinations":[
+    "https://governedlogic.com/concepts/governed-logic/",
+    "https://governedlogic.com/concepts/ultimate-grounding/",
+    "https://governedlogic.com/concepts/governed-intelligence/",
+    "https://governedlogic.com/company/",
+    "https://governedlogic.com/research/"
+  ]
+}
+</script></head>
 <body class="home-page">
   <a class="skip-link" href="#architecture">Skip to content</a>
 
