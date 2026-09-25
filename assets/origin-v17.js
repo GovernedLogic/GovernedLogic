@@ -46,7 +46,7 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const TAU = Math.PI * 2;
-  const AUTOPLAY_SECONDS = 13.5;
+  const CINEMATIC_SECONDS = 22;
   const MOBILE_BREAKPOINT = 720;
 
   /*
@@ -100,9 +100,9 @@
   let width = 1;
   let height = 1;
   let dpr = 1;
-  let progress = 0;
-  let targetProgress = 0;
-  let autoplay = true;
+  let cinematicProgress = 0;
+  let gatherProgress = 0;
+  let autoplayCinematic = true;
   let frameRequest = 0;
   let lastFrameTime = 0;
   let inView = true;
@@ -185,7 +185,7 @@
     canvas.style.height = height + "px";
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
     updateHandoff(getScrollProgress());
-    render(progress);
+    render(cinematicProgress, gatherProgress);
   }
 
   function scheduleLayoutRefresh() {
@@ -221,36 +221,27 @@
     const delta = lastFrameTime ? Math.min(0.05, (now - lastFrameTime) / 1000) : 0;
     lastFrameTime = now;
 
-    if (autoplay) {
-      progress = clamp(progress + delta / AUTOPLAY_SECONDS, 0, 1);
-      targetProgress = progress;
-      if (progress >= 1) {
-        autoplay = false;
-      }
-    } else {
-      const response = 1 - Math.exp(-delta * 9.5);
-      progress += (targetProgress - progress) * response;
-      if (Math.abs(targetProgress - progress) < 0.00025) progress = targetProgress;
+    if (autoplayCinematic) {
+      cinematicProgress = clamp(cinematicProgress + delta / CINEMATIC_SECONDS, 0, 1);
+      if (cinematicProgress >= 1) autoplayCinematic = false;
     }
 
     const pointerResponse = 1 - Math.exp(-delta * 7);
     pointer.x += (pointer.targetX - pointer.x) * pointerResponse;
     pointer.y += (pointer.targetY - pointer.y) * pointerResponse;
 
-    render(progress);
+    render(cinematicProgress, gatherProgress);
 
-    const progressMoving = autoplay || Math.abs(targetProgress - progress) >= 0.00025;
     const pointerMoving =
       Math.abs(pointer.targetX - pointer.x) >= 0.001 ||
       Math.abs(pointer.targetY - pointer.y) >= 0.001;
-    if (progressMoving || pointerMoving) frameRequest = window.requestAnimationFrame(frame);
+    if (autoplayCinematic || pointerMoving) frameRequest = window.requestAnimationFrame(frame);
   }
 
-  function updateCenter(value) {
-    const arrive = smoothstep(0.12, 0.34, value);
-    const settle = smoothstep(0.78, 1, value);
-    const scale = mix(0.42, 1, easeOutCubic(arrive)) * mix(1, 0.86, settle);
-    centerMark.style.opacity = String(mix(0, 0.96, arrive) * mix(1, 0.7, settle));
+  function updateCenter(value, gather) {
+    const arrive = smoothstep(0.015, 0.13, value);
+    const scale = mix(0.25, 1, easeOutCubic(arrive)) * mix(1, 1.22, gather);
+    centerMark.style.opacity = String(mix(0, 1, arrive));
     centerMark.style.transform = "translate(-50%, -50%) scale(" + scale.toFixed(4) + ")";
   }
 
@@ -310,48 +301,42 @@
     });
   }
 
-  function updatePrinciples(value) {
+  function updatePrinciples(value, gather) {
     principlePositions.clear();
     const centerX = width / 2;
     const centerY = height / 2;
     const ringRadius = Math.min(width, height) * (isMobile ? 0.29 : 0.265);
     const settle = smoothstep(0.69, 0.9, value);
+    const contraction = easeOutCubic(smoothstep(0.02, 0.96, gather));
 
     principleElements.forEach(function (element, index) {
       const key = String(element.dataset.principle || "").toLowerCase();
       const targetAngle = PRINCIPLE_ANGLES[key];
-      if (typeof targetAngle !== "number") {
-        element.style.opacity = "0";
-        return;
-      }
+      if (typeof targetAngle !== "number") { element.style.opacity = "0"; return; }
 
-      /* Consecutive semantic phases: sparse vocabulary, then principles,
-       * then the reasoning chain. */
       const revealStart = 0.3 + index * 0.025;
       const revealEnd = 0.44 + index * 0.025;
       const reveal = smoothstep(revealStart, revealEnd, value);
-      const angle = targetAngle - (1 - reveal) * 0.46;
-      const radius = ringRadius * mix(1.42, 1, easeOutCubic(reveal)) * mix(1, 0.78, settle);
+      const baseAngle = targetAngle - (1 - reveal) * 0.46;
+      const angle = baseAngle + contraction * TAU * 1.05;
+      const baseRadius = ringRadius * mix(1.42, 1, easeOutCubic(reveal)) * mix(1, 0.78, settle);
+      const radius = baseRadius * (1 - contraction);
       const depth = 0.52 + 0.32 * Math.cos(angle - 0.55);
-      const x = centerX + Math.cos(angle) * radius + pointer.x * 3.5 * depth;
-      const y = centerY + Math.sin(angle) * radius * 0.78 + pointer.y * 2.5 * depth;
+      const parallax = 1 - contraction;
+      const x = centerX + Math.cos(angle) * radius + pointer.x * 3.5 * depth * parallax;
+      const y = centerY + Math.sin(angle) * radius * 0.78 + pointer.y * 2.5 * depth * parallax;
       const finalQuiet = mix(1, 0.32, smoothstep(0.8, 1, value));
-      const opacity = reveal * finalQuiet;
-      const scale = mix(0.74, 1.03, depth) * mix(1, 0.94, settle);
+      const enterLight = 1 - smoothstep(0.7, 0.96, gather);
+      const opacity = reveal * finalQuiet * enterLight;
+      const scale = mix(0.74, 1.03, depth) * mix(1, 0.94, settle) * mix(1, 0.82, contraction);
 
       element.style.opacity = opacity.toFixed(4);
       element.style.filter = "blur(" + mix(0.45, 0, reveal).toFixed(2) + "px)";
       element.style.transform =
-        "translate(-50%, -50%) translate3d(" +
-        (x - centerX).toFixed(2) +
-        "px," +
-        (y - centerY).toFixed(2) +
-        "px," +
-        Math.round(mix(-20, 36, depth)) +
-        "px) scale(" +
-        scale.toFixed(4) +
-        ")";
-      principlePositions.set(key, { x: x, y: y, opacity: opacity, visible: opacity > 0.01 });
+        "translate(-50%, -50%) translate3d(" + (x-centerX).toFixed(2) + "px," +
+        (y-centerY).toFixed(2) + "px," + Math.round(mix(-20,36,depth)) + "px) scale(" +
+        scale.toFixed(4) + ")";
+      principlePositions.set(key,{x:x,y:y,opacity:opacity,visible:opacity>0.01});
     });
   }
 
@@ -642,19 +627,22 @@
     context.restore();
   }
 
-  function render(value) {
+  function render(value, gather) {
     value = clamp(value, 0, 1);
+    gather = clamp(gather, 0, 1);
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
     context.clearRect(0, 0, width, height);
 
-    updateCenter(value);
+    updateCenter(value, gather);
     updateTokens(value);
-    updatePrinciples(value);
+    updatePrinciples(value, gather);
     updateArchitecture(value);
 
-    drawInfinityDepth(value);
-    drawSeedOfLife(value);
-    drawTesseract(value);
+    if (stage.dataset.originEffectsV05 !== "ready") {
+      drawInfinityDepth(value);
+      drawSeedOfLife(value);
+      drawTesseract(value);
+    }
     drawRelationships(value);
     drawArchitecturePath(value);
     drawFixedCenter(value);
@@ -670,13 +658,11 @@
   function onScroll() {
     const current = getScrollProgress();
     updateHandoff(current);
-    const scrollDelta = current - lastScrollProgress;
-    if (Math.abs(scrollDelta) > 0.0005) {
-      autoplay = false;
-      targetProgress = clamp(targetProgress + scrollDelta, 0, 1);
-      lastScrollProgress = current;
-      wake();
-    }
+    if (Math.abs(current - lastScrollProgress) <= 0.0005) return;
+    gatherProgress = current;
+    lastScrollProgress = current;
+    render(cinematicProgress, gatherProgress);
+    wake();
   }
 
   function onPointerMove(event) {
@@ -714,13 +700,14 @@
       window.cancelAnimationFrame(frameRequest);
       frameRequest = 0;
     }
-    autoplay = false;
-    progress = 1;
-    targetProgress = 1;
+    autoplayCinematic = false;
+    cinematicProgress = 1;
+    gatherProgress = getScrollProgress();
     pointer.x = pointer.targetX = 0;
     pointer.y = pointer.targetY = 0;
-    render(1);
+    render(1, gatherProgress);
   }
+
 
   stage.addEventListener("pointermove", onPointerMove, { passive: true });
   stage.addEventListener("pointerleave", onPointerLeave, { passive: true });
@@ -762,30 +749,29 @@
     reduceMotion.addEventListener("change", function () {
       if (reduceMotion.matches) applyReducedMotion();
       else {
-        progress = getScrollProgress();
-        targetProgress = progress;
-        autoplay = progress <= 0.001;
+        gatherProgress = getScrollProgress();
+        cinematicProgress = gatherProgress > 0.001 ? 1 : 0;
+        autoplayCinematic = gatherProgress <= 0.001;
         wake();
       }
     });
   }
 
   if (fallbackWasShown) {
-    autoplay = false;
-    progress = 1;
-    targetProgress = 1;
+    autoplayCinematic = false;
+    cinematicProgress = 1;
   }
 
   resizeCanvas();
   lastScrollProgress = getScrollProgress();
+  gatherProgress = lastScrollProgress;
   updateHandoff(lastScrollProgress);
   if (reduceMotion.matches) {
     applyReducedMotion();
   } else if (lastScrollProgress > 0.001) {
-    autoplay = false;
-    progress = lastScrollProgress;
-    targetProgress = progress;
-    render(progress);
+    autoplayCinematic = false;
+    cinematicProgress = 1;
+    render(cinematicProgress, gatherProgress);
     wake();
   } else {
     wake();
