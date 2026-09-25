@@ -49,17 +49,23 @@
   z-index:2;
   left:50%;
   top:50%;
-  width:clamp(84px,12vw,164px);
+  width:12px;
   aspect-ratio:1;
-  object-fit:contain;
-  mix-blend-mode:screen;
-  -webkit-mask-image:radial-gradient(circle at center,#000 0 72%,rgba(0,0,0,.7) 82%,transparent 100%);
-  mask-image:radial-gradient(circle at center,#000 0 72%,rgba(0,0,0,.7) 82%,transparent 100%);
+  background:radial-gradient(circle,#fff 0 22%,rgba(255,255,255,.96) 36%,rgba(255,255,255,.4) 56%,transparent 72%);
+  border-radius:50%;
+  box-shadow:0 0 12px 3px #ffffffc9,0 0 34px 5px #ffffff4d;
   opacity:0;
   transform:translate(-50%,-50%) scale(.28);
-  filter:brightness(1.38) contrast(1.1) drop-shadow(0 0 24px rgba(143,205,255,.42));
   pointer-events:none;
   will-change:opacity,transform;
+}
+.origin-center::before{
+  content:"";
+  position:absolute;
+  inset:2px;
+  background:#fff;
+  transform:rotate(45deg);
+  box-shadow:0 0 8px 2px #fff;
 }
 .origin-field,
 .origin-principles,
@@ -249,7 +255,7 @@ html:not(.gl-intro-loading):not(.gl-intro-ready) .origin-experience + .hero,
 .home-page>.document-footer{margin-top:20px}
 @media(max-width:720px){
   .origin-experience{height:175vh;height:175svh;height:175dvh;min-height:0}
-  .origin-center{width:92px}
+  .origin-center{width:10px}
   .origin-token{font-size:9px;letter-spacing:.08em}
   .origin-principle{font-size:10px;letter-spacing:.16em}
   .origin-architecture{
@@ -288,7 +294,7 @@ html:not(.gl-intro-loading):not(.gl-intro-ready) .origin-experience + .hero,
   .quiet-links{display:grid;gap:15px}
 }
 @media(max-width:720px) and (max-height:520px){
-  .origin-center{width:76px}
+  .origin-center{width:9px}
   .origin-principle{font-size:9px;letter-spacing:.12em}
   .origin-architecture{
     inset:auto 0 13svh;
