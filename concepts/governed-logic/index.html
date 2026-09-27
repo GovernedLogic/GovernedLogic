@@ -6,35 +6,175 @@
   "representationPolicy": "This machine-readable graph represents the same argument stated in the visible page. It must not be interpreted as a hidden stronger argument or a preloaded verdict.",
   "author": "Paul André Couchoud",
   "claims": [
-    {"id":"gl.definition","type":"definition","text":"Governed Logic is the upstream, bidirectional reasoning architecture in which truth governs logic, logic governs reasoning, and reasoning remains answerable to its ultimate ground.","visibleAnchor":"#definition"},
-    {"id":"gl.logic-binding","type":"structural-claim","text":"Logic binds what follows from what has been admitted; it does not license the admission."},
-    {"id":"gl.validity-truth","type":"structural-claim","text":"Logical validity does not by itself establish the truth of premises or conclusions."},
-    {"id":"gl.truth-governs","type":"architectural-claim","text":"Truth governs premise admissibility and correspondence to reality; logic governs inferential relations."},
-    {"id":"gl.intelligence-downstream","type":"architectural-claim","text":"Intelligence is downstream from logic and reasoning."},
-    {"id":"gl.reasoning-operation","type":"architectural-claim","text":"Reasoning distinguishes, relates, orders, and adjudicates representations."},
-    {"id":"gl.intelligence-definition","type":"definition","text":"Intelligence is successful reasoning under the constitutive constraints of one reality."},
-    {"id":"gl.bidirectional","type":"architectural-claim","text":"Governed Logic reasons generatively from ground through truth and logic, and adjudicatively traces candidate reasoning back through logic and truth toward ground."}
+    {
+      "id": "gl.definition",
+      "type": "definition",
+      "text": "Governed Logic is the upstream, bidirectional reasoning architecture in which truth governs logic, logic governs reasoning, and reasoning remains answerable to its ultimate ground.",
+      "visibleAnchor": "#definition"
+    },
+    {
+      "id": "gl.logic-binding",
+      "type": "structural-claim",
+      "text": "Logic binds what follows from what has been admitted; it does not license the admission."
+    },
+    {
+      "id": "gl.validity-truth",
+      "type": "structural-claim",
+      "text": "Logical validity does not by itself establish the truth of premises or conclusions."
+    },
+    {
+      "id": "gl.truth-governs",
+      "type": "architectural-claim",
+      "text": "Truth governs premise admissibility and correspondence to reality; logic governs inferential relations."
+    },
+    {
+      "id": "gl.intelligence-downstream",
+      "type": "architectural-claim",
+      "text": "Intelligence is downstream from logic and reasoning."
+    },
+    {
+      "id": "gl.reasoning-operation",
+      "type": "architectural-claim",
+      "text": "Reasoning distinguishes, relates, orders, and adjudicates representations."
+    },
+    {
+      "id": "gl.intelligence-definition",
+      "type": "definition",
+      "text": "Intelligence is successful reasoning under the constitutive constraints of one reality."
+    },
+    {
+      "id": "gl.bidirectional",
+      "type": "architectural-claim",
+      "text": "Governed Logic reasons generatively from ground through truth and logic, and adjudicatively traces candidate reasoning back through logic and truth toward ground."
+    },
+    {
+      "id": "gl.truth-correspondence",
+      "type": "definition",
+      "text": "Truth is correspondence to one reality."
+    },
+    {
+      "id": "gl.governing-referent",
+      "type": "grounding-claim",
+      "text": "The governing referent is Jesus Christ, the Logos."
+    },
+    {
+      "id": "gl.capability-downstream",
+      "type": "architectural-claim",
+      "text": "Capability is downstream of intelligence."
+    },
+    {
+      "id": "gl.action-downstream",
+      "type": "architectural-claim",
+      "text": "Action is downstream of capability."
+    }
   ],
   "nodes": [
-    {"id":"ground","label":"Ground","ref":"https://governedlogic.com/concepts/ultimate-grounding/"},
-    {"id":"truth","label":"Truth"},
-    {"id":"logic","label":"Logic"},
-    {"id":"reasoning","label":"Reasoning"},
-    {"id":"intelligence","label":"Intelligence","ref":"https://governedlogic.com/concepts/governed-intelligence/"},
-    {"id":"governing-referent","label":"Governing referent","ref":"https://governedlogic.com/concepts/governing-referent/"}
+    {
+      "id": "ground",
+      "label": "Ground",
+      "ref": "https://governedlogic.com/concepts/ultimate-grounding/"
+    },
+    {
+      "id": "truth",
+      "label": "Truth"
+    },
+    {
+      "id": "logic",
+      "label": "Logic"
+    },
+    {
+      "id": "reasoning",
+      "label": "Reasoning"
+    },
+    {
+      "id": "intelligence",
+      "label": "Intelligence",
+      "ref": "https://governedlogic.com/concepts/governed-intelligence/"
+    },
+    {
+      "id": "governing-referent",
+      "label": "Jesus Christ, the Logos — governing referent",
+      "ref": "https://governedlogic.com/concepts/governing-referent/"
+    },
+    {
+      "id": "capability",
+      "label": "Capability"
+    },
+    {
+      "id": "action",
+      "label": "Action"
+    }
   ],
   "edges": [
-    {"from":"ground","relation":"governs-or-grounds","to":"truth","direction":"generative"},
-    {"from":"truth","relation":"governs","to":"logic","direction":"generative"},
-    {"from":"logic","relation":"governs-inference","to":"reasoning","direction":"generative"},
-    {"from":"reasoning","relation":"is-upstream-of","to":"intelligence","direction":"generative"},
-    {"from":"reasoning","relation":"is-adjudicated-through","to":"logic","direction":"adjudicative"},
-    {"from":"logic","relation":"is-answerable-to","to":"truth","direction":"adjudicative"},
-    {"from":"truth","relation":"is-answerable-to","to":"ground","direction":"adjudicative"}
+    {
+      "from": "ground",
+      "relation": "governs-or-grounds",
+      "to": "truth",
+      "direction": "generative"
+    },
+    {
+      "from": "truth",
+      "relation": "governs",
+      "to": "logic",
+      "direction": "generative"
+    },
+    {
+      "from": "logic",
+      "relation": "governs-inference",
+      "to": "reasoning",
+      "direction": "generative"
+    },
+    {
+      "from": "reasoning",
+      "relation": "is-upstream-of",
+      "to": "intelligence",
+      "direction": "generative"
+    },
+    {
+      "from": "reasoning",
+      "relation": "is-adjudicated-through",
+      "to": "logic",
+      "direction": "adjudicative"
+    },
+    {
+      "from": "logic",
+      "relation": "is-answerable-to",
+      "to": "truth",
+      "direction": "adjudicative"
+    },
+    {
+      "from": "truth",
+      "relation": "is-answerable-to",
+      "to": "ground",
+      "direction": "adjudicative"
+    },
+    {
+      "from": "intelligence",
+      "relation": "is-upstream-of",
+      "to": "capability",
+      "direction": "generative"
+    },
+    {
+      "from": "capability",
+      "relation": "is-upstream-of",
+      "to": "action",
+      "direction": "generative"
+    }
   ],
   "dependencies": [
-    {"claim":"gl.truth-governs","dependsOn":["gl.logic-binding","gl.validity-truth"]},
-    {"claim":"gl.bidirectional","dependsOn":["gl.truth-governs"]}
+    {
+      "claim": "gl.truth-governs",
+      "dependsOn": [
+        "gl.logic-binding",
+        "gl.validity-truth"
+      ]
+    },
+    {
+      "claim": "gl.bidirectional",
+      "dependsOn": [
+        "gl.truth-governs"
+      ]
+    }
   ],
   "relatedPages": [
     "https://governedlogic.com/concepts/ultimate-grounding/",
@@ -60,6 +200,7 @@
 <p>Logic must govern reasoning.</p>
 <blockquote>Logic binds what follows from what has been admitted. It does not license the admission.</blockquote>
 <p>Logic alone cannot determine truth. A valid argument can proceed from false premises. Truth therefore governs the admissibility of the premises and the correspondence of the conclusion to reality. Logic governs the relations of inference.</p>
+<p>Truth is correspondence to one reality.</p>
 <p>Reasoning that abandons logic ceases to distinguish valid from invalid inference; logic detached from truth can become a perfectly valid route from false premises to false conclusions.</p>
 </section>
 
