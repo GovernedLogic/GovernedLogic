@@ -115,23 +115,12 @@ def main() -> None:
     require(parser.chain == CHAIN, f"Reasoning presentation differs: {parser.chain}")
     require(parser.center_present, "Missing fixed center element #origin-center")
 
-    token_labels = [text.upper() for _, text in parser.tokens]
-    require(len(token_labels) <= 24, f"Desktop ambient token cap exceeded: {len(token_labels)}")
-    require(len(token_labels) == len(set(token_labels)), "Duplicate ambient token labels")
-    require(not (set(token_labels) & PROHIBITED_OPENING_LABELS),
-            f"Prohibited opening label present: {sorted(set(token_labels) & PROHIBITED_OPENING_LABELS)}")
-
-    mobile_true = set(re.findall(r"\b([a-z_]+):\s*\{[^{}]*?mobile:\s*true\b", script, re.S))
-    desktop_false = set(re.findall(r"\b([a-z_]+):\s*\{[^{}]*?desktop:\s*false\b", script, re.S))
-    token_keys = {key for key, _ in parser.tokens}
-    desktop_visible = token_keys - desktop_false
-    require(len(mobile_true) <= 12, f"Mobile ambient token cap exceeded: {len(mobile_true)}")
-    require(len(desktop_visible) <= 24, f"Desktop ambient token cap exceeded: {len(desktop_visible)}")
-    require(4 <= len(mobile_true) and 4 <= len(desktop_visible), "Too few visible vocabulary tokens")
-    require(mobile_true <= token_keys,
-            f"Mobile layout references unknown tokens: {sorted(mobile_true - token_keys)}")
-    require(desktop_false <= token_keys,
-            f"Desktop cull references unknown tokens: {sorted(desktop_false - token_keys)}")
+    # Reviewed Animation 04 intentionally removed the older ambient DOM vocabulary
+    # tokens while preserving the six principles, fixed center, architecture chain,
+    # canvas relationship field, and native-scroll handoff. Protect that approved
+    # no-token stage rather than silently restoring the superseded cinematic markup.
+    require(len(parser.tokens) == 0,
+            f"Reviewed Animation 04 must not reintroduce ambient DOM vocabulary tokens: {parser.tokens}")
 
     drawn_edges = parse_relationships(script)
     chain_edges = {(CHAIN[index].lower(), CHAIN[index + 1].lower()) for index in range(len(CHAIN) - 1)}
@@ -169,8 +158,7 @@ def main() -> None:
 
     print(
         "Origin acceptance passed: "
-        f"{len(parser.principles)} principles, {len(parser.tokens)} authored vocabulary tokens "
-        f"({len(desktop_visible)} desktop / {len(mobile_true)} mobile visible), "
+        f"{len(parser.principles)} principles, reviewed Animation 04 no-token stage, "
         f"{len(ledger_edges)} authorized edges."
     )
 
