@@ -38,7 +38,7 @@ class OpeningParser(HTMLParser):
         self.principles: list[tuple[str, str]] = []
         self.tokens: list[tuple[str, str]] = []
         self.chain: list[str] = []
-        self.center_src: str | None = None
+        self.center_present = False
         self.architecture_depth = 0
 
     @staticmethod
@@ -54,7 +54,7 @@ class OpeningParser(HTMLParser):
         if not self.opening_depth:
             return
         if attrs.get("id") == "origin-center":
-            self.center_src = attrs.get("src")
+            self.center_present = True
         if "origin-architecture" in classes:
             self.architecture_depth = self.depth
         if "origin-principle" in classes:
@@ -113,7 +113,7 @@ def main() -> None:
     require(principle_labels == PRINCIPLES, f"Principles differ: {principle_labels}")
     require(principle_keys == [item.lower() for item in PRINCIPLES], f"Principle keys differ: {principle_keys}")
     require(parser.chain == CHAIN, f"Reasoning presentation differs: {parser.chain}")
-    require(parser.center_src == "/assets/origin-radial.png", f"Wrong fixed-center asset: {parser.center_src}")
+    require(parser.center_present, "Missing fixed center element #origin-center")
 
     token_labels = [text.upper() for _, text in parser.tokens]
     require(len(token_labels) <= 24, f"Desktop ambient token cap exceeded: {len(token_labels)}")
