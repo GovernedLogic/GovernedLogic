@@ -1,0 +1,82 @@
+/* Governed Logic homepage content/layout compartment.
+   Animation remains isolated in origin-v17.css and origin JS assets.
+   Global brand tokens remain in publication.css. */
+
+.company-masthead{
+  width:min(calc(100% - 40px),1200px);
+  margin:0 auto;
+  padding:clamp(70px,10vw,130px) 0 clamp(50px,8vw,90px);
+  text-align:center;
+}
+.company-mark{
+  display:block;
+  width:clamp(110px,15vw,190px);
+  height:auto;
+  margin:0 auto 28px;
+  filter:drop-shadow(0 0 30px #168cfa55);
+}
+.company-name{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:clamp(52px,9vw,126px);
+  font-weight:900;
+  line-height:.88;
+  letter-spacing:-.065em;
+  text-transform:uppercase;
+  text-wrap:balance;
+}
+.company-name span{
+  display:block;
+  color:var(--gold);
+  font-size:.54em;
+  letter-spacing:.16em;
+  margin-top:.28em;
+}
+.company-line{
+  max-width:900px;
+  margin:36px auto 0;
+  font:500 clamp(20px,2.4vw,31px)/1.45 Georgia,"Times New Roman",serif;
+  color:#dce5ef;
+}
+.home-page .hero{padding-top:54px}
+.home-page .hero>.eyebrow{display:none}
+.home-page .hero>h2.architecture-thesis{
+  font-size:clamp(44px,6.6vw,78px);
+  line-height:1.03;
+  letter-spacing:-.045em;
+  margin:22px 0 30px;
+  font-weight:500;
+}
+.home-page .hero>h2.architecture-thesis span{color:var(--gold)}
+.foundational-statement .architecture-definition{
+  padding:clamp(28px,4vw,48px);
+  border:1px solid #315170;
+  background:linear-gradient(145deg,rgba(22,140,250,.08),rgba(141,120,255,.045) 55%,rgba(5,5,5,.25));
+}
+.foundational-statement .architecture-definition>p{
+  max-width:78ch;
+  margin-left:auto;
+  margin-right:auto;
+}
+.foundation-chain{
+  font:600 clamp(20px,3vw,32px)/1.5 Georgia,"Times New Roman",serif;
+  color:#e7f2ff;
+  text-align:center;
+  letter-spacing:-.02em;
+}
+.foundation-principles{
+  border-left:2px solid var(--gold);
+  padding-left:22px;
+}
+.foundation-closing{
+  font:500 clamp(19px,2.4vw,27px)/1.55 Georgia,"Times New Roman",serif;
+  color:#dfe7ee;
+}
+@media(max-width:720px){
+  .company-masthead{width:calc(100% - 32px);padding-top:52px}
+  .company-name{font-size:clamp(44px,15vw,72px)}
+  .company-name span{font-size:.46em;letter-spacing:.12em}
+  .company-line{font-size:20px}
+  .home-page .hero>h2.architecture-thesis{font-size:clamp(36px,10.5vw,54px)}
+  .foundational-statement .architecture-definition{padding:22px}
+}
