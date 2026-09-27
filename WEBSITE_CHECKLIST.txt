@@ -1,0 +1,46 @@
+GOVERNEDLOGIC.COM — WEBSITE COMPLETION CHECKLIST
+Date: 2026-09-27
+Status: ACTIVE
+North Star: governedlogic.com is a coherent, honest, publishable baseline that accurately represents Governed Logic as Paul understands it now.
+
+GOVERNING CONTENT
+[ ] Homepage contains the boxed foundational statement intact.
+[ ] Homepage explicitly names the triune God as ultimate ground and Jesus Christ as the Logos.
+[ ] Six constitutive principles are exactly: Being, Truth, Logic, Meaning, Intelligibility, Obligation.
+[ ] Truth is defined as correspondence to one reality.
+[ ] Reasoning is represented as distinguishing, relating, ordering, and adjudicating representations.
+[ ] Intelligence is represented as successful reasoning under the constitutive constraints of one reality.
+[ ] Architecture preserves: Ground → Truth → Logic → Reasoning → Intelligence.
+[ ] Capability is downstream of intelligence; action is downstream of capability.
+[ ] Governed Intelligence is the AI instantiation of Governed Logic.
+[ ] Historical language such as “capacity to align representations with reality” is preserved only as provenance where needed, not allowed to override current canonical wording.
+
+CANONICAL PAGE COHERENCE
+[ ] /concepts/governed-logic/ agrees with current architecture.
+[ ] /concepts/ultimate-grounding/ agrees with current grounding terminology and named Logos terminus.
+[ ] /concepts/governed-intelligence/ agrees with current intelligence definition and prototype status.
+[ ] /concepts/ index does not conflict with canonical pages.
+[ ] /company/ accurately distinguishes current work, prototype, planned engineering, research, publishing, education, and services.
+[ ] /research/ accurately represents testing without overstating results.
+[ ] /mechanism.html distinguishes the public prototype from the full architecture and uses current principle terminology.
+[ ] Sources/provenance remain available and historical wording is not silently rewritten.
+
+HUMAN / MACHINE ALIGNMENT
+[ ] Visible text, metadata, JSON-LD, and machine-readable argument graphs agree.
+[ ] Canonical URLs and navigation resolve to the intended pages.
+[ ] No duplicate page silently claims authority over a newer canonical definition.
+[ ] No unresolved “moral obligation” leakage where the general architectural term should be “obligation.”
+
+VISUAL / UX
+[ ] Existing opening animation block remains structurally unchanged.
+[ ] Existing page layout remains structurally unchanged except bounded content additions.
+[ ] Governed Logic blue is the primary accent; old yellow/gold accent is removed from active design tokens.
+[ ] Mobile and desktop remain readable.
+[ ] Five primary homepage destinations remain intact.
+
+QA / PRODUCTION
+[ ] Run available origin/corpus checks or equivalent repository verification.
+[ ] Inspect production diffs for unrelated changes.
+[ ] Verify live governedlogic.com reflects the production commit.
+[ ] Record exact production commit SHA(s).
+[ ] Report unresolved philosophical/content conflicts rather than silently choosing.
