@@ -6,14 +6,14 @@
   "records": [
     {
       "id": "https://governedlogic.com/company/",
-      "title": "What we are building",
+      "title": "A reasoning systems company.",
       "url": "https://governedlogic.com/company/",
       "path": "/company/",
       "type": "business",
       "canonicalUrl": "https://governedlogic.com/company/",
       "sourcePath": "company/index.html",
-      "sha256_html": "ab0534e6b05656100e09b27d512c32baa2aad4dff8f9d9f019063afc6483ac07",
-      "sha256_text": "e144631b8d87a2305a022841fa8b3dd8309c92990cdffa1c2c8bb582100f7fe0",
+      "sha256_html": "6b5c7c98f8d991a2763bb2adbcd9ea59c289ec74ede4c37c7405f708d918a6b1",
+      "sha256_text": "39f7d1bf6cdfd64bdc993f1870be31bdabb8bf9111d0aa69bb46bf8d88efc5ca",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
         "https://governedlogic.com/",
@@ -23,10 +23,10 @@
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-24T12:11:16Z",
-      "dateModified": "2026-09-24T12:11:16Z",
+      "dateModified": "2026-09-27T05:18:27Z",
       "version": "19.2",
       "approvalReference": "Paul's explicit business direction and approval of separated HTML pages · 24 September 2026",
-      "description": "Governed Logic Reasoning Systems is a research, development, publishing, education, and technology company.",
+      "description": "Governed Logic Reasoning Systems is a reasoning systems company.",
       "relationships": {
         "about": {
           "@id": "https://governedlogic.com/#organization"
@@ -84,19 +84,21 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/governed-intelligence/",
       "sourcePath": "concepts/governed-intelligence/index.html",
-      "sha256_html": "85cace401541e6a95810ff3a7494ea711b3797d73d74d849b86c8d0f07a01cd1",
-      "sha256_text": "296a783b284c7f8bd171667fc0aecd9d873af89bcad182fd1f31313391b25dd7",
+      "sha256_html": "3439608dc71590f107019c71774d01b4f079036900c0c61f8526bf3a5a805535",
+      "sha256_text": "5c7575ece8c2f1847e93a1e3a813b6dbca0ddbe28684ec15f0c7048ae3a59173",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
         "https://governedlogic.com/concepts/governed-intelligence/",
-        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=2",
-        "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/mechanism.html",
+        "https://governedlogic.com/research/",
+        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=2"
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
+      "dateModified": "2026-09-27",
       "version": "19.2",
-      "description": "Governed Intelligence is the artificial intelligence implementation of Governed Logic.",
+      "description": "Governed Intelligence is the artificial-intelligence instantiation of Governed Logic.",
       "relationships": {
         "citation": [
           "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf",
@@ -120,19 +122,21 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/governed-logic/",
       "sourcePath": "concepts/governed-logic/index.html",
-      "sha256_html": "a5a86497d9748245c648b28207e3f1f8eebefc14dd97e4751111b1368ef6f0db",
-      "sha256_text": "c05e048a831074d315e80a842075bc6a4b7a4b0c62160b3aa2d0cc2950c8a169",
+      "sha256_html": "7aa694d20d98ae7e2acf34e965c305cb95068ee48f735ca9dd3bd586f20e859e",
+      "sha256_text": "4d26d0a33c800052f804662484e98fe1c928b95d2caf41408aa506a23aa6b43c",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
+        "https://governedlogic.com/concepts/governed-intelligence/",
         "https://governedlogic.com/concepts/governed-logic/",
-        "https://governedlogic.com/sources/#paul-2026-09-23",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
+        "https://governedlogic.com/mechanism.html",
         "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf#page=2"
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
-      "version": "19.1",
-      "description": "Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground.",
+      "dateModified": "2026-09-27",
+      "version": "19.4",
+      "description": "Governed Logic is the upstream, bidirectional reasoning architecture in which truth governs logic, logic governs reasoning, and reasoning remains answerable to its ultimate ground.",
       "relationships": {
         "citation": [
           "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
@@ -190,8 +194,8 @@
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/",
       "sourcePath": "concepts/index.html",
-      "sha256_html": "5d997c8915df18869098c519d24efd831b071d9c0f00064aee14bd20dcd9f0e5",
-      "sha256_text": "429010c23e6a5f37cf7f0bd2d7904bb5cc0cf25a8847cf150e5c377704cfc700",
+      "sha256_html": "47aebc88731a3d3af97afb2018c93fe06cdc3bda3e49d3b8f277a99514834231",
+      "sha256_text": "c9701498a69abc8a3e0a6de96c387792d1cfff0dfcf36a44317f0ea81e524a55",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
         "https://governedlogic.com/concepts/governed-intelligence/",
@@ -203,8 +207,8 @@
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-24",
-      "version": "19.2",
+      "dateModified": "2026-09-27",
+      "version": "19.4",
       "description": "Intelligence is downstream from logic and reasoning.",
       "relationships": {
         "isPartOf": {
@@ -250,26 +254,26 @@
     },
     {
       "id": "https://governedlogic.com/concepts/ultimate-grounding/",
-      "title": "Ultimate grounding",
+      "title": "On the Nature of Ultimate Grounding",
       "url": "https://governedlogic.com/concepts/ultimate-grounding/",
       "path": "/concepts/ultimate-grounding/",
       "type": "concept",
       "canonicalUrl": "https://governedlogic.com/concepts/ultimate-grounding/",
       "sourcePath": "concepts/ultimate-grounding/index.html",
-      "sha256_html": "7f8073c7ee4184b23b8854f98c841e6b0815cbe8f963be280e8a403e43a95b1c",
-      "sha256_text": "21dc027704e1e717e7269c90a1e3607b6b9772c566ad17996d70632f74bbfea4",
+      "sha256_html": "39b13ec7517d76c9d6da9821fd189e1946d84c726033652ac4593602d8c90c73",
+      "sha256_text": "f3337fc850889a761084fdf3e05eb355b596d08532b46731d8ad768612c8cf3d",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
+        "https://governedlogic.com/concepts/governed-logic/",
         "https://governedlogic.com/concepts/ultimate-grounding/",
-        "https://governedlogic.com/sources/#paul-2026-09-23",
-        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=5",
-        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf#page=7"
+        "https://governedlogic.com/research/",
+        "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf"
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
-      "version": "19.1",
-      "description": "An ultimate ground is not grounded by something more fundamental in the same relevant respect.",
+      "dateModified": "2026-09-27",
+      "version": "19.4",
+      "description": "A genuine termination occurs only when the load carried by the reasoning chain is actually borne by a ground sufficient for that load and ultimate with respect to the chain.",
       "relationships": {
         "citation": [
           "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
@@ -292,8 +296,8 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/",
       "sourcePath": "index.html",
-      "sha256_html": "f711692a686d0486d436adfb9643af6bd9e5940caef862a1860bb75061d1956b",
-      "sha256_text": "d4650bce687de13567faec50c4fa54fd45c429c4afa625623fb9f0f5e0127472",
+      "sha256_html": "42dba9af5ec39277fce14a9a23276fa03e20abc41144a5dd1297118d1d433b9a",
+      "sha256_text": "f519650d4e21839dc4801462d905fe6912ecf26104266f597995c2e9eba123b0",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
         "https://governedlogic.com/company/",
@@ -307,8 +311,8 @@
         "https://governedlogic.com/sources/"
       ],
       "author": "Paul André Couchoud",
-      "version": "19.2-review",
-      "description": "Intelligence is the capacity to align representations with reality.",
+      "version": "19.5",
+      "description": "Truth must govern logic. Logic must govern reasoning. Reasoning is answerable back through logic to truth and ultimately to ground. Intelligence is downstream.",
       "relationships": {
         "about": [
           {
@@ -335,8 +339,8 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/mechanism.html",
       "sourcePath": "mechanism.html",
-      "sha256_html": "475c614001ab22e928acbe345be4b6f18d691784b5af12bf4a9492e7749a5d94",
-      "sha256_text": "52c37903a1c8deb0f7219a1bc46f13b3833eb72fd86fb29cfc0f1fb3d5420ca6",
+      "sha256_html": "519b624d816395c193257651035976f362320794563a8dd48a1d9225871a9886",
+      "sha256_text": "69fa1d5b1edc06f8517105dd978c5da5dfaf3cfff427c2d6637be35d53193525",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
         "https://governedlogic.com/",
@@ -359,8 +363,8 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/publication/",
       "sourcePath": "publication/index.html",
-      "sha256_html": "c467766f70be600af2c9d302f3f39a4bcc377940ebf655a79e4a474d7bafcb5b",
-      "sha256_text": "30baddd4362d1d39ccbf768aa9a635aef4578aa9b8cd9c1e6e9de94642db35d6",
+      "sha256_html": "f776a4b138863d4c6c780746fe879059a98a7b72cf71440efb537bbfcb06ef5d",
+      "sha256_text": "56f1a95bb000c04214f8ca1257dcc0fb669f451b4ef21021afd3e3e1ef59dd73",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
         "https://governedlogic.com/company/",
@@ -380,9 +384,9 @@
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-24",
+      "dateModified": "2026-09-27",
       "version": "19.2-review",
-      "description": "This review separates the human experience from the canonical content architecture.",
+      "description": "The canonical website, machine-readable corpus, and source record are maintained as representations of the same public meaning.",
       "relationships": {
         "isPartOf": {
           "@id": "https://governedlogic.com/#website"
@@ -398,24 +402,24 @@
       "type": "research",
       "canonicalUrl": "https://governedlogic.com/research/",
       "sourcePath": "research/index.html",
-      "sha256_html": "e83163160da373746ed326e792bded4f6fe123f8fa18896372c4407b0a7615a4",
-      "sha256_text": "01e50d101d2f716fabe6b8c8284b4f110a31ff87816dc9dc0f023db92e81fc39",
+      "sha256_html": "9ea3270518aee0b2358d94879f942701f6ee5b6e06b83efa9375753d1117528f",
+      "sha256_text": "6078f122ecb53179dd0307f1febc7a7065b73fb505575377c69a1cd6d5e4a8d4",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
         "https://governedlogic.com/",
         "https://governedlogic.com/company/",
         "https://governedlogic.com/concepts/governed-intelligence/",
         "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
         "https://governedlogic.com/research/",
-        "https://governedlogic.com/sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf#page=4",
         "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt"
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-24T12:11:16Z",
-      "dateModified": "2026-09-24T12:11:16Z",
+      "dateModified": "2026-09-27T05:18:50Z",
       "version": "19.2",
       "approvalReference": "Paul's explicit business direction and approval of separated HTML pages · 24 September 2026",
-      "description": "Research is a core activity of Governed Logic Reasoning Systems.",
+      "description": "The objective is not confirmation. The objective is truth.",
       "relationships": {
         "about": [
           {
@@ -443,10 +447,13 @@
       "type": "page",
       "canonicalUrl": "https://governedlogic.com/sources/",
       "sourcePath": "sources/index.html",
-      "sha256_html": "0bd7f4976d11d5f2f0a25d331bfec8d73e8313be58cd20b865b9a50801792212",
-      "sha256_text": "e283087216066871001f7dbb643b12f23d43f721b2bbf17cf795ac0a06b649de",
+      "sha256_html": "a416a99d1bb72a50bf53b9b222536353a23b15e7629ac72eb03f4ac6c6937310",
+      "sha256_text": "c0d2abc6a2c86aa9485f1f61c2a91367625e7ec782eaa7c1d022315ac825879b",
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
       "links": [
+        "https://governedlogic.com/concepts/governed-intelligence/",
+        "https://governedlogic.com/concepts/governed-logic/",
+        "https://governedlogic.com/concepts/ultimate-grounding/",
         "https://governedlogic.com/sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf",
         "https://governedlogic.com/sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf",
         "https://governedlogic.com/sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf",
@@ -455,9 +462,9 @@
       ],
       "author": "Paul André Couchoud",
       "datePublished": "2026-09-23",
-      "dateModified": "2026-09-23",
+      "dateModified": "2026-09-27",
       "version": "19.2",
-      "description": "Intelligence is downstream from logic and reasoning.",
+      "description": "Historical source editions are provenance; current canonical website pages state the active public definitions.",
       "relationships": {
         "isPartOf": {
           "@id": "https://governedlogic.com/#website"
@@ -513,7 +520,7 @@
       "id": "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
       "url": "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
       "path": "/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
-      "title": "Business strategy — additional direction",
+      "title": "Business strategy — historical additional direction",
       "type": "source",
       "canonicalUrl": "https://governedlogic.com/sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt",
       "recordUrl": "https://governedlogic.com/sources/#paul-business-2026-09-23",
