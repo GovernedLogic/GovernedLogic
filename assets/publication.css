@@ -56,7 +56,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offse
 .chain-nav a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 4px;border-radius:8px;color:#c8c4ca;text-decoration:none;font-size:12px;transition:background .2s,color .2s}
 .chain-nav a:hover{background:#24202d;color:var(--text)}
 .chain-nav a[aria-current="location"]{background:#29213e;color:#fff;box-shadow:inset 0 -2px var(--violet)}
-.principles article{border-radius:8px;border-top-color:#74633e}
+.principles article{border-radius:8px;border-top-color:#234f78}
 .terms p{border-radius:8px}
 .chain span{border-radius:6px}
 .chain{position:relative}
@@ -64,7 +64,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offse
 .chain.in-view b:nth-of-type(2){animation-delay:.2s}
 .chain.in-view b:nth-of-type(3){animation-delay:.4s}
 .chain.in-view b:nth-of-type(4){animation-delay:.6s}
-@keyframes chain-pulse{0%,100%{opacity:.45}50%{opacity:1;text-shadow:0 0 14px #d7bb7280}}
+@keyframes chain-pulse{0%,100%{opacity:.45}50%{opacity:1;text-shadow:0 0 14px #168cff80}}
 @media(min-width:721px){.principles{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:720px){
 .hero,main,footer{width:calc(100% - 36px)}
