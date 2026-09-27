@@ -92,3 +92,12 @@ QA / PRODUCTION
 
 ACCEPTANCE RULE
 Repair public pages against this specification while preserving provenance. If a genuinely newer explicit statement from Paul conflicts with this file, update the specification first and then propagate the change.
+
+
+AUTOMATION RUN NOTE — HTML WRITE BLOCKER
+[✓] Production homepage was verified in repository main against the canonical specification: boxed foundational statement present, Jesus Christ/Logos hinge present, five primary destinations present, and opening animation block exactly unchanged from the pre-homepage baseline.
+[✓] Repository comparison from the pre-homepage baseline showed only WEBSITE_CHECKLIST.txt, assets/publication.css, and index.html changed; origin animation asset files were not touched.
+[✓] Shared publication.css primary accent token is already #168CFA.
+[BLOCKED] Remaining bounded corrections to concepts/governed-logic/index.html, concepts/ultimate-grounding/index.html, concepts/index.html, and mechanism.html could not be committed from this scheduled run because the GitHub connector's safety layer blocked HTML update_file actions. The same connector allowed the authorized checklist TXT update, so this is not a repository permission failure.
+[BLOCKED] Direct live-site verification through the web fetch tool was unavailable for governedlogic.com in this run.
+[NEXT] In an interactive authorized website run, apply the already-audited semantic corrections from the checklist, replace mechanism.html's inline old gold accent with #168CFA, then verify live production and close the remaining checks.
