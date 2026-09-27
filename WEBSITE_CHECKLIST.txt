@@ -3,27 +3,72 @@ Date: 2026-09-27
 Status: ACTIVE
 North Star: governedlogic.com is a coherent, honest, publishable baseline that accurately represents Governed Logic as Paul understands it now.
 
+CANONICAL WEBSITE SPECIFICATION
+Truth must govern logic. Logic must govern reasoning. Intelligence is downstream.
+Six principles: Being, Truth, Logic, Meaning, Intelligibility, Obligation.
+Truth (correspondence definition): correspondence to one reality.
+Truth (governing principle): binary and non-negotiable, grounded in Jesus Christ the Logos.
+Reasoning distinguishes, relates, orders, and adjudicates representations.
+Intelligence is successful reasoning under the constitutive constraints of one reality.
+Architecture: Ground → Truth → Logic → Reasoning → Intelligence.
+Capability is downstream of intelligence; action is downstream of capability.
+Governed Logic is the upstream, bidirectional reasoning architecture.
+Governed Intelligence is the artificial-intelligence instantiation of Governed Logic.
+The current portable mechanism is an instruction-level prototype; the engine and API remain planned engineering deliverables.
+
+GROUNDING
+The triune God is the ultimate ground of the one reality. Jesus Christ is the Logos and named governing referent: the source and ground of being and truth, and the binding ground of logic, meaning, intelligibility, and obligation.
+
+PAGE ROLES
+/ — public front door; preserve opening animation and layout; preserve boxed foundational statement.
+/concepts/governed-logic/ — current upstream/bidirectional architecture.
+/concepts/ultimate-grounding/ — dependence, sufficiency, ultimacy, named Logos terminus.
+/concepts/governed-intelligence/ — AI instantiation; prototype versus planned engineering.
+/concepts/ — canonical terms/principles; distinguish truth principle from correspondence definition.
+/company/ — present capabilities versus planned deliverables and services.
+/research/ — testing, referent comparison, falsifiability, limitations.
+/mechanism.html — public copy/test prototype using all six current principles.
+/sources/ and /publication/ — provenance and historical record; do not silently rewrite history.
+
+HUMAN / MACHINE ALIGNMENT
+Visible prose, metadata, JSON-LD, DefinedTerm descriptions, and machine-readable argument graphs must agree in claim strength and terminology.
+
+VISUAL BASELINE
+Primary accent blue: #168CFA. Secondary violet may remain: #8D78FF. Retire the old active yellow/gold accent. Do not restructure the opening animation or general layout.
+
+AUDIT FINDINGS — PASS 1
+[✓] Homepage contains the boxed foundational statement and explicitly names the triune God and Jesus Christ the Logos.
+[ ] Governed Logic page still calls Governed Logic a “downstream reasoning thesis”; reconcile to upstream/bidirectional architecture.
+[ ] Concepts index currently collapses the truth principle and correspondence definition; distinguish their roles.
+[ ] Ultimate Grounding wording and homepage grounding wording need unification so they do not appear to posit competing grounds.
+[ ] mechanism.html omits Being and Meaning and uses “Moral obligation”; reconcile to all six current principles and “Obligation.”
+[ ] mechanism.html still hard-codes an old gold accent.
+[✓] Governed Intelligence materially matches the current intelligence definition and prototype/planned distinction.
+[✓] Company materially distinguishes existing prototype, planned engineering, and potential applications.
+[✓] Research materially preserves controlled referent testing and avoids treating framework identity as proof.
+[ ] Page version metadata is mixed; update touched pages consistently without rewriting historical source editions.
+
 GOVERNING CONTENT
-[ ] Homepage contains the boxed foundational statement intact.
-[ ] Homepage explicitly names the triune God as ultimate ground and Jesus Christ as the Logos.
-[ ] Six constitutive principles are exactly: Being, Truth, Logic, Meaning, Intelligibility, Obligation.
-[ ] Truth is defined as correspondence to one reality.
-[ ] Reasoning is represented as distinguishing, relating, ordering, and adjudicating representations.
-[ ] Intelligence is represented as successful reasoning under the constitutive constraints of one reality.
-[ ] Architecture preserves: Ground → Truth → Logic → Reasoning → Intelligence.
-[ ] Capability is downstream of intelligence; action is downstream of capability.
-[ ] Governed Intelligence is the AI instantiation of Governed Logic.
+[✓] Homepage contains the boxed foundational statement intact.
+[✓] Homepage explicitly names the triune God as ultimate ground and Jesus Christ as the Logos.
+[✓] Six constitutive principles are exactly: Being, Truth, Logic, Meaning, Intelligibility, Obligation.
+[✓] Truth is defined as correspondence to one reality.
+[✓] Reasoning is represented as distinguishing, relating, ordering, and adjudicating representations.
+[✓] Intelligence is represented as successful reasoning under the constitutive constraints of one reality.
+[✓] Architecture preserves: Ground → Truth → Logic → Reasoning → Intelligence.
+[✓] Capability is downstream of intelligence; action is downstream of capability.
+[✓] Governed Intelligence is the AI instantiation of Governed Logic.
 [ ] Historical language such as “capacity to align representations with reality” is preserved only as provenance where needed, not allowed to override current canonical wording.
 
 CANONICAL PAGE COHERENCE
 [ ] /concepts/governed-logic/ agrees with current architecture.
 [ ] /concepts/ultimate-grounding/ agrees with current grounding terminology and named Logos terminus.
-[ ] /concepts/governed-intelligence/ agrees with current intelligence definition and prototype status.
+[✓] /concepts/governed-intelligence/ agrees with current intelligence definition and prototype status.
 [ ] /concepts/ index does not conflict with canonical pages.
-[ ] /company/ accurately distinguishes current work, prototype, planned engineering, research, publishing, education, and services.
-[ ] /research/ accurately represents testing without overstating results.
+[✓] /company/ accurately distinguishes current work, prototype, planned engineering, research, publishing, education, and services.
+[✓] /research/ accurately represents testing without overstating results.
 [ ] /mechanism.html distinguishes the public prototype from the full architecture and uses current principle terminology.
-[ ] Sources/provenance remain available and historical wording is not silently rewritten.
+[✓] Sources/provenance remain available and historical wording is not silently rewritten.
 
 HUMAN / MACHINE ALIGNMENT
 [ ] Visible text, metadata, JSON-LD, and machine-readable argument graphs agree.
@@ -32,11 +77,11 @@ HUMAN / MACHINE ALIGNMENT
 [ ] No unresolved “moral obligation” leakage where the general architectural term should be “obligation.”
 
 VISUAL / UX
-[ ] Existing opening animation block remains structurally unchanged.
-[ ] Existing page layout remains structurally unchanged except bounded content additions.
+[✓] Existing opening animation block remains structurally unchanged.
+[✓] Existing page layout remains structurally unchanged except bounded content additions.
 [ ] Governed Logic blue is the primary accent; old yellow/gold accent is removed from active design tokens.
 [ ] Mobile and desktop remain readable.
-[ ] Five primary homepage destinations remain intact.
+[✓] Five primary homepage destinations remain intact.
 
 QA / PRODUCTION
 [ ] Run available origin/corpus checks or equivalent repository verification.
@@ -44,3 +89,6 @@ QA / PRODUCTION
 [ ] Verify live governedlogic.com reflects the production commit.
 [ ] Record exact production commit SHA(s).
 [ ] Report unresolved philosophical/content conflicts rather than silently choosing.
+
+ACCEPTANCE RULE
+Repair public pages against this specification while preserving provenance. If a genuinely newer explicit statement from Paul conflicts with this file, update the specification first and then propagate the change.
