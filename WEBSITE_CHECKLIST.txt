@@ -33,6 +33,15 @@ PAGE ROLES
 HUMAN / MACHINE ALIGNMENT
 Visible prose, metadata, JSON-LD, DefinedTerm descriptions, and machine-readable argument graphs must agree in claim strength and terminology.
 
+MEO — MEANING ENGINE OPTIMIZATION
+Machine-readable first. Human-readable second.
+MEO is a top-level website requirement, not a downstream optimization pass.
+The machine layer must expose explicit propositions, definitions, stable referents, relationships, claim types, grounding chains, provenance, and machine-readable argument structure sufficient for reasoning systems to recover the intended meaning without reconstructing it from marketing prose.
+The human layer may compress the same underlying meaning into exact sentences, strong visuals, demonstrations, and “Follow the chain,” but may not contradict, weaken, or silently redefine the machine layer.
+Representations are pointers; they are answerable to their referents. Machine-readable meaning must therefore bind terms and claims to stable referents rather than merely repeat usage language.
+Generated corpus artifacts — publication/catalog.json, publication/search-index.json, publication/manifest.json, feed.xml, sitemap.xml, robots.txt, JSON-LD, DefinedTerm metadata, and related machine-facing surfaces — must be regenerated or reconciled whenever canonical meaning changes.
+MEO acceptance requires semantic parity across human-visible content and machine-readable surfaces, with no stale definitions, competing referents, or historical wording presented as current canon.
+
 VISUAL BASELINE
 Primary accent blue: #168CFA. Secondary violet may remain: #8D78FF. Retire the old active yellow/gold accent. Do not restructure the opening animation or general layout.
 
@@ -139,3 +148,10 @@ CONTENT REBUILD RUN — 2026-09-27
 [HOLD] Governed_Intelligence_Definition_and_Derived_Requirements_v0.1_2026-09-27.txt is explicitly CANDIDATE CANON. Its newer intelligence wording was not silently promoted over the active website definition. Pressure-test before changing the public definition.
 [HOLD] GovernedLogic_Website_Architecture_v0.1_2026-09-26.txt proposes a seven-page foundational spine and uses historical “Moral Obligation” wording, while the newer active website checklist freezes the public six principles as Being, Truth, Logic, Meaning, Intelligibility, Obligation and leaves navigation relationships unresolved. No new pillar routes or top-level navigation taxonomy were invented in this run.
 [NEXT] Reconcile publication/catalog.json, publication/search-index.json, publication/manifest.json, feed.xml, and related generated corpus artifacts to the rebuilt canonical HTML. Repair acceptance scripts only where stale relative to the protected approved opening. Run origin/corpus/link/canonical checks, inspect the final diff, verify live governedlogic.com against repository source, and close the workflow only when those checks pass.
+
+
+SELF-CORRECTING PUBLISHER RULE — 2026-09-27
+[✓] The website monitor/publisher is an executable maintenance system, not merely a reporter. When an authorized interactive review identifies a bounded defect in the website or its checklist, repair the canonical checklist/source directly when safe, then use the next monitor run to verify propagation, generated artifacts, acceptance checks, and production state.
+[✓] Do not merely describe a known bounded defect back to the monitor when the connected repository can be corrected directly. Preserve protected compartments, provenance, canonical wording, and explicit HOLD items.
+[✓] MEO is now a top-level checklist requirement. “Machine-readable first. Human-readable second.” is part of MEO, not a parallel website concept.
+[NEXT] On the next publisher run, reconcile machine-facing corpus artifacts against canonical HTML and evaluate them under the MEO acceptance rule before declaring completion.
