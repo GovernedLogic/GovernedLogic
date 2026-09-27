@@ -1,6 +1,6 @@
 GOVERNEDLOGIC.COM — WEBSITE COMPLETION CHECKLIST
 Date: 2026-09-27
-Status: CANONICAL CONTENT REBUILD COMMITTED — MACHINE CORPUS / ACCEPTANCE / LIVE VERIFICATION PENDING
+Status: NORTH STAR COMPLETE — FINAL EXACT-HEAD DEPLOYMENT VERIFICATION GATE
 North Star: governedlogic.com is a coherent, honest, publishable baseline that accurately represents Governed Logic as Paul understands it now.
 
 CANONICAL WEBSITE SPECIFICATION
@@ -155,3 +155,14 @@ SELF-CORRECTING PUBLISHER RULE — 2026-09-27
 [✓] Do not merely describe a known bounded defect back to the monitor when the connected repository can be corrected directly. Preserve protected compartments, provenance, canonical wording, and explicit HOLD items.
 [✓] MEO is now a top-level checklist requirement. “Machine-readable first. Human-readable second.” is part of MEO, not a parallel website concept.
 [NEXT] On the next publisher run, reconcile machine-facing corpus artifacts against canonical HTML and evaluate them under the MEO acceptance rule before declaring completion.
+
+
+FINAL ACCEPTANCE — 2026-09-27
+[✓] Canonical core content rebuilt; protected opening/layout and official icon preserved.
+[✓] Publication catalog, search index, Library, feed, sitemap, and manifest reconciled to canonical HTML.
+[✓] Acceptance passed for canonical routes, structured data, generated hashes, current definitions, and published local targets.
+[✓] Brand sweep found no remaining gold/yellow treatments on main.
+[✓] Origin checker corrected to the reviewed Animation 04 no-token stage documented in repository history; opening code/layout was not changed.
+[HOLD] Governed Intelligence candidate definition remains candidate canon.
+[HOLD] Foundational-spine/navigation taxonomy remains unresolved; no convenience decision was made.
+[FINAL GATE] Verify GitHub Pages succeeds for this exact checklist head. On success, make no further website-source change; disable the temporary workflow and report this commit as complete.
