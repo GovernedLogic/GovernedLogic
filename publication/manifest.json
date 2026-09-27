@@ -1,8 +1,8 @@
 {
   "version": "19.2",
-  "preparedAt": "2026-09-24T12:11:16Z",
-  "status": "review build; production baseline remains main at 77d4969e0666e0aac1d824054d1bc5ab9943dbe0; no propagation measurements",
-  "releaseChannel": "review",
+  "preparedAt": "2026-09-27T05:30:15Z",
+  "status": "canonical content baseline; generated corpus reconciliation in progress; live verification pending",
+  "releaseChannel": "production",
   "previousRelease": "19.2",
   "previousCommit": "77d4969e0666e0aac1d824054d1bc5ab9943dbe0",
   "author": "Paul André Couchoud",
@@ -16,8 +16,22 @@
     ],
     "generative": "Ground → Truth → Logic → Reasoning.",
     "adjudicative": "Reasoning → Logic → Truth → Ground.",
-    "intelligence": "Intelligence is the capacity to align representations with reality.",
-    "foundationalRelationship": "Reality → Truth → Logic → Reasoning → Intelligence."
+    "constitutivePrinciples": [
+      "Being",
+      "Truth",
+      "Logic",
+      "Meaning",
+      "Intelligibility",
+      "Obligation"
+    ],
+    "truthCorrespondence": "Truth is correspondence to one reality.",
+    "reasoning": "Reasoning distinguishes, relates, orders, and adjudicates representations.",
+    "intelligence": "Intelligence is successful reasoning under the constitutive constraints of one reality.",
+    "capability": "Capability is downstream of intelligence.",
+    "action": "Action is downstream of capability.",
+    "foundationalRelationship": "Ground → Truth → Logic → Reasoning → Intelligence.",
+    "ultimateGround": "The triune God is the ultimate ground of the one reality.",
+    "governingReferent": "Jesus Christ, the Logos."
   },
   "pages": [
     {
@@ -273,7 +287,7 @@
       "source": "paul",
       "location": "Current website definition",
       "text": "Intelligence is alignment with reality.",
-      "status": "historical wording; superseded in 19.2 by Paul's business addendum"
+      "status": "historical source wording; superseded by the current website definition of intelligence."
     },
     {
       "source": "paul",
@@ -413,7 +427,8 @@
     {
       "source": "02",
       "location": "I",
-      "text": "Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground."
+      "text": "Governed Logic is the downstream reasoning thesis that follows when reasoning is required to remain answerable to truth and ultimately to its ground.",
+      "status": "historical source wording; current website canon defines Governed Logic as the upstream, bidirectional reasoning architecture."
     },
     {
       "source": "04",
@@ -513,7 +528,8 @@
     {
       "source": "paul-business",
       "location": "1",
-      "text": "Governed Intelligence is the artificial intelligence implementation of Governed Logic."
+      "text": "Governed Intelligence is the artificial intelligence implementation of Governed Logic.",
+      "status": "historical source wording; current website canon uses artificial-intelligence instantiation of Governed Logic."
     },
     {
       "source": "paul-business",
@@ -578,12 +594,14 @@
     {
       "source": "paul-business",
       "location": "10",
-      "text": "Intelligence is the capacity to align representations with reality."
+      "text": "Intelligence is the capacity to align representations with reality.",
+      "status": "historical source wording; current website canon defines intelligence as successful reasoning under the constitutive constraints of one reality."
     },
     {
       "source": "paul-business",
       "location": "10",
-      "text": "Reality → Truth → Logic → Reasoning → Intelligence."
+      "text": "Reality → Truth → Logic → Reasoning → Intelligence.",
+      "status": "historical source wording; current website architecture is Ground → Truth → Logic → Reasoning → Intelligence."
     },
     {
       "source": "paul-business",
@@ -622,13 +640,21 @@
       "object": "https://governedlogic.com/concepts/governed-logic/#concept",
       "source": "paul-business",
       "section": "1",
-      "status": "source assertion"
+      "status": "historical source assertion; superseded by current website canon"
+    },
+    {
+      "subject": "https://governedlogic.com/concepts/governed-intelligence/#concept",
+      "relationshipText": "Governed Intelligence is the artificial-intelligence instantiation of Governed Logic.",
+      "object": "https://governedlogic.com/concepts/governed-logic/#concept",
+      "source": "current-website-canon",
+      "section": "Governed Intelligence",
+      "status": "current website canon"
     }
   ],
   "development": {
-    "governedIntelligence": "The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering.",
+    "governedIntelligence": "A working instruction-level prototype exists and is used for research, demonstrations, adversarial testing, and further engineering.",
     "reasoningEngineAndApi": "The engine and API are planned engineering deliverables, not currently available production services.",
-    "novelty": "Novelty is a newly designated part of the company's work, with its fuller definition to follow."
+    "novelty": "Novelty is a named part of the company's intended research and development architecture. Its complete purpose, scope, methods, and deliverables remain pending Paul's additional source material."
   },
   "discovery": {
     "generator": "scripts/build-corpus.py v1",
