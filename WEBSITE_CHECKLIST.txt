@@ -1,6 +1,6 @@
 GOVERNEDLOGIC.COM — WEBSITE COMPLETION CHECKLIST
 Date: 2026-09-27
-Status: PRODUCTION BASELINE COMMITTED — LIVE VERIFICATION PENDING
+Status: CANONICAL CONTENT REBUILD COMMITTED — MACHINE CORPUS / ACCEPTANCE / LIVE VERIFICATION PENDING
 North Star: governedlogic.com is a coherent, honest, publishable baseline that accurately represents Governed Logic as Paul understands it now.
 
 CANONICAL WEBSITE SPECIFICATION
@@ -126,3 +126,16 @@ HUMAN REVIEW ITERATION — 2026-09-27
 [✓] Added prominent GOVERNED LOGIC REASONING SYSTEMS masthead using the official Governed Logic mark.
 [✓] Replaced the synthesized homepage foundational statement with exact canonical chains and sentences from the approved Governed Logic corpus.
 [✓] No origin animation code or animation stylesheet was modified by this iteration.
+
+
+CONTENT REBUILD RUN — 2026-09-27
+[✓] Read the newest canonical website architecture capture, current repository/source, active WEBSITE_CHECKLIST.txt, relevant Governed Logic source material, On the Nature of Ultimate Grounding working draft 0.7, and the 27 September Governed Intelligence candidate-definition capture before writing.
+[✓] Rebuilt homepage reading content from the canonical truth set rather than polishing synthesized website copy. The protected opening animation/layout and official icon were not changed.
+[✓] Rebuilt /concepts/governed-logic/ around the upstream requirement, six principles, governing referent, Ground → Truth → Logic → Reasoning → Intelligence, bidirectional generation/adjudication, and the boundary between grounding, architecture, and AI instantiation.
+[✓] Rebuilt /concepts/ultimate-grounding/ as a substantive On the Nature of Ultimate Grounding page using dependence, sufficiency, ultimacy, the six-domain method, and Derivation → Identification → Verification as distinct inferential stages.
+[✓] Rebuilt /concepts/governed-intelligence/ around the settled public definition, instruction-level prototype status, architecture-versus-prompt distinction, commitment/adjudication boundary, and research limitations.
+[✓] Reworked /company/ so the public category identity is explicit: Governed Logic Reasoning Systems is a reasoning systems company. Current work, planned engineering, practical engagements, publishing, and the Novelty hold remain separated.
+[✓] Rebuilt /research/ around controlled referent testing, falsifiability, correspondence, termination quality, borrowed authority, withheld-identity testing, limitations, and publication of failures/counterexamples.
+[HOLD] Governed_Intelligence_Definition_and_Derived_Requirements_v0.1_2026-09-27.txt is explicitly CANDIDATE CANON. Its newer intelligence wording was not silently promoted over the active website definition. Pressure-test before changing the public definition.
+[HOLD] GovernedLogic_Website_Architecture_v0.1_2026-09-26.txt proposes a seven-page foundational spine and uses historical “Moral Obligation” wording, while the newer active website checklist freezes the public six principles as Being, Truth, Logic, Meaning, Intelligibility, Obligation and leaves navigation relationships unresolved. No new pillar routes or top-level navigation taxonomy were invented in this run.
+[NEXT] Reconcile publication/catalog.json, publication/search-index.json, publication/manifest.json, feed.xml, and related generated corpus artifacts to the rebuilt canonical HTML. Repair acceptance scripts only where stale relative to the protected approved opening. Run origin/corpus/link/canonical checks, inspect the final diff, verify live governedlogic.com against repository source, and close the workflow only when those checks pass.
