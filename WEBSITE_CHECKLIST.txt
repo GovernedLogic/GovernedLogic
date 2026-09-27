@@ -112,3 +112,17 @@ INTERACTIVE PRODUCTION REPAIR — 2026-09-27
 [✓] Protected opening animation assets and homepage layout were not modified in this interactive repair pass.
 [BLOCKED] External live fetch remains unavailable from the current web/runtime paths, so public render verification is not yet independently proven.
 [NEXT] Temporary Finish Governed Logic Website workflow remains enabled solely to verify public deployment/render and close the checklist when external access succeeds.
+
+
+PUBLISHER RULES — LEARNED FROM HUMAN REVIEW 2026-09-27
+[✓] The website publisher is permanent infrastructure, not a one-time completion task.
+[✓] DO NOT SYNTHESIZE settled canonical or foundational language. Use the exact canonical wording and preserve connected logical chains. Short supporting copy may be subordinate, but must not replace or compress the canonical statement.
+[✓] The homepage must identify GOVERNED LOGIC REASONING SYSTEMS prominently; company identity may not become visually subordinate to the animation or conceptual architecture.
+[✓] Website compartments are independently owned: animation/motion, canonical content, brand/design tokens, layout/components, and machine-readable meaning. A change in one compartment must not casually mutate another.
+[✓] New homepage presentation work is isolated in /assets/home.css. The opening animation remains isolated in its origin CSS/JS assets.
+[✓] Human review can create a new publisher rule when a defect reveals a general pattern; the rule must then be persisted here and in the publisher monitor rather than patched only once.
+
+HUMAN REVIEW ITERATION — 2026-09-27
+[✓] Added prominent GOVERNED LOGIC REASONING SYSTEMS masthead using the official Governed Logic mark.
+[✓] Replaced the synthesized homepage foundational statement with exact canonical chains and sentences from the approved Governed Logic corpus.
+[✓] No origin animation code or animation stylesheet was modified by this iteration.
