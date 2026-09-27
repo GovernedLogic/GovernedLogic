@@ -1,7 +1,7 @@
 {
   "version": "19.2",
   "preparedAt": "2026-09-27T05:30:15Z",
-  "status": "canonical content baseline; generated corpus reconciled; acceptance and live verification pending",
+  "status": "canonical content baseline; corpus reconciled; repository acceptance passed; final exact-head GitHub Pages deployment verification gate",
   "releaseChannel": "production",
   "previousRelease": "19.2",
   "previousCommit": "77d4969e0666e0aac1d824054d1bc5ab9943dbe0",
