@@ -335,3 +335,13 @@ html:not(.gl-intro-loading):not(.gl-intro-ready) .origin-experience + .hero,
 /* v19.6 animation legibility */
 .origin-principle{min-width:max-content;text-align:center;text-shadow:0 0 18px rgba(178,218,255,.42)}
 @media(max-width:720px){.origin-principle{font-weight:700}}
+
+
+/* v19.7 opening refinement */
+.origin-center{width:7px;background:#fff;box-shadow:0 0 8px 2px #fff,0 0 22px 5px rgba(255,255,255,.62),0 0 58px 9px rgba(141,120,255,.18)}
+.origin-center::before{inset:1.5px;background:#fff;box-shadow:0 0 6px 2px #fff}
+.origin-principle{font-size:clamp(14px,1.6vw,20px);font-weight:700;letter-spacing:.17em}
+@media(max-width:720px){
+ .origin-center{width:6px}
+ .origin-principle{font-size:clamp(13px,3.8vw,16px);letter-spacing:.10em}
+}
