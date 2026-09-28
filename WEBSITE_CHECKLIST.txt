@@ -230,3 +230,23 @@ CURRENT HOMEPAGE WHAT — 2026-09-28
 [ ] Provide a real About / Paul André Couchoud destination with the recovered verified portrait and source-grounded biography.
 [ ] Provide a Dedication page naming Gavin Smith; Ethan, Paul’s son; and John C. Lennox.
 [ ] Final verification must check the live-production commit/deployment and perform this anti-synthesis check before completion.
+
+
+MEDIA MANAGER FINAL CHECK — 2026-09-28
+[✓] Re-read the preserved WHAT after implementation rather than checking against a summarized plan.
+[✓] Homepage now functions as an argument: AI/truth problem → correspondence → Five Whys → six domains → grounding question → five canonical doors.
+[✓] Homepage does not front-load Jesus Christ by name; the theological identification remains in the canonical destination corpus, especially On the Nature of Ultimate Grounding.
+[✓] Faint LOGOS remains at the final six-principle scroll convergence.
+[✓] Decorative particle/geometric opening script is no longer loaded on the homepage.
+[✓] Purple down-arrow was removed.
+[✓] Official blue metallic three-loop Governed Logic mark is used directly from /assets/governed-logic-mark.webp.
+[✓] Full Governed Logic Reasoning Systems brand artwork is used directly from /assets/gl-reasoning-systems.webp.
+[✓] Company description now leads in concrete reasoning-systems language: AI reasoning, evidence, premises, rules, meaning, assumptions, and truth.
+[✓] Five protected doors remain present and their destination-page content was not rewritten in this pass.
+[✓] Five Whys is presented as a single visual reasoning chain rather than product-style cards.
+[✓] Homepage repetition was reduced; destination pages carry the deeper corpus.
+[✓] Paul André Couchoud About page exists and uses the historical Paul portrait recovered from the Governed Logic Git history plus source-grounded prior bio/resume language.
+[✓] Dedication page exists for Gavin Smith; Ethan, my son; and John C. Lennox.
+[✓] About and Dedication are linked from the homepage and listed in sitemap.xml.
+[✓] Homepage MEO argument graph is argument-first rather than a shortcut to the identification conclusion.
+[HOLD] The generated publication catalog/search index/manifest/library/feed have not yet been regenerated from v20.x canonical HTML because the current execution environment cannot run the repository Python corpus builder. Do not describe those generated artifacts as reconciled to v20.x until the builder is run. The live HTML, JSON-LD, homepage MEO graph, sitemap, and canonical routes are current.
