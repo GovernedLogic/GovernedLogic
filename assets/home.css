@@ -177,3 +177,27 @@
   .seven-line{font-size:clamp(42px,13vw,60px)!important}
 }
 @media(prefers-reduced-motion:reduce){.truth-signal span{animation:none;height:38%}}
+
+/* v19.8 identity correction: company first, not corporate accessory. */
+.company-masthead{
+  min-height:72svh;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"mark" "name" "line" "purpose";
+  justify-items:center;
+  text-align:center;
+  row-gap:0;
+  padding:clamp(88px,12vw,150px) 0;
+}
+.company-mark{grid-area:mark;width:clamp(170px,24vw,290px);margin:0 0 clamp(34px,5vw,56px)}
+.company-name{grid-area:name;max-width:none;font-size:clamp(54px,8.4vw,106px);line-height:.9;text-align:center}
+.company-name span{font-size:.23em;letter-spacing:.32em;margin-top:.82em}
+.company-line{grid-area:line;margin:clamp(34px,4vw,50px) auto 0;max-width:34em}
+.company-purpose{grid-area:purpose;max-width:38em;margin:22px auto 0;color:#aeb9c7;font:400 clamp(16px,1.7vw,20px)/1.65 Georgia,"Times New Roman",serif}
+@media(max-width:720px){
+ .company-masthead{min-height:70svh;grid-template-columns:1fr;grid-template-areas:"mark" "name" "line" "purpose";padding:78px 0}
+ .company-mark{width:clamp(150px,48vw,210px);margin-bottom:36px}
+ .company-name{font-size:clamp(48px,15vw,68px);line-height:.9}
+ .company-name span{font-size:.22em;letter-spacing:.22em;margin-top:.82em}
+ .company-line{margin-top:34px;font-size:20px}
+ .company-purpose{font-size:17px;margin-top:20px;padding:0 8px}
+}
