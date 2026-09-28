@@ -250,3 +250,16 @@ MEDIA MANAGER FINAL CHECK — 2026-09-28
 [✓] About and Dedication are linked from the homepage and listed in sitemap.xml.
 [✓] Homepage MEO argument graph is argument-first rather than a shortcut to the identification conclusion.
 [HOLD] The generated publication catalog/search index/manifest/library/feed have not yet been regenerated from v20.x canonical HTML because the current execution environment cannot run the repository Python corpus builder. Do not describe those generated artifacts as reconciled to v20.x until the builder is run. The live HTML, JSON-LD, homepage MEO graph, sitemap, and canonical routes are current.
+
+
+LATE MEDIA MANAGER → AGENT SMITH PASS — 2026-09-27
+[✓] Existing visible homepage sentences preserved; this pass adds a distinct deeper layer instead of rewriting or synthesizing the current argument.
+[✓] New standalone “The ancient problem” section captures the Jeremiah 10 / Ecclesiastes 1:9 / John 10 structural insight, including the distinction between craftsmanship and authority.
+[✓] Captured the Tower of Babel 2.0 representation-stack insight as “Representations on representations” without replacing the current homepage argument.
+[✓] Preserved the exact core formulations: “Capability does not confer authority.” and “We did not invent a new human problem when we invented artificial intelligence. We built its most convincing interface.”
+[✓] Preserved the hierarchy reversal: machine → truth, representation → referent, intelligence → logic/reasoning, with the Logos as the terminus rather than a marketing ornament.
+[✓] Captured the downstream stakes: groundless reasoning becomes operational when coupled to surveillance, data capture, control, and autonomous decisions.
+[✓] Opening semantic experience receives more temporal and spatial void; the six principles and Ground → Truth → Logic → Reasoning → Intelligence chain are deliberately separated instead of occupying the same visual moment.
+[✓] Mobile is the priority surface for the opening spacing and depth behavior, while desktop retains full fidelity.
+[✓] Added meaningful touch/pointer depth to the five doors and a representation → referent → ground depth interaction. Motion remains subordinate to meaning and respects reduced-motion preferences.
+[✓] No destination-page copy was rewritten in this pass.

@@ -47,7 +47,7 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const TAU = Math.PI * 2;
-  const CINEMATIC_SECONDS = 22;
+  const CINEMATIC_SECONDS = 27;
   const MOBILE_BREAKPOINT = 720;
 
   /*
@@ -202,10 +202,10 @@
   }
 
   function updateHandoff(scrollProgress) {
-    const handoff = smoothstep(0.64, 1, scrollProgress);
+    const handoff = smoothstep(0.76, 1, scrollProgress);
     if (logosMark) {
-      const logosIn = smoothstep(0.885, 0.945, scrollProgress);
-      const logosOut = smoothstep(0.972, 1, scrollProgress);
+      const logosIn = smoothstep(0.915, 0.958, scrollProgress);
+      const logosOut = smoothstep(0.978, 1, scrollProgress);
       const logosOpacity = logosIn * (1 - logosOut) * 0.34;
       experience.style.setProperty("--origin-logos-opacity", logosOpacity.toFixed(4));
     }
@@ -312,8 +312,8 @@
     principlePositions.clear();
     const centerX = width / 2;
     const centerY = height / 2;
-    const ringRadius = Math.min(width, height) * (isMobile ? 0.34 : 0.30);
-    const settle = smoothstep(0.69, 0.9, value);
+    const ringRadius = Math.min(width, height) * (isMobile ? 0.37 : 0.34);
+    const settle = smoothstep(0.72, 0.94, value);
     const contraction = easeOutCubic(smoothstep(0.02, 0.96, gather));
 
     principleElements.forEach(function (element, index) {
@@ -332,7 +332,7 @@
       const parallax = 1 - contraction;
       const x = centerX + Math.cos(angle) * radius + pointer.x * 3.5 * depth * parallax;
       const y = centerY + Math.sin(angle) * radius * 0.78 + pointer.y * 2.5 * depth * parallax;
-      const finalQuiet = mix(1, 0.32, smoothstep(0.8, 1, value));
+      const finalQuiet = mix(1, 0.32, smoothstep(0.88, 1, value));
       const enterLight = 1 - smoothstep(0.7, 0.96, gather);
       const opacity = reveal * finalQuiet * enterLight;
       const scale = mix(0.74, 1.03, depth) * mix(1, 0.94, settle) * mix(1, 0.82, contraction);
@@ -348,14 +348,14 @@
   }
 
   function updateArchitecture(value) {
-    const arrival = smoothstep(0.67, 0.79, value);
+    const arrival = smoothstep(0.80, 0.92, value);
     architecture.style.opacity = arrival.toFixed(4);
 
     let pulsePosition = -1;
-    if (value >= 0.71 && value < 0.87) {
-      pulsePosition = smoothstep(0.71, 0.87, value);
-    } else if (value >= 0.87 && value < 0.985) {
-      pulsePosition = 1 - smoothstep(0.87, 0.985, value);
+    if (value >= 0.83 && value < 0.94) {
+      pulsePosition = smoothstep(0.83, 0.94, value);
+    } else if (value >= 0.94 && value < 0.995) {
+      pulsePosition = 1 - smoothstep(0.94, 0.995, value);
     }
 
     const activeIndex = pulsePosition < 0
@@ -568,7 +568,7 @@
   }
 
   function drawArchitecturePath(value) {
-    const arrival = smoothstep(0.68, 0.8, value);
+    const arrival = smoothstep(0.80, 0.92, value);
     if (arrival <= 0.001 || chainElements.length < 2) return;
     const points = chainPoints();
 
@@ -584,11 +584,11 @@
 
     let pulseAmount = -1;
     let pulseOpacity = 1;
-    if (value >= 0.71 && value < 0.87) {
-      pulseAmount = smoothstep(0.71, 0.87, value);
-    } else if (value >= 0.87 && value < 0.985) {
-      pulseAmount = 1 - smoothstep(0.87, 0.985, value);
-      pulseOpacity = 1 - 0.25 * smoothstep(0.94, 0.985, value);
+    if (value >= 0.83 && value < 0.94) {
+      pulseAmount = smoothstep(0.83, 0.94, value);
+    } else if (value >= 0.94 && value < 0.995) {
+      pulseAmount = 1 - smoothstep(0.94, 0.995, value);
+      pulseOpacity = 1 - 0.25 * smoothstep(0.975, 0.995, value);
     }
 
     if (pulseAmount >= 0) {

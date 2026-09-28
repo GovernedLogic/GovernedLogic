@@ -358,3 +358,37 @@ html:not(.gl-intro-loading):not(.gl-intro-ready) .origin-experience + .hero,
  filter:blur(.18px);
 }
 @media(max-width:720px){.origin-logos{font-size:9px;letter-spacing:.34em;text-indent:.34em}}
+
+
+/* v20.4 — slower semantic opening, larger language, real separation between ring and chain. */
+.origin-experience{height:260vh;height:260svh;height:260dvh}
+.origin-principle{font-size:clamp(17px,1.85vw,24px);letter-spacing:.18em}
+.origin-architecture{
+  gap:clamp(16px,3vw,48px);
+  padding-inline:clamp(24px,6vw,96px);
+  transform:translateY(35vh);transform:translateY(35svh);transform:translateY(35dvh)
+}
+.origin-architecture li{
+  gap:clamp(12px,2.6vw,42px);
+  font-size:clamp(12px,1.45vw,17px);
+  letter-spacing:.17em
+}
+.origin-architecture li:not(:last-child)::after{font-size:1.3em}
+.origin-experience + .company-masthead{position:relative;z-index:6}
+@media(max-width:720px){
+  .origin-experience{height:285vh;height:285svh;height:285dvh}
+  .origin-principle{font-size:clamp(15px,4.6vw,19px);letter-spacing:.12em}
+  .origin-architecture{
+    inset:auto 0 4vh;inset:auto 0 4svh;inset:auto 0 4dvh;
+    gap:10px;padding:0 22px;transform:none
+  }
+  .origin-architecture li{gap:9px;font-size:12px;letter-spacing:.14em}
+  .origin-architecture li:not(:last-child)::after{font-size:1.15em}
+}
+@media(max-width:720px) and (max-height:520px){
+  .origin-experience{height:230vh;height:230svh;height:230dvh}
+  .origin-architecture{inset:auto 0 8vh;inset:auto 0 8svh;inset:auto 0 8dvh}
+}
+@media(prefers-reduced-motion:reduce){
+  .origin-experience{height:100vh;height:100svh;height:100dvh}
+}
