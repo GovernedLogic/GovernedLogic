@@ -80,3 +80,24 @@
   .home-page .hero>h2.architecture-thesis{font-size:clamp(36px,10.5vw,54px)}
   .foundational-statement .architecture-definition{padding:22px}
 }
+
+/* v19.6 company identity + editorial composition */
+.company-masthead{width:min(calc(100% - 40px),1000px);padding:clamp(58px,8vw,96px) 0 clamp(46px,7vw,76px);display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"mark name" "mark line";column-gap:clamp(24px,4vw,52px);align-items:center;text-align:left}
+.company-mark{grid-area:mark;width:clamp(112px,14vw,168px);margin:0;filter:drop-shadow(0 0 30px #168cfa55)}
+.company-name{grid-area:name;font-family:Georgia,"Times New Roman",serif;font-size:clamp(42px,6.4vw,76px);font-weight:500;line-height:.92;letter-spacing:-.045em;text-transform:none;text-wrap:balance}
+.company-name span{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.25em;font-weight:700;letter-spacing:.28em;text-transform:uppercase;margin-top:.72em}
+.company-line{grid-area:line;max-width:720px;margin:20px 0 0;font:400 clamp(18px,2vw,25px)/1.5 Georgia,"Times New Roman",serif;color:#dce5ef}
+.home-page .hero{padding-top:clamp(62px,8vw,98px);padding-bottom:clamp(72px,9vw,112px)}
+.home-page .hero>.eyebrow{display:block;margin-bottom:22px}
+.home-page .hero>h2.architecture-thesis{font-family:Georgia,"Times New Roman",serif;font-size:clamp(46px,7.4vw,86px);line-height:.98;letter-spacing:-.045em;font-weight:400;max-width:13ch;margin:0 0 34px}
+.home-page .hero-copy{font-family:Georgia,"Times New Roman",serif;font-size:clamp(20px,2.35vw,27px);line-height:1.62;max-width:34em}
+.home-introduction h2,.home-library h2,.home-machine h2{font-weight:400}
+.home-introduction p{font-size:clamp(19px,2.15vw,25px);line-height:1.68}
+@media(max-width:720px){
+ .company-masthead{width:calc(100% - 32px);grid-template-columns:76px minmax(0,1fr);grid-template-areas:"mark name" "line line";column-gap:18px;padding-top:48px}
+ .company-mark{width:76px}
+ .company-name{font-size:clamp(34px,10vw,50px);line-height:.94}
+ .company-name span{font-size:.26em;letter-spacing:.18em;margin-top:.65em}
+ .company-line{margin-top:28px;font-size:19px}
+ .home-page .hero>h2.architecture-thesis{font-size:clamp(42px,12vw,60px);max-width:10ch}
+}
