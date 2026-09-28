@@ -345,3 +345,16 @@ html:not(.gl-intro-loading):not(.gl-intro-ready) .origin-experience + .hero,
  .origin-center{width:6px}
  .origin-principle{font-size:clamp(13px,3.8vw,16px);letter-spacing:.10em}
 }
+
+/* v19.8 scroll terminus: a nearly subliminal Logos before the light handoff. */
+.origin-logos{
+ position:absolute;z-index:4;left:50%;top:50%;pointer-events:none;
+ transform:translate(-50%,-50%) scale(.96);
+ opacity:var(--origin-logos-opacity,0);
+ color:#fff;
+ font:600 clamp(9px,.9vw,12px)/1 ui-sans-serif,system-ui,sans-serif;
+ letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;
+ text-shadow:0 0 7px rgba(255,255,255,.8),0 0 22px rgba(141,120,255,.42);
+ filter:blur(.18px);
+}
+@media(max-width:720px){.origin-logos{font-size:9px;letter-spacing:.34em;text-indent:.34em}}
