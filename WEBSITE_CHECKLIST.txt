@@ -266,3 +266,16 @@ LATE MEDIA MANAGER → AGENT SMITH PASS — 2026-09-27
 [✓] No destination-page copy was rewritten in this pass.
 
 [CORRECTED] v20.4 assistant-derived editorial language is NOT promoted into the homepage MEO/canonical claim graph. Visible editorial copy may develop the argument, but machine-readable canon must not silently convert assistant prose into Paul-approved architecture.
+
+
+PAUL VISUAL REVIEW — LATE 2026-09-27 / PICK UP TOMORROW
+[KEEP] The scroll at the top is perfect.
+[KEEP] The animation with the line across the bottom is brilliant.
+[ADJUST] Add more space around/between the opening animation elements so the composition can breathe more.
+[ADJUST] The logo is a little messed up; inspect and repair the logo presentation without changing the underlying brand artwork.
+[QUESTION/REWORK] The large “Touch to follow the chain” representation → referent → ground interaction is not communicating its point clearly on desktop. It currently feels like clicking through three large words without enough meaning. Rework or remove unless its purpose becomes immediately legible.
+[REMOVE AS TITLE] Do not use “Capability does not confer authority.” as a standalone title/maxim. Preserve the underlying concept in the explanatory paragraphs instead.
+[KEEP/LIKED] The paragraph reveal-on-scroll behavior is visually effective; Paul noticed the paragraphs appearing as he scrolled and liked the effect.
+[KEEP/LIKED] Paul likes the blue, ombré light lines, glow, and subtle purple background glow.
+[WORDING NOTE — USER’S OWN CORRECTION] “We did not invent a new human problem; we have invented artificially intelligent systems, not intelligence.” Preserve this as Paul’s wording for tomorrow’s review. Do not silently replace it with assistant-authored alternatives.
+[PROCESS] No further website edits tonight. All monitors/automations are off. Resume only by Paul’s explicit instruction.
