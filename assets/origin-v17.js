@@ -305,7 +305,7 @@
     principlePositions.clear();
     const centerX = width / 2;
     const centerY = height / 2;
-    const ringRadius = Math.min(width, height) * (isMobile ? 0.29 : 0.265);
+    const ringRadius = Math.min(width, height) * (isMobile ? 0.34 : 0.30);
     const settle = smoothstep(0.69, 0.9, value);
     const contraction = easeOutCubic(smoothstep(0.02, 0.96, gather));
 
@@ -494,7 +494,7 @@
     if (Math.max(ambientAlpha, principleAlpha) <= 0.001) return;
 
     context.save();
-    context.lineWidth = 0.72;
+    context.lineWidth = isMobile ? 1.15 : 0.9;
     RELATIONSHIPS.forEach(function (relationship, index) {
       const masterAlpha = relationship[1] === "fixed_center"
         ? principleAlpha
@@ -503,7 +503,7 @@
       const from = getSemanticPosition(relationship[0]);
       const to = getSemanticPosition(relationship[1]);
       if (!from || !to || !from.visible || !to.visible) return;
-      const localAlpha = masterAlpha * Math.min(from.opacity || 1, to.opacity || 1) * 0.34;
+      const localAlpha = masterAlpha * Math.min(from.opacity || 1, to.opacity || 1) * (isMobile ? 0.62 : 0.46);
       if (localAlpha <= 0.002) return;
 
       const midpointX = (from.x + to.x) / 2 + (height * 0.018) * Math.sin(index * 1.7);
