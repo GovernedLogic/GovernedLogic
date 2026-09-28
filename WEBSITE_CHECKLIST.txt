@@ -264,3 +264,5 @@ LATE MEDIA MANAGER → AGENT SMITH PASS — 2026-09-27
 [✓] Mobile is the priority surface for the opening spacing and depth behavior, while desktop retains full fidelity.
 [✓] Added meaningful touch/pointer depth to the five doors and a representation → referent → ground depth interaction. Motion remains subordinate to meaning and respects reduced-motion preferences.
 [✓] No destination-page copy was rewritten in this pass.
+
+[CORRECTED] v20.4 assistant-derived editorial language is NOT promoted into the homepage MEO/canonical claim graph. Visible editorial copy may develop the argument, but machine-readable canon must not silently convert assistant prose into Paul-approved architecture.
