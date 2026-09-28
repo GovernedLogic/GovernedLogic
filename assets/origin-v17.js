@@ -609,9 +609,9 @@
     if (appear <= 0.001) return;
     const centerX = width / 2;
     const centerY = height / 2;
-    const radius = mix(6, Math.min(width, height) * 0.09, appear);
+    const radius = mix(4, Math.min(width, height) * 0.055, appear);
     const gradient = context.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
-    gradient.addColorStop(0, "rgba(255,255,255," + (appear * 0.18).toFixed(4) + ")");
+    gradient.addColorStop(0, "rgba(255,255,255," + (appear * 0.34).toFixed(4) + ")");
     gradient.addColorStop(0.18, "rgba(142,203,247," + (appear * 0.11).toFixed(4) + ")");
     gradient.addColorStop(1, "rgba(93,90,224,0)");
     context.save();
@@ -622,7 +622,7 @@
     context.strokeStyle = "rgba(225,241,255," + (appear * 0.24).toFixed(4) + ")";
     context.lineWidth = 0.65;
     context.beginPath();
-    context.arc(centerX, centerY, mix(3, 16, appear), 0, TAU);
+    context.arc(centerX, centerY, mix(2, 9, appear), 0, TAU);
     context.stroke();
     context.restore();
   }
@@ -686,6 +686,17 @@
     wake();
   }
 
+  function onDeviceOrientation(event) {
+    if (!isMobile || reduceMotion.matches) return;
+    const gamma = clamp(Number(event.gamma || 0) / 35, -1, 1);
+    const beta = clamp((Number(event.beta || 0) - 45) / 45, -1, 1);
+    stage.style.setProperty("--gl-tilt-x", (gamma * 18).toFixed(1) + "px");
+    stage.style.setProperty("--gl-tilt-y", (beta * 14).toFixed(1) + "px");
+    pointer.targetX = gamma * 0.58;
+    pointer.targetY = beta * 0.42;
+    wake();
+  }
+
   function onVisibilityChange() {
     documentVisible = !document.hidden;
     if (!documentVisible && frameRequest) {
@@ -712,6 +723,7 @@
   stage.addEventListener("pointermove", onPointerMove, { passive: true });
   stage.addEventListener("pointerleave", onPointerLeave, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("deviceorientation", onDeviceOrientation, { passive: true });
   document.addEventListener("visibilitychange", onVisibilityChange);
 
   if (typeof ResizeObserver === "function") {
