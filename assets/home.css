@@ -455,3 +455,15 @@
   .plus-one{font-size:clamp(42px,12vw,58px)!important}
   .door-intro h2{font-size:clamp(42px,12vw,58px)}
 }
+
+/* v20.2 — official mark + wordmark as one identity. */
+.company-icon{
+  display:block;
+  width:clamp(190px,26vw,330px);
+  height:auto;
+  margin:0 auto clamp(28px,4vw,44px);
+  filter:drop-shadow(0 0 24px rgba(22,140,250,.30)) drop-shadow(0 0 70px rgba(22,140,250,.10));
+}
+@media(max-width:720px){
+  .company-icon{width:clamp(170px,55vw,240px);margin-bottom:24px}
+}
