@@ -168,3 +168,28 @@ FINAL ACCEPTANCE — 2026-09-27
 [✓] GitHub Pages exact-head deployment verified for production commit 10f0db950d8d34abd893fc86428274e8b826c66d. GitHub Actions workflow "pages build and deployment" run 36298186489 completed successfully on 2026-09-27.
 [✓] No website-source change was warranted after exact-head deployment verification.
 [✓] Permanent Governed Logic website publisher remains enabled; successful deployment closes this iteration only and does not disable permanent publishing infrastructure.
+
+
+MEDIA MANAGER REQUIREMENTS — 2026-09-28
+Status: ACTIVE WHAT LIST — preserve intent; do not treat this section as implementation instructions.
+
+[✓] Preserve the existing five-door homepage section: Governed Logic; On the Nature of Ultimate Grounding; Governed Intelligence; The Company; Research.
+[✓] Preserve the substantive content behind those five doors. It is currently protected from rewriting.
+[✓] Governed Logic Reasoning Systems must have an unmistakable company-identity moment using the official Governed Logic mark.
+[✓] Homepage must plainly communicate what Governed Logic Reasoning Systems is and what it does.
+[✓] Preserve the truth demonstration concept: “What is truth?” → correspondence with reality → Five Whys → Being, Truth, Logic, Meaning, Intelligibility, Obligation → “What sufficiently grounds all six?” → six plus one equals seven.
+[✓] Preserve the six-principle scroll convergence as a distinct experience from optional decorative particle/loop animation.
+[✓] At the final convergence of the six-principle scroll, LOGOS should appear only barely—enough that a visitor may wonder whether they saw it—before the point/beam of light.
+[ ] Homepage still needs stronger overall visual coherence: one Governed Logic visual language rather than separate cinematic, editorial, and product-UI personalities.
+[ ] Void must be compositional, not merely larger padding.
+[ ] Homepage needs editorial choreography that avoids repeating the corpus; it should reveal the argument and lead into the five protected doors.
+[ ] The truth/Five Whys demonstration should increasingly feel like one continuous reasoning chain rather than a set of product-style cards or blocks.
+[ ] Official mark and opening experience should feel like one visual system rather than a separate corporate masthead attached afterward.
+[ ] If a three-loop opening figure remains, it must be the intended difficult/interlocking three-loop geometry rather than three easy adjacent circles.
+[ ] Mobile should be treated as a first-class visual medium with meaningful restrained movement/depth where useful.
+[ ] Governed Logic itself should become more visually demonstrable: reasoning chain, representation→referent, grounding, mimicry/default-versus-governed reasoning can be shown rather than only described.
+[ ] Create a real Paul André Couchoud bio/about destination using the actual bio source and an actual verified portrait. Do not fabricate either.
+[ ] Add Paul André Couchoud visibly and naturally to the site's human/company identity and provide a route to the bio.
+[ ] Create a dedication page. Dedication names, exactly as currently specified: Gavin Smith; Ethan, Paul’s son; John C. Lennox.
+[ ] Locate/verify the actual bio.txt and portrait before completing the bio requirement. Current Library search did not reliably surface either source.
+[ ] Do not declare this Media Manager pass complete while any explicit requirement above remains unresolved.
