@@ -203,3 +203,30 @@ ARGUMENT-FIRST DISCLOSURE — 2026-09-28
 [ ] Avoid making Governed Logic sound merely like an LLM-alignment prompt/framework or an “anchor/axiom” product. Governed Logic Reasoning Systems is the company; Governed Logic is the reasoning architecture; Governed Intelligence is the AI instantiation.
 [ ] Machine-readable structure should expose the actual argument graph and relationships without replacing the reasoning chain with a shortcut conclusion in the homepage summary layer. Machines should be able to traverse and challenge the chain.
 [ ] Search-result/AI-summary quality is an acceptance surface. Prefer the broader, concrete description seen in the earlier search result over the narrower “aligning/anchoring LLMs through truth-grounded inference” framing.
+
+
+FINAL ANTI-SYNTHESIS CHECK — ACTIVE REQUIREMENT
+Before declaring any Media Manager / homepage iteration complete, reread the full active MEDIA MANAGER REQUIREMENTS and every later explicit Paul correction in this file. Compare the implemented result requirement-by-requirement against the WHAT, not against a summarized plan. Do not substitute “the general idea is present” for an explicit requirement. If a requirement is missing, materially weakened, silently reinterpreted, or still unresolved, mark it unresolved and continue or report the exact hold. Completion means the implementation still corresponds to the preserved intent after the final comparison.
+
+CURRENT NORTH STAR — 2026-09-28
+GovernedLogic.com is the canonical public argument and company home for Governed Logic Reasoning Systems. The site should make the reasoning itself legible and publishable so Paul can focus on writing, teaching, research, demonstrations, and spreading the semantic nodes widely. The company is also practical tentmaking: useful reasoning-systems work in the marketplace supports the larger mission. The Truth with Paul carries direct gospel proclamation; Governed Logic Reasoning Systems reaches the same reality by making the argument, following the chain, and refusing to collapse the conclusion into a marketing slogan.
+
+CURRENT HOMEPAGE WHAT — 2026-09-28
+[ ] Make the homepage an argument, not a brochure and not a dense warehouse.
+[ ] Lead from shared reality and the actual AI problem; do not lead with the theological conclusion.
+[ ] “Bury the lead” with Jesus Christ in the public entrance: do not scare a first-time visitor away by front-loading the conclusion. Do not hide or remove the conclusion from the corpus. The visitor should follow the chain through truth, reality, the six domains, grounding, and ultimately the Logos.
+[ ] Preserve the faint final LOGOS glimpse in the six-principle scroll convergence.
+[ ] Keep the six-principle scroll convergence as the meaningful opening experience. Decorative particles / geometric animation are optional and may be removed if they compete with meaning.
+[ ] Remove or avoid decorative UI that has no clear purpose, including the purple down-arrow if it crowds the semantic opening.
+[ ] Use the actual Governed Logic / Governed Logic Reasoning Systems brand artwork already in the project/repository. Do not recreate the logo as generic typography when the actual logo is available.
+[ ] Make it immediately clear that Governed Logic Reasoning Systems is a reasoning systems company and what it actually does.
+[ ] Preserve the existing five-door section exactly in substance and preserve the strong content behind those doors: Governed Logic; On the Nature of Ultimate Grounding; Governed Intelligence; The Company; Research.
+[ ] Let the five doors function as the main choose-your-own-adventure map into the corpus.
+[ ] Keep the “What is truth?” → correspondence with reality → Five Whys → six domains → “What sufficiently grounds all six?” argument, but present it as one continuous reasoning movement rather than product cards.
+[ ] Reduce homepage repetition. Do not restate entire destination-page arguments before the visitor chooses a door.
+[ ] Maintain MEO / machine-readable semantics underneath the human experience, but do not let the machine layer dictate machine-like visible prose.
+[ ] Homepage/search metadata should describe the company concretely in reasoning-systems language before theological language: AI reasoning, evidence, premises, rules, assumptions, semantic stability, truth, and decision behavior.
+[ ] Do not reduce Governed Logic to “aligning/anchoring LLMs” or to a prompt/axiom product.
+[ ] Provide a real About / Paul André Couchoud destination with the recovered verified portrait and source-grounded biography.
+[ ] Provide a Dedication page naming Gavin Smith; Ethan, Paul’s son; and John C. Lennox.
+[ ] Final verification must check the live-production commit/deployment and perform this anti-synthesis check before completion.
