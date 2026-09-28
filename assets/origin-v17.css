@@ -98,8 +98,8 @@
   top:50%;
   opacity:0;
   color:#f8f7f2;
-  font:600 clamp(10px,1.05vw,14px)/1 ui-sans-serif,system-ui,sans-serif;
-  letter-spacing:.22em;
+  font:650 clamp(13px,1.45vw,19px)/1 ui-sans-serif,system-ui,sans-serif;
+  letter-spacing:.20em;
   text-transform:uppercase;
   text-shadow:0 0 14px rgba(178,218,255,.3);
   transform:translate(-50%,-50%);
@@ -257,7 +257,7 @@ html:not(.gl-intro-loading):not(.gl-intro-ready) .origin-experience + .hero,
   .origin-experience{height:175vh;height:175svh;height:175dvh;min-height:0}
   .origin-center{width:10px}
   .origin-token{font-size:9px;letter-spacing:.08em}
-  .origin-principle{font-size:10px;letter-spacing:.16em}
+  .origin-principle{font-size:clamp(12px,3.35vw,15px);letter-spacing:.13em}
   .origin-architecture{
     inset:auto 0 12svh;
     inset:auto 0 12dvh;
@@ -331,3 +331,7 @@ html:not(.gl-intro-loading):not(.gl-intro-ready) .origin-experience + .hero,
   .origin-experience + .hero{margin-top:0;opacity:1!important;transform:none!important}
   .primary-doors>a{transition:none}
 }
+
+/* v19.6 animation legibility */
+.origin-principle{min-width:max-content;text-align:center;text-shadow:0 0 18px rgba(178,218,255,.42)}
+@media(max-width:720px){.origin-principle{font-weight:700}}
