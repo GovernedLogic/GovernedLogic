@@ -20,7 +20,7 @@ GROUNDING
 The triune God is the ultimate ground of the one reality. Jesus Christ is the Logos and named governing referent: the source and ground of being and truth, and the binding ground of logic, meaning, intelligibility, and obligation.
 
 PAGE ROLES
-/ — public front door; preserve opening animation and layout; preserve boxed foundational statement.
+/ — public front door and argument map; preserve the semantic six-principle scroll convergence, lead from the AI/truth problem, and route visitors into the five canonical doors. Do not front-load the theological conclusion.
 /concepts/governed-logic/ — current upstream/bidirectional architecture.
 /concepts/ultimate-grounding/ — dependence, sufficiency, ultimacy, named Logos terminus.
 /concepts/governed-intelligence/ — AI instantiation; prototype versus planned engineering.
@@ -46,7 +46,7 @@ VISUAL BASELINE
 Primary accent blue: #168CFA. Secondary violet may remain: #8D78FF. Retire the old active yellow/gold accent. Do not restructure the opening animation or general layout.
 
 AUDIT FINDINGS — PASS 1
-[✓] Homepage contains the boxed foundational statement and explicitly names the triune God and Jesus Christ the Logos.
+[SUPERSEDED] Earlier homepage exposed the full foundational/theological conclusion directly. Current argument-first homepage intentionally does not front-load that conclusion.
 [✓] Governed Logic page reconciled to the upstream, bidirectional architecture.
 [✓] Concepts index distinguishes the governing truth principle from truth as correspondence to one reality.
 [✓] Ultimate Grounding and homepage grounding wording now identify the triune God as ultimate ground and Jesus Christ as the Logos without competing-ground language.
@@ -58,8 +58,8 @@ AUDIT FINDINGS — PASS 1
 [✓] Touched canonical concept pages are aligned to site version 19.4 while historical source editions remain unchanged.
 
 GOVERNING CONTENT
-[✓] Homepage contains the boxed foundational statement intact.
-[✓] Homepage explicitly names the triune God as ultimate ground and Jesus Christ as the Logos.
+[SUPERSEDED] The boxed foundational statement is no longer required on the homepage; its substance remains in the canonical corpus and destination pages.
+[SUPERSEDED] Homepage no longer explicitly names the ultimate-ground identification in the entrance layer; the argument routes to Ultimate Grounding where identification is developed.
 [✓] Six constitutive principles are exactly: Being, Truth, Logic, Meaning, Intelligibility, Obligation.
 [✓] Truth is defined as correspondence to one reality.
 [✓] Reasoning is represented as distinguishing, relating, ordering, and adjudicating representations.
@@ -86,8 +86,8 @@ HUMAN / MACHINE ALIGNMENT
 [✓] Repository code search finds no active “Moral obligation” leakage; current architecture uses “Obligation.”
 
 VISUAL / UX
-[✓] Existing opening animation block remains structurally unchanged.
-[✓] Existing page layout remains structurally unchanged except bounded content additions.
+[SUPERSEDED] Decorative opening animation is no longer protected. The semantic six-principle scroll convergence is protected; decorative particles/geometry may be removed.
+[SUPERSEDED] Homepage layout may be simplified to serve the argument, while the five-door section and substantive destination-page content remain protected.
 [✓] Governed Logic blue #168CFA is the primary accent token; old yellow/gold active accents were retired in the audited pages.
 [✓] Existing responsive layout and protected opening structure were preserved; no layout rules were changed in this interactive semantic repair pass.
 [✓] Five primary homepage destinations remain intact.
@@ -158,7 +158,7 @@ SELF-CORRECTING PUBLISHER RULE — 2026-09-27
 
 
 FINAL ACCEPTANCE — 2026-09-27
-[✓] Canonical core content rebuilt; protected opening/layout and official icon preserved.
+[✓] Canonical core content preserved; later Media Manager iterations intentionally simplified the homepage entrance while protecting the five-door map and destination-page content.
 [✓] Publication catalog, search index, Library, feed, sitemap, and manifest reconciled to canonical HTML.
 [✓] Acceptance passed for canonical routes, structured data, generated hashes, current definitions, and published local targets.
 [✓] Brand sweep found no remaining gold/yellow treatments on main.
