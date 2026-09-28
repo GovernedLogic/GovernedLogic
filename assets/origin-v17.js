@@ -645,11 +645,7 @@
     updatePrinciples(value, gather);
     updateArchitecture(value);
 
-    if (stage.dataset.originEffectsV05 !== "ready") {
-      drawInfinityDepth(value);
-      drawSeedOfLife(value);
-      drawTesseract(value);
-    }
+    /* v20: semantic opening only. Decorative particle/geometry layers are intentionally absent. */
     drawRelationships(value);
     drawArchitecturePath(value);
     drawFixedCenter(value);
