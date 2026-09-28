@@ -74,10 +74,31 @@
     if(total<6.98)leader(lead,alpha*.62);
   }
   function drawLoops(v,g){
-    const appear=smooth(.39,.48,v),dissolve=smooth(.67,.82,v),ge=ease(g),alpha=appear*(1-dissolve*.94)*mix(1,.1,smooth(.04,.94,g));if(alpha<=.002)return;
-    const R=Math.min(w,h)*(mobileQuery.matches ? .115:.105)*mix(1,.055,ge),spacing=R*1.72,total=(reduceMotion.matches?1:smooth(.40,.67,v))*LOOP_COUNT;let lead=null;
-    for(let i=0;i<LOOP_COUNT;i++){const amount=clamp(total-i,0,1);if(amount<=0)continue;const cx=w/2+(i-1)*spacing,cy=h/2,start=i%2===0?0:Math.PI,ctx=i===1?f:b;traceArc(ctx,cx,cy,R,start,amount,alpha*.34,"17,51,87",mobileQuery.matches ? 3:4.6,0);traceArc(ctx,cx,cy,R,start,amount,alpha*.82,"217,238,252",mobileQuery.matches ? 1.15:1.8,mobileQuery.matches ? 5:8);lead={x:cx+Math.cos(start+TAU*amount)*R,y:cy+Math.sin(start+TAU*amount)*R};}
-    if(total<LOOP_COUNT-.01)leader(lead,appear*mix(1,.15,dissolve));
+    const appear=smooth(.39,.48,v),dissolve=smooth(.67,.82,v),ge=ease(g),alpha=appear*(1-dissolve*.94)*mix(1,.1,smooth(.04,.94,g));
+    if(alpha<=.002)return;
+    const R=Math.min(w,h)*(mobileQuery.matches ? .125:.118)*mix(1,.055,ge);
+    const cx=w/2,cy=h/2;
+    const amount=reduceMotion.matches?1:smooth(.40,.67,v);
+    const samples=Math.max(8,Math.floor(220*amount));
+    const point=t=>{
+      // Bernoulli-style figure eight tuned toward two circular lobes.
+      const s=Math.sin(t),c=Math.cos(t),den=1+s*s;
+      return{x:cx+(2.02*R*c/den),y:cy+(1.98*R*s*c/den)};
+    };
+    const trace=(ctx,width,a,color,glow)=>{
+      ctx.save();ctx.lineCap="round";ctx.lineJoin="round";ctx.lineWidth=width;
+      ctx.strokeStyle="rgba("+color+","+a.toFixed(4)+")";
+      ctx.shadowColor="rgba("+color+","+(a*.62).toFixed(4)+")";ctx.shadowBlur=glow;
+      ctx.beginPath();
+      for(let i=0;i<=samples;i++){
+        const t=(i/220)*TAU,pt=point(t);
+        if(i===0)ctx.moveTo(pt.x,pt.y);else ctx.lineTo(pt.x,pt.y);
+      }
+      ctx.stroke();ctx.restore();
+    };
+    trace(b,mobileQuery.matches?3.1:4.8,alpha*.30,"17,51,87",0);
+    trace(f,mobileQuery.matches?1.25:1.9,alpha*.88,"217,238,252",mobileQuery.matches?6:9);
+    if(amount<.995)leader(point(amount*TAU),appear*mix(1,.15,dissolve));
   }
   function drawNetwork(v,g){
     const form=smooth(.68,.88,v),ge=ease(smooth(.02,.98,g)),alpha=form*mix(1,.16,smooth(.05,.96,g));if(alpha<=.002)return;
