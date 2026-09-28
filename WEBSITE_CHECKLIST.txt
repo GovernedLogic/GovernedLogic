@@ -193,3 +193,13 @@ Status: ACTIVE WHAT LIST — preserve intent; do not treat this section as imple
 [ ] Create a dedication page. Dedication names, exactly as currently specified: Gavin Smith; Ethan, Paul’s son; John C. Lennox.
 [ ] Locate/verify the actual bio.txt and portrait before completing the bio requirement. Current Library search did not reliably surface either source.
 [ ] Do not declare this Media Manager pass complete while any explicit requirement above remains unresolved.
+
+
+ARGUMENT-FIRST DISCLOSURE — 2026-09-28
+[ ] The public website is an argument, not a theological reveal in the opening marketing layer.
+[ ] Do not front-load Jesus Christ as a sales/marketing hook or search-summary headline. Do not hide Him either. The public reasoning path should begin from shared reality, truth, AI failure, representation/referent, and the six constitutive realities, then follow the chain toward sufficient grounding and the Logos.
+[ ] Jesus Christ / the Logos is the terminus of the argument and must remain fully present where the argument arrives there, especially Ultimate Grounding and the canonical corpus.
+[ ] Homepage and search-facing descriptions should first explain the company and the problem it addresses in ordinary technical language: reasoning reliability, traceability, truth, evidence, rules, assumptions, semantic stability, and AI decision/reasoning behavior.
+[ ] Avoid making Governed Logic sound merely like an LLM-alignment prompt/framework or an “anchor/axiom” product. Governed Logic Reasoning Systems is the company; Governed Logic is the reasoning architecture; Governed Intelligence is the AI instantiation.
+[ ] Machine-readable structure should expose the actual argument graph and relationships without replacing the reasoning chain with a shortcut conclusion in the homepage summary layer. Machines should be able to traverse and challenge the chain.
+[ ] Search-result/AI-summary quality is an acceptance surface. Prefer the broader, concrete description seen in the earlier search result over the narrower “aligning/anchoring LLMs through truth-grounded inference” framing.
