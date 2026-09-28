@@ -9,6 +9,7 @@
   const centerMark = experience && experience.querySelector("#origin-center, .origin-center");
   const architecture = experience && experience.querySelector("#origin-architecture");
   const hero = document.querySelector("#architecture");
+  const logosMark = experience && experience.querySelector("#origin-logos");
 
   function markFailed() {
     if (window.__glIntroFallbackTimer) window.clearTimeout(window.__glIntroFallbackTimer);
@@ -202,6 +203,12 @@
 
   function updateHandoff(scrollProgress) {
     const handoff = smoothstep(0.64, 1, scrollProgress);
+    if (logosMark) {
+      const logosIn = smoothstep(0.885, 0.945, scrollProgress);
+      const logosOut = smoothstep(0.972, 1, scrollProgress);
+      const logosOpacity = logosIn * (1 - logosOut) * 0.34;
+      experience.style.setProperty("--origin-logos-opacity", logosOpacity.toFixed(4));
+    }
     experience.style.setProperty("--origin-stage-opacity", mix(1, 0.16, handoff).toFixed(4));
     experience.style.setProperty("--origin-stage-scale", mix(1, 0.985, handoff).toFixed(4));
     hero.style.setProperty("--origin-hero-opacity", mix(0.12, 1, handoff).toFixed(4));
