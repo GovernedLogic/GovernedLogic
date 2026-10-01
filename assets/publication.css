@@ -195,3 +195,7 @@ p{letter-spacing:.002em}
 .document-page .document-footer span:last-child:has(a){font-size:0}
 .document-page .document-footer span:last-child:has(a) a{font-size:11px;margin:2px 3px}
 @media(max-width:720px){.document-page #current-canonical>p:last-child{grid-template-columns:1fr}}
+
+
+/* v20.10 reader-facing provenance cleanup */
+.provenance{display:none}
