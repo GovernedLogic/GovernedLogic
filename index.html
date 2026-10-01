@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Governed Logic Reasoning Systems</title>
   <meta name="description" content="Governed Logic Reasoning Systems">
   <meta name="author" content="Paul André Couchoud">
-  <meta name="gl-version" content="20.8">
+  <meta name="gl-version" content="21.2">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://governedlogic.com/">
   <meta property="og:title" content="Governed Logic Reasoning Systems">
@@ -16,13 +16,10 @@
   <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Governed Logic publications">
   <link rel="alternate" type="application/json" href="/publication/manifest.json" title="Governed Logic content and source manifest">
   <link rel="alternate" type="application/json" href="/assets/origin-scene.json" title="Opening scene relationship ledger">
-  <link rel="stylesheet" href="/assets/publication.css?v=20.8">
+  <link rel="stylesheet" href="/assets/publication.css?v=21.2">
   <link rel="stylesheet" href="/assets/business.css">
-  <link rel="stylesheet" href="/assets/home.css?v=20.8">
-  <link rel="stylesheet" href="/assets/origin-v17.css?v=20.8">
-  <script>
-  (()=>{const root=document.documentElement;root.classList.add("gl-intro-loading");window.__glIntroFallbackTimer=window.setTimeout(()=>{if(!root.classList.contains("gl-intro-ready")){root.classList.remove("gl-intro-loading");root.classList.add("gl-intro-failed");}},3000);})();
-  </script>
+  <link rel="stylesheet" href="/assets/home.css?v=21.2">
+  <link rel="stylesheet" href="/assets/book-open-hero.css?v=21.2">
   <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -112,22 +109,37 @@
 <body class="home-page">
   <a class="skip-link" href="#architecture">Skip to content</a>
 
-  <section class="origin-experience" id="origin" aria-label="Governed Logic introduction">
-    <div class="origin-stage">
-      <canvas class="origin-canvas" id="origin-canvas" aria-hidden="true"></canvas>
-      <span class="origin-center" id="origin-center" aria-hidden="true"></span>
-      <span class="origin-logos" id="origin-logos" aria-hidden="true">LOGOS</span>
+  <section class="book-hero" id="origin" aria-label="Governed Logic introduction">
+    <div
+      class="book-hero__stage"
+      id="book-hero-stage"
+      role="button"
+      tabindex="0"
+      aria-label="Governed Logic binary palindrome mark. Activate to open or close."
+      aria-pressed="false"
+    >
+      <div class="book-hero__book">
+        <div class="book-hero__half book-hero__half--left" aria-hidden="true">
+          <span class="book-hero__glyph">10</span>
+        </div>
 
-      <ul class="origin-principles" aria-label="Six first principles">
-        <li class="origin-principle" data-principle="being">BEING</li>
-        <li class="origin-principle" data-principle="truth">TRUTH</li>
-        <li class="origin-principle" data-principle="logic">LOGIC</li>
-        <li class="origin-principle" data-principle="meaning">MEANING</li>
-        <li class="origin-principle" data-principle="intelligibility">INTELLIGIBILITY</li>
-        <li class="origin-principle" data-principle="obligation">OBLIGATION</li>
-      </ul>
+        <div class="book-hero__spine" aria-hidden="true">
+          <span class="book-hero__axis"></span>
+          <div class="book-hero__star-wrap">
+            <svg class="book-hero__star" viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M50 2 C53 28 61 39 98 50 C61 61 53 72 50 98 C47 72 39 61 2 50 C39 39 47 28 50 2 Z"/>
+            </svg>
+            <span class="book-hero__star-core"></span>
+          </div>
+        </div>
 
+        <div class="book-hero__half book-hero__half--right" aria-hidden="true">
+          <span class="book-hero__glyph">01</span>
+        </div>
+      </div>
     </div>
+
+    <div class="book-hero__hint">click to fold / unfold</div>
   </section>
 
   <section class="company-masthead" id="architecture" tabindex="-1" aria-label="Governed Logic Reasoning Systems">
@@ -149,9 +161,9 @@
 </main>
   <footer class="document-footer">
     <span id="paul">Paul André Couchoud · Governed Logic Reasoning Systems</span>
-    <span>Governed Logic · v20.8 · 2026</span>
+    <span>Governed Logic · v21.2 · 2026</span>
   </footer>
-  <script src="/assets/origin-v17.js?v=20.8" defer></script>
-  <script src="/assets/home-depth.js?v=20.8" defer></script>
+  <script src="/assets/home-depth.js?v=21.2" defer></script>
+  <script src="/assets/book-open-hero.js?v=21.2" defer></script>
 </body>
 </html>
