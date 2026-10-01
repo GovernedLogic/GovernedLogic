@@ -144,3 +144,28 @@ html.motion-paused *{animation-play-state:paused!important}
 body{font-family:Georgia,"Times New Roman",serif}
 .eyebrow,.label,.chain-nav,.document-header,.document-footer,.published-date,.source-link,.source-note,.release-mark,.copy-principles,.copy-status{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 p{letter-spacing:.002em}
+
+
+/* v20.9 navigation presentation: keep URLs in the document, remove link-list clutter from human view. */
+.document-page .reading-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:30px}
+.document-page .reading-links a{display:flex;align-items:center;min-height:56px;padding:13px 15px;border:1px solid #343141;border-radius:8px;background:linear-gradient(145deg,#121018,#090b10);color:#e0d8ef;text-decoration:none;font:600 13px/1.45 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:border-color .2s,background .2s,transform .2s}
+.document-page .reading-links a:hover{border-color:#8d78ff;background:#171321;transform:translateY(-1px)}
+.document-page .reading-links[aria-label="Breadcrumb"]{display:flex;align-items:center;gap:9px;margin:0 0 30px}
+.document-page .reading-links[aria-label="Breadcrumb"] a{min-height:auto;padding:0;border:0;background:none;color:#aeb8c8;font-size:12px;font-weight:500}
+.document-page .reading-links[aria-label="Breadcrumb"] a:hover{background:none;border:0;transform:none;color:#e0d8ef}
+.document-page .source-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;padding:0;margin:26px 0 0}
+.document-page .source-list li{margin:0}
+.document-page .source-list a{display:flex;align-items:center;min-height:52px;padding:12px 14px;border:1px solid #303240;border-radius:8px;background:#0c0c10;color:#dcd4e8;text-decoration:none;font:600 13px/1.4 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.document-page .source-list a:hover{border-color:#71618f;background:#12101a;color:#fff}
+.document-page .source-note .source-link,.document-page .provenance dd a{color:#c6b8db;text-decoration:none;text-underline-offset:0}
+.document-page .provenance dd a{display:inline-flex;align-items:center;min-height:36px;padding:5px 9px;border:1px solid #393341;border-radius:6px;background:#0b0b0e;font:600 12px/1.45 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.document-page .provenance dd a:hover,.document-page .source-note .source-link:hover{border-color:#756397;color:#fff}
+.document-page .source-entry>a{display:inline-flex;align-items:center;min-height:44px;margin:4px 0 6px;padding:9px 13px;border:1px solid #393341;border-radius:7px;background:#0d0d11;color:#d9d0e8;text-decoration:none;font:600 12px/1.4 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.document-page .source-entry>a:hover{border-color:#8d78ff;color:#fff}
+.document-page .document-footer span:last-child a{display:inline-flex;align-items:center;min-height:34px;padding:3px 7px;border:1px solid #302d37;border-radius:6px;color:#bfb4cf;text-decoration:none}
+.document-page .document-footer span:last-child a:hover{border-color:#625573;color:#fff}
+@media(max-width:720px){
+  .document-page .reading-links,.document-page .source-list{grid-template-columns:1fr}
+  .document-page .reading-links a,.document-page .source-list a{min-height:50px}
+  .document-page .document-footer span:last-child{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+}
