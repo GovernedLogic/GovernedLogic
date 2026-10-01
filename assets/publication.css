@@ -1,6 +1,6 @@
 @import url("/assets/experience.css?v=22.0");
 
-:root{--bg:#000000;--panel:#0c0c0e;--text:#ffffff;--muted:#aaa6ad;--line:#29272d;--gold:#168cfa;--violet:#00ff41;--max:1000px}
+:root{--bg:#000000;--panel:rgba(0,0,0,.64);--text:#ffffff;--muted:rgba(255,255,255,.66);--line:rgba(255,255,255,.12);--gold:#168cfa;--violet:#00ff41;--max:1000px}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;line-height:1.72}
@@ -477,3 +477,16 @@ a:hover{color:#fff}
 @media(prefers-reduced-motion:reduce){
   .concept-card,.principles article{transition:none}
 }
+
+
+/* LAUNCH NEUTRAL OVERRIDES 22.0 — keep reading surfaces inside black/blue/green/white. */
+body.document-page{color:#fff}
+body.document-page p,body.document-page li,body.document-page dd,body.document-page small,body.document-page .hero-copy{color:rgba(255,255,255,.70)}
+body.document-page h1,body.document-page h2,body.document-page h3,body.document-page strong,body.document-page .maxim{color:#fff}
+body.document-page .document-footer,body.document-page .document-footer p{color:rgba(255,255,255,.48)}
+body.document-page .button{color:#fff;border-color:rgba(22,140,250,.55);background:rgba(0,0,0,.32)}
+body.document-page .button:hover{border-color:#00ff41;background:rgba(0,255,65,.055)}
+body.document-page .principles article,body.document-page .terms p{background:rgba(0,0,0,.52);border-color:rgba(255,255,255,.11)}
+body.document-page .chain span{background:rgba(0,0,0,.55);border-color:rgba(255,255,255,.12);color:#fff}
+body.document-page aside{background:linear-gradient(90deg,rgba(22,140,250,.055),transparent)}
+body.document-page blockquote{color:#fff}
