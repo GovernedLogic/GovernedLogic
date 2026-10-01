@@ -294,3 +294,18 @@ LAUNCH 22.0 — 2026-10-01
 [✓] Homepage search/OG description uses the approved company definition: “Governed Logic Reasoning Systems is a reasoning systems company.”
 [✓] Launch JavaScript compiled successfully during verification; homepage references launch.css and launch.js; all expected public routes resolve in repository main.
 [VERIFY LIMIT] The custom domain could not be fetched from the available external web verifier during this run. Repository main and route/source integrity were verified directly through the connected GitHub repository.
+
+
+WORKSHOP PASS — 2026-10-01 — CURRENT VISUAL / FLOW AUTHORITY
+[✓] No monitors or email-task queue are part of this pass. Website work is direct and interactive.
+[✓] Preserve the current launch structure/bones and canonical source content. This pass changes presentation, placement, and flow—not Governed Logic doctrine.
+[✓] Look and feel must become distinctly Governed Logic rather than generic black philosophy, game UI, SaaS, crypto, or sci-fi interface.
+[✓] Current visual direction restores the original Governed Logic atmosphere: near-black, Governed Logic blue, original violet/purple (#8D78FF from the prior design language), white, restrained Matrix green where useful, glow, depth, and token-like particles.
+[✓] Typography should feel serious, modern, intellectual, technical, legible, and human. Avoid novelty/video-game display treatment.
+[✓] Content and visual design are adjudicated together: preserve approved words, but adjust placement, grouping, visual weight, spacing, section boundaries, and movement so the reader encounters the existing content in the right order and at the right emphasis.
+[✓] The entry/pagination experience must not force a visitor to guess what “Enter” means. Generic “Enter” labels are retired in favor of explicit destination/action language, and the homepage experience should begin without a redundant entry gate.
+[✓] Scene progression should remain obvious and simple: background/tap/arrow progression through the overview; named actions open named destinations.
+[✓] Restore more token/particle atmosphere from the original design without clutter. Particles should read as representations/tokens, not confetti.
+[✓] The glass/depth scene may carry a restrained white point-light/star at its center as a visual referent/focal point.
+[✓] Do not over-appify the website. Motion and pagination serve comprehension; they do not become the product.
+[✓] “Walk the workshop” is the method for this phase: make small, coherent, reversible adjustments to color, typography, spacing, placement, and flow; re-evaluate in context; preserve what already works.
