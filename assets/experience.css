@@ -35,3 +35,70 @@
 @media(max-width:860px){.gl-site-nav{width:100%;margin:18px auto -12px;padding:0 14px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}.gl-site-nav::-webkit-scrollbar{display:none}.gl-site-nav ol{display:flex;width:max-content;gap:8px;padding-right:14px}.gl-site-nav li{flex:0 0 min(70vw,250px);width:min(70vw,250px);scroll-snap-align:start}.gl-site-nav a{min-height:64px}}
 @media(max-width:720px){.gl-route-next{width:calc(100% - 28px);grid-template-columns:1fr;margin-bottom:72px}.gl-route-next a{min-height:98px;padding:21px 22px}.gl-route-next .gl-route-next-link{text-align:left;align-items:flex-start}.document-page .reading-links{grid-template-columns:1fr}.document-page .reading-links a{min-height:68px}.document-page .about-story .story-chapter{padding-left:8px;padding-right:8px}.document-page .story-turn:before{left:-10px}}
 @media(prefers-reduced-motion:reduce){.gl-site-nav a,.gl-route-next a,.document-page .reading-links a:after{transition:none}.gl-site-nav a:hover,.gl-route-next a:hover{transform:none}}
+
+
+/* v21.1 Super Two — consistent route affordances on existing document markup */
+body.document-page .document-header{
+  isolation:isolate;
+  overflow:hidden;
+}
+body.document-page .document-header:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(260px 120px at 0 0,rgba(22,140,250,.12),transparent 72%),
+    radial-gradient(240px 110px at 100% 100%,rgba(141,120,255,.08),transparent 72%);
+}
+body.document-page .document-header nav{display:flex;align-items:center;margin-left:auto}
+body.document-page .document-header>a:last-child,
+body.document-page .document-header nav a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:0 12px;
+  border:1px solid rgba(121,195,255,.12);
+  border-radius:9px;
+  background:rgba(9,14,23,.62);
+}
+body.document-page .document-header>a:last-child:hover,
+body.document-page .document-header nav a:hover,
+body.document-page .document-header>a:last-child:focus-visible,
+body.document-page .document-header nav a:focus-visible{
+  border-color:rgba(141,120,255,.48);
+  background:rgba(19,24,40,.9);
+}
+body.document-page .document-main section[id],
+body.document-page .document-main .business-section[id]{scroll-margin-top:118px}
+body.document-page .document-main section[id]:target,
+body.document-page .document-main .business-section[id]:target{
+  border-color:rgba(22,140,250,.44);
+  box-shadow:inset 0 1px rgba(255,255,255,.03),0 0 0 1px rgba(141,120,255,.08),0 24px 74px rgba(0,0,0,.3);
+}
+@media(max-width:720px){
+  body.document-page .document-header>a:last-child,
+  body.document-page .document-header nav a{padding:0 9px;border:0;background:transparent}
+  .document-page .reading-links:has(a + a){
+    display:flex;
+    width:calc(100% + 44px);
+    margin-left:-22px;
+    padding:0 22px 12px;
+    gap:10px;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:22px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .document-page .reading-links:has(a + a)::-webkit-scrollbar{display:none}
+  .document-page .reading-links:has(a + a) a{
+    flex:0 0 min(78vw,300px);
+    min-height:86px;
+    scroll-snap-align:center;
+    scroll-snap-stop:always;
+  }
+}
