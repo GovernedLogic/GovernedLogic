@@ -1,0 +1,27 @@
+GOVERNEDLOGIC.COM — GOVERNING WEBSITE NORTH STAR
+Captured: 2026-10-01
+Source: Paul — “The number one requirement of the website is that it points.”
+Scriptural pointer: Matthew 24:14.
+
+STATUS
+This is a durable website authority/state rule. It governs subsequent GovernedLogic.com design, information architecture, navigation, machine readability, article, research, company, biography, mechanism, and interaction work.
+
+RULE
+The website is not the destination. Test each website decision by whether it points clearly rather than drawing attention to itself or obscuring the work.
+
+BOUNDARIES
+- Do not rewrite either treatise.
+- Do not synthesize new doctrine from this rule.
+- Do not front-load the conclusion or turn it into a marketing gimmick.
+- Preserve the existing argument path and source hierarchy.
+- Preserve the protected opening scroll/collapse animation.
+- Preserve the current blue/violet visual language.
+- Preserve the official brand artwork.
+- Preserve substantive destination-page data.
+- Preserve desktop and mobile usability.
+- The small sparkle note is captured only as a visual idea. It is not authorization to implement a specific visual effect unless a later task says so.
+
+RELATIONSHIP TO CURRENT WEBSITE STATE
+- WEBSITE_SOURCE_AUTHORITY_MAP.txt remains the source-precedence inventory.
+- WEBSITE_CHECKLIST.txt remains the operational completion/checklist state.
+- This file adds the governing North Star without altering either treatise or public-page content.
