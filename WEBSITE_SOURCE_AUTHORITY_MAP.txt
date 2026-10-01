@@ -1,0 +1,199 @@
+GOVERNEDLOGIC.COM — SOURCE AUTHORITY MAP
+Prepared: 2026-10-01
+Purpose: inventory and authority map only. This file does not rewrite doctrine, approve candidate material, or replace source artifacts.
+
+AUTHORITY RULE
+1. Newest explicit Paul instruction/correction controls the website behavior or wording it directly addresses.
+2. Current canonical Library source controls substantive wording when one exists.
+3. Current GitHub HTML is the public representation, not an independent doctrinal authority; it must remain answerable to the source.
+4. Candidate, hypothesis, research, and working documents remain at their stated status until explicitly promoted.
+5. Archive, superseded, and historical files are provenance. Do not silently merge them into current canon.
+6. Missing or conflicting authority is a HOLD, not an invitation to synthesize a compromise.
+
+CURRENT DIRECT WEBSITE BOUNDARIES — 2026-09-30 / 2026-10-01
+- Website editor role: organize, present, route, format, and implement; do not invent Governed Logic content.
+- Preserve the approved opening scroll/collapse experience and its working motion.
+- Preserve the established blue/violet visual language unless a later bounded presentation test is explicitly approved.
+- Preserve substantive destination-page content unless a specific source-backed correction is required.
+- Remove visible link clutter by changing presentation/navigation, not by deleting the underlying content.
+- Desktop and mobile are both acceptance surfaces.
+- The two treatises are foundational source works and are not to be rewritten by website maintenance.
+- Jeremiah 10 / “ancient problem” material is not homepage content.
+- Current mechanism page is known to require separate source-backed repair; it is not authoritative merely because it is public.
+- bio.txt is the biography source. Do not replace Paul’s story with a generated summary.
+
+FOUNDATIONAL TREATISES
+
+A. ON THE NATURE OF ULTIMATE GROUNDING
+CURRENT SOURCE:
+- Library: /Governed Logic/Canon/Ultimate Grounding/On_the_Nature_of_Ultimate_Grounding_v0.7_2026-09-26.txt
+  Status: latest located unarchived treatise text; use as the current file source unless a later explicit Paul correction governs the point at issue.
+
+CURRENT CORRECTIONS / BOUNDARIES:
+- Current project instruction: treatise is declarative; conceptual/theoretical development closed 2026-09-30. Website work may organize/present existing material but must not resume theoretical development.
+
+HISTORICAL / PROVENANCE:
+- /Governed Logic/Canon/Ultimate Grounding/Archive/On_the_Nature_of_Ultimate_Grounding_v0.6_2026-09-23.txt
+- /Governed Logic/Canon/Ultimate Grounding/Archive/On_the_Nature_of_Ultimate_Grounding_v0.6_2026-09-23.pdf
+- /Governed Logic/Archive/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf
+- GitHub: /sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf
+These are provenance/public snapshots and do not outrank v0.7 or later explicit corrections.
+
+B. GOVERNED LOGIC
+CURRENT SOURCE BASE:
+- Library: /Governed Logic/Canon/Governed Logic.txt
+  Status: canonical base file located in Library.
+
+LATER CURRENT CLARIFICATIONS:
+- /Governed Logic/Research/Captures/GovernedLogic_FollowTheChain_Termination_2026-09-23.txt
+- /Governed Logic/Research/Captures/GovernedLogic_STOP_WhatChanged_2026-09-23.txt
+- Current project instruction: Governed Logic is the substrate-agnostic treatise/reasoning architecture; Alpha and Omega reasoning is within Governed Logic rather than a separate competing framework; conceptual/theoretical development closed 2026-09-30.
+These later explicit clarifications supersede older incompatible wording without erasing provenance.
+
+HISTORICAL / PROVENANCE:
+- /Governed Logic/Archive/02_Governed_Logic_2026-09-22_172847_EDT.pdf
+- /Governed Logic/Archive/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf
+- GitHub: /sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf
+- GitHub: /sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf
+
+GOVERNED INTELLIGENCE
+CURRENT WORKING BASELINE:
+- Library: /Governed Logic/Architecture/Governed Intelligence/GOVERNED_INTELLIGENCE_PRD.txt
+  Status: CURRENT WORKING BASELINE in-file.
+
+CANDIDATE — DO NOT SILENTLY PROMOTE:
+- Library: /Governed Logic/Architecture/Governed Intelligence/Governed_Intelligence_Definition_and_Derived_Requirements_v0.1_2026-09-27.txt
+  Status: candidate canon / pressure-test material.
+- /Governed Logic/Architecture/Governed_Intelligence_Requirements_Architecture_Map_v0.1.txt
+- /Governed Logic/Architecture/Governed_Intelligence_AI_Failure_Catalog_v0.1.txt
+These can inform engineering/research, but candidate wording must not replace settled public definitions without explicit approval.
+
+HISTORICAL / PROVENANCE:
+- /Governed Logic/Archive/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf
+- GitHub: /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf
+
+WEBSITE ARCHITECTURE / PUBLICATION SYSTEM
+CURRENT WORKING ARCHITECTURE:
+- Library: GovernedLogic_Website_Architecture_v0.1_2026-09-26.txt
+  Status: working canonical architecture capture; defines the site as a navigable semantic graph and states that article HTML itself is the website artifact.
+
+FOUNDATIONAL MEO SOURCE:
+- Library: Governed_Logic_Website_MEO_Session_v0.2.txt
+  Status: working source for machine/human semantic correspondence and independent reconstruction testing.
+
+PRODUCTION STATE / CHECKLIST:
+- GitHub: /WEBSITE_CHECKLIST.txt
+  Status: operational production history and current requirements mixed with explicitly SUPERSEDED, HOLD, completed, and later-review sections.
+  Rule: never treat an old checked box as newer than Paul’s later explicit review. Read status labels and later sections before acting.
+
+OLDER WEBSITE SPECIFICATION:
+- Library: WEBSITE_SPECIFICATION.html
+  Status: earlier implementation specification / provenance. Useful where not superseded; does not outrank later architecture or direct corrections.
+
+CURRENT PUBLIC GITHUB SURFACES
+- /index.html
+- /concepts/governed-logic/index.html
+- /concepts/ultimate-grounding/index.html
+- /concepts/governed-intelligence/index.html
+- /concepts/alpha-and-omega-reasoning/index.html
+- /concepts/governing-referent/index.html
+- /concepts/sufficient-grounding/index.html
+- /concepts/index.html
+- /company/index.html
+- /research/index.html
+- /about/index.html
+- /dedication/index.html
+- /mechanism.html
+- /sources/
+- /publication/
+These are published representations. Their text must be traceable to authoritative source material or explicitly labeled editorial/working content.
+
+CURRENT MAIN HEAD AT MAP PREPARATION
+- c3038207757b936e136f8732d81052c5b1e3e3a7 — Restore Paul biography from canonical bio.txt
+
+PROTECTED PRESENTATION COMPARTMENT
+- GitHub assets/origin-v17.js
+- GitHub assets/origin-v17.css
+- GitHub approved Governed Logic brand artwork/assets
+- Existing working opening scroll/collapse behavior
+Rule: website content/navigation work must not casually mutate this compartment.
+
+BRAND
+CURRENT SOURCE:
+- Library: /Governed Logic/Brand/GOVERNED_LOGIC_BRAND_SYSTEM_v0.1_2026-09-26.txt
+PUBLIC ASSETS:
+- GitHub official Governed Logic mark / wordmark assets
+Rule: use actual brand artwork. Do not recreate the logo as convenience typography.
+
+BIOGRAPHY / PAUL
+CURRENT SOURCE:
+- Library: /Career/bio.txt
+  Status: authoritative narrative source for the website biography.
+SUPPORTING PROVENANCE:
+- /Career/Paul André Couchoud — Resume.PDF
+- other retained Career resumes
+PUBLIC REPRESENTATION:
+- GitHub: /about/index.html
+Rule: presentation may be edited for readability/navigation only while preserving the source story; do not substitute a generated biography.
+
+PUBLISHING / ARTICLES
+CURRENT WORKFLOW:
+- Library: PublishingWorkflow.txt
+  Updated: 2026-09-26
+  Status: CANONICAL EXECUTABLE PROJECT WORKFLOW.
+
+CURRENT ARTICLE STANDARD:
+- Library: GOVERNED_LOGIC_ARTICLE_WRITING_STANDARD_v0.3.txt
+  Updated: 2026-09-25.
+
+CURRENT ARTICLE LEDGER:
+- Library: /Governed Logic/Publishing/ARTICLE_LEDGER_v0.4_2026-09-29.txt
+  Status: newest located article ledger; controls article identity/state unless superseded by a later explicit instruction.
+
+ARTICLE ARTIFACTS:
+- Library: /Governed Logic/Articles/*.html
+Rule: existence of an HTML file does not itself mean APPROVED or PUBLISHED. Read its QA record and the current ledger/workflow state. One article identity maps to one canonical HTML artifact; do not regenerate duplicates.
+
+RESEARCH
+Examples of current research/analysis artifacts:
+- /Governed Logic/Research/Governed_Logic_AI_Evaluation_Crosswalk_v0.1.txt
+- /Governed Logic/Research/AI_Mediated_Learning_Epistemic_Dependence_Analysis_v0.1.txt
+- /Governed Logic/Research/Captures/*
+- /Governed Logic/Research/Semantic Drift/*
+Status: research/evidence/capture. These may support public research pages or future publications but are not automatically canonical definitions.
+
+ARCHIVE
+- /Governed Logic/Archive/*
+- /Governed Logic/Canon/Ultimate Grounding/Archive/*
+Status: provenance only unless a current source explicitly points back to an archived artifact for exact historical wording.
+
+GITHUB /sources
+Current contents include the 2026-09-22 four-document PDF set and Business Strategy Addendum.
+Status: public provenance/source snapshots. They are not guaranteed to be the latest Library source and must not override newer current files merely because they are already on the website.
+
+MECHANISM
+PUBLIC:
+- GitHub: /mechanism.html
+CURRENT STATUS:
+- Known from Paul’s current review to be materially wrong and requiring a separate source-backed repair.
+Rule: preserve share/copy/test intent, but do not use current mechanism.html as an authority for correcting other pages.
+
+SOURCE-PRECEDENCE EXAMPLES
+- Ultimate Grounding conflict: v0.7 Library text > v0.6/v0.5 historical PDFs for current wording, subject to newer explicit Paul correction.
+- Governed Intelligence conflict: settled/current public definition > 2026-09-27 candidate definition until Paul promotes it.
+- Website checklist conflict: later explicit Paul review > earlier checked implementation state.
+- Bio conflict: /Career/bio.txt > assistant-generated bio summary.
+- Article conflict: current ledger/QA status > mere presence of an HTML file.
+- Public GitHub source snapshot conflict: latest current Library source > older /sources PDF snapshot.
+
+DO NOT TOUCH / DO NOT INFER
+- Do not rewrite either treatise during website maintenance.
+- Do not promote candidate canon.
+- Do not delete source data to simplify the interface.
+- Do not infer approval from publication-candidate files.
+- Do not restore Jeremiah 10 to the homepage.
+- Do not make animation, brand, and content changes in one opportunistic diff.
+- Do not synthesize a new master doctrine from this map.
+
+NEXT HANDOFF
+This map is the authority inventory. Subsequent website-editor packets should cite the owning source/status before changing a public representation. Where no current source exists or two current sources genuinely conflict, stop at HOLD and ask Paul rather than resolving the conflict by synthesis.
