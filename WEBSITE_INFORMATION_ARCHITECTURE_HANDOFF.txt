@@ -1,0 +1,67 @@
+GOVERNEDLOGIC.COM — INFORMATION ARCHITECTURE HANDOFF
+Prepared: 2026-10-01
+Status: navigation / presentation handoff only. This file does not alter doctrine, promote candidate material, or authorize rewriting source text.
+
+AUTHORITY USED
+- WEBSITE_NORTH_STAR.txt: the number one website requirement is that the site points.
+- WEBSITE_SOURCE_AUTHORITY_MAP.txt: newest explicit Paul correction controls; current canonical Library source controls substantive wording; public HTML is representation, not doctrinal authority.
+- Library: GovernedLogic_Website_Architecture_v0.1_2026-09-26.txt: the site is a navigable semantic graph; multiple legitimate entry points are allowed; the exact top-level relationship of the seven foundational pages, Governed Logic, and Governed Intelligence remains an implementation decision.
+- Library: Governed_Logic_Website_MEO_Session_v0.2.txt: human presentation should remain visually compact while the same HTML carries a dense machine-readable semantic representation.
+- The external-design-research task is marked completed in Gmail. No separate persistent research handoff was located in Gmail or GitHub during this pass, so this handoff uses only the explicit criteria from that task (immediate comprehension, deep archives, low-link interfaces, mobile/desktop usability, and possible paginated navigation) and does not invent research conclusions.
+
+SIMPLE HUMAN PATH
+
+1. PROTECTED OPENING
+The existing semantic opening remains untouched. It is an experience, not a menu.
+
+2. COMPANY IDENTITY / HANDOFF
+The existing Governed Logic Reasoning Systems mark and wordmark identify whose work the visitor has entered. Do not attach a cluster of utility links here.
+
+3. FIVE PRIMARY DOORS
+The homepage should hand the visitor to exactly the five already established primary destinations:
+01 Governed Logic
+02 On the Nature of Ultimate Grounding
+03 Governed Intelligence
+04 The Company
+05 Research
+
+These are the top-level human choices. They are not the entire semantic graph.
+
+4. DEEPER GRAPH LIVES BEHIND THE DOORS
+- The seven foundational pages, governing-referent material, sufficient-grounding material, first-principle definitions, and related concepts remain discoverable within the substantive concept/grounding paths.
+- Paul / About and Dedication remain real destinations but are subordinate identity/provenance routes rather than additional homepage doors.
+- Articles remain canonical HTML nodes surfaced through the publication/article system and through truthful semantic relationships; they should not become a sixth catch-all homepage door merely to expose inventory.
+- Research artifacts remain behind Research unless a specific current source promotes them elsewhere.
+- Mechanism remains a separate source-backed repair task and must not govern other pages while its public wording is known to be unreliable.
+
+HUMAN NAVIGATION RULE
+Use a small number of intentional visual doors, blocks, or page transitions. Keep ordinary URLs underneath for accessibility, sharing, search, and machine traversal. Do not display a catalog of raw text links simply because many routes exist.
+
+MACHINE / SEMANTIC RULE
+The visible path may be compact, but the underlying semantic graph must remain intact through canonical URLs, semantic HTML, structured data, stable identifiers, manifests, and truthful internal relationships. Human simplification must not mean deletion of machine-readable relationships or substantive pages.
+
+CURRENT PRODUCTION ASSESSMENT
+The current homepage already implements the correct top-level five-door map immediately after the protected opening and company identity. Replacing it now with another top-level taxonomy would create churn and risk contradicting the unresolved architecture question about the seven foundational pages versus Governed Logic / Governed Intelligence.
+
+Therefore this pass makes NO public-page structural edit.
+
+SAFE NEXT MOVES
+- Preserve the current five homepage doors.
+- Improve presentation within destination pages rather than multiplying top-level navigation.
+- Remove visible link soup by converting secondary routes into designed blocks while preserving their hrefs and underlying pages.
+- Treat the separate pagination/swipe experiment as a prototype first; do not merge it into production merely because horizontal navigation is possible.
+- Let later homepage-clarity work add only source-backed explanatory copy; information architecture should not become a pretext for writing doctrine.
+- Keep desktop and mobile parity as an acceptance condition.
+
+HOLD / NON-DECISIONS
+- Do not promote the seven foundational pages into a new top-level global menu without a later explicit decision.
+- Do not make About, Dedication, Sources, Publication Record, Mechanism, or Articles additional peer homepage doors merely to expose every route.
+- Do not collapse Governed Logic, Ultimate Grounding, or Governed Intelligence into one generic Concepts door.
+- Do not delete any existing destination page or semantic relationship to simplify the visible interface.
+- Do not alter the protected opening compartment.
+
+HANDOFF
+The information architecture is currently best expressed as:
+protected opening -> company identity -> five primary doors -> deeper semantic graph.
+
+The next presentation passes should work inside that structure, not replace it.
