@@ -738,3 +738,49 @@
 @media(max-width:900px){.primary-doors{grid-template-columns:repeat(2,minmax(0,1fr))}.primary-doors>a,.primary-doors>a:nth-child(-n+3),.primary-doors>a:nth-child(n+4){grid-column:auto;min-height:240px}.primary-doors>a:first-child{grid-column:1/-1;min-height:280px}}
 @media(max-width:640px){.company-masthead{width:calc(100% - 18px);min-height:68svh;padding:72px 18px 84px;border:0}.company-icon{width:clamp(170px,52vw,235px);margin-bottom:28px}.home-page main{width:calc(100% - 24px);padding:64px 0 96px}.primary-doors{grid-template-columns:1fr;gap:12px}.primary-doors>a,.primary-doors>a:first-child{grid-column:auto;min-height:190px;padding:26px 24px;border-radius:17px}.primary-doors .door-number{top:24px;left:24px}.primary-doors h2{font-size:clamp(34px,10vw,46px)}.home-page .document-footer{width:calc(100% - 24px)}}
 @media(prefers-reduced-motion:reduce){.primary-doors>a{transition:none}.primary-doors>a:hover,.primary-doors>a:focus-visible{transform:none}}
+
+
+/* v21.0 Super One integration — clarity, hierarchy, and deliberate primary navigation. */
+.home-page .company-masthead{
+  background:
+    radial-gradient(600px 330px at 50% 26%,rgba(22,140,250,.10),transparent 68%),
+    radial-gradient(520px 300px at 58% 68%,rgba(141,120,255,.07),transparent 72%);
+}
+.home-page main>.home-clarity{position:relative;isolation:isolate}
+.home-clarity-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.home-clarity-actions a{
+  display:inline-flex;align-items:center;min-height:48px;padding:0 16px;
+  border:1px solid rgba(121,195,255,.20);border-radius:999px;
+  background:linear-gradient(135deg,rgba(22,140,250,.09),rgba(141,120,255,.07));
+  color:#e9f2fb;text-decoration:none;
+  font:650 12px/1.3 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  letter-spacing:.04em;
+}
+.home-clarity-actions a:hover,.home-clarity-actions a:focus-visible{border-color:rgba(141,120,255,.65);background:linear-gradient(135deg,rgba(22,140,250,.15),rgba(141,120,255,.13))}
+.home-clarity-definitions{gap:14px;border:0}
+.home-clarity-definitions article{
+  position:relative;min-height:280px;padding:clamp(28px,4vw,40px);
+  border:1px solid rgba(121,195,255,.14)!important;border-radius:18px;
+  background:radial-gradient(380px 230px at 8% 0,rgba(22,140,250,.10),transparent 65%),linear-gradient(145deg,rgba(13,20,33,.92),rgba(6,9,16,.94));
+  box-shadow:inset 0 1px rgba(255,255,255,.025),0 20px 60px rgba(0,0,0,.20)
+}
+.home-clarity-definitions article:nth-child(2){background:radial-gradient(380px 230px at 8% 0,rgba(141,120,255,.105),transparent 65%),linear-gradient(145deg,rgba(14,17,32,.92),rgba(6,9,16,.94))}
+.definition-index{display:block;margin-bottom:54px;color:#79c3ff;font:750 10px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.18em}
+.home-clarity-definitions h2{font-size:clamp(26px,3vw,38px);font-family:Georgia,"Times New Roman",serif;font-weight:400}
+.home-map{position:relative;padding-top:clamp(88px,12vw,138px)!important}
+.home-map .door-intro{max-width:760px;padding-bottom:clamp(44px,6vw,68px)!important}
+.home-map .door-intro h2{max-width:14ch}
+.primary-doors .door-copy{display:flex;flex-direction:column;gap:12px}
+.primary-doors .door-copy strong{max-width:13ch;color:#f6f8fc;font:400 clamp(32px,4vw,52px)/1.03 Georgia,"Times New Roman",serif;letter-spacing:-.035em;text-wrap:balance}
+.primary-doors .door-copy small{max-width:32ch;color:#93a5ba;font:600 12px/1.5 ui-sans-serif,system-ui,sans-serif;letter-spacing:.04em}
+.primary-doors .door-arrow{position:absolute;right:clamp(24px,3vw,38px);top:clamp(24px,3vw,36px);color:#73879f;font:500 20px/1 ui-sans-serif,system-ui,sans-serif;transition:transform .25s,color .25s}
+.primary-doors>a:hover .door-arrow,.primary-doors>a:focus-visible .door-arrow{color:#fff;transform:translate(3px,-3px)}
+@media(max-width:720px){
+  .home-clarity-actions{display:grid;grid-template-columns:1fr}
+  .home-clarity-actions a{justify-content:center}
+  .home-clarity-definitions{grid-template-columns:1fr}
+  .home-clarity-definitions article{min-height:0;padding:28px 24px}
+  .definition-index{margin-bottom:34px}
+  .primary-doors .door-copy strong{font-size:clamp(32px,10vw,44px)}
+}
+@media(prefers-reduced-motion:reduce){.primary-doors .door-arrow{transition:none}}
