@@ -15,7 +15,7 @@ BOUNDARIES
 - Do not front-load the conclusion or turn it into a marketing gimmick.
 - Preserve the existing argument path and source hierarchy.
 - Preserve the protected opening scroll/collapse animation.
-- Preserve the current blue/violet visual language.
+- Launch palette is locked to black, Governed Logic blue, green, and solid white. Prior violet/color experimentation is superseded and must not be reintroduced without Paul's explicit direction.
 - Preserve the official brand artwork.
 - Preserve substantive destination-page data.
 - Preserve desktop and mobile usability.
@@ -25,3 +25,17 @@ RELATIONSHIP TO CURRENT WEBSITE STATE
 - WEBSITE_SOURCE_AUTHORITY_MAP.txt remains the source-precedence inventory.
 - WEBSITE_CHECKLIST.txt remains the operational completion/checklist state.
 - This file adds the governing North Star without altering either treatise or public-page content.
+
+
+LAUNCH-DAY DESIGN AUTHORITY — 2026-10-01
+Paul explicitly selected ONE_FILE_BROWSER_DEMO_REEL-1.html as the governing interaction/design reference for the public website. Preserve the reference's experiential grammar: autonomous scene progression, click/tap and keyboard advancement, upper-right pagination dots, persistent procedural depth/particle field, glass depth, layered motion, restrained chrome, and full-screen scene transitions. Adapt menus, Library, and deeper information architecture around that grammar rather than redesigning it.
+
+ACTIVE PRODUCTION PALETTE
+Black: #000000
+Governed Logic blue: #168CFA
+Green: #00FF41
+Solid white: #FFFFFF
+The active launch implementation uses only these core colors plus transparency/opacity derived from them.
+
+BOUNDARY
+This launch authority governs presentation and interaction. It does not authorize rewriting canonical/source-authored wording, changing approved article states, collapsing protected content compartments, or promoting candidate canon.
