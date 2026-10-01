@@ -8,7 +8,7 @@
   <meta name="author" content="Paul André Couchoud">
   <meta name="gl-status" content="approved">
   <meta name="gl-type" content="page">
-  <meta name="gl-version" content="20.8">
+  <meta name="gl-version" content="20.9">
   <meta name="gl-date-published" content="2026-09-28T02:39:00Z">
   <meta name="gl-date-modified" content="2026-10-01">
   <meta name="gl-approval" content="Paul direct instruction in live website session · 27 September 2026">
@@ -20,13 +20,24 @@
     .about-role{color:#9fbad1;font:700 11px/1.5 ui-sans-serif,system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase}
     .about-hero h1{max-width:10ch;margin:14px 0 26px}
     .about-lede{font:400 clamp(21px,3vw,30px)/1.55 Georgia,"Times New Roman",serif;color:#dfe7ee;max-width:34em}
-    .about-copy{max-width:760px;padding:0 0 clamp(90px,12vw,150px)}
+    .about-copy{max-width:860px;padding:0 0 clamp(90px,12vw,150px)}
     .about-copy p{font-size:clamp(18px,2vw,23px)}
+    .about-story{position:relative}
+    .story-chapter{position:relative;padding:clamp(38px,6vw,72px) 0;border-top:1px solid rgba(159,186,209,.18)}
+    .story-chapter:first-child{padding-top:0;border-top:0}
+    .story-chapter p{max-width:34em;margin-left:0;margin-right:auto}
+    .story-turn{font:400 clamp(26px,4vw,42px)/1.3 Georgia,"Times New Roman",serif!important;color:#f2f7fb;max-width:24em!important;margin-top:clamp(34px,5vw,58px)!important;margin-bottom:clamp(20px,3vw,34px)!important}
+    .story-turn + .story-turn{margin-top:-10px!important;color:#b9d7ef}
+    .question-line,.role-line,.chain-line{margin-top:.28em!important;margin-bottom:.28em!important;color:#dce8f1}
+    .question-line{padding-left:1.1rem;border-left:1px solid rgba(141,120,255,.34)}
+    .role-line{font-family:ui-sans-serif,system-ui,sans-serif;font-size:clamp(15px,1.7vw,18px)!important;letter-spacing:.04em;color:#afc2d2}
+    .chain-line{font-weight:600;color:#dfe8ff}
+    .story-chapter h2{margin-top:0}
     .about-nav{display:flex;gap:18px 28px;flex-wrap:wrap;margin-top:34px}.about-nav a{color:#bfa8e5;text-underline-offset:5px}
-    @media(max-width:720px){.about-hero{grid-template-columns:1fr;padding-top:50px}.about-portrait{max-width:280px}.about-hero h1{max-width:none}}
+    @media(max-width:720px){.about-hero{grid-template-columns:1fr;padding-top:50px}.about-portrait{max-width:280px}.about-hero h1{max-width:none}.story-chapter{padding:36px 0}.question-line{padding-left:.85rem}}
   </style>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://governedlogic.com/about/#page","url":"https://governedlogic.com/about/","name":"Paul André Couchoud","description":"Paul André Couchoud is the founder of Governed Logic Reasoning Systems and creator of Governed Logic.","datePublished":"2026-09-28T02:39:00Z","dateModified":"2026-09-28T02:39:00Z","author":{"@id":"https://governedlogic.com/about/#paul"},"isPartOf":{"@id":"https://governedlogic.com/#website"}},{"@type":"Person","@id":"https://governedlogic.com/about/#paul","name":"Paul André Couchoud","url":"https://governedlogic.com/about/","image":"https://governedlogic.com/paul-portrait.png","founder":{"@type":"Organization","name":"Governed Logic Reasoning Systems","url":"https://governedlogic.com/"}}]}
+  {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://governedlogic.com/about/#page","url":"https://governedlogic.com/about/","name":"Paul André Couchoud","description":"Paul André Couchoud is the founder of Governed Logic Reasoning Systems and creator of Governed Logic.","datePublished":"2026-09-28T02:39:00Z","dateModified":"2026-10-01T05:10:00Z","author":{"@id":"https://governedlogic.com/about/#paul"},"isPartOf":{"@id":"https://governedlogic.com/#website"}},{"@type":"Person","@id":"https://governedlogic.com/about/#paul","name":"Paul André Couchoud","url":"https://governedlogic.com/about/","image":"https://governedlogic.com/paul-portrait.png","founder":{"@type":"Organization","name":"Governed Logic Reasoning Systems","url":"https://governedlogic.com/"}}]}
   </script>
 </head>
 <body class="document-page">
@@ -44,7 +55,8 @@
         
       </div>
     </section>
-    <section class="about-copy">
+    <section class="about-copy about-story" aria-label="Biography">
+<div class="story-chapter">
 <p>I have spent most of my adult life building software in places most people never go.</p>
 <p>And I mean that literally.</p>
 <p>I've been in basements of substance-abuse treatment centers. I've walked through juvenile detention facilities and jails. I've sat in courtrooms. I've worked in hospice centers and facilities caring for the elderly. I've eaten moose stew in Alaska while working with tribal communities. I've walked through the corridors beneath the Texas Capitol.</p>
@@ -52,8 +64,10 @@
 <p>I've sat in executive boardrooms in Boston with people making millions of dollars a month. I've worked inside Charles Schwab. AMD. KPMG's former consulting business, BearingPoint. I've worked with state CIOs and executives, judges, clinicians, software architects, developers, business analysts, and people whose lives were being directly affected by the systems we were building.</p>
 <p>I've seen software from both ends of the building.</p>
 <p>And somewhere along the way, I learned something that has shaped almost everything I've done since.</p>
-<p>Software isn't really about software.</p>
-<p>It's about what happens when software touches reality.</p>
+<p class="story-turn">Software isn't really about software.</p>
+<p class="story-turn">It's about what happens when software touches reality.</p>
+</div>
+<div class="story-chapter">
 <p>I started working in technology in the late nineteen nineties. By nineteen ninety-nine, I was already around software-development projects, process, reporting, databases, testing, and automation.</p>
 <p>One of the tools I worked with was Rational Robot.</p>
 <p>This was long before anybody was talking about AI agents. You could perform a process on the computer while Rational Robot recorded you. Fill out this form. Click this button. Submit it. Open the report. Verify the result. Then the system could replay those actions automatically.</p>
@@ -88,22 +102,24 @@
 <p>Language came out.</p>
 <p>And the output could affect what happened to a human being.</p>
 <p>That's where I learned that requirements aren't paperwork.</p>
-<p>They're responsibility.</p>
+<p class="story-turn">They're responsibility.</p>
 <p>Get a requirement wrong and sometimes somebody gets annoyed.</p>
 <p>Sometimes somebody loses money.</p>
 <p>Sometimes somebody loses access to a service.</p>
 <p>Sometimes somebody's freedom can be affected.</p>
 <p>And in healthcare, getting information wrong can contribute to somebody being seriously harmed or even dying.</p>
 <p>So I became obsessed with the middle of that chain.</p>
-<p>What does the person actually need?</p>
-<p>What does this word mean?</p>
-<p>What is the business rule?</p>
-<p>What happens if the answer is yes?</p>
-<p>What happens if it's no?</p>
-<p>What happens when two conditions occur together?</p>
-<p>Who has authority to make the decision?</p>
-<p>What exactly must the system do?</p>
-<p>And how do we prove that it did it?</p>
+<p class="question-line">What does the person actually need?</p>
+<p class="question-line">What does this word mean?</p>
+<p class="question-line">What is the business rule?</p>
+<p class="question-line">What happens if the answer is yes?</p>
+<p class="question-line">What happens if it's no?</p>
+<p class="question-line">What happens when two conditions occur together?</p>
+<p class="question-line">Who has authority to make the decision?</p>
+<p class="question-line">What exactly must the system do?</p>
+<p class="question-line">And how do we prove that it did it?</p>
+</div>
+<div class="story-chapter">
 <p>I learned requirements engineering. Business rules. Logic gates. Process-flow diagrams. Use cases. Traceability. Functional testing. Regression testing. Change control. Risk management.</p>
 <p>I learned the Rational Unified Process and IBM's Rational toolset: RequisitePro, Rose, ClearQuest, TestManager.</p>
 <p>And I learned iterative development before most of the business world discovered that putting sticky notes on a wall made everyone Agile.</p>
@@ -137,8 +153,10 @@
 <p>A legal dispute.</p>
 <p>Potentially something affecting another person's property, livelihood, or freedom.</p>
 <p>That's when the lesson became permanent for me:</p>
-<p>The output of a computer system doesn't stay inside the computer.</p>
-<p>It enters reality.</p>
+<p class="story-turn">The output of a computer system doesn't stay inside the computer.</p>
+<p class="story-turn">It enters reality.</p>
+</div>
+<div class="story-chapter">
 <p>After BearingPoint lost the TexasOnline contract to NIC, Kelly and I were laid off.</p>
 <p>But by then I had spent years learning Texas government technology from inside the machine.</p>
 <p>And that became extraordinarily valuable.</p>
@@ -166,21 +184,23 @@
 <p>Later I became Director of Operations at AMTdirect.</p>
 <p>And eventually Director of IT Project Execution at Sevita, an enormous national community-based healthcare organization serving tens of thousands of people.</p>
 <p>By then I had moved through almost every layer of software delivery.</p>
-<p>Project coordinator.</p>
-<p>Business analyst.</p>
-<p>Project manager.</p>
-<p>Product manager.</p>
-<p>Program manager.</p>
-<p>Product owner.</p>
-<p>Director.</p>
+<p class="role-line">Project coordinator.</p>
+<p class="role-line">Business analyst.</p>
+<p class="role-line">Project manager.</p>
+<p class="role-line">Product manager.</p>
+<p class="role-line">Program manager.</p>
+<p class="role-line">Product owner.</p>
+<p class="role-line">Director.</p>
+</div>
+<div class="story-chapter">
 <p>But I never really stopped doing the thing I had learned to do at the beginning.</p>
-<p>Walk backward from the output.</p>
-<p>Find the requirement.</p>
-<p>Find the rule.</p>
-<p>Find the decision.</p>
-<p>Find the assumption.</p>
-<p>Ask what happens when it goes wrong.</p>
-<p>And ask who is responsible for making sure it doesn't.</p>
+<p class="chain-line">Walk backward from the output.</p>
+<p class="chain-line">Find the requirement.</p>
+<p class="chain-line">Find the rule.</p>
+<p class="chain-line">Find the decision.</p>
+<p class="chain-line">Find the assumption.</p>
+<p class="chain-line">Ask what happens when it goes wrong.</p>
+<p class="chain-line">And ask who is responsible for making sure it doesn't.</p>
 <p>For more than twenty-five years, that was my career.</p>
 <p>I didn't know it yet, but those questions were preparing me for a very different kind of machine.</p>
 <p>Because eventually the rules weren't going to be explicitly written by people like me.</p>
@@ -191,13 +211,16 @@
 <p>Generate the moral judgments.</p>
 <p>Generate something that looked remarkably like reasoning.</p>
 <p>And when that machine finally arrived, I found myself asking exactly the same question I'd been asking since the beginning of my career:</p>
-<p>What governs the output?</p>
+<p class="story-turn">What governs the output?</p>
 <p>That's where Part Two begins.</p>
+</div>
+<div class="story-chapter">
 <h2>Why Anything and Alignment</h2>
 <p>If I had to reduce the thread running through my whole life and career to two ideas, they would be: why anything, and alignment.</p>
 <p>Why anything? Why is this the way it is? Why does it work? Why is this rule true? Why is this output justified? Why is there truth, logic, morality, intelligibility, anything at all? That is the upstream question.</p>
 <p>Then alignment: does the representation match reality? Does the requirement match the actual need? Does the software match the requirement? Does the output match the truth? Does the reasoning remain aligned all the way through?</p>
 <p>Looking backward, those two questions were there long before I had the words Governed Logic. Why anything pushes toward the ground. Alignment asks whether everything downstream remains faithful to it.</p>
+</div>
 </section>
   </main>
   <footer class="document-footer"><span>Paul André Couchoud · Governed Logic Reasoning Systems</span><span>Follow the chain.</span></footer>
