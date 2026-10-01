@@ -279,3 +279,18 @@ PAUL VISUAL REVIEW — LATE 2026-09-27 / PICK UP TOMORROW
 [KEEP/LIKED] Paul likes the blue, ombré light lines, glow, and subtle purple background glow.
 [WORDING NOTE — USER’S OWN CORRECTION] “We did not invent a new human problem; we have invented artificially intelligent systems, not intelligence.” Preserve this as Paul’s wording for tomorrow’s review. Do not silently replace it with assistant-authored alternatives.
 [PROCESS] No further website edits tonight. All monitors/automations are off. Resume only by Paul’s explicit instruction.
+
+
+LAUNCH 22.0 — 2026-10-01
+[✓] Paul selected ONE_FILE_BROWSER_DEMO_REEL-1.html as the governing interaction/design reference.
+[✓] Homepage rebuilt as a full-screen scene experience with autonomous progression, click/tap and arrow-key advancement, upper-right pagination dots, procedural WebGL depth, particle field, grain/veil layers, glass depth, and reduced-motion handling.
+[✓] Existing five primary doors preserved exactly as the top-level human destinations: Governed Logic; On the Nature of Ultimate Grounding; Governed Intelligence; The Company; Research.
+[✓] Library, About, Mechanism, Publication record, and Sources remain subordinate routes available through the launch menu rather than becoming additional peer homepage doors.
+[✓] Official Governed Logic mark and wordmark remain in active use.
+[✓] Active launch palette locked to #000000, #168CFA, #00FF41, and #FFFFFF; prior violet/gold/pink presentation is removed from active launch surfaces.
+[✓] Old origin/book-open/home presentation assets remain in repository history/assets for rollback but are no longer loaded by the homepage.
+[✓] Canonical destination-page prose and approved article/content states were not rewritten by the launch presentation pass.
+[✓] Shared Company, Research, Concepts, About, Library, and Mechanism presentation surfaces were reconciled to the launch palette without changing authored wording.
+[✓] Homepage search/OG description uses the approved company definition: “Governed Logic Reasoning Systems is a reasoning systems company.”
+[✓] Launch JavaScript compiled successfully during verification; homepage references launch.css and launch.js; all expected public routes resolve in repository main.
+[VERIFY LIMIT] The custom domain could not be fetched from the available external web verifier during this run. Repository main and route/source integrity were verified directly through the connected GitHub repository.
