@@ -718,3 +718,7 @@
   .home-clarity-boundary{grid-template-columns:1fr;gap:12px;margin-top:34px;padding-top:28px}
   .home-clarity-boundary p{font-size:18px}
 }
+
+/* final usability: source-backed company descriptor */
+.company-masthead::after{content:"A reasoning systems company.";display:block;max-width:38em;margin:clamp(38px,5vw,60px) auto 0;color:#e2e8ef;font:400 clamp(21px,2.5vw,30px)/1.55 Georgia,"Times New Roman",serif}
+@media(max-width:720px){.company-masthead::after{font-size:20px;margin-top:34px}}
