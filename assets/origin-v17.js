@@ -17,7 +17,7 @@
     root.classList.add("gl-intro-failed");
   }
 
-  if (!experience || !stage || !canvas || !centerMark || !architecture || !hero) {
+  if (!experience || !stage || !canvas || !centerMark || !hero) {
     markFailed();
     return;
   }
@@ -40,7 +40,7 @@
   const tokenElements = Array.from(
     experience.querySelectorAll(".origin-token[data-token]")
   );
-  const chainElements = Array.from(architecture.querySelectorAll("li"));
+  const chainElements = architecture ? Array.from(architecture.querySelectorAll("li")) : [];
   const chainLabelElements = chainElements.map(function (element) {
     return element.querySelector("span") || element;
   });
@@ -348,6 +348,7 @@
   }
 
   function updateArchitecture(value) {
+    if (!architecture) return;
     const arrival = smoothstep(0.80, 0.92, value);
     architecture.style.opacity = arrival.toFixed(4);
 
@@ -484,7 +485,7 @@
     if (fieldPosition) return fieldPosition;
     const point = chainPositions.get(key);
     if (!point) return null;
-    const opacity = Number.parseFloat(architecture.style.opacity || "0");
+    const opacity = architecture ? Number.parseFloat(architecture.style.opacity || "0") : 0;
     return {
       x: point.x,
       y: point.y,
