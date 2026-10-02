@@ -1,0 +1,238 @@
+GOVERNEDLOGIC.COM PRD
+Owner: Paul André Couchoud
+Updated: 2026-10-02
+Status: CURRENT REQUIREMENTS — PLAIN TEXT
+
+PURPOSE
+
+This file is the current requirements source of truth for governedlogic.com.
+
+Git owns history.
+This file owns current requirements.
+Do not reconstruct website requirements from old commits, old screenshots, old checklists, memory, or prior drafts when this PRD resolves the question.
+
+The website implementation must correspond to this PRD.
+When Paul changes a requirement, update this PRD and the implementation together.
+
+SOURCE AUTHORITY
+
+WEB-001
+The PRD governs website requirements.
+
+WEB-002
+Paul’s canonical authored material remains authoritative for exact substantive copy. The PRD may point to a canonical source; the website must not paraphrase that source merely to make the page smoother.
+
+WEB-003
+Do not invent company prose, biography, claims, doctrine, product capability, research findings, or marketing language and present it as Paul’s writing.
+
+WEB-004
+For exact company/product language already supplied by Paul, use the current Governed Logic source corpus, including the Business Strategy Addendum and current canonical concept pages.
+
+WEB-005
+For Paul’s biography, use the existing /about/ source material and verified portrait. Do not add new biographical claims without Paul’s approval.
+
+WORKSHOP METHOD
+
+WEB-010
+Website work is direct, interactive, and iterative.
+
+WEB-011
+“Walk the workshop” means inspect the current site, make small coherent changes to color, spacing, typography, placement, shape, movement, copy placement, and flow, then inspect again.
+
+WEB-012
+Do not replace a working structure merely because a new design is possible. Preserve good bones and improve the current object.
+
+WEB-013
+Do not create monitors, email task queues, or documentation detours instead of changing the website.
+
+WEB-014
+When a workshop decision becomes a standing rule, update this PRD in the same workstream.
+
+FRONT DOOR / COMPANY CLARITY
+
+WEB-020
+A first-time visitor must understand what Governed Logic Reasoning Systems is doing before having time to wonder what the company is.
+
+WEB-021
+AMI Labs is a communication-behavior reference: immediate company identity followed almost immediately by concrete explanation of what is being built. Do not copy AMI’s wording.
+
+WEB-022
+The homepage must communicate current company work using source-backed language, not generic category repetition.
+
+WEB-023
+Do not use tautological public copy such as “Governed Logic Reasoning Systems is a reasoning systems company” as the explanatory sentence beneath “A reasoning systems company.”
+
+WEB-024
+Current company work that may be presented on the front door, when phrased from existing source material:
+- Governed Intelligence.
+- The Governed Logic Reasoning Engine.
+- Reasoning API.
+- Research.
+- Publishing.
+- Education.
+- Public demonstrations, experiments, and engineering progress.
+
+WEB-025
+The homepage must distinguish an existing instruction-level Governed Intelligence prototype from planned engineering deliverables.
+
+PAUL / FOUNDER PRESENCE
+
+WEB-030
+Paul André Couchoud must have a visible human presence on the site.
+
+WEB-031
+The homepage must identify Paul naturally as founder and creator of Governed Logic and provide a direct route to his biography.
+
+WEB-032
+Paul must not dominate governedlogic.com as the product. The company and work remain primary.
+
+WEB-033
+Jordan Peterson’s site is a human-presence reference only: a strong biography and an accountable human source behind the work. Governedlogic.com should be substantially less person-centered.
+
+WEB-034
+The /about/ page may carry the substantial biography. The homepage should use a restrained founder presence.
+
+VISUAL IDENTITY
+
+WEB-040
+Locked website palette:
+- Near-black / black: #020307 / #000000
+- Governed Logic blue: #168CFA
+- Governed Logic violet: #8D78FF
+- White: #FFFFFF
+- Matrix green: #00FF41, restrained accent only
+
+WEB-041
+The visual atmosphere is near-black, blue, violet, white, restrained green, depth, glass, and token-like particles.
+
+WEB-042
+Use the official Governed Logic mark and existing Governed Logic Reasoning Systems artwork. Do not recreate the mark as generic typography.
+
+WEB-043
+The company glass treatment should read as a soft glass cloud / atmospheric depth field, not a hard oval, blob, fluorescent slab, crypto orb, or generic SaaS card.
+
+WEB-044
+Particles are part of the Governed Logic visual language. They should read as tokens / representations, not confetti or generic space dust.
+
+WEB-045
+Do not use a giant amorphous WebGL blob.
+
+WEB-046
+Typography must feel serious, modern, intellectual, technical, legible, and human. Avoid game UI, crypto, novelty sci-fi, or over-cinematic display treatment.
+
+WEB-047
+Canonical semantic words must remain readable even if an effect fails. Do not use transparent clipped-gradient text for essential words.
+
+WEB-048
+Mobile is a first-class visual medium. No constitutive principle, product name, or core proposition may crop or overflow.
+
+GOVERNED LOGIC SEMANTICS
+
+WEB-050
+The six constitutive principles are:
+BEING
+TRUTH
+LOGIC
+MEANING
+INTELLIGIBILITY
+OBLIGATION
+
+WEB-051
+All six must remain equally legible. Decorative treatment must not imply an unsupported hierarchy.
+
+WEB-052
+The reasoning sequence is:
+GROUND → TRUTH → LOGIC → REASONING → INTELLIGENCE
+
+WEB-053
+Governed Logic is upstream and bidirectional.
+
+WEB-054
+Governed Intelligence is the artificial-intelligence instantiation of Governed Logic.
+
+WEB-055
+The objective is not confirmation. The objective is truth.
+
+WEB-056
+Do not front-load the theological conclusion as a marketing hook. Do not hide it. The public reasoning path follows the chain toward ultimate grounding and the Logos.
+
+HOMEPAGE STRUCTURE
+
+WEB-060
+The homepage is a front door, not the entire corpus.
+
+WEB-061
+Preserve these five substantive destinations:
+1. Governed Logic
+2. On the Nature of Ultimate Grounding
+3. Governed Intelligence
+4. The Company
+5. Research
+
+WEB-062
+Destination actions must be named clearly. Do not make visitors guess what “Enter” means.
+
+WEB-063
+Motion and pagination serve comprehension. They are not the product.
+
+WEB-064
+The homepage may use a short autonomous overview, but reading time must be sufficient and navigation must remain obvious.
+
+WEB-065
+Avoid unnecessary game-like chrome, timers, playback controls, or novelty controls.
+
+HUMAN / MACHINE CORRESPONDENCE
+
+WEB-070
+Human-readable and machine-readable descriptions must correspond.
+
+WEB-071
+Metadata, JSON-LD, canonical routes, visible page identity, and source content must not describe materially different companies or concepts.
+
+WEB-072
+Machine readability never excuses a broken human representation.
+
+WEB-073
+Search-facing descriptions should explain the company concretely in reasoning-systems language before theological language.
+
+CANONICAL ROUTES
+
+WEB-080
+Primary routes:
+/
+ /concepts/governed-logic/
+ /concepts/ultimate-grounding/
+ /concepts/governed-intelligence/
+ /company/
+ /research/
+ /about/
+
+WEB-081
+Quiet infrastructure routes remain available:
+ /library/
+ /publication/
+ /sources/
+ /mechanism.html
+
+ACCEPTANCE
+
+WEB-090
+Before calling a workshop pass complete, inspect desktop and mobile behavior.
+
+WEB-091
+Core words and product names must remain fully readable at mobile widths.
+
+WEB-092
+Internal links and canonical URLs must remain valid.
+
+WEB-093
+JavaScript must parse without error.
+
+WEB-094
+GitHub Pages deployment must succeed before claiming a change is live.
+
+WEB-095
+If the implementation conflicts with this PRD, fix the implementation.
+
+WEB-096
+If Paul changes the requirement, update this PRD first or in the same commit sequence, then update the implementation.
