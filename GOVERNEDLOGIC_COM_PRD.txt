@@ -73,7 +73,10 @@ Current company work that may be presented on the front door, when phrased from 
 - Public demonstrations, experiments, and engineering progress.
 
 WEB-025
-The homepage must distinguish an existing instruction-level Governed Intelligence prototype from planned engineering deliverables.
+The homepage must distinguish an existing instruction-level Governed Intelligence prototype from work that is still being developed.
+
+WEB-026
+Do not expose internal workflow/status scaffolding as public marketing language. Labels such as “committed development direction,” “planned engineering deliverable,” “explicit hold,” and similar implementation-state language belong in requirements/source control unless Paul explicitly wants them public.
 
 PAUL / FOUNDER PRESENCE
 
