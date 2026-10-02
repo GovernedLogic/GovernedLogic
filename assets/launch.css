@@ -426,3 +426,187 @@ h2{font-size:clamp(42px,6.2vw,86px)}
   .scene{padding-left:20px;padding-right:20px}
   .principle-field span:nth-child(5){font-size:clamp(25px,7.65vw,34px)}
 }
+
+
+/* WORKSHOP PASS 22.4 — company front door + restrained founder presence */
+.company-cloud{
+  width:min(1080px,92vw);
+  padding:clamp(30px,4.2vw,52px);
+  border-radius:34px;
+  border-color:rgba(121,195,255,.14);
+  background:
+    radial-gradient(520px 300px at 12% 18%,rgba(22,140,250,.105),transparent 72%),
+    radial-gradient(520px 320px at 90% 78%,rgba(141,120,255,.085),transparent 74%),
+    linear-gradient(145deg,rgba(8,14,24,.70),rgba(4,7,13,.50));
+  box-shadow:
+    0 28px 90px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.065);
+}
+.company-cloud:before{
+  width:420px;height:250px;left:-160px;top:-100px;
+  background:rgba(22,140,250,.075);
+}
+.company-cloud:after{
+  width:440px;height:280px;right:-170px;bottom:-120px;
+  background:rgba(141,120,255,.065);
+}
+.company-front{
+  display:block;
+}
+.company-brandline{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-bottom:clamp(28px,3.6vw,46px);
+}
+.company-front-mark{
+  width:clamp(48px,5vw,66px);
+  flex:0 0 auto;
+  filter:drop-shadow(0 0 22px rgba(22,140,250,.24));
+}
+.company-front-wordmark{
+  display:block;
+  width:min(420px,62vw);
+  height:auto;
+  opacity:.96;
+}
+.company-front-copy{
+  max-width:900px;
+}
+.company-front-copy .eyebrow{
+  margin-bottom:12px;
+}
+.company-front-copy h1{
+  max-width:none;
+  font-size:clamp(42px,5.7vw,72px);
+  line-height:.98;
+  letter-spacing:-.045em;
+}
+.build-list{
+  margin-top:clamp(26px,3.2vw,38px);
+  border-top:1px solid rgba(121,195,255,.16);
+}
+.build-list a{
+  display:grid;
+  grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr);
+  gap:22px;
+  align-items:baseline;
+  padding:15px 2px 16px;
+  border-bottom:1px solid rgba(121,195,255,.11);
+  text-decoration:none;
+}
+.build-list strong{
+  color:#f7f9fb;
+  font-size:clamp(15px,1.45vw,18px);
+  font-weight:620;
+  letter-spacing:-.015em;
+}
+.build-list span{
+  color:rgba(226,236,246,.66);
+  font-size:clamp(13px,1.18vw,15px);
+  line-height:1.48;
+}
+.build-list a:hover strong,
+.build-list a:focus-visible strong{
+  color:#79c3ff;
+}
+.build-list a:focus-visible{
+  outline:1px solid rgba(121,195,255,.55);
+  outline-offset:5px;
+}
+.company-disciplines{
+  margin-top:18px;
+  color:rgba(225,235,246,.48);
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.founder-line{
+  margin-top:clamp(24px,3vw,34px);
+  padding-top:18px;
+  border-top:1px solid rgba(141,120,255,.13);
+  display:flex;
+  align-items:center;
+  gap:12px 18px;
+  flex-wrap:wrap;
+  color:rgba(232,239,247,.66);
+  text-decoration:none;
+  font-size:12px;
+}
+.founder-line span:first-child{
+  color:#fff;
+  font-weight:620;
+}
+.founder-line span:last-child{
+  margin-left:auto;
+  color:#b9d7ef;
+}
+.founder-line:hover span:last-child,
+.founder-line:focus-visible span:last-child{
+  color:#fff;
+}
+.founder-line:focus-visible{
+  outline:1px solid rgba(141,120,255,.45);
+  outline-offset:6px;
+}
+.company-cloud .scene-star{
+  left:auto;
+  right:9%;
+  top:18%;
+  opacity:.36;
+}
+@media(max-width:760px){
+  .company-cloud{
+    width:100%;
+    padding:25px 20px 26px;
+    border-radius:26px;
+  }
+  .company-brandline{
+    gap:13px;
+    margin-bottom:26px;
+  }
+  .company-front-mark{
+    width:44px;
+  }
+  .company-front-wordmark{
+    width:min(300px,70vw);
+  }
+  .company-front-copy h1{
+    font-size:clamp(38px,10.8vw,50px);
+  }
+  .build-list{
+    margin-top:22px;
+  }
+  .build-list a{
+    grid-template-columns:1fr;
+    gap:5px;
+    padding:12px 1px 13px;
+  }
+  .build-list strong{font-size:15px}
+  .build-list span{font-size:13px}
+  .company-disciplines{
+    font-size:10px;
+    line-height:1.6;
+    letter-spacing:.055em;
+  }
+  .founder-line{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:5px 12px;
+    margin-top:20px;
+    padding-top:15px;
+  }
+  .founder-line span:nth-child(2){
+    grid-column:1/-1;
+  }
+  .founder-line span:last-child{
+    grid-column:2;
+    grid-row:1;
+    margin-left:0;
+  }
+  .company-cloud .scene-star{
+    right:8%;
+    top:12%;
+    opacity:.28;
+  }
+}
