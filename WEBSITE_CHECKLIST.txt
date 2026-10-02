@@ -309,3 +309,22 @@ WORKSHOP PASS — 2026-10-01 — CURRENT VISUAL / FLOW AUTHORITY
 [✓] The glass/depth scene may carry a restrained white point-light/star at its center as a visual referent/focal point.
 [✓] Do not over-appify the website. Motion and pagination serve comprehension; they do not become the product.
 [✓] “Walk the workshop” is the method for this phase: make small, coherent, reversible adjustments to color, typography, spacing, placement, and flow; re-evaluate in context; preserve what already works.
+
+
+FRONT-DOOR COMPANY CLARITY — PERMANENT WEBSITE RULE
+Captured: 2026-10-02
+Paul’s explicit reference point: AMI Labs.
+
+The website must tell a visitor what the company is doing immediately. The visitor should understand Governed Logic Reasoning Systems before having time to wonder what the company is.
+
+Reference behavior Paul likes:
+“Real World. Real Intelligence.” is followed almost immediately by a concrete explanation that AMI is building systems that understand the real world, have persistent memory, reason and plan, and are controllable and safe.
+
+GovernedLogic.com must achieve the same kind of immediate company comprehension using Governed Logic’s own source-backed language and identity. Do not imitate AMI’s copy. The rule is the communication behavior:
+1. clear company identity immediately;
+2. concrete statement of what the company does/builds immediately after;
+3. enough specificity that a first-time human or machine can reconstruct the company without guessing;
+4. no long philosophical preamble before basic company comprehension;
+5. preserve Governed Logic semantic depth underneath that clarity.
+
+This is a standing front-door acceptance test.
