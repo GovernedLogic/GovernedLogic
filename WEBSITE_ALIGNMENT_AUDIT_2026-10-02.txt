@@ -1,0 +1,494 @@
+GOVERNEDLOGIC.COM — GL / GI ALIGNMENT AUDIT
+Date: 2026-10-02
+Basis: Paul’s six mobile screenshots from the current production experience; current main homepage source (index.html, assets/launch.css, assets/launch.js); current canonical Governed Logic / Governed Intelligence source material; Governed Logic Business Strategy Addendum; On the Nature of Ultimate Grounding source state.
+
+PURPOSE
+
+Document every observed failure, contradiction, or material misalignment in the current homepage experience relative to Governed Logic (GL), Governed Intelligence (GI), the company truth set, and the stated requirement that human-readable and machine-readable representations correspond.
+
+This is a QA / alignment record. It does not create new doctrine or rewrite Paul’s canonical work.
+
+============================================================
+A. CRITICAL SEMANTIC / CORRESPONDENCE FAILURES
+============================================================
+
+A1. OBLIGATION IS PRESENT IN THE DOM BUT NOT HUMAN-READABLE
+Severity: CRITICAL
+
+Observed:
+The first-principles screen visibly presents:
+BEING
+TRUTH
+LOGIC
+MEANING
+INTELLIGIBILITY
+then a fluorescent gradient rectangle.
+
+“OBLIGATION” is not human-readable in the screenshots.
+
+Source:
+index.html contains <span class="shine">OBLIGATION</span>.
+
+Failure:
+The machine representation contains six principles while the human representation visually exposes only five. This is a direct human/machine correspondence failure.
+
+GL / GI alignment:
+The constitutive set is Being, Truth, Logic, Meaning, Intelligibility, Obligation. A presentation that visually drops Obligation changes the represented architecture even though the source string survives in HTML.
+
+Likely mechanism:
+The .shine treatment relies on transparent text plus background-clip:text. In the tested mobile rendering path, the gradient is painting as a rectangular block rather than clipping to glyphs.
+
+Required disposition:
+BLOCKER. No semantic word may depend on a text effect that can erase the human-readable representation.
+
+------------------------------------------------------------
+
+A2. “LOGIC.” IS ERASED ON THE GOVERNED LOGIC DOOR
+Severity: CRITICAL
+
+Observed:
+The Governed Logic screen visibly reads “Governed” followed by a fluorescent gradient rectangle.
+
+Source:
+index.html contains:
+Governed
+<span class="shine">Logic.</span>
+
+Failure:
+The primary destination is visually rendered as “Governed [block]” rather than “Governed Logic.”
+
+GL alignment:
+This erases the name of the architecture at the exact moment the visitor is being introduced to it.
+
+Required disposition:
+BLOCKER.
+
+------------------------------------------------------------
+
+A3. “INTELLIGENCE.” IS ERASED ON THE GOVERNED INTELLIGENCE DOOR
+Severity: CRITICAL
+
+Observed:
+The GI screen visibly reads “Governed” followed by a large gradient rectangle.
+
+Source:
+index.html contains:
+Governed
+<span class="shine">Intelligence.</span>
+
+Failure:
+The human sees “Governed [block]”; the machine/source sees “Governed Intelligence.”
+
+GI alignment:
+The page visually removes the very term being defined. This is a severe representation/referent and human/machine correspondence defect.
+
+Required disposition:
+BLOCKER.
+
+------------------------------------------------------------
+
+A4. “TRUTH.” IS ERASED IN THE RESEARCH HERO
+Severity: CRITICAL
+
+Observed:
+The research screen visibly reads “The objective is” followed by a gradient rectangle.
+
+Source:
+index.html contains:
+The objective is <span class="shine">truth.</span>
+
+Failure:
+The strongest research proposition is visually destroyed at the point of emphasis.
+
+GL alignment:
+Truth is not a decorative accent. The rendering makes the visual representation fail to state the proposition the source actually contains.
+
+Required disposition:
+BLOCKER.
+
+============================================================
+B. FIRST-PRINCIPLES / CONSTITUTIVE-PRINCIPLES FAILURES
+============================================================
+
+B1. HUMAN VIEW SHOWS FIVE PRINCIPLES, NOT SIX
+Severity: CRITICAL
+Cause: A1 plus mobile layout clipping.
+
+The screenshots make the homepage appear to define only five principles. This is not merely a cosmetic omission because the six-principle set is constitutive to current GL/GI architecture.
+
+------------------------------------------------------------
+
+B2. INTELLIGIBILITY OVERFLOWS / IS CROPPED ON MOBILE
+Severity: HIGH
+
+Observed:
+“INTELLIGIBILITY” extends beyond the viewport and is visibly cut off in the supplied screenshots.
+
+Failure:
+A constitutive principle is not fully readable on the target mobile viewport.
+
+GL alignment:
+A principle cannot function as a stable public semantic node if the interface truncates its representation.
+
+------------------------------------------------------------
+
+B3. PRINCIPLES ARE GIVEN UNEQUAL VISUAL ONTOLOGICAL WEIGHT WITHOUT A SOURCE BASIS
+Severity: HIGH
+
+Observed:
+BEING / LOGIC / MEANING are filled.
+TRUTH / INTELLIGIBILITY are outline-only.
+OBLIGATION is currently converted into a gradient block.
+
+Failure:
+The visual system implies a hierarchy or difference in status among the six principles that the canonical architecture does not establish.
+
+GL alignment:
+The six are constitutive features of one reality. Decorative differentiation must not accidentally imply that some are primary, secondary, hollow, unresolved, or merely stylistic.
+
+Required disposition:
+Either make the visual distinction semantically justified from source or give the six equal legibility/status.
+
+------------------------------------------------------------
+
+B4. “FIRST PRINCIPLES” VS. CURRENT SETTLED “CONSTITUTIVE” LANGUAGE
+Severity: MEDIUM / TERMINOLOGY CHECK
+
+Observed:
+Homepage label: “GOVERNED LOGIC · FIRST PRINCIPLES.”
+
+Canonical direction:
+Current GL/GI sources repeatedly describe the six as constitutive principles / constitutive features of one reality. Some project artifacts also use “first principles.”
+
+Failure risk:
+“First principles” may be acceptable historical shorthand, but it is weaker than the current constitutive claim. If the homepage is intended to state the settled architecture, the label should be checked against the newest canonical wording rather than inherited by convenience.
+
+Disposition:
+CHECK / DO NOT SILENTLY DECIDE.
+
+============================================================
+C. COMPANY FRONT-DOOR FAILURES
+============================================================
+
+C1. THE FIRST SEMANTIC IMPRESSION DOES NOT EXPLAIN THE COMPANY
+Severity: HIGH
+
+Observed:
+The first screen is a stylized principles composition, not a company explanation.
+
+Paul’s current requirement:
+The opening semantic layer must tell a human and a machine:
+- what Governed Logic Reasoning Systems is;
+- what it does;
+- who it is;
+- what it is about;
+- what it intends to build;
+- that it is a reasoning systems company.
+
+Failure:
+A first-time visitor must infer what organization they have entered before the site explains the company.
+
+------------------------------------------------------------
+
+C2. THE COMPANY DOOR IS TAUTOLOGICAL AND TOO THIN
+Severity: HIGH
+
+Observed:
+Hero:
+“A reasoning systems company.”
+Body:
+“Governed Logic Reasoning Systems is a reasoning systems company.”
+
+Failure:
+The body repeats the category without explaining the business.
+
+Existing source-backed material already available:
+- research, development, publishing, education, and technology;
+- building a reasoning architecture and technology through which it can be applied;
+- existing Governed Intelligence instruction-level prototype;
+- planned Governed Logic Reasoning Engine;
+- planned reasoning API;
+- development in public;
+- research as a core activity;
+- publishing/authorship as substantive company activity.
+
+No new writing is needed to give the front door semantic depth.
+
+------------------------------------------------------------
+
+C3. CURRENT HOMEPAGE JSON-LD / META DESCRIPTION IS SEMANTICALLY TOO SHALLOW
+Severity: HIGH
+
+Current main:
+“Governed Logic Reasoning Systems is a reasoning systems company.”
+
+Failure:
+This is correct but insufficient as the machine-facing description of the company. It does not expose the existing source-backed company activities, current prototype status, public-development direction, or intended engineering deliverables.
+
+GL / GI alignment:
+The machine-readable front door currently under-describes the same company that the human-facing site is supposed to explain. Human and machine should recover the same substantive organization.
+
+------------------------------------------------------------
+
+C4. COMPANY IDENTITY APPEARS TWICE WITHOUT SOLVING THE INFORMATION NEED
+Severity: MEDIUM
+
+Current scene structure:
+- unnumbered company lockup scene;
+- later “04 / THE COMPANY” door.
+
+Failure:
+Company identity is repeated, but the repeated surfaces still do not provide the semantic depth Paul has already documented.
+
+This is duplication without added explanatory value.
+
+============================================================
+D. GI / GL PRESENTATION ALIGNMENT
+============================================================
+
+D1. GI DEFINITION COPY IS CORRECT, BUT ITS TITLE IS VISUALLY BROKEN
+Severity: CRITICAL VISUAL / SEMANTIC
+
+Aligned copy:
+“Governed Intelligence is the artificial-intelligence instantiation of Governed Logic.”
+
+Failure:
+The hero title removes “Intelligence” visually, so the aligned definition sits under a broken representation.
+
+------------------------------------------------------------
+
+D2. GL DOOR COPY IS SUBSTANTIVELY ALIGNED, BUT THE BRAND NAME IS VISUALLY BROKEN
+Severity: CRITICAL VISUAL / SEMANTIC
+
+Aligned copy:
+Governed Logic is described as upstream and bidirectional; truth governs logic; logic governs reasoning; reasoning remains answerable to ultimate ground.
+
+Failure:
+The missing visible word “Logic” damages the concept name and defeats the clarity of otherwise-aligned copy.
+
+------------------------------------------------------------
+
+D3. THE HOMEPAGE DOES NOT YET EXPOSE THE REPRESENTATION / REFERENT DISCIPLINE THAT MAKES THE VISUAL SYSTEM MEANINGFUL
+Severity: MEDIUM
+
+Current visual:
+network particles, nodes, loops, glow, moving token-like points.
+
+Failure:
+The visuals strongly imply a semantic graph / representation system, but the front-door copy does not yet explain what those visual elements correspond to.
+
+GL / GI alignment:
+If visual elements represent tokens, representations, referents, grounding, or relations, that mapping should be intentional. Otherwise the site risks aesthetic mimicry: it looks like a reasoning system without teaching the visitor what is actually being represented.
+
+============================================================
+E. TRUTHFUL INTERFACE-STATE FAILURES
+============================================================
+
+E1. “SOUND ON” DOES NOT CORRESPOND TO THE ACTUAL INITIAL STATE
+Severity: HIGH
+
+Current implementation:
+The entry gate was removed.
+The page starts immediately.
+The AudioContext is not created until user interaction with the sound control.
+The visible control initially says “SOUND ON.”
+
+Failure:
+The interface presents an on-state while sound is not actually on.
+
+GL alignment:
+This is a small UI bug with an unusually direct correspondence problem: the representation does not match the actual state.
+
+------------------------------------------------------------
+
+E2. TIMER / EXPERIENCE CHROME MAKES THE SITE READ LIKE A MEDIA EXPERIENCE OR GAME
+Severity: MEDIUM / BRAND ALIGNMENT
+
+Observed:
+00:05, 00:10, 00:18, 00:20, 00:23, 00:27 timer display plus dot pagination and sound state.
+
+Failure risk:
+The chrome communicates “interactive cinematic experience” more strongly than “reasoning systems company.”
+
+Paul’s current critique:
+The site is still “a little too cool.”
+
+This does not mean motion should be removed. It means interface chrome should not become the identity.
+
+============================================================
+F. MOBILE READABILITY / FLOW FAILURES
+============================================================
+
+F1. PRIMARY SEMANTIC WORDS ARE NOT MOBILE-SAFE
+Severity: CRITICAL
+Evidence:
+INTELLIGIBILITY is clipped; shine words become blocks.
+
+Failure:
+The mobile view cannot be considered semantically equivalent to desktop/source until every constitutive term and page name survives intact.
+
+------------------------------------------------------------
+
+F2. TYPOGRAPHIC SCALE IS STILL OPTIMIZED FOR SPECTACLE OVER COMPLETE WORD RECOGNITION
+Severity: HIGH
+
+Observed:
+Very large serif display words, staggered indentation, outline text, and viewport-edge collisions.
+
+Failure:
+The first-principles screen prioritizes composition over complete semantic legibility.
+
+GL alignment:
+The words are the architecture. Their legibility outranks the composition.
+
+------------------------------------------------------------
+
+F3. AUTO-ADVANCE CAN MOVE THE USER BEFORE SUBSTANTIVE COPY IS FINISHED
+Severity: MEDIUM
+
+Current implementation:
+Scenes advance on timers of roughly 7.6–8.8 seconds.
+
+Failure risk:
+Human reading speed varies, especially on mobile. A reasoning site should not pressure the user past propositions before they are understood.
+
+Disposition:
+Keep autonomous motion only if user control and reading completion remain obvious.
+
+============================================================
+G. VISUAL SEMANTIC / BRAND FAILURES
+============================================================
+
+G1. FLUORESCENT RECTANGLES READ AS PLACEHOLDERS / REDACTIONS
+Severity: CRITICAL
+This is the shared rendering defect behind A1–A4.
+
+The blocks do not look like intentional semantic objects; they look like broken UI, censored text, loading placeholders, or decorative bars.
+
+------------------------------------------------------------
+
+G2. GLOWING LOOP FORMS ARE SEMANTICALLY AMBIGUOUS
+Severity: MEDIUM
+
+Observed:
+Large luminous loop / orbit shapes sit behind the content.
+
+Failure risk:
+They may be read as atoms, infinity signs, neural paths, or decorative sci-fi rings. Unless a specific relationship is intended, they can compete with the official Governed Logic icon and with the site’s actual representational semantics.
+
+Disposition:
+Visuals may remain atmospheric, but they should not accidentally imply an ontology or symbol that the source does not establish.
+
+------------------------------------------------------------
+
+G3. CURRENT SITE STILL LEANS TOWARD “FUTURISTIC EXPERIENCE” OVER “SERIOUS REASONING SYSTEMS COMPANY”
+Severity: MEDIUM
+
+Evidence:
+glow field, particles, timer, sound control, large cinematic typography, pagination dots.
+
+Paul’s stated target:
+serious, modern, intellectual, technical, human; not video game, crypto, sci-fi novelty, or generic AI spectacle.
+
+Failure:
+The current balance still gives too much authority to atmosphere relative to company meaning.
+
+============================================================
+H. MACHINE / HUMAN CORRESPONDENCE FAILURES
+============================================================
+
+H1. SOURCE HTML IS SEMANTICALLY MORE COMPLETE THAN THE HUMAN RENDER
+Severity: CRITICAL
+
+Examples:
+- OBLIGATION exists in HTML but not visually.
+- LOGIC exists in HTML but renders as a block.
+- INTELLIGENCE exists in HTML but renders as a block.
+- TRUTH exists in HTML but renders as a block.
+
+This is exactly the kind of human/machine semantic divergence the website is supposed to avoid.
+
+------------------------------------------------------------
+
+H2. MACHINE-FACING COMPANY DESCRIPTION IS TOO COMPRESSED
+Severity: HIGH
+
+The JSON-LD graph correctly names the Organization, Person, WebSite, WebPage, and primary destinations, but the Organization/WebPage description is only the category statement.
+
+The machine graph therefore knows where pages are but not enough about what the company actually does and is building.
+
+------------------------------------------------------------
+
+H3. VISUAL SEMANTIC FAILURE CANNOT BE EXCUSED BY MACHINE READABILITY
+Severity: CRITICAL PRINCIPLE
+
+Because crawlers can recover the hidden strings does not make the page aligned.
+A Governed Logic site requires:
+representation for humans ↔ source representation for machines ↔ same intended referent.
+
+Current mobile rendering breaks that correspondence.
+
+============================================================
+I. ITEMS THAT ARE CURRENTLY ALIGNED AND SHOULD BE PRESERVED
+============================================================
+
+I1. “Governed Intelligence is the artificial-intelligence instantiation of Governed Logic.”
+Aligned.
+
+I2. Governed Logic is presented as upstream and bidirectional.
+Aligned.
+
+I3. “The objective is not confirmation. The objective is truth.”
+Aligned in source/copy; hero rendering is broken.
+
+I4. “Governed Logic Reasoning Systems is a reasoning systems company.”
+Correct category statement; insufficient by itself, but not false.
+
+I5. Blue / violet / near-black atmosphere is directionally consistent with the desired Governed Logic identity.
+Preserve, but subordinate spectacle to semantic legibility.
+
+I6. Token / particle field is directionally useful if treated as representations/tokens rather than arbitrary decoration.
+
+I7. Named destination actions (“Open Governed Logic,” “Explore Governed Intelligence,” “About the company,” “View research”) are clearer than generic “Enter.”
+Preserve.
+
+============================================================
+J. PRIORITY ORDER FOR REPAIR
+============================================================
+
+P0 — Semantic blockers
+1. Fix .shine so OBLIGATION / LOGIC / INTELLIGENCE / TRUTH always render as readable text on mobile.
+2. Fix INTELLIGIBILITY overflow/cropping.
+3. Make all six constitutive principles equally legible.
+4. Fix SOUND ON state correspondence.
+
+P1 — Company meaning
+5. Put source-backed company semantic depth at the front door for humans.
+6. Give the Organization/WebPage machine description the same substantive company meaning.
+7. Remove duplication that repeats “reasoning systems company” without explaining it.
+
+P2 — Governed Logic visual identity
+8. Reduce game/cinematic UI cues that do not carry meaning.
+9. Make particle/loop/star/glass elements semantically disciplined rather than merely futuristic.
+10. Rebalance typography toward complete word recognition and intellectual readability.
+
+P3 — Flow
+11. Ensure autonomous progression never defeats reading.
+12. Keep named actions obvious and page transitions unsurprising.
+
+============================================================
+K. CORE ALIGNMENT TEST
+============================================================
+
+For every public visual or sentence, ask:
+
+1. What representation is being shown?
+2. What does it refer to?
+3. Does the human receive the same meaning the source/machine receives?
+4. Is the representation true to the canonical referent?
+5. Does the design clarify the reasoning architecture, or merely imitate the appearance of intelligence?
+6. Does the page make the company, Governed Logic, and Governed Intelligence more intelligible?
+7. If the visual is removed, is meaning lost? If not, it is atmosphere and must remain subordinate.
+8. If the text effect fails, does the proposition remain readable? If not, the effect is not robust enough for canonical language.
+
+END OF AUDIT
