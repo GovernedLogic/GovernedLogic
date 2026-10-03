@@ -12,105 +12,70 @@
 <style>
 :root{color-scheme:dark}
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;color:#fff}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
 body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-#stage{position:fixed;inset:0;background:#000}
-#field{position:absolute;inset:0;width:100%;height:100%;display:block}
-#identity{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:opacity 1.6s ease;pointer-events:none}
-#identity.show{opacity:1}
-.lockup{display:flex;align-items:center;gap:clamp(18px,3vw,42px);transform:translateY(8vh)}
-.globe{width:clamp(72px,11vw,150px);aspect-ratio:1;border-radius:50%;position:relative;box-shadow:0 0 34px rgba(0,255,65,.16)}
-.globe:before,.globe:after{content:"";position:absolute;inset:8%;border:1px solid rgba(255,255,255,.24);border-radius:50%}
-.globe:after{inset:18% 6%;border-color:rgba(0,255,65,.46);transform:rotate(90deg)}
-.words{line-height:.9;text-transform:uppercase;letter-spacing:.12em;text-shadow:0 0 22px rgba(255,255,255,.08)}
-.words strong{display:block;font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(27px,5vw,68px);letter-spacing:.08em;white-space:nowrap}
-.words span{display:block;margin-top:.72em;font-size:clamp(8px,1.25vw,16px);letter-spacing:.42em;color:rgba(255,255,255,.82);white-space:nowrap}
-@media(max-width:650px){.lockup{flex-direction:column;gap:20px;transform:translateY(6vh);text-align:center}.words strong{font-size:clamp(25px,8.4vw,42px)}.words span{font-size:9px;letter-spacing:.31em}}
-@media(prefers-reduced-motion:reduce){#identity{transition-duration:.25s}}
+main{position:fixed;inset:0;display:grid;place-items:center;background:#000}
+#particles{position:absolute;inset:0;width:100%;height:100%;display:block}
+#vignette{position:absolute;inset:0;pointer-events:none;background:
+radial-gradient(circle at 50% 45%,rgba(0,255,65,.045),transparent 24%),
+radial-gradient(circle at 50% 50%,transparent 0 42%,rgba(0,0,0,.28) 72%,rgba(0,0,0,.78) 100%)}
+.lockup{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:clamp(18px,3vw,30px);width:min(78vw,760px);opacity:0;transform:translateY(8px);animation:arrive 1.6s ease .35s forwards}
+.mark{display:block;width:clamp(92px,15vw,156px);height:auto;filter:drop-shadow(0 0 26px rgba(0,255,65,.13)) drop-shadow(0 0 34px rgba(22,140,250,.10))}
+.wordmark{display:block;width:min(100%,640px);height:auto;filter:drop-shadow(0 0 22px rgba(255,255,255,.035))}
+@keyframes arrive{to{opacity:1;transform:none}}
+@media(max-width:600px){
+  .lockup{width:min(84vw,520px);gap:20px}
+  .mark{width:112px}
+  .wordmark{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .lockup{animation:none;opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
-<main id="stage" aria-label="Governed Logic Reasoning Systems">
-<canvas id="field" aria-hidden="true"></canvas>
-<div id="identity" aria-hidden="true">
-  <div class="lockup">
-    <div class="globe" aria-hidden="true"></div>
-    <div class="words"><strong>Governed Logic</strong><span>Reasoning Systems</span></div>
-  </div>
+<main aria-label="Governed Logic Reasoning Systems">
+<canvas id="particles" aria-hidden="true"></canvas>
+<div id="vignette" aria-hidden="true"></div>
+<div class="lockup">
+  <img class="mark" src="/assets/governed-logic-mark.webp" alt="">
+  <img class="wordmark" src="/assets/gl-reasoning-systems.webp" alt="Governed Logic Reasoning Systems">
 </div>
 </main>
 <script>
 (()=>{
-const canvas=document.getElementById('field'),ctx=canvas.getContext('2d',{alpha:false}),identity=document.getElementById('identity');
+const canvas=document.getElementById('particles');
+const ctx=canvas.getContext('2d');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let W=0,H=0,D=1,cx=0,cy=0,start=performance.now(),shown=false;
-const N=reduced?500:(innerWidth<700?2200:5000),P=[];
-function resize(){D=Math.min(devicePixelRatio||1,1.7);W=innerWidth;H=innerHeight;cx=W/2;cy=H/2;canvas.width=W*D;canvas.height=H*D;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(D,0,0,D,0,0)}
+let W=0,H=0,D=1,pts=[];
+function resize(){
+  D=Math.min(devicePixelRatio||1,1.5);
+  W=innerWidth;H=innerHeight;
+  canvas.width=W*D;canvas.height=H*D;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.setTransform(D,0,0,D,0,0);
+  const count=reduced?0:(W<700?78:120);
+  pts=Array.from({length:count},(_,i)=>({
+    x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-.5)*.055,vy:(Math.random()-.5)*.055,
+    r:.45+Math.random()*.75,
+    g:i%19===0
+  }));
+}
 addEventListener('resize',resize);resize();
-function rand(i){const x=Math.sin(i*129.9898+78.233)*43758.5453;return x-Math.floor(x)}
-for(let i=0;i<N;i++){
- const a=rand(i)*Math.PI*2, r=.08+rand(i+9)*.92, speed=.65+rand(i+19)*1.7;
- P.push({a,r,speed,j:rand(i+31),k:rand(i+47),x:cx,y:cy});
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  for(const p of pts){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.g?'rgba(0,255,65,.34)':'rgba(255,255,255,.28)';
+    ctx.fill();
+  }
+  if(!reduced)requestAnimationFrame(draw);
 }
-const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
-function dot(x,y,r,green=0,alpha=1){
- const rr=Math.max(.45,r);ctx.beginPath();ctx.arc(x,y,rr,0,Math.PI*2);
- const g=Math.round(255*green), rb=Math.round(255*(1-green));
- ctx.fillStyle='rgba('+rb+',255,'+rb+','+alpha+')';ctx.fill();
-}
-function draw(now){
- const t=(now-start)/1000;ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
- if(reduced){
-   drawEarth(1,now);if(!shown){shown=true;identity.classList.add('show')}requestAnimationFrame(draw);return;
- }
- if(t<2){requestAnimationFrame(draw);return}
- if(t<3.35){
-   const q=ease((t-2)/1.35),r=.6+q*5.2,glow=8+q*52;
-   ctx.shadowColor='#fff';ctx.shadowBlur=glow;dot(cx,cy,r,0,1);ctx.shadowBlur=0;requestAnimationFrame(draw);return;
- }
- const burst=ease((t-3.35)/1.35), swirl=ease((t-4.5)/2.4), form=ease((t-6.1)/2.8), earth=ease((t-8.3)/2.4);
- const maxR=Math.min(W,H)*.46;
- for(let i=0;i<N;i++){
-   const p=P[i];
-   const burstR=maxR*(.18+.82*p.r)*burst;
-   const ba=p.a;
-   const bx=cx+Math.cos(ba)*burstR, by=cy+Math.sin(ba)*burstR;
-   const orbitA=ba+(t-4.3)*(.45+.55*p.speed);
-   const orbitR=maxR*(.12+.75*p.r)*(1-.12*swirl);
-   const ox=cx+Math.cos(orbitA)*orbitR, oy=cy+Math.sin(orbitA)*orbitR*.72;
-   const petals=18;
-   const sa=p.a*petals+(t-5.8)*.22;
-   const sr=maxR*(.12+.56*Math.abs(Math.sin(sa*.5)))*(.35+.65*p.r);
-   const sx=cx+Math.cos(p.a*2.0+(t-5.8)*.18)*sr;
-   const sy=cy+Math.sin(p.a*2.0+(t-5.8)*.18)*sr*.86;
-   let x=bx+(ox-bx)*swirl,y=by+(oy-by)*swirl;
-   x=x+(sx-x)*form;y=y+(sy-y)*form;
-   const lon=(p.a+(t*.10))%(Math.PI*2), lat=(p.k-.5)*Math.PI;
-   const R=Math.min(W,H)*.18;
-   const ex=cx+Math.cos(lat)*Math.sin(lon)*R;
-   const ey=cy+Math.sin(lat)*R;
-   x=x+(ex-x)*earth;y=y+(ey-y)*earth;
-   const green=earth*clamp((p.j-.25)*1.6);
-   dot(x,y,.45+p.j*.85,green,.42+p.j*.55);
- }
- if(t<8.7){ctx.shadowColor='#fff';ctx.shadowBlur=18;dot(cx,cy,1.8,0,.95);ctx.shadowBlur=0}
- if(t>9.4)drawEarth(earth,now);
- if(t>10.35&&!shown){shown=true;identity.classList.add('show')}
- requestAnimationFrame(draw);
-}
-function drawEarth(q,now){
- const R=Math.min(W,H)*.18;
- ctx.save();ctx.translate(cx,cy);
- const g=ctx.createRadialGradient(-R*.28,-R*.28,R*.05,0,0,R);
- g.addColorStop(0,'rgba(255,255,255,'+(.10*q)+')');g.addColorStop(.55,'rgba(0,255,65,'+(.055*q)+')');g.addColorStop(1,'rgba(0,0,0,0)');
- ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,R,0,Math.PI*2);ctx.fill();
- ctx.strokeStyle='rgba(255,255,255,'+(.16*q)+')';ctx.lineWidth=.7;
- for(let i=-2;i<=2;i++){ctx.beginPath();ctx.ellipse(0,0,R*(.22+Math.abs(i)*.14),R,0,0,Math.PI*2);ctx.stroke()}
- ctx.strokeStyle='rgba(0,255,65,'+(.22*q)+')';
- for(let i=-2;i<=2;i++){ctx.beginPath();ctx.ellipse(0,0,R,R*(.22+Math.abs(i)*.14),0,0,Math.PI*2);ctx.stroke()}
- ctx.restore();
-}
-requestAnimationFrame(draw);
+draw();
 })();
 </script>
 </body>
