@@ -129,6 +129,9 @@ Canonical semantic words must remain readable even if an effect fails. Do not us
 WEB-048
 Mobile is a first-class visual medium. No constitutive principle, product name, or core proposition may crop or overflow.
 
+WEB-049
+The homepage must preserve the distinctive Governed Logic visual atmosphere while remaining legible: depth, living light, token/representation particles, restrained motion, and expressive first-principle typography. Content-clarity work must not flatten the homepage into a generic explainer deck. Mobile must preserve the atmosphere without cropping semantic words.
+
 GOVERNED LOGIC SEMANTICS
 
 WEB-050
@@ -191,14 +194,14 @@ The homepage must read as a guided argument for a normally intelligent first-tim
 3. Governed Logic as the upstream bidirectional reasoning architecture.
 4. The relevant problem in current AI / large-language-model reasoning.
 5. Governed Intelligence as the AI instantiation, including the distinction between the current instruction-level prototype and engineering work still in development.
-6. A simple mechanism-level demonstration that makes the representation / referent / adjudication distinction concrete.
+6. Homepage evidence must come from actual source-backed research, demonstrations, benchmarks, or evaluation. Until a specific result is selected, route visitors to Research.
 7. Clear routes into the five primary destinations.
 
 WEB-067
 Homepage sections must introduce load-bearing concepts before relying on them. Remove abrupt conceptual jumps, unexplained terminology, duplicated claims, premature depth, and vague marketing language that forces a new visitor to reconstruct the argument.
 
 WEB-068
-A homepage demonstration may use an illustrative scenario, but it must be labeled as illustrative when it is not an empirical test result. Do not present a constructed example as measured model behavior.
+Homepage evidence must distinguish actual experiments, benchmarks, demonstrations, and evaluation results from explanatory examples. Prefer actual source-backed Governed Logic / Governed Intelligence evaluation material. Do not use the Daniel 28 explanatory example in the homepage evidence slot unless Paul explicitly requests it there.
 
 WEB-069
 Homepage autonomous timing must allow the substantive scenes to be read. Mobile reading order must preserve the same conceptual sequence without cropping core claims.
