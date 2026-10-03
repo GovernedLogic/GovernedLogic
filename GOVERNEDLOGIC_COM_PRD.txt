@@ -184,6 +184,25 @@ The homepage may use a short autonomous overview, but reading time must be suffi
 WEB-065
 Avoid unnecessary game-like chrome, timers, playback controls, or novelty controls.
 
+WEB-066
+The homepage must read as a guided argument for a normally intelligent first-time visitor with no prior Governed Logic context. The sequence is:
+1. Governed Logic Reasoning Systems as a reasoning systems company and its current work on Governed Intelligence.
+2. The grounding foundation in On the Nature of Ultimate Grounding.
+3. Governed Logic as the upstream bidirectional reasoning architecture.
+4. The relevant problem in current AI / large-language-model reasoning.
+5. Governed Intelligence as the AI instantiation, including the distinction between the current instruction-level prototype and engineering work still in development.
+6. A simple mechanism-level demonstration that makes the representation / referent / adjudication distinction concrete.
+7. Clear routes into the five primary destinations.
+
+WEB-067
+Homepage sections must introduce load-bearing concepts before relying on them. Remove abrupt conceptual jumps, unexplained terminology, duplicated claims, premature depth, and vague marketing language that forces a new visitor to reconstruct the argument.
+
+WEB-068
+A homepage demonstration may use an illustrative scenario, but it must be labeled as illustrative when it is not an empirical test result. Do not present a constructed example as measured model behavior.
+
+WEB-069
+Homepage autonomous timing must allow the substantive scenes to be read. Mobile reading order must preserve the same conceptual sequence without cropping core claims.
+
 HUMAN / MACHINE CORRESPONDENCE
 
 WEB-070
