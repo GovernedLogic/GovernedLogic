@@ -293,3 +293,26 @@ The public opening must be responsive and remain centered and coherent on deskto
 
 WEB-106
 No additional website content becomes public merely because it exists in Git history, the repository, the PRD, or canonical source material. Public release requires Paul's explicit approval.
+
+
+TEMPORARY PUBLIC HOLDING STATE — 2026-10-03
+
+WEB-107
+Until Paul explicitly approves the animated opening implementation, the production homepage uses a temporary holding state that overrides WEB-102 through WEB-104 for public rendering only.
+
+WEB-108
+The temporary holding state is intentionally minimal:
+- solid black background;
+- official Governed Logic Reasoning Systems artwork already stored in the repository;
+- restrained white/green particle atmosphere only;
+- no explanatory copy;
+- no navigation;
+- no buttons;
+- no menus;
+- no additional public pages.
+
+WEB-109
+The temporary holding state must look deliberate and finished, not like a prototype, wireframe, or engineering test.
+
+WEB-110
+The approved animated opening remains a future implementation target in the PRD and is not deleted by this rollback.
