@@ -189,13 +189,13 @@ Avoid unnecessary game-like chrome, timers, playback controls, or novelty contro
 
 WEB-066
 The homepage must read as a guided argument for a normally intelligent first-time visitor with no prior Governed Logic context. The sequence is:
-1. Governed Logic Reasoning Systems as a reasoning systems company and its current work on Governed Intelligence.
-2. The grounding foundation in On the Nature of Ultimate Grounding.
-3. Governed Logic as the upstream bidirectional reasoning architecture.
-4. The relevant problem in current AI / large-language-model reasoning.
-5. Governed Intelligence as the AI instantiation, including the distinction between the current instruction-level prototype and engineering work still in development.
-6. Homepage evidence must come from actual source-backed research, demonstrations, benchmarks, or evaluation. Until a specific result is selected, route visitors to Research.
-7. Clear routes into the five primary destinations.
+1. Governed Logic Reasoning Systems as a reasoning systems company building Governed Intelligence.
+2. Why the company exists: modern AI has a reasoning problem; capability is not the same thing as correct reasoning.
+3. The hidden upstream flaw: current AI is a groundless machine; its reasoning is not governed by truth; intelligence is downstream.
+4. Governed Logic as the substrate-agnostic upstream reasoning architecture: ground → truth → logic → reasoning → intelligence.
+5. On the Nature of Ultimate Grounding as the foundation beneath Governed Logic and the six constitutive principles: Being, Truth, Logic, Meaning, Intelligibility, Obligation.
+6. Governed Intelligence as the AI instantiation, including the distinction between the current instruction-level prototype and engineering work still in development.
+7. Clear routes into the five primary destinations and Research.
 
 WEB-067
 Homepage sections must introduce load-bearing concepts before relying on them. Remove abrupt conceptual jumps, unexplained terminology, duplicated claims, premature depth, and vague marketing language that forces a new visitor to reconstruct the argument.
