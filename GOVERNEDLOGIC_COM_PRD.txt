@@ -1,6 +1,6 @@
 GOVERNEDLOGIC.COM PRD
 Owner: Paul André Couchoud
-Updated: 2026-10-02
+Updated: 2026-10-03
 Status: CURRENT REQUIREMENTS — PLAIN TEXT
 
 PURPOSE
@@ -261,3 +261,35 @@ If the implementation conflicts with this PRD, fix the implementation.
 
 WEB-096
 If Paul changes the requirement, update this PRD first or in the same commit sequence, then update the implementation.
+
+
+PUBLIC RELEASE GATE — 2026-10-03
+
+WEB-100
+Until Paul explicitly approves additional public content, governedlogic.com exposes only the approved opening experience at the root route. All previously published substantive pages, menus, destination links, library/publication/source surfaces, feeds, and sitemap entries are withheld from the public website.
+
+WEB-101
+No unapproved explanatory copy appears during the opening animation. The opening is visual only until the Governed Logic Reasoning Systems identity resolves.
+
+WEB-102
+Opening sequence:
+1. Solid black screen for approximately two seconds.
+2. A tiny pure-white point appears exactly at screen center, grows from roughly one pixel through several pixels, and intensifies into a brilliant star.
+3. The star bursts outward into thousands of discrete pure-white particle/token points. Do not draw connecting lines between particles.
+4. The particles orbit and swirl around the fixed center point and progressively organize into a geometric Spirograph-like structure corresponding visually to Paul's green sweatshirt reference: dense overlapping petal/loop geometry around the center.
+5. As the structure coheres, some particles gradually transition from white to Governed Logic green.
+6. The organized particle structure resolves into a particle-built Earth/globe.
+7. The Earth becomes the Earth element of the Governed Logic Reasoning Systems identity, and the company identity resolves around it.
+8. There is no separate Spirograph remaining in the final identity state.
+
+WEB-103
+The existing Governed Logic identity artwork is the visual referent for the final company identity, not a static implementation asset for the opening. The opening must recreate the identity natively with web rendering rather than displaying the existing static logo/wordmark image.
+
+WEB-104
+The opening must preserve a black field, pure-white initial particles, Governed Logic green emerging during organization, depth, smooth motion, and a central governing point. It must not introduce decorative connecting lines, explanatory labels, captions, buttons, menus, or unrelated imagery before the final identity state.
+
+WEB-105
+The public opening must be responsive and remain centered and coherent on desktop and mobile. Reduced-motion users may receive a shortened non-flashing transition to the final identity state.
+
+WEB-106
+No additional website content becomes public merely because it exists in Git history, the repository, the PRD, or canonical source material. Public release requires Paul's explicit approval.
