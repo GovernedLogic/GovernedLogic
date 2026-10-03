@@ -1,6 +1,6 @@
 GOVERNEDLOGIC.COM PRD
 Owner: Paul André Couchoud
-Updated: 2026-10-02
+Updated: 2026-10-03
 Status: CURRENT REQUIREMENTS — PLAIN TEXT
 
 PURPOSE
@@ -190,15 +190,15 @@ Avoid unnecessary game-like chrome, timers, playback controls, or novelty contro
 WEB-066
 The homepage must read as a guided argument for a normally intelligent first-time visitor with no prior Governed Logic context. The sequence is:
 1. Governed Logic Reasoning Systems as a reasoning systems company and its current work on Governed Intelligence.
-2. The grounding foundation in On the Nature of Ultimate Grounding.
-3. Governed Logic as the upstream bidirectional reasoning architecture.
-4. The relevant problem in current AI / large-language-model reasoning.
-5. Governed Intelligence as the AI instantiation, including the distinction between the current instruction-level prototype and engineering work still in development.
+2. The relevant problem in current AI / large-language-model reasoning: increasingly capable artificial intelligence remains groundless when reasoning and logic lack a stable governing ground for truth.
+3. Governed Logic as the upstream bidirectional reasoning architecture: truth governs logic; logic governs reasoning; intelligence is downstream.
+4. The grounding foundation in On the Nature of Ultimate Grounding, including the six constitutive principles: being, truth, logic, meaning, intelligibility, and obligation.
+5. Governed Intelligence as the artificial-intelligence instantiation of Governed Logic, including the distinction between the current instruction-level prototype and engineering work still in development.
 6. Homepage evidence must come from actual source-backed research, demonstrations, benchmarks, or evaluation. Until a specific result is selected, route visitors to Research.
 7. Clear routes into the five primary destinations.
 
 WEB-067
-Homepage sections must introduce load-bearing concepts before relying on them. Remove abrupt conceptual jumps, unexplained terminology, duplicated claims, premature depth, and vague marketing language that forces a new visitor to reconstruct the argument.
+Homepage sections must introduce load-bearing concepts before relying on them. The visitor must encounter the AI/reasoning problem before being asked to follow the deeper ultimate-grounding argument. Remove abrupt conceptual jumps, unexplained terminology, duplicated claims, premature depth, and vague marketing language that forces a new visitor to reconstruct the argument.
 
 WEB-068
 Homepage evidence must distinguish actual experiments, benchmarks, demonstrations, and evaluation results from explanatory examples. Prefer actual source-backed Governed Logic / Governed Intelligence evaluation material. Do not use the Daniel 28 explanatory example in the homepage evidence slot unless Paul explicitly requests it there.
