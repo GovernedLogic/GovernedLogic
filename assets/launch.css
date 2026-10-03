@@ -919,3 +919,44 @@ h2{font-size:clamp(42px,6.2vw,86px)}
   .evidence-grid div+div{padding-left:0;border-left:0;border-top:1px solid rgba(121,195,255,.08)}
   .evidence-grid strong{font-size:12px}
 }
+
+
+/* WORKSHOP PASS 23.0 — canonical front door: calm, legible, atmospheric */
+.company-cloud{
+  border-radius:30px;
+  background:
+    radial-gradient(520px 300px at 14% 20%,rgba(22,140,250,.085),transparent 72%),
+    radial-gradient(520px 320px at 88% 78%,rgba(141,120,255,.055),transparent 74%),
+    linear-gradient(145deg,rgba(7,12,21,.64),rgba(3,5,10,.44));
+  box-shadow:0 26px 90px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.055);
+}
+.company-front-copy .company-lede{max-width:720px;font-size:clamp(18px,1.7vw,22px)}
+.case-scene .scene-inner{max-width:1040px}
+.case-scene h2{max-width:16ch}
+.case-copy{max-width:820px}
+.case-quote{max-width:820px;background:transparent;border-left-color:rgba(121,195,255,.62);padding-top:7px;padding-bottom:7px}
+.logic-scene .principles-inline span:nth-child(2),
+.logic-scene .principles-inline span:nth-child(5){
+  color:#eef6ff;
+  -webkit-text-stroke:0;
+  text-shadow:none;
+}
+.mechanism-flow span{
+  background:rgba(255,255,255,.018);
+  border-color:rgba(121,195,255,.13);
+}
+.destination-grid a{transition:color .18s ease,background .18s ease}
+.destination-grid a:hover,.destination-grid a:focus-visible{background:rgba(22,140,250,.025)}
+#gl{opacity:.42}
+#particles{opacity:.68}
+#grain{opacity:.022}
+#veil{background:radial-gradient(circle at 50% 44%,transparent 0 34%,rgba(0,0,0,.09) 64%,rgba(0,0,0,.68) 100%),linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.24))}
+@media(max-width:760px){
+  .company-cloud{border-radius:24px}
+  .case-scene{padding:86px 22px 64px}
+  .case-scene .scene-inner{width:100%}
+  .case-scene h2{max-width:none}
+  .logic-scene .principles-inline span:nth-child(5){font-size:clamp(15px,4.8vw,22px)}
+  #gl{opacity:.34}
+  #particles{opacity:.56}
+}
