@@ -1,7 +1,7 @@
 (()=>{
 const qs=s=>document.querySelector(s),qsa=s=>[...document.querySelectorAll(s)],scenes=qsa('.scene'),meter=qs('#meter'),menu=qs('#menuPanel'),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let scene=0,started=true,timer=null,audioOn=false,mouse={x:.5,y:.5,tx:.5,ty:.5};
-const durations=[16000,10500,11000,11000,10000,10000,9000],accents=['#168CFA','#8D78FF','#168CFA','#8D78FF','#168CFA','#8D78FF','#168CFA'];
+const durations=[20000,24000,24000,26000,26000,26000,22000],accents=['#168CFA','#8D78FF','#168CFA','#8D78FF','#168CFA','#8D78FF','#168CFA'];
 scenes.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Go to scene '+(i+1));if(i===0)b.classList.add('on');b.addEventListener('click',e=>{e.stopPropagation();setScene(i,true)});meter.appendChild(b)});
 function update(){scenes.forEach((s,i)=>{const on=i===scene;s.classList.toggle('active',on);s.setAttribute('aria-hidden',on?'false':'true');if('inert'in s)s.inert=!on});[...meter.children].forEach((m,i)=>m.classList.toggle('on',i===scene));document.documentElement.style.setProperty('--accent',accents[scene]);if(audioOn)ramp(scene<2?.3:.22)}
 function setScene(n,user=false){scene=(n+scenes.length)%scenes.length;const run=()=>update();if(document.startViewTransition&&started&&user&&!reduced)document.startViewTransition(run);else run();if(started)schedule()}
