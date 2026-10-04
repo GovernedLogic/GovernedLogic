@@ -316,3 +316,46 @@ The temporary holding state must look deliberate and finished, not like a protot
 
 WEB-110
 The approved animated opening remains a future implementation target in the PRD and is not deleted by this rollback.
+
+
+APPROVED INTRO ARCHITECTURE — 2026-10-03
+
+WEB-111
+Paul approved implementation of the animated opening on 2026-10-03. WEB-107 through WEB-110 are superseded as the production-state authority. The public-release gate remains in force for all other unapproved website content.
+
+WEB-112
+Page 8 is the immutable final visual referent for the opening. Build the animation backward from Page 8, then play that transformation forward. Intermediate effects may not invent a destination that differs from Page 8.
+
+WEB-113
+Page 8 composition is the approved Governed Logic Reasoning Systems identity: dark cinematic field; shallow Earth horizon behind and above the title; metallic serif GOV­ERNED LOGIC title; thin horizontal divider with a bright blue-white central flare; widely tracked REASONING SYSTEMS subtitle; subtle blue circuitry at the left and right edges; reflective/radial technical floor beneath; strong depth and OLED-quality contrast. The approved JPEG is a visual referent only, not an implementation asset.
+
+WEB-114
+The opening is a self-contained fullscreen overlay component above the real website. The website loads independently underneath it. The intro may not own, restructure, or interfere with the website's navigation, content architecture, semantic HTML, metadata, or future page code.
+
+WEB-115
+The opening target duration is 11 seconds from initial black screen to completed Page 8 identity. At completion the intro overlay fades out and removes itself from the DOM. The underlying website remains loaded and functional.
+
+WEB-116
+The opening transformation is:
+black → tiny centered white point → intensifying white star → outward burst of thousands of discrete white particles → orbital/swirl organization around the center → particles form a Spirograph-like petal structure → selected particles transition from white toward Governed Logic green → the green geometric particle structure resolves into Earth → Earth moves/scales into its Page 8 horizon position → Governed Logic Reasoning Systems resolves → Page 8.
+
+WEB-117
+The Spirograph stage must be particle-built. Do not connect the particles with decorative network lines. The visual target is the dense overlapping-petal geometry represented by Paul's green Spirograph sweatshirt, not a generic particle sphere.
+
+WEB-118
+Particle identity persists across the transformation so the experience reads as one object reorganizing through states rather than a sequence of unrelated effects.
+
+WEB-119
+The Page 8 identity must be rendered natively in the browser. Do not substitute the approved JPEG or a static logo/wordmark image as the visible final implementation.
+
+WEB-120
+The ONE_FILE_BROWSER_DEMO_REEL capability reference establishes the browser-rendering floor: live procedural light, layered depth, particle rendering, responsive motion, and cinematic compositing are allowed and expected. It is a capability reference, not a design to copy.
+
+WEB-121
+No explanatory copy, menu, button, label, caption, or navigation appears inside the intro. The only words in the intro are the final Governed Logic Reasoning Systems identity at Page 8.
+
+WEB-122
+The intro must be responsive on desktop and mobile. Reduced-motion users bypass the animated overlay and receive the underlying website directly.
+
+WEB-123
+Intro failure must fail open: if the intro script cannot initialize, the underlying website remains visible and usable.
