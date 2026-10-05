@@ -10,13 +10,30 @@
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://governedlogic.com/">
 <link rel="stylesheet" href="assets/opening.css">
+<link rel="preload" href="assets/materials/cinzel.ttf" as="font" type="font/ttf" crossorigin>
+<script src="assets/material-environment.js" defer></script>
+<script src="assets/earth-renderer.js" defer></script>
 <script src="assets/opening.js" defer></script>
 </head>
 <body>
 <main id="site" aria-label="Governed Logic Reasoning Systems">
   <canvas id="siteCanvas" aria-hidden="true"></canvas>
   <div class="identity">
-    <h1 class="brand-title">Governed Logic</h1>
+    <h1 class="brand-title"><span class="semantic-title">Governed Logic</span>
+      <svg class="metal-title" viewBox="0 0 1600 205" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="chrome" x1="0" y1="0" x2=".06" y2="1"><stop offset="0" stop-color="#f3faff"/><stop offset=".16" stop-color="#b9d1e3"/><stop offset=".33" stop-color="#7d96ab"/><stop offset=".38" stop-color="#dae9f6"/><stop offset=".48" stop-color="#829bae"/><stop offset=".505" stop-color="#405c72"/><stop offset=".72" stop-color="#152d42"/><stop offset=".91" stop-color="#8ba7bc"/><stop offset="1" stop-color="#e8f5ff"/></linearGradient>
+          <linearGradient id="edge" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#fff"/><stop offset=".28" stop-color="#edf8ff"/><stop offset=".5" stop-color="#6c90ae"/><stop offset=".7" stop-color="#112c42"/><stop offset="1" stop-color="#acc4d5"/></linearGradient>
+          <filter id="metalBevel" x="-5%" y="-10%" width="110%" height="130%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceAlpha" stdDeviation=".6" result="bump"/>
+            <feSpecularLighting in="bump" surfaceScale="2.5" specularConstant=".72" specularExponent="26" lighting-color="#d6ecff" result="specular"><feDistantLight azimuth="230" elevation="48"/></feSpecularLighting>
+            <feComposite in="specular" in2="SourceAlpha" operator="in" result="lit"/>
+            <feComposite in="SourceGraphic" in2="lit" operator="arithmetic" k1="0" k2="1" k3=".85" k4="0"/>
+          </filter>
+        </defs>
+        <text x="800" y="175" text-anchor="middle" textLength="1540" lengthAdjust="spacingAndGlyphs" fill="#050b13" stroke="#07131e" stroke-width="3" transform="translate(1 4)">Governed Logic</text>
+        <text x="800" y="175" text-anchor="middle" textLength="1540" lengthAdjust="spacingAndGlyphs" fill="url(#chrome)" stroke="url(#edge)" stroke-width="1.15" paint-order="stroke fill" filter="url(#metalBevel)">Governed Logic</text>
+      </svg></h1>
     <div class="brand-rule" aria-hidden="true"><i></i></div>
     <p class="brand-sub">Reasoning Systems</p>
   </div>

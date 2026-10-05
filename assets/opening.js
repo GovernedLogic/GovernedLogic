@@ -18,6 +18,9 @@
   const atmosphereCtx = atmosphere.getContext('2d', {alpha:false});
   if (!sceneCtx || !atmosphereCtx) return;
   let layout;
+  const materialEarth=window.GLCreateEarth?.(()=>resize());
+  const fallbackSurface=materialEarth?null:document.createElement('canvas');
+  const fallbackContext=fallbackSurface?.getContext('2d');
   function size(canvas, ctx) {
     canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -72,7 +75,7 @@
     pixels.data[k+3]=255;
   }
   textureContext.putImageData(pixels,0,0);
-  function earth(ctx,cx,cy,rx,ry,alpha=1) {
+  function fallbackEarth(ctx,cx,cy,rx,ry,alpha=1) {
     ctx.save();ctx.globalAlpha*=alpha;
     ctx.drawImage(globeTexture,cx-rx,cy-ry,rx*2,ry*2);
     ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,TAU);ctx.clip();
@@ -83,8 +86,33 @@
     glow(ctx,cx,cy-ry,rx*.35,'182,217,250',.45);
     glow(ctx,cx,cy-ry,rx*.13,'255,218,155',.8);ctx.restore();
   }
+  function earth(ctx,cx,cy,r,cap=0,alpha=1){
+    if(alpha<=0)return;
+    ctx.save();ctx.globalAlpha*=alpha;
+    if(materialEarth)ctx.drawImage(materialEarth.render(width,height,dpr,cx,cy,r,cap,layout.scale),0,0,width,height);
+    else if(fallbackContext){
+      if(fallbackSurface.width!==Math.round(width*dpr)||fallbackSurface.height!==Math.round(height*dpr))size(fallbackSurface,fallbackContext);
+      const f=fallbackContext,s=layout.scale,top=cy-r;
+      f.clearRect(0,0,width,height);fallbackEarth(f,cx,cy,r,r,1);
+      f.globalCompositeOperation='destination-in';
+      const vertical=f.createLinearGradient(0,top+28*s,0,top+148*s);
+      vertical.addColorStop(0,'#fff');vertical.addColorStop(1,`rgba(255,255,255,${1-cap})`);
+      f.fillStyle=vertical;f.fillRect(0,0,width,height);
+      const horizontal=f.createLinearGradient(cx-700*s,0,cx+700*s,0);
+      for(let i=0;i<=20;i++){const x=(i/20-.5)*1400;horizontal.addColorStop(i/20,`rgba(255,255,255,${mix(1,Math.exp(-Math.pow(Math.abs(x)/465,4)),cap)})`);}
+      f.fillStyle=horizontal;f.fillRect(0,0,width,height);f.globalCompositeOperation='source-over';
+      ctx.drawImage(fallbackSurface,0,0,width,height);
+    }
+    const top=cy-r, s=layout.scale;
+    // A sharp light core with restrained, directional bloom at the physical limb.
+    glow(ctx,cx,top,50*s,'103,183,238',.48);
+    glow(ctx,cx,top,16*s,'255,229,187',.88);
+    ctx.strokeStyle='#fff5d6';ctx.lineWidth=Math.max(.6,s*.8);ctx.beginPath();ctx.moveTo(cx-27*s,top);ctx.lineTo(cx+27*s,top);ctx.stroke();
+    ctx.restore();
+  }
   function backdrop(ctx,withEarth=true) {
-    const {cx,base,scale:s,earthY,earthRX,earthRY}=layout;
+    const {cx,base,scale:s,earthY,earthR}=layout;
+    if(window.GLMaterialEnvironment){window.GLMaterialEnvironment(ctx,{width,height,cx,base,scale:s});if(withEarth)earth(ctx,cx,earthY,earthR,1);return;}
     ctx.fillStyle='#000';ctx.fillRect(0,0,width,height);
     const sky=ctx.createRadialGradient(cx,base-380*s,0,cx,base-240*s,800*s);
     sky.addColorStop(0,'#152430');sky.addColorStop(.4,'#060c12');sky.addColorStop(1,'#000');ctx.fillStyle=sky;ctx.fillRect(0,0,width,height);
@@ -125,7 +153,7 @@
     ctx.strokeStyle='#9eeaff77';ctx.lineWidth=s;ctx.beginPath();ctx.moveTo(cx,hy);ctx.lineTo(cx,base+430*s);ctx.stroke();
     glow(ctx,cx,floorY,85*s,'137,232,255',.66);
     ctx.restore();
-    if(withEarth)earth(ctx,cx,earthY,earthRX,earthRY);
+    if(withEarth)earth(ctx,cx,earthY,earthR,1);
     // Fade the edges into the physical black field.
     const vignette=ctx.createRadialGradient(cx,base,150*s,cx,base,1100*s);
     vignette.addColorStop(0,'#0000');vignette.addColorStop(.65,'#0000');vignette.addColorStop(1,'#000b');ctx.fillStyle=vignette;ctx.fillRect(0,0,width,height);
@@ -133,7 +161,7 @@
   function resize() {
     width=document.documentElement.clientWidth;height=siteCanvas.parentElement.clientHeight;dpr=Math.min(devicePixelRatio||1,2);
     const scale=width/1920,base=height*.5;
-    layout={cx:width*.5,base,scale,earthY:base-103*scale,earthRX:410*scale,earthRY:68*scale};
+    layout={cx:width*.5,base,scale,earthY:base+1100*scale,earthR:1300*scale};
     size(siteCanvas,context);size(scene,sceneCtx);size(atmosphere,atmosphereCtx);backdrop(sceneCtx);backdrop(atmosphereCtx,false);
     context.drawImage(scene,0,0,width,height);
     if(intro)size(intro.canvas,intro.ctx);
@@ -154,6 +182,8 @@
     const canvas=document.createElement('canvas');canvas.className='intro-canvas';
     const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)return;
     const identity=document.querySelector('#site .identity').cloneNode(true);
+    identity.querySelectorAll('[id]').forEach(n=>n.id+='-intro');
+    identity.querySelectorAll('[fill],[stroke],[filter]').forEach(n=>{for(const a of ['fill','stroke','filter']){const v=n.getAttribute(a);if(v?.startsWith('url(#'))n.setAttribute(a,v.replace(')', '-intro)'));}});
     element.append(canvas,identity);intro={element,canvas,ctx,identity};size(canvas,ctx);
     document.body.appendChild(element);
     // Independent safety deadline removes the overlay even after a rendering failure.
@@ -176,9 +206,9 @@
         if(reveal>0){ctx.globalAlpha=reveal;ctx.drawImage(t<10.35?atmosphere:scene,0,0,width,height);ctx.globalAlpha=1;}
         if(t>=2.85 && t<10.35){
           const burst=ease((t-2.85)/.8),orbit=ease((t-3.45)/1.25),petal=ease((t-4.25)/1.5),sphere=ease((t-6.2)/1.5),settle=ease((t-7.85)/2.25);
-          const radius=u*.31,earthX=mix(cx,layout.cx,settle),earthY=mix(cy,layout.earthY,settle),rx=mix(u*.245,layout.earthRX,settle),ry=mix(u*.245,layout.earthRY,settle);
+          const radius=u*.31,earthX=mix(cx,layout.cx,settle),earthY=mix(cy,layout.earthY,settle),rx=mix(u*.245,layout.earthR,settle),ry=rx;
           const green=ease((t-5.05)/1.25)*(1-sphere),rotation=(t-4.2)*.08;
-          if(sphere>.5)earth(ctx,earthX,earthY,rx,ry,ease((sphere-.5)*2));
+          if(sphere>.5)earth(ctx,earthX,earthY,rx,settle,ease((sphere-.5)*2));
           ctx.globalCompositeOperation='lighter';
           for(let i=0;i<count;i++){
             const p=particles[i],a=p.a+(t-3.3)*(.45+p.s*.6)*orbit,dist=u*(.12+p.r*.5)*burst;
@@ -187,7 +217,9 @@
             x=mix(x,cx+px*radius,petal);y=mix(y,cy+py*radius,petal);
             const lo=p.lon+.38,z=Math.cos(p.lat)*Math.cos(lo);
             x=mix(x,earthX+Math.cos(p.lat)*Math.sin(lo)*rx,sphere);y=mix(y,earthY-Math.sin(p.lat)*ry,sphere);
-            let alpha=(.35+p.s*.65)*mix(1,z<0?.06:p.land?.95:.14,sphere)*(1-ease((t-9.3)/1.05));
+            const capDepth=(y-(earthY-rx))/Math.max(.3,layout.scale);
+            const capFade=mix(1,1-ease((capDepth-28)/120),settle);
+            let alpha=(.35+p.s*.65)*mix(1,z<0?.06:p.land?.95:.14,sphere)*(1-ease((t-8.2)/1.1))*capFade;
             const g=green*(p.s>.35?1:.2),red=Math.round(mix(255,10,g)),blue=Math.round(mix(255,65,g));
             ctx.fillStyle=`rgba(${red},255,${blue},${alpha})`;
             const size=(.55+p.s*.75)*Math.min(1.3,Math.max(.8,width/1400));

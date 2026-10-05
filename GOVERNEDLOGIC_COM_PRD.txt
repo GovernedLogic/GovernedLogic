@@ -1,6 +1,6 @@
 GOVERNEDLOGIC.COM PRD
 Owner: Paul André Couchoud
-Updated: 2026-10-03
+Updated: 2026-10-05
 Status: CURRENT REQUIREMENTS — PLAIN TEXT
 
 PURPOSE
@@ -359,3 +359,15 @@ The intro must be responsive on desktop and mobile. Reduced-motion users bypass 
 
 WEB-123
 Intro failure must fail open: if the intro script cannot initialize, the underlying website remains visible and usable.
+
+
+OPENING VISUAL QUALITY — 2026-10-05
+
+WEB-124
+Paul supplies The Truth with Paul artwork as a visual-quality benchmark for the native opening animation: crispness, hyperrealism, fine detail, convincing materials, lighting, reflections, and depth. It is not a replacement composition, background asset, or instruction to build around that image. The approved Page 8 composition remains the destination.
+
+WEB-125
+The Truth with Paul must eventually have its own website page. This is a separate future requirement, not the current implementation priority. Its exact route and the Mimicry route remain undecided. The existing multi-page architecture remains in force.
+
+WEB-126
+The active work is to improve the opening animation's rendered quality to the supplied visual benchmark. Technical checks and deployment success do not establish visual fidelity. Inspect the actual rendered result against the references before claiming the quality requirement is satisfied.

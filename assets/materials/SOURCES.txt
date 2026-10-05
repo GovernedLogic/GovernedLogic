@@ -1,0 +1,24 @@
+OPENING MATERIAL CREDITS
+
+Earth day, cloud and city-light surface imagery: NASA Goddard Space Flight Center; Reto Stoeckli; Robert Simmon; DMSP city-lights data.
+Source overview:
+https://science.nasa.gov/earth/earth-observatory/the-blue-marble-true-color-global-imagery-at-1km-resolution/
+NASA media usage guidance:
+https://www.nasa.gov/nasa-brand-center/images-and-media/
+No NASA endorsement is implied.
+
+Day map source (8192 x 4096):
+https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57730/land_ocean_ice_8192.png
+Runtime: resized to 4096 x 2048, JPEG quality 94.
+
+Night map (2400 x 1200), unchanged:
+https://eoimages.gsfc.nasa.gov/images/imagerecords/55000/55167/earth_lights_lrg.jpg
+
+Cloud map (2048 x 1024), unchanged:
+https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57747/cloud_combined_2048.jpg
+
+Cinzel native variable font, unchanged:
+https://raw.githubusercontent.com/google/fonts/main/ofl/cinzel/Cinzel%5Bwght%5D.ttf
+SIL Open Font License 1.1; see Cinzel-OFL.txt.
+
+Retrieved 2026-10-05. These are surface maps and font data rendered into browser-native geometry and text. No reference screenshot or composed identity image is used by the opening.
