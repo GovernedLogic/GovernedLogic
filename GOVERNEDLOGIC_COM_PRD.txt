@@ -371,3 +371,15 @@ The Truth with Paul must eventually have its own website page. This is a separat
 
 WEB-126
 The active work is to improve the opening animation's rendered quality to the supplied visual benchmark. Technical checks and deployment success do not establish visual fidelity. Inspect the actual rendered result against the references before claiming the quality requirement is satisfied.
+
+
+BOUNDED OPENING REFINEMENT — 2026-10-09
+
+WEB-127
+The opening is a bounded visual transformation with fixed endpoints: initial full black field and final native Governed Logic Reasoning Systems Page 8 identity. Preserve both endpoints, the approximately eleven-second lifecycle, reduced-motion bypass, fail-open behavior, and public content release restrictions. Improve the visual journey by changing the isolated opening component, not by rebuilding the homepage or publishing hidden pages.
+
+WEB-128
+Refine one visual behavior at a time. For the current pass, allow the particle-built Spirograph structure a slightly longer readable interval before the particle-to-Earth transition. The intermediate structure remains discrete particles, without connecting lines. Preserve particle continuity, green transition, globe destination, and the final identity. Do not treat a code commit as proof that subjective visual fidelity has been accepted; Paul reviews the actual rendered result.
+
+WEB-129
+The PRD records requirements and visual acceptance criteria, not duplicate blocks of implementation code. GitHub source files own implementation detail. A bounded change must update the PRD and implementation together, verify the changes, and preserve a reversible Git history. Current scope does not authorize disclosure of withheld website content.
