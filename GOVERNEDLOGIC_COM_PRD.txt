@@ -383,3 +383,21 @@ Refine one visual behavior at a time. For the current pass, allow the particle-b
 
 WEB-129
 The PRD records requirements and visual acceptance criteria, not duplicate blocks of implementation code. GitHub source files own implementation detail. A bounded change must update the PRD and implementation together, verify the changes, and preserve a reversible Git history. Current scope does not authorize disclosure of withheld website content.
+
+
+FUNCTIONAL NAVIGATION RELEASE — 2026-10-09
+
+WEB-130
+Paul explicitly requires a functioning navigable website, not only the isolated opening. This supersedes WEB-100 solely for the minimum navigational shell and reviewed-safe route placeholders. The publication gate remains in force for all substantive text, source documents, claims, articles, and hidden prior content not expressly approved.
+
+WEB-131
+Preserve the existing native eleven-second opening and final company identity unchanged. Underneath, restore a scrollable homepage with an obvious Explore affordance, persistent semantic company identity, clear accessible navigation, and separate addressable pages for Follow the Chain Challenge, Company, Research, and Canonical Library. The current substantive pages may have neutral clearly labeled under-review placeholders only.
+
+WEB-132
+The homepage and pages must function with JavaScript disabled or an animation failure; navigation uses ordinary HTML anchors. Maintain mobile usability, descriptive navigation, and independent CSS. No scroll lock or fullscreen trapping after intro removal.
+
+WEB-133
+This navigation release does not constitute approval of final company copy, Follow the Chain challenge text, research findings, or canonical source publication. No archived content becomes public by inference. The PRD owns these requirements; Git owns exact implementation.
+
+WEB-134
+Acceptance requires committed PRD and code, verified route existence and links, and successful Pages deployment before declaring live. Visual acceptance requires viewing rendered desktop and phone pages; do not assume successful deployment proves visual quality.
