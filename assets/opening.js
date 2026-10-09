@@ -205,7 +205,7 @@
         const reveal=ease((t-8.55)/1.65);
         if(reveal>0){ctx.globalAlpha=reveal;ctx.drawImage(t<10.35?atmosphere:scene,0,0,width,height);ctx.globalAlpha=1;}
         if(t>=2.85 && t<10.35){
-          const burst=ease((t-2.85)/.8),orbit=ease((t-3.45)/1.25),petal=ease((t-4.25)/1.5),sphere=ease((t-6.2)/1.5),settle=ease((t-7.85)/2.25);
+          const burst=ease((t-2.85)/.8),orbit=ease((t-3.45)/1.25),petal=ease((t-4.25)/1.5),sphere=ease((t-6.55)/1.3),settle=ease((t-7.95)/2.15);
           const radius=u*.31,earthX=mix(cx,layout.cx,settle),earthY=mix(cy,layout.earthY,settle),rx=mix(u*.245,layout.earthR,settle),ry=rx;
           const green=ease((t-5.05)/1.25)*(1-sphere),rotation=(t-4.2)*.08;
           if(sphere>.5)earth(ctx,earthX,earthY,rx,settle,ease((sphere-.5)*2));
