@@ -1,6 +1,6 @@
 GOVERNEDLOGIC.COM PRD
 Owner: Paul André Couchoud
-Updated: 2026-10-05
+Updated: 2026-10-11
 Status: CURRENT REQUIREMENTS — PLAIN TEXT
 
 PURPOSE
@@ -401,3 +401,15 @@ This navigation release does not constitute approval of final company copy, Foll
 
 WEB-134
 Acceptance requires committed PRD and code, verified route existence and links, and successful Pages deployment before declaring live. Visual acceptance requires viewing rendered desktop and phone pages; do not assume successful deployment proves visual quality.
+
+
+MIDDLE TRANSFORMATION REFINEMENT — 2026-10-11
+
+WEB-135
+Paul reaffirmed that the opening's full-black start and final Governed Logic Reasoning Systems identity are the correct fixed endpoints. The current refinement changes only the isolated animation between them.
+
+WEB-136
+The middle must be slower, cleaner, and more deliberate than the prior implementation. The particle-built Spirograph must remain readable before becoming a particle Earth, and the material Earth must develop through that same object rather than appear as an abrupt replacement. A modest extension beyond the previous approximately eleven-second implementation is allowed where needed to correct the rushed middle.
+
+WEB-137
+Preserve discrete particles, the white center, continuity of particle identity, restrained Governed Logic green, responsive behavior, reduced-motion bypass, fail-open removal, and the unchanged final identity. Visual acceptance still requires inspection of the rendered animation; code completion alone is not acceptance.

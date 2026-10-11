@@ -4,6 +4,37 @@
   const TAU = Math.PI * 2;
   const clamp = x => Math.max(0, Math.min(1, x));
   const ease = x => { x = clamp(x); return x*x*x*(x*(x*6-15)+10); };
+  const phase = (time,start,end) => ease((time-start)/(end-start));
+  const TIMELINE = Object.freeze({
+    starStart:2,
+    starEnd:2.9,
+    burstStart:2.85,
+    burstEnd:4,
+    orbitStart:3.35,
+    orbitEnd:5,
+    petalStart:4.4,
+    petalEnd:5.95,
+    greenStart:5.15,
+    greenEnd:6.65,
+    sphereStart:7.45,
+    sphereEnd:9.05,
+    centerFadeStart:7.15,
+    centerFadeEnd:8.45,
+    greenFadeStart:8.55,
+    greenFadeEnd:9.75,
+    materialStart:8.65,
+    materialEnd:10.35,
+    settleStart:8.75,
+    settleEnd:11.65,
+    environmentStart:9.55,
+    environmentEnd:11.55,
+    tokenFadeStart:9.75,
+    tokenFadeEnd:11.65,
+    identityStart:10.6,
+    identityEnd:12.05,
+    finalAt:12.7,
+    deadline:13.45
+  });
   const mix = (a,b,t) => a+(b-a)*t;
   const rand = n => { const x=Math.sin(n*127.1+311.7)*43758.5453123; return x-Math.floor(x); };
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -54,7 +85,7 @@
     const lat=Math.asin(1-2*(i+.5)/count),lon=i*2.3999632297%TAU-Math.PI;
     const petal=i%24,theta=Math.floor(i/24)/Math.ceil(count/24)*TAU;
     const a=petal/24*TAU,x=.5+.5*Math.cos(theta),y=.5*Math.sin(theta);
-    return {a:i*2.3999632297,r:rand(i+1),s:rand(i+999),sx:x*Math.cos(a)-y*Math.sin(a),sy:x*Math.sin(a)+y*Math.cos(a),lat,lon,land:inLand(lon*180/Math.PI,lat*180/Math.PI)};
+    return {a:i*2.3999632297,r:rand(i+1),s:rand(i+999),c:rand(i+2048),sx:x*Math.cos(a)-y*Math.sin(a),sy:x*Math.sin(a)+y*Math.cos(a),lat,lon,land:inLand(lon*180/Math.PI,lat*180/Math.PI)};
   });
   // Procedural orthographic Earth surface, generated once from geographic silhouettes.
   const globeTexture=document.createElement('canvas');globeTexture.width=512;globeTexture.height=512;
@@ -187,7 +218,7 @@
     element.append(canvas,identity);intro={element,canvas,ctx,identity};size(canvas,ctx);
     document.body.appendChild(element);
     // Independent safety deadline removes the overlay even after a rendering failure.
-    deadline=setTimeout(removeIntro,11700);
+    deadline=setTimeout(removeIntro,TIMELINE.deadline*1000);
     motion.addEventListener('change',motionChanged);
     document.addEventListener('visibilitychange',visibilityChanged);
     const start=performance.now();
@@ -197,21 +228,29 @@
         const t=(now-start)/1000;
         ctx.fillStyle='#000';ctx.fillRect(0,0,width,height);
         const u=Math.min(width,height),cx=width*.5,cy=height*.5;
-        if(t>=2 && t<2.85){
-          const a=ease((t-2)/.85),r=.5+a*3;
+        if(t>=TIMELINE.starStart && t<TIMELINE.starEnd){
+          const a=phase(t,TIMELINE.starStart,TIMELINE.starEnd),r=.5+a*3;
           if(a>.05)glow(ctx,cx,cy,u*.065*a,'255,255,255',a);
           ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,r,0,TAU);ctx.fill();
         }
-        const reveal=ease((t-8.55)/1.65);
-        if(reveal>0){ctx.globalAlpha=reveal;ctx.drawImage(t<10.35?atmosphere:scene,0,0,width,height);ctx.globalAlpha=1;}
-        if(t>=2.85 && t<10.35){
-          const burst=ease((t-2.85)/.8),orbit=ease((t-3.45)/1.25),petal=ease((t-4.25)/1.5),sphere=ease((t-6.55)/1.3),settle=ease((t-7.95)/2.15);
+        const reveal=phase(t,TIMELINE.environmentStart,TIMELINE.environmentEnd);
+        if(reveal>0){ctx.globalAlpha=reveal;ctx.drawImage(t<TIMELINE.settleEnd?atmosphere:scene,0,0,width,height);ctx.globalAlpha=1;}
+        if(t>=TIMELINE.burstStart && t<TIMELINE.tokenFadeEnd){
+          const burst=phase(t,TIMELINE.burstStart,TIMELINE.burstEnd);
+          const orbit=phase(t,TIMELINE.orbitStart,TIMELINE.orbitEnd);
+          const petal=phase(t,TIMELINE.petalStart,TIMELINE.petalEnd);
+          const sphere=phase(t,TIMELINE.sphereStart,TIMELINE.sphereEnd);
+          const settle=phase(t,TIMELINE.settleStart,TIMELINE.settleEnd);
+          const materialize=phase(t,TIMELINE.materialStart,TIMELINE.materialEnd);
+          const particleFade=1-phase(t,TIMELINE.tokenFadeStart,TIMELINE.tokenFadeEnd);
           const radius=u*.31,earthX=mix(cx,layout.cx,settle),earthY=mix(cy,layout.earthY,settle),rx=mix(u*.245,layout.earthR,settle),ry=rx;
-          const green=ease((t-5.05)/1.25)*(1-sphere),rotation=(t-4.2)*.08;
-          if(sphere>.5)earth(ctx,earthX,earthY,rx,settle,ease((sphere-.5)*2));
+          const green=phase(t,TIMELINE.greenStart,TIMELINE.greenEnd)*(1-phase(t,TIMELINE.greenFadeStart,TIMELINE.greenFadeEnd));
+          const rotation=(t-TIMELINE.petalStart)*.055;
+          const orbitAmount=orbit*(1-.82*petal);
+          if(materialize>0)earth(ctx,earthX,earthY,rx,settle,materialize);
           ctx.globalCompositeOperation='lighter';
           for(let i=0;i<count;i++){
-            const p=particles[i],a=p.a+(t-3.3)*(.45+p.s*.6)*orbit,dist=u*(.12+p.r*.5)*burst;
+            const p=particles[i],a=p.a+(t-TIMELINE.orbitStart)*(.28+p.s*.2)*orbitAmount,dist=u*(.09+p.r*.36)*burst;
             let x=cx+Math.cos(a)*dist,y=cy+Math.sin(a)*dist;
             const px=p.sx*Math.cos(rotation)-p.sy*Math.sin(rotation),py=p.sx*Math.sin(rotation)+p.sy*Math.cos(rotation);
             x=mix(x,cx+px*radius,petal);y=mix(y,cy+py*radius,petal);
@@ -219,17 +258,23 @@
             x=mix(x,earthX+Math.cos(p.lat)*Math.sin(lo)*rx,sphere);y=mix(y,earthY-Math.sin(p.lat)*ry,sphere);
             const capDepth=(y-(earthY-rx))/Math.max(.3,layout.scale);
             const capFade=mix(1,1-ease((capDepth-28)/120),settle);
-            let alpha=(.35+p.s*.65)*mix(1,z<0?.06:p.land?.95:.14,sphere)*(1-ease((t-8.2)/1.1))*capFade;
-            const g=green*(p.s>.35?1:.2),red=Math.round(mix(255,10,g)),blue=Math.round(mix(255,65,g));
+            const leader=p.c>.985?1.55:1;
+            let alpha=clamp((.18+p.s*.52)*leader*mix(1,1.4,sphere)*mix(1,z<0?.07:p.land?.98:.18,sphere)*particleFade*capFade);
+            const selected=p.c>.8?1:p.c>.62?.35:.07;
+            const g=green*selected,red=Math.round(mix(255,0,g)),blue=Math.round(mix(255,65,g));
             ctx.fillStyle=`rgba(${red},255,${blue},${alpha})`;
-            const size=(.55+p.s*.75)*Math.min(1.3,Math.max(.8,width/1400));
+            const size=(.55+p.s*.75)*(p.c>.985?1.35:1)*mix(1,1.12,sphere)*Math.min(1.3,Math.max(.8,width/1400));
             ctx.fillRect(x-size/2,y-size/2,size,size);
           }
           ctx.globalCompositeOperation='source-over';
-          if(t<3.5)glow(ctx,cx,cy,u*.05,'255,255,255',1-ease((t-2.85)/.65));
+          const center=phase(t,TIMELINE.burstStart,3.35)*(1-phase(t,TIMELINE.centerFadeStart,TIMELINE.centerFadeEnd));
+          if(center>0){
+            glow(ctx,cx,cy,u*.042,'255,255,255',center*.72);
+            ctx.globalAlpha=center;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,1.25,0,TAU);ctx.fill();ctx.globalAlpha=1;
+          }
         }
-        identity.style.opacity=String(ease((t-9.0)/1.25));
-        if(t>=11){element.classList.add('is-finished');finishTimer=setTimeout(removeIntro,470);return;}
+        identity.style.opacity=String(phase(t,TIMELINE.identityStart,TIMELINE.identityEnd));
+        if(t>=TIMELINE.finalAt){element.classList.add('is-finished');finishTimer=setTimeout(removeIntro,470);return;}
         raf=requestAnimationFrame(frame);
       } catch { removeIntro(); }
     }
