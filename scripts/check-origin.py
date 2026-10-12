@@ -51,6 +51,71 @@ CHALLENGE_NOTICE = (
 )
 FAQ_NOTICE = "FAQ questions and answers remain withheld pending source review and approval."
 
+
+REVIEWED_ROUTE_COPY = {
+    "/": {
+        "heading": ("h2", "Governed Logic"),
+        "paragraphs": (
+            "GROUND → TRUTH → LOGIC → REASONING → INTELLIGENCE",
+            "The company website is being brought online in stages. "
+            "Substantive material remains withheld until reviewed and approved.",
+        ),
+        "doors": (
+            ("/challenge/", "Follow the Chain Challenge"),
+            ("/company/", "The Company"),
+            ("/research/", "Research"),
+            ("/library/", "Canonical Library"),
+        ),
+    },
+    "/challenge/": {
+        "heading": ("h1", "Follow the Chain Challenge"),
+        "paragraphs": (CHALLENGE_NOTICE,),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/company/", "The Company"),
+        ),
+    },
+    "/company/": {
+        "heading": ("h1", "The Company"),
+        "paragraphs": (
+            "Governed Logic Reasoning Systems. Detailed company material remains under review.",
+        ),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/research/", "Research"),
+        ),
+    },
+    "/research/": {
+        "heading": ("h1", "Research"),
+        "paragraphs": (
+            "Research findings and demonstrations are not published here until source review and approval.",
+        ),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/library/", "Canonical Library"),
+        ),
+    },
+    "/library/": {
+        "heading": ("h1", "Canonical Library"),
+        "paragraphs": (
+            "This is the entry point for stable, machine-readable canonical publications. "
+            "Unreviewed documents are not public.",
+        ),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/faq/", "FAQ"),
+        ),
+    },
+    "/faq/": {
+        "heading": ("h1", "Frequently Asked Questions"),
+        "paragraphs": (FAQ_NOTICE,),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/challenge/", "Follow the Chain"),
+        ),
+    },
+}
+
 BRAND_ATTRIBUTES = {"href": "/", "aria-label": "Governed Logic home"}
 BRAND_TEXT = "GOVERNED LOGIC"
 EYEBROW_TEXT = "GOVERNED LOGIC REASONING SYSTEMS"
@@ -309,6 +374,105 @@ def machine_surface_checks(site_root: Path, parser: DocumentParser, route: str, 
     )
 
 
+def publication_boundary_checks(parser: DocumentParser, route: str) -> None:
+    """Freeze reviewed route copy and reject additional public claims."""
+    bodies = parser.elements("body")
+    require(len(bodies) == 1, f"Reviewed document must contain exactly one body on {route}")
+    body = bodies[0]
+    require(body.attrs == {}, f"Reviewed body attributes differ on {route}: {body.attrs}")
+    require(
+        not normalized("".join(child for child in body.children if isinstance(child, str))),
+        f"Unexpected direct body text on {route}",
+    )
+
+    body_children = body.element_children()
+    body_tags = [element.tag for element in body_children]
+    if route == "/":
+        require(
+            body_tags == ["div", "header", "main", "footer"],
+            f"Reviewed homepage landmarks differ: {body_tags}",
+        )
+        intro, _, content, _ = body_children
+        require(
+            intro.attrs == {"id": "site", "aria-label": "Governed Logic Reasoning Systems"},
+            f"Reviewed opening container differs: {intro.attrs}",
+        )
+        expected_content_attrs = {"class": "site-content", "id": "explore"}
+    else:
+        require(
+            body_tags == ["header", "main", "footer"],
+            f"Reviewed page landmarks differ on {route}: {body_tags}",
+        )
+        _, content, _ = body_children
+        expected_content_attrs = {"class": "inner-page"}
+
+    require(
+        len(parser.elements("main")) == 1 and parser.elements("main")[0] is content,
+        f"Reviewed content must be the sole main landmark on {route}",
+    )
+    require(
+        content.attrs == expected_content_attrs,
+        f"Reviewed content attributes differ on {route}: {content.attrs}",
+    )
+    require(
+        not normalized("".join(child for child in content.children if isinstance(child, str))),
+        f"Unexpected direct reviewed-content text on {route}",
+    )
+
+    expected = REVIEWED_ROUTE_COPY[route]
+    heading_tag, heading_text = expected["heading"]
+    expected_tags = ["p", heading_tag, *(["p"] * len(expected["paragraphs"])), "div"]
+    children = content.element_children()
+    actual_tags = [element.tag for element in children]
+    require(
+        actual_tags == expected_tags,
+        f"Reviewed content structure differs on {route}: {actual_tags}",
+    )
+
+    eyebrow, heading, *remainder = children
+    require(
+        eyebrow.attrs == {"class": "eyebrow"}
+        and not eyebrow.element_children()
+        and normalized(eyebrow.text()) == EYEBROW_TEXT,
+        f"Reviewed eyebrow differs on {route}",
+    )
+    require(
+        heading.attrs == {}
+        and not heading.element_children()
+        and normalized(heading.text()) == heading_text,
+        f"Reviewed heading differs on {route}: {heading.text()!r}",
+    )
+
+    paragraphs = remainder[:-1]
+    doors = remainder[-1]
+    for paragraph, expected_text in zip(paragraphs, expected["paragraphs"]):
+        require(
+            paragraph.attrs == {}
+            and not paragraph.element_children()
+            and normalized(paragraph.text()) == expected_text,
+            f"Reviewed paragraph text differs on {route}: {paragraph.text()!r}",
+        )
+
+    require(doors.attrs == {"class": "site-doors"}, f"Reviewed door group differs on {route}: {doors.attrs}")
+    door_links = doors.element_children()
+    require(
+        len(door_links) == len(expected["doors"]) and all(link.tag == "a" for link in door_links),
+        f"Reviewed door count or structure differs on {route}",
+    )
+    for link, (href, label) in zip(door_links, expected["doors"]):
+        require(link.attrs == {"href": href}, f"Reviewed door attributes differ on {route}: {link.attrs}")
+        link_children = link.element_children()
+        require(
+            len(link_children) == 1
+            and link_children[0].tag == "span"
+            and link_children[0].attrs == {}
+            and not link_children[0].element_children()
+            and normalized(link_children[0].text()) == "→"
+            and normalized(link.text()) == f"{label} →",
+            f"Reviewed door label or arrow differs for {href} on {route}: {link.text()!r}",
+        )
+
+
 def local_checks(site_root: Path, exact_artifact: bool) -> None:
     missing = [relative for relative in PUBLIC_FILES if not (site_root / relative).is_file()]
     require(not missing, "Missing public files: " + ", ".join(missing))
@@ -345,6 +509,7 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
                 require((site_root / path.lstrip("/")).is_file(), f"Missing asset {reference} used by {route}")
         shell_checks(parser, route)
         machine_surface_checks(site_root, parser, route, html)
+        publication_boundary_checks(parser, route)
 
         if route == "/":
             require("#explore" in parser.links and 'id="explore"' in html, "Explore target is incomplete")
