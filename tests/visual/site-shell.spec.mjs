@@ -93,6 +93,7 @@ for (const routeDefinition of ROUTES) {
         const normalize = value => value.replace(/\s+/g, " ").trim();
         const navigation = document.querySelector('nav[aria-label="Primary"]');
         const mainElements = Array.from(document.querySelectorAll("main"));
+        const navigationRect = navigation.getBoundingClientRect();
         const links = Array.from(navigation.querySelectorAll(":scope > a"));
         const linkMetrics = links.map(link => {
           const rect = link.getBoundingClientRect();
@@ -109,6 +110,11 @@ for (const routeDefinition of ROUTES) {
               && rect.right <= innerWidth + 0.5
               && rect.top >= -0.5
               && rect.bottom <= innerHeight + 0.5,
+            insideNavigation:
+              rect.left >= navigationRect.left - 0.5
+              && rect.right <= navigationRect.right + 0.5
+              && rect.top >= navigationRect.top - 0.5
+              && rect.bottom <= navigationRect.bottom + 0.5,
             centerHit: hit === link || link.contains(hit),
             height: rect.height,
             top: rect.top,
@@ -133,7 +139,13 @@ for (const routeDefinition of ROUTES) {
           documentOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
           bodyOverflow: document.body.scrollWidth > document.body.clientWidth + 1,
-          navigationOverflow: navigation.scrollWidth > navigation.clientWidth + 1,
+          navigationInsideViewport:
+            navigationRect.left >= -0.5
+            && navigationRect.right <= innerWidth + 0.5
+            && navigationRect.top >= -0.5
+            && navigationRect.bottom <= innerHeight + 0.5,
+          navigationContentWithinBounds:
+            linkMetrics.every(link => link.insideNavigation),
           visibleMainCount: mainElements.filter(visible).length,
           mainWithinHorizontalViewport: mainElements.every(element => {
             const rect = element.getBoundingClientRect();
@@ -153,26 +165,6 @@ for (const routeDefinition of ROUTES) {
       },
       { expectedNavigation: EXPECTED_NAVIGATION, mobile: isMobile }
     );
-
-    expect(metrics.documentOverflow, "document must not overflow horizontally").toBe(false);
-    expect(metrics.bodyOverflow, "body must not overflow horizontally").toBe(false);
-    expect(metrics.navigationOverflow, "primary navigation must not overflow horizontally").toBe(false);
-    expect(metrics.visibleMainCount, "exactly one main must be visible").toBe(1);
-    expect(metrics.mainWithinHorizontalViewport, "main must fit the viewport width").toBe(true);
-    expect(metrics.labelsAndRoutesMatch, "navigation labels and routes must match the reviewed shell").toBe(true);
-    expect(metrics.overlaps, "navigation targets must not overlap").toEqual([]);
-    expect(metrics.mobileTargetsMeetMinimum, "mobile navigation targets must be at least 44px tall").toBe(true);
-    for (const [index, link] of metrics.links.entries()) {
-      expect(link.visible, "navigation link " + index + " must be visible").toBe(true);
-      expect(link.focusable, "navigation link " + index + " must be keyboard focusable").toBe(true);
-      expect(link.insideViewport, "navigation link " + index + " must fit the viewport").toBe(true);
-      expect(link.centerHit, "navigation link " + index + " must win its center hit test").toBe(true);
-    }
-
-    expect(blockedRequests, "the page must not request non-loopback resources").toEqual([]);
-    expect(localRequestFailures, "loopback resources must load successfully").toEqual([]);
-    expect(consoleErrors, "the page must not emit console errors").toEqual([]);
-    expect(pageErrors, "the page must not emit uncaught errors").toEqual([]);
 
     const screenshotDirectory = path.resolve(
       "visual-qa",
@@ -196,5 +188,31 @@ for (const routeDefinition of ROUTES) {
       path: screenshotPath,
       contentType: "image/png"
     });
+
+    expect(metrics.documentOverflow, "document must not overflow horizontally").toBe(false);
+    expect(metrics.bodyOverflow, "body must not overflow horizontally").toBe(false);
+    expect(metrics.navigationInsideViewport, "primary navigation must fit the viewport").toBe(true);
+    expect(
+      metrics.navigationContentWithinBounds,
+      "primary navigation links must remain inside the navigation container"
+    ).toBe(true);
+    expect(metrics.visibleMainCount, "exactly one main must be visible").toBe(1);
+    expect(metrics.mainWithinHorizontalViewport, "main must fit the viewport width").toBe(true);
+    expect(metrics.labelsAndRoutesMatch, "navigation labels and routes must match the reviewed shell").toBe(true);
+    expect(metrics.overlaps, "navigation targets must not overlap").toEqual([]);
+    expect(metrics.mobileTargetsMeetMinimum, "mobile navigation targets must be at least 44px tall").toBe(true);
+    for (const [index, link] of metrics.links.entries()) {
+      expect(link.visible, "navigation link " + index + " must be visible").toBe(true);
+      expect(link.focusable, "navigation link " + index + " must be keyboard focusable").toBe(true);
+      expect(link.insideViewport, "navigation link " + index + " must fit the viewport").toBe(true);
+      expect(link.insideNavigation, "navigation link " + index + " must fit the navigation").toBe(true);
+      expect(link.centerHit, "navigation link " + index + " must win its center hit test").toBe(true);
+    }
+
+    expect(blockedRequests, "the page must not request non-loopback resources").toEqual([]);
+    expect(localRequestFailures, "loopback resources must load successfully").toEqual([]);
+    expect(consoleErrors, "the page must not emit console errors").toEqual([]);
+    expect(pageErrors, "the page must not emit uncaught errors").toEqual([]);
+
   });
 }
