@@ -14,6 +14,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
       - name: Test publication-boundary guards
         run: python3 scripts/test-release-guards.py
       - name: Build and verify reviewed artifact
@@ -37,15 +40,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-      - name: Generate exact dependency lock
-        shell: bash
-        run: |
-          set -euo pipefail
-          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-          echo "LOCKFILE_BASE64_BEGIN"
-          base64 -w 0 package-lock.json
-          echo
-          echo "LOCKFILE_BASE64_END"
+          cache: npm
       - name: Install browser test dependencies
         run: npm ci --ignore-scripts
       - name: Install Chromium
@@ -53,13 +48,15 @@ jobs:
       - name: Render and validate reviewed artifact
         run: npm run test:visual
       - name: Build visual contact sheet
-        if: always()
+        if: ${{ !cancelled() }}
         run: npm run visual:contact-sheet
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Upload visual QA evidence
-        if: always()
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v5
         with:
-          name: governedlogic-visual-qa
+          name: governedlogic-visual-qa-${{ github.event.pull_request.head.sha || github.sha }}
           path: visual-qa/
           if-no-files-found: error
           retention-days: 14
