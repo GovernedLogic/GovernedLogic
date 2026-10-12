@@ -74,6 +74,7 @@ try {
 await writeFile(
   path.join(outputRoot, "manifest.json"),
   JSON.stringify({
+    sourceSha: process.env.SOURCE_SHA || null,
     mode: "Chromium with prefers-reduced-motion: reduce",
     limitation: "Stable responsive layout only; full opening-animation timing is not verified.",
     expectedScreenshotCount: PROJECTS.length * ROUTES.length,
@@ -85,3 +86,6 @@ await writeFile(
 );
 
 console.log("Visual contact sheet contains " + screenshots.length + " screenshots.");
+if (missing.length) {
+  throw new Error("Visual evidence is incomplete: " + missing.join(", "));
+}
