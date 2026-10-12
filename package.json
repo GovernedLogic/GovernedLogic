@@ -1,0 +1,12 @@
+{
+  "name": "governedlogic-release-guards",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:visual": "playwright test --config tests/visual/playwright.config.mjs",
+    "visual:contact-sheet": "node tests/visual/contact-sheet.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0"
+  }
+}
