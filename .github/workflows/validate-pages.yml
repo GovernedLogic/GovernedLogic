@@ -10,19 +10,56 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
       - name: Test publication-boundary guards
         run: python3 scripts/test-release-guards.py
       - name: Build and verify reviewed artifact
+        shell: bash
         run: |
+          set -euo pipefail
           output_root="$(mktemp -d)"
-          python3 scripts/build_site.py --output "$output_root/site"
-          python3 scripts/check-origin.py --root "$output_root/site" --artifact
+          site_root="$output_root/site"
+          python3 scripts/build_site.py --output "$site_root"
+          python3 scripts/check-origin.py --root "$site_root" --artifact
+          printf 'SITE_ROOT=%s\n' "$site_root" >> "$GITHUB_ENV"
       - name: Check JavaScript syntax
         run: |
           node --check assets/opening.js
           node --check assets/earth-renderer.js
           node --check assets/material-environment.js
+          node --check tests/visual/playwright.config.mjs
+          node --check tests/visual/site-shell.spec.mjs
+          node --check tests/visual/contact-sheet.mjs
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Generate exact dependency lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          echo "LOCKFILE_BASE64_BEGIN"
+          base64 -w 0 package-lock.json
+          echo
+          echo "LOCKFILE_BASE64_END"
+      - name: Install browser test dependencies
+        run: npm ci --ignore-scripts
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Render and validate reviewed artifact
+        run: npm run test:visual
+      - name: Build visual contact sheet
+        if: always()
+        run: npm run visual:contact-sheet
+      - name: Upload visual QA evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: governedlogic-visual-qa
+          path: visual-qa/
+          if-no-files-found: error
+          retention-days: 14
