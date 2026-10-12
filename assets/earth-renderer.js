@@ -50,15 +50,18 @@ window.GLCreateEarth = function(onReady) {
   gl.useProgram(program);const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
   const p=gl.getAttribLocation(program,'p');gl.enableVertexAttribArray(p);gl.vertexAttribPointer(p,2,gl.FLOAT,false,0,0);
   const uniforms={};for(const k of ['resolution','center','radius','cap','scale'])uniforms[k]=gl.getUniformLocation(program,k);
+  const state={status:'loading',ready:false,failed:false,textures:{dayMap:'loading',nightMap:'loading',cloudMap:'loading'}};
   let loaded=0;
+  function failTexture(key){if(state.textures[key]!=='loading')return;state.textures[key]='failed';state.status='failed';state.failed=true;}
   for(const [i,key,url] of [[0,'dayMap','assets/materials/earth-day.jpg'],[1,'nightMap','assets/materials/earth-night.jpg'],[2,'cloudMap','assets/materials/earth-clouds.jpg']]){
     const texture=gl.createTexture();gl.activeTexture(gl.TEXTURE0+i);gl.bindTexture(gl.TEXTURE_2D,texture);
     gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(i===0?[18,52,77,255]:[0,0,0,255]));
     gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
     gl.uniform1i(gl.getUniformLocation(program,key),i);
-    const image=new Image();image.onload=()=>{gl.activeTexture(gl.TEXTURE0+i);gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);loaded++;if(loaded===3)onReady?.();};image.src=url;
+    const image=new Image();image.onload=()=>{if(state.textures[key]!=='loading')return;try{gl.activeTexture(gl.TEXTURE0+i);gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);}catch{failTexture(key);return;}state.textures[key]='ready';loaded++;if(loaded===3&&!state.failed){state.status='ready';state.ready=true;onReady?.();}};image.onerror=()=>failTexture(key);image.src=url;
   }
-  return {canvas,render(w,h,dpr,x,y,r,cap,s){
+  return {canvas,state,get status(){return state.status;},get ready(){return state.ready;},get failed(){return state.failed;},render(w,h,dpr,x,y,r,cap,s){
+    if(!state.ready)return null;
     const W=Math.round(w*dpr),H=Math.round(h*dpr);
     if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H;gl.viewport(0,0,W,H);}
     gl.useProgram(program);gl.uniform2f(uniforms.resolution,W,H);gl.uniform2f(uniforms.center,x*dpr,y*dpr);gl.uniform1f(uniforms.radius,r*dpr);gl.uniform1f(uniforms.cap,cap);gl.uniform1f(uniforms.scale,Math.max(.01,s)*dpr);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.TRIANGLES,0,6);return canvas;

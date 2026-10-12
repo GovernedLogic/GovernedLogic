@@ -409,7 +409,31 @@ WEB-135
 Paul reaffirmed that the opening's full-black start and final Governed Logic Reasoning Systems identity are the correct fixed endpoints. The current refinement changes only the isolated animation between them.
 
 WEB-136
-The middle must be slower, cleaner, and more deliberate than the prior implementation. The particle-built Spirograph must remain readable before becoming a particle Earth, and the material Earth must develop through that same object rather than appear as an abrupt replacement. A modest extension beyond the previous approximately eleven-second implementation is allowed where needed to correct the rushed middle.
+The middle must be slower, cleaner, and more deliberate than the prior implementation. The particle-built Spirograph must use the approved radial mark's dense overlapping loop geometry, not a simple daisy-like rose, and remain readable before becoming a particle Earth. The material Earth must wait for a coherent particle globe, develop through that same object, and settle continuously into the final horizon rather than appear as an abrupt full-screen replacement. A modest extension beyond the previous approximately eleven-second implementation is allowed where needed to correct the rushed middle.
 
 WEB-137
 Preserve discrete particles, the white center, continuity of particle identity, restrained Governed Logic green, responsive behavior, reduced-motion bypass, fail-open removal, and the unchanged final identity. Visual acceptance still requires inspection of the rendered animation; code completion alone is not acceptance.
+
+
+PUBLIC DEPLOYMENT BOUNDARY — 2026-10-11
+
+WEB-138
+The public website is deployed from an explicit allowlisted artifact, not by serving the repository root. A file's presence in the repository, Git history, the PRD, a workshop document, a script, or an unreviewed asset does not authorize publication at governedlogic.com.
+
+WEB-139
+The deployment must include only the reviewed public routes and the runtime assets they require. The PRD, requirement pointers, audits, handoffs, source-authority maps, deployment scripts, legacy implementations, release references, and withheld portrait are excluded from the public website artifact unless a later requirement expressly approves them.
+
+WEB-140
+Release acceptance must verify both sides of the boundary after deployment: approved routes and assets return successfully, and representative withheld paths return not found. The public GitHub repository remains Git history and is not the website publication artifact.
+
+
+NAVIGATION, FAQ, AND MACHINE SURFACES — 2026-10-11
+
+WEB-141
+The website must have a deliberate, visually distinctive, responsive menu that preserves ordinary HTML navigation, keyboard access, mobile usability, and the Governed Logic visual atmosphere. Repeated menu and page-shell primitives should remain synchronized.
+
+WEB-142
+The site must include an FAQ page and a machine-readable FAQ representation. Their questions, answers, claims, and relationships must correspond exactly; machine readability does not authorize invented or expanded copy.
+
+WEB-143
+The Follow the Chain Challenge must include a machine-consumable challenge surface corresponding to the human challenge. Challenge rules, inputs, outputs, examples, and evaluation criteria remain withheld until they are sourced from Paul's canonical authored material or Paul approves them.

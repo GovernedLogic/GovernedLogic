@@ -1,0 +1,57 @@
+name: Deploy governedlogic.com
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: governedlogic-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Build reviewed public artifact
+        run: python3 scripts/build_site.py --output "${{ runner.temp }}/site"
+      - name: Verify artifact boundary
+        run: |
+          python3 scripts/check-origin.py --root "${{ runner.temp }}/site" --artifact
+          node --check "${{ runner.temp }}/site/assets/opening.js"
+          node --check "${{ runner.temp }}/site/assets/earth-renderer.js"
+          node --check "${{ runner.temp }}/site/assets/material-environment.js"
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ runner.temp }}/site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy reviewed artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  verify:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Verify live routes and publication boundary
+        run: python3 scripts/check-origin.py --live https://governedlogic.com --attempts 6 --delay 10

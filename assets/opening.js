@@ -2,9 +2,11 @@
 (() => {
   'use strict';
   const TAU = Math.PI * 2;
+  const EARTH_U_OFFSET=.02*TAU,EARTH_TILT_START=.05,EARTH_TILT_END=1.02;
   const clamp = x => Math.max(0, Math.min(1, x));
   const ease = x => { x = clamp(x); return x*x*x*(x*(x*6-15)+10); };
   const phase = (time,start,end) => ease((time-start)/(end-start));
+  const wrapLongitude = x => ((x+Math.PI)%TAU+TAU)%TAU-Math.PI;
   const TIMELINE = Object.freeze({
     starStart:2,
     starEnd:2.9,
@@ -13,27 +15,27 @@
     orbitStart:3.35,
     orbitEnd:5,
     petalStart:4.4,
-    petalEnd:5.95,
+    petalEnd:5.35,
     greenStart:5.15,
     greenEnd:6.65,
-    sphereStart:7.45,
-    sphereEnd:9.05,
-    centerFadeStart:7.15,
-    centerFadeEnd:8.45,
-    greenFadeStart:8.55,
-    greenFadeEnd:9.75,
-    materialStart:8.65,
-    materialEnd:10.35,
-    settleStart:8.75,
-    settleEnd:11.65,
-    environmentStart:9.55,
-    environmentEnd:11.55,
-    tokenFadeStart:9.75,
-    tokenFadeEnd:11.65,
-    identityStart:10.6,
-    identityEnd:12.05,
-    finalAt:12.7,
-    deadline:13.45
+    sphereStart:7.15,
+    sphereEnd:9.65,
+    centerFadeStart:7.45,
+    centerFadeEnd:9.2,
+    greenFadeStart:9.45,
+    greenFadeEnd:11.15,
+    materialStart:9.35,
+    materialEnd:11.8,
+    settleStart:9.2,
+    settleEnd:12.85,
+    environmentStart:10.55,
+    environmentEnd:12.75,
+    tokenFadeStart:10.8,
+    tokenFadeEnd:12.85,
+    identityStart:12,
+    identityEnd:13.75,
+    finalAt:14.35,
+    deadline:15.15
   });
   const mix = (a,b,t) => a+(b-a)*t;
   const rand = n => { const x=Math.sin(n*127.1+311.7)*43758.5453123; return x-Math.floor(x); };
@@ -43,15 +45,23 @@
   const context = siteCanvas.getContext('2d', {alpha:false});
   if (!context) return; // The semantic HTML identity is the no-canvas fallback.
   let width=0, height=0, dpr=1, intro=null, raf=0, deadline=0, finishTimer=0;
+  const MATERIAL_HANDOFF_MS=420;
   const scene = document.createElement('canvas');
   const sceneCtx = scene.getContext('2d', {alpha:false});
   const atmosphere = document.createElement('canvas');
   const atmosphereCtx = atmosphere.getContext('2d', {alpha:false});
   if (!sceneCtx || !atmosphereCtx) return;
-  let layout;
-  const materialEarth=window.GLCreateEarth?.(()=>resize());
-  const fallbackSurface=materialEarth?null:document.createElement('canvas');
-  const fallbackContext=fallbackSurface?.getContext('2d');
+  let layout,materialReadyAt=null,materialHandoffRaf=0;
+  const materialEarth=window.GLCreateEarth?.(beginMaterialHandoff);
+  const fallbackSurface=document.createElement('canvas');
+  const fallbackContext=fallbackSurface.getContext('2d');
+  function materialBlend(now=performance.now()){return materialEarth?.ready&&materialReadyAt!==null?ease((now-materialReadyAt)/MATERIAL_HANDOFF_MS):0;}
+  function beginMaterialHandoff(){materialReadyAt=performance.now();cancelAnimationFrame(materialHandoffRaf);materialHandoffRaf=requestAnimationFrame(drawMaterialHandoff);}
+  function drawMaterialHandoff(now){
+    if(!layout||!materialEarth?.ready){materialHandoffRaf=0;return;}
+    backdrop(sceneCtx);context.drawImage(scene,0,0,width,height);
+    if(materialBlend(now)<1)materialHandoffRaf=requestAnimationFrame(drawMaterialHandoff);else materialHandoffRaf=0;
+  }
   function size(canvas, ctx) {
     canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -80,22 +90,17 @@
       const a=poly[i],b=poly[j];if((a[1]>lat)!==(b[1]>lat)&&lon<(b[0]-a[0])*(lat-a[1])/(b[1]-a[1])+a[0])yes=!yes;
     }return yes;});
   }
-  const count=matchMedia('(max-width:600px)').matches?3200:6000;
-  const particles=Array.from({length:count},(_,i)=>{
-    const lat=Math.asin(1-2*(i+.5)/count),lon=i*2.3999632297%TAU-Math.PI;
-    const petal=i%24,theta=Math.floor(i/24)/Math.ceil(count/24)*TAU;
-    const a=petal/24*TAU,x=.5+.5*Math.cos(theta),y=.5*Math.sin(theta);
-    return {a:i*2.3999632297,r:rand(i+1),s:rand(i+999),c:rand(i+2048),sx:x*Math.cos(a)-y*Math.sin(a),sy:x*Math.sin(a)+y*Math.cos(a),lat,lon,land:inLand(lon*180/Math.PI,lat*180/Math.PI)};
-  });
   // Procedural orthographic Earth surface, generated once from geographic silhouettes.
   const globeTexture=document.createElement('canvas');globeTexture.width=512;globeTexture.height=512;
   const textureContext=globeTexture.getContext('2d');
   if(!textureContext)return;
   const pixels=textureContext.createImageData(512,512);
+  const fallbackTiltCos=Math.cos(EARTH_TILT_START),fallbackTiltSin=Math.sin(EARTH_TILT_START);
   for(let y=0;y<512;y++)for(let x=0;x<512;x++){
     const nx=(x-255.5)/256,ny=(255.5-y)/256,rr=nx*nx+ny*ny;
     if(rr>1)continue;
-    const z=Math.sqrt(1-rr),lat=Math.asin(ny),lon=Math.atan2(nx,z)-.38;
+    const z=Math.sqrt(1-rr),materialY=ny*fallbackTiltCos-z*fallbackTiltSin,materialZ=ny*fallbackTiltSin+z*fallbackTiltCos;
+    const lat=Math.asin(materialY),lon=wrapLongitude(Math.atan2(materialZ,nx)+EARTH_U_OFFSET);
     const landHere=inLand(lon*180/Math.PI,lat*180/Math.PI);
     const noise=(Math.sin(lon*83+Math.sin(lat*61)*2)+Math.sin(lat*137+lon*37)+Math.cos(lon*217-lat*151))/3;
     const light=.15+.85*Math.max(0,-nx*.22+ny*.55+z*.72);
@@ -120,8 +125,9 @@
   function earth(ctx,cx,cy,r,cap=0,alpha=1){
     if(alpha<=0)return;
     ctx.save();ctx.globalAlpha*=alpha;
-    if(materialEarth)ctx.drawImage(materialEarth.render(width,height,dpr,cx,cy,r,cap,layout.scale),0,0,width,height);
-    else if(fallbackContext){
+    const earthAlpha=ctx.globalAlpha,materialAmount=materialBlend();
+    const materialSurface=materialAmount>0?materialEarth.render(width,height,dpr,cx,cy,r,cap,layout.scale):null;
+    if(fallbackContext&&(!materialSurface||materialAmount<1)){
       if(fallbackSurface.width!==Math.round(width*dpr)||fallbackSurface.height!==Math.round(height*dpr))size(fallbackSurface,fallbackContext);
       const f=fallbackContext,s=layout.scale,top=cy-r;
       f.clearRect(0,0,width,height);fallbackEarth(f,cx,cy,r,r,1);
@@ -132,8 +138,11 @@
       const horizontal=f.createLinearGradient(cx-700*s,0,cx+700*s,0);
       for(let i=0;i<=20;i++){const x=(i/20-.5)*1400;horizontal.addColorStop(i/20,`rgba(255,255,255,${mix(1,Math.exp(-Math.pow(Math.abs(x)/465,4)),cap)})`);}
       f.fillStyle=horizontal;f.fillRect(0,0,width,height);f.globalCompositeOperation='source-over';
+      ctx.globalAlpha=earthAlpha*(materialSurface?1-materialAmount:1);
       ctx.drawImage(fallbackSurface,0,0,width,height);
     }
+    if(materialSurface){ctx.globalAlpha=earthAlpha*materialAmount;ctx.drawImage(materialSurface,0,0,width,height);}
+    ctx.globalAlpha=earthAlpha;
     const top=cy-r, s=layout.scale;
     // A sharp light core with restrained, directional bloom at the physical limb.
     glow(ctx,cx,top,50*s,'103,183,238',.48);
@@ -209,6 +218,15 @@
   try{resize();}catch{ return; }
   if(motion.matches || document.hidden)return;
   try {
+    const count=Math.min(window.innerWidth,window.innerHeight)<=600?3200:6000;
+    const particles=Array.from({length:count},(_,i)=>{
+      const lat=Math.asin(1-2*(i+.5)/count),lon=i*2.3999632297%TAU-Math.PI;
+      const latticeX=Math.cos(lat)*Math.sin(lon+.38),latticeY=-Math.sin(lat);
+      const theta=Math.atan2(latticeY,latticeX),mapAngle=lon-EARTH_U_OFFSET,cosLat=Math.cos(lat);
+      const loopPhase=i%12/12*Math.PI;
+      const spiro=.012+.988*Math.abs(Math.cos(theta-loopPhase));
+      return {a:theta,r:rand(i+1),s:rand(i+999),c:rand(i+2048),sx:Math.cos(theta)*spiro,sy:Math.sin(theta)*spiro,mx:cosLat*Math.cos(mapAngle),my:Math.sin(lat),mz:cosLat*Math.sin(mapAngle),lat,lon,land:inLand(lon*180/Math.PI,lat*180/Math.PI)};
+    });
     const element=document.createElement('div');element.id='glIntro';element.setAttribute('aria-hidden','true');
     const canvas=document.createElement('canvas');canvas.className='intro-canvas';
     const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)return;
@@ -247,23 +265,26 @@
           const green=phase(t,TIMELINE.greenStart,TIMELINE.greenEnd)*(1-phase(t,TIMELINE.greenFadeStart,TIMELINE.greenFadeEnd));
           const rotation=(t-TIMELINE.petalStart)*.055;
           const orbitAmount=orbit*(1-.82*petal);
+          const lattice=petal*(1-sphere);
+          const globeReadability=sphere*(1-materialize);
+          const earthTilt=mix(EARTH_TILT_START,EARTH_TILT_END,settle),tiltCos=Math.cos(earthTilt),tiltSin=Math.sin(earthTilt);
           if(materialize>0)earth(ctx,earthX,earthY,rx,settle,materialize);
           ctx.globalCompositeOperation='lighter';
           for(let i=0;i<count;i++){
-            const p=particles[i],a=p.a+(t-TIMELINE.orbitStart)*(.28+p.s*.2)*orbitAmount,dist=u*(.09+p.r*.36)*burst;
+            const p=particles[i],a=p.a+(t-TIMELINE.orbitStart)*(.28+p.s*.2)*orbitAmount,dist=u*(.012+p.r*.43)*burst;
             let x=cx+Math.cos(a)*dist,y=cy+Math.sin(a)*dist;
             const px=p.sx*Math.cos(rotation)-p.sy*Math.sin(rotation),py=p.sx*Math.sin(rotation)+p.sy*Math.cos(rotation);
             x=mix(x,cx+px*radius,petal);y=mix(y,cy+py*radius,petal);
-            const lo=p.lon+.38,z=Math.cos(p.lat)*Math.cos(lo);
-            x=mix(x,earthX+Math.cos(p.lat)*Math.sin(lo)*rx,sphere);y=mix(y,earthY-Math.sin(p.lat)*ry,sphere);
+            const globeY=p.my*tiltCos+p.mz*tiltSin,z=-p.my*tiltSin+p.mz*tiltCos;
+            x=mix(x,earthX+p.mx*rx,sphere);y=mix(y,earthY-globeY*ry,sphere);
             const capDepth=(y-(earthY-rx))/Math.max(.3,layout.scale);
             const capFade=mix(1,1-ease((capDepth-28)/120),settle);
             const leader=p.c>.985?1.55:1;
-            let alpha=clamp((.18+p.s*.52)*leader*mix(1,1.4,sphere)*mix(1,z<0?.07:p.land?.98:.18,sphere)*particleFade*capFade);
+            let alpha=clamp((.18+p.s*.52)*leader*mix(1,1.45,lattice)*mix(1,1.4,sphere)*mix(1,1.35,globeReadability)*mix(1,z<0?.07:p.land?.98:.18,sphere)*particleFade*capFade);
             const selected=p.c>.8?1:p.c>.62?.35:.07;
             const g=green*selected,red=Math.round(mix(255,0,g)),blue=Math.round(mix(255,65,g));
             ctx.fillStyle=`rgba(${red},255,${blue},${alpha})`;
-            const size=(.55+p.s*.75)*(p.c>.985?1.35:1)*mix(1,1.12,sphere)*Math.min(1.3,Math.max(.8,width/1400));
+            const size=(.55+p.s*.75)*(p.c>.985?1.35:1)*mix(1,1.25,lattice)*mix(1,1.12,sphere)*Math.min(1.3,Math.max(.8,width/1400));
             ctx.fillRect(x-size/2,y-size/2,size,size);
           }
           ctx.globalCompositeOperation='source-over';
