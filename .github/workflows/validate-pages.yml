@@ -1,0 +1,28 @@
+name: Validate governedlogic.com
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Test publication-boundary guards
+        run: python3 scripts/test-release-guards.py
+      - name: Build and verify reviewed artifact
+        run: |
+          output_root="$(mktemp -d)"
+          python3 scripts/build_site.py --output "$output_root/site"
+          python3 scripts/check-origin.py --root "$output_root/site" --artifact
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/opening.js
+          node --check assets/earth-renderer.js
+          node --check assets/material-environment.js
