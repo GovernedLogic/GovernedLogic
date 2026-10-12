@@ -56,6 +56,35 @@ class ReleaseGuardTests(unittest.TestCase):
             )
             self.assert_rejected(site)
 
+    def test_appended_opening_claim_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            opening = '<div id="site" role="region" aria-label="Governed Logic Reasoning Systems">'
+            self.replace_once(site, "index.html", opening, opening + "<p>An unreviewed claim.</p>")
+            self.assert_rejected(site)
+
+    def test_direct_door_group_text_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                '<div class="site-doors">',
+                '<div class="site-doors">An unreviewed claim.',
+            )
+            self.assert_rejected(site)
+
+    def test_added_inline_script_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                "</head>",
+                "<script>document.body.dataset.unreviewed = 'claim';</script></head>",
+            )
+            self.assert_rejected(site)
+
     def test_appended_inner_route_claims_fail(self) -> None:
         for relative in (
             "challenge/index.html",
