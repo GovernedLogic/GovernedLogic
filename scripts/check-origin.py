@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -22,6 +23,17 @@ ROUTES = {
     "/research/": "research/index.html",
     "/library/": "library/index.html",
     "/faq/": "faq/index.html",
+}
+
+
+# Git blob IDs are exact byte fingerprints for the reviewed HTML, not security credentials.
+REVIEWED_HTML_BLOB_IDS = {
+    "index.html": "7f93d377cd03477ff09dce902ad26cb276bf0c54",
+    "challenge/index.html": "e089a8dd20eae386182ad6eaa2a2f505ead71fe0",
+    "company/index.html": "3da275358597edcea7b1d05e35d83e904b9a6bf2",
+    "research/index.html": "821d511aa44ff8abd08756a5c73b89532837698e",
+    "library/index.html": "f7445f452dfbd3c2ad430f6f5e34747801102d14",
+    "faq/index.html": "47bc58916df9b317ac21230e521fa9b8742a6000",
 }
 
 NAVIGATION = (
@@ -184,6 +196,11 @@ class Element:
 
 def normalized(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip()
+
+
+def git_blob_id(data: bytes) -> str:
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data, usedforsecurity=False).hexdigest()
 
 
 class DocumentParser(HTMLParser):
@@ -394,7 +411,7 @@ def publication_boundary_checks(parser: DocumentParser, route: str) -> None:
         )
         intro, _, content, _ = body_children
         require(
-            intro.attrs == {"id": "site", "aria-label": "Governed Logic Reasoning Systems"},
+            intro.attrs == {"id": "site", "role": "region", "aria-label": "Governed Logic Reasoning Systems"},
             f"Reviewed opening container differs: {intro.attrs}",
         )
         expected_content_attrs = {"class": "site-content", "id": "explore"}
@@ -454,6 +471,10 @@ def publication_boundary_checks(parser: DocumentParser, route: str) -> None:
         )
 
     require(doors.attrs == {"class": "site-doors"}, f"Reviewed door group differs on {route}: {doors.attrs}")
+    require(
+        not normalized("".join(child for child in doors.children if isinstance(child, str))),
+        f"Unexpected direct text in reviewed door group on {route}",
+    )
     door_links = doors.element_children()
     require(
         len(door_links) == len(expected["doors"]) and all(link.tag == "a" for link in door_links),
@@ -490,7 +511,14 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
         )
 
     for route, relative in ROUTES.items():
-        html = (site_root / relative).read_text(encoding="utf-8")
+        html_path = site_root / relative
+        html_bytes = html_path.read_bytes()
+        actual_blob_id = git_blob_id(html_bytes)
+        require(
+            actual_blob_id == REVIEWED_HTML_BLOB_IDS[relative],
+            f"Reviewed HTML bytes differ on {route}: {actual_blob_id}",
+        )
+        html = html_bytes.decode("utf-8")
         parser = DocumentParser()
         parser.feed(html)
         parser.close()
