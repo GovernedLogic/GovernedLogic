@@ -437,3 +437,12 @@ The site must include an FAQ page and a machine-readable FAQ representation. The
 
 WEB-143
 The Follow the Chain Challenge must include a machine-consumable challenge surface corresponding to the human challenge. Challenge rules, inputs, outputs, examples, and evaluation criteria remain withheld until they are sourced from Paul's canonical authored material or Paul approves them.
+
+
+HOMEPAGE TRUTH-GOVERNED EXPLANATION — OCTOBER 14, 2026 — REVIEW ONLY
+WEB-144
+Paul requested that the previously demonstrated “Why Anything?” reasoning explanation, with the identified hedge removed and wording revised to identify Jesus Christ rather than a merely possible abstract Logos, be placed on the Governed Logic homepage. This branch includes that proposed explanatory content and a short integrity application. Text remains subject to exact-copy review and WEB-100/106 public release gate; no production release is authorized by this branch change.
+WEB-145
+The published presentation must not imply that conversational text generation, a coherent argument, or broad model agreement constitutes independent experimental proof of the ultimate-grounding identity claim. Maintain the distinction between the established authored argument and still-open Governed Intelligence engineering verification.
+WEB-146
+Before production merge inspect the complete homepage desktop and phone layouts, preserve the animated opening and existing navigation, and obtain Paul's specific public-release approval for substantive copy.
