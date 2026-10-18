@@ -7,6 +7,7 @@ for(const route of routes){
   const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
   const response=await page.goto(route,{waitUntil:'networkidle'});expect(response.ok()).toBeTruthy();
   await expect(page.locator('main')).toHaveCount(1);await expect(page.locator('h1')).toHaveCount(1);
+  if(route==='/faq/')for(const summary of await page.locator('main details summary').all())await summary.click();
   expect((await page.locator('main').innerText()).split(/\s+/).length).toBeGreaterThan(45);
   await expect(page.getByRole('navigation',{name:'Primary',exact:true})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
