@@ -321,21 +321,26 @@
             const capFade=mix(1,1-ease((capDepth-28)/120),settle);
             const leader=p.c>.988?1.2:1,front=clamp((z+.12)/1.12);
             const orbitalLight=.35+.65*clamp(.5+orbitalDepth*.6);
-            const petalLight=.67+.33*clamp(.5+petalDepth*2);
-            const surfaceLight=p.land?.55+.45*front:.13+.2*front;
+            const petalLight=.85+.15*clamp(.5+petalDepth*2);
+            const surfaceLight=p.land?.7+.3*front:.34+.3*front;
             const depthLight=z<0?.018:surfaceLight;
             const spatialLight=mix(mix(1,orbitalLight,orbit),petalLight,petal);
-            const alpha=clamp((.21+p.s*.48)*leader*mix(spatialLight,depthLight,sphere)*mix(1,1.15,globeReadability)*particleFade*capFade);
+            const coreAlpha=mix(.21+p.s*.48,.48+p.s*.42,petal);
+            const alpha=clamp(coreAlpha*leader*mix(spatialLight,depthLight,sphere)*mix(1,1.15,globeReadability)*particleFade*capFade);
             // White carries the form. A selected minority warms into green;
             // restrained blue on the globe anticipates its material atmosphere.
-            const selected=p.c>.76?1:p.c>.62?.32:0,g=green*selected;
+            const selected=p.c>.7?1:p.c>.58?.24:0,g=green*selected;
             const blueSphere=sphere*(1-g)*.55;
-            const red=Math.round(mix(mix(245,105,g),112,blueSphere));
-            const grn=Math.round(mix(mix(249,212,g),190,blueSphere));
-            const blue=Math.round(mix(mix(255,151,g),236,blueSphere));
+            const red=Math.round(mix(mix(245,74,g),112,blueSphere));
+            const grn=Math.round(mix(mix(249,244,g),190,blueSphere));
+            const blue=Math.round(mix(mix(255,145,g),236,blueSphere));
             ctx.fillStyle=`rgba(${red},${grn},${blue},${alpha})`;
             const depthSize=mix(mix(1,.9+orbitalDepth*.18,orbit*(1-petal)),.88+.22*front,sphere);
-            const size=(.58+p.s*.58)*(p.c>.988?1.15:1)*depthSize*Math.min(1.15,Math.max(.72,width/1400));
+            const rawSize=(.58+p.s*.58)*(p.c>.988?1.15:1)*depthSize*Math.min(1.15,Math.max(.72,width/1400));
+            // Subpixel cores lost most of their light to coverage averaging on
+            // ordinary screens. A one-CSS-pixel floor keeps each point legible
+            // once the geometry has organized, without bloom or connected lines.
+            const size=mix(rawSize,Math.max(1.08,rawSize),petal);
             if(p.c>.988){ctx.beginPath();ctx.arc(x,y,size*.5,0,TAU);ctx.fill();}
             else ctx.fillRect(x-size*.5,y-size*.5,size,size);
           }
