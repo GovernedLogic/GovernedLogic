@@ -19,6 +19,7 @@ from build_site import PUBLIC_FILES, ROOT
 ROUTES = {
     "/": "index.html",
     "/challenge/": "challenge/index.html",
+    "/concepts/ultimate-grounding/": "concepts/ultimate-grounding/index.html",
     "/company/": "company/index.html",
     "/research/": "research/index.html",
     "/library/": "library/index.html",
@@ -28,16 +29,17 @@ ROUTES = {
 
 # Git blob IDs are exact byte fingerprints for the reviewed HTML, not security credentials.
 REVIEWED_HTML_BLOB_IDS = {
-    "index.html": "7f93d377cd03477ff09dce902ad26cb276bf0c54",
-    "challenge/index.html": "e089a8dd20eae386182ad6eaa2a2f505ead71fe0",
-    "company/index.html": "3da275358597edcea7b1d05e35d83e904b9a6bf2",
-    "research/index.html": "821d511aa44ff8abd08756a5c73b89532837698e",
-    "library/index.html": "f7445f452dfbd3c2ad430f6f5e34747801102d14",
-    "faq/index.html": "47bc58916df9b317ac21230e521fa9b8742a6000",
+    "index.html": "c92b8b2216d3e2e4ac03b91eeede4103084fe6f9",
+    "challenge/index.html": "da48ea10e738b0ef5014cdc146b3e55c27e9d298",
+    "concepts/ultimate-grounding/index.html": "f7b3f7c9ea67e25521b9b6efcfb08544f22a1c27",
+    "company/index.html": "e8daeaf86c4c5c47cfc823f46a0476e804b91b7e",
+    "research/index.html": "302f9ac88d38ad889d70ccd85d3db08ca891769e",
+    "library/index.html": "b652132ff5bf78352ae54eab69d760c2dd6221d8",
+    "faq/index.html": "a48f5ea4e8508f9d203c8bcf65b9fe73f0b95574",
 }
 
 NAVIGATION = (
-    ("/challenge/", "Follow the Chain"),
+    ("/challenge/", "Follow the chain."),
     ("/company/", "Company"),
     ("/research/", "Research"),
     ("/library/", "Canonical Library"),
@@ -46,9 +48,10 @@ NAVIGATION = (
 
 INNER_PAGE_DOORS = {
     "/challenge/": ("/", "/company/"),
+    "/concepts/ultimate-grounding/": ("/", "/library/"),
     "/company/": ("/", "/research/"),
     "/research/": ("/", "/library/"),
-    "/library/": ("/", "/faq/"),
+    "/library/": ("/", "/concepts/ultimate-grounding/", "/faq/"),
     "/faq/": ("/", "/challenge/"),
 }
 
@@ -73,18 +76,29 @@ REVIEWED_ROUTE_COPY = {
             "Substantive material remains withheld until reviewed and approved.",
         ),
         "doors": (
-            ("/challenge/", "Follow the Chain Challenge"),
+            ("/challenge/", "Follow the chain."),
+            ("/concepts/ultimate-grounding/", "Ultimate Grounding"),
             ("/company/", "The Company"),
             ("/research/", "Research"),
             ("/library/", "Canonical Library"),
         ),
     },
     "/challenge/": {
-        "heading": ("h1", "Follow the Chain Challenge"),
+        "heading": ("h1", "Follow the chain."),
         "paragraphs": (CHALLENGE_NOTICE,),
         "doors": (
             ("/", "Return to homepage"),
             ("/company/", "The Company"),
+        ),
+    },
+    "/concepts/ultimate-grounding/": {
+        "heading": ("h1", "On the Nature of Ultimate Grounding"),
+        "paragraphs": (
+            "The canonical treatise will be linked here after publication review.",
+        ),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/library/", "Canonical Library"),
         ),
     },
     "/company/": {
@@ -115,6 +129,7 @@ REVIEWED_ROUTE_COPY = {
         ),
         "doors": (
             ("/", "Return to homepage"),
+            ("/concepts/ultimate-grounding/", "Ultimate Grounding"),
             ("/faq/", "FAQ"),
         ),
     },
@@ -123,7 +138,7 @@ REVIEWED_ROUTE_COPY = {
         "paragraphs": (FAQ_NOTICE,),
         "doors": (
             ("/", "Return to homepage"),
-            ("/challenge/", "Follow the Chain"),
+            ("/challenge/", "Follow the chain."),
         ),
     },
 }
@@ -133,6 +148,16 @@ BRAND_TEXT = "GOVERNED LOGIC"
 EYEBROW_TEXT = "GOVERNED LOGIC REASONING SYSTEMS"
 FOOTER_TEXT = "Governed Logic Reasoning Systems · Home"
 NAVIGATION_STYLESHEET = "/assets/site-navigation.css"
+
+STRUCTURED_DATA_NAMES = {
+    "/": "Governed Logic Reasoning Systems",
+    "/challenge/": "Follow the chain.",
+    "/concepts/ultimate-grounding/": "On the Nature of Ultimate Grounding",
+    "/company/": "The Company",
+    "/research/": "Research",
+    "/library/": "Canonical Library",
+    "/faq/": "Frequently Asked Questions",
+}
 
 WITHHELD_URLS = (
     "/GOVERNEDLOGIC_COM_PRD.txt",
@@ -147,7 +172,6 @@ WITHHELD_URLS = (
     "/scripts/build-corpus.py",
     "/scripts/check-corpus.py",
     "/concepts/governed-logic/",
-    "/concepts/ultimate-grounding/",
     "/concepts/governed-intelligence/",
     "/assets/origin-v17.js",
     "/assets/origin-v17.css",
@@ -316,7 +340,8 @@ def shell_checks(parser: DocumentParser, route: str) -> None:
             expected_attrs["aria-current"] = "page"
         require(element.attrs == expected_attrs,
                 f"Primary-navigation anchor attributes differ for {href} on {route}: {element.attrs}")
-    expected_current = [] if route == "/" else [(route, "page")]
+    navigation_routes = {href for href, _ in NAVIGATION}
+    expected_current = [(route, "page")] if route in navigation_routes else []
     require(parser.current_links == expected_current,
             f"Current-page indication differs on {route}: {parser.current_links}")
 
@@ -369,10 +394,9 @@ def machine_surface_checks(site_root: Path, parser: DocumentParser, route: str, 
             "questions": [],
         }
         require("FAQPage" not in html, "FAQPage schema must remain absent until approved Q&A exists")
-        require("application/ld+json" not in html, "FAQ JSON-LD must remain absent until approved Q&A exists")
     else:
         expected_manifest = {
-            "type": "follow_the_chain_challenge",
+            "type": "follow_the_chain",
             "canonical_url": "https://governedlogic.com/challenge/",
             "publication_status": "withheld_pending_review",
             "notice": CHALLENGE_NOTICE,
@@ -388,6 +412,35 @@ def machine_surface_checks(site_root: Path, parser: DocumentParser, route: str, 
     require(
         manifest["notice"] in visible_paragraphs,
         f"Human and machine review notice differs on {route}",
+    )
+
+
+def structured_data_checks(parser: DocumentParser, route: str) -> None:
+    scripts = [
+        element
+        for element in parser.elements("script")
+        if element.attrs.get("type") == "application/ld+json"
+    ]
+    require(len(scripts) == 1, f"Expected one JSON-LD block on {route}; found {len(scripts)}")
+    try:
+        payload = json.loads(scripts[0].text())
+    except json.JSONDecodeError as error:
+        raise AssertionError(f"Invalid JSON-LD on {route}: {error}") from error
+
+    expected_type = "WebSite" if route == "/" else "WebPage"
+    expected_url = "https://governedlogic.com" + route
+    require(payload.get("@context") == "https://schema.org", f"JSON-LD context differs on {route}")
+    require(payload.get("@type") == expected_type, f"JSON-LD type differs on {route}")
+    require(payload.get("name") == STRUCTURED_DATA_NAMES[route], f"JSON-LD name differs on {route}")
+    require(payload.get("url") == expected_url, f"JSON-LD URL differs on {route}")
+    owner = payload.get("publisher") if route == "/" else payload.get("isPartOf")
+    require(
+        owner == {
+            "@type": "Organization" if route == "/" else "WebSite",
+            "name": "Governed Logic Reasoning Systems",
+            "url": "https://governedlogic.com/",
+        },
+        f"JSON-LD site ownership differs on {route}: {owner}",
     )
 
 
@@ -537,6 +590,7 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
                 require((site_root / path.lstrip("/")).is_file(), f"Missing asset {reference} used by {route}")
         shell_checks(parser, route)
         machine_surface_checks(site_root, parser, route, html)
+        structured_data_checks(parser, route)
         publication_boundary_checks(parser, route)
 
         if route == "/":
@@ -555,7 +609,13 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
                 if element.tag == "a"
             ]
             require(
-                door_links == ["/challenge/", "/company/", "/research/", "/library/"],
+                door_links == [
+                    "/challenge/",
+                    "/concepts/ultimate-grounding/",
+                    "/company/",
+                    "/research/",
+                    "/library/",
+                ],
                 f"Homepage primary doors differ: {door_links}",
             )
         else:
@@ -579,6 +639,8 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
     opening = (site_root / "assets/opening.js").read_text(encoding="utf-8")
     opening_css = (site_root / "assets/opening.css").read_text(encoding="utf-8").replace(" ", "")
     navigation_css = (site_root / "assets/site-navigation.css").read_text(encoding="utf-8").replace(" ", "")
+    require("--gl-black:#000000" in navigation_css, "Exact Governed Logic black token is missing")
+    require("--gl-violet:#8D78FF" in navigation_css, "Exact Governed Logic violet token is missing")
     for contract in (
         "const TIMELINE",
         "starStart:2",
@@ -615,6 +677,12 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
     )
     require("@media(forced-colors:active)" in navigation_css, "Forced-colors navigation fallback is missing")
     homepage = (site_root / "index.html").read_text(encoding="utf-8")
+    public_text = "\n".join(
+        (site_root / relative).read_text(encoding="utf-8", errors="ignore")
+        for relative in PUBLIC_FILES
+        if Path(relative).suffix in {".html", ".json", ".xml"}
+    )
+    require("Follow the Chain Challenge" not in public_text, "Retired phrase appears in the public artifact")
     opening_css_source = (site_root / "assets/opening.css").read_text(encoding="utf-8")
     earth_renderer = (site_root / "assets/earth-renderer.js").read_text(encoding="utf-8")
     require(

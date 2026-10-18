@@ -15,6 +15,7 @@ PUBLIC_FILES = (
     "index.html",
     "challenge/index.html",
     "challenge/index.json",
+    "concepts/ultimate-grounding/index.html",
     "company/index.html",
     "research/index.html",
     "library/index.html",

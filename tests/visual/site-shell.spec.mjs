@@ -6,13 +6,14 @@ const BASE_ORIGIN = "http://127.0.0.1:4173";
 const ROUTES = [
   { path: "/", slug: "home" },
   { path: "/challenge/", slug: "challenge" },
+  { path: "/concepts/ultimate-grounding/", slug: "ultimate-grounding" },
   { path: "/company/", slug: "company" },
   { path: "/research/", slug: "research" },
   { path: "/library/", slug: "library" },
   { path: "/faq/", slug: "faq" }
 ];
 const EXPECTED_NAVIGATION = [
-  { href: "/challenge/", label: "Follow the Chain" },
+  { href: "/challenge/", label: "Follow the chain." },
   { href: "/company/", label: "Company" },
   { href: "/research/", label: "Research" },
   { href: "/library/", label: "Canonical Library" },
