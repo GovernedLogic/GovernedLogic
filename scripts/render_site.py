@@ -23,7 +23,12 @@ class Text(HTMLParser):
         if self.main and not self.skip:self.parts.append(data)
 def main_text(source):
     p=Text();p.feed(source);return re.sub(r'\s+',' ',' '.join(p.parts)).strip()
+def definitions(source):
+    for key,value in json.loads((ROOT/'content/definitions.json').read_text(encoding='utf-8')).items():
+        source=source.replace('{{definition:'+key+'}}',value)
+    return source
 def render(source,path):
+    source=definitions(source)
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)
     anchor=main.group(1) if main else 'content'
     header=(ROOT/'components/header.html').read_text(encoding='utf-8').replace('href="#content"',f'href="#{anchor}"')
@@ -50,6 +55,7 @@ def build(destination):
         if p in GENERATED:continue
         target=destination/p;target.parent.mkdir(parents=True,exist_ok=True)
         if p in PAGES:target.write_text(render((ROOT/p).read_text(encoding='utf-8'),p),encoding='utf-8',newline='\n')
+        elif p=='faq/index.json':target.write_text(definitions((ROOT/p).read_text(encoding='utf-8')),encoding='utf-8',newline='\n')
         else:shutil.copy2(ROOT/p,target)
     records=[]
     for p in PAGES:

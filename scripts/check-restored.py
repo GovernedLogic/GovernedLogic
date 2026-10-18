@@ -37,7 +37,7 @@ def check(root):
         if not d.json:errors.append('Missing machine data: '+p)
         if len(d.ids)!=len(set(d.ids)):errors.append('Duplicate IDs: '+p+' '+str([i for i in set(d.ids) if d.ids.count(i)>1]))
         if len(main_text(source).split())<45:errors.append('Insufficient page content: '+p)
-        for phrase in ('Substantive material remains withheld','will be linked here after publication review','Follow the Chain Challenge','<!--SITE_HEADER-->'):
+        for phrase in ('Substantive material remains withheld','will be linked here after publication review','Follow the Chain Challenge','<!--SITE_HEADER-->','{{definition:'):
             if phrase in source:errors.append('Placeholder or retired copy: '+p)
     for p,d in docs.items():
         for ref in d.refs:

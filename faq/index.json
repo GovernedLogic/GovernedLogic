@@ -7,7 +7,7 @@
       "name": "What is Governed Logic?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Governed Logic is the upstream, bidirectional reasoning architecture in which truth governs logic, logic governs reasoning, and reasoning remains answerable to its ultimate ground."
+        "text": "{{definition:governed-logic}}"
       }
     },
     {
@@ -15,7 +15,7 @@
       "name": "What is Governed Intelligence?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Governed Intelligence is the artificial intelligence implementation of Governed Logic."
+        "text": "{{definition:governed-intelligence}}"
       }
     },
     {
@@ -39,7 +39,7 @@
       "name": "What does ultimate grounding mean?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "An ultimate ground is not grounded by something more fundamental in the same relevant respect."
+        "text": "{{definition:ultimate-grounding}}"
       }
     },
     {
