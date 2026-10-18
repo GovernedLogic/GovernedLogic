@@ -1,7 +1,7 @@
 """Build a componentized public site from an explicit allowlist."""
 from pathlib import Path
 from html.parser import HTMLParser
-from html import escape
+from html import escape, unescape
 import argparse, hashlib, json, re, shutil
 ROOT=Path(__file__).resolve().parents[1]
 PAGES=('index.html','challenge/index.html','company/index.html','research/index.html','about/index.html','faq/index.html','concepts/index.html','concepts/governed-logic/index.html','concepts/governed-intelligence/index.html','concepts/ultimate-grounding/index.html','concepts/alpha-and-omega-reasoning/index.html','concepts/governing-referent/index.html','concepts/sufficient-grounding/index.html','mechanism.html','sources/index.html','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html')
@@ -60,7 +60,7 @@ def build(destination):
     records=[]
     for p in PAGES:
         source=(destination/p).read_text(encoding='utf-8');title=re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)
-        title=re.sub('<[^>]+>','',title.group(1)).strip() if title else 'Governed Logic Reasoning Systems'
+        title=unescape(re.sub('<[^>]+>','',title.group(1))).strip() if title else 'Governed Logic Reasoning Systems'
         if p=='index.html':title='Governed Logic Reasoning Systems'
         records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'page','text':main_text(source),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
     titles=['On the Nature of Ultimate Grounding','Governed Logic','Alpha and Omega Reasoning','Governed Intelligence','Business strategy — additional direction']
