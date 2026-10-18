@@ -462,3 +462,6 @@ The opening's full-black initial frame and company-name destination remain corre
 
 WEB-150
 This revision is a first visual interpretation of Paul's feedback, not final visual acceptance. Capture desktop and mobile layouts and chronological motion frames, verify completion and reduced-motion access, and inspect the rendered result. Publish through the existing GitHub Pages release path under the continuing deployment authorization.
+
+WEB-151
+Paul approves the visual direction and corrects the vertical architecture: Ground belongs at the bottom as the supporting foundation, with Truth, Logic, Reasoning, and Intelligence above it. Generation rises; adjudication returns downward. Apply the same orientation to the phone's vertically stacked chain while retaining the canonical source order and the desktop left-to-right chain.
