@@ -1,0 +1,62 @@
+name: Validate governedlogic.com
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Test publication-boundary guards
+        run: python3 scripts/test-release-guards.py
+      - name: Build and verify reviewed artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          output_root="$(mktemp -d)"
+          site_root="$output_root/site"
+          python3 scripts/build_site.py --output "$site_root"
+          python3 scripts/check-origin.py --root "$site_root" --artifact
+          printf 'SITE_ROOT=%s\n' "$site_root" >> "$GITHUB_ENV"
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/opening.js
+          node --check assets/earth-renderer.js
+          node --check assets/material-environment.js
+          node --check tests/visual/playwright.config.mjs
+          node --check tests/visual/site-shell.spec.mjs
+          node --check tests/visual/contact-sheet.mjs
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install browser test dependencies
+        run: npm ci --ignore-scripts
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Render and validate reviewed artifact
+        run: npm run test:visual
+      - name: Build visual contact sheet
+        if: ${{ !cancelled() }}
+        run: npm run visual:contact-sheet
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Upload visual QA evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: governedlogic-visual-qa-${{ github.event.pull_request.head.sha || github.sha }}
+          path: visual-qa/
+          if-no-files-found: error
+          retention-days: 14

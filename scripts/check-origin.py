@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -18,14 +19,27 @@ from build_site import PUBLIC_FILES, ROOT
 ROUTES = {
     "/": "index.html",
     "/challenge/": "challenge/index.html",
+    "/concepts/ultimate-grounding/": "concepts/ultimate-grounding/index.html",
     "/company/": "company/index.html",
     "/research/": "research/index.html",
     "/library/": "library/index.html",
     "/faq/": "faq/index.html",
 }
 
+
+# Git blob IDs are exact byte fingerprints for the reviewed HTML, not security credentials.
+REVIEWED_HTML_BLOB_IDS = {
+    "index.html": "c92b8b2216d3e2e4ac03b91eeede4103084fe6f9",
+    "challenge/index.html": "da48ea10e738b0ef5014cdc146b3e55c27e9d298",
+    "concepts/ultimate-grounding/index.html": "f7b3f7c9ea67e25521b9b6efcfb08544f22a1c27",
+    "company/index.html": "e8daeaf86c4c5c47cfc823f46a0476e804b91b7e",
+    "research/index.html": "302f9ac88d38ad889d70ccd85d3db08ca891769e",
+    "library/index.html": "b652132ff5bf78352ae54eab69d760c2dd6221d8",
+    "faq/index.html": "a48f5ea4e8508f9d203c8bcf65b9fe73f0b95574",
+}
+
 NAVIGATION = (
-    ("/challenge/", "Follow the Chain"),
+    ("/challenge/", "Follow the chain."),
     ("/company/", "Company"),
     ("/research/", "Research"),
     ("/library/", "Canonical Library"),
@@ -34,9 +48,10 @@ NAVIGATION = (
 
 INNER_PAGE_DOORS = {
     "/challenge/": ("/", "/company/"),
+    "/concepts/ultimate-grounding/": ("/", "/library/"),
     "/company/": ("/", "/research/"),
     "/research/": ("/", "/library/"),
-    "/library/": ("/", "/faq/"),
+    "/library/": ("/", "/concepts/ultimate-grounding/", "/faq/"),
     "/faq/": ("/", "/challenge/"),
 }
 
@@ -51,11 +66,98 @@ CHALLENGE_NOTICE = (
 )
 FAQ_NOTICE = "FAQ questions and answers remain withheld pending source review and approval."
 
+
+REVIEWED_ROUTE_COPY = {
+    "/": {
+        "heading": ("h2", "Governed Logic"),
+        "paragraphs": (
+            "GROUND → TRUTH → LOGIC → REASONING → INTELLIGENCE",
+            "The company website is being brought online in stages. "
+            "Substantive material remains withheld until reviewed and approved.",
+        ),
+        "doors": (
+            ("/challenge/", "Follow the chain."),
+            ("/concepts/ultimate-grounding/", "Ultimate Grounding"),
+            ("/company/", "The Company"),
+            ("/research/", "Research"),
+            ("/library/", "Canonical Library"),
+        ),
+    },
+    "/challenge/": {
+        "heading": ("h1", "Follow the chain."),
+        "paragraphs": (CHALLENGE_NOTICE,),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/company/", "The Company"),
+        ),
+    },
+    "/concepts/ultimate-grounding/": {
+        "heading": ("h1", "On the Nature of Ultimate Grounding"),
+        "paragraphs": (
+            "The canonical treatise will be linked here after publication review.",
+        ),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/library/", "Canonical Library"),
+        ),
+    },
+    "/company/": {
+        "heading": ("h1", "The Company"),
+        "paragraphs": (
+            "Governed Logic Reasoning Systems. Detailed company material remains under review.",
+        ),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/research/", "Research"),
+        ),
+    },
+    "/research/": {
+        "heading": ("h1", "Research"),
+        "paragraphs": (
+            "Research findings and demonstrations are not published here until source review and approval.",
+        ),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/library/", "Canonical Library"),
+        ),
+    },
+    "/library/": {
+        "heading": ("h1", "Canonical Library"),
+        "paragraphs": (
+            "This is the entry point for stable, machine-readable canonical publications. "
+            "Unreviewed documents are not public.",
+        ),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/concepts/ultimate-grounding/", "Ultimate Grounding"),
+            ("/faq/", "FAQ"),
+        ),
+    },
+    "/faq/": {
+        "heading": ("h1", "Frequently Asked Questions"),
+        "paragraphs": (FAQ_NOTICE,),
+        "doors": (
+            ("/", "Return to homepage"),
+            ("/challenge/", "Follow the chain."),
+        ),
+    },
+}
+
 BRAND_ATTRIBUTES = {"href": "/", "aria-label": "Governed Logic home"}
 BRAND_TEXT = "GOVERNED LOGIC"
 EYEBROW_TEXT = "GOVERNED LOGIC REASONING SYSTEMS"
 FOOTER_TEXT = "Governed Logic Reasoning Systems · Home"
 NAVIGATION_STYLESHEET = "/assets/site-navigation.css"
+
+STRUCTURED_DATA_NAMES = {
+    "/": "Governed Logic Reasoning Systems",
+    "/challenge/": "Follow the chain.",
+    "/concepts/ultimate-grounding/": "On the Nature of Ultimate Grounding",
+    "/company/": "The Company",
+    "/research/": "Research",
+    "/library/": "Canonical Library",
+    "/faq/": "Frequently Asked Questions",
+}
 
 WITHHELD_URLS = (
     "/GOVERNEDLOGIC_COM_PRD.txt",
@@ -70,7 +172,6 @@ WITHHELD_URLS = (
     "/scripts/build-corpus.py",
     "/scripts/check-corpus.py",
     "/concepts/governed-logic/",
-    "/concepts/ultimate-grounding/",
     "/concepts/governed-intelligence/",
     "/assets/origin-v17.js",
     "/assets/origin-v17.css",
@@ -119,6 +220,11 @@ class Element:
 
 def normalized(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip()
+
+
+def git_blob_id(data: bytes) -> str:
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data, usedforsecurity=False).hexdigest()
 
 
 class DocumentParser(HTMLParser):
@@ -234,7 +340,8 @@ def shell_checks(parser: DocumentParser, route: str) -> None:
             expected_attrs["aria-current"] = "page"
         require(element.attrs == expected_attrs,
                 f"Primary-navigation anchor attributes differ for {href} on {route}: {element.attrs}")
-    expected_current = [] if route == "/" else [(route, "page")]
+    navigation_routes = {href for href, _ in NAVIGATION}
+    expected_current = [(route, "page")] if route in navigation_routes else []
     require(parser.current_links == expected_current,
             f"Current-page indication differs on {route}: {parser.current_links}")
 
@@ -287,10 +394,9 @@ def machine_surface_checks(site_root: Path, parser: DocumentParser, route: str, 
             "questions": [],
         }
         require("FAQPage" not in html, "FAQPage schema must remain absent until approved Q&A exists")
-        require("application/ld+json" not in html, "FAQ JSON-LD must remain absent until approved Q&A exists")
     else:
         expected_manifest = {
-            "type": "follow_the_chain_challenge",
+            "type": "follow_the_chain",
             "canonical_url": "https://governedlogic.com/challenge/",
             "publication_status": "withheld_pending_review",
             "notice": CHALLENGE_NOTICE,
@@ -307,6 +413,138 @@ def machine_surface_checks(site_root: Path, parser: DocumentParser, route: str, 
         manifest["notice"] in visible_paragraphs,
         f"Human and machine review notice differs on {route}",
     )
+
+
+def structured_data_checks(parser: DocumentParser, route: str) -> None:
+    scripts = [
+        element
+        for element in parser.elements("script")
+        if element.attrs.get("type") == "application/ld+json"
+    ]
+    require(len(scripts) == 1, f"Expected one JSON-LD block on {route}; found {len(scripts)}")
+    try:
+        payload = json.loads(scripts[0].text())
+    except json.JSONDecodeError as error:
+        raise AssertionError(f"Invalid JSON-LD on {route}: {error}") from error
+
+    expected_type = "WebSite" if route == "/" else "WebPage"
+    expected_url = "https://governedlogic.com" + route
+    require(payload.get("@context") == "https://schema.org", f"JSON-LD context differs on {route}")
+    require(payload.get("@type") == expected_type, f"JSON-LD type differs on {route}")
+    require(payload.get("name") == STRUCTURED_DATA_NAMES[route], f"JSON-LD name differs on {route}")
+    require(payload.get("url") == expected_url, f"JSON-LD URL differs on {route}")
+    owner = payload.get("publisher") if route == "/" else payload.get("isPartOf")
+    require(
+        owner == {
+            "@type": "Organization" if route == "/" else "WebSite",
+            "name": "Governed Logic Reasoning Systems",
+            "url": "https://governedlogic.com/",
+        },
+        f"JSON-LD site ownership differs on {route}: {owner}",
+    )
+
+
+def publication_boundary_checks(parser: DocumentParser, route: str) -> None:
+    """Freeze reviewed route copy and reject additional public claims."""
+    bodies = parser.elements("body")
+    require(len(bodies) == 1, f"Reviewed document must contain exactly one body on {route}")
+    body = bodies[0]
+    require(body.attrs == {}, f"Reviewed body attributes differ on {route}: {body.attrs}")
+    require(
+        not normalized("".join(child for child in body.children if isinstance(child, str))),
+        f"Unexpected direct body text on {route}",
+    )
+
+    body_children = body.element_children()
+    body_tags = [element.tag for element in body_children]
+    if route == "/":
+        require(
+            body_tags == ["div", "header", "main", "footer"],
+            f"Reviewed homepage landmarks differ: {body_tags}",
+        )
+        intro, _, content, _ = body_children
+        require(
+            intro.attrs == {"id": "site", "role": "region", "aria-label": "Governed Logic Reasoning Systems"},
+            f"Reviewed opening container differs: {intro.attrs}",
+        )
+        expected_content_attrs = {"class": "site-content", "id": "explore"}
+    else:
+        require(
+            body_tags == ["header", "main", "footer"],
+            f"Reviewed page landmarks differ on {route}: {body_tags}",
+        )
+        _, content, _ = body_children
+        expected_content_attrs = {"class": "inner-page"}
+
+    require(
+        len(parser.elements("main")) == 1 and parser.elements("main")[0] is content,
+        f"Reviewed content must be the sole main landmark on {route}",
+    )
+    require(
+        content.attrs == expected_content_attrs,
+        f"Reviewed content attributes differ on {route}: {content.attrs}",
+    )
+    require(
+        not normalized("".join(child for child in content.children if isinstance(child, str))),
+        f"Unexpected direct reviewed-content text on {route}",
+    )
+
+    expected = REVIEWED_ROUTE_COPY[route]
+    heading_tag, heading_text = expected["heading"]
+    expected_tags = ["p", heading_tag, *(["p"] * len(expected["paragraphs"])), "div"]
+    children = content.element_children()
+    actual_tags = [element.tag for element in children]
+    require(
+        actual_tags == expected_tags,
+        f"Reviewed content structure differs on {route}: {actual_tags}",
+    )
+
+    eyebrow, heading, *remainder = children
+    require(
+        eyebrow.attrs == {"class": "eyebrow"}
+        and not eyebrow.element_children()
+        and normalized(eyebrow.text()) == EYEBROW_TEXT,
+        f"Reviewed eyebrow differs on {route}",
+    )
+    require(
+        heading.attrs == {}
+        and not heading.element_children()
+        and normalized(heading.text()) == heading_text,
+        f"Reviewed heading differs on {route}: {heading.text()!r}",
+    )
+
+    paragraphs = remainder[:-1]
+    doors = remainder[-1]
+    for paragraph, expected_text in zip(paragraphs, expected["paragraphs"]):
+        require(
+            paragraph.attrs == {}
+            and not paragraph.element_children()
+            and normalized(paragraph.text()) == expected_text,
+            f"Reviewed paragraph text differs on {route}: {paragraph.text()!r}",
+        )
+
+    require(doors.attrs == {"class": "site-doors"}, f"Reviewed door group differs on {route}: {doors.attrs}")
+    require(
+        not normalized("".join(child for child in doors.children if isinstance(child, str))),
+        f"Unexpected direct text in reviewed door group on {route}",
+    )
+    door_links = doors.element_children()
+    require(
+        len(door_links) == len(expected["doors"]) and all(link.tag == "a" for link in door_links),
+        f"Reviewed door count or structure differs on {route}",
+    )
+    for link, (href, label) in zip(door_links, expected["doors"]):
+        require(link.attrs == {"href": href}, f"Reviewed door attributes differ on {route}: {link.attrs}")
+        link_children = link.element_children()
+        require(
+            len(link_children) == 1
+            and link_children[0].tag == "span"
+            and link_children[0].attrs == {}
+            and not link_children[0].element_children()
+            and normalized(link_children[0].text()) == "→"
+            and normalized(link.text()) == f"{label} →",
+            f"Reviewed door label or arrow differs for {href} on {route}: {link.text()!r}",
+        )
 
 
 def local_checks(site_root: Path, exact_artifact: bool) -> None:
@@ -326,7 +564,14 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
         )
 
     for route, relative in ROUTES.items():
-        html = (site_root / relative).read_text(encoding="utf-8")
+        html_path = site_root / relative
+        html_bytes = html_path.read_bytes()
+        actual_blob_id = git_blob_id(html_bytes)
+        require(
+            actual_blob_id == REVIEWED_HTML_BLOB_IDS[relative],
+            f"Reviewed HTML bytes differ on {route}: {actual_blob_id}",
+        )
+        html = html_bytes.decode("utf-8")
         parser = DocumentParser()
         parser.feed(html)
         parser.close()
@@ -345,6 +590,8 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
                 require((site_root / path.lstrip("/")).is_file(), f"Missing asset {reference} used by {route}")
         shell_checks(parser, route)
         machine_surface_checks(site_root, parser, route, html)
+        structured_data_checks(parser, route)
+        publication_boundary_checks(parser, route)
 
         if route == "/":
             require("#explore" in parser.links and 'id="explore"' in html, "Explore target is incomplete")
@@ -362,7 +609,13 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
                 if element.tag == "a"
             ]
             require(
-                door_links == ["/challenge/", "/company/", "/research/", "/library/"],
+                door_links == [
+                    "/challenge/",
+                    "/concepts/ultimate-grounding/",
+                    "/company/",
+                    "/research/",
+                    "/library/",
+                ],
                 f"Homepage primary doors differ: {door_links}",
             )
         else:
@@ -386,6 +639,8 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
     opening = (site_root / "assets/opening.js").read_text(encoding="utf-8")
     opening_css = (site_root / "assets/opening.css").read_text(encoding="utf-8").replace(" ", "")
     navigation_css = (site_root / "assets/site-navigation.css").read_text(encoding="utf-8").replace(" ", "")
+    require("--gl-black:#000000" in navigation_css, "Exact Governed Logic black token is missing")
+    require("--gl-violet:#8D78FF" in navigation_css, "Exact Governed Logic violet token is missing")
     for contract in (
         "const TIMELINE",
         "starStart:2",
@@ -422,6 +677,12 @@ def local_checks(site_root: Path, exact_artifact: bool) -> None:
     )
     require("@media(forced-colors:active)" in navigation_css, "Forced-colors navigation fallback is missing")
     homepage = (site_root / "index.html").read_text(encoding="utf-8")
+    public_text = "\n".join(
+        (site_root / relative).read_text(encoding="utf-8", errors="ignore")
+        for relative in PUBLIC_FILES
+        if Path(relative).suffix in {".html", ".json", ".xml"}
+    )
+    require("Follow the Chain Challenge" not in public_text, "Retired phrase appears in the public artifact")
     opening_css_source = (site_root / "assets/opening.css").read_text(encoding="utf-8")
     earth_renderer = (site_root / "assets/earth-renderer.js").read_text(encoding="utf-8")
     require(
