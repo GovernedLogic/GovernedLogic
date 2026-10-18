@@ -1,11 +1,9 @@
 {
-  "type": "follow_the_chain",
+  "title": "Follow the chain.",
   "canonical_url": "https://governedlogic.com/challenge/",
-  "publication_status": "withheld_pending_review",
-  "notice": "Challenge rules, inputs, outputs, examples, and evaluation criteria remain withheld pending source review and approval.",
-  "rules": [],
-  "inputs": [],
-  "outputs": [],
-  "examples": [],
-  "evaluation_criteria": []
+  "purpose": "The objective is truth, not winning an argument.",
+  "method": [
+    "Investigate whether propositions, premises, inferences, and conclusions correspond to reality.",
+    "Examine the reasoning chain from premise through inference, adjudication, conclusion, representation, and termination."
+  ]
 }

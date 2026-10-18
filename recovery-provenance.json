@@ -1,0 +1,62 @@
+[
+  {
+    "path": "concepts/alpha-and-omega-reasoning/index.html",
+    "source_sha256": "a3c5a82db295f8a24a406f6375c74e0369b5ca79e2c05d12a93a830f9c8138ee",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "concepts/governed-intelligence/index.html",
+    "source_sha256": "3439608dc71590f107019c71774d01b4f079036900c0c61f8526bf3a5a805535",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "concepts/governed-logic/index.html",
+    "source_sha256": "7aa694d20d98ae7e2acf34e965c305cb95068ee48f735ca9dd3bd586f20e859e",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "concepts/governing-referent/index.html",
+    "source_sha256": "673883d761ef873d6453b3b9f6dd5699111f7a1d1156f2539648e7b5988f77ed",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "concepts/index.html",
+    "source_sha256": "47aebc88731a3d3af97afb2018c93fe06cdc3bda3e49d3b8f277a99514834231",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "concepts/sufficient-grounding/index.html",
+    "source_sha256": "cd0393e5993540f27c0e9c9d41d9dcfa3b358663b18cf371634d931dca518db0",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "concepts/ultimate-grounding/index.html",
+    "source_sha256": "39b13ec7517d76c9d6da9821fd189e1946d84c726033652ac4593602d8c90c73",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "company/index.html",
+    "source_sha256": "6b5c7c98f8d991a2763bb2adbcd9ea59c289ec74ede4c37c7405f708d918a6b1",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "research/index.html",
+    "source_sha256": "9ea3270518aee0b2358d94879f942701f6ee5b6e06b83efa9375753d1117528f",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "about/index.html",
+    "source_sha256": "f4e45793c9d457aa007bbb9e98e267d1dcfa751a98a1510d4926325dd665dec2",
+    "revision": "origin/biography-presentation-pass"
+  },
+  {
+    "path": "mechanism.html",
+    "source_sha256": "519b624d816395c193257651035976f362320794563a8dd48a1d9225871a9886",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  },
+  {
+    "path": "sources/index.html",
+    "source_sha256": "0bd7f4976d11d5f2f0a25d331bfec8d73e8313be58cd20b865b9a50801792212",
+    "revision": "9caacb3556ad0b583113aebad0f95028ad84c833"
+  }
+]

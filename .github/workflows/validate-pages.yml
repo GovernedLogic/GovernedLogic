@@ -17,8 +17,8 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - name: Test publication-boundary guards
-        run: python3 scripts/test-release-guards.py
+      - name: Validate substantive publication
+        run: python3 scripts/check-restored.py
       - name: Build and verify reviewed artifact
         shell: bash
         run: |
@@ -26,7 +26,7 @@ jobs:
           output_root="$(mktemp -d)"
           site_root="$output_root/site"
           python3 scripts/build_site.py --output "$site_root"
-          python3 scripts/check-origin.py --root "$site_root" --artifact
+          python3 scripts/check-restored.py --root "$site_root" --artifact
           printf 'SITE_ROOT=%s\n' "$site_root" >> "$GITHUB_ENV"
       - name: Check JavaScript syntax
         run: |

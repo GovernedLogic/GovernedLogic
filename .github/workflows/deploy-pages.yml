@@ -27,7 +27,7 @@ jobs:
         run: python3 scripts/build_site.py --output "${{ runner.temp }}/site"
       - name: Verify artifact boundary
         run: |
-          python3 scripts/check-origin.py --root "${{ runner.temp }}/site" --artifact
+          python3 scripts/check-restored.py --root "${{ runner.temp }}/site" --artifact
           node --check "${{ runner.temp }}/site/assets/opening.js"
           node --check "${{ runner.temp }}/site/assets/earth-renderer.js"
           node --check "${{ runner.temp }}/site/assets/material-environment.js"
@@ -54,4 +54,4 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
       - name: Verify live routes and publication boundary
-        run: python3 scripts/check-origin.py --live https://governedlogic.com --attempts 6 --delay 10
+        run: python3 scripts/check-restored.py --live https://governedlogic.com --attempts 6 --delay 10
