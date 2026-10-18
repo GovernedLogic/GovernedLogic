@@ -7,35 +7,38 @@
   const ease = x => { x = clamp(x); return x*x*x*(x*(x*6-15)+10); };
   const phase = (time,start,end) => ease((time-start)/(end-start));
   const wrapLongitude = x => ((x+Math.PI)%TAU+TAU)%TAU-Math.PI;
+  // The pauses are part of the composition: release, organization, recognition.
+  // Surface material arrives only after the same particles describe a globe.
   const TIMELINE = Object.freeze({
-    starStart:2,
-    starEnd:2.9,
-    burstStart:2.85,
-    burstEnd:4,
-    orbitStart:3.35,
-    orbitEnd:5,
-    petalStart:4.4,
-    petalEnd:5.35,
-    greenStart:5.15,
-    greenEnd:6.65,
-    sphereStart:7.15,
-    sphereEnd:9.65,
-    centerFadeStart:7.45,
-    centerFadeEnd:9.2,
-    greenFadeStart:9.45,
-    greenFadeEnd:11.15,
-    materialStart:9.35,
-    materialEnd:11.8,
-    settleStart:9.2,
-    settleEnd:12.85,
-    environmentStart:10.55,
-    environmentEnd:12.75,
-    tokenFadeStart:10.8,
-    tokenFadeEnd:12.85,
-    identityStart:12,
-    identityEnd:13.75,
-    finalAt:14.35,
-    deadline:15.15
+    pointStart:.75,
+    starStart:1.55,
+    starEnd:2.6,
+    burstStart:2.35,
+    burstEnd:3.75,
+    orbitStart:3.1,
+    orbitEnd:5.15,
+    petalStart:4.75,
+    petalEnd:6.2,
+    greenStart:5.95,
+    greenEnd:7.15,
+    sphereStart:7.95,
+    sphereEnd:10.05,
+    centerFadeStart:8.05,
+    centerFadeEnd:9.7,
+    greenFadeStart:9.85,
+    greenFadeEnd:11.55,
+    materialStart:9.9,
+    materialEnd:11.25,
+    settleStart:11.05,
+    settleEnd:13.55,
+    environmentStart:12,
+    environmentEnd:14.1,
+    tokenFadeStart:11.85,
+    tokenFadeEnd:13.65,
+    identityStart:13.05,
+    identityEnd:14.7,
+    finalAt:15.1,
+    deadline:16.1
   });
   const mix = (a,b,t) => a+(b-a)*t;
   const rand = n => { const x=Math.sin(n*127.1+311.7)*43758.5453123; return x-Math.floor(x); };
@@ -218,14 +221,28 @@
   try{resize();}catch{ return; }
   if(motion.matches || document.hidden)return;
   try {
-    const count=Math.min(window.innerWidth,window.innerHeight)<=600?3200:6000;
+    const count=Math.min(window.innerWidth,window.innerHeight)<=600?3360:5760;
+    const loops=24,samples=count/loops;
     const particles=Array.from({length:count},(_,i)=>{
-      const lat=Math.asin(1-2*(i+.5)/count),lon=i*2.3999632297%TAU-Math.PI;
-      const latticeX=Math.cos(lat)*Math.sin(lon+.38),latticeY=-Math.sin(lat);
-      const theta=Math.atan2(latticeY,latticeX),mapAngle=lon-EARTH_U_OFFSET,cosLat=Math.cos(lat);
-      const loopPhase=i%12/12*Math.PI;
-      const spiro=.012+.988*Math.abs(Math.cos(theta-loopPhase));
-      return {a:theta,r:rand(i+1),s:rand(i+999),c:rand(i+2048),sx:Math.cos(theta)*spiro,sy:Math.sin(theta)*spiro,mx:cosLat*Math.cos(mapAngle),my:Math.sin(lat),mz:cosLat*Math.sin(mapAngle),lat,lon,land:inLand(lon*180/Math.PI,lat*180/Math.PI)};
+      const loop=i%loops,phi=loop/loops*TAU;
+      const theta=(Math.floor(i/loops)+.5)/samples*TAU;
+      // Twenty-four circles, each tangent to the center, reproduce the dense
+      // interlocking radial mark. These are points on loops, never drawn lines.
+      const sx=.5*(Math.cos(phi)+Math.cos(theta+phi));
+      const sy=.5*(Math.sin(phi)+Math.sin(theta+phi));
+      const a=Math.atan2(sy,sx),z=1-2*rand(i+4107),rho=Math.sqrt(1-z*z);
+      const vx=Math.cos(a)*rho,vy=-Math.sin(a)*rho;
+      // Assign the sphere on the same radial bearing as the petal point. The
+      // transformation gains depth without particles crossing the whole image.
+      const mx=vx,my=vy*fallbackTiltCos-z*fallbackTiltSin,mz=vy*fallbackTiltSin+z*fallbackTiltCos;
+      const lat=Math.asin(my),lon=wrapLongitude(Math.atan2(mz,mx)+EARTH_U_OFFSET);
+      return {a,r:rand(i+1),s:rand(i+999),c:rand(i+2048),sx,sy,mx,my,mz,
+        dirX:Math.cos(a),dirY:Math.sin(a),deflect:.12*Math.sin(phi),
+        orbitCos:Math.cos(theta+phi),orbitSin:Math.sin(theta+phi),
+        phiCos:Math.cos(phi),phiSin:Math.sin(phi),
+        orbitalRadius:.56+.23*Math.sin(phi*.5)**2,inclination:.28+.54*Math.abs(Math.sin(phi)),
+        orbitDepth:Math.sqrt(1-(.28+.54*Math.abs(Math.sin(phi)))**2),
+        land:inLand(lon*180/Math.PI,lat*180/Math.PI)};
     });
     const element=document.createElement('div');element.id='glIntro';element.setAttribute('aria-hidden','true');
     const canvas=document.createElement('canvas');canvas.className='intro-canvas';
@@ -240,16 +257,26 @@
     motion.addEventListener('change',motionChanged);
     document.addEventListener('visibilitychange',visibilityChanged);
     const start=performance.now();
+    const stages=[['black',0],['point',TIMELINE.pointStart],['star',TIMELINE.starStart],['release',TIMELINE.burstStart],['orbits',TIMELINE.orbitStart],['spirograph',TIMELINE.petalEnd],['green',TIMELINE.greenEnd],['globe',TIMELINE.sphereStart],['material',TIMELINE.materialStart],['horizon',TIMELINE.settleStart],['identity',TIMELINE.identityStart]];
+    let stage='';
     function frame(now) {
       if(!intro)return;
       try {
         const t=(now-start)/1000;
+        const currentStage=stages.findLast(item=>t>=item[1])?.[0]||'black';
+        if(stage!==currentStage){stage=currentStage;element.dataset.stage=stage;}
         ctx.fillStyle='#000';ctx.fillRect(0,0,width,height);
         const u=Math.min(width,height),cx=width*.5,cy=height*.5;
-        if(t>=TIMELINE.starStart && t<TIMELINE.starEnd){
-          const a=phase(t,TIMELINE.starStart,TIMELINE.starEnd),r=.5+a*3;
-          if(a>.05)glow(ctx,cx,cy,u*.065*a,'255,255,255',a);
-          ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,r,0,TAU);ctx.fill();
+        if(t>=TIMELINE.pointStart && t<TIMELINE.starEnd){
+          const point=phase(t,TIMELINE.pointStart,TIMELINE.starStart),star=phase(t,TIMELINE.starStart,TIMELINE.starEnd);
+          glow(ctx,cx,cy,u*(.006+.025*star),'218,239,255',(.08+.5*star)*point);
+          if(star>.02){
+            ctx.save();ctx.globalAlpha=star*.72;
+            const ray=ctx.createLinearGradient(cx-u*.045,0,cx+u*.045,0);
+            ray.addColorStop(0,'#fff0');ray.addColorStop(.48,'#e3f5ff44');ray.addColorStop(.5,'#fff');ray.addColorStop(.52,'#e3f5ff44');ray.addColorStop(1,'#fff0');
+            ctx.fillStyle=ray;ctx.fillRect(cx-u*.045,cy-.4,u*.09,.8);ctx.restore();
+          }
+          ctx.globalAlpha=point;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,.65+star*.85,0,TAU);ctx.fill();ctx.globalAlpha=1;
         }
         const reveal=phase(t,TIMELINE.environmentStart,TIMELINE.environmentEnd);
         if(reveal>0){ctx.globalAlpha=reveal;ctx.drawImage(t<TIMELINE.settleEnd?atmosphere:scene,0,0,width,height);ctx.globalAlpha=1;}
@@ -261,37 +288,62 @@
           const settle=phase(t,TIMELINE.settleStart,TIMELINE.settleEnd);
           const materialize=phase(t,TIMELINE.materialStart,TIMELINE.materialEnd);
           const particleFade=1-phase(t,TIMELINE.tokenFadeStart,TIMELINE.tokenFadeEnd);
-          const radius=u*.31,earthX=mix(cx,layout.cx,settle),earthY=mix(cy,layout.earthY,settle),rx=mix(u*.245,layout.earthR,settle),ry=rx;
+          const radius=u*.32,earthX=mix(cx,layout.cx,settle),earthY=mix(cy,layout.earthY,settle),rx=mix(u*.265,layout.earthR,settle),ry=rx;
           const green=phase(t,TIMELINE.greenStart,TIMELINE.greenEnd)*(1-phase(t,TIMELINE.greenFadeStart,TIMELINE.greenFadeEnd));
-          const rotation=(t-TIMELINE.petalStart)*.055;
-          const orbitAmount=orbit*(1-.82*petal);
-          const lattice=petal*(1-sphere);
+          const rotation=(t-TIMELINE.petalStart)*.032*(1-sphere);
+          const turn=(t-TIMELINE.orbitStart)*.42*(1-petal);
+          const rotationCos=Math.cos(rotation),rotationSin=Math.sin(rotation),turnCos=Math.cos(turn),turnSin=Math.sin(turn);
           const globeReadability=sphere*(1-materialize);
           const earthTilt=mix(EARTH_TILT_START,EARTH_TILT_END,settle),tiltCos=Math.cos(earthTilt),tiltSin=Math.sin(earthTilt);
+          if(sphere>0&&particleFade>0)glow(ctx,earthX,earthY,rx*1.14,'29,100,151',sphere*.045*particleFade);
           if(materialize>0)earth(ctx,earthX,earthY,rx,settle,materialize);
-          ctx.globalCompositeOperation='lighter';
+          // Source-over leaves dark depth between points; additive compositing
+          // previously turned the center into an overexposed white disc.
+          ctx.globalCompositeOperation='source-over';
           for(let i=0;i<count;i++){
-            const p=particles[i],a=p.a+(t-TIMELINE.orbitStart)*(.28+p.s*.2)*orbitAmount,dist=u*(.012+p.r*.43)*burst;
-            let x=cx+Math.cos(a)*dist,y=cy+Math.sin(a)*dist;
-            const px=p.sx*Math.cos(rotation)-p.sy*Math.sin(rotation),py=p.sx*Math.sin(rotation)+p.sy*Math.cos(rotation);
-            x=mix(x,cx+px*radius,petal);y=mix(y,cy+py*radius,petal);
+            const p=particles[i],deflect=p.deflect*orbit;
+            const dist=radius*(.18+.99*Math.sqrt(p.r))*burst;
+            let x=cx+(p.dirX-p.dirY*deflect)*dist,y=cy+(p.dirY+p.dirX*deflect)*dist;
+            // Inclined orbital bands collect the outward release. Their shared
+            // rotation slows into the exact circle positions of the radial mark.
+            const orbitRadius=radius*p.orbitalRadius;
+            const ox=(p.orbitCos*turnCos-p.orbitSin*turnSin)*orbitRadius,oy=(p.orbitSin*turnCos+p.orbitCos*turnSin)*orbitRadius;
+            const orbitalDepth=oy/radius*p.orbitDepth;
+            const orbitalX=ox*p.phiCos-oy*p.inclination*p.phiSin;
+            const orbitalY=ox*p.phiSin+oy*p.inclination*p.phiCos;
+            x=mix(x,cx+orbitalX,orbit);y=mix(y,cy+orbitalY,orbit);
+            const px=p.sx*rotationCos-p.sy*rotationSin,py=p.sx*rotationSin+p.sy*rotationCos;
+            const petalDepth=px*.17+py*.12,petalPerspective=1+petalDepth*.12;
+            x=mix(x,cx+px*radius*petalPerspective,petal);y=mix(y,cy+py*radius*.94*petalPerspective,petal);
             const globeY=p.my*tiltCos+p.mz*tiltSin,z=-p.my*tiltSin+p.mz*tiltCos;
             x=mix(x,earthX+p.mx*rx,sphere);y=mix(y,earthY-globeY*ry,sphere);
             const capDepth=(y-(earthY-rx))/Math.max(.3,layout.scale);
             const capFade=mix(1,1-ease((capDepth-28)/120),settle);
-            const leader=p.c>.985?1.55:1;
-            let alpha=clamp((.18+p.s*.52)*leader*mix(1,1.45,lattice)*mix(1,1.4,sphere)*mix(1,1.35,globeReadability)*mix(1,z<0?.07:p.land?.98:.18,sphere)*particleFade*capFade);
-            const selected=p.c>.8?1:p.c>.62?.35:.07;
-            const g=green*selected,red=Math.round(mix(255,0,g)),blue=Math.round(mix(255,65,g));
-            ctx.fillStyle=`rgba(${red},255,${blue},${alpha})`;
-            const size=(.55+p.s*.75)*(p.c>.985?1.35:1)*mix(1,1.25,lattice)*mix(1,1.12,sphere)*Math.min(1.3,Math.max(.8,width/1400));
-            ctx.fillRect(x-size/2,y-size/2,size,size);
+            const leader=p.c>.988?1.2:1,front=clamp((z+.12)/1.12);
+            const orbitalLight=.35+.65*clamp(.5+orbitalDepth*.6);
+            const petalLight=.67+.33*clamp(.5+petalDepth*2);
+            const surfaceLight=p.land?.55+.45*front:.13+.2*front;
+            const depthLight=z<0?.018:surfaceLight;
+            const spatialLight=mix(mix(1,orbitalLight,orbit),petalLight,petal);
+            const alpha=clamp((.21+p.s*.48)*leader*mix(spatialLight,depthLight,sphere)*mix(1,1.15,globeReadability)*particleFade*capFade);
+            // White carries the form. A selected minority warms into green;
+            // restrained blue on the globe anticipates its material atmosphere.
+            const selected=p.c>.76?1:p.c>.62?.32:0,g=green*selected;
+            const blueSphere=sphere*(1-g)*.55;
+            const red=Math.round(mix(mix(245,105,g),112,blueSphere));
+            const grn=Math.round(mix(mix(249,212,g),190,blueSphere));
+            const blue=Math.round(mix(mix(255,151,g),236,blueSphere));
+            ctx.fillStyle=`rgba(${red},${grn},${blue},${alpha})`;
+            const depthSize=mix(mix(1,.9+orbitalDepth*.18,orbit*(1-petal)),.88+.22*front,sphere);
+            const size=(.58+p.s*.58)*(p.c>.988?1.15:1)*depthSize*Math.min(1.15,Math.max(.72,width/1400));
+            if(p.c>.988){ctx.beginPath();ctx.arc(x,y,size*.5,0,TAU);ctx.fill();}
+            else ctx.fillRect(x-size*.5,y-size*.5,size,size);
           }
           ctx.globalCompositeOperation='source-over';
-          const center=phase(t,TIMELINE.burstStart,3.35)*(1-phase(t,TIMELINE.centerFadeStart,TIMELINE.centerFadeEnd));
+          const center=1-phase(t,TIMELINE.centerFadeStart,TIMELINE.centerFadeEnd);
           if(center>0){
-            glow(ctx,cx,cy,u*.042,'255,255,255',center*.72);
-            ctx.globalAlpha=center;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,1.25,0,TAU);ctx.fill();ctx.globalAlpha=1;
+            glow(ctx,cx,cy,u*.018,'217,239,255',center*.3);
+            ctx.globalAlpha=center*.85;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,.9,0,TAU);ctx.fill();ctx.globalAlpha=1;
           }
         }
         identity.style.opacity=String(phase(t,TIMELINE.identityStart,TIMELINE.identityEnd));
