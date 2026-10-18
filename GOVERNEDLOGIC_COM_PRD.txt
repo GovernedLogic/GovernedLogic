@@ -451,3 +451,14 @@ Use reusable build-time header and footer components and static semantic HTML. T
 
 WEB-147
 The exact human-facing phrase is "Follow the chain." The inquiry text is drawn from Paul's October 18 assignment. The FAQ uses verbatim source answers. The recovered September source editions and October 14 article are dated as editions; recovery does not rename them as newly authored work.
+
+VISUAL DIRECTION REVISION — 2026-10-18
+
+WEB-148
+Paul accepts the recovered site as a baseline and requests a professional architectural design revision. Black and white are primary. Blue and restrained green are preferred accents; purple ranks last. Replace the repeated slogan/serif-italic layout, improve typography, vary section composition, and give visual depth a structural purpose. Use the recovered content and ordinary semantic navigation.
+
+WEB-149
+The opening's full-black initial frame and company-name destination remain correct endpoints. Paul authorizes work on the intermediate sequence and refinement of the final composition. Earlier instructions to leave opening assets unchanged applied to the recovery pass and do not prohibit this requested motion revision. The intended sequence remains point, star, particle release, orbital organization, overlapping particle Spirograph, selective green, coherent particle Earth, material Earth, horizon, company identity. Preserve continuity of particles and allow distinct states to read before the next transition.
+
+WEB-150
+This revision is a first visual interpretation of Paul's feedback, not final visual acceptance. Capture desktop and mobile layouts and chronological motion frames, verify completion and reduced-motion access, and inspect the rendered result. Publish through the existing GitHub Pages release path under the continuing deployment authorization.

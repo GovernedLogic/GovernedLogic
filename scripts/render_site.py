@@ -6,7 +6,7 @@ import argparse, hashlib, json, re, shutil
 ROOT=Path(__file__).resolve().parents[1]
 PAGES=('index.html','challenge/index.html','company/index.html','research/index.html','about/index.html','faq/index.html','concepts/index.html','concepts/governed-logic/index.html','concepts/governed-intelligence/index.html','concepts/ultimate-grounding/index.html','concepts/alpha-and-omega-reasoning/index.html','concepts/governing-referent/index.html','concepts/sufficient-grounding/index.html','mechanism.html','sources/index.html','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html')
 SOURCE_FILES=('sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf','sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf','sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf','sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf','sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt')
-ASSETS=('assets/opening.css','assets/restored-site.css','assets/library.js','assets/material-environment.js','assets/earth-renderer.js','assets/opening.js','assets/materials/Cinzel-OFL.txt','assets/materials/SOURCES.txt','assets/materials/cinzel.ttf','assets/materials/earth-clouds.jpg','assets/materials/earth-day.jpg','assets/materials/earth-night.jpg','assets/governed-logic-mark.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png')
+ASSETS=('assets/opening.css','assets/restored-site.css','assets/library.js','assets/material-environment.js','assets/earth-renderer.js','assets/opening.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/materials/cinzel.ttf','assets/materials/earth-clouds.jpg','assets/materials/earth-day.jpg','assets/materials/earth-night.jpg','assets/governed-logic-mark.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png')
 GENERATED=('library/index.html','publication/index.html','publication/catalog.json','publication/search-index.json','publication/manifest.json','feed.xml','robots.txt','sitemap.xml')
 PUBLIC_FILES=(*PAGES,*SOURCE_FILES,*ASSETS,'challenge/index.json','faq/index.json','CNAME','.nojekyll',*GENERATED)
 BASE='https://governedlogic.com'
@@ -28,6 +28,8 @@ def definitions(source):
         source=source.replace('{{definition:'+key+'}}',value)
     return source
 def render(source,path):
+    if path=='index.html':
+        source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/home.html').read_text(encoding='utf-8').strip(),source,count=1)
     source=definitions(source)
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)
     anchor=main.group(1) if main else 'content'

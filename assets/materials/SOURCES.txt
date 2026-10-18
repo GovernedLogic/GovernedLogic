@@ -21,4 +21,9 @@ Cinzel native variable font, unchanged:
 https://raw.githubusercontent.com/google/fonts/main/ofl/cinzel/Cinzel%5Bwght%5D.ttf
 SIL Open Font License 1.1; see Cinzel-OFL.txt.
 
+IBM Plex Sans native variable font, unchanged:
+https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/IBMPlexSans%5Bwdth%2Cwght%5D.ttf
+Copyright 2017 IBM Corp.; SIL Open Font License 1.1; see IBM-Plex-OFL.txt.
+Retrieved 2026-10-18 for the website typography revision.
+
 Retrieved 2026-10-05. These are surface maps and font data rendered into browser-native geometry and text. No reference screenshot or composed identity image is used by the opening.
