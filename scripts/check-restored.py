@@ -58,6 +58,8 @@ def check(root):
     if errors:raise AssertionError('\n'.join(sorted(set(errors))))
     print(f'Passed: {len(docs)} substantive pages, all links and anchors, structured data, exact source editions, and {len(PUBLIC_FILES)}-file boundary.')
 def live(root,base,attempts,delay):
+    # Pages consumes this hidden build marker; it is not a public resource.
+    served_files=[p for p in PUBLIC_FILES if p!='.nojekyll']
     def fetch(p):
         u=base.rstrip('/')+'/'+p+'?release=20261018-substantive'
         try:
@@ -65,13 +67,13 @@ def live(root,base,attempts,delay):
             return None if data==(root/p).read_bytes() else 'Stale bytes: '+p
         except (HTTPError,URLError,TimeoutError) as e:return p+': '+str(e)
     for attempt in range(attempts):
-        with ThreadPoolExecutor(max_workers=6) as pool:errors=[x for x in pool.map(fetch,PUBLIC_FILES) if x]
+        with ThreadPoolExecutor(max_workers=6) as pool:errors=[x for x in pool.map(fetch,served_files) if x]
         for p in ('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json'):
             try:
                 with urlopen(base.rstrip('/')+'/'+p,timeout=15) as r:errors.append('Internal file exposed: '+p)
             except HTTPError as e:
                 if e.code!=404:errors.append('Unexpected boundary status: '+p)
-        if not errors:print('Live verification passed: all 50 public files match the built release; internal sources remain excluded.');return
+        if not errors:print(f'Live verification passed: all {len(served_files)} served files match the built release; internal sources remain excluded.');return
         if attempt+1<attempts:time.sleep(delay)
     raise AssertionError('\n'.join(errors))
 if __name__=='__main__':
