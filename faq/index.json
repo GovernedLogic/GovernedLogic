@@ -1,7 +1,62 @@
 {
-  "type": "faq",
-  "canonical_url": "https://governedlogic.com/faq/",
-  "publication_status": "withheld_pending_review",
-  "notice": "FAQ questions and answers remain withheld pending source review and approval.",
-  "questions": []
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Governed Logic?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{definition:governed-logic}}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Governed Intelligence?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{definition:governed-intelligence}}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What exists today?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The company already has a working instruction-level prototype, which serves as the starting point for further research, development, and engineering."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are the reasoning engine and API available?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The engine and API are planned engineering deliverables, not currently available production services."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does ultimate grounding mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{definition:ultimate-grounding}}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What can model experiments establish?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Model behavior can provide evidence about the effects, stability, and failure modes of an implementation. It cannot independently prove a metaphysical thesis, a historical claim, or the identity of the ultimate ground."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is behind Governed Logic?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Paul André Couchoud is the founder of Governed Logic Reasoning Systems and creator of Governed Logic."
+      }
+    }
+  ]
 }

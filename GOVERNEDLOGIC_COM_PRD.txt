@@ -437,3 +437,17 @@ The site must include an FAQ page and a machine-readable FAQ representation. The
 
 WEB-143
 The Follow the Chain Challenge must include a machine-consumable challenge surface corresponding to the human challenge. Challenge rules, inputs, outputs, examples, and evaluation criteria remain withheld until they are sourced from Paul's canonical authored material or Paul approves them.
+
+SUBSTANTIVE WEBSITE RECOVERY — 2026-10-18
+
+WEB-144
+Paul rejected the published shell as approximately 15 percent of the intended result and instructed: "Don't stop until I have a website worth showing Gavin." The earlier instruction was "deploy to live NOW". Restore substantive source-backed website content and verify the complete rendered result. The shell-only restriction does not define completion of this work.
+
+WEB-145
+Preserve the existing native globe/Earth opening assets. Recover the five substantive destinations, source editions, company and research explanations, founder biography, prototype, library, and original articles. Present the existing prototype and development objectives accurately. Do not invent performance results or claim historical approval of an unidentified complete homepage.
+
+WEB-146
+Use reusable build-time header and footer components and static semantic HTML. The public artifact remains explicitly allowlisted. Verify all routes, internal links and anchors, source-document fidelity, machine-readable correspondence, desktop and narrow-phone layouts, JavaScript-free navigation, search, FAQ interaction, and opening completion.
+
+WEB-147
+The exact human-facing phrase is "Follow the chain." The inquiry text is drawn from Paul's October 18 assignment. The FAQ uses verbatim source answers. The recovered September source editions and October 14 article are dated as editions; recovery does not rename them as newly authored work.

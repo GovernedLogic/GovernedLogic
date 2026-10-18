@@ -4,7 +4,7 @@ import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const PROJECTS = ["desktop-1440", "mobile-320", "mobile-390"];
-const ROUTES = ["home", "challenge", "company", "research", "library", "faq"];
+const ROUTES = ["home", "challenge", "company", "research", "about", "faq", "concepts", "concepts-governed-logic", "concepts-governed-intelligence", "concepts-ultimate-grounding", "concepts-alpha-and-omega-reasoning", "concepts-governing-referent", "concepts-sufficient-grounding", "mechanism.html", "sources", "articles-why-anything", "articles-integrity-in-artificial-intelligence", "library", "publication"];
 const outputRoot = path.resolve("visual-qa");
 const cards = [];
 const missing = [];

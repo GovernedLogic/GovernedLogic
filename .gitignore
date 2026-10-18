@@ -2,3 +2,4 @@ __pycache__/
 *.py[cod]
 .animation-qa/
 visual-qa/
+node_modules/

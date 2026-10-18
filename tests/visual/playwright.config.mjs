@@ -7,7 +7,7 @@ if (!siteRoot) {
 
 export default defineConfig({
   testDir: ".",
-  testMatch: "site-shell.spec.mjs",
+  testMatch: "substantive.spec.mjs",
   fullyParallel: false,
   forbidOnly: true,
   retries: 0,
@@ -19,8 +19,9 @@ export default defineConfig({
     ["html", { outputFolder: "../../visual-qa/report", open: "never" }]
   ],
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: process.env.BASE_URL || "http://127.0.0.1:4173",
     browserName: "chromium",
+    launchOptions: process.env.CHROMIUM_BIN ? { executablePath: process.env.CHROMIUM_BIN } : {},
     colorScheme: "dark",
     deviceScaleFactor: 1,
     locale: "en-US",
@@ -29,8 +30,8 @@ export default defineConfig({
     timezoneId: "UTC",
     trace: "retain-on-failure"
   },
-  webServer: {
-    command: "python3 -m http.server 4173 --bind 127.0.0.1 --directory " + JSON.stringify(siteRoot),
+  webServer: process.env.BASE_URL ? undefined : {
+    command: JSON.stringify(process.env.PYTHON_BIN || "python3") + " -m http.server 4173 --bind 127.0.0.1 --directory " + JSON.stringify(siteRoot),
     url: "http://127.0.0.1:4173/",
     reuseExistingServer: false,
     timeout: 30_000
