@@ -31,6 +31,8 @@ def render(source,path):
     if path=='index.html':
         source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/home.html').read_text(encoding='utf-8').strip(),source,count=1)
     source=definitions(source)
+    style_version=hashlib.sha256((ROOT/'assets/restored-site.css').read_bytes()).hexdigest()[:12]
+    source=source.replace('href="/assets/restored-site.css"',f'href="/assets/restored-site.css?v={style_version}"')
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)
     anchor=main.group(1) if main else 'content'
     header=(ROOT/'components/header.html').read_text(encoding='utf-8').replace('href="#content"',f'href="#{anchor}"')
