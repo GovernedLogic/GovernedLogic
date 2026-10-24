@@ -135,3 +135,12 @@ NEXT OWNER: Grok/BA to dispatch both separately scoped approved-to-start workstr
 
 COMMUNICATION RULE CONFIRMATION — PAUL, 2026-10-24
 Paul personally confirmed the only active Grok team bots are GL Business Analyst, GL Site Architect, GL Site Developer, and GL QA. GL Business Analyst is the single point of contact with Harriet and the only Grok-side editor of PROJECT_STATE.txt. Architect, Developer, and QA report internally to the BA; BA consolidates questions, findings, blockers, progress, and evidence. Harriet retains responsibility for her own GitHub/release-side state updates. This supersedes any older instruction allowing any participant to update the state file independently. No website code or CNAME change is authorized by this clarification.
+
+
+RELEASE UPDATE — HARRIET, 2026-10-24
+- Paul approved homepage reorder PR #16 for release.
+- Harriet merged PR #16 as squash commit 78f92c2eabce9b02ba5f11d218284c3047ff1599.
+- This change only reorders existing homepage sections so the upstream AI problem appears before the architecture; no copy, CNAME, routing, opening, or render_site.py change in PR #16.
+- GitHub Pages deploy run 40142854993 was triggered for this commit and is currently queued/in progress; live publication is not yet confirmed at the time of this entry.
+- Mechanism archive PR #17 remains ON HOLD. Do not merge or deploy it without Paul's separate approval.
+NEXT OWNER: Harriet/hourly monitor to verify deployment result and live homepage order; GL Business Analyst remains sole Grok-side communicator/state editor.
