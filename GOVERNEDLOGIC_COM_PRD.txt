@@ -1,6 +1,6 @@
 GOVERNEDLOGIC.COM PRD
 Owner: Paul André Couchoud
-Updated: 2026-10-11
+Updated: 2026-10-24
 Status: CURRENT REQUIREMENTS — PLAIN TEXT
 
 PURPOSE
@@ -237,7 +237,6 @@ Quiet infrastructure routes remain available:
  /library/
  /publication/
  /sources/
- /mechanism.html
 
 ACCEPTANCE
 
@@ -465,3 +464,8 @@ This revision is a first visual interpretation of Paul's feedback, not final vis
 
 WEB-151
 Paul approves the visual direction and corrects the vertical architecture: Ground belongs at the bottom as the supporting foundation, with Truth, Logic, Reasoning, and Intelligence above it. Generation rises; adjudication returns downward. Apply the same orientation to the phone's vertically stacked chain while retaining the canonical source order and the desktop left-to-right chain.
+
+MECHANISM ARCHIVE — 2026-10-24
+
+WEB-152
+/mechanism.html is archived pending Paul's later review. It is not publicly served and is not linked from public pages or the sitemap. The file is kept in the repository. The homepage prototype text remains, per WEB-145.
