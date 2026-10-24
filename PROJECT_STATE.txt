@@ -102,6 +102,7 @@ HANDOFF LOG
 2026-10-24 — Harriet: reviewed PR #14 (read-only GitHub cross-check). Confirmed it changes only PROJECT_STATE.txt; requested attribution of Grok-only checks, precise WEB-070 wording, historical status of the IA handoff, archive PR preconditions, and restated release constraints. No merge pending Paul's direction.
 2026-10-24 — Grok (GL Business Analyst): applied all five review points in this file. Only PROJECT_STATE.txt changed. Next owner: Paul (merge direction for PR #14; authorization to open the archive PR; homepage order decision).
 2026-10-24 — Grok (GL Site Architect): recorded Paul's llms.txt direction at his request. Only PROJECT_STATE.txt changed. Next owner: Harriet.
+2026-10-24 — Grok (GL Business Analyst): consolidated team update (communication rule, Architect and Developer findings, status of homepage and archive PRs) on this same PR. Only PROJECT_STATE.txt changed. Next owner: Harriet.
 
 NEXT ACTION
 1. Paul: direct Harriet whether to merge PR #14 (documentation only).
@@ -142,3 +143,38 @@ Status: APPROVED DIRECTION / NOT A RELEASE AUTHORIZATION.
 5. Paul's guidance for the machine-readable layer: "Be wise as serpents and innocent as doves"; "ancient wisdom, modern technology." Keep the existing solid foundation while designing forward for how LLMs and other machine readers actually read the site.
 Questions for Harriet: (a) Should the source live in the build (e.g. content/llms.txt copied by render_site.py) or as a static root file added to the allowlist? (b) Should the team draft a PRD WEB- item for Paul's approval?
 NEXT OWNER: Harriet (acknowledge and answer); Paul (supply the llms.txt text); then GL Site Architect specifies the build change for GL Site Developer.
+
+BA CONSOLIDATED UPDATE — 2026-10-24, 6:20 PM ET (GL Business Analyst)
+Communication rule (Paul's directive to Grok, 2026-10-24 6:15 PM ET):
+- GL Business Analyst is the team lead and the single point of communication with Harriet, through this file.
+- Site Architect, Site Developer, and QA report findings, questions, blockers, and recommendations to the BA. Only the BA updates this file: on a feature branch, with a PR for Harriet to review and merge.
+- Keep it simple: the purpose is to communicate and build the website.
+
+Status, homepage improvement (PR B):
+- Paul authorized pushing the branch and opening the PR (Grok chat, 6:15 PM ET). PR not yet opened at the time of writing; link to follow in the next update.
+- Change: content/home.html only, +5/-5. "The upstream problem" moves above "The architecture"; their labels swap (02 and 03). No text strings added or changed (108 strings identical).
+- Developer's local results on c9ba301 (reported, not yet QA-verified): build 52 files, 19 routes; check-restored --artifact passes; all five WEB-061 destinations return 200; test:visual 68 passed, 3 failed, 1 skipped, identical to unmodified main. Desktop and phone before/after screenshots taken.
+
+Status, mechanism archive (PR A):
+- Paul authorized pushing the branch and opening the PR, and authorized the one-line render_site.py PAGES edit it requires (Grok chat, 6:15 PM ET). PR not yet opened at the time of writing.
+- Change: 10 files, +16/-14, applied cleanly to c9ba301. Includes the PRD and Source Authority Map edits (WEB-152, WEB-081, map lines 106 and 175, PRD header date) and removal of the empty box on the Governed Intelligence page.
+- Developer's local results (reported, not yet QA-verified): build 51 files, 18 routes; check-restored passes; no mechanism.html in the build or sitemap, and zero links to it; file kept in the repository; CNAME, index.html, robots.txt, the opening, and .github untouched.
+- QA's acceptance condition: no public link to /mechanism.html may remain (homepage buttons, Governed Logic and Governed Intelligence pages, FAQ, Library and Publication entries, footer "The prototype" on all pages), and /mechanism without the extension must also stop serving it.
+- PR A and PR B both touch content/home.html but apply cleanly in either order; combined, they build and pass checks.
+
+Developer questions (for Paul or Harriet):
+1. WEB-066 step 2 (the modern AI reasoning problem) has no separate section in existing copy; the "Groundless Machine" block covers steps 2 and 3 together. A separate step 2 section needs copy from Paul. PR B does not invent any.
+2. On phones, the architecture chain stacks with Ground at the top, which may conflict with WEB-151 (ground at the bottom). Not touched by PR B; proposed as a separate item for the Site Architect.
+
+Architect findings (reported by GL Site Architect from its baseline review; not independently verified by the BA):
+- No /llms.txt (see Paul's llms.txt direction above).
+- sitemap.xml gives no last-modified dates for pages.
+- The publication manifest at the site root points to files that do not exist (as reported; exact file to be confirmed by the Architect).
+These are machine-readability items for separately approved work; none is in PR A or PR B.
+
+Pre-existing test failures (disclosed): the 3 visual "Opening completes" failures look like a stale test. It waits for an "Explore ↓" link that now reads "See what we are building ↓" (GL QA's analysis). The ImportError and check-corpus failures recorded earlier are unchanged.
+
+NEXT ACTION (BA)
+1. Harriet: review this documentation-only PR (#15) and merge when ready.
+2. GL Site Developer: open PR A and PR B; GL QA verifies each; BA hands both to Harriet with evidence.
+3. Paul: approve publication of PR A and PR B after Harriet's review; decide whether to write step 2 copy; supply the llms.txt text when ready.
