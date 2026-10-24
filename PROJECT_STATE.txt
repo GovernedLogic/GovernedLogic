@@ -1,6 +1,6 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
 Updated: 2026-10-24
-Status: Initial operating handoff approved by Paul; Grok reconciliation pending.
+Status: Initial operating handoff approved by Paul; Grok reconciliation completed 2026-10-24 (see GROK RECONCILIATION). Awaiting Harriet's verification.
 Repository: GovernedLogic/GovernedLogic
 Site: https://governedlogic.com/
 
@@ -56,8 +56,48 @@ D. Resolve known test failures and root manifest publication decision through se
 E. Audit human-readable versus JSON-LD, canonical URLs, sitemap, robots, and published pages; preserve correct definitions.
 F. Preserve Paul's three Google responses dated October 24 as an external-representation observation. Google accurately reflected the hierarchy and bidirectional reasoning, but the theological axiom characterization needs comparison against canonical grounding derivation. Do not claim the build script caused Google's wording without evidence.
 
+GROK RECONCILIATION — 2026-10-24 (GL Business Analyst, formerly GL Product Owner)
+Acknowledged: this file, the role split, and the working agreement are accepted. No website code, PRD, Source Authority Map, deployment, CNAME, or route changed in this update; only this file.
+
+Role changes actually made in Grok's bot workspace on 2026-10-24 (renames and profile text; no records deleted):
+- GL Product Owner -> GL Business Analyst (team lead). Takes over backlog, acceptance criteria, PRD correspondence, and communication with Harriet and Paul.
+- GL Scrum Master -> GL Scrum Master (retired). Profile now says retired: no new work, no merges, no release coordination; release coordination goes to Harriet. Its records are kept.
+- GL Site Engineer -> GL Site Developer. Feature branch plus PR only; never pushes to or merges into main.
+- GL Site Architect: new bot created for architecture, build integrity, and design decisions; read-only on main.
+- GL QA: unchanged; already holds the QA role.
+- Original generic Grok Bot: unchanged and idle.
+- No second developer added.
+Correction to earlier reporting: on 2026-10-24 GL Scrum Master reported a release flow in which it merges PRs (PR #13 was merged that way). That flow is superseded by this file: Harriet coordinates merges.
+
+Verified by Grok on 2026-10-24 at about 5:50 PM ET (GitHub deployments/Actions API and live HTTP checks):
+- Current live commit: 42bd6d5 (this file's creation commit). "Deploy governedlogic.com" succeeded at 5:43 PM ET; live Last-Modified Sat, 24 Oct 2026 21:43:33 GMT. Every push to main triggers that deploy workflow, including documentation-only commits.
+- Deploy history: f70c06e succeeded Oct 23 10:39 AM ET; ee10b51 failed Oct 23 10:52 AM ET (build step; render_site.py import error); 51cd132 (PR #13 merge) succeeded Oct 24 8:50 AM ET; 42bd6d5 succeeded Oct 24 5:43 PM ET.
+- PR #13's "Validate governedlogic.com" run on 491b6e3 concluded failure (the pre-existing test failures listed in PR #13).
+- /mechanism.html: still live (HTTP 200) and still listed in the live sitemap.xml. The homepage still links to it.
+- Root /manifest.json: HTTP 404 live. /publication/manifest.json: HTTP 200 live. /robots.txt: HTTP 200 live.
+- PROJECT_STATE.txt and WEBSITE_SOURCE_AUTHORITY_MAP.txt are not served publicly (HTTP 404).
+- Source Authority Map path: WEBSITE_SOURCE_AUTHORITY_MAP.txt at the repository root (a separate file, not inside the PRD).
+- Other root documents found: WEBSITE_INFORMATION_ARCHITECTURE_HANDOFF.txt (not reviewed in this pass; possible overlap with this file, for Harriet to assess). No root README.md, STATE.md, or PROJECT_STATE.md.
+- Active branch for current work: none on GitHub. No branch or PR exists for the mechanism archive.
+- Open PRs (older, not part of current work): #1 Prototype: Governed Reasoner v0; #3 Harriet OS STOP baseline; #4 Website recovery and architecture specification v0.1; #8 Homepage: Why Anything? grounding argument; #9 Review homepage: Why Anything? and AI integrity.
+- Homepage section order live: "The architecture" still appears before "The upstream problem". Commit b0b74e2 (Oct 20, "Put AI problem before solution...") edited only index.html <main>, which the build replaces with content/home.html, so that change never shipped. New backlog item; needs Paul's confirmation that the order change is still wanted.
+
+Reported, not independently verified by Grok:
+- Mechanism archive: GL Site Developer (then GL Site Engineer) reports a 10-file change prepared locally from main at 51cd132 that passes check-restored --artifact. It is not on GitHub. Paul approved removing the now-empty box on the Governed Intelligence page (Grok chat, Oct 24 9:12 AM ET). Opening the PR waits on Paul's approval.
+- Drafted PRD/Source Authority Map wording for the archive (new WEB-152, /mechanism.html removed from WEB-081, map lines 106 and 175 marked "archived, not public", PRD header date) exists as drafts in Grok's workspace and is not in the repository.
+- Test failures reported by GL Scrum Master: npm run test:visual fails "Opening completes and leaves content usable" at desktop-1440, mobile-320, and mobile-390 (it waits for an "Explore" link that b0b74e2 removed); test-release-guards.py and check-origin.py fail with ImportError (ROOT from build_site); check-corpus.py fails on about/index.html dateModified.
+- Portrait conflict reported by GL QA via GL Scrum Master: WEB-139 lists a "withheld portrait" as excluded, but paul-portrait.png is published and served live; PRD line 32 calls it the "verified portrait".
+
+Additional documentation gaps (Grok read-only check, 2026-10-24):
+- The PRD has no requirement covering sitemap.xml contents, robots.txt, root manifest.json, or the specific JSON-LD content (founder, six-principle keywords, about).
+- WEB-070 correspondence: the JSON-LD "about" sentence "Truth governs logic. Logic governs reasoning. Intelligence is downstream." is not in visible homepage copy. It is visible only on mechanism.html, so the archive would leave it with no visible counterpart. The homepage JSON-LD top-level type is WebSite, with Organization as publisher.
+
 HANDOFF LOG
 2026-10-24 — Harriet: initial state document created at Paul's request. This records his approved responsibility split and working protocol. No website code, PRD, deployment, or bot configuration changed by this commit. Awaiting Grok's reconciliation and report.
+2026-10-24 — Grok (GL Business Analyst): handoff acknowledged; role changes made as listed above; verified status and corrections recorded. No website changes. Next owner: Harriet (verify this update), then Paul (approve opening the mechanism archive PR).
 
 NEXT ACTION
-Paul will direct Grok to read PROJECT_STATE.txt on main. Grok should update this same file with a concise acknowledgement, exact factual corrections, verified current status, and the next requested action. No unapproved website changes.
+1. Harriet: verify the Grok reconciliation above against GitHub and the live site.
+2. Paul: approve opening the mechanism archive as its own PR (priority B). After approval, GL Site Developer opens it on a feature branch, GL QA verifies it, and Grok hands Harriet the PR link, changed files, QA evidence, PRD changes, and risks.
+3. Paul: confirm whether the "problem before architecture" homepage order (b0b74e2) is still wanted, so it can become its own backlog item.
+No unapproved website changes.
