@@ -1,0 +1,63 @@
+GOVERNED LOGIC — SHARED PROJECT STATE
+Updated: 2026-10-24
+Status: Initial operating handoff approved by Paul; Grok reconciliation pending.
+Repository: GovernedLogic/GovernedLogic
+Site: https://governedlogic.com/
+
+PURPOSE
+This is the ONE shared, version-controlled operational handoff between Paul, Harriet, Grok, and Grok's website team. Read it before work and update it after meaningful decisions or changes. Git history records earlier states; keep this file concise and current. Do not create parallel state documents.
+The existing GOVERNEDLOGIC_COM_PRD.txt remains authoritative for website requirements. Paul's canonical source material governs exact substantive copy and doctrine. This file tracks work, responsibilities, decisions, verification, and handoffs; it does not supersede the PRD or Paul.
+
+AUTHORITY AND ROLES — PAUL'S DIRECTIVE
+Paul: final authority for vision, canonical wording, requirements changes, priorities, and public release approval.
+Harriet: GitHub/repository and release coordinator. Owns review of PRD/source correspondence, branch/PR and commit coordination, release verification, shared state maintenance, and independent assessment of machine-readable versus human-readable representations. Harriet may prepare and commit authorized changes, but does not authorize publication on Paul's behalf.
+Grok: website design and engineering coordinator; manages the specialized website team and prepares reviewable work. Grok's team does not merge or deploy independently.
+Grok website team:
+- Business Analyst (team lead): owns requirement clarification, PRD correspondence, acceptance criteria, backlog coordination, and communication with Harriet and Paul. Cannot override Paul.
+- Site Architect: maintains technical architecture, build integrity, and design decisions.
+- Site Developer: implements approved website changes. Add a second developer only when independent parallel work justifies it.
+- QA: independently verifies source/build, visual and mobile behavior, links, release boundaries, and deployed results.
+Retire the separate GL Product Owner and GL Scrum Master bot roles. Transfer useful responsibilities to the Business Analyst and release coordination; do not delete their records or lose work. The original generic Grok Bot remains idle unless Paul assigns a role. Grok should confirm when role changes are actually made.
+
+WORKING AGREEMENT
+1. Before starting: read this file, current PRD, authoritative source files, current main, and relevant open PRs. Confirm no overlapping changes.
+2. Paul approves a change and its scope. Business Analyst states the acceptance criteria and checks PRD correspondence.
+3. Developer works on a feature branch, not directly on main. Keep each change small; preserve existing design and infrastructure.
+4. QA verifies the branch and built artifact, including negative/withheld-route checks and mobile behavior where relevant; document test results and known failures.
+5. Grok hands Harriet the PR link, changed files, QA evidence, PRD changes, risks, and precise request for review.
+6. Harriet reviews source correspondence, current branch state, PR/commit history, and release readiness. Paul explicitly approves public release. Harriet coordinates the merge and verifies deployment; never claim live solely because a commit or build succeeded.
+7. Whoever completes a step updates THIS file with status, relevant PR/commit identifiers, verified versus reported facts, blockers, and next owner. Avoid simultaneous edits; re-read latest main before updating and reconcile conflicts.
+8. No agent silently changes canonical copy, doctrine, public product claims, CNAME, routes, or deployment pipeline. Do not force-push or overwrite another agent's changes. Keep an auditable rollback path.
+9. If Harriet is not in an active session, Grok may prepare work and update this file but must wait for the agreed review/release handoff; neither agent is continuously monitoring GitHub.
+10. GitHub permissions and actual branch protection must be verified; this document expresses the approved workflow, not a claim that technical protections already exist.
+
+CURRENT BASELINE — VERIFIED BY HARRIET VIA GITHUB, 2026-10-24
+- Default branch: main; repository accessible via connected GitHub.
+- PRD at GOVERNEDLOGIC_COM_PRD.txt; header still says Updated: 2026-10-11. Some older public-release holds coexist with newer requirements and require reconciliation, not arbitrary deletion.
+- Homepage source includes index.html and content/home.html. scripts/render_site.py replaces the index.html <main> with content/home.html during build; edit the authoritative source, not only the replaced section.
+- content/definitions.json supplies canonical short definitions into rendered pages.
+- scripts/build_site.py is a compatibility entry point to render_site.py. Preserve the build/render and machine-readable publication architecture.
+- Root manifest.json exists in repository but is not included in render_site.py's PUBLIC_FILES. The build separately generates publication/manifest.json. Live status requires verification.
+- PR #13 documents restoration of a broken render_site.py build and lists pre-existing failing visual/import/corpus tests; inspect and resolve these separately, rather than masking failures.
+- A root STATE.md, PROJECT_STATE.md, and README.md were not found in Harriet's limited root-path checks before creation of this file. Other state documents have not been exhaustively inventoried.
+
+CURRENT IN-FLIGHT WORK — REPORTED BY GROK, NOT YET INDEPENDENTLY VERIFIED
+- Only approved website tweak: archive /mechanism.html from public publication while retaining source in repository.
+- Site Engineer reportedly prepared changes to links, render_site.py allowlist, PRD and Source Authority Map; PR not yet opened pending Paul's separate approval to open it.
+- Grok reports October 23 metadata/JSON-LD, sitemap, robots changes and a production deployment after PR #13. Exact live artifacts and current deployed SHA require independent verification.
+- Known documentation issues: October 23 machine-readable changes missing from PRD; portrait exclusion wording conflicts with published portrait. Treat as separate work items.
+- Existing PRD Source Authority Map path/location should be supplied by Grok; do not guess.
+
+PRIORITIES AND HOLD POINTS
+A. Grok: read this file; acknowledge handoff, report actual role changes, existing state/source map paths, active branch, pending PR and exact current live commit. Do not start a rewrite.
+B. Complete the mechanism archive as its own approved, tested PR. Verify that the old public URL is actually unavailable after deployment; do not infer from removing links.
+C. Reconcile PRD to the actual approved publication state and October 23 machine-readable changes, preserving historical decisions without confusing them with current requirements.
+D. Resolve known test failures and root manifest publication decision through separately approved work.
+E. Audit human-readable versus JSON-LD, canonical URLs, sitemap, robots, and published pages; preserve correct definitions.
+F. Preserve Paul's three Google responses dated October 24 as an external-representation observation. Google accurately reflected the hierarchy and bidirectional reasoning, but the theological axiom characterization needs comparison against canonical grounding derivation. Do not claim the build script caused Google's wording without evidence.
+
+HANDOFF LOG
+2026-10-24 — Harriet: initial state document created at Paul's request. This records his approved responsibility split and working protocol. No website code, PRD, deployment, or bot configuration changed by this commit. Awaiting Grok's reconciliation and report.
+
+NEXT ACTION
+Paul will direct Grok to read PROJECT_STATE.txt on main. Grok should update this same file with a concise acknowledgement, exact factual corrections, verified current status, and the next requested action. No unapproved website changes.
