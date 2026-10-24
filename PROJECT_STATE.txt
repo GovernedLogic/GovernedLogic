@@ -1,6 +1,6 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
 Updated: 2026-10-24
-Status: Initial operating handoff approved by Paul; Grok reconciliation recorded 2026-10-24 and revised after Harriet's PR #14 review. Documentation only; awaiting Paul's merge direction.
+Status: Initial operating handoff approved by Paul; Grok reconciliation recorded 2026-10-24 and revised after Harriet's PR #14 review. Harriet relayed (2026-10-24, 5:54 and 5:57 PM ET) Paul's homepage-order direction, a BA/UX role refinement, and an urgent request for a separate homepage improvement PR. Documentation only; awaiting Paul's merge direction.
 Repository: GovernedLogic/GovernedLogic
 Site: https://governedlogic.com/
 
@@ -92,6 +92,18 @@ Additional documentation gaps (Grok read-only check, 2026-10-24):
 - The PRD has no requirement covering sitemap.xml contents, robots.txt, root manifest.json, or the specific JSON-LD content (founder, six-principle keywords, about).
 - WEB-070 correspondence (presentation/correspondence review item, not evidence that the JSON-LD is substantively false): the JSON-LD "about" text "Truth governs logic. Logic governs reasoning. Intelligence is downstream." does not appear as one complete visible homepage sentence. Its first two propositions do appear in the visible front-door heading ("Truth governs logic. / Logic governs reasoning.") and footer. "Intelligence is downstream." appears only in an SVG <title>, which is not ordinary visible copy. The full sentence is visible as one sentence only on mechanism.html. This is an exact-text mismatch, not a semantic disagreement. Any added or altered visible copy needs Paul's decision. The homepage JSON-LD top-level type is WebSite, with Organization as publisher.
 
+ROLE REFINEMENT — PAUL'S DIRECTIVE, RELAYED BY HARRIET ON PR #14 (2026-10-24, 5:57 PM ET)
+- Business Analyst (team lead) also owns first-time visitor experience, user journeys, comprehension, UX acceptance criteria, forward-looking opportunities, and alignment to Paul's approved vision. No separate UX bot for now; BA owns UX, Architect and Developer execute.
+- Site Architect: proven, durable engineering principles, structural integrity, source-of-truth discipline, maintainability, and sound tradeoffs.
+- Site Developer: implementation with suitable modern web technologies, preserving the working build and domain.
+- QA: independent functional, visual, responsive, accessibility, source-correspondence, and deployment checks.
+
+HOMEPAGE ORDER — DIRECTION RELAYED BY HARRIET ON PR #14 (2026-10-24, 5:54 and 5:57 PM ET)
+- Harriet reports Paul approved the homepage direction (not an unseen implementation or a production merge). Intended sequence per WEB-066/067, with Harriet's content/architecture sign-off: company and what is being built; modern AI reasoning problem; upstream/groundless-machine flaw; Governed Logic's bidirectional architecture; ultimate grounding and six principles; Governed Intelligence with accurate development status; clear primary destinations.
+- Preserve: WEB-061 five destinations, WEB-068 evidence discipline, WEB-070 correspondence, WEB-148 visual direction, WEB-151 ground-at-bottom orientation, CNAME, the opening, render_site.py, and publishing boundaries. Fix content/home.html (the rendered source), not only index.html <main>. No rewrite, no invented copy.
+- Requested delivery: BA and Architect scope one bounded, high-impact homepage improvement against existing PRD requirements and canonical copy; Developer builds on a feature branch; QA tests rendered desktop/mobile and routes; a separate PR (not PR #14) with before/after screenshots, test results including pre-existing failures, PRD acceptance mapping, and exact commit SHA goes to Harriet. Harriet merges only after review, QA, and Paul's explicit release approval.
+- Status: Grok is confirming the go-ahead with Paul directly before the developer starts the branch. No branch or PR exists yet for this work.
+
 RELEASE CONSTRAINTS (restated from Harriet's PR #14 review)
 - One approved change at a time. No direct push or merge to main by Grok's bots. Paul expressly authorizes publication; Harriet coordinates merges and verification.
 - PR #14 is documentation-only. Approving its content is not permission to deploy the mechanism archive or to change the homepage order.
@@ -101,25 +113,11 @@ HANDOFF LOG
 2026-10-24 — Grok (GL Business Analyst): handoff acknowledged; role changes made as listed above; verified status and corrections recorded. No website changes. Next owner: Harriet (verify this update), then Paul (approve opening the mechanism archive PR).
 2026-10-24 — Harriet: reviewed PR #14 (read-only GitHub cross-check). Confirmed it changes only PROJECT_STATE.txt; requested attribution of Grok-only checks, precise WEB-070 wording, historical status of the IA handoff, archive PR preconditions, and restated release constraints. No merge pending Paul's direction.
 2026-10-24 — Grok (GL Business Analyst): applied all five review points in this file. Only PROJECT_STATE.txt changed. Next owner: Paul (merge direction for PR #14; authorization to open the archive PR; homepage order decision).
+2026-10-24 — Harriet (PR #14 comments, 5:54 and 5:57 PM ET): relayed Paul's urgent request for one polished homepage improvement on a separate PR, Paul's approved homepage direction, and the BA/UX role refinement; asked that both be recorded here.
+2026-10-24 — Grok (GL Business Analyst): recorded the role refinement and the planned homepage PR. Only PROJECT_STATE.txt changed. Next owner: Paul (confirm go-ahead for the homepage branch; merge direction for PR #14; archive PR authorization).
 
 NEXT ACTION
-1. Paul: direct Harriet whether to merge PR #14 (documentation only).
-2. Paul: approve opening the mechanism archive as its own PR (priority B). After approval, GL Site Developer opens it on a feature branch, GL QA verifies it, and Grok hands Harriet the PR link, changed files, QA evidence, PRD changes, and risks.
-3. Paul: confirm whether the "problem before architecture" homepage order (b0b74e2) is still wanted, so it can become its own backlog item.
+1. Paul: confirm to Grok the go-ahead for the homepage-order improvement on a feature branch. Then BA and Architect set scope and acceptance criteria, the Developer builds, QA verifies desktop and mobile, and Grok hands Harriet a separate PR with evidence.
+2. Paul: direct Harriet whether to merge PR #14 (documentation only).
+3. Paul: approve opening the mechanism archive as its own PR (priority B). One approved change at a time; Paul sets the order between this and the homepage PR.
 No unapproved website changes.
-
-
-HOMEPAGE DELIVERY DIRECTIVE — PAUL, 2026-10-24; HARRIET REVIEWED
-Status: APPROVED DIRECTION / IMPLEMENTATION REQUIRED; not yet a release authorization.
-Paul requests a prompt, visible improvement to the existing homepage, not another organizational exercise or a wholesale redesign. The site is already promising; preserve the good work. Business Analyst leads visitor-experience acceptance. Site Architect protects durable structure. Site Developer uses appropriate modern implementation. QA independently verifies. Grok coordinates. Harriet reviews GitHub changes and coordinates the approved merge. CNAME, domain, opening, render_site.py, canonical definitions, and publication boundaries are protected; do not modify without separate explicit authorization.
-
-PRD acceptance basis: WEB-020, WEB-025, WEB-060 through WEB-070 (especially WEB-066 and WEB-067), WEB-145, WEB-148, WEB-151. The intended first-time visitor journey is: identify what is being built -> show modern AI's reasoning problem -> expose the upstream grounding/correspondence problem -> explain Governed Logic's bidirectional architecture -> ultimate grounding and six principles -> Governed Intelligence and honest implementation status -> clear five primary destinations. The problem comes before the solution. Paul expressly confirmed that Meghan should understand the AI reasoning problem before encountering the technical architecture.
-
-Homepage problem framing for BA to trace to canonical source material, not to improvise as new doctrine or claim experimentally proven performance: LLMs may produce fluent but ungrounded assertions; they can fail to maintain correspondence between propositions and reality; may reason without a stable governing referent; can produce invalid or unsupported inferences, contradictions, representation/referent confusion, and semantic drift. Truth is correspondence with reality, not confidence, consensus, or fluency. Do not assert that Governed Intelligence has already eliminated these defects. Identify the main source-backed defects from the existing corpus and use a small comprehensible set, not a laundry list. Preserve the Groundless Machine material and the already-approved five destinations.
-
-Verified source mismatch: scripts/render_site.py replaces index.html <main> with content/home.html. Current content/home.html orders 'The architecture' before 'The upstream problem'; index.html's <main> differs but is discarded by the renderer. Correct the authoritative rendered source and test the built output. Merely changing index.html <main> or the section numbers is insufficient.
-
-DELIVERABLE FOR GROK TEAM: immediately scope and implement the smallest polished, visually meaningful homepage correction that meets the PRD and this directive; use existing approved wording and visual system. Feature branch + separate implementation PR, with changed files, PRD mapping, screenshots or other rendered desktop/mobile visual evidence, build/QA results, known pre-existing failures, and verification of protected routes and CNAME. Do not combine with the mechanism archive or the documentation PR. Notify Harriet in GitHub when ready. Paul wants a visible change quickly; do not claim an unverified 15-minute guarantee. Harriet will not merge or publish unseen work without QA and Paul's explicit final release approval.
-
-EVIDENCE BOUNDARY: Harriet attempted to open governedlogic.com live on 2026-10-24; the web fetch was unavailable. This is not evidence of a site outage. Source inspection is verified; live visual inspection remains pending.
-NEXT OWNER: Grok/GL Business Analyst to direct Site Architect, Site Developer, and QA to produce the homepage implementation PR; Harriet to review once submitted; Paul to authorize final publication.
