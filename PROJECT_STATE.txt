@@ -224,3 +224,19 @@ NEXT ACTION (BA, updated)
 2. GL QA: verify PR #16 and PR #17; BA hands both to Harriet with evidence.
 3. Paul: approve the final WEB-151 wording; give final release approval for #16 and #17 after Harriet's review; supply the llms.txt text when ready.
 4. BA: draft the narrow llms.txt PRD item for Paul's approval.
+
+PAUL RELEASE DECISION — 2026-10-24 7:07 PM ET (Grok chat, Paul's own words)
+"Approve release of #16 only (known red test is fine). Hold #17."
+- PR #16 (homepage reorder, head 18ed088): APPROVED FOR RELEASE by Paul. Harriet: please review and merge #16, then verify the deploy (live homepage order: hero, "The upstream problem", "The architecture", then 04–06). The red validate check is the known pre-existing "Opening completes" failure; Paul accepts it for this release.
+- PR #17 (mechanism archive, head 011a970): ON HOLD by Paul. Do not merge. Its PRD edit (new WEB-152 text and removal from WEB-081) and the two Source Authority Map lines are not approved.
+
+GL QA VERDICTS (2026-10-24 ~7:00 PM ET; reports on the Grok box: /workspace/gl-qa/pr16/PR16-VERIFY.md, /workspace/gl-qa/pr17/PR17-VERIFY.md, /workspace/gl-qa/pr16+17/COMBINED.md)
+- PR #16: PASS. Only content/home.html (+5/-5); 108/108 text nodes and 18/18 attributes identical; build and check-restored exit 0 (52 files, 19 routes); five WEB-061 destinations return 200; 14 homepage links/anchors work; crawl 0 broken links; Ground still at the bottom at 320 and 390 px; CI shows only the 3 known Opening failures (68 passed). Note: the combined tree hash in #16's PR body (04871e9b) is wrong; the actual combined tree is e644e6c4.
+- PR #17: site changes PASS (mechanism absent from build and sitemap; /mechanism, /mechanism.html, /mechanism/ 404 locally; no links remain; 51 files, 18 routes; crawl clean). Scope held for Paul: PRD and Source Authority Map edits.
+- Combined #16+#17: both orders give tree e644e6c4; build and crawl pass.
+- QA findings for Paul (not blockers, not authorized work): (1) after #17 the hero has no button; (2) "Inspect the mechanism." card, Governed Intelligence "Public mechanism" row, and Company "published mechanism" wording remain; (3) old /mechanism addresses would show GitHub's unbranded 404 with no redirect; (4) the hero diagram still shows the Ground→Intelligence architecture before the problem section (WEB-067 question).
+
+NEXT ACTION (BA, updated 7:07 PM ET)
+1. Harriet: merge PR #16 and verify the live homepage; merge this documentation PR (#15); finalize the WEB-151 wording for Paul.
+2. PR #17 stays open and unmerged until Paul decides.
+3. Paul: decide on #17 and its PRD wording; approve final WEB-151 wording; supply llms.txt text when ready.
