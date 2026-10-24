@@ -103,6 +103,7 @@ HANDOFF LOG
 2026-10-24 — Grok (GL Business Analyst): applied all five review points in this file. Only PROJECT_STATE.txt changed. Next owner: Paul (merge direction for PR #14; authorization to open the archive PR; homepage order decision).
 2026-10-24 — Grok (GL Site Architect): recorded Paul's llms.txt direction at his request. Only PROJECT_STATE.txt changed. Next owner: Harriet.
 2026-10-24 — Grok (GL Business Analyst): consolidated team update (communication rule, Architect and Developer findings, status of homepage and archive PRs) on this same PR. Only PROJECT_STATE.txt changed. Next owner: Harriet.
+2026-10-24 — Grok (GL Business Analyst): added Paul's request for Harriet to word a WEB-151 revision (architecture chain linear on all screens; step 4 loop), plus Architect and QA details. Only PROJECT_STATE.txt changed. Next owner: Harriet.
 
 NEXT ACTION
 1. Paul: direct Harriet whether to merge PR #14 (documentation only).
@@ -178,3 +179,14 @@ NEXT ACTION (BA)
 1. Harriet: review this documentation-only PR (#15) and merge when ready.
 2. GL Site Developer: open PR A and PR B; GL QA verifies each; BA hands both to Harriet with evidence.
 3. Paul: approve publication of PR A and PR B after Harriet's review; decide whether to write step 2 copy; supply the llms.txt text when ready.
+
+REQUEST FOR HARRIET — WEB-151 WORDING (Paul, Grok chat, 2026-10-24 6:34 PM ET)
+Paul's words: "It's linear so a Vertical construction or visual display vertically is stupid as well as structurally incorrect And then when we get to the reasoning chain #4 the reasoning process within four that goes forward and backwards but it's still linear it just loops back on itself, basically it's grounded."
+Conflict with the current PRD: WEB-151 (2026-10-18) applies the Ground-at-bottom orientation "to the phone's vertically stacked chain". WEB-052 sets the sequence GROUND → TRUTH → LOGIC → REASONING → INTELLIGENCE; WEB-053 says Governed Logic is upstream and bidirectional. No current requirement places the forward/backward loop specifically within step 4 (Reasoning).
+Paul asked that Harriet word the WEB-151 change first. Please draft replacement wording for Paul's approval covering: (1) the chain is linear on every screen size (no vertical stacking on phones); (2) step 4, Reasoning, shows the forward-and-backward process looping back on itself while remaining grounded.
+Hold: no layout change to the architecture chain until Paul approves the new wording. PR B (homepage reorder) does not change the chain.
+Current behavior, for reference (verified by GL QA, 2026-10-24): desktop shows a left-to-right row with Ground on the left from 601px up. At 600px and below, restored-site.css line 21 sets .architecture-chain to flex-direction:column-reverse, giving a vertical stack with Ground at the bottom.
+
+ARCHITECT DETAILS (GL Site Architect, read-only, 2026-10-24 ~6:20 PM ET)
+- The root manifest.json (web-app manifest from f70c06e) lists /assets/images/icon-192.png and icon-512.png, which do not exist. It is not published (not in PUBLIC_FILES; 404 live), so this is repo hygiene. Option for priority D: delete it, or add real icons and allowlist it in its own PR.
+- The generated sitemap (render_site.py line 78) writes only <loc> for 19 URLs. Recommendation for priority E: add <lastmod> from real dates (for example each page's JSON-LD dateModified), not the build time. This touches protected render_site.py and needs Paul's authorization. The committed root sitemap.xml is overwritten by the build.
