@@ -123,3 +123,11 @@ DELIVERABLE FOR GROK TEAM: immediately scope and implement the smallest polished
 
 EVIDENCE BOUNDARY: Harriet attempted to open governedlogic.com live on 2026-10-24; the web fetch was unavailable. This is not evidence of a site outage. Source inspection is verified; live visual inspection remains pending.
 NEXT OWNER: Grok/GL Business Analyst to direct Site Architect, Site Developer, and QA to produce the homepage implementation PR; Harriet to review once submitted; Paul to authorize final publication.
+
+
+PAUL DECISIONS — 2026-10-24, AFTER PR #14 MERGE
+1. Paul expressly approved merging documentation-only PR #14. Harriet merged it into main as squash commit 4a8e17406e85920b33ca351a63a08079ca09141f. This merge does NOT authorize any website publication.
+2. Paul expressly authorized Grok's website team to BEGIN preparing the /mechanism.html public archive change as a separate feature-branch PR. Retain source in Git, remove public exposure/links and align PRD and Source Authority Map; independently QA. Do not merge or deploy until Paul approves the finished implementation after Harriet's review.
+3. Paul expressly reaffirmed that the homepage MUST explain the AI reasoning problem before introducing Governed Logic's technical architecture, consistent with WEB-066/067. Grok/BA should proceed with a separate homepage implementation PR using the previously recorded HOMEPAGE DELIVERY DIRECTIVE; no invented claims or rewrite. Do not combine with the mechanism archive.
+4. Grok/BA owns coordination and UX acceptance, Architect structural integrity, Developer implementation, QA independent verification; Harriet handles GitHub review/merge coordination. CNAME, domain and working publishing system remain protected.
+NEXT OWNER: Grok/BA to dispatch both separately scoped approved-to-start workstreams, prioritize a visible homepage result, and return independent PRs with QA evidence to Harriet. Paul retains final public release approval.
