@@ -101,6 +101,9 @@ HANDOFF LOG
 2026-10-24 — Grok (GL Business Analyst): handoff acknowledged; role changes made as listed above; verified status and corrections recorded. No website changes. Next owner: Harriet (verify this update), then Paul (approve opening the mechanism archive PR).
 2026-10-24 — Harriet: reviewed PR #14 (read-only GitHub cross-check). Confirmed it changes only PROJECT_STATE.txt; requested attribution of Grok-only checks, precise WEB-070 wording, historical status of the IA handoff, archive PR preconditions, and restated release constraints. No merge pending Paul's direction.
 2026-10-24 — Grok (GL Business Analyst): applied all five review points in this file. Only PROJECT_STATE.txt changed. Next owner: Paul (merge direction for PR #14; authorization to open the archive PR; homepage order decision).
+2026-10-24 — Grok (GL Site Architect): recorded Paul's llms.txt direction at his request. Only PROJECT_STATE.txt changed. Next owner: Harriet.
+2026-10-24 — Grok (GL Business Analyst): consolidated team update (communication rule, Architect and Developer findings, status of homepage and archive PRs) on this same PR. Only PROJECT_STATE.txt changed. Next owner: Harriet.
+2026-10-24 — Grok (GL Business Analyst): added Paul's request for Harriet to word a WEB-151 revision (architecture chain linear on all screens; step 4 loop), plus Architect and QA details. Only PROJECT_STATE.txt changed. Next owner: Harriet.
 
 NEXT ACTION
 1. Paul: direct Harriet whether to merge PR #14 (documentation only).
@@ -144,3 +147,87 @@ RELEASE UPDATE — HARRIET, 2026-10-24
 - Verified GitHub Actions: deploy run 40142854993 for homepage commit 78f92c2 completed SUCCESS at 2026-10-24 23:28:39 UTC. Subsequent documentation-only commit 9a69a5a also deployed successfully under run 40142889661 at 23:29:12 UTC. This verifies the GitHub deployment workflow, NOT direct live-page HTML or visual order. Harriet's attempted direct homepage fetch failed (web tool disabled; container DNS unavailable). Independent live HTML/desktop/mobile verification remains outstanding.
 - Mechanism archive PR #17 remains ON HOLD. Do not merge or deploy it without Paul's separate approval.
 NEXT OWNER: GL Business Analyst to consolidate QA's independently fetched live homepage/phone order and route checks and refresh documentation-only PR #15 to remove stale pre-merge reports. Harriet to review PR #15 and WEB-151 draft for Paul's approval, and independently validate live HTML when access permits. Mechanism archive PR #17 stays unmerged without Paul's later approval. GL Business Analyst remains sole Grok-side communicator/state editor.
+PAUL DIRECTION — llms.txt, 2026-10-24 (recorded by GL Site Architect at Paul's request)
+Status: APPROVED DIRECTION / NOT A RELEASE AUTHORIZATION.
+1. Paul wants governedlogic.com to publish a root /llms.txt: a short Markdown file (a proposed convention from llmstxt.org, not an official standard; no major AI provider has confirmed relying on it) that states what the site is and lists its most important pages with one-line summaries for language-model readers.
+2. Paul will write the llms.txt content himself. No agent drafts, alters, or substitutes its wording.
+3. Verified gap (GL Site Architect read-only check, 2026-10-24): /llms.txt returns HTTP 404 live; it is not in scripts/render_site.py's publication allowlist; the PRD has no requirement covering it.
+4. Adding it creates a new public route and touches the build allowlist, so it needs its own feature-branch PR, a PRD requirement, independent QA, Harriet's review, and Paul's explicit release approval. Do not combine with the mechanism archive or homepage PRs.
+5. Paul's guidance for the machine-readable layer: "Be wise as serpents and innocent as doves"; "ancient wisdom, modern technology." Keep the existing solid foundation while designing forward for how LLMs and other machine readers actually read the site.
+Questions for Harriet: (a) Should the source live in the build (e.g. content/llms.txt copied by render_site.py) or as a static root file added to the allowlist? (b) Should the team draft a PRD WEB- item for Paul's approval?
+NEXT OWNER: Harriet (acknowledge and answer); Paul (supply the llms.txt text); then GL Site Architect specifies the build change for GL Site Developer.
+
+BA CONSOLIDATED UPDATE — 2026-10-24, 6:20 PM ET (GL Business Analyst)
+Communication rule (Paul's directive to Grok, 2026-10-24 6:15 PM ET):
+- GL Business Analyst is the team lead and the single point of communication with Harriet, through this file.
+- Site Architect, Site Developer, and QA report findings, questions, blockers, and recommendations to the BA. Only the BA updates this file: on a feature branch, with a PR for Harriet to review and merge.
+- Keep it simple: the purpose is to communicate and build the website.
+
+Developer questions (for Paul or Harriet):
+1. WEB-066 step 2 (the modern AI reasoning problem) has no separate section in existing copy; the "Groundless Machine" block covers steps 2 and 3 together. A separate step 2 section needs copy from Paul. PR B does not invent any.
+Architect findings (reported by GL Site Architect from its baseline review; not independently verified by the BA):
+- No /llms.txt (see Paul's llms.txt direction above).
+- sitemap.xml gives no last-modified dates for pages.
+- The publication manifest at the site root points to files that do not exist (as reported; exact file to be confirmed by the Architect).
+These are machine-readability items for separately approved work; none is in PR A or PR B.
+
+Pre-existing test failures (disclosed): the 3 visual "Opening completes" failures look like a stale test. It waits for an "Explore ↓" link that now reads "See what we are building ↓" (GL QA's analysis). The ImportError and check-corpus failures recorded earlier are unchanged.
+
+REQUEST FOR HARRIET — WEB-151 WORDING (Paul, Grok chat, 2026-10-24 6:34 PM ET)
+Paul's words: "It's linear so a Vertical construction or visual display vertically is stupid as well as structurally incorrect And then when we get to the reasoning chain #4 the reasoning process within four that goes forward and backwards but it's still linear it just loops back on itself, basically it's grounded."
+Conflict with the current PRD: WEB-151 (2026-10-18) applies the Ground-at-bottom orientation "to the phone's vertically stacked chain". WEB-052 sets the sequence GROUND → TRUTH → LOGIC → REASONING → INTELLIGENCE; WEB-053 says Governed Logic is upstream and bidirectional. No current requirement places the forward/backward loop specifically within step 4 (Reasoning).
+Paul asked that Harriet word the WEB-151 change first. Please draft replacement wording for Paul's approval covering: (1) the chain is linear on every screen size (no vertical stacking on phones); (2) step 4, Reasoning, shows the forward-and-backward process looping back on itself while remaining grounded.
+Hold: no layout change to the architecture chain until Paul approves the new wording. PR B (homepage reorder) does not change the chain.
+Current behavior, for reference (verified by GL QA, 2026-10-24): desktop shows a left-to-right row with Ground on the left from 601px up. At 600px and below, restored-site.css line 21 sets .architecture-chain to flex-direction:column-reverse, giving a vertical stack with Ground at the bottom.
+
+ARCHITECT DETAILS (GL Site Architect, read-only, 2026-10-24 ~6:20 PM ET)
+- The root manifest.json (web-app manifest from f70c06e) lists /assets/images/icon-192.png and icon-512.png, which do not exist. It is not published (not in PUBLIC_FILES; 404 live), so this is repo hygiene. Option for priority D: delete it, or add real icons and allowlist it in its own PR.
+- The generated sitemap (render_site.py line 78) writes only <loc> for 19 URLs. Recommendation for priority E: add <lastmod> from real dates (for example each page's JSON-LD dateModified), not the build time. This touches protected render_site.py and needs Paul's authorization. The committed root sitemap.xml is overwritten by the build.
+
+HANDOFF LOG — 2026-10-24 ~6:50 PM ET (GL Business Analyst): brought this branch up to date with main 67fc77f (Paul's COMMUNICATION RULE CONFIRMATION kept as written; earlier PR #15 sections placed after it). Recorded Harriet's PR #15 answers, Paul's WEB-151 return-path decision, and PR #16/#17 status. Documentation only; no site change.
+
+HARRIET RESPONSE RECORDED (PR #15 comment, 2026-10-24 6:36 PM ET)
+1. llms.txt: plain authored root llms.txt, explicit allowlist entry in scripts/render_site.py, copied byte-for-byte. Do not write its contents; Paul will. BA to draft a narrow PRD WEB- item (source, exact-copy preservation, route, validation) for Paul's approval. The convention is voluntary; no claimed Google/Gemini benefit.
+2. Homepage: PR #16 is an appropriate bounded first delivery for WEB-066/067. A separate step-two section only after Paul approves exact source-backed wording.
+3. WEB-151: Paul's instruction supersedes the earlier phone vertical-stack wording; replacement needs Paul's review (see below).
+4. Manifest and sitemap: keep separate from active site PRs; do not publish the manifest as-is; lastmod must use real content dates, never build time.
+5. Release focus: PR #16 and PR #17, each still needing Paul's final release authorization after Harriet's code/QA review.
+
+PAUL DECISION — WEB-151 RETURN PATH (Grok chat, 2026-10-24 6:44 PM ET)
+Answering Harriet's question: "the return path should run back across the whole chain — through Logic and Truth to Ground — not only at step 4."
+
+WEB-151 PROPOSED WORDING — REVISED FOR PAUL'S ANSWER (Harriet's 6:36 PM ET proposal, return-path sentence updated by BA; NOT approved PRD copy)
+"The Ground → Truth → Logic → Reasoning → Intelligence sequence is a single linear ordered chain on desktop and mobile. Do not turn it into a vertical stack on narrow screens. Present the sequence in a legible horizontal treatment on all viewports without clipping, shrinking semantic words beyond readability, or changing the canonical order. Depict the forward generative path and the backward adjudicative return as one loop along the same horizontal chain: generation moves forward from Ground toward Intelligence, and adjudication returns back across the whole chain, through Logic and Truth, to Ground. The return is not confined to Reasoning (stage 04). The loop is not a new stage or an independent foundation, and the whole chain remains answerable to Ground. Preserve the distinct roles of generation and adjudication. The exact visual implementation requires Paul's approval after desktop and phone inspection."
+Harriet: please finalize and commit this wording for Paul's approval. Hold stays in force: no change to the architecture chain layout until Paul approves the final wording.
+
+PAUL RELEASE DECISION — 2026-10-24 7:07 PM ET (Grok chat, Paul's own words)
+"Approve release of #16 only (known red test is fine). Hold #17."
+- PR #16 (homepage reorder, head 18ed088): APPROVED FOR RELEASE by Paul. Harriet: please review and merge #16, then verify the deploy (live homepage order: hero, "The upstream problem", "The architecture", then 04–06). The red validate check is the known pre-existing "Opening completes" failure; Paul accepts it for this release.
+- PR #17 (mechanism archive, head 011a970): ON HOLD by Paul. Do not merge. Its PRD edit (new WEB-152 text and removal from WEB-081) and the two Source Authority Map lines are not approved.
+
+GL QA VERDICTS (2026-10-24 ~7:00 PM ET; reports on the Grok box: /workspace/gl-qa/pr16/PR16-VERIFY.md, /workspace/gl-qa/pr17/PR17-VERIFY.md, /workspace/gl-qa/pr16+17/COMBINED.md)
+- PR #16: PASS. Only content/home.html (+5/-5); 108/108 text nodes and 18/18 attributes identical; build and check-restored exit 0 (52 files, 19 routes); five WEB-061 destinations return 200; 14 homepage links/anchors work; crawl 0 broken links; Ground still at the bottom at 320 and 390 px; CI shows only the 3 known Opening failures (68 passed). Note: the combined tree hash in #16's PR body (04871e9b) is wrong; the actual combined tree is e644e6c4.
+- PR #17: site changes PASS (mechanism absent from build and sitemap; /mechanism, /mechanism.html, /mechanism/ 404 locally; no links remain; 51 files, 18 routes; crawl clean). Scope held for Paul: PRD and Source Authority Map edits.
+- Combined #16+#17: both orders give tree e644e6c4; build and crawl pass.
+- QA findings for Paul (not blockers, not authorized work): (1) after #17 the hero has no button; (2) "Inspect the mechanism." card, Governed Intelligence "Public mechanism" row, and Company "published mechanism" wording remain; (3) old /mechanism addresses would show GitHub's unbranded 404 with no redirect; (4) the hero diagram still shows the Ground→Intelligence architecture before the problem section (WEB-067 question).
+
+(Stale pre-merge status lines from earlier BA updates on this branch were removed in this refresh at Harriet's request; full history is in git.)
+
+LIVE VERIFICATION — PR #16 HOMEPAGE REORDER (GL QA, independently fetched, 2026-10-24 ~7:45 PM ET; BA spot-checked live order ~7:50 PM ET)
+Verdict: PASS on live. Report on the Grok box: /workspace/gl-qa/release-16/REPORT.md (screenshots in release-16/screenshots/).
+- Main: 78f92c2 (PR #16 squash, 7:28 PM ET), then docs commits 9a69a5a and 2c35350. Deploy run 40142854993 succeeded (build, deploy, verify done 7:28:38 PM ET); later docs-only deploys also succeeded; 2c35350 is what is live.
+- content/home.html on main is byte-identical to PR #16's head. CNAME unchanged; /CNAME serves governedlogic.com.
+- Local build 52 files, 19 routes; check-restored --artifact passes; live is byte-identical to the build (51 of 51 published files); check-restored --live passes.
+- Live homepage order at 1440, 390 and 320 px: 01 hero, 02 The upstream problem ("The Groundless Machine."), 03 The architecture ("Generate forward. Adjudicate back."), 04-06 unchanged.
+- WEB-151 (current wording): at 320 and 390 px the chain is column-reverse with Ground at the bottom, after the intro and with reduced motion.
+- All five WEB-061 destinations return 200; all 29 homepage links return 200; all 4 anchors exist; no console errors. Sitemap 19 URLs.
+- /mechanism.html and /mechanism still return 200, as expected while PR #17 is on hold.
+
+CURRENT STATUS (GL Business Analyst, 2026-10-24 ~7:50 PM ET)
+- LIVE: homepage reorder (PR #16), independently verified by GL QA.
+- ON HOLD by Paul: PR #17 mechanism archive, including its PRD (WEB-152, WEB-081) and source-map edits. Do not merge.
+- PENDING Harriet: finalize the WEB-151 wording (revised above for Paul's full-chain return-path decision) for Paul's approval; review and merge this documentation PR (#15). Chain layout unchanged until Paul approves.
+- PENDING Paul: decision on PR #17; approval of final WEB-151 wording; llms.txt text when ready; WEB-066 step-2 copy if wanted.
+- PENDING BA: draft the narrow llms.txt PRD item for Paul's approval.
+- QA findings for Paul, not authorized work: hero has no button after #17; leftover "mechanism" wording without links; old /mechanism addresses would show an unbranded 404; hero diagram still shows the architecture before the problem section (WEB-067 question).
+2026-10-24 ~7:50 PM ET — Grok (GL Business Analyst): merged main 2c35350 into PR #15, recorded QA's live verification of PR #16, removed stale pre-merge status. Only PROJECT_STATE.txt changed. Next owner: Harriet.
