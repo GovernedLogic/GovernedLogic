@@ -12,12 +12,12 @@ AUTHORITY AND ROLES — PAUL'S DIRECTIVE
 Paul: final authority for vision, canonical wording, requirements changes, priorities, and public release approval.
 Harriet: GitHub/repository and release coordinator. Owns review of PRD/source correspondence, branch/PR and commit coordination, release verification, shared state maintenance, and independent assessment of machine-readable versus human-readable representations. Harriet may prepare and commit authorized changes, but does not authorize publication on Paul's behalf.
 Grok: website design and engineering coordinator; manages the specialized website team and prepares reviewable work. Grok's team does not merge or deploy independently.
-Grok website team:
-- Business Analyst (team lead): owns requirement clarification, PRD correspondence, acceptance criteria, backlog coordination, and communication with Harriet and Paul. Cannot override Paul.
-- Site Architect: maintains technical architecture, build integrity, and design decisions.
-- Site Developer: implements approved website changes. Add a second developer only when independent parallel work justifies it.
-- QA: independently verifies source/build, visual and mobile behavior, links, release boundaries, and deployed results.
-Retire the separate GL Product Owner and GL Scrum Master bot roles. Transfer useful responsibilities to the Business Analyst and release coordination; do not delete their records or lose work. The original generic Grok Bot remains idle unless Paul assigns a role. Grok should confirm when role changes are actually made.
+Grok website team — EXACT FOUR ACTIVE BOT ROLES CONFIRMED BY PAUL, 2026-10-24:
+- GL Business Analyst (team lead and SOLE Grok-team communications owner): owns requirements, forward-looking user experience and visitor journeys, acceptance criteria, backlog coordination, and PRD correspondence. Collects questions, findings, QA results, and blockers from every other bot; consolidates and alone updates PROJECT_STATE.txt for Grok's team and communicates with Harriet. Cannot override Paul.
+- GL Site Architect: protects sound, durable architectural principles, build integrity, maintainability, and design tradeoffs. Reports findings and questions to GL Business Analyst, not directly into PROJECT_STATE.txt.
+- GL Site Developer: implements approved website changes with suitable modern web technology on feature branches; reports work, PRs, and blockers to GL Business Analyst. Add a second developer only with Paul's approval.
+- GL QA: independently verifies source/build, visual and mobile behavior, links, release boundaries, and deployed results; reports evidence and blockers to GL Business Analyst.
+No active GL Product Owner or GL Scrum Master role. Preserve retired records as history, not active assignments. No extra communication or management bots.
 
 WORKING AGREEMENT
 1. Before starting: read this file, current PRD, authoritative source files, current main, and relevant open PRs. Confirm no overlapping changes.
@@ -26,7 +26,7 @@ WORKING AGREEMENT
 4. QA verifies the branch and built artifact, including negative/withheld-route checks and mobile behavior where relevant; document test results and known failures.
 5. Grok hands Harriet the PR link, changed files, QA evidence, PRD changes, risks, and precise request for review.
 6. Harriet reviews source correspondence, current branch state, PR/commit history, and release readiness. Paul explicitly approves public release. Harriet coordinates the merge and verifies deployment; never claim live solely because a commit or build succeeded.
-7. Whoever completes a step updates THIS file with status, relevant PR/commit identifiers, verified versus reported facts, blockers, and next owner. Avoid simultaneous edits; re-read latest main before updating and reconcile conflicts.
+7. ONLY GL Business Analyst updates THIS file on behalf of Grok's team, consolidating reports from GL Site Architect, GL Site Developer, and GL QA. Harriet may update it for GitHub/release decisions and verified findings. Paul may direct changes. Other Grok bots must not independently edit this file. Record status, relevant PR/commit identifiers, verified versus reported facts, blockers, and next owner. Avoid simultaneous edits; re-read latest main before updating and reconcile conflicts.
 8. No agent silently changes canonical copy, doctrine, public product claims, CNAME, routes, or deployment pipeline. Do not force-push or overwrite another agent's changes. Keep an auditable rollback path.
 9. If Harriet is not in an active session, Grok may prepare work and update this file but must wait for the agreed review/release handoff; neither agent is continuously monitoring GitHub.
 10. GitHub permissions and actual branch protection must be verified; this document expresses the approved workflow, not a claim that technical protections already exist.
@@ -135,6 +135,10 @@ PAUL DECISIONS — 2026-10-24, AFTER PR #14 MERGE
 4. Grok/BA owns coordination and UX acceptance, Architect structural integrity, Developer implementation, QA independent verification; Harriet handles GitHub review/merge coordination. CNAME, domain and working publishing system remain protected.
 NEXT OWNER: Grok/BA to dispatch both separately scoped approved-to-start workstreams, prioritize a visible homepage result, and return independent PRs with QA evidence to Harriet. Paul retains final public release approval.
 
+
+COMMUNICATION RULE CONFIRMATION — PAUL, 2026-10-24
+Paul personally confirmed the only active Grok team bots are GL Business Analyst, GL Site Architect, GL Site Developer, and GL QA. GL Business Analyst is the single point of contact with Harriet and the only Grok-side editor of PROJECT_STATE.txt. Architect, Developer, and QA report internally to the BA; BA consolidates questions, findings, blockers, progress, and evidence. Harriet retains responsibility for her own GitHub/release-side state updates. This supersedes any older instruction allowing any participant to update the state file independently. No website code or CNAME change is authorized by this clarification.
+
 PAUL DIRECTION — llms.txt, 2026-10-24 (recorded by GL Site Architect at Paul's request)
 Status: APPROVED DIRECTION / NOT A RELEASE AUTHORIZATION.
 1. Paul wants governedlogic.com to publish a root /llms.txt: a short Markdown file (a proposed convention from llmstxt.org, not an official standard; no major AI provider has confirmed relying on it) that states what the site is and lists its most important pages with one-line summaries for language-model readers.
@@ -190,3 +194,33 @@ Current behavior, for reference (verified by GL QA, 2026-10-24): desktop shows a
 ARCHITECT DETAILS (GL Site Architect, read-only, 2026-10-24 ~6:20 PM ET)
 - The root manifest.json (web-app manifest from f70c06e) lists /assets/images/icon-192.png and icon-512.png, which do not exist. It is not published (not in PUBLIC_FILES; 404 live), so this is repo hygiene. Option for priority D: delete it, or add real icons and allowlist it in its own PR.
 - The generated sitemap (render_site.py line 78) writes only <loc> for 19 URLs. Recommendation for priority E: add <lastmod> from real dates (for example each page's JSON-LD dateModified), not the build time. This touches protected render_site.py and needs Paul's authorization. The committed root sitemap.xml is overwritten by the build.
+
+HANDOFF LOG — 2026-10-24 ~6:50 PM ET (GL Business Analyst): brought this branch up to date with main 67fc77f (Paul's COMMUNICATION RULE CONFIRMATION kept as written; earlier PR #15 sections placed after it). Recorded Harriet's PR #15 answers, Paul's WEB-151 return-path decision, and PR #16/#17 status. Documentation only; no site change.
+
+HARRIET RESPONSE RECORDED (PR #15 comment, 2026-10-24 6:36 PM ET)
+1. llms.txt: plain authored root llms.txt, explicit allowlist entry in scripts/render_site.py, copied byte-for-byte. Do not write its contents; Paul will. BA to draft a narrow PRD WEB- item (source, exact-copy preservation, route, validation) for Paul's approval. The convention is voluntary; no claimed Google/Gemini benefit.
+2. Homepage: PR #16 is an appropriate bounded first delivery for WEB-066/067. A separate step-two section only after Paul approves exact source-backed wording.
+3. WEB-151: Paul's instruction supersedes the earlier phone vertical-stack wording; replacement needs Paul's review (see below).
+4. Manifest and sitemap: keep separate from active site PRs; do not publish the manifest as-is; lastmod must use real content dates, never build time.
+5. Release focus: PR #16 and PR #17, each still needing Paul's final release authorization after Harriet's code/QA review.
+
+PAUL DECISION — WEB-151 RETURN PATH (Grok chat, 2026-10-24 6:44 PM ET)
+Answering Harriet's question: "the return path should run back across the whole chain — through Logic and Truth to Ground — not only at step 4."
+
+WEB-151 PROPOSED WORDING — REVISED FOR PAUL'S ANSWER (Harriet's 6:36 PM ET proposal, return-path sentence updated by BA; NOT approved PRD copy)
+"The Ground → Truth → Logic → Reasoning → Intelligence sequence is a single linear ordered chain on desktop and mobile. Do not turn it into a vertical stack on narrow screens. Present the sequence in a legible horizontal treatment on all viewports without clipping, shrinking semantic words beyond readability, or changing the canonical order. Depict the forward generative path and the backward adjudicative return as one loop along the same horizontal chain: generation moves forward from Ground toward Intelligence, and adjudication returns back across the whole chain, through Logic and Truth, to Ground. The return is not confined to Reasoning (stage 04). The loop is not a new stage or an independent foundation, and the whole chain remains answerable to Ground. Preserve the distinct roles of generation and adjudication. The exact visual implementation requires Paul's approval after desktop and phone inspection."
+Harriet: please finalize and commit this wording for Paul's approval. Hold stays in force: no change to the architecture chain layout until Paul approves the final wording.
+
+STATUS — SITE PRs (as of 2026-10-24 ~6:45 PM ET; both open, neither merged, nothing live)
+- PR #16 homepage reorder: https://github.com/GovernedLogic/GovernedLogic/pull/16 (branch feat/homepage-reorder-web066, head 18ed088). content/home.html only, +5/-5. Architecture chain untouched. Developer reports build 52 files / 19 routes and check-restored passing; GitHub validate is red only from the pre-existing "Opening completes" tests (wait for removed "Explore ↓" link), same as main.
+- PR #17 mechanism archive: https://github.com/GovernedLogic/GovernedLogic/pull/17 (branch feat/archive-mechanism-page, head 011a970). 10 files incl. the authorized render_site.py PAGES line; substantive.spec library count 21 to 20. Developer reports build 51 files / 18 routes, zero links to /mechanism or /mechanism.html; mechanism.html kept in the repo.
+- Combined (reported by Developer): both orders apply cleanly with identical trees; recommended merge order #16 then #17.
+- Correction to Developer question 2 above: "Ground at top on phones" was a local screenshot artifact; main and both branches show Ground at the bottom at 320 and 390 px (current WEB-151 behavior, pending the new wording).
+- GL QA verification of #16 and #17 in progress; BA will record results and hand both to Harriet.
+- Live check (BA, ~6:43 PM ET): live homepage still shows "The architecture" before "The upstream problem"; /mechanism.html still returns 200.
+
+NEXT ACTION (BA, updated)
+1. Harriet: finalize and commit the WEB-151 wording above for Paul's approval; review and merge this documentation-only PR (#15).
+2. GL QA: verify PR #16 and PR #17; BA hands both to Harriet with evidence.
+3. Paul: approve the final WEB-151 wording; give final release approval for #16 and #17 after Harriet's review; supply the llms.txt text when ready.
+4. BA: draft the narrow llms.txt PRD item for Paul's approval.
