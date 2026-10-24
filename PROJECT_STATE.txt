@@ -12,12 +12,12 @@ AUTHORITY AND ROLES — PAUL'S DIRECTIVE
 Paul: final authority for vision, canonical wording, requirements changes, priorities, and public release approval.
 Harriet: GitHub/repository and release coordinator. Owns review of PRD/source correspondence, branch/PR and commit coordination, release verification, shared state maintenance, and independent assessment of machine-readable versus human-readable representations. Harriet may prepare and commit authorized changes, but does not authorize publication on Paul's behalf.
 Grok: website design and engineering coordinator; manages the specialized website team and prepares reviewable work. Grok's team does not merge or deploy independently.
-Grok website team:
-- Business Analyst (team lead): owns requirement clarification, PRD correspondence, acceptance criteria, backlog coordination, and communication with Harriet and Paul. Cannot override Paul.
-- Site Architect: maintains technical architecture, build integrity, and design decisions.
-- Site Developer: implements approved website changes. Add a second developer only when independent parallel work justifies it.
-- QA: independently verifies source/build, visual and mobile behavior, links, release boundaries, and deployed results.
-Retire the separate GL Product Owner and GL Scrum Master bot roles. Transfer useful responsibilities to the Business Analyst and release coordination; do not delete their records or lose work. The original generic Grok Bot remains idle unless Paul assigns a role. Grok should confirm when role changes are actually made.
+Grok website team — EXACT FOUR ACTIVE BOT ROLES CONFIRMED BY PAUL, 2026-10-24:
+- GL Business Analyst (team lead and SOLE Grok-team communications owner): owns requirements, forward-looking user experience and visitor journeys, acceptance criteria, backlog coordination, and PRD correspondence. Collects questions, findings, QA results, and blockers from every other bot; consolidates and alone updates PROJECT_STATE.txt for Grok's team and communicates with Harriet. Cannot override Paul.
+- GL Site Architect: protects sound, durable architectural principles, build integrity, maintainability, and design tradeoffs. Reports findings and questions to GL Business Analyst, not directly into PROJECT_STATE.txt.
+- GL Site Developer: implements approved website changes with suitable modern web technology on feature branches; reports work, PRs, and blockers to GL Business Analyst. Add a second developer only with Paul's approval.
+- GL QA: independently verifies source/build, visual and mobile behavior, links, release boundaries, and deployed results; reports evidence and blockers to GL Business Analyst.
+No active GL Product Owner or GL Scrum Master role. Preserve retired records as history, not active assignments. No extra communication or management bots.
 
 WORKING AGREEMENT
 1. Before starting: read this file, current PRD, authoritative source files, current main, and relevant open PRs. Confirm no overlapping changes.
@@ -26,7 +26,7 @@ WORKING AGREEMENT
 4. QA verifies the branch and built artifact, including negative/withheld-route checks and mobile behavior where relevant; document test results and known failures.
 5. Grok hands Harriet the PR link, changed files, QA evidence, PRD changes, risks, and precise request for review.
 6. Harriet reviews source correspondence, current branch state, PR/commit history, and release readiness. Paul explicitly approves public release. Harriet coordinates the merge and verifies deployment; never claim live solely because a commit or build succeeded.
-7. Whoever completes a step updates THIS file with status, relevant PR/commit identifiers, verified versus reported facts, blockers, and next owner. Avoid simultaneous edits; re-read latest main before updating and reconcile conflicts.
+7. ONLY GL Business Analyst updates THIS file on behalf of Grok's team, consolidating reports from GL Site Architect, GL Site Developer, and GL QA. Harriet may update it for GitHub/release decisions and verified findings. Paul may direct changes. Other Grok bots must not independently edit this file. Record status, relevant PR/commit identifiers, verified versus reported facts, blockers, and next owner. Avoid simultaneous edits; re-read latest main before updating and reconcile conflicts.
 8. No agent silently changes canonical copy, doctrine, public product claims, CNAME, routes, or deployment pipeline. Do not force-push or overwrite another agent's changes. Keep an auditable rollback path.
 9. If Harriet is not in an active session, Grok may prepare work and update this file but must wait for the agreed review/release handoff; neither agent is continuously monitoring GitHub.
 10. GitHub permissions and actual branch protection must be verified; this document expresses the approved workflow, not a claim that technical protections already exist.
@@ -131,3 +131,7 @@ PAUL DECISIONS — 2026-10-24, AFTER PR #14 MERGE
 3. Paul expressly reaffirmed that the homepage MUST explain the AI reasoning problem before introducing Governed Logic's technical architecture, consistent with WEB-066/067. Grok/BA should proceed with a separate homepage implementation PR using the previously recorded HOMEPAGE DELIVERY DIRECTIVE; no invented claims or rewrite. Do not combine with the mechanism archive.
 4. Grok/BA owns coordination and UX acceptance, Architect structural integrity, Developer implementation, QA independent verification; Harriet handles GitHub review/merge coordination. CNAME, domain and working publishing system remain protected.
 NEXT OWNER: Grok/BA to dispatch both separately scoped approved-to-start workstreams, prioritize a visible homepage result, and return independent PRs with QA evidence to Harriet. Paul retains final public release approval.
+
+
+COMMUNICATION RULE CONFIRMATION — PAUL, 2026-10-24
+Paul personally confirmed the only active Grok team bots are GL Business Analyst, GL Site Architect, GL Site Developer, and GL QA. GL Business Analyst is the single point of contact with Harriet and the only Grok-side editor of PROJECT_STATE.txt. Architect, Developer, and QA report internally to the BA; BA consolidates questions, findings, blockers, progress, and evidence. Harriet retains responsibility for her own GitHub/release-side state updates. This supersedes any older instruction allowing any participant to update the state file independently. No website code or CNAME change is authorized by this clarification.
