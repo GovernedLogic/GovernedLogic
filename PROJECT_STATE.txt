@@ -101,6 +101,7 @@ HANDOFF LOG
 2026-10-24 — Grok (GL Business Analyst): handoff acknowledged; role changes made as listed above; verified status and corrections recorded. No website changes. Next owner: Harriet (verify this update), then Paul (approve opening the mechanism archive PR).
 2026-10-24 — Harriet: reviewed PR #14 (read-only GitHub cross-check). Confirmed it changes only PROJECT_STATE.txt; requested attribution of Grok-only checks, precise WEB-070 wording, historical status of the IA handoff, archive PR preconditions, and restated release constraints. No merge pending Paul's direction.
 2026-10-24 — Grok (GL Business Analyst): applied all five review points in this file. Only PROJECT_STATE.txt changed. Next owner: Paul (merge direction for PR #14; authorization to open the archive PR; homepage order decision).
+2026-10-24 — Grok (GL Site Architect): recorded Paul's llms.txt direction at his request. Only PROJECT_STATE.txt changed. Next owner: Harriet.
 
 NEXT ACTION
 1. Paul: direct Harriet whether to merge PR #14 (documentation only).
@@ -131,3 +132,13 @@ PAUL DECISIONS — 2026-10-24, AFTER PR #14 MERGE
 3. Paul expressly reaffirmed that the homepage MUST explain the AI reasoning problem before introducing Governed Logic's technical architecture, consistent with WEB-066/067. Grok/BA should proceed with a separate homepage implementation PR using the previously recorded HOMEPAGE DELIVERY DIRECTIVE; no invented claims or rewrite. Do not combine with the mechanism archive.
 4. Grok/BA owns coordination and UX acceptance, Architect structural integrity, Developer implementation, QA independent verification; Harriet handles GitHub review/merge coordination. CNAME, domain and working publishing system remain protected.
 NEXT OWNER: Grok/BA to dispatch both separately scoped approved-to-start workstreams, prioritize a visible homepage result, and return independent PRs with QA evidence to Harriet. Paul retains final public release approval.
+
+PAUL DIRECTION — llms.txt, 2026-10-24 (recorded by GL Site Architect at Paul's request)
+Status: APPROVED DIRECTION / NOT A RELEASE AUTHORIZATION.
+1. Paul wants governedlogic.com to publish a root /llms.txt: a short Markdown file (a proposed convention from llmstxt.org, not an official standard; no major AI provider has confirmed relying on it) that states what the site is and lists its most important pages with one-line summaries for language-model readers.
+2. Paul will write the llms.txt content himself. No agent drafts, alters, or substitutes its wording.
+3. Verified gap (GL Site Architect read-only check, 2026-10-24): /llms.txt returns HTTP 404 live; it is not in scripts/render_site.py's publication allowlist; the PRD has no requirement covering it.
+4. Adding it creates a new public route and touches the build allowlist, so it needs its own feature-branch PR, a PRD requirement, independent QA, Harriet's review, and Paul's explicit release approval. Do not combine with the mechanism archive or homepage PRs.
+5. Paul's guidance for the machine-readable layer: "Be wise as serpents and innocent as doves"; "ancient wisdom, modern technology." Keep the existing solid foundation while designing forward for how LLMs and other machine readers actually read the site.
+Questions for Harriet: (a) Should the source live in the build (e.g. content/llms.txt copied by render_site.py) or as a static root file added to the allowlist? (b) Should the team draft a PRD WEB- item for Paul's approval?
+NEXT OWNER: Harriet (acknowledge and answer); Paul (supply the llms.txt text); then GL Site Architect specifies the build change for GL Site Developer.
