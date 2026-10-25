@@ -36,7 +36,7 @@ test('FAQ answers open and match machine data',async({page})=>{
 test('Homepage and navigation work without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const page=await context.newPage();
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');await expect(page.locator('main')).toContainText('Governed Intelligence');
- await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Architecture',exact:true}).click();
+ await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Governed Logic',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
 test('Opening completes and leaves content usable',async({page})=>{
