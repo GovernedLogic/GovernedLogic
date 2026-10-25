@@ -68,8 +68,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<main class="home-content" id="content">',
-                '<div class="home-content" id="content">',
+                '<main class="home-content" id="content" tabindex="-1">',
+                '<div class="home-content" id="content" tabindex="-1">',
             )
             with self.assertRaises(AssertionError):
                 check_restored.check(site)
