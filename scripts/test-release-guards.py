@@ -21,6 +21,13 @@ check_origin = importlib.util.module_from_spec(CHECK_SPEC)
 CHECK_SPEC.loader.exec_module(check_origin)
 
 
+RESTORED_SPEC = importlib.util.spec_from_file_location("check_restored", SCRIPTS / "check-restored.py")
+if RESTORED_SPEC is None or RESTORED_SPEC.loader is None:
+    raise RuntimeError("Unable to load scripts/check-restored.py")
+check_restored = importlib.util.module_from_spec(RESTORED_SPEC)
+RESTORED_SPEC.loader.exec_module(check_restored)
+
+
 class ReleaseGuardTests(unittest.TestCase):
     def build_artifact(self, directory: str) -> Path:
         site = Path(directory) / "site"
@@ -35,152 +42,52 @@ class ReleaseGuardTests(unittest.TestCase):
             raise AssertionError(f"Test fixture marker differs in {relative}: {old!r}")
         path.write_text(content.replace(old, new, 1), encoding="utf-8")
 
-    def assert_rejected(self, site: Path) -> None:
-        with self.assertRaisesRegex(AssertionError, "Reviewed"):
-            check_origin.local_checks(site, exact_artifact=True)
-
-    @staticmethod
-    def parsed_route(site: Path, route: str):
-        html = (site / check_origin.ROUTES[route]).read_text(encoding="utf-8")
-        parser = check_origin.DocumentParser()
-        parser.feed(html)
-        parser.close()
-        return parser
-
-    def assert_semantically_rejected(
-        self, site: Path, route: str, expected_pattern: str
-    ) -> None:
-        parser = self.parsed_route(site, route)
-        with self.assertRaisesRegex(AssertionError, expected_pattern):
-            check_origin.publication_boundary_checks(parser, route)
+    def test_release_root_imports(self) -> None:
+        self.assertEqual(check_origin.ROOT, ROOT)
+        self.assertTrue(check_origin.ROOT.is_dir())
 
     def test_reviewed_artifact_passes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            site = self.build_artifact(directory)
-            check_origin.local_checks(site, exact_artifact=True)
+            check_restored.check(self.build_artifact(directory))
 
-    def test_reviewed_semantic_boundaries_pass_without_hashes(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            site = self.build_artifact(directory)
-            for route in check_origin.ROUTES:
-                with self.subTest(route=route):
-                    check_origin.publication_boundary_checks(self.parsed_route(site, route), route)
-
-    def test_semantic_guard_rejects_changed_paragraph(self) -> None:
+    def test_placeholder_phrase_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
                 "index.html",
-                "The company website is being brought online in stages. "
-                "Substantive material remains withheld until reviewed and approved.",
-                "An unreviewed homepage claim.",
+                "See what we are building ↓",
+                "See what we are building ↓ Substantive material remains withheld",
             )
-            self.assert_semantically_rejected(site, "/", "Reviewed paragraph text differs")
+            with self.assertRaises(AssertionError):
+                check_restored.check(site)
 
-    def test_semantic_guard_rejects_appended_content(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            site = self.build_artifact(directory)
-            self.replace_once(
-                site,
-                "company/index.html",
-                "</main>",
-                "<p>An unreviewed claim.</p></main>",
-            )
-            self.assert_semantically_rejected(
-                site, "/company/", "Reviewed content structure differs"
-            )
-
-    def test_semantic_guard_rejects_changed_door_label(self) -> None:
+    def test_missing_main_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
                 "index.html",
-                "The Company <span>→</span>",
-                "About the Company <span>→</span>",
+                '<main class="home-content" id="content">',
+                '<div class="home-content" id="content">',
             )
-            self.assert_semantically_rejected(
-                site, "/", "Reviewed door label or arrow differs"
-            )
+            with self.assertRaises(AssertionError):
+                check_restored.check(site)
 
-    def test_semantic_guard_rejects_misplaced_main(self) -> None:
+    def test_extra_file_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
-            self.replace_once(
-                site,
-                "index.html",
-                '<main class="site-content" id="explore">',
-                '<section class="site-content" id="explore">',
-            )
-            self.assert_semantically_rejected(
-                site, "/", "Reviewed homepage landmarks differ"
-            )
+            (site / "unreviewed.html").write_text("unreviewed", encoding="utf-8")
+            with self.assertRaises(AssertionError):
+                check_restored.check(site)
 
-    def test_semantic_guard_rejects_duplicate_main(self) -> None:
+    def test_opening_asset_altered_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
-            self.replace_once(
-                site,
-                "company/index.html",
-                "</main><footer",
-                '<main aria-label="Duplicate"></main></main><footer',
-            )
-            self.assert_semantically_rejected(site, "/company/", "sole main landmark")
-
-    def test_altered_homepage_copy_fails(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            site = self.build_artifact(directory)
-            self.replace_once(
-                site,
-                "index.html",
-                "The company website is being brought online in stages. "
-                "Substantive material remains withheld until reviewed and approved.",
-                "An unreviewed homepage claim.",
-            )
-            self.assert_rejected(site)
-
-    def test_appended_opening_claim_fails(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            site = self.build_artifact(directory)
-            opening = '<div id="site" role="region" aria-label="Governed Logic Reasoning Systems">'
-            self.replace_once(site, "index.html", opening, opening + "<p>An unreviewed claim.</p>")
-            self.assert_rejected(site)
-
-    def test_direct_door_group_text_fails(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            site = self.build_artifact(directory)
-            self.replace_once(
-                site,
-                "index.html",
-                '<div class="site-doors">',
-                '<div class="site-doors">An unreviewed claim.',
-            )
-            self.assert_rejected(site)
-
-    def test_added_inline_script_fails(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            site = self.build_artifact(directory)
-            self.replace_once(
-                site,
-                "index.html",
-                "</head>",
-                "<script>document.body.dataset.unreviewed = 'claim';</script></head>",
-            )
-            self.assert_rejected(site)
-
-    def test_appended_inner_route_claims_fail(self) -> None:
-        for relative in (
-            "challenge/index.html",
-            "company/index.html",
-            "research/index.html",
-            "library/index.html",
-            "faq/index.html",
-        ):
-            with self.subTest(relative=relative), tempfile.TemporaryDirectory() as directory:
-                site = self.build_artifact(directory)
-                self.replace_once(site, relative, "</main>", "<p>An unreviewed claim.</p></main>")
-                self.assert_rejected(site)
+            path = site / "assets" / "opening.js"
+            path.write_bytes(path.read_bytes() + b"\n")
+            with self.assertRaises(AssertionError):
+                check_restored.check(site)
 
 
 if __name__ == "__main__":

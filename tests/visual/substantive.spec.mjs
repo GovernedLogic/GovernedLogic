@@ -42,7 +42,9 @@ test('Homepage and navigation work without JavaScript',async({browser})=>{
 test('Opening completes and leaves content usable',async({page})=>{
  test.setTimeout(45000);await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/');
  await expect(page.locator('#glIntro')).toHaveCount(0,{timeout:20000});
- await page.getByRole('link',{name:'Explore ↓',exact:true}).click();await expect(page.locator('#explore')).toBeInViewport();
+ const invite=page.locator('a.scroll-invite');
+ await expect(invite).toHaveAccessibleName('See what we are building ↓');
+ await invite.click();await expect(page.locator('#explore')).toBeInViewport();
 });
 test('Opening records its chronological visual sequence',async({page},info)=>{
  test.skip(info.project.name==='mobile-320','The opening filmstrip covers desktop and the 390-pixel mobile viewport.');
