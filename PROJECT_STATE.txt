@@ -163,3 +163,18 @@ Required visitor journey and visual acceptance:
 
 DELIVERABLE: separate homepage implementation PR with exact changed files, PRD acceptance mapping, before/after desktop and 390px phone screenshots, build and visual/accessibility QA results, known pre-existing failures separated from new regressions, and explicit confirmation that CNAME/opening/build pipeline are unchanged. Mechanism archive PR #17 remains on hold and must not be combined with this work. Paul retains final release approval; Harriet reviews and coordinates merge only after the finished implementation is visible and verified.
 NEXT OWNER: GL Business Analyst to dispatch Architect/Developer/QA and return a materially improved homepage PR. Harriet will review the actual implementation, not merely the plan.
+
+
+DELIVERY ESCALATION — PAUL / HARRIET, 2026-10-25 02:40 ET
+Verified GitHub status: roughly a day after the current working session began, there is still NO separate substantive homepage redesign branch or implementation PR. The only published homepage change is the earlier section reorder. PR #15 remains documentation/state work; PR #17 remains on hold. No current branch named for a real homepage redesign was found.
+
+This is now the primary blocker. GL Business Analyst must stop treating documentation reconciliation as the main deliverable and immediately direct GL Site Architect, GL Site Developer, and GL QA to produce the materially improved homepage already specified in REAL HOMEPAGE DESIGN PASS. The next meaningful BA update must include an actual implementation branch/PR, changed site files, before/after desktop and 390px screenshots, and QA results. A state-only update without substantive website code does not satisfy this directive.
+
+Priority order:
+1. Build the real homepage design pass now from the approved PRD/canonical content and existing visual system.
+2. QA it on desktop and phone and verify protected CNAME/opening/build boundaries.
+3. Submit the implementation PR to Harriet for review and Paul's release approval.
+4. Keep PR #17 mechanism archive on hold.
+5. Defer non-blocking documentation cleanup, llms.txt implementation, and other secondary work until the homepage implementation PR exists, unless required to build/test that PR safely.
+
+No merge or deployment is authorized by this escalation. Paul retains final release approval. Harriet will review the actual implementation promptly once submitted.
