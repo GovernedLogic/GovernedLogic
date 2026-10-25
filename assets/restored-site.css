@@ -517,3 +517,13 @@ details.faq-item>summary{display:flex;align-items:center;min-height:44px;padding
   body:has(#site)>header.site-bar{order:-1;flex:0 0 auto}
   body:has(#site)>#site{order:0;flex:1 0 auto;min-height:calc(100svh - 88px);height:calc(100svh - 88px)}
 }
+.library-item h2 .gl-go{display:block}
+.library-item h2 .gl-go>button{
+  display:flex;align-items:center;gap:16px;width:100%;
+  min-height:44px;min-width:44px;margin-top:16px;padding:16px 20px;
+  color:var(--ink);background:color-mix(in srgb,var(--bg-2) 82%,transparent);
+  border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 18px 50px rgba(0,0,0,.32);
+  backdrop-filter:blur(16px);
+  font:inherit;line-height:1.2;text-align:left;cursor:pointer;
+}
