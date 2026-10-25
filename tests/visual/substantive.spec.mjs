@@ -59,13 +59,16 @@ test('Opening records its chronological visual sequence',async({page},info)=>{
  const frames=[
   {at:50,name:'01-black',label:'Black field',stage:'black'},
   {at:400,name:'02-trace',label:'Light starts',stage:'trace'},
-  {at:900,name:'03-trace',label:'The band lengthens',stage:'trace'},
-  {at:1400,name:'04-trace',label:'One path, mid circuit',stage:'trace'},
-  {at:1900,name:'05-resolve',label:'Earth shows through',stage:'resolve'},
-  {at:2300,name:'06-resolve',label:'The page returns',stage:'resolve'},
-  {at:2800,name:'07-fade',label:'Veil thinning',stage:'fade'},
-  {at:3200,name:'08-fade',label:'Last of the trace',stage:'fade'},
-  {at:3700,name:'09-complete',label:'Page usable'}
+  {at:800,name:'03-trace',label:'The band lengthens',stage:'trace'},
+  {at:1200,name:'04-trace',label:'One path, mid circuit',stage:'trace'},
+  {at:1500,name:'05-trace',label:'Crossings woven',stage:'trace'},
+  {at:1800,name:'06-resolve',label:'Earth shows through',stage:'resolve'},
+  {at:2200,name:'07-resolve',label:'The page returns',stage:'resolve'},
+  {at:2500,name:'08-resolve',label:'Veil nearly gone',stage:'resolve'},
+  {at:2800,name:'09-fade',label:'Overlay recedes',stage:'fade'},
+  {at:3100,name:'10-fade',label:'Hero almost clear',stage:'fade'},
+  {at:3300,name:'11-fade',label:'Last of the trace',stage:'fade'},
+  {at:3700,name:'12-complete',label:'Page usable'}
  ];
  const directory=path.resolve('visual-qa/motion',info.project.name);await mkdir(directory,{recursive:true});
  const evidence=[];let elapsed=0;
