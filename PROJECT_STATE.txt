@@ -1,73 +1,62 @@
 GOVERNED LOGIC — PROJECT_STATE (SNAPSHOT)
-Updated: 2026-10-25 12:12:52 EDT (Governor)
+Updated: 2026-10-25 18:48:00 EDT (Governor)
 Repository: GovernedLogic/GovernedLogic   Site: https://governedlogic.com/
-What is happening now, what changed, what is blocked, who acts next. Bot configuration says who each bot is; the PRD says what we are building; each PR holds its assignment and evidence.
-History: all earlier entries (including Harriet's dated sections) are in Git history; last full version on main at commit 533282d.
+Current snapshot only: roles, what's live, open decisions, next owner, PR links. History (including Harriet's dated release records) is in Git history; last full version on main at commit 8f97591.
 
 RULES (verbatim)
 - Timestamp standard (Paul directive, recorded by Harriet): All new operational handoffs and state updates must include an exact timestamp in America/New_York local time: YYYY-MM-DD HH:MM:SS EDT or EST, as applicable. Use the correct seasonal abbreviation (EDT during daylight saving time; EST during standard time), not an assumed fixed UTC offset. GitHub commit timestamps remain the independently verifiable source for when Git changes actually occurred. Distinguish the time an event occurred from the time it was reported or recorded; do not invent precision when an external event's exact time is unknown. Each handoff identifies sender, recipient/next owner, action, status, PR/commit if applicable, and timestamp. GL Business Analyst remains the sole Grok-side editor and communicator; Harriet may update her own release/review records. Preserve earlier historical entries without rewriting their times. Keep entries brief and actionable.
 - Communication (Paul, 2026-10-25 10:22:34 EDT): "the project.state.txt file on main is how you communicate with Harriet and the governor is the only one that communicates to Harriet on behalf of the team."
 - Protected files (Harriet, Homepage Delivery Directive): CNAME, domain, opening, render_site.py, canonical definitions, and publication boundaries are protected; do not modify without separate explicit authorization.
 - Lean rule (Paul, 2026-10-25 12:03:00 EDT, via Governor): each PR carries its own evidence (screenshots, QA results, changed files); this file keeps only the current snapshot, with links to PRs. Paul's words: "Hell yes and if I say Paul approves she's just going to have to believe me cuz you would never make that up so I approve it, we got to get lean, it all comes down to words, words, words and when she sees that she'll know it's from me"
-- PR body (Paul, 2026-10-25 12:06 EDT, via Governor; Paul's words: "Yes"): every PR body must include 'Read PROJECT_STATE.txt at main commit: ____'. PR template is being added in #25.
+- PR body (Paul, 2026-10-25 12:06 EDT, via Governor; Paul's words: "Yes"): every PR body must include 'Read PROJECT_STATE.txt at main commit: ____'.
 
 ROLES (Paul, 2026-10-25 10:22:34 EDT)
 - Paul: final authority; only his words approve changes and releases.
-- Harriet: GitHub/release coordinator; reviews and merges.
+- Harriet: GitHub/release coordinator; reviews and merges. Bots never merge.
 - Governor: team lead; requirements, visitor journey, design direction and acceptance; sole Grok-side editor of this file and contact with Harriet.
 - GL Site Architect: durable structure and source fidelity against the two treatises.
 - GL Site Developer: implements on v10.10/* branches; owns repo layout, build, CI, PRs.
 - GL QA: independent verification at 1440/390/320.
 
+PAUL APPROVALS (verbatim, Paul's own words to Governor in Governor's chat, 2026-10-25 EDT)
+- 18:10, for PR #28: "GO LIVE"
+- 18:21: "I approve everything. Everything must go live. Nothing holds up anything. Not my approvals. Nothing" (standing approval; bots still never merge, Harriet merges)
+- 18:21: "I didn't want any links"
+- 18:22: "Go live or die"
+Relayed via GL QA (Paul's words in QA's chat), both about the footer items Ultimate Grounding / About Paul / Library / Follow the chain:
+- 18:15: "i ALWAYS WANTED THEM GONE, THANK YOU1"
+- 18:16: "THEY ARE LINKS, REMEMBER WHAT i SAID ABOUT LINKS"
+
 WHAT'S LIVE
-- main 533282d (each push to main deploys). Release in progress: V10.10 Governed Logic.
-- Merged: #16 https://github.com/GovernedLogic/GovernedLogic/pull/16 ; #18 https://github.com/GovernedLogic/GovernedLogic/pull/18 ; #19 https://github.com/GovernedLogic/GovernedLogic/pull/19 ; #20 approved PRD https://github.com/GovernedLogic/GovernedLogic/pull/20 ; #21 https://github.com/GovernedLogic/GovernedLogic/pull/21
+- main includes #28 overhaul (squash 6416ce9, deployed 18:15, QA verified 51/51 identical) https://github.com/GovernedLogic/GovernedLogic/pull/28 and #29 deploy hotfix (e0f309e) https://github.com/GovernedLogic/GovernedLogic/pull/29 . Each push to main deploys.
 
-OPEN PRs (merge order A #23, B #26, C #24, D #25; QA is re-verifying fixed heads)
-- #22 state (this file, head 5a053bc) https://github.com/GovernedLogic/GovernedLogic/pull/22 — Governor — documentation only — Harriet: review and merge.
-- #23 tests (A) https://github.com/GovernedLogic/GovernedLogic/pull/23 — GL Site Developer — head 6f4b86f, QA re-verifying — then Harriet.
-- #26 front-door (B) https://github.com/GovernedLogic/GovernedLogic/pull/26 — GL Site Developer — head abf8bb8, QA re-verifying — then Harriet, Paul release approval.
-- #24 ci (C) https://github.com/GovernedLogic/GovernedLogic/pull/24 — GL Site Developer — head a58c480, QA re-verifying — then Harriet.
-- #25 repo-hygiene (D) https://github.com/GovernedLogic/GovernedLogic/pull/25 — GL Site Developer — head 29f1ad7, QA re-verifying; adds the PR template — then Harriet.
-- #27 hero-exhibit https://github.com/GovernedLogic/GovernedLogic/pull/27 — GL Site Developer — QA FAIL; held on D-35 — do not merge.
-- #15 old state/llms.txt https://github.com/GovernedLogic/GovernedLogic/pull/15 — superseded — Harriet: close.
-- #17 mechanism archive https://github.com/GovernedLogic/GovernedLogic/pull/17 — HOLD (WEB-178) — do not merge without Paul.
+READY TO MERGE (Harriet), in order
+1. #25 repo hygiene — head 532e3eb, Validate 40240084058 — https://github.com/GovernedLogic/GovernedLogic/pull/25
+2. #30 footer link removal plus COVERAGE.md — head 504080a, Validate 40241144751, QA PASS 18:47 — https://github.com/GovernedLogic/GovernedLogic/pull/30
+3. #31 Library/Publication listings as buttons, zero <a> sitewide — head 47d6a96, Validate 40241192864, QA PASS 18:47 — https://github.com/GovernedLogic/GovernedLogic/pull/31
+- #22 this state file (documentation only) — https://github.com/GovernedLogic/GovernedLogic/pull/22
 
-OPEN DECISIONS (delegated by Paul to Harriet, 2026-10-25 11:16 EDT)
-Paul's words, verbatim: "Harriet can answer these but she's going to have to use governed logic to do it. She's going to have to reason through to answer these questions"
-Top 8 (Governor's default in brackets where sources support one):
-1. D-02/D-01: Drive files are the canonical treatises? [yes] Where are the two 23 Sep clarification captures?
-2. D-30: where treatises are silent, does the 22 Sep repo wording stand? [yes, provisionally, unless a treatise contradicts it]
-3. D-12: approve verbatim reuse for /company/ and the problem section [approve]; "substrate-agnostic" has no source [no default].
-4. D-03/D-31: retarget hero button away from /mechanism.html [yes, to /concepts/governed-intelligence/#current-state]; repair the "triune" blend [no default].
-5. D-04: ~16 s intro on every visit [shorten toward ~11 s, WEB-115].
-6. D-35: remove the hero diagram so the problem comes before the architecture [approve; copy-free] (gates #27).
-7. D-08/D-43: treatise text on HTML pages; publish v0.7 as a source edition [no default].
-8. D-28: authorize render_site.py changes for feed dates/library metadata and a real 404 page [authorize both].
-Full list (D-01–D-45, 44 open): DECISIONS_FOR_HARRIET in Paul's Drive, My Drive/Governed Logic/V10.10 Audit 2026-10-25 (not shared): https://drive.google.com/drive/folders/1bp29dvsxVuzZJFSHDoaTg7HSjJLQj39v
+NOT READY
+- #27 hero exhibit removal (01faac9) https://github.com/GovernedLogic/GovernedLogic/pull/27 — deletes the section 01 copy including "Intelligence is downstream."; rescope or close as superseded.
+- #17 mechanism archive https://github.com/GovernedLogic/GovernedLogic/pull/17 — HOLD (WEB-178).
+- #15 old state/llms.txt https://github.com/GovernedLogic/GovernedLogic/pull/15 — superseded; close.
 
-ADMIN REQUESTS FOR HARRIET
-- Make validate a required PR check once #23 is green.
-- Settings > Pages: Enforce HTTPS.
-- Branch cleanup (~20 merged branches; docs/project-state-grok-reconciliation-2026-10-24 c786728 and review/v17-separated 58cdd9c have commits never on main).
-- Close #15.
+RULINGS
+- Brand button aria-label removed so the accessible name equals the visible text (Governor 18:23).
+- Phone header is two rows at 88px; accepted for now.
+- Orphaned destinations get buttons on their parent page and never go back in the footer.
 
-NEXT ACTIONS
-- Harriet: answer the top 8 decisions; review/merge #22; then #23, #26, #24, #25 in order as QA passes; admin requests above.
-- GL QA: re-verify fixed heads of #23–#26 against their acceptance at 1440/390/320; post evidence in each PR.
-- GL Site Developer: fix any QA failures; keep #27 parked until D-35.
-- Governor: record each QA pass and handoff here with exact timestamps; turn Harriet's answers into the next V10.10 PRs.
-- Paul: release approval for each PR.
-- Paul: decide whether to adopt Harriet's 12:11 recommendations below (and the WEB-196 update that follows from them).
+OPEN DECISIONS
+- Delegated by Paul to Harriet (2026-10-25 11:16 EDT); full list DECISIONS_FOR_HARRIET in Paul's Drive, My Drive/Governed Logic/V10.10 Audit 2026-10-25.
+- #27 scope: rescope or close as superseded.
 
-DESIGN NOTE — Governor, 2026-10-25 11:42 EDT: phone header cap raised from 72px to 96px so menu text can stay at 13px or larger.
+NEXT OWNER
+- Harriet: merge #25, #30, #31 in that order.
+- Then GL QA: verify live at 1440/390/320 and report with exact timestamp.
 
-HARRIET'S REVIEW — 2026-10-25 12:11 EDT
-Sender: Harriet via Paul. Recipient: Governor. Action: review of the lean state file on PR #22 (head 5a053bc). Status: recommendations PROPOSED, not adopted; awaiting Paul's approval.
-- Findings: the lean file "still appends substantial historical material"; PRD WEB-196 still reflects older role assignments (proposed replacement prepared by Governor, not committed).
-- Governing rule (Harriet's words): "Read what you need, when you need it, from the authoritative source."
-- Proposed decision categories:
-  1. Routine engineering: Developer implements, QA verifies, Governor accepts, Harriet checks release readiness under existing authorization.
-  2. Material design: Governor proposes, Architect reviews, Developer implements, QA verifies, Paul approves the finished visual change, Harriet releases.
-  3. Canonical or doctrinal: Paul's explicit approval of the exact content.
-- Proposed role boundaries: Governor decides what the visitor should understand; Architect judges, before implementation, whether the representation preserves canonical meaning and sound structure; QA tests the finished implementation; Harriet verifies evidence and release boundaries without rerunning QA.
+LATER
+- PRD amendments to lock the final visuals after Paul approves them.
+- Favicon.
+- 404 page.
+- Mobile performance.
+- Googlebot-variant guard.

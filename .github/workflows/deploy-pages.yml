@@ -1,7 +1,9 @@
 name: Deploy governedlogic.com
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Validate governedlogic.com"]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -11,18 +13,54 @@ permissions:
   id-token: write
   actions: read
 
-concurrency:
-  group: governedlogic-pages
-  cancel-in-progress: false
-
 jobs:
+  validate:
+    # A manual deploy has no prior Validate governedlogic.com run. Call that
+    # same workflow — release guards, check-corpus, check-origin, and the
+    # visual suite — and do not build unless it succeeds. A push deploy
+    # skips this job because workflow_run already required that success.
+    if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/validate-pages.yml
+
   build:
-    runs-on: ubuntu-latest
+    # Push to main deploys only after Validate governedlogic.com succeeded
+    # for that push. A pull-request run or a failed run does not deploy.
+    # workflow_dispatch deploys github.sha only after the validate job above
+    # succeeds. There is no manual path that skips it.
+    needs: validate
+    if: >-
+      ${{
+        always() && !cancelled() && (
+          (
+            github.event_name == 'workflow_dispatch'
+            && needs.validate.result == 'success'
+          )
+          || (
+            github.event_name == 'workflow_run'
+            && github.event.workflow_run.conclusion == 'success'
+            && github.event.workflow_run.event == 'push'
+            && github.event.workflow_run.head_branch == 'main'
+          )
+        )
+      }}
+    # One production deploy at a time. The group is on the build and deploy
+    # jobs, not the workflow, so a pull-request validate run skips these jobs
+    # and cannot cancel a push deploy that is waiting. A second deploy waits
+    # until the first finishes; an in-progress deploy is not cancelled.
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Build reviewed public artifact
         run: python3 scripts/build_site.py --output "${{ runner.temp }}/site"
       - name: Verify artifact boundary
@@ -32,7 +70,7 @@ jobs:
           node --check "${{ runner.temp }}/site/assets/earth-renderer.js"
           node --check "${{ runner.temp }}/site/assets/material-environment.js"
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ${{ runner.temp }}/site
 
@@ -40,18 +78,30 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
+    # Same pages-deploy group as build. A skipped build leaves this job
+    # skipped, so it does not take the group.
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
+    # A skipped validate job makes the default success() false.
+    if: ${{ !cancelled() && needs.build.result == 'success' }}
     steps:
       - name: Deploy reviewed artifact
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: deploy
+    # A skipped deploy must not count as success for the live check.
+    if: ${{ !cancelled() && needs.deploy.result == 'success' }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
       - name: Verify live routes and publication boundary
         run: python3 scripts/check-restored.py --live https://governedlogic.com --attempts 6 --delay 10

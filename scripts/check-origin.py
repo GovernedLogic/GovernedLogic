@@ -5,9 +5,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 from html.parser import HTMLParser
+import importlib.util
 import json
 from pathlib import Path
 import re
+import tempfile
 import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin
@@ -773,6 +775,18 @@ def live_checks(base_url: str, attempts: int, delay: float) -> None:
     raise AssertionError("Live checks failed: " + "; ".join(last_errors))
 
 
+def restored_checker():
+    """The current publication boundary lives in check-restored.py."""
+    spec = importlib.util.spec_from_file_location(
+        "check_restored", Path(__file__).with_name("check-restored.py")
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError("Unable to load scripts/check-restored.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", default=str(ROOT), help="Repository or staged artifact root")
@@ -781,9 +795,21 @@ def main() -> None:
     parser.add_argument("--attempts", type=int, default=1)
     parser.add_argument("--delay", type=float, default=10)
     args = parser.parse_args()
-    local_checks(Path(args.root).resolve(), args.artifact)
-    if args.live:
-        live_checks(args.live, max(1, args.attempts), max(0, args.delay))
+    restored = restored_checker()
+    attempts = max(1, args.attempts)
+    delay = max(0, args.delay)
+    if args.artifact:
+        root = Path(args.root).resolve()
+        restored.check(root)
+        if args.live:
+            restored.live(root, args.live, attempts, delay)
+    else:
+        with tempfile.TemporaryDirectory(prefix="gl-origin-", ignore_cleanup_errors=True) as temp:
+            root = Path(temp) / "site"
+            restored.build(root)
+            restored.check(root)
+            if args.live:
+                restored.live(root, args.live, attempts, delay)
     print("Current public-release acceptance passed.")
 
 
