@@ -35,34 +35,57 @@ import render_site  # noqa: E402
 REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
 # Published homepage, exhibit included, arrows exact. Hero appends the one
 # reviewed exhibit-removed digest to this tuple and nothing else.
+# index.html: #explore is a button, the two /mechanism.html forms are restored, and the brand name equals its visible text.
 HOMEPAGE_DIGESTS = (
-    "550acca45cd4a6502e2532e68c6cefb2f014b018f8b365f0939dedb8da51709a",
+    "66e0ae03603154176d379d44410103a13ef0f98e25509785ee94f23d7d49202f",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
-    "challenge/index.html": ("0efa1741949b9e6f6b63702d7e6701e2693abc829fcf706623c116dfeecf9df0",),
-    "company/index.html": ("4280c66c303ff4074ba5f941450ae7030666d1d5f00019e355d44e0861ea7b73",),
-    "research/index.html": ("85dd17eb780dbb38207475c1d811f98509026299e0f50ac6bcd37c0d46d98f5e",),
-    "about/index.html": ("ee45a58b31bbb74796ebebadb0bc022a1b3e1cec6cbe37cb1e88915e7a1ca611",),
-    "faq/index.html": ("1fac02d38af4a4555504d6d857f6cb52c5a080fc129c9331bccb3bb86d040470",),
-    "concepts/index.html": ("caf634656d860cde017f77717db83e09100e086307df5ae81eec077d683f3e8b",),
-    "concepts/governed-logic/index.html": ("41e6633ff911b81794a91f3b351bd9262ba6ddab4091376f6c9a794f06302671",),
-    "concepts/governed-intelligence/index.html": ("ff14400ebfe4dee864b45f8c6eb1657f7dab6298f680a68ced7bbb665915760d",),
-    "concepts/ultimate-grounding/index.html": ("0fbb9bbbf3a77c0a78f3449b61814416231544833e26fda3f923cd60c18a6d8d",),
-    "concepts/alpha-and-omega-reasoning/index.html": ("04498559484023e1d9aa608cbdd15c712211d8686d561bbf9bdcab53a00680b7",),
-    "concepts/governing-referent/index.html": ("4676a0d8638d257d3996044234b80f7d7f19b72a457a665c52bf9c91f81b1a93",),
-    "concepts/sufficient-grounding/index.html": ("04953fe85d7db22f0a398565ee2aef107700985b799c5fe772ebf02fdb8fc7c5",),
-    "mechanism.html": ("2b3f2575d11515db7b6c48effd44bbdeebbbdf21fa3a3f93e2e82680bcce0901",),
-    "sources/index.html": ("344cc7b5fd6f7c909a7f30eb4f80040c8a46a1a3cf94bf1a8dee148fdb98bd20",),
-    "articles/why-anything/index.html": ("c51411b3b296a20d1a7a0c9015214c59941a6024f435c8db3c87d7ace6162f7d",),
-    "articles/integrity-in-artificial-intelligence/index.html": ("2a134239aea296745b2970956506251bf8502a7f4abfe2f05fb140dbaaaaa0a9",),
-    "library/index.html": ("22dcfbb33b3afba973dff54c1d8e69f316dde7b5a0b57dde2bb524f6aabb953b",),
-    "publication/index.html": ("d5584a7da59ac8adf16a40a9a53a7caed66073cd6b5ac157193b650a821f224c",),
+    # challenge/index.html: footer labels restored. Brand accessible name equals the visible text, so every page digest moved.
+    "challenge/index.html": ("ee1b7f205e8dc46a62711ad97d4ef44995e5509b7df93b3fa0d81b9c3e8a6117",),
+    # company/index.html: same restored footer labels.
+    "company/index.html": ("fcf2f6cf0ad74eaaf8bb64929f82f7d4b6b5120086d94de4c04915ca78ef0427",),
+    # research/index.html: same restored footer labels. Parent-page buttons are not in this pin.
+    "research/index.html": ("a2b9e60119b6dd154fc7d90cd55a1401314b5b5986e9f2b2d06a84f97d92e0ab",),
+    # about/index.html: same restored footer labels.
+    "about/index.html": ("7ce6f840fd09025d105e2ffaa5d1d30f89d09855d20297bb12f7cdc53e201efd",),
+    # faq/index.html: same restored footer labels.
+    "faq/index.html": ("34680b1cb607c86f61b87e1d6f5319e6247e40201e000f4baeab7ff7dbe269f4",),
+    # concepts/index.html: same restored footer labels. The Alpha and Omega button is not in this pin.
+    "concepts/index.html": ("f63c6acd3df0ea7c9314962d0255717c8981b9633555a6d1dae302d967c3c5d4",),
+    # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
+    "concepts/governed-logic/index.html": ("45a37bd24089bf66cb9540125f2203f2b704aeb39d8d619b693f4f1b4f002bf6",),
+    # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
+    "concepts/governed-intelligence/index.html": ("24a72041b32f5a448a614705396e90ae95a6a58e868a9efe3330b55861e03095",),
+    # concepts/ultimate-grounding/index.html: same restored footer labels.
+    "concepts/ultimate-grounding/index.html": ("f863e51f5cf76a2e57492e22944e2fb72a3eae08daa1d16632fc5cfeba3e4394",),
+    # concepts/alpha-and-omega-reasoning/index.html: same restored footer labels.
+    "concepts/alpha-and-omega-reasoning/index.html": ("13734bad73413b9a2e596048768ed0b1bb1d06a50de20557a5503a905e7eb4dd",),
+    # concepts/governing-referent/index.html: same restored footer labels.
+    "concepts/governing-referent/index.html": ("df6710c78b617536665e9d10a08b3d16ac82bcda395f5d85575a855264144469",),
+    # concepts/sufficient-grounding/index.html: same restored footer labels.
+    "concepts/sufficient-grounding/index.html": ("4a520393ded4b8ac4e29701d1eb46795751a1c1d9ac4238660c3a58526f90811",),
+    # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
+    "mechanism.html": ("d20ed6b26d35dfe58c8005d951a45a50a25b42ac7624a4de792d5d40ec6c7931",),
+    # sources/index.html: same restored footer labels.
+    "sources/index.html": ("689455c1b5af851231ad96763b3517852173867975e927a66373e758042ea25a",),
+    # articles/why-anything/index.html: same restored footer labels.
+    "articles/why-anything/index.html": ("f94d669bddd2266b6276cb11719a11771d8327a7565fffd6ea0f30a5dccef2f3",),
+    # articles/integrity-in-artificial-intelligence/index.html: same restored footer labels.
+    "articles/integrity-in-artificial-intelligence/index.html": ("89bddc62081c75b6105917792caa31758fb924c6450ba99a9ec9ca4e339ed413",),
+    # library/index.html: generated page picks up the restored footer labels.
+    "library/index.html": ("c65c92b95fb237e35426a709092ba6309e8b9f9416f35a55d508c6f6967c38a4",),
+    # publication/index.html: generated page picks up the restored footer labels.
+    "publication/index.html": ("12b51ffd1b30784fbdc57a53197b31ceec550ec0d46b19822eefa89d61f70840",),
 }
-OPENING_DIGEST = "8d61ee828cf5dd5f1dd1ac060f7c0b74bd39a8be7b9e3745b86afdb247f7dba2"
-# The mechanism copy button is the only reviewed inline script.
+# Opening words are unchanged. The #explore anchor is no longer in the opening record.
+OPENING_DIGEST = "e4525a6b1741253a9ddf32a04e183588998f354f737189dab236a889f1f8c39d"
+# Header skip/current script, plus the mechanism copy button after it.
+_HEADER_SCRIPT = "56aa3c97ea8b9ef40eee9611ac9dd6f3dda62f9acd1dd9c470b1bb0c34a46fcf"
+_COPY_SCRIPT = "84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e"
 REVIEWED_INLINE_SCRIPTS = {
-    "mechanism.html": ("84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e",),
+    relative: (_HEADER_SCRIPT, _COPY_SCRIPT) if relative == "mechanism.html" else (_HEADER_SCRIPT,)
+    for relative in (*REVIEWED_PAGES,)
 }
 INLINE_SCRIPT = re.compile(r"<script\b([^>]*)>(.*?)</script>", re.IGNORECASE | re.DOTALL)
 EXTERNAL_SCRIPT = re.compile(r"\bsrc\s*=", re.IGNORECASE)
@@ -388,6 +411,36 @@ class ReleaseGuardTests(unittest.TestCase):
                     with self.assertRaisesRegex(AssertionError, message):
                         check_restored.check(site)
 
+    def test_anchor_set_rejects_planted_library_about_link(self) -> None:
+        """Library listings are exactly the catalog paths. area and data-href count as anchors."""
+        plants = (
+            (
+                "library/index.html",
+                '<main class="document-main" id="content">',
+                '<main class="document-main" id="content"><a href="/about/">About Paul</a>',
+                "Unexpected anchor",
+            ),
+            (
+                "index.html",
+                '<main class="home-content" id="content" tabindex="-1">',
+                '<main class="home-content" id="content" tabindex="-1"><area href="/about/">',
+                "Unexpected anchor",
+            ),
+            (
+                "index.html",
+                '<main class="home-content" id="content" tabindex="-1">',
+                '<main class="home-content" id="content" tabindex="-1"><span data-href="/about/"></span>',
+                "Unexpected anchor",
+            ),
+        )
+        for relative, old, new, message in plants:
+            with self.subTest(relative=relative, message=message):
+                with tempfile.TemporaryDirectory() as directory:
+                    site = self.build_artifact(directory)
+                    self.replace_once(site, relative, old, new)
+                    with self.assertRaisesRegex(AssertionError, message):
+                        check_restored.check(site)
+
     def test_opening_asset_altered_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
@@ -627,8 +680,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit">Research</button>',
-                '<button type="submit">Studies</button>',
+                '<button type="submit" href="/research/">Research</button>',
+                '<button type="submit" href="/research/">Studies</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
@@ -639,8 +692,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit">Library</button>',
-                '<button type="submit">Archive</button>',
+                '<button type="submit" href="/faq/">FAQ</button>',
+                '<button type="submit" href="/faq/">Questions</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)

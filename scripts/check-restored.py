@@ -5,6 +5,7 @@ from urllib.parse import urljoin,urlsplit,unquote
 from urllib.request import Request,urlopen
 from urllib.error import HTTPError,URLError
 from concurrent.futures import ThreadPoolExecutor
+from collections import Counter
 import argparse,hashlib,json,re,tempfile,time
 from render_site import ROOT,PAGES,PUBLIC_FILES,ASSETS,SOURCE_FILES,build,route,main_text,BASE
 class Doc(HTMLParser):
@@ -78,15 +79,24 @@ def check(root):
             if (form.get('target') or '').lower()=='_blank':errors.append('Internal form target=_blank: '+where)
         if d.hidden:errors.append('Hidden input is not allowed: '+p)
         if d.button_query:errors.append('Button name or value is not allowed: '+p)
-        allowed={'library/index.html','publication/index.html'}
-        for href in d.anchors:
-            if p in allowed:continue
-            if p=='mechanism.html' and href in ('/','#copy'):continue
-            if p=='index.html' and href=='#explore':continue
-            errors.append(f'Unexpected anchor: {p} -> {href}')
         for href in d.blank:
             u=urlsplit(urljoin(BASE+route(p),href))
             if u.netloc in ('',urlsplit(BASE).netloc):errors.append(f'Internal target=_blank: {p} -> {href}')
+    catalog=json.loads((root/'publication/catalog.json').read_text(encoding='utf-8'))
+    listing=Counter(record['path'] for record in catalog['records'] if record.get('path')!='/')
+    # Home has zero anchors: #explore is a scroll button (Governor 16:46), stricter than one #explore.
+    expected_anchors={
+        'library/index.html':listing,
+        'publication/index.html':listing,
+        'mechanism.html':Counter({'/':1,'#copy':1}),
+    }
+    for p,d in docs.items():
+        for tag,attrs in d.tags:
+            if tag=='area' and attrs.get('href') is not None:errors.append(f'Unexpected anchor area: {p} -> {attrs.get("href")}')
+            if 'data-href' in attrs:errors.append(f'Unexpected anchor data-href: {p} -> {attrs.get("data-href")}')
+        got=Counter(d.anchors)
+        exp=expected_anchors.get(p, Counter())
+        if got!=exp:errors.append(f'Unexpected anchor set: {p} expected {dict(exp)} got {dict(got)}')
     faq=json.loads((root/'faq/index.json').read_text(encoding='utf-8'))
     visible=main_text((root/'faq/index.html').read_text(encoding='utf-8'))
     for q in faq['mainEntity']:
