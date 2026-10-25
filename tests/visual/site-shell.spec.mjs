@@ -13,11 +13,11 @@ const ROUTES = [
   { path: "/faq/", slug: "faq" }
 ];
 const EXPECTED_NAVIGATION = [
-  { href: "/challenge/", label: "Follow the chain." },
+  { href: "/concepts/governed-logic/", label: "Governed Logic" },
+  { href: "/concepts/ultimate-grounding/", label: "Ultimate Grounding" },
+  { href: "/concepts/governed-intelligence/", label: "Governed Intelligence" },
   { href: "/company/", label: "Company" },
-  { href: "/research/", label: "Research" },
-  { href: "/library/", label: "Canonical Library" },
-  { href: "/faq/", label: "FAQ" }
+  { href: "/research/", label: "Research" }
 ];
 
 for (const routeDefinition of ROUTES) {
