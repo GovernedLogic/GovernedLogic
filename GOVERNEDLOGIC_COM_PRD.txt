@@ -540,13 +540,30 @@ Complete treatise coverage does not mean pasting both treatises onto the homepag
 
 WEB-157
 No page may reverse, collapse, or blend distinct source claims. At minimum, preserve these distinctions wherever applicable:
+- ground, dependence, sufficiency, ultimacy, termination, and halt;
+- criteria of non-dependence and the relation between dependence and bindingness;
 - a halt is not a termination;
 - a representation is not its referent;
 - logic does not establish premise truth by itself;
+- the six domain chains remain distinct before they are tested together under the total-load rule;
+- specification of the required ground and identification of the candidate are distinct stages with different evidentiary burdens;
+- specification-level rivals and identity-level rivals are not the same objection;
+- the symmetrical terminus rule and explicit failure conditions apply to every candidate;
 - Governed Logic is upstream of reasoning and intelligence;
 - Governed Intelligence is the artificial-intelligence instantiation of Governed Logic;
 - Alpha and Omega reasoning is within Governed Logic;
 - a generated answer is a candidate until adjudicated.
+
+The Governed Logic source base also requires the website graph to preserve, where represented:
+- the fixed-point / governing-referent discipline without rhetorical force;
+- rejection of weak or invalid semantic edges;
+- co-reference is not synonymy;
+- "Who is the referent?" and "What relationship does this expression assert?" as separate questions;
+- REFERENT -> CREATION -> REPRESENTATION -> REFERENT;
+- the asterisk / little star as pointer rather than referent;
+- the every-word fixed-point test with serious candidates and ridiculous controls under the same traversal rules;
+- explicit governing referent, binding principles, adjudication path, and termination condition for Governed Intelligence;
+- the proposed falsifier: coherent truth-answerable AI reasoning with no governing referent or equivalent grounding structure and no implicit borrowing.
 
 WEB-158
 The public site may summarize a canonical passage only when the summary preserves its meaning and is traceable to the source. When exact wording carries the argument, use the exact approved wording. Do not resume theoretical development through website copy.
