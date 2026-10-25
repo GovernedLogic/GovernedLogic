@@ -178,3 +178,29 @@ Priority order:
 5. Defer non-blocking documentation cleanup, llms.txt implementation, and other secondary work until the homepage implementation PR exists, unless required to build/test that PR safely.
 
 No merge or deployment is authorized by this escalation. Paul retains final release approval. Harriet will review the actual implementation promptly once submitted.
+
+
+APPROVED PRD HANDOFF — 2026-10-25
+Paul approved the reconciled GOVERNEDLOGIC_COM_PRD.txt; PR #20 merged as commit 26ec768b37a8366605513394b8c80bcf2963b04b. This PRD is now the current executable website requirements source of truth. Earlier state instructions that conflict with it are superseded.
+
+NEXT IMPLEMENTATION CYCLE — REQUIRED BY WEB-154/155/187
+GL Business Analyst is the sole Grok-side communicator and must now coordinate the Architect, Developer, and QA around the approved PRD as a whole, not around isolated historical PRs.
+1. Create one treatise-to-website traceability matrix covering every load-bearing section/proposition in the two foundational sources named in WEB-153. Each record must contain the fields required by WEB-155 and be classified PASS, CORRECTION REQUIRED, INTENTIONAL OMISSION, or HOLD.
+2. Audit the current published website and all current public routes against the approved PRD and traceability matrix. Do not rebuild anything that already passes.
+3. Convert only actual gaps into a prioritized implementation backlog, with the homepage contract (WEB-160 through WEB-169), machine/human correspondence, demonstrations/current capability (WEB-188 through WEB-191), application domains (WEB-193), and distribution ecosystem (WEB-194/195) explicitly checked.
+4. Preserve all existing work that passes. No wholesale rewrite.
+5. No missing doctrine may be invented. Any unresolved source/identity/publication question is HOLD for Paul.
+6. GL Site Architect and GL QA must separately challenge the matrix for source fidelity and false PASS results before implementation begins.
+7. The first implementation PR after the audit should address the highest-impact CORRECTION REQUIRED items that materially improve the visitor experience, with WEB-180/181 evidence. Paul retains final release approval; Harriet reviews and coordinates only approved merges.
+
+SOURCE AUTHORITY FOR THE MATRIX
+- On the Nature of Ultimate Grounding: /Governed Logic/Canon/Ultimate Grounding/On_the_Nature_of_Ultimate_Grounding_v0.7_2026-09-26.txt (canonical source identified in WEB-153).
+- Governed Logic: /Governed Logic/Canon/Governed Logic.txt, plus the explicit later clarifications named in WEB-153.
+Harriet independently located the two base files in Paul's Google Drive and confirmed their identities before issuing this handoff. Use the PRD/source-authority map to resolve any later-clarification files; do not substitute similarly named drafts.
+
+CURRENT RELEASE NOTES
+- PR #18 and PR #19 are already merged and published; evaluate them under the new PRD rather than treating them as proof of overall compliance.
+- PR #17 mechanism archive remains HOLD under WEB-178; do not merge.
+- PR #15 is superseded as an operational handoff by the approved PRD/current PROJECT_STATE where conflicts exist; do not merge stale state merely to preserve old chronology. Git already preserves its history.
+
+NEXT OWNER: GL Business Analyst to return the traceability matrix + current-site compliance audit for Harriet review. The next meaningful milestone is quantified PRD compliance and a gap-backed implementation backlog, not another isolated tweak.
