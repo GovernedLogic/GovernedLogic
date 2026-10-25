@@ -34,6 +34,9 @@ REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.h
 # reviewed exhibit-removed digest to this tuple and nothing else.
 HOMEPAGE_DIGESTS = (
     "c226934b60fdc848e658993bcf27fc49da6580b250e8d0f9a8f3ed9fadd2fb6f",
+    # Reviewed removal of the reasoning exhibit (held for D-35). Text and
+    # links otherwise match main a1a367c. Any other homepage still fails.
+    "ae9c14b13d40786026235f3c48246618d77533a172a0b2e1832e7dc19917f880",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
