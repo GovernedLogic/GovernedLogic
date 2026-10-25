@@ -8,17 +8,33 @@ from concurrent.futures import ThreadPoolExecutor
 import argparse,hashlib,json,re,tempfile,time
 from render_site import ROOT,PAGES,PUBLIC_FILES,ASSETS,SOURCE_FILES,build,route,main_text,BASE
 class Doc(HTMLParser):
-    def __init__(self):super().__init__();self.tags=[];self.ids=[];self.refs=[];self.canonical=[];self.json=[];self.capture=None
+    def __init__(self):
+        super().__init__();self.tags=[];self.ids=[];self.refs=[];self.canonical=[];self.json=[];self.capture=None
+        self.forms=[];self._form=None;self.anchors=[];self.hidden=[];self.button_query=[];self.blank=[]
     def handle_starttag(self,tag,attrs):
         a=dict(attrs);self.tags.append((tag,a))
         if 'id' in a:self.ids.append(a['id'])
         if tag=='link' and a.get('rel')=='canonical':self.canonical.append(a.get('href'))
         for key in ('href','src'):
-            if a.get(key):self.refs.append(a[key])
+            if a.get(key) and tag not in ('form','button'):self.refs.append(a[key])
+        if tag=='a' and a.get('href') is not None:self.anchors.append(a.get('href'))
+        if tag=='form':
+            self._form={'method':(a.get('method') or 'get').strip().lower(),'action':a.get('action'),'named':0,'target':(a.get('target') or '')}
+            self.forms.append(self._form)
+        if tag=='input' and (a.get('type') or '').lower()=='hidden':self.hidden.append(a.get('name') or '')
+        if tag in ('button','input'):
+            kind=(a.get('type') or ('submit' if tag=='button' else '')).lower()
+            if kind in ('submit','button','') and (a.get('name') or a.get('value') is not None and tag=='button'):
+                if a.get('name') or (tag=='button' and 'value' in a):self.button_query.append((a.get('name'),a.get('value')))
+            if tag in ('button','input') and self._form is not None and a.get('name') and kind=='submit':self._form['named']+=1
+        if (a.get('target') or '').lower()=='_blank' and (a.get('href') or a.get('action')):self.blank.append(a.get('href') or a.get('action'))
+        if a.get('formaction') is not None:
+            self.forms.append({'method':(a.get('formmethod') or (self._form or {}).get('method') or 'get').strip().lower(),'action':a.get('formaction'),'named':1 if a.get('name') else 0,'formaction':True,'inform':self._form is not None})
         if tag=='script' and a.get('type') in ('application/ld+json','application/json'):self.capture=''
     def handle_data(self,data):
         if self.capture is not None:self.capture+=data
     def handle_endtag(self,tag):
+        if tag=='form':self._form=None
         if tag=='script' and self.capture is not None:self.json.append(json.loads(self.capture));self.capture=None
 def check(root):
     errors=[]
@@ -47,6 +63,30 @@ def check(root):
             if target.endswith('/') or not target:target+='index.html'
             if not (root/target).is_file():errors.append(f'Broken link/asset: {p} -> {ref}')
             elif u.fragment and target in docs and u.fragment not in docs[target].ids:errors.append(f'Missing anchor: {p} -> {ref}')
+        for form in d.forms:
+            raw=form['action'];where=f'{p} form action={raw!r}'
+            if form['method']!='get':errors.append('Form method must be get: '+where)
+            if raw is not None and '?' in raw:errors.append('Form action must not contain a query: '+where)
+            if form['named']:errors.append('Named submit is not allowed: '+where)
+            if form.get('formaction') and not form.get('inform'):errors.append('formaction outside a form: '+where)
+            if raw is None:continue
+            u=urlsplit(urljoin(BASE+route(p),raw))
+            if u.netloc!=urlsplit(BASE).netloc:errors.append('External form action: '+where);continue
+            target=unquote(u.path.lstrip('/'))
+            if target.endswith('/') or not target:target+='index.html'
+            if not (root/target).is_file():errors.append(f'Form action is not a built route or file: {p} -> {raw}')
+            if (form.get('target') or '').lower()=='_blank':errors.append('Internal form target=_blank: '+where)
+        if d.hidden:errors.append('Hidden input is not allowed: '+p)
+        if d.button_query:errors.append('Button name or value is not allowed: '+p)
+        allowed={'library/index.html','publication/index.html'}
+        for href in d.anchors:
+            if p in allowed:continue
+            if p=='mechanism.html' and href in ('/','#copy'):continue
+            if p=='index.html' and href=='#explore':continue
+            errors.append(f'Unexpected anchor: {p} -> {href}')
+        for href in d.blank:
+            u=urlsplit(urljoin(BASE+route(p),href))
+            if u.netloc in ('',urlsplit(BASE).netloc):errors.append(f'Internal target=_blank: {p} -> {href}')
     faq=json.loads((root/'faq/index.json').read_text(encoding='utf-8'))
     visible=main_text((root/'faq/index.html').read_text(encoding='utf-8'))
     for q in faq['mainEntity']:

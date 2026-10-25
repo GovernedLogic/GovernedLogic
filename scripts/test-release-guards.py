@@ -355,6 +355,42 @@ class ReleaseGuardTests(unittest.TestCase):
             with self.assertRaises(AssertionError):
                 check_restored.check(site)
 
+    def test_copy_guard_rejects_query_leaks_and_anchors(self) -> None:
+        mutations = (
+            (
+                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="post" action="/company/"><button type="submit" href="/company/">Company</button>',
+                "Form method must be get",
+            ),
+            (
+                '<button type="submit" href="/research/">Research</button>',
+                '<button type="submit" name="x" value="1" href="/research/">Research</button>',
+                "Button name or value",
+            ),
+            (
+                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="get" action="/company/"><input type="hidden" name="q" value="1"><button type="submit" href="/company/">Company</button>',
+                "Hidden input",
+            ),
+            (
+                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="get" action="/company/" target="_blank"><button type="submit" href="/company/">Company</button>',
+                "target=_blank",
+            ),
+            (
+                '<button type="submit" href="/research/">Research</button>',
+                '<a href="/research/">Research</a>',
+                "Unexpected anchor",
+            ),
+        )
+        for old, new, message in mutations:
+            with self.subTest(message=message):
+                with tempfile.TemporaryDirectory() as directory:
+                    site = self.build_artifact(directory)
+                    self.replace_once(site, "index.html", old, new)
+                    with self.assertRaisesRegex(AssertionError, message):
+                        check_restored.check(site)
+
     def test_opening_asset_altered_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
