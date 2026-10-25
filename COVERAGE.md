@@ -1,3 +1,20 @@
+# Follow-up coverage
+
+orphans=0. machine=0.
+
+The four removed footer controls are not site-wide orphans. No parent-page button was added.
+
+| Destination | Reached now | Depth from / | Worst-page depth before | Worst-page depth now |
+|---|---|---|---|---|
+| /concepts/ultimate-grounding/ | Header on every page, label Ultimate Grounding | 1 | 1 | 1 |
+| /about/ | Homepage control "Read Paul's story" | 1 | 1 | 2 |
+| /library/ | Homepage control "The library" | 1 | 1 | 2 |
+| /challenge/ | Homepage control "The inquiry" (page title: Follow the chain.) | 1 | 1 | 2 |
+
+Worst-page depth is 2 for About, Library, and Follow the chain because the footer control that sat on every page is gone. Each is still one click from the homepage. A button only on the parent page would also be two clicks from every other page, so it would not restore the old depth.
+
+Skip links outside render_site.py were already focus buttons that move focus to main. The remaining anchors are the 42 library and publication listings emitted by render_site.py.
+
 | Route | Old anchor text | Old href | New mechanism + label | Status |
 |---|---|---|---|---|
 | /about/ | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
@@ -129,9 +146,9 @@
 | /concepts/governed-intelligence/ | Ultimate Grounding | /concepts/ultimate-grounding/ | dest already covered on page | SAME-PAGE (duplicate) |
 | /concepts/governed-intelligence/ | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
 | /concepts/governed-intelligence/ | Library | /library/ | — | C-FIDELITY (reachable elsewhere only) |
-| /concepts/governed-intelligence/ | Inspect and copy the public prototype → | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
-| /concepts/governed-intelligence/ | Instruction-level prototype and limitations | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
-| /concepts/governed-intelligence/ | The prototype | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
+| /concepts/governed-intelligence/ | Inspect and copy the public prototype → | /mechanism.html | form: "Inspect and copy the public prototype →" | SAME-PAGE |
+| /concepts/governed-intelligence/ | Instruction-level prototype and limitations | /mechanism.html | form: "Instruction-level prototype and limitations" | SAME-PAGE |
+| /concepts/governed-intelligence/ | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
 | /concepts/governed-intelligence/ | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
 | /concepts/governed-intelligence/ | Research | /research/ | form: "Research" | SAME-PAGE |
 | /concepts/governed-intelligence/ | Research → | /research/ | form: "Research →" | SAME-PAGE |
@@ -153,8 +170,8 @@
 | /concepts/governed-logic/ | Ultimate Grounding → | /concepts/ultimate-grounding/ | dest already covered on page | SAME-PAGE (duplicate) |
 | /concepts/governed-logic/ | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
 | /concepts/governed-logic/ | Library | /library/ | — | C-FIDELITY (reachable elsewhere only) |
-| /concepts/governed-logic/ | Public prototype → | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
-| /concepts/governed-logic/ | The prototype | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
+| /concepts/governed-logic/ | Public prototype → | /mechanism.html | form: "Public prototype →" | SAME-PAGE |
+| /concepts/governed-logic/ | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
 | /concepts/governed-logic/ | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
 | /concepts/governed-logic/ | Research | /research/ | form: "Research" | SAME-PAGE |
 | /concepts/governed-logic/ | Sources & editions | /sources/ | form: "Sources & editions" | SAME-PAGE |
@@ -290,9 +307,9 @@
 | / | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
 | / | 01 The library Concepts, source treatises, and the reasoning architect | /library/ | form: "The library" (label differs) | SAME-PAGE |
 | / | Library | /library/ | dest already covered on page | SAME-PAGE (duplicate) |
-| / | Explore the working prototype ↗ | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
-| / | Read and test the instructions → | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
-| / | The prototype | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
+| / | Explore the working prototype ↗ | /mechanism.html | form: "Explore the working prototype ↗" | SAME-PAGE |
+| / | Read and test the instructions → | /mechanism.html | form: "Read and test the instructions →" | SAME-PAGE |
+| / | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
 | / | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
 | / | Explore the research method → | /research/ | form: "Explore the research method →" | SAME-PAGE |
 | / | Research | /research/ | form: "Research" | SAME-PAGE |
@@ -337,7 +354,7 @@
 | /library/ | Business strategy — additional direction · Source edition → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | a: "Business strategy — additional direction · Source " | STILL-A |
 | /mechanism.html | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
 | /mechanism.html | Governed Logic Reasoning Systems | / | form: "Governed Logic Reasoning Systems" | SAME-PAGE |
-| /mechanism.html | ← Governed Logic | / | a: "← Governed Logic" | STILL-A |
+| /mechanism.html | ← Governed Logic | / | form: "← Governed Logic" | SAME-PAGE |
 | /mechanism.html | About Paul | /about/ | — | C-NOTE (reachable elsewhere only) |
 | /mechanism.html | Follow the chain. | /challenge/ | — | C-NOTE (reachable elsewhere only) |
 | /mechanism.html | Company | /company/ | form: "Company" | SAME-PAGE |
@@ -439,167 +456,4 @@
 | /sources/ | Read the source PDF → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | form: "Read the source PDF →" | SAME-PAGE |
 | /sources/ | Read the complete supplied addendum → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | form: "Read the complete supplied addendum →" | SAME-PAGE |
 
-SAME-PAGE=304, STILL-A=43, FRAG=0, C-FIDELITY=34, C-NOTE=12, ORPHAN=0, SELF=45
-
-## Parent routes
-
-These three destinations stay in the generated library and publication listings. Each also has a form on its parent page, outside `main`, so the catalog text is unchanged. `render_site.py` is untouched.
-
-| Parent | Control | Destination |
-|---|---|---|
-| /concepts/ | Alpha and Omega Reasoning | /concepts/alpha-and-omega-reasoning/ |
-| /research/ | Why Anything? | /articles/why-anything/ |
-| /research/ | Integrity in Artificial Intelligence | /articles/integrity-in-artificial-intelligence/ |
-
-## Content sections
-
-| Route | Section | Headings |
-|---|---|---|
-| /about/ | paul | h1: Paul André Couchoud |
-| /about/ | section 2 | h2: Why Anything and Alignment |
-| /articles/integrity-in-artificial-intelligence/ | section 1 | h1: Integrity in Artificial Intelligence |
-| /articles/why-anything/ | section 1 | h1: Why Anything? |
-| /challenge/ | section 1 | h1: Follow the chain. |
-| /challenge/ | section 2 | h2: Representations are answerable to their referents. |
-| /challenge/ | section 3 | h2: Truth governs logic. |
-| /company/ | section 1 | h1: A reasoning systems company. |
-| /company/ | identity | h2: The work begins upstream of intelligence. |
-| /company/ | governed-intelligence-development | h2: Governed Intelligence |
-| /company/ | section 4 | h2: Reasoning engine and API <br> h3: The Governed Logic Reasoning Engine <br> h3: Reasoning API |
-| /company/ | engagements | h2: Work follows from the problem. |
-| /company/ | publishing | h2: Authorship and publishing |
-| /company/ | section 7 | h2: Sources and version |
-| /concepts/alpha-and-omega-reasoning/ | section 1 | h1: Alpha and Omega Reasoning |
-| /concepts/alpha-and-omega-reasoning/ | section 2 | h2: Sources and version |
-| /concepts/governed-intelligence/ | section 1 | h1: Governed Intelligence |
-| /concepts/governed-intelligence/ | architecture-not-prompt | h2: The architecture is not the prompt. |
-| /concepts/governed-intelligence/ | current-state | h2: What exists now. |
-| /concepts/governed-intelligence/ | commitment | h2: The issue is what governs commitment. |
-| /concepts/governed-intelligence/ | principles | h2: Six principles under a named governing referent. |
-| /concepts/governed-intelligence/ | research-boundary | h2: Behavioral change is evidence about implementation, not a truth-making vote. |
-| /concepts/governed-intelligence/ | section 7 | h2: Sources and version |
-| /concepts/governed-logic/ | section 1 | h1: Governed Logic |
-| /concepts/governed-logic/ | upstream | h2: The problem begins before intelligence. |
-| /concepts/governed-logic/ | governing-principles | h2: Six constitutive principles. One named referent. |
-| /concepts/governed-logic/ | governing-structure | h2: Ground → Truth → Logic → Reasoning → Intelligence |
-| /concepts/governed-logic/ | bidirectional | h2: Generate forward. Adjudicate back. |
-| /concepts/governed-logic/ | downstream | h2: More capability does not repair an unresolved ground. |
-| /concepts/governed-logic/ | boundaries | h2: Grounding, architecture, and instantiation are not the same page. |
-| /concepts/governed-logic/ | section 8 | h2: Sources and version |
-| /concepts/governing-referent/ | section 1 | h1: Governing referent |
-| /concepts/governing-referent/ | section 2 | h2: Sources and version |
-| /concepts/ | section 1 | h1: Canonical definitions |
-| /concepts/ | section 2 | h2: Governed Logic |
-| /concepts/ | section 3 | h2: Governed Intelligence |
-| /concepts/ | section 4 | h2: Governing referent |
-| /concepts/ | section 5 | h2: Sufficient grounding |
-| /concepts/ | section 6 | h2: Ultimate grounding |
-| /concepts/ | first-principles | h2: Principles and governing referent <br> h3: Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. <br> h3: Logic is binding. <br> h3: Being is real. <br> h3: Meaning is real. <br> h3: Intelligibility is real. <br> h3: Obligation is real and binding. |
-| /concepts/sufficient-grounding/ | section 1 | h1: Sufficient grounding |
-| /concepts/sufficient-grounding/ | section 2 | h2: Sources and version |
-| /concepts/ultimate-grounding/ | section 1 | h1: On the Nature of Ultimate Grounding |
-| /concepts/ultimate-grounding/ | termination | h2: Stopping the question does not ground the chain. |
-| /concepts/ultimate-grounding/ | terms | h2: Ground. Dependence. Sufficiency. Ultimacy. |
-| /concepts/ultimate-grounding/ | six-domains | h2: Being. Truth. Logic. Meaning. Intelligibility. Obligation. |
-| /concepts/ultimate-grounding/ | thesis | h2: The derived specification is the specification of the Logos. |
-| /concepts/ultimate-grounding/ | derivation-identification-verification | h2: Derivation → Identification → Verification |
-| /concepts/ultimate-grounding/ | status | h2: A thesis under argument, not a shortcut around argument. |
-| /concepts/ultimate-grounding/ | section 8 | h2: Sources and version |
-| /faq/ | section 1 | h1: Questions & answers |
-| / | section 1 | h1: Governed Logic Governed Logic Governed Logic |
-| / | explore | h2: Truth governs logic.Logic governs reasoning.Intelligence is downstream. |
-| / | section 3 | h2: The Groundless Machine. |
-| / | section 4 | h2: Generate forward.Adjudicate back. |
-| / | section 5 | h2: Why anything? |
-| / | section 6 | h2: Governed Intelligence. <br> h3: Inspect the mechanism. <br> h3: Reasoning engine & API. |
-| / | section 7 | h2: The objective is truth. |
-| / | section 8 | h2: Paul André Couchoud |
-| / | section 9 | h2: Follow the chain. <br> h3: The library <br> h3: The inquiry <br> h3: The company |
-| /library/ | section 1 | h1: The library |
-| /library/ | section 2 | h2: Follow the chain. → |
-| /library/ | section 3 | h2: A reasoning systems company. → |
-| /library/ | section 4 | h2: Research → |
-| /library/ | section 5 | h2: Paul André Couchoud → |
-| /library/ | section 6 | h2: Questions & answers → |
-| /library/ | section 7 | h2: Canonical definitions → |
-| /library/ | section 8 | h2: Governed Logic → |
-| /library/ | section 9 | h2: Governed Intelligence → |
-| /library/ | section 10 | h2: On the Nature of Ultimate Grounding → |
-| /library/ | section 11 | h2: Alpha and Omega Reasoning → |
-| /library/ | section 12 | h2: Governing referent → |
-| /library/ | section 13 | h2: Sufficient grounding → |
-| /library/ | section 14 | h2: The mechanism. → |
-| /library/ | section 15 | h2: Sources and editions → |
-| /library/ | section 16 | h2: Why Anything? → |
-| /library/ | section 17 | h2: Integrity in Artificial Intelligence → |
-| /library/ | section 18 | h2: On the Nature of Ultimate Grounding · Source edition → |
-| /library/ | section 19 | h2: Governed Logic · Source edition → |
-| /library/ | section 20 | h2: Alpha and Omega Reasoning · Source edition → |
-| /library/ | section 21 | h2: Governed Intelligence · Source edition → |
-| /library/ | section 22 | h2: Business strategy — additional direction · Source edition → |
-| /mechanism.html | section 1 | h1: The mechanism. |
-| /mechanism.html | section 2 | h2: The architecture is not the prompt. |
-| /mechanism.html | section 3 | h2: Copy the current prototype. |
-| /mechanism.html | section 4 | h2: What this prototype can—and cannot—do. |
-| /mechanism.html | section 5 | h2: How to test it. |
-| /mechanism.html | section 6 | h2: Follow the chain. |
-| /publication/ | section 1 | h1: Publication record |
-| /publication/ | section 2 | h2: Follow the chain. → |
-| /publication/ | section 3 | h2: A reasoning systems company. → |
-| /publication/ | section 4 | h2: Research → |
-| /publication/ | section 5 | h2: Paul André Couchoud → |
-| /publication/ | section 6 | h2: Questions & answers → |
-| /publication/ | section 7 | h2: Canonical definitions → |
-| /publication/ | section 8 | h2: Governed Logic → |
-| /publication/ | section 9 | h2: Governed Intelligence → |
-| /publication/ | section 10 | h2: On the Nature of Ultimate Grounding → |
-| /publication/ | section 11 | h2: Alpha and Omega Reasoning → |
-| /publication/ | section 12 | h2: Governing referent → |
-| /publication/ | section 13 | h2: Sufficient grounding → |
-| /publication/ | section 14 | h2: The mechanism. → |
-| /publication/ | section 15 | h2: Sources and editions → |
-| /publication/ | section 16 | h2: Why Anything? → |
-| /publication/ | section 17 | h2: Integrity in Artificial Intelligence → |
-| /publication/ | section 18 | h2: On the Nature of Ultimate Grounding · Source edition → |
-| /publication/ | section 19 | h2: Governed Logic · Source edition → |
-| /publication/ | section 20 | h2: Alpha and Omega Reasoning · Source edition → |
-| /publication/ | section 21 | h2: Governed Intelligence · Source edition → |
-| /publication/ | section 22 | h2: Business strategy — additional direction · Source edition → |
-| /research/ | section 1 | h1: Research |
-| /research/ | method | h2: Hold the framework constant. Change the governing referent. |
-| /research/ | evaluation | h2: Coherence is not correspondence. |
-| /research/ | falsifiability | h2: The framework must be allowed to lose. |
-| /research/ | referent-testing | h2: Do not preload the preferred name into property discovery. |
-| /research/ | limits | h2: Agreement among models does not vote truth into existence. |
-| /research/ | publication | h2: Publish the method, the failures, and the counterexamples. |
-| /research/ | section 8 | h2: Sources and version |
-| /sources/ | section 1 | h1: Sources and editions |
-| /sources/ | source-01 | h2: On the Nature of Ultimate Grounding |
-| /sources/ | source-02 | h2: Governed Logic |
-| /sources/ | source-03 | h2: Alpha and Omega Reasoning |
-| /sources/ | source-04 | h2: Governed Intelligence |
-| /sources/ | paul-2026-09-23 | h2: Paul André Couchoud — website language |
-| /sources/ | paul-business-2026-09-23 | h2: Business strategy — additional direction |
-
-## Resources
-
-24 visitor destinations are the rows of the table above (19 pages and 5 source editions). These 14 assets only need to load. Together that is 38 resources.
-
-| Resource | How it loads |
-|---|---|
-| /assets/opening.css | stylesheet link on the homepage |
-| /assets/restored-site.css | stylesheet link on every page |
-| /assets/opening.js | script src on the homepage; mark trace, light field, scroll invite |
-| /assets/earth-renderer.js | script src on the homepage; permanent Earth painting |
-| /assets/material-environment.js | script src on the homepage |
-| /assets/library.js | script src on /library/ |
-| /assets/materials/cinzel.ttf | @font-face in opening.css and restored-site.css |
-| /assets/materials/ibm-plex-sans.ttf | @font-face in restored-site.css |
-| /assets/materials/earth-day.jpg | sampled by earth-renderer.js |
-| /assets/materials/earth-night.jpg | sampled by earth-renderer.js |
-| /assets/materials/earth-clouds.jpg | sampled by earth-renderer.js |
-| /assets/governed-logic-mark.webp | img in the header brand |
-| /assets/the-groundless-machine.webp | img in homepage section 02 |
-| /paul-portrait.png | img in the homepage founder section and /about/ |
-
-License notes shipped beside the fonts (`assets/materials/Cinzel-OFL.txt`, `IBM-Plex-OFL.txt`, `SOURCES.txt`) and `assets/gl-reasoning-systems.webp` are in the publication boundary and load only if a stylesheet or page references them. `gl-reasoning-systems.webp` is an allowed image and is not required for the first screen.
+SAME-PAGE=305, STILL-A=42, FRAG=0, C-FIDELITY=34, C-NOTE=12, ORPHAN=0, SELF=45

@@ -35,48 +35,48 @@ import render_site  # noqa: E402
 REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
 # Published homepage, exhibit included, arrows exact. Hero appends the one
 # reviewed exhibit-removed digest to this tuple and nothing else.
-# index.html: #explore is a button, the two /mechanism.html forms are restored, and the brand aria-label is Governed Logic home.
+# index.html: four footer controls removed, the brand name is its visible text, and button href attributes are gone.
 HOMEPAGE_DIGESTS = (
-    "a9067640f1aeb445d18e4cc039bc5805972da043b4d957faaedf460dd9438a6f",
+    "774fe282b185a30f204bda0131d37633f42b8fdf9058e6b1855fb12c835b68bb",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
     # challenge/index.html: footer labels restored. The brand aria-label Governed Logic home is restored, so every page digest moved.
-    "challenge/index.html": ("ce5c0f7d1df0d68b577d98e3649b859669ed0ceba2718227aa25b9efe6918d66",),
+    "challenge/index.html": ("5cb44a606a0ad60cd373d3e897a3edd14ff47b4a03d4f764e9ad345ee097b717",),
     # company/index.html: same restored footer labels.
-    "company/index.html": ("252d5ca42f6b476a5442b3f157b8c390b7342d3e3c9227201c707dba19ee0338",),
+    "company/index.html": ("987c9663a63c29b36a591db0c8f9f012617977f5d51734aeaf4dbc3343c60e88",),
     # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
-    "research/index.html": ("29326e62eb14fe361f6d8a8fd97ec315d66633abe43d30961498660bf8041fa0",),
+    "research/index.html": ("f74139c12089d2cf497b96ea458d142fcd0a9e5e9726d0e8cf77eda509de2275",),
     # about/index.html: same restored footer labels.
-    "about/index.html": ("326c05b69b9bbf5ad31f0aa45dbad432e056559ceb567f3ecf52f265509f0cd7",),
+    "about/index.html": ("22a964323bf35591b3b8d430d8faac12f901e0d3507c0c0c4c09c60b2cad6574",),
     # faq/index.html: same restored footer labels.
-    "faq/index.html": ("a4ab45144403523b0187c539e09a5910d04d56c2a3e47f3756b3c16a50633ffb",),
+    "faq/index.html": ("fd1897c90cf870c4eba4058f2cadfe0b68bc4588c054182196cb34eca0fec3a6",),
     # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
-    "concepts/index.html": ("f36521869cd88280d6033b1380473ae4d291b54374edc4db263e2ad1d3e6a303",),
+    "concepts/index.html": ("8b59f6350d029fc89c5fa1eec5affd612af0eef9b6b68cb7daf7400b076e188f",),
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
-    "concepts/governed-logic/index.html": ("d525110511680e26a4d008b7bd957bdc7ae6fcc863ba5809dba80569e5a90156",),
+    "concepts/governed-logic/index.html": ("cba29fd5701cedeb972f72eecc050dcdb70bc5b4055ddc65ec0a5c90754fdb95",),
     # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
-    "concepts/governed-intelligence/index.html": ("df4309398cf9b52f87eab3b8901b4e90b8cb6d1be82442d10b3a665121453080",),
+    "concepts/governed-intelligence/index.html": ("49169ab2671c4cc098c19ae81d16295e6a2834ab7c1656a2899ecf53efee1c2b",),
     # concepts/ultimate-grounding/index.html: same restored footer labels.
-    "concepts/ultimate-grounding/index.html": ("a7cdf82ebba194e3235eb5955e33f525605dadc7af3094afddfb1ca704b4d64e",),
+    "concepts/ultimate-grounding/index.html": ("a561d138268c6fc93b16f53885997cff8eeae04de7c386925ba008c71796c8fa",),
     # concepts/alpha-and-omega-reasoning/index.html: same restored footer labels.
-    "concepts/alpha-and-omega-reasoning/index.html": ("b0b6652e00fe8c7dd3771f92a4bcd4c439ec989dfe4747c8a8f736afef53e62a",),
+    "concepts/alpha-and-omega-reasoning/index.html": ("75babad3d05ace816554f71157ffd50eab5457ebbf3ba7449f76eae8a4bf8715",),
     # concepts/governing-referent/index.html: same restored footer labels.
-    "concepts/governing-referent/index.html": ("b522484085dd5a67d60e2e50fffbd1ea140858df713929c940e40a73268eb1f3",),
+    "concepts/governing-referent/index.html": ("a3eedcd088c699db8065c429c3a87d55ca7669bf49b16430e2de00837926c104",),
     # concepts/sufficient-grounding/index.html: same restored footer labels.
-    "concepts/sufficient-grounding/index.html": ("c509370d31674dc29f243d69b6d4a3e5a9b882ff72c273697f7496b85c5f3981",),
+    "concepts/sufficient-grounding/index.html": ("4f8a897403e902b99b2a75a25f2db553028d4cc0863caa1d460d0865b0cbfc03",),
     # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
-    "mechanism.html": ("09f803052a23b75e43c9c8731d643a26c1aef814acddca11dd9d0b7afd63ddc7",),
+    "mechanism.html": ("c2fec57f681a3e9dabc8b707dd3b3cf78e8bd0883448c6f95bfa790ba10bbe2c",),
     # sources/index.html: same restored footer labels.
-    "sources/index.html": ("b0675567b0a70b6e5123339f4f5d1e4e028cd9ed605056f8b7d6de575bd69c9e",),
+    "sources/index.html": ("f168594e9deac60a7378aa1c1b2d96c3255b2bb9c5474faf622719c7cf8de4f9",),
     # articles/why-anything/index.html: same restored footer labels.
-    "articles/why-anything/index.html": ("1d4e9f61d9b16a0aad309d5743b91f2d70e7322b06bf418a7fac54ecea3d0853",),
+    "articles/why-anything/index.html": ("cfac9ea4a351cdabc87107157dd538c46775ec144b0f26c7273f156653cf4544",),
     # articles/integrity-in-artificial-intelligence/index.html: same restored footer labels.
-    "articles/integrity-in-artificial-intelligence/index.html": ("a3cdef85b8ea657e99f73ddc9fc7d7d082bac6e650a5af9f066929297cd83b76",),
+    "articles/integrity-in-artificial-intelligence/index.html": ("f81193dbcf7a57c81ea7fc1997f372f4e71eda3507d02c7c567f6035c1633411",),
     # library/index.html: generated page picks up the restored footer labels.
-    "library/index.html": ("b6e2987c626995e23be36176b73af4306c5638ccf3927970bc4c720fefa8c6dc",),
+    "library/index.html": ("fb43aa54c07f7c3f3e710c2231cb377ff97d9e1b91fd53cfbeec6779a6d85c27",),
     # publication/index.html: generated page picks up the restored footer labels.
-    "publication/index.html": ("656f01d4a3bfac4986cd87dbc537d4a269fe7073f7425ad9d574a368c46ed1f7",),
+    "publication/index.html": ("3837690d0ae39e808c3c7127307f79b3365e13a4f1bd97b8123493b37ce7a4bd",),
 }
 # Opening words are unchanged. The #explore anchor is no longer in the opening record.
 OPENING_DIGEST = "e4525a6b1741253a9ddf32a04e183588998f354f737189dab236a889f1f8c39d"
@@ -378,27 +378,27 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_copy_guard_rejects_query_leaks_and_anchors(self) -> None:
         mutations = (
             (
-                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
-                '<form class="gl-go" method="post" action="/company/"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
+                '<form class="gl-go" method="post" action="/company/"><button type="submit">Company</button>',
                 "Form method must be get",
             ),
             (
-                '<button type="submit" href="/research/">Research</button>',
-                '<button type="submit" name="x" value="1" href="/research/">Research</button>',
+                '<button type="submit">Research</button>',
+                '<button type="submit" name="x" value="1">Research</button>',
                 "Button name or value",
             ),
             (
-                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
-                '<form class="gl-go" method="get" action="/company/"><input type="hidden" name="q" value="1"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
+                '<form class="gl-go" method="get" action="/company/"><input type="hidden" name="q" value="1"><button type="submit">Company</button>',
                 "Hidden input",
             ),
             (
-                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
-                '<form class="gl-go" method="get" action="/company/" target="_blank"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
+                '<form class="gl-go" method="get" action="/company/" target="_blank"><button type="submit">Company</button>',
                 "target=_blank",
             ),
             (
-                '<button type="submit" href="/research/">Research</button>',
+                '<button type="submit">Research</button>',
                 '<a href="/research/">Research</a>',
                 "Unexpected anchor",
             ),
@@ -674,14 +674,26 @@ class ReleaseGuardTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
 
+    def test_button_href_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                '<button type="submit">Research</button>',
+                '<button type="submit" href="/research/">Research</button>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Button href is not allowed"):
+                check_restored.check(site)
+
     def test_nav_label_change_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit" href="/research/">Research</button>',
-                '<button type="submit" href="/research/">Studies</button>',
+                '<button type="submit">Research</button>',
+                '<button type="submit">Studies</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
@@ -692,8 +704,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit" href="/faq/">FAQ</button>',
-                '<button type="submit" href="/faq/">Questions</button>',
+                '<button type="submit">FAQ</button>',
+                '<button type="submit">Questions</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
