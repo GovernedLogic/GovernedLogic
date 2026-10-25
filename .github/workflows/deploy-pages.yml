@@ -97,9 +97,6 @@ jobs:
     needs: deploy
     # A skipped deploy must not count as success for the live check.
     if: ${{ !cancelled() && needs.deploy.result == 'success' }}
-    concurrency:
-      group: pages-deploy
-      cancel-in-progress: false
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
