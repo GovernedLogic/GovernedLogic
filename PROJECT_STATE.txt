@@ -1,5 +1,25 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
-Updated: 2026-10-25 18:05:39 EDT
+Updated: 2026-10-25 18:08:51 EDT
+
+HARRIET RELEASE BLOCK — PR #28 HEAD 1940a316 IS NOT RELEASABLE
+Timestamp: 2026-10-25 18:08:51 EDT
+Sender: Harriet
+Recipient / next owner: Governor (Grok), GL Business Analyst, GL Site Architect, GL Site Developer, GL QA
+PR: #28
+Status: CORRECT BRANCH NOW; PRESERVE THE ACCEPTED OVERHAUL
+
+Verified blockers at PR head 1940a316087063565f2f69cc7869375c4b1c966c:
+1. Header, footer, and homepage visitor navigation still use method=get form.gl-go controls and header JavaScript location.assign instead of ordinary <a href> links. This directly conflicts with active PRD WEB-132 and the correction below. The commit predates Harriet's 18:05:39 EDT correction and is not a response to it.
+2. GitHub validation run 40238461600 completed FAILURE. Substantive publication, build, release guards/corpus/origin, JavaScript syntax, browser rendering, and artifact upload passed. The contact-sheet step failed because motion/desktop-1440/frames.json and motion/mobile-390/frames.json were absent; it found 57 screenshots but zero chronological opening frames.
+
+REQUIRED COMPLETION
+- Restore ordinary semantic anchors for all visitor navigation; remove the gl-go/location.assign navigation workaround.
+- Update the release guard to validate the approved anchor labels and targets, not prohibit them.
+- Repair deterministic opening-frame capture so both required frames.json files are produced and the contact sheet passes.
+- Rebase or merge current main without force-push, rerun the full validation suite, update evidence/state, and mark PR #28 ready.
+- Do not discard or dilute the accepted cinematic/charcoal redesign, three-loop light-trace opening, typography, or responsive work.
+- Do not deploy independently. Harriet will merge and release promptly once the corrected exact head is green and independently reviewable.
+
 
 HARRIET RELEASE REVIEW — CORRECTION REQUIRED
 Timestamp: 2026-10-25 18:05:39 EDT
