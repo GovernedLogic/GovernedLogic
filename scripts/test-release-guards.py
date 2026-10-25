@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Regression tests for the reviewed website publication boundary.
 
-The reviewed record of each page is its text and links, not its markup.
-A stylesheet, class, or layout-tag change does not fail these guards.
-Title, description metadata, visible text (including the header, footer,
-and homepage text outside main), and anchor labels and hrefs do.
+The reviewed record of each page is its text, links, image sources, and
+publication metadata, not its markup. A stylesheet, class, or layout-tag
+change does not fail these guards. Title, Open Graph title, description
+metadata, robots content, visible text (including image alt text, the
+header, footer, and homepage text outside main), image sources, and
+anchor labels and hrefs do.
 Arrows are exact: ↗ and → are different. The reasoning exhibit is part
 of the published homepage. v10.10/hero-exhibit may append one reviewed
 exhibit-removed homepage digest; any other homepage still fails.
@@ -33,28 +35,28 @@ REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.h
 # Published homepage, exhibit included, arrows exact. Hero appends the one
 # reviewed exhibit-removed digest to this tuple and nothing else.
 HOMEPAGE_DIGESTS = (
-    "c226934b60fdc848e658993bcf27fc49da6580b250e8d0f9a8f3ed9fadd2fb6f",
+    "550acca45cd4a6502e2532e68c6cefb2f014b018f8b365f0939dedb8da51709a",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
-    "challenge/index.html": ("979a16df6e31870360e89f18ead3c7d7b5599b1769f5bc4e9e097a0a053aa8b4",),
-    "company/index.html": ("d0bb671871bc0434ef1fb0e2d252fb1da8dbd1451983ccd2038e81c5906d5de8",),
-    "research/index.html": ("6102e05fb4d46844ef2f60b3d95b2048b91d419ce94f5b077213591994c99648",),
-    "about/index.html": ("815700c55c9a58fb94f52922b781818426181f839d71196d34130a68a5e38247",),
-    "faq/index.html": ("f33dd0e4f9a490588e66701c19c9c29ab3da842e2a151a5fedbc2445593132fe",),
-    "concepts/index.html": ("766223284ad97d59d6f1c7e63d5f758f91e0ba7cbec839dd5bd122116cb504f6",),
-    "concepts/governed-logic/index.html": ("17da84c6156497c1b4dcbf6f380193cd0897a46d97071c983781b22cf5511335",),
-    "concepts/governed-intelligence/index.html": ("d0c3262b48bfaae9f0d4012a86dfabb654251349c926387179f6cda8941341e9",),
-    "concepts/ultimate-grounding/index.html": ("2d3e8d5f510d0868a6c909ee823c09e8379616dbd743d5750d913e7d7e27b681",),
-    "concepts/alpha-and-omega-reasoning/index.html": ("ac9b15215af6364dfba6f880a984aaebf5bdbe7f96cb440345cd7c60530f2bf2",),
-    "concepts/governing-referent/index.html": ("288eade7ec0e38d4394e11c9176f79e97fa0fc4a32fe86f90b347c0eac716840",),
-    "concepts/sufficient-grounding/index.html": ("55110ef98727f237f1fc9e6552106d9205b663b5d8a6a58c5fbe8295ac0c3e33",),
-    "mechanism.html": ("9357022a64be9b7d2f0bab2bec3b02a790092b5cba297c6843e61b12e9a6822b",),
-    "sources/index.html": ("17b794890d80e898ff76d6465f40846e3dbc9b7f08e0189b9535729e80b8accf",),
-    "articles/why-anything/index.html": ("f084ba9012314f722fd7e7a116155974aedc08e230ffba0a24b649ca13fc451e",),
-    "articles/integrity-in-artificial-intelligence/index.html": ("6bf2040d54d985946d6e2f05c60bf7e3a8c0a7a0505e3591addcd2b87e1ab1c4",),
-    "library/index.html": ("0255134ce8da66b42e1b9ea404f42e2738dc83e6bec42f2f01d839cd8108255d",),
-    "publication/index.html": ("39416cca3c4d1b382d0957fc07d78c40154ee5f9c92a3da7901b0ca9d31555eb",),
+    "challenge/index.html": ("0efa1741949b9e6f6b63702d7e6701e2693abc829fcf706623c116dfeecf9df0",),
+    "company/index.html": ("4280c66c303ff4074ba5f941450ae7030666d1d5f00019e355d44e0861ea7b73",),
+    "research/index.html": ("85dd17eb780dbb38207475c1d811f98509026299e0f50ac6bcd37c0d46d98f5e",),
+    "about/index.html": ("ee45a58b31bbb74796ebebadb0bc022a1b3e1cec6cbe37cb1e88915e7a1ca611",),
+    "faq/index.html": ("1fac02d38af4a4555504d6d857f6cb52c5a080fc129c9331bccb3bb86d040470",),
+    "concepts/index.html": ("caf634656d860cde017f77717db83e09100e086307df5ae81eec077d683f3e8b",),
+    "concepts/governed-logic/index.html": ("41e6633ff911b81794a91f3b351bd9262ba6ddab4091376f6c9a794f06302671",),
+    "concepts/governed-intelligence/index.html": ("ff14400ebfe4dee864b45f8c6eb1657f7dab6298f680a68ced7bbb665915760d",),
+    "concepts/ultimate-grounding/index.html": ("0fbb9bbbf3a77c0a78f3449b61814416231544833e26fda3f923cd60c18a6d8d",),
+    "concepts/alpha-and-omega-reasoning/index.html": ("04498559484023e1d9aa608cbdd15c712211d8686d561bbf9bdcab53a00680b7",),
+    "concepts/governing-referent/index.html": ("4676a0d8638d257d3996044234b80f7d7f19b72a457a665c52bf9c91f81b1a93",),
+    "concepts/sufficient-grounding/index.html": ("04953fe85d7db22f0a398565ee2aef107700985b799c5fe772ebf02fdb8fc7c5",),
+    "mechanism.html": ("2b3f2575d11515db7b6c48effd44bbdeebbbdf21fa3a3f93e2e82680bcce0901",),
+    "sources/index.html": ("344cc7b5fd6f7c909a7f30eb4f80040c8a46a1a3cf94bf1a8dee148fdb98bd20",),
+    "articles/why-anything/index.html": ("c51411b3b296a20d1a7a0c9015214c59941a6024f435c8db3c87d7ace6162f7d",),
+    "articles/integrity-in-artificial-intelligence/index.html": ("2a134239aea296745b2970956506251bf8502a7f4abfe2f05fb140dbaaaaa0a9",),
+    "library/index.html": ("22dcfbb33b3afba973dff54c1d8e69f316dde7b5a0b57dde2bb524f6aabb953b",),
+    "publication/index.html": ("d5584a7da59ac8adf16a40a9a53a7caed66073cd6b5ac157193b650a821f224c",),
 }
 OPENING_DIGEST = "8d61ee828cf5dd5f1dd1ac060f7c0b74bd39a8be7b9e3745b86afdb247f7dba2"
 # The mechanism copy button is the only reviewed inline script.
@@ -67,7 +69,9 @@ JSON_SCRIPT = re.compile(
     r"""type\s*=\s*['"]application/(?:ld\+json|json)['"]""", re.IGNORECASE
 )
 META_TAG = re.compile(r"<meta\b([^>]*)>", re.IGNORECASE)
+IMG_TAG = re.compile(r"<img\b([^>]*)>", re.IGNORECASE)
 META_ATTR = re.compile(r"""([\w:-]+)\s*=\s*(['"])(.*?)\2""", re.DOTALL)
+NAME_TOKEN = re.compile(r"[\s,]+")
 TITLE_TAG = re.compile(r"<title>(.*?)</title>", re.IGNORECASE | re.DOTALL)
 WHITESPACE = re.compile(r"\s+")
 
@@ -126,6 +130,10 @@ def _collapse(value: str) -> str:
     return WHITESPACE.sub(" ", value).strip()
 
 
+def _name_tokens(value: str) -> set[str]:
+    return {part.strip().lower() for part in NAME_TOKEN.split(value) if part.strip()}
+
+
 def _descriptions(node: object, found: list[str]) -> None:
     if isinstance(node, dict):
         for key, value in node.items():
@@ -146,16 +154,33 @@ def visible(html: str) -> tuple[str, list[str]]:
 
 
 def page_record(html: str) -> str:
-    """Canonical text and links. Markup other than anchors is not recorded."""
+    """Canonical text, links, image sources, and publication metadata.
+
+    Markup other than anchors and img sources is not recorded. Robots is
+    the content of every meta name=robots, in document order, so adding,
+    editing, or removing that tag changes the record. Image alt text is
+    also part of the visible text.
+    """
     title = _collapse(TITLE_TAG.search(html).group(1) if TITLE_TAG.search(html) else "")
     meta: list[str] = []
+    og_titles: list[str] = []
     og: list[str] = []
+    robots: list[str] = []
     for raw in META_TAG.findall(html):
         attrs = _attrs(raw)
         if "description" in attrs.get("name", "").split():
             meta.append(attrs.get("content", ""))
-        if attrs.get("property", "").lower() == "og:description":
+        if "robots" in _name_tokens(attrs.get("name", "")):
+            robots.append(_collapse(attrs.get("content", "")))
+        property_name = attrs.get("property", "").lower()
+        if property_name == "og:title":
+            og_titles.append(_collapse(attrs.get("content", "")))
+        if property_name == "og:description":
             og.append(attrs.get("content", ""))
+    images = [
+        f"{_collapse(attrs.get('src', ''))}\t{_collapse(attrs.get('alt', ''))}"
+        for attrs in (_attrs(raw) for raw in IMG_TAG.findall(html))
+    ]
     jsonld: list[str] = []
     for attrs, body in INLINE_SCRIPT.findall(html):
         if not JSON_SCRIPT.search(attrs):
@@ -164,10 +189,14 @@ def page_record(html: str) -> str:
     text, links = visible(html)
     return "\n".join((
         "title: " + title,
+        "og-title: " + "\n".join(og_titles),
         "meta: " + "\n".join(meta),
+        "robots: " + "\n".join(robots),
         "og: " + "\n".join(og),
         "jsonld: " + "\n".join(jsonld),
         "text: " + text,
+        "images:",
+        *images,
         "links:",
         *links,
     ))
@@ -421,6 +450,54 @@ class ReleaseGuardTests(unittest.TestCase):
                 "<title>Firm — Governed Logic Reasoning Systems</title>",
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: company/index.html"):
+                assert_reviewed_copy(site)
+
+    def test_og_title_change_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "company/index.html",
+                'content="Governed Logic Reasoning Systems — Company"',
+                'content="Governed Logic Reasoning Systems — Firm"',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: company/index.html"):
+                assert_reviewed_copy(site)
+
+    def test_added_robots_noindex_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                "</head>",
+                '<meta name="robots" content="noindex"></head>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
+                assert_reviewed_copy(site)
+
+    def test_removed_robots_tag_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                '<meta name="robots" content="index,follow">',
+                "",
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
+                assert_reviewed_copy(site)
+
+    def test_img_src_swap_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                'src="/assets/the-groundless-machine.webp"',
+                'src="/assets/unreviewed-cover.webp"',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
                 assert_reviewed_copy(site)
 
     def test_og_description_change_fails(self) -> None:
