@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Review-only recovery, reconciliation, information architecture, and implementation specification for governedlogic.com.">
+  <meta name="gl:document-type" content="system specification">
+  <meta name="gl:status" content="Review — Paul approval required">
+  <meta name="gl:version" content="0.1">
+  <meta name="gl:created" content="2026-09-05">
+  <meta name="gl:updated" content="2026-09-05">
+  <meta name="gl:canonical-path" content="/system/WEBSITE_RECOVERY_AND_ARCHITECTURE_SPEC_v0.1.html">
+  <meta name="gl:intended-destination" content="GitHub review branch; not the public website">
+  <title>Governed Logic Website Recovery &amp; Architecture Specification v0.1</title>
+  <style>
+    :root {
+      --bg: #0a0d10;
+      --surface: #11161b;
+      --surface-2: #171e25;
+      --ink: #eef2f4;
+      --muted: #a6b0b7;
+      --line: #2a343d;
+      --steel: #98adbc;
+      --blue: #7ea8c5;
+      --warm: #cfb77e;
+      --green: #83bca6;
+      --red: #d98e8e;
+      --amber: #e1bc74;
+      --max: 1180px;
+      --reading: 820px;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% -8%, rgba(126, 168, 197, .13), transparent 34rem),
+        linear-gradient(180deg, #090c0f, var(--bg) 34rem);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.62;
+    }
+    a { color: #add4ef; text-underline-offset: .18em; }
+    a:focus-visible { outline: 3px solid var(--warm); outline-offset: 4px; border-radius: 3px; }
+    .skip-link { position: absolute; left: -999px; top: 8px; }
+    .skip-link:focus { left: 12px; z-index: 20; background: #fff; color: #111; padding: 8px 12px; }
+    header, main, footer { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    header { padding: 76px 0 42px; border-bottom: 1px solid var(--line); }
+    .eyebrow { margin: 0 0 12px; color: var(--blue); font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1, h2, h3 { line-height: 1.15; text-wrap: balance; }
+    h1 { margin: 0; max-width: 920px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.5rem, 6vw, 5.2rem); font-weight: 500; letter-spacing: -.045em; }
+    h2 { margin: 0 0 18px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.8rem, 3.2vw, 2.8rem); font-weight: 500; letter-spacing: -.025em; }
+    h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    p { margin: 0 0 1rem; }
+    .lede { max-width: 850px; margin: 22px 0 0; color: #c9d2d8; font-size: clamp(1.08rem, 2vw, 1.35rem); }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+    .badge, .status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.025);
+      color: #d4dde2;
+      font-size: .72rem;
+      font-weight: 750;
+      letter-spacing: .04em;
+    }
+    .status.block { border-color: rgba(217,142,142,.48); color: #f1b4b4; }
+    .status.decision { border-color: rgba(225,188,116,.48); color: #f0ce8d; }
+    .status.ready { border-color: rgba(131,188,166,.48); color: #a9ddc8; }
+    nav.toc { position: sticky; top: 0; z-index: 5; width: 100%; border-bottom: 1px solid var(--line); background: rgba(10,13,16,.93); backdrop-filter: blur(16px); }
+    nav.toc .inner { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; display: flex; gap: 18px; overflow-x: auto; padding: 13px 0; scrollbar-width: thin; }
+    nav.toc a { flex: 0 0 auto; color: var(--muted); font-size: .78rem; font-weight: 700; text-decoration: none; }
+    nav.toc a:hover { color: var(--ink); }
+    main { padding: 28px 0 90px; }
+    section { padding: 54px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 60px; }
+    section:last-child { border-bottom: 0; }
+    .summary-grid, .card-grid, .home-grid, .type-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .summary-card, .card, .home-card, .type-card, .callout {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(23,30,37,.92), rgba(17,22,27,.92));
+      padding: 20px;
+    }
+    .summary-card strong { display: block; color: var(--steel); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 7px; }
+    .summary-card p, .card p, .home-card p, .type-card p { color: var(--muted); margin: 0; }
+    .callout { border-left: 4px solid var(--blue); margin: 18px 0; }
+    .callout.block { border-left-color: var(--red); }
+    .callout.approval { border-left-color: var(--warm); }
+    .callout p:last-child { margin-bottom: 0; }
+    blockquote { margin: 22px 0; padding: 18px 20px; border-left: 4px solid var(--warm); background: rgba(207,183,126,.075); font-family: Georgia, "Times New Roman", serif; font-size: 1.22rem; }
+    blockquote p:last-child { margin-bottom: 0; }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0 30px; border: 1px solid var(--line); border-radius: 10px; }
+    table { width: 100%; min-width: 860px; border-collapse: collapse; background: rgba(17,22,27,.6); font-size: .84rem; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th:last-child, td:last-child { border-right: 0; }
+    tr:last-child td { border-bottom: 0; }
+    th { color: #dce4e9; background: rgba(255,255,255,.045); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
+    td { color: #c7d0d5; }
+    td strong { color: var(--ink); }
+    code { color: #d9e8f2; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+    pre { overflow-x: auto; margin: 18px 0; padding: 18px; border: 1px solid var(--line); border-radius: 10px; background: #07090b; color: #dce8ef; line-height: 1.52; }
+    ul, ol { padding-left: 1.3rem; }
+    li { margin: .38rem 0; }
+    .sitemap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin-top: 20px; }
+    .sitemap article { border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.025); padding: 20px; }
+    .sitemap .route { display: inline-block; margin-bottom: 8px; color: var(--blue); font: 700 .73rem ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .sitemap ul { color: var(--muted); margin-bottom: 0; }
+    .sequence { counter-reset: phase; display: grid; gap: 12px; margin-top: 18px; }
+    .sequence article { position: relative; padding: 18px 18px 18px 62px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,.022); }
+    .sequence article::before { counter-increment: phase; content: counter(phase); position: absolute; left: 17px; top: 17px; width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--blue); border-radius: 50%; color: var(--blue); font-weight: 800; }
+    .sequence p { color: var(--muted); margin-bottom: 0; }
+    .approval-box { border: 1px solid rgba(207,183,126,.55); border-radius: 14px; padding: 24px; background: linear-gradient(145deg, rgba(207,183,126,.09), rgba(126,168,197,.06)); }
+    footer { padding: 30px 0 50px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+    footer p { margin: 0; }
+    @media (max-width: 860px) {
+      .summary-grid, .card-grid, .home-grid, .type-grid, .sitemap { grid-template-columns: 1fr; }
+      header, main, footer, nav.toc .inner { width: min(calc(100% - 28px), var(--max)); }
+      header { padding-top: 54px; }
+      section { padding: 42px 0; }
+    }
+    @media print {
+      :root { color-scheme: light; }
+      body { color: #111; background: #fff; }
+      header, main, footer { width: 100%; }
+      nav.toc { display: none; }
+      section { break-inside: avoid-page; }
+      .summary-card, .card, .home-card, .type-card, .callout, .sitemap article, .sequence article, .approval-box, pre, table { background: #fff; color: #111; border-color: #bbb; }
+      p, td, .card p, .home-card p, .type-card p, .summary-card p, .sitemap ul, .sequence p, footer { color: #333; }
+      h1, h2, h3, th, td strong { color: #111; }
+      a { color: #111; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to specification</a>
+  <header>
+    <p class="eyebrow">Governed Logic · Reasoning Systems · Review artifact</p>
+    <h1>Website Recovery &amp; Architecture Specification</h1>
+    <p class="lede">A source-grounded proposal for recovering governedlogic.com without rewriting history, overstating evidence, flattening the company into one product, or allowing a visual prototype to become canon by accident.</p>
+    <div class="meta" aria-label="Document metadata">
+      <span class="badge">Status: Review</span>
+      <span class="badge">Version: 0.1</span>
+      <span class="badge">Created: 2026-09-05</span>
+      <span class="badge">Paul approval required</span>
+      <span class="badge">Canonical format: HTML</span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Specification sections">
+    <div class="inner">
+      <a href="#decision">Decision</a>
+      <a href="#authority">Authority map</a>
+      <a href="#github">GitHub baseline</a>
+      <a href="#ledger">Change ledger</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#homepage">Homepage</a>
+      <a href="#types">Page types</a>
+      <a href="#mapping">Content map</a>
+      <a href="#visual">Visual system</a>
+      <a href="#epistemic">Epistemic system</a>
+      <a href="#filesystem">Filesystem</a>
+      <a href="#implementation">Implementation</a>
+      <a href="#approvals">Approvals</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section id="decision">
+      <p class="eyebrow">Executive decision</p>
+      <h2>Recover the company around six stable public doors.</h2>
+      <div class="summary-grid">
+        <article class="summary-card">
+          <strong>Recommended navigation</strong>
+          <p>Framework · Research · Evidence · Writing · Work · About</p>
+        </article>
+        <article class="summary-card">
+          <strong>Homepage function</strong>
+          <p>Establish the category, show the upstream chain, state the evidence honestly, then route visitors by intent.</p>
+        </article>
+        <article class="summary-card">
+          <strong>Migration rule</strong>
+          <p>Preserve the June site as provenance. Replace nothing silently. Redirect public paths only after an approved path map exists.</p>
+        </article>
+      </div>
+      <blockquote><p>Governed Logic is the company. HarrietOS is the workbench. The website is the public canon.</p></blockquote>
+      <div class="callout block">
+        <h3>Hard content hold: nucleus v0.4 is missing</h3>
+        <p><code>CORPUS_INDEX.html</code> declares <code>governed-logic-nucleus-v0.4.html</code> the current canonical working nucleus, but that file is absent from both the handoff ZIP and the connected GitHub repository. The supplied v0.3 is explicitly superseded. Architecture work may continue, but canonical definitions, the load-bearing chain, and final public framework copy must not be promoted from v0.3 as though it were current.</p>
+      </div>
+      <div class="callout approval">
+        <h3>Review boundary</h3>
+        <p>This specification proposes structure, paths, metadata, migration, and bounded tasks. It does not modify the public site, publish claims, deploy pages, email anyone, create offers, or resolve Paul-level decisions.</p>
+      </div>
+    </section>
+
+    <section id="authority">
+      <p class="eyebrow">Deliverable 1</p>
+      <h2>Source inventory and authority map</h2>
+      <p>Newer source-routing records control current status. Canon governs claims. System documents govern process. Research sources define questions rather than conclusions. Mockups govern neither truth nor taxonomy.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Artifact</th><th>Classification</th><th>Authority / status</th><th>Permitted use</th><th>Restriction</th></tr></thead>
+          <tbody>
+            <tr><td><strong>WORK_KICKOFF_BRIEF.html</strong></td><td>Current implementation instruction</td><td>Primary handoff brief, v0.1, 2026-09-04</td><td>Defines Work-phase deliverables, prohibitions, and approval boundary.</td><td>Does not itself make older content canonical.</td></tr>
+            <tr><td><strong>CORPUS_INDEX.html</strong></td><td>Current routing / version authority</td><td>Active v0.3, 2026-09-04</td><td>Determines which corpus artifacts are current, superseded, working, or historical.</td><td>Points to a missing nucleus v0.4; cannot substitute for the missing source.</td></tr>
+            <tr><td><strong>governed-logic-nucleus-v0.3.html</strong></td><td>Canonical provenance</td><td>Superseded but preserved</td><td>Shows the v0.3 architecture, terms, tests, failure taxonomy, and engineering bridge.</td><td>Must not be quoted as current where v0.4 changed it.</td></tr>
+            <tr><td><strong>HARRIET_OS_PRD.html</strong></td><td>System requirement</td><td>Draft v0.1, 2026-06-16; still binding where not superseded</td><td>HTML canon, filesystem source of truth, human approval, website-management scope.</td><td>Its MVP sequence is historical planning, not automatic authorization to build.</td></tr>
+            <tr><td><strong>FILE_MANAGEMENT_STRATEGY.html</strong></td><td>System / repository policy</td><td>Draft v0.2, 2026-06-16</td><td>Defines local drive, Git, GitHub, Codex, public-site roles, and safety rules.</td><td>Requires review branches for structural change and forbids sensitive public commits.</td></tr>
+            <tr><td><strong>CODEX_INSTRUCTIONS.html</strong></td><td>Implementation contract</td><td>Draft v0.1, 2026-06-16</td><td>Controls bounded task format and hard rules.</td><td>Codex does not define mission, canon, or public claims.</td></tr>
+            <tr><td><strong>WEBSITE_STRUCTURE.html</strong></td><td>Historical architecture proposal</td><td>Draft v0.1, 2026-06-16</td><td>Supplies folder classes and path conventions.</td><td>Not final 2026 navigation; deployment assumptions require reconciliation.</td></tr>
+            <tr><td><strong>GOVERNED_LOGIC_MASTER_DEEP_RESEARCH_TASK_2026-08-19.txt</strong></td><td>Research scope source</td><td>Current research program</td><td>Supplies research domains, comparisons, tests, evidence standards, and novelty classifications.</td><td>Questions and hypotheses are not public findings.</td></tr>
+            <tr><td><strong>GOVERNED_LOGIC_MASTER_INVENTORY_2026-08-07.html</strong></td><td>Historical audit snapshot</td><td>Working baseline, pending review</td><td>Supplies gaps, risk findings, content inventory, business candidates, and the critical path.</td><td>Dates, counts, channel state, and recommendations may now be stale.</td></tr>
+            <tr><td><strong>Governed_Logic_Semantic_Glossary_v0_1.md</strong></td><td>Legacy working glossary</td><td>Non-canonical format</td><td>Term mining and provenance for a future HTML glossary.</td><td>Must be reconciled against v0.4 before conversion; no silent promotion.</td></tr>
+            <tr><td><strong>ai-safety-has-an-architecture-problem.html</strong></td><td>Draft article and visual source</td><td>Draft v0.1, 2026-08-07</td><td>Strong article structure, engineering vocabulary, limitation language, and article-page design.</td><td>Claims still require editorial and citation review before publication.</td></tr>
+            <tr><td><strong>governedlogic_homepage_mockup.html</strong></td><td>Current working design source</td><td>Strongest supplied homepage direction</td><td>Hero, restrained palette, typography, framework/evidence/work hierarchy, and CTA pattern.</td><td>Its copy and page links are not automatically canonical or approved.</td></tr>
+            <tr><td><strong>index_living_tesseract.html</strong></td><td>Historical design provenance</td><td>Earlier full-site concept</td><td>Useful content blocks, founder placement, and offer concepts.</td><td>Do not inherit the animated spectacle, older terminology, or proof claims without review.</td></tr>
+            <tr><td><strong>Governed Logic Brand Identity Board(1).png</strong></td><td>Visual identity evidence</td><td>Strong brand direction</td><td>Cool metallic blue/silver, charcoal, linked logic, wordmark, and “Follow the Chain.”</td><td>Board explanations such as “unbounded reasoning” are not automatically canonical copy.</td></tr>
+            <tr><td><strong>Metallic Blue Triple Loop Icon.png</strong></td><td>Visual source</td><td>Strong three-loop direction</td><td>Candidate hero mark, favicon source, social tile, and diagram motif.</td><td>Exact master-logo approval and derivative asset cleanup remain required.</td></tr>
+            <tr><td><strong>84783a90-12d2-4442-8786-ed7bda20e673.png</strong></td><td>Historical visual provenance</td><td>Older public-site screenshot</td><td>Documents the cosmic/network presentation and earlier public state.</td><td>Do not restore as the governing visual system.</td></tr>
+            <tr><td><strong>PACKET_MANIFEST.txt</strong></td><td>Packet inventory</td><td>Operational source list</td><td>Confirms the intended handoff contents.</td><td>Contains filenames, not authority or checksums.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="github">
+      <p class="eyebrow">Connected repository baseline</p>
+      <h2>The public repository is a June-era site, not the recovered canon.</h2>
+      <div class="card-grid">
+        <article class="card"><h3>Repository</h3><p><code>GovernedLogic/GovernedLogic</code>, public, default branch <code>main</code>. Connected account has push/admin repository permission.</p></article>
+        <article class="card"><h3>Observed head</h3><p><code>d487b2f54f88d08ba350ee14e48b915e0e72b701</code>, dated 2026-06-24. No later repository commit was found.</p></article>
+        <article class="card"><h3>Deployment shape</h3><p>GitHub Pages appears to serve root-level files. <code>CNAME</code>, <code>index.html</code>, page shells, shared CSS/JS, and media are at repository root.</p></article>
+      </div>
+      <div class="callout block">
+        <h3>Immediate public-truth risk</h3>
+        <p>The current homepage states “Six competed. One survived” and “only it works.” The current <code>papers.html</code> adds uncontrolled technical claims including unique latent-space density, exponentially improbable contradiction, hallucination reduction, functional determinism, and cross-platform verification. The August inventory already identified these as beyond the established public evidence ceiling. They must be corrected in the first approved implementation batch.</p>
+      </div>
+      <h3>Repository facts that affect architecture</h3>
+      <ul>
+        <li>The root navigation brands several pages as <strong>Governed Intelligence</strong>, flattening the upstream company/framework into its downstream AI instantiation.</li>
+        <li><code>REQUIREMENTS.md</code> declares a “Law of 7” and a seven-page architecture as non-negotiable. Later sources do not preserve that rule as current canon.</li>
+        <li>Most secondary pages are shells or historical arguments without required status/version metadata.</li>
+        <li><code>rental-command-center/</code> is unrelated to the Governed Logic public information architecture and requires an explicit preserve/relocate decision; it must not be moved blindly.</li>
+        <li>No nucleus, current corpus index, source authority map, version registry, or release-note structure exists in the repository.</li>
+      </ul>
+    </section>
+
+    <section id="ledger">
+      <p class="eyebrow">Deliverable 2</p>
+      <h2>Reconciliation and change ledger</h2>
+      <p>“Proposed state” means recommended for approval, not already decided. A block cannot be implemented until its missing source or decision is supplied.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID / state</th><th>Old or conflicting item</th><th>Proposed state</th><th>Reason / source</th><th>Impact / Paul decision</th></tr></thead>
+          <tbody>
+            <tr><td><span class="status block">R-01 Block</span></td><td>Handoff brief calls v0.3 the strongest supplied nucleus; corpus index declares v0.4 current.</td><td>Recover and inspect the exact v0.4 file. Treat v0.3 only as provenance until then.</td><td><code>CORPUS_INDEX.html</code>, dated the same day, records the later promotion.</td><td>No final framework copy or canonical glossary conversion before recovery.</td></tr>
+            <tr><td><span class="status block">R-02 Block</span></td><td>v0.3 makes GL-P1 both referent and prior, keeps morality as “binding,” and locks an intelligence definition.</td><td>Use v0.4’s declared corrections: separate referent from priors; moral obligation is real and binding; distinguish sufficient local grounding from ultimate adjudication; leave intelligence definition open.</td><td>Corpus index’s v0.4 change summary.</td><td>Exact wording remains blocked on the missing source.</td></tr>
+            <tr><td><span class="status ready">R-03 Ready</span></td><td>Site/navigation repeatedly brands the project “Governed Intelligence.”</td><td>Brand all company surfaces “Governed Logic · Reasoning Systems.” Place Governed Intelligence beneath Framework as a downstream AI instantiation.</td><td>Kickoff brief and nucleus scope hierarchy.</td><td>High compatibility impact; redirects preserve old paths.</td></tr>
+            <tr><td><span class="status ready">R-04 Ready</span></td><td>Legacy chain appears as <code>Ground → Truth → Logic → Reasoning → Intelligence → Action</code> and similar variants.</td><td>Use the public-safe upstream statement: “Truth governs logic. Governed logic governs reasoning. Intelligence is downstream.” Reserve the exact canonical chain for v0.4 recovery.</td><td>Current company architecture and v0.4 hold.</td><td>Prevents another premature terminology lock.</td></tr>
+            <tr><td><span class="status ready">R-05 Ready</span></td><td>“Six competed. One survived.” “Only it works.”</td><td>Replace with: explicit governing commitments materially affected model behavior in repeated exploratory sessions; comparative and referent-specific superiority remain testable questions.</td><td>August inventory and research standards.</td><td>Critical first public correction; wording still receives Paul editorial approval.</td></tr>
+            <tr><td><span class="status ready">R-06 Ready</span></td><td>Claims of unique Logos latent-space density, exponential suppression, self-enforcement, and functional determinism.</td><td>Classify as hypotheses or retire until mechanistic and controlled evidence exists.</td><td>Deep-research task requires alternatives and causal testing; v0.3 calls runtime mechanisms candidates.</td><td>Remove from factual technical copy; preserve in historical archive.</td></tr>
+            <tr><td><span class="status ready">R-07 Ready</span></td><td>“Reduces hallucinations,” “the anchor holds,” “nobody broke it,” “same every time.”</td><td>Replace universal/performance language with bounded observations, named test conditions, complete transcripts, limitations, and reproducibility status.</td><td>Evidence boundary in inventory and nucleus cross-model section.</td><td>Evidence pages must carry method and limitation metadata.</td></tr>
+            <tr><td><span class="status decision">R-08 Decision</span></td><td><code>REQUIREMENTS.md</code> makes seven links/pages/languages/sections a non-negotiable law.</td><td>Preserve as historical design constraint, not current governance. Let information architecture follow visitor tasks and corpus structure.</td><td>September kickoff explicitly recovers broader company architecture; later canon does not repeat the rule.</td><td>Paul confirms retirement of “Law of 7” as a website requirement.</td></tr>
+            <tr><td><span class="status ready">R-09 Ready</span></td><td>Top-level Discovery, Apologetics, Mission, Media, and Contact mix company, ministry, evidence, and channel roles.</td><td>Use Framework, Research, Evidence, Writing, Work, About. Keep theological and ministry material visible within Framework/Writing rather than letting it define the entire corporate navigation.</td><td>Kickoff’s company breadth and company/channel distinction.</td><td>Requires approved redirects and content routing.</td></tr>
+            <tr><td><span class="status decision">R-10 Decision</span></td><td>Legacy apologetics and mission pages present categorical historical/theological arguments as current company documentation.</td><td>Preserve, source-review, and route as signed writing or The Truth with Paul material; link to canonical framework where appropriate.</td><td>Page-type separation between canon, theology, argument, article, and evidence.</td><td>Paul decides whether each page is revised, archived, or republished.</td></tr>
+            <tr><td><span class="status ready">R-11 Ready</span></td><td>One-page cosmic/tesseract presentation and animated particle field dominate the public entry.</td><td>Use the restrained charcoal, steel, cool-blue, warm-neutral system from the newer mockup and article; one meaningful chain visual, limited motion.</td><td>Kickoff visual baseline and supplied identity assets.</td><td>Rebuild visual layer after architecture approval.</td></tr>
+            <tr><td><span class="status ready">R-12 Ready</span></td><td>Mockups use article links and offer cards as if content is ready.</td><td>Show only real published artifacts. Mark drafts internally; do not expose dead CTAs or ornamental offers.</td><td>HarrietOS publishing and truth-status requirements.</td><td>Homepage current-work module is data/content gated.</td></tr>
+            <tr><td><span class="status decision">R-13 Decision</span></td><td>Four historical offer names appear settled.</td><td>Use one engagement overview until scope, buyer, deliverables, legal path, price, and contact path are verified. AI Reasoning Assessment remains the leading candidate.</td><td>Inventory business audit and kickoff prohibition against freezing legacy offers.</td><td>Paul approves offer names and launch timing separately from IA.</td></tr>
+            <tr><td><span class="status ready">R-14 Ready</span></td><td>The Truth with Paul is mixed into company identity or reduced to a button.</td><td>Make it a distinct publishing channel with video companion pages, transcripts, and related articles under Writing.</td><td>Company/channel split and four-lane content map.</td><td>Preserves Paul’s public voice without turning the company into a personality site.</td></tr>
+            <tr><td><span class="status ready">R-15 Ready</span></td><td>Research, findings, demos, and fruit are empty shells with strong implied proof.</td><td>Unify under Evidence with separate page types for method, experiment, raw record, finding, limitation, and unresolved question.</td><td>Deep-research standards and commitment-ledger design.</td><td>No “fruit” or testimonial page until evidence exists and permission is documented.</td></tr>
+            <tr><td><span class="status decision">R-16 Decision</span></td><td><code>chat.html</code> promises a governed AI experience through an external project and implies broad reliability.</td><td>Retire or reframe as a documented prototype/demo with provider, model, instructions, limits, version, and dependency status.</td><td>Prototype is not finished architecture; vendor dependence must be explicit.</td><td>Paul confirms whether the external experience remains active.</td></tr>
+            <tr><td><span class="status ready">R-17 Ready</span></td><td>Legacy pages lack artifact type, epistemic status, version, source, and review metadata.</td><td>Add a compact metadata strip and structured meta elements to every canonical, research, evidence, and writing page.</td><td>HarrietOS acceptance criteria and epistemic presentation requirement.</td><td>Applies to all new page templates.</td></tr>
+            <tr><td><span class="status ready">R-18 Ready</span></td><td>Canonical files, public files, internal system files, and deployment files are conflated at repository root.</td><td>Separate source/canon/system from <code>/public</code>; deploy only <code>/public</code>; keep sensitive local-only material excluded from the public remote.</td><td>File-management strategy and public-repository reality.</td><td>Requires an approved Pages deployment method and migration plan.</td></tr>
+            <tr><td><span class="status decision">R-19 Decision</span></td><td><code>rental-command-center/</code> lives inside the public Governed Logic repository.</td><td>Preserve its current commit history, verify dependencies/links, then move it to a separate location or frozen archive.</td><td>It is outside Governed Logic website scope and may contain unrelated operational material.</td><td>No relocation until Paul selects destination and confirms no active public dependency.</td></tr>
+            <tr><td><span class="status ready">R-20 Ready</span></td><td>“ChatGPT-induced psychosis” could be inferred as an established branch.</td><td>Keep parasocial risk, mimicry, synthetic intimacy, and personhood simulation in research. Treat the exact psychosis label as candidate/subtopic pending source recovery and Paul decision.</td><td>Explicit kickoff instruction.</td><td>Do not make it a top-level page or marketing claim now.</td></tr>
+            <tr><td><span class="status decision">R-21 Decision</span></td><td>Current about copy says “AI scientist. Discoverer of Governed Logic” without a complete verified career narrative.</td><td>Build the About page from a source-verified professional chronology, founder origin, present work, lived stakes, and claim boundaries.</td><td>Kickoff purpose and inventory bio gap.</td><td>Paul approves exact credentials and personal details before publication.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <p class="eyebrow">Deliverable 3</p>
+      <h2>Recommended public information architecture</h2>
+      <p>The navigation exposes six visitor intents. Research breadth lives below those doors; it does not become a wall of top-level tabs.</p>
+      <div class="sitemap">
+        <article><span class="route">/framework/</span><h3>Framework</h3><ul><li>Governed Logic</li><li>Grounding and dependency chain</li><li>Governed Intelligence</li><li>Digital Escapement / candidate runtime</li><li>Semantic glossary</li><li>Contrasts with behavioral alignment and procedural governance</li></ul></article>
+        <article><span class="route">/research/</span><h3>Research</h3><ul><li>Truth, logic, reasoning, and intelligence</li><li>Reasoning and epistemics</li><li>AI safety and alignment architecture</li><li>Semantics and representation/referent</li><li>Mimicry, personhood, and human-AI relationship</li><li>Embodied/autonomous systems</li><li>World models and consequence prediction</li><li>Audits and evaluation</li></ul></article>
+        <article><span class="route">/evidence/</span><h3>Evidence</h3><ul><li>Papers and research reports</li><li>Experiments and protocols</li><li>Demonstrations</li><li>Reasoning/commitment ledgers</li><li>Raw records and reproducibility packages</li><li>Open questions and falsification conditions</li></ul></article>
+        <article><span class="route">/writing/</span><h3>Writing</h3><ul><li>Articles</li><li>The Groundless Machine</li><li>The Groundless Man</li><li>The Groundless Mind</li><li>The Truth with Paul</li><li>Video companion pages and transcripts</li></ul></article>
+        <article><span class="route">/work/</span><h3>Work</h3><ul><li>Engagement overview</li><li>Assessments and audits</li><li>Workshops and education</li><li>Prototype integration</li><li>Speaking and media</li><li>Contact / intake</li></ul></article>
+        <article><span class="route">/about/</span><h3>About</h3><ul><li>Governed Logic, the company</li><li>Paul André Couchoud</li><li>Professional chronology</li><li>Origin and current program</li><li>Contact</li></ul></article>
+      </div>
+      <h3 style="margin-top:28px">Navigation behavior</h3>
+      <ul>
+        <li>The logo returns Home; Home does not need to consume a text-nav slot.</li>
+        <li>Desktop shows the six labels and one quiet “Start a conversation” CTA. Mobile uses an accessible disclosure menu, not a theatrical full-screen interaction.</li>
+        <li>Each primary landing page supplies secondary navigation for its domain. Breadcrumbs appear below the header on deeper pages.</li>
+        <li>Theology is explicit where it is load-bearing. It is classified rather than hidden, softened, or confused with empirical evidence.</li>
+        <li>Search is deferred until the corpus is large enough to justify it; HTML metadata and clear index pages serve discoverability first.</li>
+      </ul>
+    </section>
+
+    <section id="homepage">
+      <p class="eyebrow">Deliverable 4</p>
+      <h2>Homepage specification</h2>
+      <div class="home-grid">
+        <article class="home-card"><h3>1. Header</h3><p>Approved Governed Logic lockup, six-item navigation, keyboard-visible focus, and one contact CTA. No mixed Governed Intelligence branding.</p></article>
+        <article class="home-card"><h3>2. Hero</h3><p>Category label “A reasoning systems company,” headline “Reasoning requires a ground,” one precise explanatory paragraph, and Framework/Evidence CTAs.</p></article>
+        <article class="home-card"><h3>3. Upstream problem</h3><p>Explain that modern AI can generate plausible adjudication without a declared, stable governing referent. Distinguish this from ordinary factual hallucination.</p></article>
+        <article class="home-card"><h3>4. Dependency chain</h3><p>A compact, inspectable diagram showing truth governing logic and governed logic governing reasoning. Exact v0.4 wording remains on hold.</p></article>
+        <article class="home-card"><h3>5. What the company does</h3><p>Three verbs: research, test, apply. Route to Research, Evidence, and Work rather than presenting three vague marketing cards.</p></article>
+        <article class="home-card"><h3>6. Groundless / governed contrast</h3><p>Preserve the strong comparison from the recent mockup, but frame it as architecture and observed failure modes—not universal claims about every output.</p></article>
+        <article class="home-card"><h3>7. Evidence status</h3><p>Two short columns: what repeated exploratory work supports; what controlled comparison has not yet established. Link to methods and raw records.</p></article>
+        <article class="home-card"><h3>8. Current work</h3><p>Feature only real artifacts with honest status: treatise working assembly, published articles, active protocols, or completed demonstrations.</p></article>
+        <article class="home-card"><h3>9. Research domains</h3><p>Show four concise domain groups with a path to the complete Research index. Avoid turning the homepage into the corpus.</p></article>
+        <article class="home-card"><h3>10. Work with Governed Logic</h3><p>State the practical problem and current engagement readiness. Do not publish package names, prices, or promises before verification.</p></article>
+        <article class="home-card"><h3>11. Founder</h3><p>A restrained source-verified summary of Paul’s systems, product, testing, and AI-research background with a route to the full About page.</p></article>
+        <article class="home-card"><h3>12. Writing and channel</h3><p>Connect governedlogic.com to The Truth with Paul through articles, videos, transcripts, and companion pages—without making the channel the company.</p></article>
+      </div>
+      <h3 style="margin-top:28px">CTA logic</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Visitor state</th><th>Primary action</th><th>Secondary action</th><th>Do not</th></tr></thead>
+          <tbody>
+            <tr><td>First encounter</td><td>Understand Governed Logic</td><td>Examine the evidence</td><td>Ask for a sale before the category is intelligible.</td></tr>
+            <tr><td>Technical / academic scrutiny</td><td>Read method, claims, and limitations</td><td>Inspect raw records</td><td>Route to marketing copy or unscored demos.</td></tr>
+            <tr><td>Potential client / partner</td><td>See how Governed Logic can evaluate a real workflow</td><td>Start a conversation</td><td>Promise an undefined platform or universal result.</td></tr>
+            <tr><td>Reader / viewer</td><td>Read the current article or treatise installment</td><td>Watch the companion episode</td><td>Send visitors to empty archive shells.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="types">
+      <p class="eyebrow">Deliverable 5</p>
+      <h2>Page-type system</h2>
+      <div class="type-grid">
+        <article class="type-card"><h3>Canon concept page</h3><p>Definition, dependency, canonical propositions, boundaries, related concepts, objections, version history, and source provenance. Cannot be published while its governing source is missing.</p></article>
+        <article class="type-card"><h3>Research-domain page</h3><p>Question, importance, active hypotheses, prior-art terrain, methods, related artifacts, current status, unresolved questions, and next experiments.</p></article>
+        <article class="type-card"><h3>Paper / evidence page</h3><p>Abstract, claim classes, method, data/source set, results, limitations, falsifiers, reproducibility package, citations, and revision history.</p></article>
+        <article class="type-card"><h3>Demonstration / test page</h3><p>Test ID, date, model/provider/version, exact instructions, conditions, prompt set, raw outputs, scoring, evaluator, deviations, result, and limits.</p></article>
+        <article class="type-card"><h3>Article page</h3><p>Title, dek, author, date, article/opinion label, citations, related framework concepts, companion video, and editorial/version history.</p></article>
+        <article class="type-card"><h3>Service / engagement page</h3><p>Qualifying problem, intended buyer, inputs, scope, deliverables, exclusions, timeline, evidence boundary, confidentiality note, and human contact path.</p></article>
+        <article class="type-card"><h3>About page</h3><p>Company identity, founder chronology, origin, present work, lived motivation, verified credentials, role boundaries, and contact.</p></article>
+        <article class="type-card"><h3>Video companion page</h3><p>Episode, summary, transcript, claims discussed, citations, related article/canon pages, corrections, and recording metadata.</p></article>
+        <article class="type-card"><h3>Index / registry page</h3><p>Filterable-by-link HTML inventory showing title, type, status, version, updated date, and destination. No hidden database is required for the MVP.</p></article>
+      </div>
+      <div class="callout">
+        <h3>Required metadata for every governed artifact</h3>
+        <p>Title · description · artifact type · epistemic status · editorial status · version · created date · updated date · canonical path · source/provenance · intended destination · companion outputs · approval state.</p>
+      </div>
+    </section>
+
+    <section id="mapping">
+      <p class="eyebrow">Deliverable 6</p>
+      <h2>Content mapping</h2>
+      <p>Existing artifacts are routed; missing copy is named rather than invented.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Source artifact / current path</th><th>Proposed destination</th><th>Action</th><th>Publication state</th></tr></thead>
+          <tbody>
+            <tr><td>Missing nucleus v0.4</td><td><code>/canon/governed-logic/</code> source; Framework pages downstream</td><td>Recover exact source, verify metadata, preserve v0.3 beside it.</td><td><span class="status block">Blocked</span></td></tr>
+            <tr><td>Nucleus v0.3</td><td><code>/versions/canon/governed-logic/</code></td><td>Preserve unchanged with superseded status and promotion link.</td><td>Historical provenance</td></tr>
+            <tr><td>Semantic Glossary v0.1 Markdown</td><td><code>/canon/glossary/</code> after HTML conversion</td><td>Reconcile term by term against v0.4; preserve original under sources/provenance.</td><td><span class="status block">Blocked</span></td></tr>
+            <tr><td>Master Deep Research Task</td><td><code>/research/index.html</code> and domain-page backlog</td><td>Map questions into research domains; do not copy hypotheses as findings.</td><td>Internal research source</td></tr>
+            <tr><td>AI Safety Has an Architecture Problem</td><td><code>/public/writing/articles/ai-safety-has-an-architecture-problem/</code></td><td>Citation review, claim classification, Paul edit, then publish with companion video when approved.</td><td>Draft v0.1</td></tr>
+            <tr><td>The Groundless Machine working assembly (referenced, not supplied)</td><td><code>/public/writing/treatises/the-groundless-machine/</code></td><td>Recover current assembly; expose only approved installments and status.</td><td><span class="status block">Source missing</span></td></tr>
+            <tr><td>Current <code>index.html</code></td><td><code>/archive/site-2026-06-24/index.html</code> plus approved replacement</td><td>Snapshot first; replace public home in correction/recovery batch.</td><td>Live historical site</td></tr>
+            <tr><td><code>architecture.html</code></td><td><code>/framework/architecture/</code></td><td>Preserve old page; rewrite only from current canon with claim types visible.</td><td>Historical working argument</td></tr>
+            <tr><td><code>mechanism.html</code></td><td><code>/framework/mechanism/</code></td><td>Separate principle, instruction-level prototype, candidate mechanism, and evidence.</td><td>Major correction required</td></tr>
+            <tr><td><code>papers.html</code></td><td>Split across Framework, Evidence, and Writing</td><td>Archive intact. Do not port its four layers wholesale; route propositions by artifact type.</td><td>Overclaim risk</td></tr>
+            <tr><td><code>research.html</code>, <code>findings.html</code>, <code>demos.html</code></td><td><code>/research/</code> and <code>/evidence/</code></td><td>Replace empty shells with real indexes as artifacts become available.</td><td>Not publish-ready</td></tr>
+            <tr><td><code>fruit.html</code></td><td>Possible Evidence case-study area later</td><td>Archive shell; require real record, permission, method, and context before any testimonial.</td><td>Deferred</td></tr>
+            <tr><td><code>apologetics.html</code>, <code>mission.html</code></td><td><code>/writing/</code> or The Truth with Paul lanes</td><td>Source-review, classify as signed theological/philosophical writing, and decide individually.</td><td><span class="status decision">Paul decision</span></td></tr>
+            <tr><td><code>chat.html</code></td><td><code>/evidence/demonstrations/</code> or retirement</td><td>Verify external prototype. Document model/version/limits if retained.</td><td><span class="status decision">Paul decision</span></td></tr>
+            <tr><td><code>about.html</code></td><td><code>/about/</code></td><td>Replace placeholder with source-verified founder/company page after Paul review.</td><td>Copy required</td></tr>
+            <tr><td>Homepage mockup</td><td>Design-system and component reference</td><td>Preserve visual direction; rebuild within approved IA rather than deploying as-is.</td><td>Working design source</td></tr>
+            <tr><td>Brand board and triple-loop image</td><td><code>/public/assets/brand/</code></td><td>Select master mark, create web derivatives, retain originals in source assets.</td><td><span class="status decision">Asset approval</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="visual">
+      <p class="eyebrow">Deliverable 7</p>
+      <h2>Visual design specification</h2>
+      <div class="card-grid">
+        <article class="card"><h3>Identity</h3><p>Dark charcoal field, cool metallic blue/silver mark, precise linework, restrained warm accent, linked three-loop motif, “Governed Logic / Reasoning Systems,” and “Follow the Chain.”</p></article>
+        <article class="card"><h3>Typography</h3><p>Editorial serif for thesis-level headings and quotations; neutral sans-serif for navigation, metadata, tables, and interface text. Self-host licensed fonts or use durable system fallbacks.</p></article>
+        <article class="card"><h3>Composition</h3><p>Maximum 1180px structural width; 820px reading width; generous vertical rhythm; borders before shadows; 2–3 columns only when content density supports them.</p></article>
+      </div>
+      <h3 style="margin-top:28px">Proposed token baseline</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Token</th><th>Value</th><th>Role</th><th>Source lineage</th></tr></thead>
+          <tbody>
+            <tr><td><code>--gl-bg</code></td><td><code>#0a0d10</code></td><td>Primary canvas</td><td>AI-safety article / newer dark direction</td></tr>
+            <tr><td><code>--gl-surface</code></td><td><code>#11161b</code></td><td>Cards and reading surfaces</td><td>AI-safety article</td></tr>
+            <tr><td><code>--gl-ink</code></td><td><code>#eef2f4</code></td><td>Primary text</td><td>AI-safety article</td></tr>
+            <tr><td><code>--gl-muted</code></td><td><code>#a6b0b7</code></td><td>Secondary copy and metadata</td><td>AI-safety article</td></tr>
+            <tr><td><code>--gl-line</code></td><td><code>#2a343d</code></td><td>Structure, tables, diagrams</td><td>AI-safety article</td></tr>
+            <tr><td><code>--gl-steel</code></td><td><code>#98adbc</code></td><td>Technical labels and mark support</td><td>Article / brand board</td></tr>
+            <tr><td><code>--gl-blue</code></td><td><code>#7ea8c5</code></td><td>Links, active states, diagram emphasis</td><td>Article / metallic blue assets</td></tr>
+            <tr><td><code>--gl-warm</code></td><td><code>#cfb77e</code></td><td>Theological/canonical accent and sparing callouts</td><td>Article / newer warm-neutral direction</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Logo and diagrams</h3>
+      <ul>
+        <li>The smooth three-loop linked form is the preferred direction, subject to exact master-mark approval. Preserve a one-color version for small and accessibility-constrained contexts.</li>
+        <li>Use the mark as identity, not as proof. Do not force every diagram into the logo geometry.</li>
+        <li>Use SVG/HTML diagrams with selectable text, named nodes, and textual equivalents. The primary homepage visual should explain governance order, not simulate a mysterious neural network.</li>
+      </ul>
+      <h3>Motion and accessibility</h3>
+      <ul>
+        <li>No scroll-jacking, mandatory scroll snapping, continuous particle fields, auto-playing audio, or motion required to understand content.</li>
+        <li>Allow one restrained, interruptible “follow the chain” reveal; provide an immediate static state and honor <code>prefers-reduced-motion</code>.</li>
+        <li>Meet WCAG 2.2 AA contrast, keyboard navigation, visible focus, semantic headings, skip link, labeled controls, alt text, and 200% zoom/reflow.</li>
+        <li>Home cards collapse to one column on narrow screens. Reading pages remain approximately 65–75 characters per line.</li>
+        <li>Print styles preserve articles, papers, and ledgers without dark backgrounds or clipped tables.</li>
+      </ul>
+    </section>
+
+    <section id="epistemic">
+      <p class="eyebrow">Deliverable 8</p>
+      <h2>Epistemic presentation system</h2>
+      <p>The site should look disciplined, not bureaucratic. Use one compact strip near each title and a small vocabulary that remains stable everywhere.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Visible label</th><th>Meaning</th><th>Required page behavior</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Canonical proposition</strong></td><td>Approved upstream Governed Logic commitment.</td><td>Show version, dependency, source, change history, and approval.</td><td>A proposition from the recovered current nucleus.</td></tr>
+            <tr><td><strong>Theological claim</strong></td><td>Claim grounded in Scripture/theology; may also participate in a philosophical argument.</td><td>Name the source and do not present it as an empirical result.</td><td>Identification of the Logos with Jesus Christ.</td></tr>
+            <tr><td><strong>Working hypothesis</strong></td><td>Testable proposal not yet established.</td><td>Show alternatives, evidence needed, and falsification condition.</td><td>Specific internal mechanism for semantic governance.</td></tr>
+            <tr><td><strong>Experiment</strong></td><td>Defined test, whether planned, running, or complete.</td><td>Show condition, method, inputs, scoring, result, deviations, and limits.</td><td>Referent-variable or trajectory-invariance test.</td></tr>
+            <tr><td><strong>Evidence record</strong></td><td>Primary or structured record bearing on a claim.</td><td>Preserve source, date, provenance, and relation to proposition.</td><td>Exact cross-model transcript.</td></tr>
+            <tr><td><strong>Unresolved question</strong></td><td>Open issue whose answer matters to architecture or claim strength.</td><td>Do not collapse into confident copy; link to relevant work.</td><td>Definition of intelligence under v0.4.</td></tr>
+            <tr><td><strong>Article / commentary</strong></td><td>Signed interpretation or argument.</td><td>Show author, citations, related canon, and correction history.</td><td>AI Safety Has an Architecture Problem.</td></tr>
+            <tr><td><strong>Historical source</strong></td><td>Superseded or earlier artifact retained for provenance.</td><td>Show superseded date, successor, and “do not cite as current” notice.</td><td>Nucleus v0.3 or June website.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Recommended title strip:</strong> <span class="badge">Type: Experiment</span> <span class="badge">Status: Complete</span> <span class="badge">Evidence: Exploratory</span> <span class="badge">Updated: 2026-09-05</span></p>
+      <p>Color supports recognition but never carries status alone. “Claim type” and “editorial status” remain separate: a theological claim can be approved; an experiment can be draft; an article can cite canonical propositions without becoming canon.</p>
+    </section>
+
+    <section id="filesystem">
+      <p class="eyebrow">Deliverable 9</p>
+      <h2>Filesystem and public-path plan</h2>
+      <div class="callout">
+        <h3>Recommended operating model</h3>
+        <p>The 1TB local drive remains the full working filesystem. Git records all non-sensitive project history. The public GitHub repository receives only sanitized project material and deployable output. Sensitive contacts, credentials, private notes, and raw personal data remain local-only or in a separately approved private remote.</p>
+      </div>
+      <pre><code>D:/HarrietOS/governedlogic-site/
+  .git/
+  .gitignore
+  CNAME
+  system/
+    WEBSITE_RECOVERY_AND_ARCHITECTURE_SPEC_v0.1.html
+    HARRIET_OS_PRD.html
+    CODEX_INSTRUCTIONS.html
+    WEBSITE_STRUCTURE.html
+    FILE_MANAGEMENT_STRATEGY.html
+    ARTIFACT_REGISTRY.html
+    RELEASE_NOTES.html
+  canon/
+    governed-logic/
+    governed-intelligence/
+    glossary/
+  sources/
+    handoffs/
+    research/
+    provenance/
+  research/
+    domains/
+    protocols/
+    ledgers/
+  content-pipeline/
+    ideas/
+    drafts/
+    review/
+    approved/
+    published/
+  youtube/the-truth-with-paul/
+  versions/
+    snapshots/
+    release-notes/
+  archive/
+    site-2026-06-24/
+  private-local/              (excluded from public Git remote)
+  public/
+    index.html
+    assets/
+      css/site.css
+      js/site.js
+      brand/
+      img/
+    framework/
+    research/
+    evidence/
+    writing/
+    work/
+    about/
+    contact/
+    legacy redirect stubs
+</code></pre>
+      <h3>Deployment recommendation</h3>
+      <p>After approval, deploy the contents of <code>/public</code> through a GitHub Pages workflow or a dedicated publish branch. Do not move root files on <code>main</code> until the Pages source, <code>CNAME</code>, and rollback path have been verified. The current site receives a Git tag and an archive snapshot before any replacement.</p>
+      <h3>Legacy path migration</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Current path</th><th>Proposed route</th><th>Compatibility action</th></tr></thead>
+          <tbody>
+            <tr><td><code>/index.html</code></td><td><code>/</code></td><td>Replace only in approved correction/recovery release.</td></tr>
+            <tr><td><code>/architecture.html</code></td><td><code>/framework/architecture/</code></td><td>Permanent redirect after new page is approved; archive old source.</td></tr>
+            <tr><td><code>/mechanism.html</code></td><td><code>/framework/mechanism/</code></td><td>Redirect after corrected distinction page exists.</td></tr>
+            <tr><td><code>/research.html</code></td><td><code>/research/</code></td><td>Redirect to research index.</td></tr>
+            <tr><td><code>/demos.html</code></td><td><code>/evidence/demonstrations/</code></td><td>Redirect only when real index exists.</td></tr>
+            <tr><td><code>/findings.html</code></td><td><code>/evidence/</code></td><td>Redirect; preserve historical shell.</td></tr>
+            <tr><td><code>/papers.html</code></td><td><code>/evidence/papers/</code></td><td>Redirect to index, not to an unreviewed historical paper.</td></tr>
+            <tr><td><code>/apologetics.html</code></td><td>Decision pending under Writing</td><td>Keep existing path until Paul classifies the artifact.</td></tr>
+            <tr><td><code>/mission.html</code></td><td>Decision pending under Writing / The Truth with Paul</td><td>Keep existing path until Paul classifies the artifact.</td></tr>
+            <tr><td><code>/chat.html</code></td><td>Decision pending under Evidence or retirement</td><td>Do not redirect until the prototype is verified.</td></tr>
+            <tr><td><code>/about.html</code></td><td><code>/about/</code></td><td>Redirect after approved founder/company copy exists.</td></tr>
+            <tr><td><code>/fruit.html</code></td><td>No immediate replacement</td><td>Archive; return an honest index/notice rather than inventing testimonials.</td></tr>
+            <tr><td><code>/rental-command-center/</code></td><td>Separate destination pending</td><td>Preserve untouched until dependency and destination review.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="implementation">
+      <p class="eyebrow">Deliverable 10</p>
+      <h2>Bounded Codex implementation plan</h2>
+      <p>These tasks begin only after Paul approves this architecture and supplies the missing sources/decisions relevant to each task.</p>
+      <div class="sequence">
+        <article><h3>Task 1 — Freeze and inventory the current public site</h3><p><strong>Context:</strong> Git/version safety. <strong>Files:</strong> tag/snapshot metadata and <code>/archive/site-2026-06-24/</code>. <strong>Acceptance:</strong> every current path and SHA recoverable; no public behavior changes. <strong>Do not:</strong> rewrite or delete any source.</p></article>
+        <article><h3>Task 2 — Correct the live evidence overclaims</h3><p><strong>Context:</strong> R-05 through R-07. <strong>Files:</strong> only current pages containing the named claims. <strong>Acceptance:</strong> overclaims removed or explicitly classified; current navigation and deployment otherwise unchanged. <strong>Do not:</strong> introduce the new IA in the correction patch.</p></article>
+        <article><h3>Task 3 — Establish the approved repository skeleton</h3><p><strong>Context:</strong> filesystem plan. <strong>Files:</strong> named top-level folders, registry, release notes, and deployment configuration. <strong>Acceptance:</strong> ordinary inspectable files; Pages preview succeeds; no sensitive material tracked. <strong>Do not:</strong> populate the site with invented copy.</p></article>
+        <article><h3>Task 4 — Build the shared public shell</h3><p><strong>Context:</strong> approved nav and visual system. <strong>Files:</strong> base template, <code>site.css</code>, minimal <code>site.js</code>, brand assets. <strong>Acceptance:</strong> responsive, keyboard accessible, reduced-motion safe, print safe, and metadata-complete. <strong>Do not:</strong> create content pages beyond one test fixture.</p></article>
+        <article><h3>Task 5 — Build registry and epistemic components</h3><p><strong>Context:</strong> page metadata and status system. <strong>Files:</strong> HTML registry, status-strip component pattern, page-type templates. <strong>Acceptance:</strong> every fixture exposes type/status/version/path/source; status never depends on color alone. <strong>Do not:</strong> add a database or CMS.</p></article>
+        <article><h3>Task 6 — Build the approved homepage structure</h3><p><strong>Context:</strong> homepage specification. <strong>Files:</strong> <code>/public/index.html</code> plus approved assets. <strong>Acceptance:</strong> twelve sections or approved subset, correct CTA hierarchy, no dead links, no unsupported claims. <strong>Do not:</strong> publish until Paul approves final copy.</p></article>
+        <article><h3>Task 7 — Build primary landing pages</h3><p><strong>Context:</strong> six-door IA. <strong>Files:</strong> Framework, Research, Evidence, Writing, Work, About indexes. <strong>Acceptance:</strong> each routes only to real or explicitly “not yet published” artifacts. <strong>Do not:</strong> fabricate page depth.</p></article>
+        <article><h3>Task 8 — Recover and publish current canon</h3><p><strong>Context:</strong> nucleus v0.4 and glossary. <strong>Files:</strong> canonical source files and downstream Framework pages. <strong>Acceptance:</strong> exact source recovered, superseded versions preserved, change ledger present. <strong>Do not:</strong> execute while R-01 is blocked.</p></article>
+        <article><h3>Task 9 — Migrate one evidence package end to end</h3><p><strong>Context:</strong> validate page types. <strong>Files:</strong> one protocol, one raw record, one result/limitation page, registry entries. <strong>Acceptance:</strong> reproducible navigation from claim to source and back. <strong>Do not:</strong> use a polished article as a substitute for raw evidence.</p></article>
+        <article><h3>Task 10 — Migrate one article/video companion pair</h3><p><strong>Context:</strong> publishing loop. <strong>Files:</strong> approved article, companion episode page, transcript/citations, registry. <strong>Acceptance:</strong> reciprocal links, consistent claims, corrections path, and approved status. <strong>Do not:</strong> create YouTube Shorts.</p></article>
+        <article><h3>Task 11 — Implement redirects and release</h3><p><strong>Context:</strong> public-path migration. <strong>Files:</strong> explicit redirect stubs/map, Pages configuration, release note. <strong>Acceptance:</strong> old URLs resolve, CNAME/SSL remain correct, rollback tested, no orphaned public content. <strong>Do not:</strong> redirect undecided pages.</p></article>
+      </div>
+    </section>
+
+    <section id="approvals">
+      <p class="eyebrow">Approval gate</p>
+      <h2>Decisions required before implementation</h2>
+      <div class="approval-box">
+        <ol>
+          <li><strong>Supply or locate <code>governed-logic-nucleus-v0.4.html</code>.</strong> This is the only hard source blocker for canonical framework copy.</li>
+          <li><strong>Approve or revise the six-door navigation:</strong> Framework, Research, Evidence, Writing, Work, About.</li>
+          <li><strong>Confirm retirement of “Law of 7” as a binding website rule.</strong></li>
+          <li><strong>Approve the three-loop visual direction and identify the exact master mark.</strong></li>
+          <li><strong>Choose the disposition of Apologetics, Mission, Chat, Fruit, and <code>rental-command-center/</code>.</strong></li>
+          <li><strong>Approve the current public evidence ceiling</strong> before correction copy is drafted.</li>
+          <li><strong>Choose the repository/deployment boundary</strong> for public, sanitized internal, and local-only private material.</li>
+          <li><strong>Verify the public contact address and founder-bio source record</strong> before those pages are implemented.</li>
+        </ol>
+      </div>
+      <h3 style="margin-top:28px">Work-phase acceptance check</h3>
+      <ul>
+        <li>Every proposed public area traces to supplied source material or is visibly marked as a proposal.</li>
+        <li>Conflicts, holds, and decisions are explicit and versionable.</li>
+        <li>The company reads as a reasoning-systems company with research, safety, evaluation, applied work, publishing, and education.</li>
+        <li>The visual recommendation visibly descends from the supplied brand assets and newer mockups.</li>
+        <li>The implementation queue is bounded enough that Codex need not make canon, brand, product, or publishing decisions.</li>
+      </ul>
+      <blockquote><p>Approval of this specification authorizes planning to become implementation. Until then, the public site remains untouched.</p></blockquote>
+    </section>
+  </main>
+
+  <footer>
+    <p>Governed Logic · Reasoning Systems · Website Recovery &amp; Architecture Specification v0.1 · Review only · 2026-09-05 · Soli Deo Gloria</p>
+  </footer>
+</body>
+</html>
