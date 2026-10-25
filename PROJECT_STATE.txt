@@ -1,6 +1,6 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
-Updated: 2026-10-24
-Status: Homepage reorder PR #16 merged; GitHub Pages deployment workflows succeeded 2026-10-24, but live HTML not independently retrieved by Harriet. Mechanism archive PR #17 remains ON HOLD. State-only PR #15 awaits updated BA review. Earlier chronological snapshots below may be superseded by this header and the latest release update.
+Updated: 2026-10-25 11:20 EDT (Governor)
+Status: V10.10 Governed Logic in progress. PRD compliance audit done and challenged (65 of 158 PRD IDs PASS; 50 HOLD on decisions). Paul delegated the open decisions to Harriet on 2026-10-25 11:11 EDT. First implementation PRs (tests, front door) being built on v10.10/* branches; nothing merged or deployed by Grok's team. Earlier sections below are history; the latest dated entry governs.
 Repository: GovernedLogic/GovernedLogic
 Site: https://governedlogic.com/
 
@@ -218,3 +218,58 @@ Sender: Governor. Recipient / next owner: Harriet (review and merge this PR). St
 - Second developer: approved in principle; added only when the V10.10 backlog shows parallel workstreams.
 - Communication rule (Paul's words): "the project.state.txt file on main is how you communicate with Harriet and the governor is the only one that communicates to Harriet on behalf of the team."
 No website code, PRD, CNAME, opening, or build file changed. Only this file.
+
+
+
+V10.10 PROGRESS, QUESTIONS AND NEXT ACTIONS — recorded 2026-10-25 11:20 EDT
+Sender: Governor (formerly GL Business Analyst). Recipient / next owner: Harriet. Action: review this state update and answer the open decisions. Status: audit complete and challenged; first implementation PRs in progress. PR: this branch (v10.10/state-roles, PR #22).
+
+PAUL'S DIRECTION (in Grok chat)
+- 2026-10-25 10:10 EDT: release name "V10.10 Governed Logic". Goal: the whole site matches the approved PRD, not one PR at a time. Branches v10.10/<workstream>; PR titles start "V10.10:".
+- 2026-10-25 11:11 EDT (Paul's words): "Harriet can answer these but she's going to have to use governed logic to do it. She's going to have to reason through to answer these questions."
+
+DONE (steps 1-6 of NEXT IMPLEMENTATION CYCLE)
+- 2026-10-25 ~10:20 EDT: Governor finished the traceability matrix and full site audit against the approved PRD (main e92b4d2/533282d; live re-fetched 10:24:49 EDT matches the build).
+- 2026-10-25 10:31 EDT: GL QA challenged all user-visible PASSes live at 1440/390/320; 9 disputes, all upheld.
+- 2026-10-25 10:32 and 10:37 EDT: GL Site Architect challenged the matrix and ran a full source-fidelity pass; 31 disputes, all upheld except one detail (UG-03 source line).
+- 2026-10-25 10:45 EDT: audit corrected. Results:
+  PRD (158 IDs): 65 PASS, 32 CORRECTION REQUIRED, 11 INTENTIONAL OMISSION (historical), 50 HOLD.
+  Homepage contract WEB-160-169: 4 PASS, 6 CORRECTION REQUIRED.
+  Traceability matrix (110 records): 47 PASS, 19 CORRECTION REQUIRED, 44 HOLD.
+  Source fidelity (140 site claims): 75 faithful, 20 drift, 0 reversal, 4 collapse, 7 blend, 27 unsourced, 7 machine/human mismatch.
+- Every backlog item (00-20) now has a testable pass/fail acceptance.
+- The audit package is in Paul's Google Drive, not in this public repo, because the matrix quotes unpublished treatise text (WEB-159): My Drive/Governed Logic/V10.10 Audit 2026-10-25 (uploaded 2026-10-25 11:14 EDT, not shared): https://drive.google.com/drive/folders/1bp29dvsxVuzZJFSHDoaTg7HSjJLQj39v . It holds SUMMARY, SITE_AUDIT, TRACEABILITY_MATRIX (Sheet), BACKLOG, DEVELOPER_BRIEF, DECISIONS_FOR_HARRIET, ARCH-CHALLENGE, ARCH-SOURCE-FIDELITY and QA-DISPUTES.
+
+MOST SERIOUS FINDINGS
+- /mechanism.html (hero primary button; PR #17 held) credits the Ultimate Grounding argument to Governed Logic and says "the triune God is the ultimate ground of the one reality"; "triune" is in neither treatise. Same sentence in catalog.json and search-index.json.
+- Governed Logic.txt is a 113-line notes file. Most Governed Logic wording on the site traces only to the 22 Sep repo editions (repo_02/03), not to a treatise.
+- Doctrine drift: "A halt is a decision." vs v0.7 "A halt is a stopping event"; "Truth is correspondence" vs v0.7's open position; three different definitions of intelligence; "governing referent" defined with v0.7's plain "referent" definition; GI page softens the pre-commitment test.
+- Homepage: architecture diagram comes before the problem (WEB-161); ~16 s intro on every visit; menu omits Ultimate Grounding; phone header scrolls away; first Tab is not the skip link.
+- CI: validate-pages has failed on every PR since #13 (stale 'Explore' Opening test), and Playwright never runs on main.
+
+QUESTIONS FOR HARRIET (delegated by Paul; full list D-01 to D-45, 44 open, in DECISIONS_FOR_HARRIET in the Drive folder). Top 8, which unblock the most work; Governor's suggested default in brackets where the sources support one:
+1. D-02/D-01: are the Drive files the canonical treatises? [yes; you already confirmed identities in the 09:54 handoff] Where are the two 23 Sep clarification captures (FollowTheChain_Termination, STOP_WhatChanged)? They are not in Paul's Drive.
+2. D-30: where the treatises are silent, does the 22 Sep repo wording (02 GL, 03 A&O, 04 GI) stand? [yes, provisionally, wherever no treatise contradicts it]
+3. D-12: approve verbatim reuse of addendum line 239 (/company/) and the Governed Logic.txt section 9 lines (problem section). [approve] "Substrate-agnostic" is in no source: [no default]
+4. D-03/D-31: retarget the hero button away from /mechanism.html? [retarget to /concepts/governed-intelligence/#current-state; keep the page held] How to repair the "triune" blend: [no default]
+5. D-04: the ~16 s intro on every visit. [shorten toward the PRD's ~11 s, WEB-115]
+6. D-35: remove the hero diagram (.reasoning-exhibit) so the problem comes before the architecture. [approve; copy-free]
+7. D-08/D-43: may treatise text appear on HTML pages, and should v0.7 be published as a source edition? [no default; publication call]
+8. D-28: authorize render_site.py changes for feed dates/library metadata (backlog 07) and a real 404 page (backlog 16). [authorize both]
+Paul keeps final release approval of every PR.
+
+IN PROGRESS
+- v10.10/tests (GL Site Developer): head 9e7b758 pushed 2026-10-25 10:43:19 EDT. Fixes the stale Opening test and release-check scripts (WEB-182); acceptance is 0 visual-suite failures and all check scripts exit 0. Goes to GL QA, then to Harriet with evidence.
+- v10.10/front-door (GL Site Developer): menu set to the five destinations (backlog 02) and sticky phone header with skip link first (backlog 03). Hero diagram removal (01) is a separate commit pending D-35; the governing-referent link (05) is held on D-32. No new wording; CNAME, render_site.py and the opening untouched.
+- PR #22 (this branch): role update plus this entry.
+
+REQUESTS FOR HARRIET (GitHub settings only an admin can change)
+- Make validate-pages a required PR check once v10.10/tests is green.
+- Check Settings, Pages, Enforce HTTPS (the deployment URL reports http://).
+- Branch cleanup: about 20 merged remote branches; two have commits never on main (docs/project-state-grok-reconciliation-2026-10-24 c786728, review/v17-separated 58cdd9c). Close PR #15 (superseded). Grok's team will not delete branches or close PRs.
+
+NEXT ACTIONS
+- Harriet: answer the top 8 decisions (in this file or a PR comment); review and merge PR #22.
+- GL Site Developer: open the tests and front-door PRs; then v10.10/ci (validate on main, gate deploy) and v10.10/repo-hygiene (unused files only; index.html, sitemap.xml, robots.txt and manifest.json preserved).
+- GL QA: verify each V10.10 PR against its acceptance at 1440/390/320.
+- Governor: hand each QA-passed PR to Harriet through this file with exact timestamps; turn Harriet's answers into the next backlog PRs (problem section, company page, doctrine fixes).
