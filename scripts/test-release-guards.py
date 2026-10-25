@@ -45,14 +45,14 @@ REVIEWED_PAGE_DIGESTS = {
     "challenge/index.html": ("ee1b7f205e8dc46a62711ad97d4ef44995e5509b7df93b3fa0d81b9c3e8a6117",),
     # company/index.html: same restored footer labels.
     "company/index.html": ("fcf2f6cf0ad74eaaf8bb64929f82f7d4b6b5120086d94de4c04915ca78ef0427",),
-    # research/index.html: same restored footer labels. Parent-page buttons are not in this pin.
-    "research/index.html": ("a2b9e60119b6dd154fc7d90cd55a1401314b5b5986e9f2b2d06a84f97d92e0ab",),
+    # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
+    "research/index.html": ("942224d3342a8f69bb393f107e6842ab62066228ef771279be6d6597e869d0e8",),
     # about/index.html: same restored footer labels.
     "about/index.html": ("7ce6f840fd09025d105e2ffaa5d1d30f89d09855d20297bb12f7cdc53e201efd",),
     # faq/index.html: same restored footer labels.
     "faq/index.html": ("34680b1cb607c86f61b87e1d6f5319e6247e40201e000f4baeab7ff7dbe269f4",),
-    # concepts/index.html: same restored footer labels. The Alpha and Omega button is not in this pin.
-    "concepts/index.html": ("f63c6acd3df0ea7c9314962d0255717c8981b9633555a6d1dae302d967c3c5d4",),
+    # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
+    "concepts/index.html": ("0c6b9d5e17384e4092e0abc638cb5bbd185305fa15ffb11f21a5ee422ca43e56",),
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
     "concepts/governed-logic/index.html": ("45a37bd24089bf66cb9540125f2203f2b704aeb39d8d619b693f4f1b4f002bf6",),
     # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.

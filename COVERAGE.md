@@ -441,6 +441,16 @@
 
 SAME-PAGE=304, STILL-A=43, FRAG=0, C-FIDELITY=34, C-NOTE=12, ORPHAN=0, SELF=45
 
+## Parent routes
+
+These three destinations stay in the generated library and publication listings. Each also has a form on its parent page, outside `main`, so the catalog text is unchanged. `render_site.py` is untouched.
+
+| Parent | Control | Destination |
+|---|---|---|
+| /concepts/ | Alpha and Omega Reasoning | /concepts/alpha-and-omega-reasoning/ |
+| /research/ | Why Anything? | /articles/why-anything/ |
+| /research/ | Integrity in Artificial Intelligence | /articles/integrity-in-artificial-intelligence/ |
+
 ## Content sections
 
 | Route | Section | Headings |
