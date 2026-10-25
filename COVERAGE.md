@@ -1,6 +1,6 @@
 # Follow-up coverage
 
-orphans=0. machine=0.
+orphans=0. machine=0. The built site has zero <a> elements.
 
 The four removed footer controls are not site-wide orphans. No parent-page button was added.
 
@@ -8,12 +8,10 @@ The four removed footer controls are not site-wide orphans. No parent-page butto
 |---|---|---|---|---|
 | /concepts/ultimate-grounding/ | Header on every page, label Ultimate Grounding | 1 | 1 | 1 |
 | /about/ | Homepage control "Read Paul's story" | 1 | 1 | 2 |
-| /library/ | Homepage control "The library" | 1 | 1 | 2 |
+| /library/ | Homepage control "The library", and the library and publication listing buttons | 1 | 1 | 2 |
 | /challenge/ | Homepage control "The inquiry" (page title: Follow the chain.) | 1 | 1 | 2 |
 
-Worst-page depth is 2 for About, Library, and Follow the chain because the footer control that sat on every page is gone. Each is still one click from the homepage. A button only on the parent page would also be two clicks from every other page, so it would not restore the old depth.
-
-Skip links outside render_site.py were already focus buttons that move focus to main. The remaining anchors are the 42 library and publication listings emitted by render_site.py.
+Worst-page depth is 2 for About, Library, and Follow the chain because the footer control that sat on every page is gone. Each is still one click from the homepage. Library and publication listings are form buttons with the existing titles.
 
 | Route | Old anchor text | Old href | New mechanism + label | Status |
 |---|---|---|---|---|
@@ -316,42 +314,42 @@ Skip links outside render_site.py were already focus buttons that move focus to 
 | / | Sources & editions | /sources/ | form: "Sources & editions" | SAME-PAGE |
 | /library/ | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
 | /library/ | Governed Logic Reasoning Systems | / | form: "Governed Logic Reasoning Systems" | SAME-PAGE |
-| /library/ | About Paul | /about/ | a: "Paul André Couchoud →" (label differs) | STILL-A |
+| /library/ | About Paul | /about/ | form: "Paul André Couchoud →" (label differs) | SAME-PAGE |
 | /library/ | Paul André Couchoud → | /about/ | dest already covered on page | SAME-PAGE (duplicate) |
-| /library/ | Integrity in Artificial Intelligence → | /articles/integrity-in-artificial-intelligence/ | a: "Integrity in Artificial Intelligence →" | STILL-A |
-| /library/ | Why Anything? → | /articles/why-anything/ | a: "Why Anything? →" | STILL-A |
-| /library/ | Follow the chain. | /challenge/ | a: "Follow the chain. →" (label differs) | STILL-A |
+| /library/ | Integrity in Artificial Intelligence → | /articles/integrity-in-artificial-intelligence/ | form: "Integrity in Artificial Intelligence →" | SAME-PAGE |
+| /library/ | Why Anything? → | /articles/why-anything/ | form: "Why Anything? →" | SAME-PAGE |
+| /library/ | Follow the chain. | /challenge/ | form: "Follow the chain. →" (label differs) | SAME-PAGE |
 | /library/ | Follow the chain. → | /challenge/ | dest already covered on page | SAME-PAGE (duplicate) |
-| /library/ | A reasoning systems company. → | /company/ | form: "Company" (label differs) | SAME-PAGE |
-| /library/ | Company | /company/ | a: "A reasoning systems company. →" (label differs) | STILL-A |
-| /library/ | Canonical definitions → | /concepts/ | form: "Definitions" (label differs) | SAME-PAGE |
-| /library/ | Definitions | /concepts/ | a: "Canonical definitions →" (label differs) | STILL-A |
-| /library/ | Alpha and Omega Reasoning → | /concepts/alpha-and-omega-reasoning/ | a: "Alpha and Omega Reasoning →" | STILL-A |
+| /library/ | A reasoning systems company. → | /company/ | form: "A reasoning systems company. →" | SAME-PAGE |
+| /library/ | Company | /company/ | form: "Company" | SAME-PAGE |
+| /library/ | Canonical definitions → | /concepts/ | form: "Canonical definitions →" | SAME-PAGE |
+| /library/ | Definitions | /concepts/ | form: "Definitions" | SAME-PAGE |
+| /library/ | Alpha and Omega Reasoning → | /concepts/alpha-and-omega-reasoning/ | form: "Alpha and Omega Reasoning →" | SAME-PAGE |
 | /library/ | Governed Intelligence | /concepts/governed-intelligence/ | form: "Governed Intelligence" | SAME-PAGE |
-| /library/ | Governed Intelligence → | /concepts/governed-intelligence/ | a: "Governed Intelligence →" | STILL-A |
+| /library/ | Governed Intelligence → | /concepts/governed-intelligence/ | form: "Governed Intelligence →" | SAME-PAGE |
 | /library/ | Governed Logic | /concepts/governed-logic/ | form: "Governed Logic" | SAME-PAGE |
-| /library/ | Governed Logic → | /concepts/governed-logic/ | a: "Governed Logic →" | STILL-A |
-| /library/ | Governing referent → | /concepts/governing-referent/ | a: "Governing referent →" | STILL-A |
-| /library/ | Sufficient grounding → | /concepts/sufficient-grounding/ | a: "Sufficient grounding →" | STILL-A |
-| /library/ | On the Nature of Ultimate Grounding → | /concepts/ultimate-grounding/ | form: "Ultimate Grounding" (label differs) | SAME-PAGE |
-| /library/ | Ultimate Grounding | /concepts/ultimate-grounding/ | a: "On the Nature of Ultimate Grounding →" (label differs) | STILL-A |
+| /library/ | Governed Logic → | /concepts/governed-logic/ | form: "Governed Logic →" | SAME-PAGE |
+| /library/ | Governing referent → | /concepts/governing-referent/ | form: "Governing referent →" | SAME-PAGE |
+| /library/ | Sufficient grounding → | /concepts/sufficient-grounding/ | form: "Sufficient grounding →" | SAME-PAGE |
+| /library/ | On the Nature of Ultimate Grounding → | /concepts/ultimate-grounding/ | form: "On the Nature of Ultimate Grounding →" | SAME-PAGE |
+| /library/ | Ultimate Grounding | /concepts/ultimate-grounding/ | form: "Ultimate Grounding" | SAME-PAGE |
 | /library/ | Ultimate Grounding | /concepts/ultimate-grounding/ | dest already covered on page | SAME-PAGE (duplicate) |
 | /library/ | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
-| /library/ | Questions & answers → | /faq/ | a: "Questions & answers →" | STILL-A |
+| /library/ | Questions & answers → | /faq/ | form: "Questions & answers →" | SAME-PAGE |
 | /library/ | Library | /library/ | — | SELF (skip/in-page) |
 | /library/ | Skip to content | #content | — | SELF (skip/in-page) |
-| /library/ | The mechanism. → | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
-| /library/ | The prototype | /mechanism.html | a: "The mechanism. →" (label differs) | STILL-A |
+| /library/ | The mechanism. → | /mechanism.html | form: "The mechanism. →" | SAME-PAGE |
+| /library/ | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
 | /library/ | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
 | /library/ | Research | /research/ | form: "Research" | SAME-PAGE |
-| /library/ | Research → | /research/ | a: "Research →" | STILL-A |
+| /library/ | Research → | /research/ | form: "Research →" | SAME-PAGE |
 | /library/ | Sources & editions | /sources/ | form: "Sources & editions" | SAME-PAGE |
-| /library/ | Sources and editions → | /sources/ | a: "Sources and editions →" | STILL-A |
-| /library/ | On the Nature of Ultimate Grounding · Source edition → | /sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf | a: "On the Nature of Ultimate Grounding · Source editi" | STILL-A |
-| /library/ | Governed Logic · Source edition → | /sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf | a: "Governed Logic · Source edition →" | STILL-A |
-| /library/ | Alpha and Omega Reasoning · Source edition → | /sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf | a: "Alpha and Omega Reasoning · Source edition →" | STILL-A |
-| /library/ | Governed Intelligence · Source edition → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | a: "Governed Intelligence · Source edition →" | STILL-A |
-| /library/ | Business strategy — additional direction · Source edition → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | a: "Business strategy — additional direction · Source " | STILL-A |
+| /library/ | Sources and editions → | /sources/ | form: "Sources and editions →" | SAME-PAGE |
+| /library/ | On the Nature of Ultimate Grounding · Source edition → | /sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf | form: "On the Nature of Ultimate Grounding · Source editi" | SAME-PAGE |
+| /library/ | Governed Logic · Source edition → | /sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf | form: "Governed Logic · Source edition →" | SAME-PAGE |
+| /library/ | Alpha and Omega Reasoning · Source edition → | /sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf | form: "Alpha and Omega Reasoning · Source edition →" | SAME-PAGE |
+| /library/ | Governed Intelligence · Source edition → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | form: "Governed Intelligence · Source edition →" | SAME-PAGE |
+| /library/ | Business strategy — additional direction · Source edition → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | form: "Business strategy — additional direction · Source " | SAME-PAGE |
 | /mechanism.html | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
 | /mechanism.html | Governed Logic Reasoning Systems | / | form: "Governed Logic Reasoning Systems" | SAME-PAGE |
 | /mechanism.html | ← Governed Logic | / | form: "← Governed Logic" | SAME-PAGE |
@@ -373,42 +371,42 @@ Skip links outside render_site.py were already focus buttons that move focus to 
 | /mechanism.html | Sources & editions | /sources/ | form: "Sources & editions" | SAME-PAGE |
 | /publication/ | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
 | /publication/ | Governed Logic Reasoning Systems | / | form: "Governed Logic Reasoning Systems" | SAME-PAGE |
-| /publication/ | About Paul | /about/ | a: "Paul André Couchoud →" (label differs) | STILL-A |
+| /publication/ | About Paul | /about/ | form: "Paul André Couchoud →" (label differs) | SAME-PAGE |
 | /publication/ | Paul André Couchoud → | /about/ | dest already covered on page | SAME-PAGE (duplicate) |
-| /publication/ | Integrity in Artificial Intelligence → | /articles/integrity-in-artificial-intelligence/ | a: "Integrity in Artificial Intelligence →" | STILL-A |
-| /publication/ | Why Anything? → | /articles/why-anything/ | a: "Why Anything? →" | STILL-A |
-| /publication/ | Follow the chain. | /challenge/ | a: "Follow the chain. →" (label differs) | STILL-A |
+| /publication/ | Integrity in Artificial Intelligence → | /articles/integrity-in-artificial-intelligence/ | form: "Integrity in Artificial Intelligence →" | SAME-PAGE |
+| /publication/ | Why Anything? → | /articles/why-anything/ | form: "Why Anything? →" | SAME-PAGE |
+| /publication/ | Follow the chain. | /challenge/ | form: "Follow the chain. →" (label differs) | SAME-PAGE |
 | /publication/ | Follow the chain. → | /challenge/ | dest already covered on page | SAME-PAGE (duplicate) |
-| /publication/ | A reasoning systems company. → | /company/ | form: "Company" (label differs) | SAME-PAGE |
-| /publication/ | Company | /company/ | a: "A reasoning systems company. →" (label differs) | STILL-A |
-| /publication/ | Canonical definitions → | /concepts/ | form: "Definitions" (label differs) | SAME-PAGE |
-| /publication/ | Definitions | /concepts/ | a: "Canonical definitions →" (label differs) | STILL-A |
-| /publication/ | Alpha and Omega Reasoning → | /concepts/alpha-and-omega-reasoning/ | a: "Alpha and Omega Reasoning →" | STILL-A |
+| /publication/ | A reasoning systems company. → | /company/ | form: "A reasoning systems company. →" | SAME-PAGE |
+| /publication/ | Company | /company/ | form: "Company" | SAME-PAGE |
+| /publication/ | Canonical definitions → | /concepts/ | form: "Canonical definitions →" | SAME-PAGE |
+| /publication/ | Definitions | /concepts/ | form: "Definitions" | SAME-PAGE |
+| /publication/ | Alpha and Omega Reasoning → | /concepts/alpha-and-omega-reasoning/ | form: "Alpha and Omega Reasoning →" | SAME-PAGE |
 | /publication/ | Governed Intelligence | /concepts/governed-intelligence/ | form: "Governed Intelligence" | SAME-PAGE |
-| /publication/ | Governed Intelligence → | /concepts/governed-intelligence/ | a: "Governed Intelligence →" | STILL-A |
+| /publication/ | Governed Intelligence → | /concepts/governed-intelligence/ | form: "Governed Intelligence →" | SAME-PAGE |
 | /publication/ | Governed Logic | /concepts/governed-logic/ | form: "Governed Logic" | SAME-PAGE |
-| /publication/ | Governed Logic → | /concepts/governed-logic/ | a: "Governed Logic →" | STILL-A |
-| /publication/ | Governing referent → | /concepts/governing-referent/ | a: "Governing referent →" | STILL-A |
-| /publication/ | Sufficient grounding → | /concepts/sufficient-grounding/ | a: "Sufficient grounding →" | STILL-A |
-| /publication/ | On the Nature of Ultimate Grounding → | /concepts/ultimate-grounding/ | form: "Ultimate Grounding" (label differs) | SAME-PAGE |
-| /publication/ | Ultimate Grounding | /concepts/ultimate-grounding/ | a: "On the Nature of Ultimate Grounding →" (label differs) | STILL-A |
+| /publication/ | Governed Logic → | /concepts/governed-logic/ | form: "Governed Logic →" | SAME-PAGE |
+| /publication/ | Governing referent → | /concepts/governing-referent/ | form: "Governing referent →" | SAME-PAGE |
+| /publication/ | Sufficient grounding → | /concepts/sufficient-grounding/ | form: "Sufficient grounding →" | SAME-PAGE |
+| /publication/ | On the Nature of Ultimate Grounding → | /concepts/ultimate-grounding/ | form: "On the Nature of Ultimate Grounding →" | SAME-PAGE |
+| /publication/ | Ultimate Grounding | /concepts/ultimate-grounding/ | form: "Ultimate Grounding" | SAME-PAGE |
 | /publication/ | Ultimate Grounding | /concepts/ultimate-grounding/ | dest already covered on page | SAME-PAGE (duplicate) |
 | /publication/ | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
-| /publication/ | Questions & answers → | /faq/ | a: "Questions & answers →" | STILL-A |
+| /publication/ | Questions & answers → | /faq/ | form: "Questions & answers →" | SAME-PAGE |
 | /publication/ | Library | /library/ | — | C-FIDELITY (reachable elsewhere only) |
-| /publication/ | The mechanism. → | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
-| /publication/ | The prototype | /mechanism.html | a: "The mechanism. →" (label differs) | STILL-A |
+| /publication/ | The mechanism. → | /mechanism.html | form: "The mechanism. →" | SAME-PAGE |
+| /publication/ | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
 | /publication/ | Publication record | /publication/ | — | SELF (skip/in-page) |
 | /publication/ | Skip to content | #content | — | SELF (skip/in-page) |
 | /publication/ | Research | /research/ | form: "Research" | SAME-PAGE |
-| /publication/ | Research → | /research/ | a: "Research →" | STILL-A |
+| /publication/ | Research → | /research/ | form: "Research →" | SAME-PAGE |
 | /publication/ | Sources & editions | /sources/ | form: "Sources & editions" | SAME-PAGE |
-| /publication/ | Sources and editions → | /sources/ | a: "Sources and editions →" | STILL-A |
-| /publication/ | On the Nature of Ultimate Grounding · Source edition → | /sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf | a: "On the Nature of Ultimate Grounding · Source editi" | STILL-A |
-| /publication/ | Governed Logic · Source edition → | /sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf | a: "Governed Logic · Source edition →" | STILL-A |
-| /publication/ | Alpha and Omega Reasoning · Source edition → | /sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf | a: "Alpha and Omega Reasoning · Source edition →" | STILL-A |
-| /publication/ | Governed Intelligence · Source edition → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | a: "Governed Intelligence · Source edition →" | STILL-A |
-| /publication/ | Business strategy — additional direction · Source edition → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | a: "Business strategy — additional direction · Source " | STILL-A |
+| /publication/ | Sources and editions → | /sources/ | form: "Sources and editions →" | SAME-PAGE |
+| /publication/ | On the Nature of Ultimate Grounding · Source edition → | /sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf | form: "On the Nature of Ultimate Grounding · Source editi" | SAME-PAGE |
+| /publication/ | Governed Logic · Source edition → | /sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf | form: "Governed Logic · Source edition →" | SAME-PAGE |
+| /publication/ | Alpha and Omega Reasoning · Source edition → | /sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf | form: "Alpha and Omega Reasoning · Source edition →" | SAME-PAGE |
+| /publication/ | Governed Intelligence · Source edition → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | form: "Governed Intelligence · Source edition →" | SAME-PAGE |
+| /publication/ | Business strategy — additional direction · Source edition → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | form: "Business strategy — additional direction · Source " | SAME-PAGE |
 | /research/ | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
 | /research/ | Governed Logic Reasoning Systems | / | form: "Governed Logic Reasoning Systems" | SAME-PAGE |
 | /research/ | Home | / | form: "Home" | SAME-PAGE |
@@ -456,11 +454,11 @@ Skip links outside render_site.py were already focus buttons that move focus to 
 | /sources/ | Read the source PDF → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | form: "Read the source PDF →" | SAME-PAGE |
 | /sources/ | Read the complete supplied addendum → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | form: "Read the complete supplied addendum →" | SAME-PAGE |
 
-SAME-PAGE=305, STILL-A=42, FRAG=0, C-FIDELITY=34, C-NOTE=12, ORPHAN=0, SELF=45
+SAME-PAGE=347, STILL-A=0, FRAG=0, C-FIDELITY=34, C-NOTE=12, ORPHAN=0, SELF=45
 
 ## Parent routes
 
-These three destinations stay in the generated library and publication listings. Each also has a form on its parent page, outside `main`, so the catalog text is unchanged. `render_site.py` is untouched.
+These three destinations stay in the generated library and publication listings, emitted as form buttons. Each also has a form on its parent page, outside `main`, so the catalog text is unchanged.
 
 | Parent | Control | Destination |
 |---|---|---|
