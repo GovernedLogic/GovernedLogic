@@ -103,7 +103,7 @@ CURRENT PUBLIC GITHUB SURFACES
 - /research/index.html
 - /about/index.html
 - /dedication/index.html
-- /mechanism.html
+- /mechanism.html — archived, not public
 - /sources/
 - /publication/
 These are published representations. Their text must be traceable to authoritative source material or explicitly labeled editorial/working content.
@@ -172,7 +172,7 @@ Current contents include the 2026-09-22 four-document PDF set and Business Strat
 Status: public provenance/source snapshots. They are not guaranteed to be the latest Library source and must not override newer current files merely because they are already on the website.
 
 MECHANISM
-PUBLIC:
+ARCHIVED, NOT PUBLIC:
 - GitHub: /mechanism.html
 CURRENT STATUS:
 - Known from Paul’s current review to be materially wrong and requiring a separate source-backed repair.

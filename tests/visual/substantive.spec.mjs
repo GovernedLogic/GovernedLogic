@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
-const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/library/','/publication/'];
+const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/library/','/publication/'];
 for(const route of routes){
  test(`${route} substantive content and usable layout`,async({page},info)=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
@@ -27,7 +27,7 @@ test('Library searches restored full text',async({page})=>{
  await expect(page.locator('#library-search-mode')).toContainText('exact text');
  await expect(page.locator('.library-item:visible')).not.toHaveCount(0);
  await page.getByLabel('Search the library').fill('zzzznomatchzzzz');await expect(page.locator('#library-empty')).toBeVisible();
- await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(21);
+ await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(20);
 });
 test('FAQ answers open and match machine data',async({page})=>{
  await page.goto('/faq/');await page.getByText('What exists today?',{exact:true}).click();
