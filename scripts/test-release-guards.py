@@ -38,9 +38,9 @@ REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.h
 # index.html: #explore is a button, the two /mechanism.html forms are restored, and the brand aria-label is Governed Logic home.
 HOMEPAGE_DIGESTS = (
     "a9067640f1aeb445d18e4cc039bc5805972da043b4d957faaedf460dd9438a6f",
-    # Reviewed removal of the reasoning exhibit from the overhaul homepage.
-    # Paul lifted the D-35 hold. Any other homepage still fails.
-    "162a3ca77fe4ee7517e945fc65c279a0220a20475ce057e9c6ab2203adc7ca5f",
+    # Reviewed removal of the reasoning-exhibit diagram. The WEB-162 line
+    # and its captions stay. Paul lifted the D-35 hold. Any other homepage still fails.
+    "781d6d044cda0e6b865e6040d671d2ae4626c2432644f022194bb9f28fb0db4f",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
