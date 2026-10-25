@@ -30,6 +30,11 @@ jobs:
           python3 scripts/build_site.py --output "$site_root"
           python3 scripts/check-restored.py --root "$site_root" --artifact
           printf 'SITE_ROOT=%s\n' "$site_root" >> "$GITHUB_ENV"
+      - name: Run release guards, corpus check, and origin check
+        run: |
+          python3 scripts/test-release-guards.py -v
+          python3 scripts/check-corpus.py
+          python3 scripts/check-origin.py
       - name: Check JavaScript syntax
         run: |
           node --check assets/opening.js
