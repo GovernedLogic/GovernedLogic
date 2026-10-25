@@ -87,6 +87,8 @@ class Visible(HTMLParser):
         self._skip = 0
         self._body = False
         self._anchors: list[list] = []
+        self._form_actions: list[str] = []
+        self._buttons: list[list] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = {key: value or "" for key, value in attrs}
@@ -96,8 +98,13 @@ class Visible(HTMLParser):
             self._skip += 1
         if not self._body or self._skip:
             return
+        if tag == "form":
+            self._form_actions.append(attributes.get("action", ""))
         if tag == "a" and "href" in attributes:
             self._anchors.append([attributes["href"], []])
+        if tag == "button" and (attributes.get("type") or "submit").lower() == "submit" and self._form_actions:
+            action = attributes.get("formaction") or self._form_actions[-1]
+            self._buttons.append([action, []])
         if attributes.get("aria-label"):
             self._add(f" {attributes['aria-label']} ")
         if attributes.get("alt"):
@@ -108,6 +115,12 @@ class Visible(HTMLParser):
             href, parts = self._anchors.pop()
             label = WHITESPACE.sub(" ", "".join(parts)).strip()
             self.links.append(f"{href}\t{label}")
+        if tag == "button" and self._body and not self._skip and self._buttons:
+            action, parts = self._buttons.pop()
+            label = WHITESPACE.sub(" ", "".join(parts)).strip()
+            self.links.append(f"{action}\t{label}")
+        if tag == "form" and self._form_actions:
+            self._form_actions.pop()
         if tag in ("script", "style") and self._skip:
             self._skip -= 1
         if tag == "body":
@@ -121,6 +134,8 @@ class Visible(HTMLParser):
         self.parts.append(data)
         if self._anchors:
             self._anchors[-1][1].append(data)
+        if self._buttons:
+            self._buttons[-1][1].append(data)
 
 
 def _attrs(source: str) -> dict[str, str]:
@@ -576,8 +591,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<a href="/research/">Research</a>',
-                '<a href="/research/">Studies</a>',
+                '<button type="submit">Research</button>',
+                '<button type="submit">Studies</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
@@ -588,8 +603,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<a href="/library/">Library</a>',
-                '<a href="/library/">Archive</a>',
+                '<button type="submit">Library</button>',
+                '<button type="submit">Archive</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)

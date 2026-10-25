@@ -15,7 +15,7 @@ for(const route of routes){
   const images=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.src));expect(images).toEqual([]);
   const headings=await page.locator('main h1,main h2,main h3').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+1).map(n=>n.textContent));expect(headings).toEqual([]);
   if(page.viewportSize().width<=800){const summary=page.locator('nav[aria-label="Primary"] summary');if(await summary.count())await summary.click();}
-  const links=page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link');
+  const links=page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button');
   for(const link of await links.all()){const box=await link.boundingBox();expect(box.height).toBeGreaterThanOrEqual(43);expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(page.viewportSize().width+1);}
   if(route==='/')await page.locator('#explore').scrollIntoViewIfNeeded();
   const dir=path.resolve('visual-qa/screenshots',info.project.name);await mkdir(dir,{recursive:true});
@@ -38,7 +38,7 @@ test('Homepage and navigation work without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const page=await context.newPage();
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');await expect(page.locator('main')).toContainText('Governed Intelligence');
  await page.locator('nav[aria-label="Primary"] summary').click();
- await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Governed Logic',exact:true}).click();
+ await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'Governed Logic',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
 test('Opening completes and leaves content usable',async({page})=>{

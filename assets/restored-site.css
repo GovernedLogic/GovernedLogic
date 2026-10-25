@@ -240,3 +240,12 @@ header.site-bar nav>a[aria-current='page'],header.site-bar nav>a:hover{color:var
 .reasoning-exhibit svg [stroke="#9ec6ae"]{stroke:var(--accent)}
 .reasoning-exhibit svg [fill="#a5cbb5"]{fill:var(--accent)}
 h1,h2,h3,.lede,.lead,.eyebrow,.label{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor}
+/* Visitor controls are GET forms. The button keeps the old anchor label. */
+.gl-go{display:inline;margin:0}
+.gl-go button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+header.site-bar nav .gl-go,.site-footer nav .gl-go{display:contents}
+header.site-bar nav button{min-height:44px;padding:0 12px;color:var(--text-2);background:none;border:0;border-bottom:2px solid transparent;border-radius:0;font:inherit;cursor:pointer}
+header.site-bar nav button:hover,header.site-bar .site-brand{color:var(--ink)}
+.site-footer nav button{min-height:44px;color:var(--text-2);background:none;border:0;font:inherit;cursor:pointer;text-align:left}
+.site-footer .footer-name{color:var(--ink);background:none;border:0;font:inherit;text-align:left}
+button.button{font:inherit}

@@ -105,17 +105,17 @@ for (const routeDefinition of ROUTES) {
         const navigation = document.querySelector('nav[aria-label="Primary"]');
         const mainElements = Array.from(document.querySelectorAll("main"));
         const navigationRect = navigation.getBoundingClientRect();
-        const links = Array.from(navigation.querySelectorAll(":scope > a"));
+        const links = Array.from(navigation.querySelectorAll("form.gl-go > button"));
         const linkMetrics = links.map(link => {
           const rect = link.getBoundingClientRect();
           const centerX = Math.max(0, Math.min(innerWidth - 1, rect.left + rect.width / 2));
           const centerY = Math.max(0, Math.min(innerHeight - 1, rect.top + rect.height / 2));
           const hit = document.elementFromPoint(centerX, centerY);
           return {
-            href: link.getAttribute("href"),
+            href: link.closest("form")?.getAttribute("action") || "",
             label: normalize(link.textContent || ""),
             visible: visible(link),
-            focusable: link.matches("a[href]") && link.tabIndex >= 0,
+            focusable: link.matches("button") && link.tabIndex >= 0,
             insideViewport:
               rect.left >= -0.5
               && rect.right <= innerWidth + 0.5
