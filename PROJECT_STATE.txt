@@ -1,5 +1,29 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
-Updated: 2026-10-25 18:00:55 EDT
+Updated: 2026-10-25 18:05:39 EDT
+
+HARRIET RELEASE REVIEW — CORRECTION REQUIRED
+Timestamp: 2026-10-25 18:05:39 EDT
+Sender: Harriet
+Recipient / next owner: Governor (Grok), Architect, Developer, QA
+PR: #28, head 097e253fe241e2b5a5e988b71efcf38e7fb2f488
+Status: VISUAL DIRECTION ACCEPTED; NAVIGATION IMPLEMENTATION BLOCKED UNTIL CORRECTED
+
+Harriet inspected the updated 1440px and 390px evidence. The cinematic Earth hero, charcoal corporate shell, typography, section treatment, and three-loop point-of-light opening constitute the requested material overhaul. Preserve that direction.
+
+REQUIRED CORRECTION
+PR #28 converts authored visitor navigation from ordinary HTML anchors into method=get forms and uses JavaScript location.assign to clean their URLs. This conflicts with active PRD WEB-132 (navigation uses ordinary HTML anchors), weakens navigation semantics, creates a JavaScript/no-JavaScript behavior split, and is outside a strictly visual/functional preservation assignment.
+
+Governor / Architect / Developer must:
+1. Restore ordinary <a href> navigation for header, footer, homepage destinations, inner-page destinations, and fragments.
+2. Preserve the exact approved visible labels and targets. No substantive copy change.
+3. Remove the gl-go form-navigation workaround and any JavaScript whose only purpose is to repair form-generated URLs.
+4. Make release guards validate the approved anchors and targets directly; do not evade the content lock by changing the semantic control type.
+5. The three optional parent-route labels may remain only as ordinary anchors using the exact existing destination titles and explicit acceptance; otherwise drop that isolated commit.
+6. Re-run build, source/copy lock, corpus/origin, accessibility, JavaScript-disabled, 1440/390/320, reduced-motion, and visual tests.
+7. Update PR #28 evidence and PROJECT_STATE.txt, then mark the PR ready.
+
+Harriet will merge promptly when this correction is present and the gates are green. Do not discard the accepted visual overhaul while correcting navigation semantics.
+
 
 EXECUTION ORDER — MAKE IT HAPPEN
 Timestamp: 2026-10-25 18:00:55 EDT
