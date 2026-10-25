@@ -467,7 +467,7 @@ const GL_MARK_TRACE = true;
       const p = pts[i];
       const under = p.z < 0;
       if (over ? under : !under) continue;
-      if (!over && Math.abs(Math.sin(3 * p.t)) < 0.12) continue;
+      if (!over && Math.abs(Math.sin(3 * p.t)) < 0.12 && Math.abs(p.x) < 0.9) continue;
       const fade = Math.exp(-((head - i) / SAMPLES) * 2.4);
       if (fade < 0.035) continue;
       const [x1, y1] = place(pts[i - 1]);
@@ -486,6 +486,7 @@ const GL_MARK_TRACE = true;
     const headAlpha = t < 0.2 ? 0 : t < 0.45 ? (t - 0.2) / 0.25 : t < 2.8 ? 1 : t < 3.95 ? 1 - (t - 2.8) / 1.15 : 0;
     // The field stays opaque through the trace, then thins across the fade samples and is clear before 4s.
     const veil = t < 1.4 ? 1 : Math.max(0, 1 - (t - 1.4) / 2.55);
+    element.style.background = veil < 1 ? 'transparent' : '';
     const overlay = 1;
     ctx.clearRect(0, 0, width, height);
     ctx.globalAlpha = 1;
@@ -651,7 +652,7 @@ const GL_MARK_TRACE = true;
   }
 })();
 
-/* The scroll invite stays in index.html. JS off follows its in-page target. */
+/* The scroll invite is a button in index.html. It scrolls to section 01. */
 (() => {
   const invite = document.querySelector('.scroll-invite');
   const target = document.getElementById('explore');

@@ -13,7 +13,7 @@ body{font-family:Georgia,'Times New Roman',serif}
 .brand-rule i:before{width:clamp(65px,19vw,360px);height:2px}
 .brand-rule i:after{height:clamp(36px,6vw,110px);width:1px;background:linear-gradient(transparent,#ceefff,white,#ceefff,transparent)}
 .brand-sub{margin:0;color:#c8d9e3;font-weight:400;font-size:clamp(8px,2.4vw,46px);letter-spacing:.56em;text-indent:.56em;text-transform:uppercase;white-space:nowrap;text-shadow:0 2px 1px #000,0 -1px 1px #fff4}
-#glIntro{position:fixed;inset:0;z-index:2147483000;background:transparent;pointer-events:none;contain:strict}
+#glIntro{position:fixed;inset:0;z-index:2147483000;background:#000;pointer-events:none;contain:strict}
 .gl-intro-skip{position:absolute;top:16px;right:16px;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border:1px solid rgba(255,255,255,.75);border-radius:50%;background:rgba(0,0,0,.4);pointer-events:auto;cursor:pointer}
 .gl-intro-skip:before,.gl-intro-skip:after{content:"";position:absolute;left:12px;right:12px;top:21px;height:2px;background:#fff}
 .gl-intro-skip:before{transform:rotate(45deg)}

@@ -63,7 +63,6 @@
   --muted:#B9C1C8;
   --accent:#8CC4EC;
   --blue:#8CC4EC;
-  --green:#8CC4EC;
   --paper:#1A1D21;
   --sans:'Plex','Plex Fallback','Helvetica Neue',Arial,system-ui,sans-serif;
 }
@@ -275,13 +274,6 @@ header.site-bar nav>a[aria-current='page'],header.site-bar nav>a:hover{color:var
   header.site-bar::after{transform:scaleX(0);animation:gl-read linear;animation-timeline:scroll(root)}
   .home-content>section.scene-arrive{animation:gl-scene .4s cubic-bezier(.2,0,0,1) both}
 }
-/* Look and type: charcoal and brand blue. The only green is the prototype status dot. */
-:root{--green:var(--accent)}
-.exhibit-caption span:last-child,.flow-direction.return,.work-grid article:first-child .eyebrow{color:var(--accent)}
-.architecture-chain li:before,.architecture-chain li:first-child:before,.architecture-chain li:last-child:before,.architecture-chain li:first-child:after{border-color:var(--accent)}
-.prototype-status:before{background:#a5cbb5}
-.reasoning-exhibit svg [stroke="#9ec6ae"]{stroke:var(--accent)}
-.reasoning-exhibit svg [fill="#a5cbb5"]{fill:var(--accent)}
 h1,h2,h3,.lede,.lead,.eyebrow,.label{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor}
 /* Visitor controls are GET forms. The button keeps the old anchor label. */
 .gl-go{display:inline;margin:0}
@@ -398,33 +390,11 @@ header.site-bar nav button[aria-current="page"],.site-footer nav button[aria-cur
   .front-door .hero-field{opacity:.22}
 }
 .front-door h2,.front-door .lede,.front-door .intro-description,.front-door .section-meta,.front-door .prototype-status,.front-door .gl-go,.front-door .button{
-  background:#121417;box-shadow:0 0 0 10px #121417;position:relative;z-index:2;
+  background:none;box-shadow:none;position:relative;z-index:2;
 }
 .retired-entry span[aria-hidden="true"]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-.home-content>section.front-door{position:relative;z-index:2;background:transparent}
+.home-content>section.front-door{position:relative}
 .hero-field{z-index:0}
-.front-door h2 .downstream{background:#121417}
-@media(min-width:1000px){
-  #site .identity{top:2%;width:min(30vw,420px);transform:translate(-50%,0)}
-  #site .brand-sub{font-size:clamp(12px,1.25vw,22px)}
-  #site .intro-caption,#site .scroll-invite{z-index:4}
-  #site .intro-caption{
-    top:auto;bottom:24px;left:auto;right:56px;width:min(340px,36vw);
-    transform:none;text-align:right;
-  }
-  #site .scroll-invite{top:auto;bottom:78px;left:auto;right:56px;transform:none}
-  .home-content>section.front-door{margin-top:-86vh;padding-top:0;background:transparent}
-  .home-content>section.front-door>.section-meta{grid-column:1;width:max-content;max-width:100%}
-  .home-content>section.front-door h2{grid-column:1;grid-row:2;line-height:1.05}
-  .home-content>section.front-door>.reasoning-exhibit{
-    grid-column:2;grid-row:2 / span 6;height:auto;align-self:start;min-height:0;
-  }
-}
-@media(max-width:999px){
-  #site{min-height:72svh}
-  #site .identity{top:16%;transform:translate(-50%,0)}
-  .home-content>section.front-door{margin-top:-28vh;background:transparent}
-}
 @media(max-width:800px){
   header.site-bar{
     display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
@@ -455,4 +425,24 @@ header.site-bar nav button[aria-current="page"],.site-footer nav button[aria-cur
 .route-bridge button{min-height:44px;min-width:44px;padding:8px 16px}
 @media(max-width:800px){
   body,p,li,dd,.book-copy,.publication-feature .book-copy,.intro-description,.intro-columns p,.work-grid article p,.document-main p,.document-main li,.foundation-copy p,.research-body p{font-size:16px}
+}
+@media(max-width:390px){
+  header.site-bar{
+    display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
+    height:64px;max-height:64px;min-height:64px;padding:0 4px;gap:0;overflow:hidden;
+  }
+  header.site-bar>.gl-go{flex:0 0 44px;width:44px;min-width:44px;height:64px;min-height:44px}
+  header.site-bar .site-brand{width:44px;height:44px;min-width:44px;min-height:44px;padding:0;justify-content:center;gap:0}
+  header.site-bar .site-brand img{width:28px;height:28px}
+  header.site-bar .site-brand span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  header.site-bar nav{
+    display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:stretch;
+    flex:1 1 auto;width:auto;height:64px;min-width:0;gap:0;font-size:12px;pointer-events:auto;
+  }
+  header.site-bar nav .gl-go{display:flex;flex:1 1 0;min-width:44px;width:auto;height:64px}
+  header.site-bar nav .gl-go>button{
+    display:flex;width:100%;min-width:44px;min-height:44px;height:60px;padding:2px;
+    font-size:12px;line-height:1.05;letter-spacing:-0.08em;white-space:normal;text-align:center;
+    justify-content:center;align-items:center;
+  }
 }
