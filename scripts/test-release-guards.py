@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
-"""Regression tests for the reviewed website publication boundary."""
+"""Regression tests for the reviewed website publication boundary.
+
+The reviewed record of each page is its text and links, not its markup.
+A stylesheet, class, or layout-tag change does not fail these guards.
+Title, description metadata, visible text (including the header, footer,
+and homepage text outside main), and anchor labels and hrefs do.
+Arrows are exact: ↗ and → are different. The reasoning exhibit is part
+of the published homepage. v10.10/hero-exhibit may append one reviewed
+exhibit-removed homepage digest; any other homepage still fails.
+"""
 from __future__ import annotations
 
 import hashlib
+from html.parser import HTMLParser
 import importlib.util
+import json
 from pathlib import Path
 import re
 import sys
@@ -17,34 +28,35 @@ sys.path.insert(0, str(SCRIPTS))
 import build_site  # noqa: E402
 import render_site  # noqa: E402
 
-# Visible copy of the current interface. Not the retired HTML blob ids.
+# Whole-page text and links of the current interface. Not the retired HTML blob ids.
 REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
-REVIEWED_MAIN_DIGESTS = {
-    # Homepage digest is taken after the reasoning exhibit is removed and ↗ is
-    # folded to →. The exhibit may be absent, and the reading-room arrow may
-    # already be →. Any other homepage copy still has to match.
-    "index.html": "21bbf8ae647bef5b77891bb05147d61c23ffd3973a0856f3e8d7e88a77669c6f",
-    "challenge/index.html": "35017d06fabc4af8fbff1673848242202494987eecc3743498eb030d06bc13d5",
-    "company/index.html": "5ee0fce47fe19dbbadb23d2a8515cf169379304802d288904097164da2e4c4a4",
-    "research/index.html": "6078f122ecb53179dd0307f1febc7a7065b73fb505575377c69a1cd6d5e4a8d4",
-    "about/index.html": "71056e04e994a0cb95e9804e75faaeee22e7217693af779eb0861d0c967bcc83",
-    "faq/index.html": "380120bf820b9da0aaa3336daed1ddd3422502dbf963b7eb8499a186f50a1b1b",
-    "concepts/index.html": "c9701498a69abc8a3e0a6de96c387792d1cfff0dfcf36a44317f0ea81e524a55",
-    "concepts/governed-logic/index.html": "4d26d0a33c800052f804662484e98fe1c928b95d2caf41408aa506a23aa6b43c",
-    "concepts/governed-intelligence/index.html": "5c7575ece8c2f1847e93a1e3a813b6dbca0ddbe28684ec15f0c7048ae3a59173",
-    "concepts/ultimate-grounding/index.html": "f3337fc850889a761084fdf3e05eb355b596d08532b46731d8ad768612c8cf3d",
-    "concepts/alpha-and-omega-reasoning/index.html": "d95a8bcbe692044536b20f49a904b808b230a4af4300319d5d255108698e802d",
-    "concepts/governing-referent/index.html": "0cd66a82bb9b41ca84a21e619db789943b71960ba4d5bc5fa275a82839c4c19c",
-    "concepts/sufficient-grounding/index.html": "3409fdb0d2c1d5a98654cc884d5221960f397eeb2e3933d84b0bb979cca46c72",
-    "mechanism.html": "4558a2a77d171498d6f5bd46563337124c65862d569362201963962023d65c86",
-    "sources/index.html": "e283087216066871001f7dbb643b12f23d43f721b2bbf17cf795ac0a06b649de",
-    "articles/why-anything/index.html": "136f7206671932935dd5fa67a6507c1758c553b961a1cecbccb269779a037771",
-    "articles/integrity-in-artificial-intelligence/index.html": "410e7b0cea28fb3a4d617c5b8853e176ea0f8c0e514daf1d11daa251da2899e5",
-    "library/index.html": "e4290fb0c62359a53ed885c4b63574f5f53bd7f12f87543618004ed89650c2a6",
-    "publication/index.html": "64daa8358c86d35e8d34cbd715ee9ce5f25201b2ecc727fea44399696849d19c",
+# Published homepage, exhibit included, arrows exact. Hero appends the one
+# reviewed exhibit-removed digest to this tuple and nothing else.
+HOMEPAGE_DIGESTS = (
+    "c226934b60fdc848e658993bcf27fc49da6580b250e8d0f9a8f3ed9fadd2fb6f",
+)
+REVIEWED_PAGE_DIGESTS = {
+    "index.html": HOMEPAGE_DIGESTS,
+    "challenge/index.html": ("979a16df6e31870360e89f18ead3c7d7b5599b1769f5bc4e9e097a0a053aa8b4",),
+    "company/index.html": ("d0bb671871bc0434ef1fb0e2d252fb1da8dbd1451983ccd2038e81c5906d5de8",),
+    "research/index.html": ("6102e05fb4d46844ef2f60b3d95b2048b91d419ce94f5b077213591994c99648",),
+    "about/index.html": ("815700c55c9a58fb94f52922b781818426181f839d71196d34130a68a5e38247",),
+    "faq/index.html": ("f33dd0e4f9a490588e66701c19c9c29ab3da842e2a151a5fedbc2445593132fe",),
+    "concepts/index.html": ("766223284ad97d59d6f1c7e63d5f758f91e0ba7cbec839dd5bd122116cb504f6",),
+    "concepts/governed-logic/index.html": ("17da84c6156497c1b4dcbf6f380193cd0897a46d97071c983781b22cf5511335",),
+    "concepts/governed-intelligence/index.html": ("d0c3262b48bfaae9f0d4012a86dfabb654251349c926387179f6cda8941341e9",),
+    "concepts/ultimate-grounding/index.html": ("2d3e8d5f510d0868a6c909ee823c09e8379616dbd743d5750d913e7d7e27b681",),
+    "concepts/alpha-and-omega-reasoning/index.html": ("ac9b15215af6364dfba6f880a984aaebf5bdbe7f96cb440345cd7c60530f2bf2",),
+    "concepts/governing-referent/index.html": ("288eade7ec0e38d4394e11c9176f79e97fa0fc4a32fe86f90b347c0eac716840",),
+    "concepts/sufficient-grounding/index.html": ("55110ef98727f237f1fc9e6552106d9205b663b5d8a6a58c5fbe8295ac0c3e33",),
+    "mechanism.html": ("9357022a64be9b7d2f0bab2bec3b02a790092b5cba297c6843e61b12e9a6822b",),
+    "sources/index.html": ("17b794890d80e898ff76d6465f40846e3dbc9b7f08e0189b9535729e80b8accf",),
+    "articles/why-anything/index.html": ("f084ba9012314f722fd7e7a116155974aedc08e230ffba0a24b649ca13fc451e",),
+    "articles/integrity-in-artificial-intelligence/index.html": ("6bf2040d54d985946d6e2f05c60bf7e3a8c0a7a0505e3591addcd2b87e1ab1c4",),
+    "library/index.html": ("0255134ce8da66b42e1b9ea404f42e2738dc83e6bec42f2f01d839cd8108255d",),
+    "publication/index.html": ("39416cca3c4d1b382d0957fc07d78c40154ee5f9c92a3da7901b0ca9d31555eb",),
 }
-OPENING_DIGEST = "772b79516151d396c6ca24ec33c86d16fce65570c213c853d7b5061c5ceee1bf"
-EXHIBIT_DIGEST = "332a084630c57eb0e24a5e502f9e175ed8594b8ac55f66bd59b286aac9308de2"
+OPENING_DIGEST = "8d61ee828cf5dd5f1dd1ac060f7c0b74bd39a8be7b9e3745b86afdb247f7dba2"
 # The mechanism copy button is the only reviewed inline script.
 REVIEWED_INLINE_SCRIPTS = {
     "mechanism.html": ("84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e",),
@@ -54,9 +66,128 @@ EXTERNAL_SCRIPT = re.compile(r"\bsrc\s*=", re.IGNORECASE)
 JSON_SCRIPT = re.compile(
     r"""type\s*=\s*['"]application/(?:ld\+json|json)['"]""", re.IGNORECASE
 )
+META_TAG = re.compile(r"<meta\b([^>]*)>", re.IGNORECASE)
+META_ATTR = re.compile(r"""([\w:-]+)\s*=\s*(['"])(.*?)\2""", re.DOTALL)
+TITLE_TAG = re.compile(r"<title>(.*?)</title>", re.IGNORECASE | re.DOTALL)
+WHITESPACE = re.compile(r"\s+")
+
+
+class Visible(HTMLParser):
+    """Body text and anchors. Classes, style, and non-anchor tags are ignored."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.parts: list[str] = []
+        self.links: list[str] = []
+        self._skip = 0
+        self._body = False
+        self._anchors: list[list] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attributes = {key: value or "" for key, value in attrs}
+        if tag == "body":
+            self._body = True
+        if tag in ("script", "style"):
+            self._skip += 1
+        if not self._body or self._skip:
+            return
+        if tag == "a" and "href" in attributes:
+            self._anchors.append([attributes["href"], []])
+        if attributes.get("aria-label"):
+            self._add(f" {attributes['aria-label']} ")
+        if attributes.get("alt"):
+            self._add(f" {attributes['alt']} ")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "a" and self._body and not self._skip and self._anchors:
+            href, parts = self._anchors.pop()
+            label = WHITESPACE.sub(" ", "".join(parts)).strip()
+            self.links.append(f"{href}\t{label}")
+        if tag in ("script", "style") and self._skip:
+            self._skip -= 1
+        if tag == "body":
+            self._body = False
+
+    def handle_data(self, data: str) -> None:
+        if self._body and not self._skip:
+            self._add(data)
+
+    def _add(self, data: str) -> None:
+        self.parts.append(data)
+        if self._anchors:
+            self._anchors[-1][1].append(data)
+
+
+def _attrs(source: str) -> dict[str, str]:
+    return {key.lower(): value for key, _, value in META_ATTR.findall(source)}
+
+
+def _collapse(value: str) -> str:
+    return WHITESPACE.sub(" ", value).strip()
+
+
+def _descriptions(node: object, found: list[str]) -> None:
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key == "description" and isinstance(value, str):
+                found.append(value)
+            else:
+                _descriptions(value, found)
+    elif isinstance(node, list):
+        for item in node:
+            _descriptions(item, found)
+
+
+def visible(html: str) -> tuple[str, list[str]]:
+    parser = Visible()
+    parser.feed(html)
+    parser.close()
+    return _collapse("".join(parser.parts)), parser.links
+
+
+def page_record(html: str) -> str:
+    """Canonical text and links. Markup other than anchors is not recorded."""
+    title = _collapse(TITLE_TAG.search(html).group(1) if TITLE_TAG.search(html) else "")
+    meta: list[str] = []
+    og: list[str] = []
+    for raw in META_TAG.findall(html):
+        attrs = _attrs(raw)
+        if "description" in attrs.get("name", "").split():
+            meta.append(attrs.get("content", ""))
+        if attrs.get("property", "").lower() == "og:description":
+            og.append(attrs.get("content", ""))
+    jsonld: list[str] = []
+    for attrs, body in INLINE_SCRIPT.findall(html):
+        if not JSON_SCRIPT.search(attrs):
+            continue
+        _descriptions(json.loads(body), jsonld)
+    text, links = visible(html)
+    return "\n".join((
+        "title: " + title,
+        "meta: " + "\n".join(meta),
+        "og: " + "\n".join(og),
+        "jsonld: " + "\n".join(jsonld),
+        "text: " + text,
+        "links:",
+        *links,
+    ))
+
+
+def page_digest(html: str) -> str:
+    return hashlib.sha256(page_record(html).encode()).hexdigest()
+
+
+def opening_record(html: str) -> str:
+    start = html.find('<div id="site"')
+    end = html.find('<header class="site-bar"')
+    if start < 0 or end < 0:
+        raise AssertionError("Unreviewed opening copy")
+    text, links = visible("<body>" + html[start:end] + "</body>")
+    return text + "\n" + "\n".join(links)
 
 
 def without_exhibit(html: str) -> tuple[str, str | None]:
+    """Test helper. The reviewed digest does not call this."""
     start = html.find('<div class="reasoning-exhibit">')
     if start < 0:
         return html, None
@@ -78,32 +209,16 @@ def without_exhibit(html: str) -> tuple[str, str | None]:
     raise AssertionError("Unreviewed page copy differs: index.html")
 
 
-def homepage_digest(html: str) -> str:
-    stripped, exhibit = without_exhibit(html)
-    if exhibit is not None:
-        exhibit_text = render_site.main_text("<main>" + exhibit + "</main>")
-        exhibit_digest = hashlib.sha256(exhibit_text.encode()).hexdigest()
-        if exhibit_digest != EXHIBIT_DIGEST:
-            raise AssertionError("Unreviewed page copy differs: index.html")
-    text = render_site.main_text(stripped.replace("↗", "→"))
-    return hashlib.sha256(text.encode()).hexdigest()
-
-
 def assert_reviewed_copy(site: Path) -> None:
-    """Reject unreviewed visible copy, an altered opening, or an inline script."""
+    """Reject unreviewed text, links, metadata, opening copy, or an inline script."""
+    homepage = (site / "index.html").read_text(encoding="utf-8")
+    opening = hashlib.sha256(opening_record(homepage).encode()).hexdigest()
+    if opening != OPENING_DIGEST:
+        raise AssertionError("Unreviewed opening copy")
     for relative in REVIEWED_PAGES:
         html = (site / relative).read_text(encoding="utf-8")
-        if relative == "index.html":
-            digest = homepage_digest(html)
-        else:
-            digest = hashlib.sha256(render_site.main_text(html).encode()).hexdigest()
-        if digest != REVIEWED_MAIN_DIGESTS[relative]:
+        if page_digest(html) not in REVIEWED_PAGE_DIGESTS[relative]:
             raise AssertionError(f"Unreviewed page copy differs: {relative}")
-    html = (site / "index.html").read_text(encoding="utf-8")
-    start = html.find('<div id="site"')
-    end = html.find('<header class="site-bar"')
-    if start < 0 or end < 0 or hashlib.sha256(html[start:end].encode()).hexdigest() != OPENING_DIGEST:
-        raise AssertionError("Unreviewed opening copy")
     for path in sorted(site.rglob("*.html")):
         relative = path.relative_to(site).as_posix()
         bodies = []
@@ -114,6 +229,7 @@ def assert_reviewed_copy(site: Path) -> None:
         expected = REVIEWED_INLINE_SCRIPTS.get(relative, ())
         if tuple(bodies) != expected:
             raise AssertionError(f"Unreviewed inline script: {relative}")
+
 
 CHECK_SPEC = importlib.util.spec_from_file_location("check_origin", SCRIPTS / "check-origin.py")
 if CHECK_SPEC is None or CHECK_SPEC.loader is None:
@@ -193,6 +309,25 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_reviewed_semantic_boundaries_pass_without_hashes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             assert_reviewed_copy(self.build_artifact(directory))
+
+    def test_classes_and_layout_markup_do_not_change_reviewed_copy(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                'class="front-door"',
+                'class="front-door redesigned" style="display:block"',
+            )
+            self.replace_once(
+                site,
+                "index.html",
+                '<div class="front-copy">',
+                '<section class="layout-only"><div class="front-copy">',
+            )
+            css = site / "assets" / "restored-site.css"
+            css.write_text(css.read_text(encoding="utf-8") + "\n/* redesign */\n", encoding="utf-8")
+            assert_reviewed_copy(site)
 
     def test_semantic_guard_rejects_changed_paragraph(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -275,6 +410,127 @@ class ReleaseGuardTests(unittest.TestCase):
                 self.replace_once(site, relative, "</main>", "<p>An unreviewed claim.</p></main>")
                 with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                     assert_reviewed_copy(site)
+
+    def test_title_change_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "company/index.html",
+                "<title>Company — Governed Logic Reasoning Systems</title>",
+                "<title>Firm — Governed Logic Reasoning Systems</title>",
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: company/index.html"):
+                assert_reviewed_copy(site)
+
+    def test_og_description_change_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "company/index.html",
+                '<meta property="og:description" content="Governed Logic Reasoning Systems is a reasoning systems company.">',
+                '<meta property="og:description" content="Governed Logic Reasoning Systems is a reasoning systems firm.">',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: company/index.html"):
+                assert_reviewed_copy(site)
+
+    def test_jsonld_description_change_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "company/index.html",
+                "Novelty is a named part",
+                "Newness is a named part",
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: company/index.html"):
+                assert_reviewed_copy(site)
+
+    def test_footer_tagline_change_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                "<p>Truth governs logic.<br>Logic governs reasoning.<br>Intelligence is downstream.</p>",
+                "<p>Truth governs logic.<br>Logic governs reasoning.<br>Intelligence is afterward.</p>",
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
+                assert_reviewed_copy(site)
+
+    def test_nav_label_change_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                '<a href="/research/">Research</a>',
+                '<a href="/research/">Studies</a>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
+                assert_reviewed_copy(site)
+
+    def test_footer_link_label_change_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                '<a href="/library/">Library</a>',
+                '<a href="/library/">Archive</a>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
+                assert_reviewed_copy(site)
+
+    def test_homepage_text_outside_main_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                "</header>",
+                "</header><p>Unreviewed aside.</p>",
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
+                assert_reviewed_copy(site)
+
+    def test_removed_exhibit_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            path = site / "index.html"
+            html = path.read_text(encoding="utf-8")
+            if '<div class="reasoning-exhibit">' not in html:
+                self.skipTest("reviewed exhibit-removed homepage")
+            stripped, exhibit = without_exhibit(html)
+            self.assertIsNotNone(exhibit)
+            path.write_text(stripped, encoding="utf-8")
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
+                assert_reviewed_copy(site)
+
+    def test_added_northeast_arrow_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                'Examine the upstream problem <span aria-hidden="true">→</span>',
+                'Examine the upstream problem <span aria-hidden="true">↗</span>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
+                assert_reviewed_copy(site)
+
+    def test_removed_northeast_arrow_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                'Explore the working prototype <span aria-hidden="true">↗</span>',
+                'Explore the working prototype <span aria-hidden="true">→</span>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
+                assert_reviewed_copy(site)
 
 
 if __name__ == "__main__":
