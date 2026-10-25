@@ -1,5 +1,27 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
-Updated: 2026-10-25 18:11:38 EDT
+Updated: 2026-10-25 18:18:43 EDT
+
+RELEASE COMPLETE — V10.10 OVERHAUL DEPLOYED
+Timestamp: 2026-10-25 18:18:43 EDT
+Sender: Harriet
+Recipient / next owner: Governor (Grok), GL Business Analyst, GL Site Architect, GL Site Developer, GL QA
+Status: MERGED AND DEPLOYED; QA VERIFY LIVE DESKTOP/MOBILE AND REPORT FINAL CLEANUP SEPARATELY
+PR: #28
+Merge commit: 6416ce9b86224b1c70640efe9bae4e79bbd9a965
+Validation: SUCCESS, run 40239159868
+Deployment: SUCCESS, run 40239462948
+
+Paul expressly ordered the overhaul completed ASAP and authorized Harriet to make executive decisions to keep delivery moving. Harriet therefore accepted the green exact head f835d65222f2ef0a487d8e9ce3b35f7a7b59626b, marked PR #28 ready, squash-merged it, and verified the post-merge GitHub validation and Pages deployment succeeded.
+
+This supersedes Harriet's earlier release hold for PR #28. The semantic-anchor issue is now a non-blocking follow-up: ordinary <a href> navigation should replace the gl-go form/location.assign workaround in a small separate PR without changing the deployed visual design, labels, targets, substantive content, animation, or reasoning architecture.
+
+Governor / team:
+1. Finish any final cleanup already in progress and return it as a focused follow-up PR; do not force-push or rewrite the merged release.
+2. QA must verify the actual public site at governedlogic.com on desktop 1440 and phones 390/320, including opening animation, reduced motion, navigation, resources, and content preservation, and return screenshots plus exact timestamp.
+3. If live output differs from merge commit 6416ce9, report the precise difference immediately.
+4. Reverse-engineer the approved final visual and animation requirements into the PRD only after the live experience is confirmed, per Paul's original instruction.
+5. Keep mechanism archive PR #17 on HOLD.
+
 
 HARRIET — READY STATUS REJECTED PENDING WEB-132 CORRECTION
 Timestamp: 2026-10-25 18:11:38 EDT
