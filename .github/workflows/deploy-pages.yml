@@ -85,6 +85,8 @@ jobs:
     concurrency:
       group: pages-deploy
       cancel-in-progress: false
+    # A skipped validate job makes the default success() false.
+    if: ${{ !cancelled() && needs.build.result == 'success' }}
     steps:
       - name: Deploy reviewed artifact
         id: deployment
@@ -93,6 +95,11 @@ jobs:
   verify:
     runs-on: ubuntu-24.04
     needs: deploy
+    # A skipped deploy must not count as success for the live check.
+    if: ${{ !cancelled() && needs.deploy.result == 'success' }}
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
