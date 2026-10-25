@@ -81,14 +81,17 @@ for (const routeDefinition of ROUTES) {
 
     const isMobile = testInfo.project.name.startsWith("mobile-");
     if (isMobile) {
-      const summary = page.locator('nav[aria-label="Primary"] summary');
-      await expect(summary).toBeVisible();
-      const summaryBox = await summary.boundingBox();
-      expect(summaryBox.width).toBeGreaterThanOrEqual(44);
-      expect(summaryBox.height).toBeGreaterThanOrEqual(44);
-      const bar = await page.locator("header.site-bar").boundingBox();
-      expect(bar.height).toBeLessThanOrEqual(64.5);
-      await summary.click();
+      // The disclosure is gone. The five doors stay visible, each at least 44px, with no horizontal overflow.
+      await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
+      await expect(page.locator('nav[aria-label="Primary"] details')).toHaveCount(0);
+      const navButtons = page.locator('nav[aria-label="Primary"] form.gl-go > button');
+      await expect(navButtons).toHaveCount(5);
+      for (const button of await navButtons.all()) {
+        await expect(button).toBeVisible();
+        const box = await button.boundingBox();
+        expect(box.width).toBeGreaterThanOrEqual(44);
+        expect(box.height).toBeGreaterThanOrEqual(44);
+      }
     }
     const metrics = await page.evaluate(
       ({ expectedNavigation, mobile }) => {

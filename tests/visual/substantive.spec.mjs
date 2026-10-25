@@ -14,7 +14,7 @@ for(const route of routes){
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
   const images=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.src));expect(images).toEqual([]);
   const headings=await page.locator('main h1,main h2,main h3').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+1).map(n=>n.textContent));expect(headings).toEqual([]);
-  if(page.viewportSize().width<=800){const summary=page.locator('nav[aria-label="Primary"] summary');if(await summary.count())await summary.click();}
+  await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
   const links=page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button');
   for(const link of await links.all()){const box=await link.boundingBox();expect(box.height).toBeGreaterThanOrEqual(43);expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(page.viewportSize().width+1);}
   if(route==='/')await page.locator('#explore').scrollIntoViewIfNeeded();
@@ -37,14 +37,13 @@ test('FAQ answers open and match machine data',async({page})=>{
 test('Homepage and navigation work without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const page=await context.newPage();
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');await expect(page.locator('main')).toContainText('Governed Intelligence');
- await page.locator('nav[aria-label="Primary"] summary').click();
  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'Governed Logic',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
 test('Opening completes and leaves content usable',async({page})=>{
  test.setTimeout(45000);await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/');
  await expect(page.locator('#glIntro')).toHaveCount(0,{timeout:20000});
- const invite=page.locator('a.scroll-invite');
+ const invite=page.locator('.scroll-invite');
  await expect(invite).toHaveAccessibleName('See what we are building ↓');
  await invite.click();await expect(page.locator('#explore')).toBeInViewport();
 });
@@ -59,17 +58,17 @@ test('Opening records its chronological visual sequence',async({page},info)=>{
  await expect(page.locator('#glIntro')).toHaveCount(1);
  const frames=[
   {at:50,name:'01-black',label:'Black field',stage:'black'},
-  {at:1000,name:'02-trace',label:'Light on the mark',stage:'trace'},
-  {at:2000,name:'03-trace',label:'The band lengthens',stage:'trace'},
-  {at:3000,name:'04-trace',label:'One path, mid circuit',stage:'trace'},
-  {at:4000,name:'05-trace',label:'Crossings woven',stage:'trace'},
-  {at:5000,name:'06-trace',label:'Circuit nearly closed',stage:'trace'},
-  {at:5400,name:'07-resolve',label:'The trace yields to the hero',stage:'resolve'},
-  {at:6000,name:'08-resolve',label:'Earth shows through',stage:'resolve'},
-  {at:6600,name:'09-fade',label:'Overlay recedes',stage:'fade'},
-  {at:7100,name:'10-fade',label:'Hero almost clear',stage:'fade'},
-  {at:7400,name:'11-hero',label:'Permanent Earth hero'},
-  {at:8000,name:'12-complete',label:'Completed company identity'}
+  {at:400,name:'02-trace',label:'Light starts',stage:'trace'},
+  {at:900,name:'03-trace',label:'The band lengthens',stage:'trace'},
+  {at:1400,name:'04-trace',label:'One path, mid circuit',stage:'trace'},
+  {at:1900,name:'05-trace',label:'Crossings woven',stage:'trace'},
+  {at:2300,name:'06-resolve',label:'Earth shows through',stage:'resolve'},
+  {at:2700,name:'07-resolve',label:'The page returns',stage:'resolve'},
+  {at:3100,name:'08-resolve',label:'Veil nearly gone',stage:'resolve'},
+  {at:3400,name:'09-fade',label:'Overlay recedes',stage:'fade'},
+  {at:3700,name:'10-fade',label:'Hero almost clear',stage:'fade'},
+  {at:3950,name:'11-fade',label:'Last of the trace',stage:'fade'},
+  {at:4500,name:'12-complete',label:'Page usable'}
  ];
  const directory=path.resolve('visual-qa/motion',info.project.name);await mkdir(directory,{recursive:true});
  const evidence=[];let elapsed=0;
@@ -98,4 +97,130 @@ test('Opening records its chronological visual sequence',async({page},info)=>{
  expect(new Set(evidence.slice(0,-1).map(frame=>frame.sha256)).size).toBe(frames.length-1);
  await writeFile(path.join(directory,'frames.json'),JSON.stringify({project:info.project.name,viewport:page.viewportSize(),mode:'Normal motion; Playwright clock controls time without changing runtime behavior',frames:evidence},null,2)+'\n');
  expect(errors).toEqual([]);
+});
+
+const widths=[320,360,390,768,1440,1920];
+test('Headlines do not break or overflow a word',async({page})=>{
+ test.setTimeout(300000);
+ const offenders=[];
+ for(const route of routes){
+  for(const width of widths){
+   await page.setViewportSize({width,height:900});
+   await page.goto(route,{waitUntil:'domcontentloaded'});
+   const found=await page.evaluate(()=>{
+    const bad=[];
+    for(const heading of document.querySelectorAll('h1,h2,h3')){
+     const style=getComputedStyle(heading);
+     if(style.display==='none'||style.visibility==='hidden')continue;
+     if(heading.scrollWidth>heading.clientWidth+1)bad.push(`${heading.tagName} overflow: ${(heading.textContent||'').trim().slice(0,80)}`);
+     const walker=document.createTreeWalker(heading,NodeFilter.SHOW_TEXT);
+     while(walker.nextNode()){
+      const node=walker.currentNode;const text=node.textContent||'';const re=/\S+/g;let match;
+      while((match=re.exec(text))){
+       const range=document.createRange();range.setStart(node,match.index);range.setEnd(node,match.index+match[0].length);
+       const tops=new Set([...range.getClientRects()].filter(rect=>rect.width>0&&rect.height>0).map(rect=>Math.round(rect.top)));
+       if(tops.size>1)bad.push(`wrapped ${match[0]}`);
+      }
+     }
+    }
+    return bad;
+   });
+   for(const item of found)offenders.push(`${route} @${width}: ${item}`);
+  }
+ }
+ expect(offenders).toEqual([]);
+});
+
+test('Section 01 text clears 4.5:1 over its scrim',async({page})=>{
+ test.setTimeout(120000);
+ const failures=[];
+ for(const width of widths){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const ratios=await page.evaluate(()=>{
+   const parse=value=>{const m=value.match(/[\d.]+/g);return m?m.slice(0,3).map(Number):null;};
+   const lin=c=>{const v=c/255;return v<=0.03928?v/12.92:((v+0.055)/1.055)**2.4;};
+   const L=rgb=>0.2126*lin(rgb[0])+0.7152*lin(rgb[1])+0.0722*lin(rgb[2]);
+   const contrast=(a,b)=>{const x=L(a),y=L(b);const hi=Math.max(x,y),lo=Math.min(x,y);return (hi+0.05)/(lo+0.05);};
+   const out=[];
+   for(const node of document.querySelectorAll('#explore h2, #explore .lede, #explore .intro-description, #explore .section-meta, #explore .prototype-status, #explore .downstream')){
+    const style=getComputedStyle(node);
+    const fg=parse(style.color);const bg=parse(style.backgroundColor);
+    if(!fg||!bg){out.push({text:(node.textContent||'').slice(0,40),ratio:0});continue;}
+    out.push({text:(node.textContent||'').trim().slice(0,48),ratio:contrast(fg,bg),color:style.color,background:style.backgroundColor});
+   }
+   return out;
+  });
+  for(const item of ratios)if(item.ratio<4.5)failures.push(`${width}: ${item.ratio.toFixed(2)} ${item.text} ${item.color} on ${item.background}`);
+ }
+ expect(failures).toEqual([]);
+});
+
+test('Phone nav stays visible at 360px',async({page})=>{
+ await page.setViewportSize({width:360,height:800});
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ await page.locator('header.site-bar').scrollIntoViewIfNeeded();
+ const metrics=await page.evaluate(()=>{
+  const buttons=[...document.querySelectorAll('nav[aria-label="Primary"] form.gl-go > button')];
+  return {
+   count:buttons.length,
+   summary:document.querySelector('nav[aria-label="Primary"] summary')?1:0,
+   overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
+   boxes:buttons.map(button=>{const r=button.getBoundingClientRect();return {w:r.width,h:r.height,right:r.right,name:(button.textContent||'').trim()};})
+  };
+ });
+ expect(metrics.summary).toBe(0);
+ expect(metrics.count).toBe(5);
+ expect(metrics.overflow).toBe(false);
+ for(const box of metrics.boxes){
+  expect(box.h).toBeGreaterThanOrEqual(44);
+  expect(box.w).toBeGreaterThanOrEqual(44);
+  expect(box.right).toBeLessThanOrEqual(361);
+ }
+});
+
+test('Intro skip is immediate and the first click still lands',async({page})=>{
+ test.setTimeout(30000);
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ const startTime=new Date('2026-10-18T12:00:00Z');
+ await page.clock.install({time:new Date(startTime.getTime()-1000)});
+ await page.clock.pauseAt(startTime);
+ await page.goto('/',{waitUntil:'load'});
+ await expect(page.locator('#glIntro')).toHaveCount(1);
+ await expect(page.locator('.gl-intro-skip')).toHaveAccessibleName('Skip to content');
+ await page.clock.runFor(500);
+ await page.locator('.scroll-invite').click();
+ await expect(page.locator('#glIntro')).toHaveCount(0);
+ await expect(page.locator('#explore')).toBeInViewport();
+});
+
+test('Labels are at least 12px and controls at least 44px',async({page})=>{
+ test.setTimeout(180000);
+ const problems=[];
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  for(const route of ['/','/about/','/concepts/governed-logic/','/publication/']){
+   await page.goto(route,{waitUntil:'domcontentloaded'});
+   const found=await page.evaluate(()=>{
+    const bad=[];
+    const seen=document.body.querySelectorAll('header,main,footer,p,span,a,button,h1,h2,h3,small,figcaption,li,dt,dd,label');
+    for(const node of seen){
+     if(node.closest('svg,script,style'))continue;
+     const style=getComputedStyle(node);
+     if(style.display==='none'||style.visibility==='hidden')continue;
+     const size=parseFloat(style.fontSize);
+     if(node.childNodes.length&&[...node.childNodes].some(child=>child.nodeType===3&&child.textContent.trim())&&size<11.5)bad.push(`size ${size} ${(node.textContent||'').trim().slice(0,40)}`);
+    }
+    for(const node of document.querySelectorAll('a,button')){
+     const style=getComputedStyle(node);
+     if(style.display==='none'||style.visibility==='hidden')continue;
+     const rect=node.getBoundingClientRect();
+     if(rect.width<43.5||rect.height<43.5)bad.push(`target ${Math.round(rect.width)}x${Math.round(rect.height)} ${(node.textContent||node.getAttribute('aria-label')||'').trim().slice(0,40)}`);
+    }
+    return bad;
+   });
+   for(const item of found)problems.push(`${route}@${width} ${item}`);
+  }
+ }
+ expect(problems).toEqual([]);
 });

@@ -372,9 +372,14 @@ const GL_MARK_TRACE = true;
   const siteCanvas = document.getElementById('siteCanvas');
   if (!siteCanvas) return;
   let seen = false;
-  try { seen = sessionStorage.getItem('gl-mark-trace') === '1'; } catch { seen = false; }
+  try { seen = /(?:^|; )gl-mark-trace=1(?:;|$)/.test(document.cookie); } catch { seen = false; }
   if (seen) return;
-  try { sessionStorage.setItem('gl-mark-trace', '1'); } catch { /* still play */ }
+  let webgl = false;
+  try {
+    const probe = document.createElement('canvas');
+    webgl = !!(probe.getContext('webgl2') || probe.getContext('webgl'));
+  } catch { webgl = false; }
+  if (!webgl) return;
 
   const TAU = Math.PI * 2;
   const K = 0.999;
@@ -385,6 +390,7 @@ const GL_MARK_TRACE = true;
   const pts = Array.from({length: SAMPLES + 1}, (_, i) => {
     const t = (i / SAMPLES) * TAU;
     return {
+      t,
       x: Math.asin(K * Math.cos(t)) / ASIN_K,
       y: AMP * Math.sin(3 * t),
       z: Math.sin(2 * t)
@@ -393,7 +399,6 @@ const GL_MARK_TRACE = true;
 
   let removed = false;
   let raf = 0;
-  let skipAt = 0;
   const offs = [];
   const listen = (target, type, fn, options) => {
     target.addEventListener(type, fn, options);
@@ -404,13 +409,17 @@ const GL_MARK_TRACE = true;
   element.className = 'gl-mark';
   element.setAttribute('aria-hidden', 'true');
   element.dataset.stage = 'black';
-  element.style.pointerEvents = 'auto';
-  element.style.background = 'transparent';
+  element.style.pointerEvents = 'none';
   const canvas = document.createElement('canvas');
   canvas.className = 'intro-canvas';
   const ctx = canvas.getContext('2d', {alpha: true});
   if (!ctx) return;
-  element.append(canvas);
+  const skipButton = document.createElement('button');
+  skipButton.type = 'button';
+  skipButton.className = 'gl-intro-skip';
+  // Reuses the existing skip-link string. No new words.
+  skipButton.setAttribute('aria-label', 'Skip to content');
+  element.append(canvas, skipButton);
   const remove = () => {
     if (removed) return;
     removed = true;
@@ -419,12 +428,17 @@ const GL_MARK_TRACE = true;
     for (const off of offs) off();
     element.remove();
   };
-  // Armed before the overlay is shown. 7.6s is inside the 8s limit.
-  const deadline = setTimeout(remove, 7600);
-  const skip = () => { if (!removed && !skipAt) skipAt = performance.now(); };
+  // Armed before the overlay is shown. The page is usable within 4s.
+  try { document.cookie = 'gl-mark-trace=1; Path=/; SameSite=Lax'; } catch { /* still play */ }
+  const deadline = setTimeout(remove, 4200);
+  const skip = () => { if (!removed) remove(); };
   const y0 = scrollY;
+  const scrollKey = new Set([' ', 'Spacebar', 'PageDown', 'PageUp', 'ArrowDown', 'ArrowUp', 'Home', 'End']);
   listen(window, 'pointerdown', skip, true);
-  listen(window, 'keydown', skip, true);
+  listen(window, 'keydown', event => {
+    if (scrollKey.has(event.key)) event.preventDefault();
+    skip();
+  }, true);
   listen(window, 'wheel', skip, {passive: true, capture: true});
   listen(window, 'scroll', () => { if (Math.abs(scrollY - y0) >= 12) skip(); }, {passive: true, capture: true});
   listen(reduce, 'change', () => { if (reduce.matches) remove(); });
@@ -453,7 +467,7 @@ const GL_MARK_TRACE = true;
       const p = pts[i];
       const under = p.z < 0;
       if (over ? under : !under) continue;
-      if (!over && Math.abs(p.z) < 0.2) continue;
+      if (!over && Math.abs(Math.sin(3 * p.t)) < 0.12) continue;
       const fade = Math.exp(-((head - i) / SAMPLES) * 2.4);
       if (fade < 0.035) continue;
       const [x1, y1] = place(pts[i - 1]);
@@ -466,20 +480,20 @@ const GL_MARK_TRACE = true;
     }
   }
   function paint(t) {
-    const stage = t >= 6.2 ? 'fade' : t >= 5.2 ? 'resolve' : t >= 0.4 ? 'trace' : 'black';
+    const stage = t >= 3.2 ? 'fade' : t >= 2 ? 'resolve' : t >= 0.2 ? 'trace' : 'black';
     element.dataset.stage = stage;
-    const travel = t < 0.4 ? 0 : t >= 5.2 ? 1 : ease((t - 0.4) / 4.8);
-    const headAlpha = t < 0.4 ? 0 : t < 0.9 ? (t - 0.4) / 0.5 : t < 4.8 ? 1 : t < 6.4 ? 1 - (t - 4.8) / 1.6 : 0;
-    // The black field itself thins from 5.2s to 7.2s, so the Earth hero comes through.
-    const veil = t < 5.2 ? 1 : Math.max(0, 1 - (t - 5.2) / 2);
+    const travel = t < 0.2 ? 0 : t >= 2.6 ? 1 : ease((t - 0.2) / 2.4);
+    const headAlpha = t < 0.2 ? 0 : t < 0.45 ? (t - 0.2) / 0.25 : t < 2.8 ? 1 : t < 3.95 ? 1 - (t - 2.8) / 1.15 : 0;
+    // The field stays opaque through the trace, then thins across the fade samples and is clear before 4s.
+    const veil = t < 1.4 ? 1 : Math.max(0, 1 - (t - 1.4) / 2.55);
     const overlay = 1;
     ctx.clearRect(0, 0, width, height);
     ctx.globalAlpha = 1;
     ctx.fillStyle = `rgba(0,0,0,${veil})`;
     ctx.fillRect(0, 0, width, height);
     if (travel > 0 && headAlpha > 0) {
-      strand(false, 5.2, '17,51,87', travel);
-      strand(true, 2.2, '217,238,252', travel);
+      strand(false, 3.4, '217,238,252', travel);
+      strand(true, 3.4, '217,238,252', travel);
       const head = Math.max(2, Math.round(travel * SAMPLES));
       const [x, y] = place(pts[head]);
       const radius = Math.min(width, height) * 0.028;
@@ -501,15 +515,8 @@ const GL_MARK_TRACE = true;
   function frame(now) {
     if (removed) return;
     try {
-      if (skipAt) {
-        const fade = (now - skipAt) / 400;
-        element.style.opacity = String(Math.max(0, 1 - fade));
-        if (fade >= 1) remove();
-        else raf = requestAnimationFrame(frame);
-        return;
-      }
       const t = (now - start) / 1000;
-      if (t >= 7.2) { remove(); return; }
+      if (t >= 4) { remove(); return; }
       paint(t);
       raf = requestAnimationFrame(frame);
     } catch { remove(); }
@@ -517,21 +524,10 @@ const GL_MARK_TRACE = true;
   raf = requestAnimationFrame(frame);
 })();
 
-/* Scene depth for the homepage. The permanent hero above is unchanged. Reduced motion never starts this. */
+/* Light field behind section 01. Depth is the scrim and shadow, not a tilt. Reduced motion never starts this. */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   if (reduce.matches) return;
-  const cards = document.querySelectorAll('.reading-index button, .work-grid article, .text-link, .button, .concept-card, .reasoning-exhibit');
-  for (const card of cards) {
-    card.addEventListener('pointermove', event => {
-      const rect = card.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `perspective(900px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg)`;
-    });
-    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-  }
   const host = document.querySelector('.front-door');
   if (!host) return;
   const canvas = document.createElement('canvas');
@@ -550,7 +546,7 @@ const GL_MARK_TRACE = true;
       return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
     };
     const vertex = compile(gl.VERTEX_SHADER, 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}');
-    const fragment = compile(gl.FRAGMENT_SHADER, 'precision mediump float;uniform vec2 r;uniform vec2 m;uniform float t;void main(){vec2 u=gl_FragCoord.xy/r;vec2 q=u-.5;q.x*=r.x/r.y;float d=length(q-vec2(m.x-.5,.2));float glow=exp(-d*d*7.)*(.55+.15*sin(t));vec3 base=vec3(.071,.078,.090);vec3 light=vec3(.549,.769,.925)*glow;gl_FragColor=vec4(base+light,.55);}');
+    const fragment = compile(gl.FRAGMENT_SHADER, 'precision mediump float;uniform vec2 r;uniform vec2 m;uniform float t;void main(){vec2 u=gl_FragCoord.xy/r;vec2 q=u-.5;q.x*=r.x/r.y;float d=length(q-vec2(m.x-.5,.2));float glow=exp(-d*d*8.)*(.22+.06*sin(t));vec3 base=vec3(.071,.078,.090);vec3 light=vec3(.25,.42,.55)*glow;gl_FragColor=vec4(base+light,1.);}');
     if (!vertex || !fragment) return;
     program = gl.createProgram();
     gl.attachShader(program, vertex);
@@ -576,10 +572,15 @@ const GL_MARK_TRACE = true;
     canvas.width = Math.max(1, Math.round(rect.width * dpr));
     canvas.height = Math.max(1, Math.round(rect.height * dpr));
   }
+  const weak = (navigator.hardwareConcurrency || 8) <= 4
+    || (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory < 4)
+    || !!(navigator.connection && navigator.connection.saveData);
   let frameId = 0;
   let active = false;
-  function frame(now) {
-    if (!active) return;
+  let onScreen = false;
+  let lastDraw = 0;
+  let loop = false;
+  function paint(now) {
     if (gl && program) {
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.useProgram(program);
@@ -592,25 +593,38 @@ const GL_MARK_TRACE = true;
       gl.uniform1f(time, now * 0.001);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     } else if (flat) {
-      flat.clearRect(0, 0, canvas.width, canvas.height);
+      flat.fillStyle = '#121417';
+      flat.fillRect(0, 0, canvas.width, canvas.height);
       const glow = flat.createRadialGradient(canvas.width * pointer.x, canvas.height * 0.42, 0, canvas.width * pointer.x, canvas.height * 0.42, canvas.width * 0.45);
-      glow.addColorStop(0, 'rgba(140,196,236,.35)');
+      glow.addColorStop(0, 'rgba(80,120,150,.28)');
       glow.addColorStop(1, 'rgba(18,20,23,0)');
       flat.fillStyle = glow;
       flat.fillRect(0, 0, canvas.width, canvas.height);
     }
+  }
+  function frame(now) {
+    if (!active || !loop) return;
+    if (now - lastDraw < 33) { frameId = requestAnimationFrame(frame); return; }
+    lastDraw = now;
+    paint(now);
     frameId = requestAnimationFrame(frame);
   }
   function setActive(next) {
-    active = next && !document.hidden;
+    onScreen = next;
+    active = onScreen && !document.hidden;
     cancelAnimationFrame(frameId);
-    if (active) frameId = requestAnimationFrame(frame);
+    if (active && loop) frameId = requestAnimationFrame(frame);
   }
   size();
+  paint(0);
+  if (weak || !gl) return;
   addEventListener('resize', size, {passive: true});
-  document.addEventListener('visibilitychange', () => setActive(active));
+  document.addEventListener('visibilitychange', () => setActive(onScreen));
   const observer = new IntersectionObserver(entries => setActive(entries.some(entry => entry.isIntersecting)));
   observer.observe(host);
+  const arm = () => { loop = true; setActive(onScreen); };
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(arm, {timeout: 1200});
+  else addEventListener('load', arm, {once: true});
 })();
 
 /* Homepage scenes arrive with a short blurred fade. Reduced motion and no-JS leave them visible. */
@@ -618,16 +632,33 @@ const GL_MARK_TRACE = true;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const sections = document.querySelectorAll('.home-content > section');
   if (!sections.length || reduce.matches || typeof IntersectionObserver !== 'function') return;
-  const seen = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      entry.target.classList.remove('scene-await');
-      entry.target.classList.add('scene-arrive');
-      seen.unobserve(entry.target);
-    }
-  }, {threshold: 0.16, rootMargin: '0px 0px -8% 0px'});
+  let seen;
+  try {
+    seen = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.remove('scene-await');
+        entry.target.classList.add('scene-arrive');
+        seen.unobserve(entry.target);
+      }
+    }, {threshold: 0.16, rootMargin: '0px 0px -8% 0px'});
+  } catch { return; }
   for (const section of sections) {
-    section.classList.add('scene-await');
-    seen.observe(section);
+    try {
+      seen.observe(section);
+      section.classList.add('scene-await');
+    } catch { section.classList.remove('scene-await'); }
   }
+})();
+
+/* The scroll invite stays in index.html. JS off follows its in-page target. */
+(() => {
+  const invite = document.querySelector('.scroll-invite');
+  const target = document.getElementById('explore');
+  if (!invite || !target) return;
+  invite.addEventListener('click', event => {
+    event.preventDefault();
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'start'});
+  });
 })();
