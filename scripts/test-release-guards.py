@@ -36,36 +36,33 @@ REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.h
 # Published homepage, exhibit included, arrows exact. Hero appends the one
 # reviewed exhibit-removed digest to this tuple and nothing else.
 HOMEPAGE_DIGESTS = (
-    "7fb1e1e0a31eb8d39408bb199c6e8d0be2400bb4bc6cd3bf389355b868ea4a63",
+    "550acca45cd4a6502e2532e68c6cefb2f014b018f8b365f0939dedb8da51709a",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
-    "challenge/index.html": ("c1efd4b0bf3d79715ba96b5aae45611651cd5a132850d719a58aab7a6fd29754",),
-    "company/index.html": ("706c80b46d1e0729d5c636e8e81279202fdb27792aecfda17886db75000d455b",),
-    "research/index.html": ("623f93f3567f91672393528d4f1963371c19344f3ad82069b420aabaac57cc39",),
-    "about/index.html": ("d7f9389fce4c73045043e66586496c831d6174397d181acecf1600530d5a6c47",),
-    "faq/index.html": ("96268e9a209d0225b6e450d1acb58e6005844d5357e8f9764fea12312ab0c15d",),
-    "concepts/index.html": ("7e7c6161ccdee3b357b29f91334225f88b5c8d5d9bfb3814e0b8a305fdabcc54",),
-    "concepts/governed-logic/index.html": ("cd89840ad88a0b14b005c34f281e416841333e159b6b2e7c958d7ff6c383a0cc",),
-    "concepts/governed-intelligence/index.html": ("9b161371c484b0eec1e5395904abbe4a6bbe615bf7f874a326b02468fe4c2b1a",),
-    "concepts/ultimate-grounding/index.html": ("fcc076428f54733ab42de138840d6ede8f4eb47a21b135e6c3bc5c8d74c86cdc",),
-    "concepts/alpha-and-omega-reasoning/index.html": ("83d737caa1b3bb72100c98492f7f84dfbab84c892bb3c3efd19f42e93831d312",),
-    "concepts/governing-referent/index.html": ("5cbfe42dd1b49f61ce1c1df4af097b0dbbb3dbd76fb28934a3833d685bd874e4",),
-    "concepts/sufficient-grounding/index.html": ("1db670c250aef08be86c2bb4db4d699a39b106e577e1ce05ff7c03403e1741e9",),
-    "mechanism.html": ("1060b008ecc2677837dc1b47cab6e92dcb965315453da47448d43be04b28432c",),
-    "sources/index.html": ("ff302a9b335f9fc0860d24d5a00fa72e4a6d465294283da8fd300ad09a10b756",),
-    "articles/why-anything/index.html": ("3c53b5e6f88431c845fe6776ba7fc84f5a343f67771a454e28ad7422ab40810c",),
-    "articles/integrity-in-artificial-intelligence/index.html": ("cc1f9ba936ef6a9b9440ee97d5d173fdb53775332d82fa3600aaf9b7957a838b",),
-    "library/index.html": ("1c8668144737c4da5408e6e90640d85752883b3428ae1657ef71ec1a814aca10",),
-    "publication/index.html": ("25918d7685b8c923bcfa6e2b88af8bd82a4a99f76d2791e963e7283231482dcd",),
+    "challenge/index.html": ("0efa1741949b9e6f6b63702d7e6701e2693abc829fcf706623c116dfeecf9df0",),
+    "company/index.html": ("4280c66c303ff4074ba5f941450ae7030666d1d5f00019e355d44e0861ea7b73",),
+    "research/index.html": ("85dd17eb780dbb38207475c1d811f98509026299e0f50ac6bcd37c0d46d98f5e",),
+    "about/index.html": ("ee45a58b31bbb74796ebebadb0bc022a1b3e1cec6cbe37cb1e88915e7a1ca611",),
+    "faq/index.html": ("1fac02d38af4a4555504d6d857f6cb52c5a080fc129c9331bccb3bb86d040470",),
+    "concepts/index.html": ("caf634656d860cde017f77717db83e09100e086307df5ae81eec077d683f3e8b",),
+    "concepts/governed-logic/index.html": ("41e6633ff911b81794a91f3b351bd9262ba6ddab4091376f6c9a794f06302671",),
+    "concepts/governed-intelligence/index.html": ("ff14400ebfe4dee864b45f8c6eb1657f7dab6298f680a68ced7bbb665915760d",),
+    "concepts/ultimate-grounding/index.html": ("0fbb9bbbf3a77c0a78f3449b61814416231544833e26fda3f923cd60c18a6d8d",),
+    "concepts/alpha-and-omega-reasoning/index.html": ("04498559484023e1d9aa608cbdd15c712211d8686d561bbf9bdcab53a00680b7",),
+    "concepts/governing-referent/index.html": ("4676a0d8638d257d3996044234b80f7d7f19b72a457a665c52bf9c91f81b1a93",),
+    "concepts/sufficient-grounding/index.html": ("04953fe85d7db22f0a398565ee2aef107700985b799c5fe772ebf02fdb8fc7c5",),
+    "mechanism.html": ("2b3f2575d11515db7b6c48effd44bbdeebbbdf21fa3a3f93e2e82680bcce0901",),
+    "sources/index.html": ("344cc7b5fd6f7c909a7f30eb4f80040c8a46a1a3cf94bf1a8dee148fdb98bd20",),
+    "articles/why-anything/index.html": ("c51411b3b296a20d1a7a0c9015214c59941a6024f435c8db3c87d7ace6162f7d",),
+    "articles/integrity-in-artificial-intelligence/index.html": ("2a134239aea296745b2970956506251bf8502a7f4abfe2f05fb140dbaaaaa0a9",),
+    "library/index.html": ("22dcfbb33b3afba973dff54c1d8e69f316dde7b5a0b57dde2bb524f6aabb953b",),
+    "publication/index.html": ("d5584a7da59ac8adf16a40a9a53a7caed66073cd6b5ac157193b650a821f224c",),
 }
-OPENING_DIGEST = "391b5b7830c4fdb030e76436dec6e2fde3ded8fa347525a02805be7f66611503"
-# Header skip/current script, plus the mechanism copy button after it.
-_HEADER_SCRIPT = "56aa3c97ea8b9ef40eee9611ac9dd6f3dda62f9acd1dd9c470b1bb0c34a46fcf"
-_COPY_SCRIPT = "84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e"
+OPENING_DIGEST = "8d61ee828cf5dd5f1dd1ac060f7c0b74bd39a8be7b9e3745b86afdb247f7dba2"
+# The mechanism copy button is the only reviewed inline script.
 REVIEWED_INLINE_SCRIPTS = {
-    relative: (_HEADER_SCRIPT, _COPY_SCRIPT) if relative == "mechanism.html" else (_HEADER_SCRIPT,)
-    for relative in (*REVIEWED_PAGES,)
+    "mechanism.html": ("84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e",),
 }
 INLINE_SCRIPT = re.compile(r"<script\b([^>]*)>(.*?)</script>", re.IGNORECASE | re.DOTALL)
 EXTERNAL_SCRIPT = re.compile(r"\bsrc\s*=", re.IGNORECASE)
@@ -630,8 +627,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit" href="/research/">Research</button>',
-                '<button type="submit" href="/research/">Studies</button>',
+                '<button type="submit">Research</button>',
+                '<button type="submit">Studies</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
@@ -642,8 +639,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit" href="/faq/">FAQ</button>',
-                '<button type="submit" href="/faq/">Questions</button>',
+                '<button type="submit">Library</button>',
+                '<button type="submit">Archive</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
