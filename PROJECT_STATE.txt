@@ -144,3 +144,22 @@ RELEASE UPDATE — HARRIET, 2026-10-24
 - Verified GitHub Actions: deploy run 40142854993 for homepage commit 78f92c2 completed SUCCESS at 2026-10-24 23:28:39 UTC. Subsequent documentation-only commit 9a69a5a also deployed successfully under run 40142889661 at 23:29:12 UTC. This verifies the GitHub deployment workflow, NOT direct live-page HTML or visual order. Harriet's attempted direct homepage fetch failed (web tool disabled; container DNS unavailable). Independent live HTML/desktop/mobile verification remains outstanding.
 - Mechanism archive PR #17 remains ON HOLD. Do not merge or deploy it without Paul's separate approval.
 NEXT OWNER: GL Business Analyst to consolidate QA's independently fetched live homepage/phone order and route checks and refresh documentation-only PR #15 to remove stale pre-merge reports. Harriet to review PR #15 and WEB-151 draft for Paul's approval, and independently validate live HTML when access permits. Mechanism archive PR #17 stays unmerged without Paul's later approval. GL Business Analyst remains sole Grok-side communicator/state editor.
+
+
+REAL HOMEPAGE DESIGN PASS — PAUL DIRECTIVE / HARRIET ACCEPTANCE, 2026-10-24
+Status: APPROVED TO BUILD; NOT YET APPROVED TO RELEASE.
+Paul rejected the idea that the homepage reorder alone counts as the new website. It was a correct sequencing fix but not a sufficient visual/product improvement. The next homepage PR must be a materially visible design pass using the existing approved content, PRD, and visual system. Do not return another micro-tweak as the redesign.
+
+GL Business Analyst is the sole Grok-side communicator and owns first-time visitor experience and acceptance criteria. Architect protects durable structure and source/build integrity. Developer implements appropriate modern web treatment. QA independently verifies desktop/mobile visual quality, accessibility, links, regressions, and deployment evidence. Architect, Developer, and QA report to BA; only BA updates PROJECT_STATE.txt for Grok's team.
+
+Required visitor journey and visual acceptance:
+- Preserve the existing opening/company identity.
+- Immediately establish what Governed Logic Reasoning Systems is building and why current AI reasoning is insufficient.
+- Make the problem section visually unmistakable and materially stronger than the current page. Use a small source-backed set of known AI/LLM reasoning defects from the existing corpus: fluent output without sufficient grounding; failure of proposition/reality correspondence; absence of a stable governing referent; unsupported or invalid inference/contradiction; semantic drift; representation/referent confusion. Do not invent claims and do not claim Governed Intelligence has already eliminated these defects experimentally.
+- Only after the problem, present Governed Logic as the upstream solution. Make Ground -> Truth -> Logic -> Reasoning -> Intelligence immediately legible, with generation forward and adjudication back, preserving Paul's required Ground-at-bottom semantics and canonical definitions.
+- Improve composition, typography hierarchy, spacing, transitions, and structural visual depth using existing black/white/blue/restrained-green direction. Avoid generic SaaS cards, crypto styling, novelty UI, or a wholesale rewrite.
+- A first-time visitor should be able to answer quickly: What are you building? What is wrong with current AI reasoning? What does Governed Logic change upstream?
+- Preserve CNAME, domain, opening endpoints, render_site.py/build architecture, source authority, and publication boundaries unless separately authorized.
+
+DELIVERABLE: separate homepage implementation PR with exact changed files, PRD acceptance mapping, before/after desktop and 390px phone screenshots, build and visual/accessibility QA results, known pre-existing failures separated from new regressions, and explicit confirmation that CNAME/opening/build pipeline are unchanged. Mechanism archive PR #17 remains on hold and must not be combined with this work. Paul retains final release approval; Harriet reviews and coordinates merge only after the finished implementation is visible and verified.
+NEXT OWNER: GL Business Analyst to dispatch Architect/Developer/QA and return a materially improved homepage PR. Harriet will review the actual implementation, not merely the plan.
