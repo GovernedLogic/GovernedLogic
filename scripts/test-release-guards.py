@@ -4,9 +4,10 @@
 The reviewed record of each page is its text, links, image sources, and
 publication metadata, not its markup. A stylesheet, class, or layout-tag
 change does not fail these guards. Title, Open Graph title, description
-metadata, robots content, visible text (including image alt text, the
-header, footer, and homepage text outside main), image sources, and
-anchor labels and hrefs do.
+metadata, robots content (name=robots and any meta name ending in
+bot, such as googlebot or bingbot), visible text (including image alt
+text, the header, footer, and homepage text outside main), image
+sources, and anchor labels and hrefs do.
 Arrows are exact: ↗ and → are different. The reasoning exhibit is part
 of the published homepage. v10.10/hero-exhibit may append one reviewed
 exhibit-removed homepage digest; any other homepage still fails.
@@ -134,6 +135,14 @@ def _name_tokens(value: str) -> set[str]:
     return {part.strip().lower() for part in NAME_TOKEN.split(value) if part.strip()}
 
 
+def _robots_meta(name: str) -> bool:
+    """name=robots, or a crawler meta name ending in bot, any case."""
+    for token in _name_tokens(name):
+        if token == "robots" or token.endswith("bot"):
+            return True
+    return False
+
+
 def _descriptions(node: object, found: list[str]) -> None:
     if isinstance(node, dict):
         for key, value in node.items():
@@ -157,7 +166,8 @@ def page_record(html: str) -> str:
     """Canonical text, links, image sources, and publication metadata.
 
     Markup other than anchors and img sources is not recorded. Robots is
-    the content of every meta name=robots, in document order, so adding,
+    the content of every meta name=robots and every meta whose name ends
+    in "bot" (googlebot, bingbot, any case), in document order, so adding,
     editing, or removing that tag changes the record. Image alt text is
     also part of the visible text.
     """
@@ -170,7 +180,7 @@ def page_record(html: str) -> str:
         attrs = _attrs(raw)
         if "description" in attrs.get("name", "").split():
             meta.append(attrs.get("content", ""))
-        if "robots" in _name_tokens(attrs.get("name", "")):
+        if _robots_meta(attrs.get("name", "")):
             robots.append(_collapse(attrs.get("content", "")))
         property_name = attrs.get("property", "").lower()
         if property_name == "og:title":
@@ -472,6 +482,30 @@ class ReleaseGuardTests(unittest.TestCase):
                 "index.html",
                 "</head>",
                 '<meta name="robots" content="noindex"></head>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
+                assert_reviewed_copy(site)
+
+    def test_googlebot_noindex_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                "</head>",
+                '<meta name="googlebot" content="noindex"></head>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
+                assert_reviewed_copy(site)
+
+    def test_bingbot_noindex_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                "</head>",
+                '<meta name="bingbot" content="noindex"></head>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
                 assert_reviewed_copy(site)
