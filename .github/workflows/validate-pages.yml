@@ -2,18 +2,21 @@ name: Validate governedlogic.com
 
 on:
   pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
@@ -28,6 +31,11 @@ jobs:
           python3 scripts/build_site.py --output "$site_root"
           python3 scripts/check-restored.py --root "$site_root" --artifact
           printf 'SITE_ROOT=%s\n' "$site_root" >> "$GITHUB_ENV"
+      - name: Run release guards, corpus check, and origin check
+        run: |
+          python3 scripts/test-release-guards.py -v
+          python3 scripts/check-corpus.py
+          python3 scripts/check-origin.py
       - name: Check JavaScript syntax
         run: |
           node --check assets/opening.js
@@ -37,7 +45,7 @@ jobs:
           node --check tests/visual/site-shell.spec.mjs
           node --check tests/visual/contact-sheet.mjs
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -54,7 +62,7 @@ jobs:
           SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Upload visual QA evidence
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: governedlogic-visual-qa-${{ github.event.pull_request.head.sha || github.sha }}
           path: visual-qa/
