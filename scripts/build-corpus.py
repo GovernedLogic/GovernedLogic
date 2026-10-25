@@ -226,8 +226,14 @@ def load_pages(root):
                  (node.tag == "header" and "hero" in node.attrs.get("class", "").split())]
         text = normalized(" ".join(node.text() for node in nodes)) or main.text()
         author = meta.get("author")
-        published = meta.get("gl-date-published") or entity.get("datePublished")
-        modified = meta.get("gl-date-modified") or entity.get("dateModified")
+        # A date-only meta value is not an event timestamp. Keep the structured
+        # timestamp, which is what /about/ publishes for dateModified.
+        def zoned_timestamp(value):
+            if value and re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:Z|[+-]\d\d:\d\d)", value):
+                return value
+            return None
+        published = zoned_timestamp(meta.get("gl-date-published")) or entity.get("datePublished")
+        modified = zoned_timestamp(meta.get("gl-date-modified")) or entity.get("dateModified")
         description = meta.get("description", "")
         if description and normalized(description) not in text:
             if path not in LEGACY_PATHS:
@@ -362,7 +368,15 @@ def library_html(records, root=ROOT):
 def feed_bytes(root, pages):
     ET.register_namespace("", ATOM)
     tag = lambda name: "{" + ATOM + "}" + name
-    old = ET.parse(root / "feed.xml").getroot()
+    feed_path = root / "feed.xml"
+    if feed_path.is_file():
+        old = ET.parse(feed_path).getroot()
+    else:
+        # The restored publication does not commit a feed. Build one from the pages.
+        old = ET.Element(tag("feed"))
+        ET.SubElement(old, tag("title")).text = "Governed Logic publications"
+        ET.SubElement(old, tag("id")).text = SITE + "/"
+        ET.SubElement(old, tag("updated")).text = "1970-01-01T00:00:00Z"
     old_entries = {entry.findtext(tag("id")): entry for entry in old.findall(tag("entry"))}
     feed = ET.Element(tag("feed"))
     for child in old:
@@ -485,6 +499,9 @@ def referenced_urls(source, base_url):
                 if candidate.strip():
                     urls.add(urljoin(base_url, candidate.strip().split()[0]))
     for value in re.findall(r'''url\(\s*['"]?([^\s)'";]+)''', source):
+        # Data URIs and in-document SVG fragment refs are not files.
+        if value.startswith(("data:", "#", "%23")):
+            continue
         urls.add(urljoin(base_url, value))
     return urls
 

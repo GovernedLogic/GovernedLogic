@@ -36,13 +36,15 @@ test('FAQ answers open and match machine data',async({page})=>{
 test('Homepage and navigation work without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const page=await context.newPage();
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');await expect(page.locator('main')).toContainText('Governed Intelligence');
- await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Architecture',exact:true}).click();
+ await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Governed Logic',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
 test('Opening completes and leaves content usable',async({page})=>{
  test.setTimeout(45000);await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/');
  await expect(page.locator('#glIntro')).toHaveCount(0,{timeout:20000});
- await page.getByRole('link',{name:'Explore ↓',exact:true}).click();await expect(page.locator('#explore')).toBeInViewport();
+ const invite=page.locator('a.scroll-invite');
+ await expect(invite).toHaveAccessibleName('See what we are building ↓');
+ await invite.click();await expect(page.locator('#explore')).toBeInViewport();
 });
 test('Opening records its chronological visual sequence',async({page},info)=>{
  test.skip(info.project.name==='mobile-320','The opening filmstrip covers desktop and the 390-pixel mobile viewport.');

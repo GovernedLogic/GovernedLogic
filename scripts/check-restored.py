@@ -78,7 +78,7 @@ def live(root,base,attempts,delay):
     raise AssertionError('\n'.join(errors))
 if __name__=='__main__':
     a=argparse.ArgumentParser();a.add_argument('--root');a.add_argument('--artifact',action='store_true');a.add_argument('--live');a.add_argument('--attempts',type=int,default=1);a.add_argument('--delay',type=float,default=10);args=a.parse_args()
-    with tempfile.TemporaryDirectory(dir=ROOT.parent,ignore_cleanup_errors=True) as temp:
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temp:
         root=Path(args.root) if args.root else Path(temp)/'site'
         if not args.root:build(root)
         check(root)
