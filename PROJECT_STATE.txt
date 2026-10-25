@@ -1,5 +1,42 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
-Updated: 2026-10-24
+Updated: 2026-10-25 14:18:58 EDT
+
+CURRENT DIRECTIVE — COMPLETE VISUAL OVERHAUL ASSIGNMENT
+Timestamp: 2026-10-25 14:18:58 EDT
+Sender: Paul
+Recipient / next owner: Governor (Grok), coordinating GL Business Analyst, GL Site Architect, GL Site Developer, and GL QA
+Status: APPROVED TO BUILD AS ONE COORDINATED PULL REQUEST; NOT APPROVED TO DEPLOY
+
+Harriet boundary: This creative implementation belongs to the Governor and Grok bot team. Harriet does not perform the animation, visual-design, or usability implementation. Harriet maintains the GitHub/release handoff, reviews the finished coordinated pull request against the protected substantive-content boundary, and coordinates release only after Paul approves the finished design.
+
+PAUL'S ASSIGNMENT — VERBATIM
+Grok, your next assignment is a complete animation, visual design, and usability overhaul of GovernedLogic.com.
+
+We want a beautiful, modern, professional website worthy of a serious reasoning systems company. Think IBM-level quality, with cinematic animation, sophisticated charcoal tones, excellent typography, visual depth, intuitive navigation, and a clean corporate identity.
+
+Reimagine the opening animation using our earlier versions as inspiration, especially the brilliant point of light tracing the three-loop geometry.
+
+The current navigation is cluttered and unattractive. Simplify it. Make the website feel like a company, with clear pages and natural navigation. Research, references, publications, and PDFs should remain accessible without overwhelming visitors.
+
+Your team determines how to accomplish this. Use your individual roles, collaborate, challenge one another, and produce the best result you can.
+
+This assignment is strictly visual and functional. Preserve every substantive statement, definition, claim, and existing resource. Do not rewrite content or alter the underlying reasoning architecture.
+
+Work together on one coordinated pull request. Demonstrate the finished experience on desktop and mobile.
+
+For this creative assignment, build first. After Paul approves the result, reverse-engineer the final visual and animation requirements into the PRD and lock them down.
+
+Do not deploy until Paul approves the finished design.
+
+We are telling you what we want. You figure out how to make it exceptional.
+
+OPERATING EFFECT
+- One coordinated visual/functional overhaul PR replaces fragmented redesign work as the next creative deliverable.
+- Existing substantive content and resources are preservation constraints, not material for rewriting.
+- Existing open visual branches/PRs are inputs for the Governor to reconcile; Harriet will not independently merge them as substitutes for the coordinated overhaul.
+- PR #17 mechanism archive remains HOLD and outside this assignment.
+- No redesign deployment occurs before Paul's approval of the finished desktop-and-mobile experience.
+
 Status: Homepage reorder PR #16 merged; GitHub Pages deployment workflows succeeded 2026-10-24, but live HTML not independently retrieved by Harriet. Mechanism archive PR #17 remains ON HOLD. State-only PR #15 awaits updated BA review. Earlier chronological snapshots below may be superseded by this header and the latest release update.
 Repository: GovernedLogic/GovernedLogic
 Site: https://governedlogic.com/
