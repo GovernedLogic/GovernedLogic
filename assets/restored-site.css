@@ -203,8 +203,11 @@ header.site-bar nav>a[aria-current='page'],header.site-bar nav>a:hover{color:var
   .site-menu{display:block}
   .site-menu summary{display:flex;align-items:center;justify-content:center;width:44px;height:44px;list-style:none;cursor:pointer;color:var(--ink)}
   .site-menu summary::-webkit-details-marker{display:none}
-  header.site-bar nav>a{display:none;flex:1 0 100%;min-height:44px;height:auto;justify-content:flex-start;padding:0 8px;white-space:normal}
-  header.site-bar nav:has(details[open])>a{display:flex}
+  header.site-bar nav>a,
+  header.site-bar nav .gl-go>button{display:none;flex:1 0 100%;min-height:44px;height:auto;justify-content:flex-start;padding:0 8px;white-space:normal}
+  header.site-bar nav:has(details[open]){width:100%}
+  header.site-bar nav:has(details[open])>a,
+  header.site-bar nav:has(details[open]) .gl-go>button{display:flex;width:100%;box-sizing:border-box}
   .home-content>section{padding:64px 16px;min-height:auto}
   .front-door{grid-template-columns:1fr;gap:32px}
   .document-main,main.document-main{padding:64px 16px 96px}
