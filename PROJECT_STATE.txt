@@ -12,10 +12,10 @@ AUTHORITY AND ROLES — PAUL'S DIRECTIVE
 Paul: final authority for vision, canonical wording, requirements changes, priorities, and public release approval.
 Harriet: GitHub/repository and release coordinator. Owns review of PRD/source correspondence, branch/PR and commit coordination, release verification, shared state maintenance, and independent assessment of machine-readable versus human-readable representations. Harriet may prepare and commit authorized changes, but does not authorize publication on Paul's behalf.
 Grok: website design and engineering coordinator; manages the specialized website team and prepares reviewable work. Grok's team does not merge or deploy independently.
-Grok website team — EXACT FOUR ACTIVE BOT ROLES CONFIRMED BY PAUL, 2026-10-24:
-- GL Business Analyst (team lead and SOLE Grok-team communications owner): owns requirements, forward-looking user experience and visitor journeys, acceptance criteria, backlog coordination, and PRD correspondence. Collects questions, findings, QA results, and blockers from every other bot; consolidates and alone updates PROJECT_STATE.txt for Grok's team and communicates with Harriet. Cannot override Paul.
-- GL Site Architect: protects sound, durable architectural principles, build integrity, maintainability, and design tradeoffs. Reports findings and questions to GL Business Analyst, not directly into PROJECT_STATE.txt.
-- GL Site Developer: implements approved website changes with suitable modern web technology on feature branches; reports work, PRs, and blockers to GL Business Analyst. Add a second developer only with Paul's approval.
+Grok website team — ACTIVE BOT ROLES (Paul, 2026-10-25 10:22:34 EDT; supersedes the 2026-10-24 four-role list). In this file, earlier references to GL Business Analyst now mean Governor:
+- Governor (formerly GL Business Analyst; team lead and SOLE Grok-team communications owner): owns requirements, forward-looking user experience and visitor journeys, homepage and visual design direction and design acceptance, acceptance criteria, backlog coordination, and PRD correspondence. Collects questions, findings, QA results, and blockers from every other bot; consolidates and alone updates PROJECT_STATE.txt for Grok's team and is the only one who communicates with Harriet. Cannot override Paul.
+- GL Site Architect: protects a strong, durable foundation (modern technology and ancient wisdom), maintainability, and design tradeoffs, and owns source fidelity: checks the site against the two treatises (WEB-153) and flags any drift from canon. Reports findings and questions to Governor, not directly into PROJECT_STATE.txt or to Harriet.
+- GL Site Developer: implements approved website changes with suitable modern web technology on feature branches and owns GitHub working correctly: repo layout, files, build, CI, and PRs. Reports work, PRs, and blockers to Governor. A second developer will be added once the V10.10 backlog has two or more workstreams that can be built in parallel (Paul agreed 2026-10-25).
 - GL QA: independently verifies source/build, visual and mobile behavior, links, release boundaries, and deployed results; reports evidence and blockers to GL Business Analyst.
 No active GL Product Owner or GL Scrum Master role. Preserve retired records as history, not active assignments. No extra communication or management bots.
 
@@ -208,3 +208,13 @@ NEXT OWNER: GL Business Analyst to return the traceability matrix + current-site
 
 TIMESTAMP AND HANDOFF STANDARD — PAUL DIRECTIVE, 2026-10-25
 All new operational handoffs and state updates must include an exact timestamp in America/New_York local time: YYYY-MM-DD HH:MM:SS EDT or EST, as applicable. Use the correct seasonal abbreviation (EDT during daylight saving time; EST during standard time), not an assumed fixed UTC offset. GitHub commit timestamps remain the independently verifiable source for when Git changes actually occurred. Distinguish the time an event occurred from the time it was reported or recorded; do not invent precision when an external event's exact time is unknown. Each handoff identifies sender, recipient/next owner, action, status, PR/commit if applicable, and timestamp. GL Business Analyst remains the sole Grok-side editor and communicator; Harriet may update her own release/review records. Preserve earlier historical entries without rewriting their times. Keep entries brief and actionable.
+
+
+ROLE UPDATE — 2026-10-25 10:22:34 EDT (decided by Paul in Grok chat; recorded 2026-10-25 10:23 EDT)
+Sender: Governor. Recipient / next owner: Harriet (review and merge this PR). Status: proposed state update, documentation only. PR: V10.10 state PR (this branch).
+- GL Business Analyst is now named Governor. Same duties; also owns homepage/visual design direction and design acceptance. Developer builds it; QA judges how it looks.
+- GL Site Architect now also owns source fidelity against the two treatises. Build and CI ownership moves to GL Site Developer.
+- GL Site Developer owns GitHub working correctly: layout, files, build, CI, PRs.
+- Second developer: approved in principle; added only when the V10.10 backlog shows parallel workstreams.
+- Communication rule (Paul's words): "the project.state.txt file on main is how you communicate with Harriet and the governor is the only one that communicates to Harriet on behalf of the team."
+No website code, PRD, CNAME, opening, or build file changed. Only this file.
