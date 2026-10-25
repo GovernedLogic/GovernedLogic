@@ -1,13 +1,13 @@
 GOVERNEDLOGIC.COM PRD
 Owner: Paul André Couchoud
 Updated: 2026-10-25
-Status: RECONCILED CANDIDATE — PLAIN TEXT — NOT RELEASE AUTHORIZATION
+Status: APPROVED CURRENT REQUIREMENTS — PLAIN TEXT
 
 PURPOSE
 
 This file is the current requirements source of truth for governedlogic.com.
 
-This reconciliation is one reviewable candidate. It becomes the current approved PRD only when Paul approves and merges it.
+Paul approved this reconciliation on 2026-10-25. It became the current PRD when PR #20 merged as commit 26ec768b37a8366605513394b8c80bcf2963b04b.
 
 Git owns history.
 This file owns current requirements.
