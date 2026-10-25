@@ -80,6 +80,20 @@ for (const routeDefinition of ROUTES) {
     }
 
     const isMobile = testInfo.project.name.startsWith("mobile-");
+    if (isMobile) {
+      // The disclosure is gone. The five doors stay visible, each at least 44px, with no horizontal overflow.
+      await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
+      await expect(page.locator('nav[aria-label="Primary"] details')).toHaveCount(0);
+      const navButtons = page.locator('nav[aria-label="Primary"] form.gl-go > button');
+      await expect(navButtons).toHaveCount(5);
+      for (const button of await navButtons.all()) {
+        await button.scrollIntoViewIfNeeded();
+        await expect(button).toBeVisible();
+        const box = await button.boundingBox();
+        expect(box.width).toBeGreaterThanOrEqual(44);
+        expect(box.height).toBeGreaterThanOrEqual(44);
+      }
+    }
     const metrics = await page.evaluate(
       ({ expectedNavigation, mobile }) => {
         const visible = element => {
@@ -93,42 +107,60 @@ for (const routeDefinition of ROUTES) {
         };
         const normalize = value => value.replace(/\s+/g, " ").trim();
         const navigation = document.querySelector('nav[aria-label="Primary"]');
+        const bar = navigation.closest("header");
         const mainElements = Array.from(document.querySelectorAll("main"));
         const navigationRect = navigation.getBoundingClientRect();
-        const links = Array.from(navigation.querySelectorAll(":scope > a"));
+        const barRect = bar ? bar.getBoundingClientRect() : navigationRect;
+        const links = Array.from(navigation.querySelectorAll("form.gl-go > button"));
+        const place = link => {
+          if (!bar || bar.scrollWidth <= bar.clientWidth + 1) return;
+          const before = link.getBoundingClientRect();
+          const host = bar.getBoundingClientRect();
+          if (before.left < host.left - 0.5 || before.right > host.right + 0.5) {
+            bar.scrollLeft += before.left - host.left;
+          }
+        };
         const linkMetrics = links.map(link => {
+          place(link);
           const rect = link.getBoundingClientRect();
+          const host = bar ? bar.getBoundingClientRect() : navigationRect;
           const centerX = Math.max(0, Math.min(innerWidth - 1, rect.left + rect.width / 2));
           const centerY = Math.max(0, Math.min(innerHeight - 1, rect.top + rect.height / 2));
           const hit = document.elementFromPoint(centerX, centerY);
           return {
-            href: link.getAttribute("href"),
+            href: link.closest("form")?.getAttribute("action") || "",
             label: normalize(link.textContent || ""),
             visible: visible(link),
-            focusable: link.matches("a[href]") && link.tabIndex >= 0,
+            focusable: link.matches("button") && link.tabIndex >= 0,
             insideViewport:
               rect.left >= -0.5
               && rect.right <= innerWidth + 0.5
               && rect.top >= -0.5
               && rect.bottom <= innerHeight + 0.5,
             insideNavigation:
-              rect.left >= navigationRect.left - 0.5
-              && rect.right <= navigationRect.right + 0.5
-              && rect.top >= navigationRect.top - 0.5
-              && rect.bottom <= navigationRect.bottom + 0.5,
+              rect.left >= host.left - 0.5
+              && rect.right <= host.right + 0.5
+              && rect.top >= host.top - 0.5
+              && rect.bottom <= host.bottom + 0.5,
             centerHit: hit === link || link.contains(hit),
             height: rect.height,
+            width: rect.width,
             top: rect.top,
             right: rect.right,
             bottom: rect.bottom,
             left: rect.left
           };
         });
+        if (bar) bar.scrollLeft = 0;
+        const rests = links.map(link => {
+          const rect = link.getBoundingClientRect();
+          return {left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom};
+        });
         const overlaps = [];
-        for (let first = 0; first < linkMetrics.length; first += 1) {
-          for (let second = first + 1; second < linkMetrics.length; second += 1) {
-            const a = linkMetrics[first];
-            const b = linkMetrics[second];
+        for (let first = 0; first < rests.length; first += 1) {
+          for (let second = first + 1; second < rests.length; second += 1) {
+            const a = rests[first];
+            const b = rests[second];
             const width = Math.min(a.right, b.right) - Math.max(a.left, b.left);
             const height = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
             if (width > 0.5 && height > 0.5) {
@@ -141,10 +173,10 @@ for (const routeDefinition of ROUTES) {
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
           bodyOverflow: document.body.scrollWidth > document.body.clientWidth + 1,
           navigationInsideViewport:
-            navigationRect.left >= -0.5
-            && navigationRect.right <= innerWidth + 0.5
-            && navigationRect.top >= -0.5
-            && navigationRect.bottom <= innerHeight + 0.5,
+            barRect.left >= -0.5
+            && barRect.right <= innerWidth + 0.5
+            && barRect.top >= -0.5
+            && barRect.bottom <= innerHeight + 0.5,
           navigationContentWithinBounds:
             linkMetrics.every(link => link.insideNavigation),
           visibleMainCount: mainElements.filter(visible).length,

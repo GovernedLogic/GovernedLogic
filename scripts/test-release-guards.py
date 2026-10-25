@@ -35,34 +35,57 @@ import render_site  # noqa: E402
 REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
 # Published homepage, exhibit included, arrows exact. Hero appends the one
 # reviewed exhibit-removed digest to this tuple and nothing else.
+# index.html: #explore is a button, the two /mechanism.html forms are restored, and the brand aria-label is Governed Logic home.
 HOMEPAGE_DIGESTS = (
-    "550acca45cd4a6502e2532e68c6cefb2f014b018f8b365f0939dedb8da51709a",
+    "a9067640f1aeb445d18e4cc039bc5805972da043b4d957faaedf460dd9438a6f",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
-    "challenge/index.html": ("0efa1741949b9e6f6b63702d7e6701e2693abc829fcf706623c116dfeecf9df0",),
-    "company/index.html": ("4280c66c303ff4074ba5f941450ae7030666d1d5f00019e355d44e0861ea7b73",),
-    "research/index.html": ("85dd17eb780dbb38207475c1d811f98509026299e0f50ac6bcd37c0d46d98f5e",),
-    "about/index.html": ("ee45a58b31bbb74796ebebadb0bc022a1b3e1cec6cbe37cb1e88915e7a1ca611",),
-    "faq/index.html": ("1fac02d38af4a4555504d6d857f6cb52c5a080fc129c9331bccb3bb86d040470",),
-    "concepts/index.html": ("caf634656d860cde017f77717db83e09100e086307df5ae81eec077d683f3e8b",),
-    "concepts/governed-logic/index.html": ("41e6633ff911b81794a91f3b351bd9262ba6ddab4091376f6c9a794f06302671",),
-    "concepts/governed-intelligence/index.html": ("ff14400ebfe4dee864b45f8c6eb1657f7dab6298f680a68ced7bbb665915760d",),
-    "concepts/ultimate-grounding/index.html": ("0fbb9bbbf3a77c0a78f3449b61814416231544833e26fda3f923cd60c18a6d8d",),
-    "concepts/alpha-and-omega-reasoning/index.html": ("04498559484023e1d9aa608cbdd15c712211d8686d561bbf9bdcab53a00680b7",),
-    "concepts/governing-referent/index.html": ("4676a0d8638d257d3996044234b80f7d7f19b72a457a665c52bf9c91f81b1a93",),
-    "concepts/sufficient-grounding/index.html": ("04953fe85d7db22f0a398565ee2aef107700985b799c5fe772ebf02fdb8fc7c5",),
-    "mechanism.html": ("2b3f2575d11515db7b6c48effd44bbdeebbbdf21fa3a3f93e2e82680bcce0901",),
-    "sources/index.html": ("344cc7b5fd6f7c909a7f30eb4f80040c8a46a1a3cf94bf1a8dee148fdb98bd20",),
-    "articles/why-anything/index.html": ("c51411b3b296a20d1a7a0c9015214c59941a6024f435c8db3c87d7ace6162f7d",),
-    "articles/integrity-in-artificial-intelligence/index.html": ("2a134239aea296745b2970956506251bf8502a7f4abfe2f05fb140dbaaaaa0a9",),
-    "library/index.html": ("22dcfbb33b3afba973dff54c1d8e69f316dde7b5a0b57dde2bb524f6aabb953b",),
-    "publication/index.html": ("d5584a7da59ac8adf16a40a9a53a7caed66073cd6b5ac157193b650a821f224c",),
+    # challenge/index.html: footer labels restored. The brand aria-label Governed Logic home is restored, so every page digest moved.
+    "challenge/index.html": ("ce5c0f7d1df0d68b577d98e3649b859669ed0ceba2718227aa25b9efe6918d66",),
+    # company/index.html: same restored footer labels.
+    "company/index.html": ("252d5ca42f6b476a5442b3f157b8c390b7342d3e3c9227201c707dba19ee0338",),
+    # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
+    "research/index.html": ("29326e62eb14fe361f6d8a8fd97ec315d66633abe43d30961498660bf8041fa0",),
+    # about/index.html: same restored footer labels.
+    "about/index.html": ("326c05b69b9bbf5ad31f0aa45dbad432e056559ceb567f3ecf52f265509f0cd7",),
+    # faq/index.html: same restored footer labels.
+    "faq/index.html": ("a4ab45144403523b0187c539e09a5910d04d56c2a3e47f3756b3c16a50633ffb",),
+    # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
+    "concepts/index.html": ("f36521869cd88280d6033b1380473ae4d291b54374edc4db263e2ad1d3e6a303",),
+    # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
+    "concepts/governed-logic/index.html": ("d525110511680e26a4d008b7bd957bdc7ae6fcc863ba5809dba80569e5a90156",),
+    # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
+    "concepts/governed-intelligence/index.html": ("df4309398cf9b52f87eab3b8901b4e90b8cb6d1be82442d10b3a665121453080",),
+    # concepts/ultimate-grounding/index.html: same restored footer labels.
+    "concepts/ultimate-grounding/index.html": ("a7cdf82ebba194e3235eb5955e33f525605dadc7af3094afddfb1ca704b4d64e",),
+    # concepts/alpha-and-omega-reasoning/index.html: same restored footer labels.
+    "concepts/alpha-and-omega-reasoning/index.html": ("b0b6652e00fe8c7dd3771f92a4bcd4c439ec989dfe4747c8a8f736afef53e62a",),
+    # concepts/governing-referent/index.html: same restored footer labels.
+    "concepts/governing-referent/index.html": ("b522484085dd5a67d60e2e50fffbd1ea140858df713929c940e40a73268eb1f3",),
+    # concepts/sufficient-grounding/index.html: same restored footer labels.
+    "concepts/sufficient-grounding/index.html": ("c509370d31674dc29f243d69b6d4a3e5a9b882ff72c273697f7496b85c5f3981",),
+    # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
+    "mechanism.html": ("09f803052a23b75e43c9c8731d643a26c1aef814acddca11dd9d0b7afd63ddc7",),
+    # sources/index.html: same restored footer labels.
+    "sources/index.html": ("b0675567b0a70b6e5123339f4f5d1e4e028cd9ed605056f8b7d6de575bd69c9e",),
+    # articles/why-anything/index.html: same restored footer labels.
+    "articles/why-anything/index.html": ("1d4e9f61d9b16a0aad309d5743b91f2d70e7322b06bf418a7fac54ecea3d0853",),
+    # articles/integrity-in-artificial-intelligence/index.html: same restored footer labels.
+    "articles/integrity-in-artificial-intelligence/index.html": ("a3cdef85b8ea657e99f73ddc9fc7d7d082bac6e650a5af9f066929297cd83b76",),
+    # library/index.html: generated page picks up the restored footer labels.
+    "library/index.html": ("b6e2987c626995e23be36176b73af4306c5638ccf3927970bc4c720fefa8c6dc",),
+    # publication/index.html: generated page picks up the restored footer labels.
+    "publication/index.html": ("656f01d4a3bfac4986cd87dbc537d4a269fe7073f7425ad9d574a368c46ed1f7",),
 }
-OPENING_DIGEST = "8d61ee828cf5dd5f1dd1ac060f7c0b74bd39a8be7b9e3745b86afdb247f7dba2"
-# The mechanism copy button is the only reviewed inline script.
+# Opening words are unchanged. The #explore anchor is no longer in the opening record.
+OPENING_DIGEST = "e4525a6b1741253a9ddf32a04e183588998f354f737189dab236a889f1f8c39d"
+# Header skip/current script, plus the mechanism copy button after it.
+_HEADER_SCRIPT = "56aa3c97ea8b9ef40eee9611ac9dd6f3dda62f9acd1dd9c470b1bb0c34a46fcf"
+_COPY_SCRIPT = "84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e"
 REVIEWED_INLINE_SCRIPTS = {
-    "mechanism.html": ("84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e",),
+    relative: (_HEADER_SCRIPT, _COPY_SCRIPT) if relative == "mechanism.html" else (_HEADER_SCRIPT,)
+    for relative in (*REVIEWED_PAGES,)
 }
 INLINE_SCRIPT = re.compile(r"<script\b([^>]*)>(.*?)</script>", re.IGNORECASE | re.DOTALL)
 EXTERNAL_SCRIPT = re.compile(r"\bsrc\s*=", re.IGNORECASE)
@@ -87,6 +110,8 @@ class Visible(HTMLParser):
         self._skip = 0
         self._body = False
         self._anchors: list[list] = []
+        self._form_actions: list[str] = []
+        self._buttons: list[list] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = {key: value or "" for key, value in attrs}
@@ -96,8 +121,13 @@ class Visible(HTMLParser):
             self._skip += 1
         if not self._body or self._skip:
             return
+        if tag == "form":
+            self._form_actions.append(attributes.get("action", ""))
         if tag == "a" and "href" in attributes:
             self._anchors.append([attributes["href"], []])
+        if tag == "button" and (attributes.get("type") or "submit").lower() == "submit" and self._form_actions:
+            action = attributes.get("formaction") or self._form_actions[-1]
+            self._buttons.append([action, []])
         if attributes.get("aria-label"):
             self._add(f" {attributes['aria-label']} ")
         if attributes.get("alt"):
@@ -108,6 +138,12 @@ class Visible(HTMLParser):
             href, parts = self._anchors.pop()
             label = WHITESPACE.sub(" ", "".join(parts)).strip()
             self.links.append(f"{href}\t{label}")
+        if tag == "button" and self._body and not self._skip and self._buttons:
+            action, parts = self._buttons.pop()
+            label = WHITESPACE.sub(" ", "".join(parts)).strip()
+            self.links.append(f"{action}\t{label}")
+        if tag == "form" and self._form_actions:
+            self._form_actions.pop()
         if tag in ("script", "style") and self._skip:
             self._skip -= 1
         if tag == "body":
@@ -121,6 +157,8 @@ class Visible(HTMLParser):
         self.parts.append(data)
         if self._anchors:
             self._anchors[-1][1].append(data)
+        if self._buttons:
+            self._buttons[-1][1].append(data)
 
 
 def _attrs(source: str) -> dict[str, str]:
@@ -336,6 +374,72 @@ class ReleaseGuardTests(unittest.TestCase):
             (site / "unreviewed.html").write_text("unreviewed", encoding="utf-8")
             with self.assertRaises(AssertionError):
                 check_restored.check(site)
+
+    def test_copy_guard_rejects_query_leaks_and_anchors(self) -> None:
+        mutations = (
+            (
+                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="post" action="/company/"><button type="submit" href="/company/">Company</button>',
+                "Form method must be get",
+            ),
+            (
+                '<button type="submit" href="/research/">Research</button>',
+                '<button type="submit" name="x" value="1" href="/research/">Research</button>',
+                "Button name or value",
+            ),
+            (
+                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="get" action="/company/"><input type="hidden" name="q" value="1"><button type="submit" href="/company/">Company</button>',
+                "Hidden input",
+            ),
+            (
+                '<form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button>',
+                '<form class="gl-go" method="get" action="/company/" target="_blank"><button type="submit" href="/company/">Company</button>',
+                "target=_blank",
+            ),
+            (
+                '<button type="submit" href="/research/">Research</button>',
+                '<a href="/research/">Research</a>',
+                "Unexpected anchor",
+            ),
+        )
+        for old, new, message in mutations:
+            with self.subTest(message=message):
+                with tempfile.TemporaryDirectory() as directory:
+                    site = self.build_artifact(directory)
+                    self.replace_once(site, "index.html", old, new)
+                    with self.assertRaisesRegex(AssertionError, message):
+                        check_restored.check(site)
+
+    def test_anchor_set_rejects_planted_library_about_link(self) -> None:
+        """Library listings are exactly the catalog paths. area and data-href count as anchors."""
+        plants = (
+            (
+                "library/index.html",
+                '<main class="document-main" id="content">',
+                '<main class="document-main" id="content"><a href="/about/">About Paul</a>',
+                "Unexpected anchor",
+            ),
+            (
+                "index.html",
+                '<main class="home-content" id="content" tabindex="-1">',
+                '<main class="home-content" id="content" tabindex="-1"><area href="/about/">',
+                "Unexpected anchor",
+            ),
+            (
+                "index.html",
+                '<main class="home-content" id="content" tabindex="-1">',
+                '<main class="home-content" id="content" tabindex="-1"><span data-href="/about/"></span>',
+                "Unexpected anchor",
+            ),
+        )
+        for relative, old, new, message in plants:
+            with self.subTest(relative=relative, message=message):
+                with tempfile.TemporaryDirectory() as directory:
+                    site = self.build_artifact(directory)
+                    self.replace_once(site, relative, old, new)
+                    with self.assertRaisesRegex(AssertionError, message):
+                        check_restored.check(site)
 
     def test_opening_asset_altered_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -576,8 +680,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<a href="/research/">Research</a>',
-                '<a href="/research/">Studies</a>',
+                '<button type="submit" href="/research/">Research</button>',
+                '<button type="submit" href="/research/">Studies</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
@@ -588,8 +692,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<a href="/library/">Library</a>',
-                '<a href="/library/">Archive</a>',
+                '<button type="submit" href="/faq/">FAQ</button>',
+                '<button type="submit" href="/faq/">Questions</button>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
