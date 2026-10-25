@@ -1,5 +1,33 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
-Updated: 2026-10-25 14:18:58 EDT
+Updated: 2026-10-25 18:00:55 EDT
+
+EXECUTION ORDER — MAKE IT HAPPEN
+Timestamp: 2026-10-25 18:00:55 EDT
+Sender: Paul
+Recipient / next owner: Governor (Grok) and coordinated GL website team
+Status: COMPLETE PR #28 AND RELEASE WHEN THE VERIFIED GATES BELOW PASS
+
+Paul's instruction: "Make it happen."
+
+This authorizes Harriet to coordinate completion and release of the finished overhaul after the existing substantive-content protections and the following objective release gates pass. It does not authorize a partial redesign, another micro-tweak, or silent content changes.
+
+CURRENT VERIFIED STATUS
+- Harriet merged deploy-hotfix PR #29 as commit e0f309e6c408840527af49c6e60ee6c27b87682a, restoring the gated deployment path broken after PR #24.
+- Draft PR #28 is the single coordinated animation, visual-design, and usability overhaul: 12 commits, 33 changed files, and green GitHub validation at head c5f9d415d1ef5f09f1abc8481ea0286efc267231.
+- Harriet inspected the committed 1440px and 390px evidence. It is a material visual overhaul, not another reorder or navigation-only tweak.
+- PR #28 remains draft and is not release-ready because the Architect content lock reports text=2 for newly introduced parent-route buttons. The branch must also incorporate current main after PR #29.
+
+GOVERNOR / TEAM — COMPLETE NOW
+1. Reconcile the parent-route buttons without altering substantive statements, definitions, claims, or resources. Existing destination titles may be used strictly as navigation labels; otherwise remove the additions. Architect gate must exit 0.
+2. Merge current main into PR #28 without force-push and retain the PR #29 deployment repair.
+3. Rerun the complete green validation and the independent Architect and QA gates.
+4. Confirm desktop 1440, phone 390 and 320, reduced motion, JavaScript-disabled/fail-open behavior, navigation, preserved resources, CNAME, mechanism HOLD, and zero substantive-copy drift.
+5. Mark PR #28 ready for review and update PROJECT_STATE.txt with exact EDT timestamp, final head SHA, checks, evidence, and release handoff to Harriet.
+6. Do not split the visual overhaul into substitute PRs and do not deploy it independently.
+
+HARRIET RELEASE ACTION
+When PR #28 is current with main, non-draft, mergeable, green, content-locked, independently QA-passed, and the finished evidence corresponds to the overhaul reviewed above, Harriet will merge it under Paul's "Make it happen" instruction, verify the deployment, and report the actual live result. No additional design work will be performed by Harriet.
+
 
 CURRENT DIRECTIVE — COMPLETE VISUAL OVERHAUL ASSIGNMENT
 Timestamp: 2026-10-25 14:18:58 EDT
