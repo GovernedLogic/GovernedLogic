@@ -1,0 +1,5 @@
+[
+ {"route": "/concepts/", "insert": "Alpha and Omega Reasoning", "after": "Governed Logic · p. 2 · Section II", "dest": "/concepts/alpha-and-omega-reasoning/"},
+ {"route": "/research/", "insert": "Why Anything?", "after": "Canonical URL https://governedlogic.com/research/", "dest": "/articles/why-anything/"},
+ {"route": "/research/", "insert": "Integrity in Artificial Intelligence", "after": "Canonical URL https://governedlogic.com/research/", "dest": "/articles/integrity-in-artificial-intelligence/"}
+]

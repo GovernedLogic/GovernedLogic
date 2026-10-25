@@ -1,5 +1,24 @@
-<a class="skip-link" href="#content">Skip to content</a>
+<button type="button" class="skip-link">Skip to content</button>
+<script>
+(function(){
+  var skip=document.querySelector('button.skip-link');
+  function mainEl(){return document.querySelector('main');}
+  function path(p){try{var u=new URL(p,location.origin);var x=u.pathname;if(x.length>1&&x.endsWith('/'))x=x.slice(0,-1);return x;}catch(e){return '';}}
+  function mark(root){if(!root)return;var here=path(location.pathname);root.querySelectorAll('form.gl-go').forEach(function(form){var btn=form.querySelector('button');if(btn&&path(form.getAttribute('action')||'')===here)btn.setAttribute('aria-current','page');});}
+  function go(){var m=mainEl();if(m&&!m.hasAttribute('tabindex'))m.setAttribute('tabindex','-1');mark(document.querySelector('header.site-bar'));mark(document.querySelector('footer.site-footer'));}
+  if(skip)skip.addEventListener('click',function(){var m=mainEl();if(!m)return;if(!m.hasAttribute('tabindex'))m.setAttribute('tabindex','-1');m.focus();});
+  document.addEventListener('submit',function(event){
+    var form=event.target;
+    if(!form||form.nodeName!=='FORM'||!form.classList.contains('gl-go'))return;
+    event.preventDefault();
+    var raw=form.getAttribute('action')||'/';
+    var url=new URL(raw,location.href);
+    location.assign(url.pathname+url.hash);
+  },true);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
+})();
+</script>
 <header class="site-bar">
-  <a class="site-brand" href="/" aria-label="Governed Logic home"><img src="/assets/governed-logic-mark.webp" alt="" width="38" height="38"><span>GOVERNED LOGIC<small>REASONING SYSTEMS</small></span></a>
-  <nav aria-label="Primary"><a href="/concepts/governed-logic/">Governed Logic</a><a href="/concepts/ultimate-grounding/">Ultimate Grounding</a><a href="/concepts/governed-intelligence/">Governed Intelligence</a><a href="/company/">Company</a><a href="/research/">Research</a></nav>
+  <form class="gl-go" method="get" action="/"><button type="submit" class="site-brand" href="/" aria-label="Governed Logic home"><img src="/assets/governed-logic-mark.webp" alt="" width="38" height="38"><span>GOVERNED LOGIC <small>REASONING SYSTEMS</small></span></button></form>
+  <nav aria-label="Primary"><form class="gl-go" method="get" action="/concepts/governed-logic/"><button type="submit" href="/concepts/governed-logic/">Governed Logic</button></form><form class="gl-go" method="get" action="/concepts/ultimate-grounding/"><button type="submit" href="/concepts/ultimate-grounding/">Ultimate Grounding</button></form><form class="gl-go" method="get" action="/concepts/governed-intelligence/"><button type="submit" href="/concepts/governed-intelligence/">Governed Intelligence</button></form><form class="gl-go" method="get" action="/company/"><button type="submit" href="/company/">Company</button></form><form class="gl-go" method="get" action="/research/"><button type="submit" href="/research/">Research</button></form></nav>
 </header>
