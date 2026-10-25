@@ -12,23 +12,42 @@ permissions:
   id-token: write
   actions: read
 
+# One production deploy at a time. A second push waits until the first
+# deploy finishes; it is not cancelled.
 concurrency:
-  group: governedlogic-pages
+  group: pages-deploy
   cancel-in-progress: false
 
 jobs:
+  validate:
+    # A manual deploy has no prior Validate governedlogic.com run. Call that
+    # same workflow — release guards, check-corpus, check-origin, and the
+    # visual suite — and do not build unless it succeeds. A push deploy
+    # skips this job because workflow_run already required that success.
+    if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/validate-pages.yml
+
   build:
-    # Push to main deploys only after Validate governedlogic.com succeeded for that push.
-    # A validation run for a pull request or a failed run does not deploy.
-    # workflow_dispatch remains a manual deploy of github.sha and still runs the
-    # build and check-restored gate below; it does not rerun the visual suite.
+    # Push to main deploys only after Validate governedlogic.com succeeded
+    # for that push. A pull-request run or a failed run does not deploy.
+    # workflow_dispatch deploys github.sha only after the validate job above
+    # succeeds. There is no manual path that skips it.
+    needs: validate
     if: >-
       ${{
-        github.event_name == 'workflow_dispatch'
-        || (
-          github.event.workflow_run.conclusion == 'success'
-          && github.event.workflow_run.event == 'push'
-          && github.event.workflow_run.head_branch == 'main'
+        always() && !cancelled() && (
+          (
+            github.event_name == 'workflow_dispatch'
+            && needs.validate.result == 'success'
+          )
+          || (
+            github.event_name == 'workflow_run'
+            && github.event.workflow_run.conclusion == 'success'
+            && github.event.workflow_run.event == 'push'
+            && github.event.workflow_run.head_branch == 'main'
+          )
         )
       }}
     runs-on: ubuntu-24.04
