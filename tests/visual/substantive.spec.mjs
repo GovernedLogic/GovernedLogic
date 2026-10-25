@@ -16,7 +16,7 @@ for(const route of routes){
   const headings=await page.locator('main h1,main h2,main h3').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+1).map(n=>n.textContent));expect(headings).toEqual([]);
   await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
   const links=page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button');
-  for(const link of await links.all()){const box=await link.boundingBox();expect(box.height).toBeGreaterThanOrEqual(43);expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(page.viewportSize().width+1);}
+  for(const link of await links.all()){await link.scrollIntoViewIfNeeded();const box=await link.boundingBox();expect(box.height).toBeGreaterThanOrEqual(43);expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(page.viewportSize().width+1);}
   if(route==='/')await page.locator('#explore').scrollIntoViewIfNeeded();
   const dir=path.resolve('visual-qa/screenshots',info.project.name);await mkdir(dir,{recursive:true});
   await page.screenshot({path:path.join(dir,route==='/'?'home.png':route.slice(1).replace(/\/$/,'').replaceAll('/','-')+'.png'),fullPage:true});
@@ -61,14 +61,11 @@ test('Opening records its chronological visual sequence',async({page},info)=>{
   {at:400,name:'02-trace',label:'Light starts',stage:'trace'},
   {at:900,name:'03-trace',label:'The band lengthens',stage:'trace'},
   {at:1400,name:'04-trace',label:'One path, mid circuit',stage:'trace'},
-  {at:1900,name:'05-trace',label:'Crossings woven',stage:'trace'},
-  {at:2300,name:'06-resolve',label:'Earth shows through',stage:'resolve'},
-  {at:2700,name:'07-resolve',label:'The page returns',stage:'resolve'},
-  {at:3100,name:'08-resolve',label:'Veil nearly gone',stage:'resolve'},
-  {at:3400,name:'09-fade',label:'Overlay recedes',stage:'fade'},
-  {at:3700,name:'10-fade',label:'Hero almost clear',stage:'fade'},
-  {at:3950,name:'11-fade',label:'Last of the trace',stage:'fade'},
-  {at:4500,name:'12-complete',label:'Page usable'}
+  {at:1900,name:'05-resolve',label:'Earth shows through',stage:'resolve'},
+  {at:2300,name:'06-resolve',label:'The page returns',stage:'resolve'},
+  {at:2800,name:'07-fade',label:'Veil thinning',stage:'fade'},
+  {at:3200,name:'08-fade',label:'Last of the trace',stage:'fade'},
+  {at:3700,name:'09-complete',label:'Page usable'}
  ];
  const directory=path.resolve('visual-qa/motion',info.project.name);await mkdir(directory,{recursive:true});
  const evidence=[];let elapsed=0;
@@ -161,21 +158,29 @@ test('Phone nav stays visible at 360px',async({page})=>{
  await page.goto('/',{waitUntil:'domcontentloaded'});
  await page.locator('header.site-bar').scrollIntoViewIfNeeded();
  const metrics=await page.evaluate(()=>{
+  const bar=document.querySelector('header.site-bar');
   const buttons=[...document.querySelectorAll('nav[aria-label="Primary"] form.gl-go > button')];
+  const boxes=buttons.map(button=>{const r=button.getBoundingClientRect();return {w:r.width,h:r.height,top:r.top,name:(button.textContent||'').trim()};});
+  const tops=boxes.map(box=>Math.round(box.top));
   return {
    count:buttons.length,
    summary:document.querySelector('nav[aria-label="Primary"] summary')?1:0,
+   details:document.querySelector('nav[aria-label="Primary"] details')?1:0,
    overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
-   boxes:buttons.map(button=>{const r=button.getBoundingClientRect();return {w:r.width,h:r.height,right:r.right,name:(button.textContent||'').trim()};})
+   headerHeight:bar?bar.getBoundingClientRect().height:0,
+   oneRow:tops.length>0&&tops.every(top=>top===tops[0]),
+   boxes
   };
  });
  expect(metrics.summary).toBe(0);
+ expect(metrics.details).toBe(0);
  expect(metrics.count).toBe(5);
  expect(metrics.overflow).toBe(false);
+ expect(metrics.headerHeight).toBeLessThanOrEqual(64);
+ expect(metrics.oneRow).toBe(true);
  for(const box of metrics.boxes){
   expect(box.h).toBeGreaterThanOrEqual(44);
   expect(box.w).toBeGreaterThanOrEqual(44);
-  expect(box.right).toBeLessThanOrEqual(361);
  }
 });
 

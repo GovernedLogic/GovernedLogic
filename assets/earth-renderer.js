@@ -58,7 +58,18 @@ window.GLCreateEarth = function(onReady) {
     gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(i===0?[18,52,77,255]:[0,0,0,255]));
     gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
     gl.uniform1i(gl.getUniformLocation(program,key),i);
-    const image=new Image();image.onload=()=>{if(state.textures[key]!=='loading')return;try{gl.activeTexture(gl.TEXTURE0+i);gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);}catch{failTexture(key);return;}state.textures[key]='ready';loaded++;if(loaded===3&&!state.failed){state.status='ready';state.ready=true;onReady?.();}};image.onerror=()=>failTexture(key);image.src=url;
+    const image=new Image();image.onload=()=>{
+      if(state.textures[key]!=='loading')return;
+      const upload=source=>{
+        if(state.textures[key]!=='loading'){if(source&&source.close)source.close();return;}
+        try{gl.activeTexture(gl.TEXTURE0+i);gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source||image);}catch{failTexture(key);return;}
+        if(source&&source.close)source.close();
+        state.textures[key]='ready';loaded++;if(loaded===3&&!state.failed){state.status='ready';state.ready=true;onReady?.();}
+      };
+      // Decode off the main thread, then upload on its own turn so the upload is not one long task with the decode.
+      if(typeof createImageBitmap==='function')createImageBitmap(image).then(bitmap=>setTimeout(()=>upload(bitmap),0)).catch(()=>setTimeout(()=>upload(null),0));
+      else setTimeout(()=>upload(null),0);
+    };image.onerror=()=>failTexture(key);image.src=url;
   }
   return {canvas,state,get status(){return state.status;},get ready(){return state.ready;},get failed(){return state.failed;},render(w,h,dpr,x,y,r,cap,s){
     if(!state.ready)return null;

@@ -66,7 +66,7 @@
   --paper:#1A1D21;
   --sans:'Plex','Plex Fallback','Helvetica Neue',Arial,system-ui,sans-serif;
 }
-@font-face{font-family:'Cinzel';src:url('materials/cinzel.ttf') format('truetype');font-style:normal;font-weight:400 700;font-display:swap;ascent-override:97.6%;descent-override:37.2%;line-gap-override:0%}
+/* Cinzel stays on the homepage hero (opening.css). Inner pages use the metric-matched fallback so the webfont is not on their critical path. */
 @font-face{font-family:'Cinzel Fallback';src:local('Liberation Serif'),local('Times New Roman'),local('Times');ascent-override:97.6%;descent-override:37.2%;line-gap-override:0%}
 @view-transition{navigation:auto}
 ::view-transition-old(root){animation:800ms cubic-bezier(.2,0,0,1) both gl-vt-out}
@@ -145,7 +145,7 @@ header.site-bar nav>a[aria-current='page'],header.site-bar nav>a:hover{color:var
 }
 .reading-index>a{display:grid;grid-template-columns:48px 1fr auto;margin-top:0;border-radius:0;border-left:0;border-right:0}
 .concept-card{display:block}
-.front-door{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:32px;align-items:center;background:radial-gradient(ellipse at 68% 40%,rgba(140,196,236,.2),transparent 58%)}
+.front-door{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:32px;align-items:center;background:none}
 .home-content>section.front-door{
   display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);
   align-items:center;column-gap:48px;row-gap:20px;
@@ -420,29 +420,60 @@ header.site-bar nav button[aria-current="page"],.site-footer nav button[aria-cur
   .home-content>section.scene-arrive{animation:gl-scene .4s cubic-bezier(.2,0,0,1) both}
 }
 .library-item h2 a,main nav a,.document-main nav a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
-.route-bridge{display:flex;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto;padding:8px 48px 48px}
+.route-bridge{display:flex;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto;padding:0 48px 92px}
 .route-bridge .gl-go{display:inline-flex}
-.route-bridge button{min-height:44px;min-width:44px;padding:8px 16px}
+.route-bridge .gl-go>button{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  min-height:44px;min-width:44px;margin:0;padding:16px 20px;
+  color:var(--ink);background:color-mix(in srgb,var(--bg-2) 82%,transparent);
+  border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 18px 50px rgba(0,0,0,.32);
+  backdrop-filter:blur(16px);
+  font:inherit;cursor:pointer;text-align:inherit;
+}
 @media(max-width:800px){
   body,p,li,dd,.book-copy,.publication-feature .book-copy,.intro-description,.intro-columns p,.work-grid article p,.document-main p,.document-main li,.foundation-copy p,.research-body p{font-size:16px}
 }
-@media(max-width:390px){
+details.faq-item>summary{display:flex;align-items:center;min-height:44px;padding:8px 0;box-sizing:border-box}
+.home-content>section,.home-content>section.front-door{padding-top:92px;padding-bottom:92px}
+@media(min-width:1024px){
   header.site-bar{
+    position:fixed;top:0;left:0;right:0;z-index:40;
+    height:64px;max-height:64px;min-height:64px;
+  }
+}
+@media(max-width:1023px){
+  header.site-bar{
+    position:relative;top:auto;z-index:40;
+    display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-start;
+    height:64px;max-height:64px;min-height:64px;width:100%;
+    padding:0 0 0 4px;gap:0;overflow-x:auto;overflow-y:hidden;box-sizing:border-box;
+  }
+  header.site-bar>.gl-go{
+    display:flex;flex:0 0 auto;width:auto;height:64px;min-width:44px;min-height:44px;
+    grid-column:auto;grid-row:auto;
+  }
+  header.site-bar .site-brand{
     display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
-    height:64px;max-height:64px;min-height:64px;padding:0 4px;gap:0;overflow:hidden;
+    width:auto;height:44px;min-width:44px;min-height:44px;max-width:none;
+    padding:0 10px;gap:8px;white-space:nowrap;font-size:12px;
   }
-  header.site-bar>.gl-go{flex:0 0 44px;width:44px;min-width:44px;height:64px;min-height:44px}
-  header.site-bar .site-brand{width:44px;height:44px;min-width:44px;min-height:44px;padding:0;justify-content:center;gap:0}
   header.site-bar .site-brand img{width:28px;height:28px}
-  header.site-bar .site-brand span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  header.site-bar .site-brand span{position:static;width:auto;height:auto;overflow:visible;clip:auto;display:block}
+  header.site-bar .site-brand small{font-size:12px;letter-spacing:.08em}
   header.site-bar nav{
-    display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:stretch;
-    flex:1 1 auto;width:auto;height:64px;min-width:0;gap:0;font-size:12px;pointer-events:auto;
+    display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;
+    width:max-content;height:64px;min-width:0;gap:0;font-size:13px;pointer-events:auto;
+    grid-column:auto;grid-row:auto;
   }
-  header.site-bar nav .gl-go{display:flex;flex:1 1 0;min-width:44px;width:auto;height:64px}
+  header.site-bar nav .gl-go{display:flex;flex:0 0 auto;min-width:44px;width:auto;height:64px}
   header.site-bar nav .gl-go>button{
-    display:flex;width:100%;min-width:44px;min-height:44px;height:60px;padding:2px;
-    font-size:12px;line-height:1.05;letter-spacing:-0.08em;white-space:normal;text-align:center;
+    display:flex;width:auto;min-width:44px;min-height:44px;height:44px;padding:0 12px;
+    font-size:13px;line-height:1.1;letter-spacing:0;white-space:nowrap;text-align:center;
     justify-content:center;align-items:center;
   }
+  .home-content>section.front-door h2{scroll-margin-top:16px}
+}
+@media(min-width:1024px){
+  .home-content>section,.home-content>section.front-door{padding:92px}
 }

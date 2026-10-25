@@ -57,7 +57,7 @@ const GL_MARK_TRACE = true;
   const atmosphereCtx = atmosphere.getContext('2d', {alpha:false});
   if (!sceneCtx || !atmosphereCtx) return;
   let layout,materialReadyAt=null,materialHandoffRaf=0;
-  const materialEarth=window.GLCreateEarth?.(beginMaterialHandoff);
+  let materialEarth=null;
   const fallbackSurface=document.createElement('canvas');
   const fallbackContext=fallbackSurface.getContext('2d');
   function materialBlend(now=performance.now()){return materialEarth?.ready&&materialReadyAt!==null?ease((now-materialReadyAt)/MATERIAL_HANDOFF_MS):0;}
@@ -99,23 +99,33 @@ const GL_MARK_TRACE = true;
   const globeTexture=document.createElement('canvas');globeTexture.width=512;globeTexture.height=512;
   const textureContext=globeTexture.getContext('2d');
   if(!textureContext)return;
-  const pixels=textureContext.createImageData(512,512);
   const fallbackTiltCos=Math.cos(EARTH_TILT_START),fallbackTiltSin=Math.sin(EARTH_TILT_START);
-  for(let y=0;y<512;y++)for(let x=0;x<512;x++){
-    const nx=(x-255.5)/256,ny=(255.5-y)/256,rr=nx*nx+ny*ny;
-    if(rr>1)continue;
-    const z=Math.sqrt(1-rr),materialY=ny*fallbackTiltCos-z*fallbackTiltSin,materialZ=ny*fallbackTiltSin+z*fallbackTiltCos;
-    const lat=Math.asin(materialY),lon=wrapLongitude(Math.atan2(materialZ,nx)+EARTH_U_OFFSET);
-    const landHere=inLand(lon*180/Math.PI,lat*180/Math.PI);
-    const noise=(Math.sin(lon*83+Math.sin(lat*61)*2)+Math.sin(lat*137+lon*37)+Math.cos(lon*217-lat*151))/3;
-    const light=.15+.85*Math.max(0,-nx*.22+ny*.55+z*.72);
-    const clouds=Math.max(0,Math.sin(lon*14+lat*9+Math.sin(lat*21)*2)+Math.cos(lat*32-lon*8)-1.0)*.65;
-    const base=landHere?[85+noise*20,101+noise*20,80+noise*16]:[12,43+noise*6,66+noise*10];
-    const k=(y*512+x)*4;
-    for(let c=0;c<3;c++)pixels.data[k+c]=mix(base[c],210,clouds)*light;
-    pixels.data[k+3]=255;
+  let globeReady=false;
+  // The silhouette field is a long task if it runs in one turn. Eight rows at a time stay under the frame budget.
+  function buildGlobe(done){
+    const pixels=textureContext.createImageData(512,512);
+    let y=0;
+    const step=()=>{
+      const end=Math.min(512,y+8);
+      for(;y<end;y++)for(let x=0;x<512;x++){
+        const nx=(x-255.5)/256,ny=(255.5-y)/256,rr=nx*nx+ny*ny;
+        if(rr>1)continue;
+        const z=Math.sqrt(1-rr),materialY=ny*fallbackTiltCos-z*fallbackTiltSin,materialZ=ny*fallbackTiltSin+z*fallbackTiltCos;
+        const lat=Math.asin(materialY),lon=wrapLongitude(Math.atan2(materialZ,nx)+EARTH_U_OFFSET);
+        const landHere=inLand(lon*180/Math.PI,lat*180/Math.PI);
+        const noise=(Math.sin(lon*83+Math.sin(lat*61)*2)+Math.sin(lat*137+lon*37)+Math.cos(lon*217-lat*151))/3;
+        const light=.15+.85*Math.max(0,-nx*.22+ny*.55+z*.72);
+        const clouds=Math.max(0,Math.sin(lon*14+lat*9+Math.sin(lat*21)*2)+Math.cos(lat*32-lon*8)-1.0)*.65;
+        const base=landHere?[85+noise*20,101+noise*20,80+noise*16]:[12,43+noise*6,66+noise*10];
+        const k=(y*512+x)*4;
+        for(let c=0;c<3;c++)pixels.data[k+c]=mix(base[c],210,clouds)*light;
+        pixels.data[k+3]=255;
+      }
+      if(y<512)setTimeout(step,0);
+      else{textureContext.putImageData(pixels,0,0);done();}
+    };
+    setTimeout(step,0);
   }
-  textureContext.putImageData(pixels,0,0);
   function fallbackEarth(ctx,cx,cy,rx,ry,alpha=1) {
     ctx.save();ctx.globalAlpha*=alpha;
     ctx.drawImage(globeTexture,cx-rx,cy-ry,rx*2,ry*2);
@@ -219,8 +229,21 @@ const GL_MARK_TRACE = true;
   }
   function motionChanged(){if(motion.matches)removeIntro();}
   function visibilityChanged(){if(document.hidden)removeIntro();}
-  addEventListener('resize',resize,{passive:true});
-  try{resize();}catch{ return; }
+  addEventListener('resize',()=>{if(globeReady)resize();},{passive:true});
+  // Paint the Earth after first paint, in idle slices, so the wordmark is the LCP element without waiting on this work.
+  const paintEarth=()=>{
+    setTimeout(()=>{
+      materialEarth=window.GLCreateEarth?.(beginMaterialHandoff)||null;
+      setTimeout(()=>{
+        globeReady=true;
+        try{resize();}catch{/* the HTML identity stays */}
+        // The procedural field is only the no-WebGL fallback, and it is sliced so it is not one long task.
+        if(!materialEarth)buildGlobe(()=>{try{resize();}catch{}});
+      },0);
+    },0);
+  };
+  // After the opening, not during it. The silhouette loop is not on the first-load critical path.
+  window.GLPaintEarth=paintEarth;
   if(motion.matches || document.hidden)return;
   if(GL_MARK_TRACE)return;
   try {
@@ -368,23 +391,23 @@ const GL_MARK_TRACE = true;
 (() => {
   if (!GL_MARK_TRACE) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  if (reduce.matches || document.hidden) return;
+  if (reduce.matches || document.hidden) { const paint=window.GLPaintEarth; if(paint){window.GLPaintEarth=null; paint();} return; }
   const siteCanvas = document.getElementById('siteCanvas');
   if (!siteCanvas) return;
   let seen = false;
   try { seen = /(?:^|; )gl-mark-trace=1(?:;|$)/.test(document.cookie); } catch { seen = false; }
-  if (seen) return;
+  if (seen) { const paint=window.GLPaintEarth; if(paint){window.GLPaintEarth=null; paint();} return; }
   let webgl = false;
   try {
     const probe = document.createElement('canvas');
     webgl = !!(probe.getContext('webgl2') || probe.getContext('webgl'));
   } catch { webgl = false; }
-  if (!webgl) return;
+  if (!webgl) { const paint=window.GLPaintEarth; if(paint){window.GLPaintEarth=null; paint();} return; }
 
   const TAU = Math.PI * 2;
   const K = 0.999;
   const AMP = 0.46;
-  const SAMPLES = 640;
+  const SAMPLES = 160;
   const ASIN_K = Math.asin(K);
   const ease = x => { x = Math.max(0, Math.min(1, x)); return x * x * x * (x * (x * 6 - 15) + 10); };
   const pts = Array.from({length: SAMPLES + 1}, (_, i) => {
@@ -427,10 +450,12 @@ const GL_MARK_TRACE = true;
     cancelAnimationFrame(raf);
     for (const off of offs) off();
     element.remove();
+    const paint = window.GLPaintEarth;
+    if (paint) { window.GLPaintEarth = null; setTimeout(paint, 0); }
   };
   // Armed before the overlay is shown. The page is usable within 4s.
   try { document.cookie = 'gl-mark-trace=1; Path=/; SameSite=Lax'; } catch { /* still play */ }
-  const deadline = setTimeout(remove, 4200);
+  const deadline = setTimeout(remove, 3400);
   const skip = () => { if (!removed) remove(); };
   const y0 = scrollY;
   const scrollKey = new Set([' ', 'Spacebar', 'PageDown', 'PageUp', 'ArrowDown', 'ArrowUp', 'Home', 'End']);
@@ -443,6 +468,9 @@ const GL_MARK_TRACE = true;
   listen(window, 'scroll', () => { if (Math.abs(scrollY - y0) >= 12) skip(); }, {passive: true, capture: true});
   listen(reduce, 'change', () => { if (reduce.matches) remove(); });
   listen(document, 'visibilitychange', () => { if (document.hidden) remove(); });
+  // Stay invisible for the first paint so the hero wordmark can be LCP before the black field covers it.
+  element.style.opacity = '0';
+  element.style.background = 'transparent';
   document.body.appendChild(element);
 
   let width = 0;
@@ -463,6 +491,7 @@ const GL_MARK_TRACE = true;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.lineWidth = widthPx;
+    const buckets = new Map();
     for (let i = 1; i <= head; i++) {
       const p = pts[i];
       const under = p.z < 0;
@@ -470,22 +499,30 @@ const GL_MARK_TRACE = true;
       if (!over && Math.abs(Math.sin(3 * p.t)) < 0.12 && Math.abs(p.x) < 0.9) continue;
       const fade = Math.exp(-((head - i) / SAMPLES) * 2.4);
       if (fade < 0.035) continue;
-      const [x1, y1] = place(pts[i - 1]);
-      const [x2, y2] = place(p);
+      const key = Math.round(fade * 8) / 8;
+      let bucket = buckets.get(key);
+      if (!bucket) buckets.set(key, bucket = []);
+      bucket.push(i);
+    }
+    for (const [fade, indices] of buckets) {
       ctx.strokeStyle = `rgba(${color},${fade})`;
       ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
+      for (const i of indices) {
+        const [x1, y1] = place(pts[i - 1]);
+        const [x2, y2] = place(pts[i]);
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+      }
       ctx.stroke();
     }
   }
   function paint(t) {
-    const stage = t >= 3.2 ? 'fade' : t >= 2 ? 'resolve' : t >= 0.2 ? 'trace' : 'black';
+    const stage = t >= 2.6 ? 'fade' : t >= 1.6 ? 'resolve' : t >= 0.15 ? 'trace' : 'black';
     element.dataset.stage = stage;
-    const travel = t < 0.2 ? 0 : t >= 2.6 ? 1 : ease((t - 0.2) / 2.4);
-    const headAlpha = t < 0.2 ? 0 : t < 0.45 ? (t - 0.2) / 0.25 : t < 2.8 ? 1 : t < 3.95 ? 1 - (t - 2.8) / 1.15 : 0;
-    // The field stays opaque through the trace, then thins across the fade samples and is clear before 4s.
-    const veil = t < 1.4 ? 1 : Math.max(0, 1 - (t - 1.4) / 2.55);
+    const travel = t < 0.15 ? 0 : t >= 2.2 ? 1 : ease((t - 0.15) / 2.05);
+    const headAlpha = t < 0.15 ? 0 : t < 0.35 ? (t - 0.15) / 0.2 : t < 2.4 ? 1 : t < 3.2 ? 1 - (t - 2.4) / 0.8 : 0;
+    // The field stays opaque through the trace, then thins and is clear before the 3.4s removal.
+    const veil = t < 0.9 ? 1 : Math.max(0, 1 - (t - 0.9) / 2.1);
     element.style.background = veil < 1 ? 'transparent' : '';
     const overlay = 1;
     ctx.clearRect(0, 0, width, height);
@@ -517,7 +554,7 @@ const GL_MARK_TRACE = true;
     if (removed) return;
     try {
       const t = (now - start) / 1000;
-      if (t >= 4) { remove(); return; }
+      if (t >= 3.4) { remove(); return; }
       paint(t);
       raf = requestAnimationFrame(frame);
     } catch { remove(); }
@@ -645,6 +682,8 @@ const GL_MARK_TRACE = true;
     }, {threshold: 0.16, rootMargin: '0px 0px -8% 0px'});
   } catch { return; }
   for (const section of sections) {
+    // Section 01 stays visible with no JS and during the intro, so it can paint as LCP.
+    if (section.id === 'explore') continue;
     try {
       seen.observe(section);
       section.classList.add('scene-await');

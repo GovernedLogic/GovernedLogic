@@ -33,3 +33,8 @@ body{font-family:Georgia,'Times New Roman',serif}
 .brand-rule{margin:.5vw 0 1.55vw}.brand-sub{font-family:Cinzel,'Cinzel Fallback',Georgia,serif;font-weight:400;font-size:clamp(8px,2.45vw,46px);letter-spacing:.52em;text-indent:.52em;color:#dce7ef;text-shadow:0 1px 0 #344959,0 2px 1px #000,0 -1px 0 #cbe6fa60}
 @media(max-width:600px){.brand-rule{margin:2vw 0 3vw}.brand-sub{font-size:2.65vw;letter-spacing:.37em;text-indent:.37em}}
 @media(forced-colors:active){.metal-title{display:none}.semantic-title{position:static;clip-path:none;width:auto;height:auto;font-size:8vw;line-height:1.3}}
+/* Critical bar, so the deferred page stylesheet does not resize the header after first paint. */
+header.site-bar{position:relative;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;height:64px;max-height:64px;overflow-x:auto;overflow-y:hidden;background:#121417;box-sizing:border-box}
+header.site-bar nav{display:flex;flex-wrap:nowrap;align-items:center;height:64px}
+header.site-bar button{min-height:44px;min-width:44px}
+@media(min-width:1024px){header.site-bar{position:fixed;top:0;left:0;right:0;width:100%}}
