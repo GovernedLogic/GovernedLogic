@@ -80,6 +80,16 @@ for (const routeDefinition of ROUTES) {
     }
 
     const isMobile = testInfo.project.name.startsWith("mobile-");
+    if (isMobile) {
+      const summary = page.locator('nav[aria-label="Primary"] summary');
+      await expect(summary).toBeVisible();
+      const summaryBox = await summary.boundingBox();
+      expect(summaryBox.width).toBeGreaterThanOrEqual(44);
+      expect(summaryBox.height).toBeGreaterThanOrEqual(44);
+      const bar = await page.locator("header.site-bar").boundingBox();
+      expect(bar.height).toBeLessThanOrEqual(64.5);
+      await summary.click();
+    }
     const metrics = await page.evaluate(
       ({ expectedNavigation, mobile }) => {
         const visible = element => {

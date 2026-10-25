@@ -359,3 +359,99 @@
     raf=requestAnimationFrame(frame);
   }catch{removeIntro();}
 })();
+
+/* Scene depth for the homepage. The permanent hero above is unchanged. Reduced motion never starts this. */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  if (reduce.matches) return;
+  const cards = document.querySelectorAll('.reading-index > a, .work-grid article, .text-link, .button, .concept-card');
+  for (const card of cards) {
+    card.addEventListener('pointermove', event => {
+      const rect = card.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(900px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg)`;
+    });
+    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+  }
+  const host = document.querySelector('.front-door');
+  if (!host) return;
+  const canvas = document.createElement('canvas');
+  canvas.className = 'hero-field';
+  canvas.setAttribute('aria-hidden', 'true');
+  host.prepend(canvas);
+  const gl = canvas.getContext('webgl2', {alpha: true, antialias: false, powerPreference: 'low-power'});
+  const flat = gl ? null : canvas.getContext('2d');
+  if (!gl && !flat) return;
+  let program = null, buffer = null, resolution = null, mouse = null, time = null;
+  if (gl) {
+    const compile = (type, source) => {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
+    };
+    const vertex = compile(gl.VERTEX_SHADER, 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}');
+    const fragment = compile(gl.FRAGMENT_SHADER, 'precision mediump float;uniform vec2 r;uniform vec2 m;uniform float t;void main(){vec2 u=gl_FragCoord.xy/r;vec2 q=u-.5;q.x*=r.x/r.y;float d=length(q-vec2(m.x-.5,.2));float glow=exp(-d*d*7.)*(.55+.15*sin(t));vec3 base=vec3(.071,.078,.090);vec3 light=vec3(.549,.769,.925)*glow;gl_FragColor=vec4(base+light,.55);}');
+    if (!vertex || !fragment) return;
+    program = gl.createProgram();
+    gl.attachShader(program, vertex);
+    gl.attachShader(program, fragment);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+    buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
+    resolution = gl.getUniformLocation(program, 'r');
+    mouse = gl.getUniformLocation(program, 'm');
+    time = gl.getUniformLocation(program, 't');
+  }
+  const pointer = {x: 0.62, y: 0.42};
+  host.addEventListener('pointermove', event => {
+    const rect = host.getBoundingClientRect();
+    pointer.x = (event.clientX - rect.left) / rect.width;
+    pointer.y = (event.clientY - rect.top) / rect.height;
+  });
+  function size() {
+    const rect = host.getBoundingClientRect();
+    const dpr = Math.min(devicePixelRatio || 1, host.clientWidth < 800 ? 1.5 : 2);
+    canvas.width = Math.max(1, Math.round(rect.width * dpr));
+    canvas.height = Math.max(1, Math.round(rect.height * dpr));
+  }
+  let frameId = 0;
+  let active = false;
+  function frame(now) {
+    if (!active) return;
+    if (gl && program) {
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.useProgram(program);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      const location = gl.getAttribLocation(program, 'p');
+      gl.enableVertexAttribArray(location);
+      gl.vertexAttribPointer(location, 2, gl.FLOAT, false, 0, 0);
+      gl.uniform2f(resolution, canvas.width, canvas.height);
+      gl.uniform2f(mouse, pointer.x, pointer.y);
+      gl.uniform1f(time, now * 0.001);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+    } else if (flat) {
+      flat.clearRect(0, 0, canvas.width, canvas.height);
+      const glow = flat.createRadialGradient(canvas.width * pointer.x, canvas.height * 0.42, 0, canvas.width * pointer.x, canvas.height * 0.42, canvas.width * 0.45);
+      glow.addColorStop(0, 'rgba(140,196,236,.35)');
+      glow.addColorStop(1, 'rgba(18,20,23,0)');
+      flat.fillStyle = glow;
+      flat.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    frameId = requestAnimationFrame(frame);
+  }
+  function setActive(next) {
+    active = next && !document.hidden;
+    cancelAnimationFrame(frameId);
+    if (active) frameId = requestAnimationFrame(frame);
+  }
+  size();
+  addEventListener('resize', size, {passive: true});
+  document.addEventListener('visibilitychange', () => setActive(active));
+  const observer = new IntersectionObserver(entries => setActive(entries.some(entry => entry.isIntersecting)));
+  observer.observe(host);
+})();
