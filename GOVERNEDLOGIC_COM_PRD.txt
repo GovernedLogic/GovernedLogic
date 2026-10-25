@@ -1,11 +1,13 @@
 GOVERNEDLOGIC.COM PRD
 Owner: Paul André Couchoud
-Updated: 2026-10-11
-Status: CURRENT REQUIREMENTS — PLAIN TEXT
+Updated: 2026-10-25
+Status: RECONCILED CANDIDATE — PLAIN TEXT — NOT RELEASE AUTHORIZATION
 
 PURPOSE
 
 This file is the current requirements source of truth for governedlogic.com.
+
+This reconciliation is one reviewable candidate. It becomes the current approved PRD only when Paul approves and merges it.
 
 Git owns history.
 This file owns current requirements.
@@ -13,6 +15,24 @@ Do not reconstruct website requirements from old commits, old screenshots, old c
 
 The website implementation must correspond to this PRD.
 When Paul changes a requirement, update this PRD and the implementation together.
+
+STABLE REQUIREMENT IDENTIFIERS
+
+WEB requirement identifiers retain their established meanings. A reconciliation may clarify or supersede a requirement, but it must not silently reuse an existing identifier for an unrelated rule.
+
+Historical requirement text remains in this file only when it carries necessary provenance or a supersession record. Later requirements control only where they explicitly say so.
+
+GOVERNING TRACEABILITY CHAIN
+
+Treatises -> PRD -> Website -> QA -> Published reality.
+
+The treatises govern the substance.
+The PRD converts that substance and Paul's website decisions into executable requirements.
+The website represents those requirements.
+QA tests the representation against the requirements and their sources.
+The published site is the final represented state that must correspond.
+
+The PRD does not replace either treatise and does not paste either treatise into itself.
 
 SOURCE AUTHORITY
 
@@ -97,16 +117,18 @@ The /about/ page may carry the substantial biography. The homepage should use a 
 
 VISUAL IDENTITY
 
+Status: WEB-040 and WEB-041 are reconciled to the later active direction in WEB-148. WEB-042 through WEB-049 remain active unless a later bounded requirement expressly changes them.
+
 WEB-040
-Locked website palette:
+Current website palette:
 - Near-black / black: #020307 / #000000
-- Governed Logic blue: #168CFA
-- Governed Logic violet: #8D78FF
 - White: #FFFFFF
+- Governed Logic blue: #168CFA
 - Matrix green: #00FF41, restrained accent only
+- Purple ranks last and is not a core launch color. Do not reintroduce it as a dominant color without Paul's explicit direction.
 
 WEB-041
-The visual atmosphere is near-black, blue, violet, white, restrained green, depth, glass, and token-like particles.
+The visual atmosphere is black and white first, with blue and restrained green accents, depth, glass, and token-like particles.
 
 WEB-042
 Use the official Governed Logic mark and existing Governed Logic Reasoning Systems artwork. Do not recreate the mark as generic typography.
@@ -263,7 +285,8 @@ WEB-096
 If Paul changes the requirement, update this PRD first or in the same commit sequence, then update the implementation.
 
 
-PUBLIC RELEASE GATE — 2026-10-03
+HISTORICAL PUBLIC RELEASE GATE — 2026-10-03
+Status: WEB-100 through WEB-110 are non-executable historical requirements except where a later active requirement expressly preserves a boundary. WEB-111 superseded the temporary holding state; WEB-130 and WEB-144 superseded the opening-only and placeholder-only publication states.
 
 WEB-100
 Until Paul explicitly approves additional public content, governedlogic.com exposes only the approved opening experience at the root route. All previously published substantive pages, menus, destination links, library/publication/source surfaces, feeds, and sitemap entries are withheld from the public website.
@@ -295,7 +318,8 @@ WEB-106
 No additional website content becomes public merely because it exists in Git history, the repository, the PRD, or canonical source material. Public release requires Paul's explicit approval.
 
 
-TEMPORARY PUBLIC HOLDING STATE — 2026-10-03
+HISTORICAL TEMPORARY PUBLIC HOLDING STATE — 2026-10-03
+Status: SUPERSEDED by WEB-111.
 
 WEB-107
 Until Paul explicitly approves the animated opening implementation, the production homepage uses a temporary holding state that overrides WEB-102 through WEB-104 for public rendering only.
@@ -319,6 +343,7 @@ The approved animated opening remains a future implementation target in the PRD 
 
 
 APPROVED INTRO ARCHITECTURE — 2026-10-03
+Status: ACTIVE subject to the later opening refinements in WEB-124 through WEB-129, WEB-135 through WEB-137, and WEB-149 through WEB-150.
 
 WEB-111
 Paul approved implementation of the animated opening on 2026-10-03. WEB-107 through WEB-110 are superseded as the production-state authority. The public-release gate remains in force for all other unapproved website content.
@@ -333,7 +358,7 @@ WEB-114
 The opening is a self-contained fullscreen overlay component above the real website. The website loads independently underneath it. The intro may not own, restructure, or interfere with the website's navigation, content architecture, semantic HTML, metadata, or future page code.
 
 WEB-115
-The opening target duration is 11 seconds from initial black screen to completed Page 8 identity. At completion the intro overlay fades out and removes itself from the DOM. The underlying website remains loaded and functional.
+The original opening target was approximately 11 seconds from initial black screen to completed Page 8 identity. WEB-136 permits a modest extension where needed to make the middle slower, cleaner, and readable. At completion the intro overlay fades out and removes itself from the DOM. The underlying website remains loaded and functional.
 
 WEB-116
 The opening transformation is:
@@ -374,9 +399,10 @@ The active work is to improve the opening animation's rendered quality to the su
 
 
 BOUNDED OPENING REFINEMENT — 2026-10-09
+Status: ACTIVE except that WEB-136 supersedes the approximately eleven-second constraint where additional time is required for a readable middle.
 
 WEB-127
-The opening is a bounded visual transformation with fixed endpoints: initial full black field and final native Governed Logic Reasoning Systems Page 8 identity. Preserve both endpoints, the approximately eleven-second lifecycle, reduced-motion bypass, fail-open behavior, and public content release restrictions. Improve the visual journey by changing the isolated opening component, not by rebuilding the homepage or publishing hidden pages.
+The opening is a bounded visual transformation with fixed endpoints: initial full black field and final native Governed Logic Reasoning Systems Page 8 identity. Preserve both endpoints, reduced-motion bypass, fail-open behavior, and public content release restrictions. The approximately eleven-second lifecycle is an original target, not a hard cap after WEB-136. Improve the visual journey by changing the isolated opening component, not by rebuilding the homepage or publishing hidden pages.
 
 WEB-128
 Refine one visual behavior at a time. For the current pass, allow the particle-built Spirograph structure a slightly longer readable interval before the particle-to-Earth transition. The intermediate structure remains discrete particles, without connecting lines. Preserve particle continuity, green transition, globe destination, and the final identity. Do not treat a code commit as proof that subjective visual fidelity has been accepted; Paul reviews the actual rendered result.
@@ -386,12 +412,13 @@ The PRD records requirements and visual acceptance criteria, not duplicate block
 
 
 FUNCTIONAL NAVIGATION RELEASE — 2026-10-09
+Status: ACTIVE for navigation and accessibility. The neutral-placeholder limitation in WEB-131 is SUPERSEDED by the substantive recovery in WEB-144 through WEB-147.
 
 WEB-130
 Paul explicitly requires a functioning navigable website, not only the isolated opening. This supersedes WEB-100 solely for the minimum navigational shell and reviewed-safe route placeholders. The publication gate remains in force for all substantive text, source documents, claims, articles, and hidden prior content not expressly approved.
 
 WEB-131
-Preserve the existing native eleven-second opening and final company identity unchanged. Underneath, restore a scrollable homepage with an obvious Explore affordance, persistent semantic company identity, clear accessible navigation, and separate addressable pages for Follow the Chain Challenge, Company, Research, and Canonical Library. The current substantive pages may have neutral clearly labeled under-review placeholders only.
+Preserve the existing native opening and final company identity. Underneath, maintain a scrollable substantive homepage, persistent semantic company identity, clear accessible navigation, and separate addressable pages for Follow the Chain Challenge, Company, Research, and Canonical Library. The obsolete Explore-link requirement and the neutral-placeholder-only state are superseded by the substantive recovery in WEB-144 through WEB-147.
 
 WEB-132
 The homepage and pages must function with JavaScript disabled or an animation failure; navigation uses ordinary HTML anchors. Maintain mobile usability, descriptive navigation, and independent CSS. No scroll lock or fullscreen trapping after intro removal.
@@ -404,6 +431,7 @@ Acceptance requires committed PRD and code, verified route existence and links, 
 
 
 MIDDLE TRANSFORMATION REFINEMENT — 2026-10-11
+Status: ACTIVE. WEB-136 relaxes the earlier approximately eleven-second target where needed to make the middle readable.
 
 WEB-135
 Paul reaffirmed that the opening's full-black start and final Governed Logic Reasoning Systems identity are the correct fixed endpoints. The current refinement changes only the isolated animation between them.
@@ -453,6 +481,7 @@ WEB-147
 The exact human-facing phrase is "Follow the chain." The inquiry text is drawn from Paul's October 18 assignment. The FAQ uses verbatim source answers. The recovered September source editions and October 14 article are dated as editions; recovery does not rename them as newly authored work.
 
 VISUAL DIRECTION REVISION — 2026-10-18
+Status: ACTIVE current visual direction.
 
 WEB-148
 Paul accepts the recovered site as a baseline and requests a professional architectural design revision. Black and white are primary. Blue and restrained green are preferred accents; purple ranks last. Replace the repeated slogan/serif-italic layout, improve typography, vary section composition, and give visual depth a structural purpose. Use the recovered content and ordinary semantic navigation.
@@ -464,4 +493,255 @@ WEB-150
 This revision is a first visual interpretation of Paul's feedback, not final visual acceptance. Capture desktop and mobile layouts and chronological motion frames, verify completion and reduced-motion access, and inspect the rendered result. Publish through the existing GitHub Pages release path under the continuing deployment authorization.
 
 WEB-151
-Paul approves the visual direction and corrects the vertical architecture: Ground belongs at the bottom as the supporting foundation, with Truth, Logic, Reasoning, and Intelligence above it. Generation rises; adjudication returns downward. Apply the same orientation to the phone's vertically stacked chain while retaining the canonical source order and the desktop left-to-right chain.
+Paul approves the visual direction and the semantic dependency: Ground is the supporting foundation from which generation proceeds through Truth, Logic, Reasoning, and Intelligence; adjudication returns toward Ground. The architecture chain remains in canonical source order and stays on one horizontal line on desktop and phone. Do not use a phone-only vertical or reversed stack. Horizontal presentation does not change Ground's foundational role.
+
+
+TREATISE-TO-WEBSITE RECONCILIATION — 2026-10-25
+
+WEB-152
+The two foundational treatises govern the complete website specification, not merely the two concept pages that bear their names.
+
+WEB-153
+The current foundational sources identified by WEBSITE_SOURCE_AUTHORITY_MAP.txt are:
+
+A. On the Nature of Ultimate Grounding
+- /Governed Logic/Canon/Ultimate Grounding/On_the_Nature_of_Ultimate_Grounding_v0.7_2026-09-26.txt
+- Status: current located canonical treatise source; theoretical and conceptual development closed 2026-09-30.
+
+B. Governed Logic
+- /Governed Logic/Canon/Governed Logic.txt
+- Current clarifications:
+  /Governed Logic/Research/Captures/GovernedLogic_FollowTheChain_Termination_2026-09-23.txt
+  /Governed Logic/Research/Captures/GovernedLogic_STOP_WhatChanged_2026-09-23.txt
+- Status: canonical base and later explicit clarifications; Alpha and Omega reasoning is within Governed Logic; theoretical and conceptual development closed 2026-09-30.
+
+The September 22 PDFs under /sources/ remain public provenance editions. They do not outrank the current sources above.
+
+WEB-154
+Before the website is called complete, maintain a traceability matrix for every load-bearing section and proposition in both foundational treatises. Each item must map to one or more of:
+- a public page or page section;
+- an exact canonical source route;
+- machine-readable structured data;
+- an approved intentional omission from the public website;
+- a HOLD awaiting Paul's decision.
+
+WEB-155
+Each traceability record must contain:
+- canonical source path;
+- source section or stable identifier;
+- exact proposition or approved excerpt;
+- public route and anchor;
+- representation type: exact quotation, faithful summary, navigation pointer, structured data, or intentional omission;
+- approval status;
+- QA evidence.
+
+WEB-156
+Complete treatise coverage does not mean pasting both treatises onto the homepage. The homepage points. Destination pages and canonical source routes carry the depth. The whole public system must preserve the complete argument without forcing the front door to become the corpus.
+
+WEB-157
+No page may reverse, collapse, or blend distinct source claims. At minimum, preserve these distinctions wherever applicable:
+- ground, dependence, sufficiency, ultimacy, termination, and halt;
+- criteria of non-dependence and the relation between dependence and bindingness;
+- a halt is not a termination;
+- a representation is not its referent;
+- logic does not establish premise truth by itself;
+- the six domain chains remain distinct before they are tested together under the total-load rule;
+- specification of the required ground and identification of the candidate are distinct stages with different evidentiary burdens;
+- specification-level rivals and identity-level rivals are not the same objection;
+- the symmetrical terminus rule and explicit failure conditions apply to every candidate;
+- Governed Logic is upstream of reasoning and intelligence;
+- Governed Intelligence is the artificial-intelligence instantiation of Governed Logic;
+- Alpha and Omega reasoning is within Governed Logic;
+- a generated answer is a candidate until adjudicated.
+
+The Governed Logic source base also requires the website graph to preserve, where represented:
+- the fixed-point / governing-referent discipline without rhetorical force;
+- rejection of weak or invalid semantic edges;
+- co-reference is not synonymy;
+- "Who is the referent?" and "What relationship does this expression assert?" as separate questions;
+- REFERENT -> CREATION -> REPRESENTATION -> REFERENT;
+- the asterisk / little star as pointer rather than referent;
+- the every-word fixed-point test with serious candidates and ridiculous controls under the same traversal rules;
+- explicit governing referent, binding principles, adjudication path, and termination condition for Governed Intelligence;
+- the proposed falsifier: coherent truth-answerable AI reasoning with no governing referent or equivalent grounding structure and no implicit borrowing.
+
+WEB-158
+The public site may summarize a canonical passage only when the summary preserves its meaning and is traceable to the source. When exact wording carries the argument, use the exact approved wording. Do not resume theoretical development through website copy.
+
+WEB-159
+Authority and publication are separate questions. A current canonical source governs the website representation, but its authority does not itself authorize exposing that source file publicly.
+
+
+CURRENT EXECUTABLE HOMEPAGE CONTRACT — 2026-10-25
+
+WEB-160
+The current homepage sequence is:
+1. Front door: identify Governed Logic Reasoning Systems and what it is building.
+2. The upstream problem: explain why modern AI capability is not the same as sufficiently grounded or correct reasoning.
+3. The architecture: present Governed Logic as the upstream bidirectional reasoning architecture.
+4. The foundation: point to On the Nature of Ultimate Grounding and the six constitutive principles.
+5. The implementation: present Governed Intelligence and distinguish the current prototype from development work.
+6. The research: present the truth-directed and falsifiable method without overstating results.
+7. The founder: identify the accountable human source without making Paul the product.
+8. Continue the inquiry: use the exact invitation "Follow the chain." and route into the deeper semantic graph.
+
+WEB-161
+The problem comes before the architecture. This order is settled. A visitor should understand the AI reasoning problem before encountering the technical architecture.
+
+WEB-162
+The visible front-door proposition is:
+Truth governs logic.
+Logic governs reasoning.
+Intelligence is downstream.
+
+The homepage must then explain that Governed Logic Reasoning Systems is building Governed Intelligence. It must distinguish the working instruction-level prototype from the reasoning engine, API, and other engineering work still in development.
+
+WEB-163
+The upstream-problem section uses a small comprehensible set of source-backed failure modes, not a laundry list. Permitted source-backed categories include fluent but insufficiently grounded assertions, failure of proposition/reality correspondence, absence of a stable governing referent, unsupported or invalid inference, contradiction, semantic drift, and representation/referent confusion. Do not claim that Governed Intelligence has already eliminated these defects experimentally.
+
+WEB-164
+The architecture section must:
+- present Governed Logic as substrate-agnostic and upstream;
+- preserve GROUND -> TRUTH -> LOGIC -> REASONING -> INTELLIGENCE in canonical order;
+- show generation forward and adjudication back;
+- keep the chain on one horizontal line at desktop, 390px, and 320px widths;
+- preserve readable terms and step numbers without clipping or horizontal page overflow;
+- preserve Ground's foundational role without changing the horizontal presentation into a vertical phone stack.
+
+WEB-165
+The foundation section must preserve the halt/termination distinction, present all six constitutive principles without an unsupported hierarchy, and route to the full grounding argument.
+
+WEB-166
+The implementation section must distinguish:
+- the settled definition of Governed Intelligence;
+- the current instruction-level prototype;
+- the intended reasoning engine and API;
+- candidate or in-development engineering work.
+
+Do not describe the prototype as the completed architecture, a deterministic logic gate, or a guarantee against hallucination or drift.
+
+WEB-167
+The research section must distinguish model-behavior evidence from metaphysical proof, historical proof, and identification of the ultimate ground. It must distinguish actual experiments, benchmarks, demonstrations, and evaluation results from explanatory examples. Do not use the Daniel 28 explanatory example as homepage evidence unless Paul explicitly requests it there.
+
+WEB-168
+The homepage must allow a normally intelligent first-time visitor with no prior Governed Logic context to answer quickly:
+- What are you building?
+- What is wrong with current AI reasoning?
+- What does Governed Logic change upstream?
+
+WEB-169
+The five primary substantive destinations remain:
+1. Governed Logic
+2. On the Nature of Ultimate Grounding
+3. Governed Intelligence
+4. The Company
+5. Research
+
+The deeper graph may expose supporting concepts, library, publication, sources, inquiry, FAQ, biography, and other approved routes without turning each into another peer homepage door.
+
+
+ROUTE AND REPRESENTATION CONTRACT — 2026-10-25
+
+WEB-170
+/concepts/governed-logic/ is the principal public representation of the Governed Logic treatise and architecture. Its claims must trace to the canonical Governed Logic source base and current approved clarifications.
+
+WEB-171
+/concepts/ultimate-grounding/ is the principal public representation of On the Nature of Ultimate Grounding. Its claims must trace to the canonical v0.7 source or a later explicit Paul correction.
+
+WEB-172
+/concepts/governed-intelligence/ distinguishes the settled definition, the working instruction-level prototype, the intended architecture, and candidate or in-development engineering material.
+
+WEB-173
+/company/ explains what the reasoning systems company does now and what it is developing. It must not convert plans into completed capabilities.
+
+WEB-174
+/research/ distinguishes hypotheses, methods, experiments, evidence, results, and open questions. A framework that cannot lose must not be represented as falsifiable.
+
+WEB-175
+/about/ preserves the verified biography and accountable human source behind the work without turning the company site into a personality site.
+
+WEB-176
+/library/, /publication/, and /sources/ expose only approved material and preserve edition, authorship, status, and provenance.
+
+WEB-177
+/challenge/ and /faq/ maintain exact correspondence between their human-facing and machine-readable representations. Do not invent challenge rules, inputs, outputs, examples, evaluation criteria, questions, or answers.
+
+WEB-178
+/mechanism.html remains a separate held decision. It is not an authority for any other page. PR #17 remains unmerged unless Paul separately approves it. This PRD reconciliation does not authorize archiving, publishing, changing, removing, or linking the mechanism.
+
+
+RECONCILED ACCEPTANCE GATE — 2026-10-25
+
+WEB-180
+Every implementation PR must provide:
+- exact changed files;
+- governing PRD requirements;
+- canonical source mapping for substantive copy;
+- before/after desktop and 390px phone evidence when the rendered surface changes;
+- 320px legibility evidence for the architecture chain and other load-bearing mobile content;
+- build, link, structured-data, accessibility, and visual-test results as applicable;
+- known pre-existing failures separated from new regressions;
+- confirmation that protected CNAME, opening endpoints, render_site.py, source authority, and publication boundaries remain unchanged unless separately authorized.
+
+WEB-181
+Acceptance must inspect at minimum:
+- 1440px desktop;
+- 390px phone;
+- 320px phone;
+- reduced-motion behavior;
+- JavaScript-disabled or forced intro-failure behavior where applicable.
+
+WEB-182
+Automated tests must correspond to the current approved interface. Obsolete selectors, including a test that waits for a removed Explore link, must be corrected rather than carried indefinitely as an accepted known failure.
+
+WEB-183
+A successful commit, build, test run, or deployment is evidence of that event only. It is not evidence of live-page correctness, visual fidelity, source correspondence, or Paul's acceptance unless those states were separately verified.
+
+WEB-184
+If implementation and PRD conflict, determine which representation is stale using source authority and Paul's latest explicit decision. Correct the stale representation. Do not silently make the implementation authoritative because it is already live.
+
+WEB-185
+Paul retains final approval. Opening a branch or PR, completing QA, or producing a deployable artifact is not permission to merge or publish.
+
+WEB-186
+This reconciliation changes requirements only. It does not authorize a website redesign, a mechanism change, a route removal, a CNAME change, a merge, or a deployment.
+
+WEB-187
+After Paul approves this PRD, the next implementation cycle creates the treatise traceability matrix, then audits every current public route and homepage section against it. The audit may report PASS, CORRECTION REQUIRED, INTENTIONAL OMISSION, or HOLD. It may not invent missing doctrine or copy.
+
+
+PUBLIC DEMONSTRATION AND DISTRIBUTION DIRECTION — 2026-10-18 / RECONCILED 2026-10-25
+
+WEB-188
+The complete website must show what Governed Logic does today, not only explain its philosophical foundation. Use tangible, source-backed demonstrations, experiments, benchmarks, and engineering status. Distinguish demonstrated results from proposed tests and planned capabilities.
+
+WEB-189
+The public demonstration pattern compares default model behavior with Governed Intelligence under the same relevant prompts, facts, and controlled variables. Show where reasoning terminates, whether frameworks switch, whether conclusions remain invariant under reframing, what outside authority is borrowed, and whether the governing referent sustains the reasoning chain.
+
+WEB-190
+The planned robot head is a prominent physical demonstration surface for Governed Intelligence and a later embodiment/interface. Until it exists in the represented state, present it as planned rather than completed. The website must not let the physical interface eclipse the reasoning system it demonstrates.
+
+WEB-191
+The website may present Paul's current capability claim that Governed Intelligence can participate today in simultaneous live adversarial debate on any subject. The claim must remain tied to the current instruction-level prototype and to a demonstration a visitor can inspect or witness. Do not silently broaden it into autonomous agency, completed-engine status, or experimentally established superiority.
+
+WEB-192
+Use "Every word is an asterisk" and "*See referent" as approved semantic teaching devices when the surrounding presentation makes their meaning clear. The corresponding chain is:
+representation -> meaning -> referent -> ground -> Logos.
+
+WEB-193
+Show practical consequences of the architecture in robotics, healthcare, law, education, autonomous systems, moral reasoning, and machine action. These are application domains and consequences, not permission to invent deployed products, customers, results, or guarantees.
+
+WEB-194
+Connect governedlogic.com, The Truth with Paul, open letters, demonstrations, articles, research, outreach, and Paul's professional network as one public conversation and distribution system. The exact future route for The Truth with Paul remains undecided under WEB-125.
+
+WEB-195
+The public mission includes teaching what artificial intelligence is, exposing the questions AI raises about truth and grounding, and following those questions honestly toward the Logos. Preserve the website rule in WEB-056: do not front-load the conclusion as a marketing hook and do not hide it.
+
+WEB-196
+Execution roles remain:
+- GL Business Analyst owns visitor-experience acceptance, consolidates the Grok-side team, and is the only Grok-side editor of PROJECT_STATE.txt;
+- GL Site Architect protects durable structure and source/build integrity;
+- GL Site Developer implements approved requirements;
+- GL QA independently verifies desktop, phone, accessibility, correspondence, regressions, and release evidence;
+- Harriet reviews GitHub changes and coordinates only the merges Paul approves;
+- Paul retains final product, content, merge, and publication approval.
