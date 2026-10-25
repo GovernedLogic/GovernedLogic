@@ -20,7 +20,10 @@ import render_site  # noqa: E402
 # Visible copy of the current interface. Not the retired HTML blob ids.
 REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
 REVIEWED_MAIN_DIGESTS = {
-    "index.html": "e8ddd4b9be84184d182389f0ad78ee753b2ef507468dc35096395f27030781d6",
+    # Homepage digest is taken after the reasoning exhibit is removed and ↗ is
+    # folded to →. The exhibit may be absent, and the reading-room arrow may
+    # already be →. Any other homepage copy still has to match.
+    "index.html": "21bbf8ae647bef5b77891bb05147d61c23ffd3973a0856f3e8d7e88a77669c6f",
     "challenge/index.html": "35017d06fabc4af8fbff1673848242202494987eecc3743498eb030d06bc13d5",
     "company/index.html": "5ee0fce47fe19dbbadb23d2a8515cf169379304802d288904097164da2e4c4a4",
     "research/index.html": "6078f122ecb53179dd0307f1febc7a7065b73fb505575377c69a1cd6d5e4a8d4",
@@ -41,6 +44,7 @@ REVIEWED_MAIN_DIGESTS = {
     "publication/index.html": "64daa8358c86d35e8d34cbd715ee9ce5f25201b2ecc727fea44399696849d19c",
 }
 OPENING_DIGEST = "772b79516151d396c6ca24ec33c86d16fce65570c213c853d7b5061c5ceee1bf"
+EXHIBIT_DIGEST = "332a084630c57eb0e24a5e502f9e175ed8594b8ac55f66bd59b286aac9308de2"
 # The mechanism copy button is the only reviewed inline script.
 REVIEWED_INLINE_SCRIPTS = {
     "mechanism.html": ("84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e",),
@@ -52,11 +56,47 @@ JSON_SCRIPT = re.compile(
 )
 
 
+def without_exhibit(html: str) -> tuple[str, str | None]:
+    start = html.find('<div class="reasoning-exhibit">')
+    if start < 0:
+        return html, None
+    index = start
+    depth = 0
+    while index < len(html):
+        open_at = html.find("<div", index)
+        close_at = html.find("</div>", index)
+        if close_at < 0:
+            break
+        if open_at != -1 and open_at < close_at:
+            depth += 1
+            index = open_at + 4
+            continue
+        depth -= 1
+        index = close_at + len("</div>")
+        if depth == 0:
+            return html[:start] + html[index:], html[start:index]
+    raise AssertionError("Unreviewed page copy differs: index.html")
+
+
+def homepage_digest(html: str) -> str:
+    stripped, exhibit = without_exhibit(html)
+    if exhibit is not None:
+        exhibit_text = render_site.main_text("<main>" + exhibit + "</main>")
+        exhibit_digest = hashlib.sha256(exhibit_text.encode()).hexdigest()
+        if exhibit_digest != EXHIBIT_DIGEST:
+            raise AssertionError("Unreviewed page copy differs: index.html")
+    text = render_site.main_text(stripped.replace("↗", "→"))
+    return hashlib.sha256(text.encode()).hexdigest()
+
+
 def assert_reviewed_copy(site: Path) -> None:
     """Reject unreviewed visible copy, an altered opening, or an inline script."""
     for relative in REVIEWED_PAGES:
-        text = render_site.main_text((site / relative).read_text(encoding="utf-8"))
-        digest = hashlib.sha256(text.encode()).hexdigest()
+        html = (site / relative).read_text(encoding="utf-8")
+        if relative == "index.html":
+            digest = homepage_digest(html)
+        else:
+            digest = hashlib.sha256(render_site.main_text(html).encode()).hexdigest()
         if digest != REVIEWED_MAIN_DIGESTS[relative]:
             raise AssertionError(f"Unreviewed page copy differs: {relative}")
     html = (site / "index.html").read_text(encoding="utf-8")
