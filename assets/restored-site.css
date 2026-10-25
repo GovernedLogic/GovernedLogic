@@ -314,3 +314,39 @@ a.scroll-invite{
   .home-content>section.scene-await{opacity:0;filter:blur(10px)}
   .home-content>section.scene-arrive{animation:gl-scene .8s cubic-bezier(.2,0,0,1) both}
 }
+.document-page{
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(140,196,236,.16), transparent 38%),
+    var(--bg-0);
+}
+.document-page .business-section,
+.document-page .provenance,
+.document-page .concept-card,
+.document-page details{
+  background:color-mix(in srgb, var(--bg-2) 86%, transparent);
+  border:1px solid var(--line);
+  border-radius:20px;
+  box-shadow:0 22px 56px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.document-page .business-section{padding:28px 32px;margin-top:24px}
+.document-page .provenance{
+  padding:24px;
+  background:color-mix(in srgb, var(--bg-1) 88%, var(--accent));
+  border-color:color-mix(in srgb, var(--accent) 50%, var(--line));
+}
+.document-page .concept-card{padding:24px}
+@media(min-width:1100px){
+  .document-page .document-main{max-width:1240px}
+  .document-page .document-main>article:has(> aside.provenance){
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,300px);
+    column-gap:36px;align-items:start;max-width:none;
+  }
+  .document-page .document-main>article:has(> aside.provenance) > :not(aside){grid-column:1}
+  .document-page .document-main>article:has(> aside.provenance) > aside.provenance{
+    grid-column:2;grid-row:1 / span 24;position:sticky;top:88px;align-self:start;margin:0;
+  }
+  .document-page .document-main>article:not(:has(> aside.provenance)){max-width:92ch}
+  .document-page .provenance .source-link,
+  .document-page .provenance .gl-go,
+  .document-page .provenance button{width:100%;white-space:normal;text-align:left;height:auto}
+}
