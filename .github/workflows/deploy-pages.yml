@@ -1,8 +1,9 @@
 name: Deploy governedlogic.com
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["Validate governedlogic.com"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -17,12 +18,28 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Push to main deploys only after Validate governedlogic.com succeeded for that push.
+    # A validation run for a pull request or a failed run does not deploy.
+    # workflow_dispatch remains a manual deploy of github.sha and still runs the
+    # build and check-restored gate below; it does not rerun the visual suite.
+    if: >-
+      ${{
+        github.event_name == 'workflow_dispatch'
+        || (
+          github.event.workflow_run.conclusion == 'success'
+          && github.event.workflow_run.event == 'push'
+          && github.event.workflow_run.head_branch == 'main'
+        )
+      }}
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Build reviewed public artifact
         run: python3 scripts/build_site.py --output "${{ runner.temp }}/site"
       - name: Verify artifact boundary
@@ -32,7 +49,7 @@ jobs:
           node --check "${{ runner.temp }}/site/assets/earth-renderer.js"
           node --check "${{ runner.temp }}/site/assets/material-environment.js"
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ${{ runner.temp }}/site
 
@@ -40,18 +57,21 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
     steps:
       - name: Deploy reviewed artifact
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: deploy
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
       - name: Verify live routes and publication boundary
         run: python3 scripts/check-restored.py --live https://governedlogic.com --attempts 6 --delay 10
