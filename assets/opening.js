@@ -521,7 +521,7 @@ const GL_MARK_TRACE = true;
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   if (reduce.matches) return;
-  const cards = document.querySelectorAll('.reading-index > a, .work-grid article, .text-link, .button, .concept-card');
+  const cards = document.querySelectorAll('.reading-index button, .work-grid article, .text-link, .button, .concept-card, .reasoning-exhibit');
   for (const card of cards) {
     card.addEventListener('pointermove', event => {
       const rect = card.getBoundingClientRect();
@@ -611,4 +611,23 @@ const GL_MARK_TRACE = true;
   document.addEventListener('visibilitychange', () => setActive(active));
   const observer = new IntersectionObserver(entries => setActive(entries.some(entry => entry.isIntersecting)));
   observer.observe(host);
+})();
+
+/* Homepage scenes arrive with a short blurred fade. Reduced motion and no-JS leave them visible. */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const sections = document.querySelectorAll('.home-content > section');
+  if (!sections.length || reduce.matches || typeof IntersectionObserver !== 'function') return;
+  const seen = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.remove('scene-await');
+      entry.target.classList.add('scene-arrive');
+      seen.unobserve(entry.target);
+    }
+  }, {threshold: 0.16, rootMargin: '0px 0px -8% 0px'});
+  for (const section of sections) {
+    section.classList.add('scene-await');
+    seen.observe(section);
+  }
 })();
