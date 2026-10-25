@@ -35,48 +35,48 @@ import render_site  # noqa: E402
 REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
 # Published homepage, exhibit included, arrows exact. Hero appends the one
 # reviewed exhibit-removed digest to this tuple and nothing else.
-# index.html: #explore is a button, the two /mechanism.html forms are restored, and the brand name equals its visible text.
+# index.html: #explore is a button, the two /mechanism.html forms are restored, and the brand aria-label is Governed Logic home.
 HOMEPAGE_DIGESTS = (
-    "66e0ae03603154176d379d44410103a13ef0f98e25509785ee94f23d7d49202f",
+    "a9067640f1aeb445d18e4cc039bc5805972da043b4d957faaedf460dd9438a6f",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
-    # challenge/index.html: footer labels restored. Brand accessible name equals the visible text, so every page digest moved.
-    "challenge/index.html": ("ee1b7f205e8dc46a62711ad97d4ef44995e5509b7df93b3fa0d81b9c3e8a6117",),
+    # challenge/index.html: footer labels restored. The brand aria-label Governed Logic home is restored, so every page digest moved.
+    "challenge/index.html": ("ce5c0f7d1df0d68b577d98e3649b859669ed0ceba2718227aa25b9efe6918d66",),
     # company/index.html: same restored footer labels.
-    "company/index.html": ("fcf2f6cf0ad74eaaf8bb64929f82f7d4b6b5120086d94de4c04915ca78ef0427",),
+    "company/index.html": ("252d5ca42f6b476a5442b3f157b8c390b7342d3e3c9227201c707dba19ee0338",),
     # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
-    "research/index.html": ("942224d3342a8f69bb393f107e6842ab62066228ef771279be6d6597e869d0e8",),
+    "research/index.html": ("29326e62eb14fe361f6d8a8fd97ec315d66633abe43d30961498660bf8041fa0",),
     # about/index.html: same restored footer labels.
-    "about/index.html": ("7ce6f840fd09025d105e2ffaa5d1d30f89d09855d20297bb12f7cdc53e201efd",),
+    "about/index.html": ("326c05b69b9bbf5ad31f0aa45dbad432e056559ceb567f3ecf52f265509f0cd7",),
     # faq/index.html: same restored footer labels.
-    "faq/index.html": ("34680b1cb607c86f61b87e1d6f5319e6247e40201e000f4baeab7ff7dbe269f4",),
+    "faq/index.html": ("a4ab45144403523b0187c539e09a5910d04d56c2a3e47f3756b3c16a50633ffb",),
     # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
-    "concepts/index.html": ("0c6b9d5e17384e4092e0abc638cb5bbd185305fa15ffb11f21a5ee422ca43e56",),
+    "concepts/index.html": ("f36521869cd88280d6033b1380473ae4d291b54374edc4db263e2ad1d3e6a303",),
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
-    "concepts/governed-logic/index.html": ("45a37bd24089bf66cb9540125f2203f2b704aeb39d8d619b693f4f1b4f002bf6",),
+    "concepts/governed-logic/index.html": ("d525110511680e26a4d008b7bd957bdc7ae6fcc863ba5809dba80569e5a90156",),
     # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
-    "concepts/governed-intelligence/index.html": ("24a72041b32f5a448a614705396e90ae95a6a58e868a9efe3330b55861e03095",),
+    "concepts/governed-intelligence/index.html": ("df4309398cf9b52f87eab3b8901b4e90b8cb6d1be82442d10b3a665121453080",),
     # concepts/ultimate-grounding/index.html: same restored footer labels.
-    "concepts/ultimate-grounding/index.html": ("f863e51f5cf76a2e57492e22944e2fb72a3eae08daa1d16632fc5cfeba3e4394",),
+    "concepts/ultimate-grounding/index.html": ("a7cdf82ebba194e3235eb5955e33f525605dadc7af3094afddfb1ca704b4d64e",),
     # concepts/alpha-and-omega-reasoning/index.html: same restored footer labels.
-    "concepts/alpha-and-omega-reasoning/index.html": ("13734bad73413b9a2e596048768ed0b1bb1d06a50de20557a5503a905e7eb4dd",),
+    "concepts/alpha-and-omega-reasoning/index.html": ("b0b6652e00fe8c7dd3771f92a4bcd4c439ec989dfe4747c8a8f736afef53e62a",),
     # concepts/governing-referent/index.html: same restored footer labels.
-    "concepts/governing-referent/index.html": ("df6710c78b617536665e9d10a08b3d16ac82bcda395f5d85575a855264144469",),
+    "concepts/governing-referent/index.html": ("b522484085dd5a67d60e2e50fffbd1ea140858df713929c940e40a73268eb1f3",),
     # concepts/sufficient-grounding/index.html: same restored footer labels.
-    "concepts/sufficient-grounding/index.html": ("4a520393ded4b8ac4e29701d1eb46795751a1c1d9ac4238660c3a58526f90811",),
+    "concepts/sufficient-grounding/index.html": ("c509370d31674dc29f243d69b6d4a3e5a9b882ff72c273697f7496b85c5f3981",),
     # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
-    "mechanism.html": ("d20ed6b26d35dfe58c8005d951a45a50a25b42ac7624a4de792d5d40ec6c7931",),
+    "mechanism.html": ("09f803052a23b75e43c9c8731d643a26c1aef814acddca11dd9d0b7afd63ddc7",),
     # sources/index.html: same restored footer labels.
-    "sources/index.html": ("689455c1b5af851231ad96763b3517852173867975e927a66373e758042ea25a",),
+    "sources/index.html": ("b0675567b0a70b6e5123339f4f5d1e4e028cd9ed605056f8b7d6de575bd69c9e",),
     # articles/why-anything/index.html: same restored footer labels.
-    "articles/why-anything/index.html": ("f94d669bddd2266b6276cb11719a11771d8327a7565fffd6ea0f30a5dccef2f3",),
+    "articles/why-anything/index.html": ("1d4e9f61d9b16a0aad309d5743b91f2d70e7322b06bf418a7fac54ecea3d0853",),
     # articles/integrity-in-artificial-intelligence/index.html: same restored footer labels.
-    "articles/integrity-in-artificial-intelligence/index.html": ("89bddc62081c75b6105917792caa31758fb924c6450ba99a9ec9ca4e339ed413",),
+    "articles/integrity-in-artificial-intelligence/index.html": ("a3cdef85b8ea657e99f73ddc9fc7d7d082bac6e650a5af9f066929297cd83b76",),
     # library/index.html: generated page picks up the restored footer labels.
-    "library/index.html": ("c65c92b95fb237e35426a709092ba6309e8b9f9416f35a55d508c6f6967c38a4",),
+    "library/index.html": ("b6e2987c626995e23be36176b73af4306c5638ccf3927970bc4c720fefa8c6dc",),
     # publication/index.html: generated page picks up the restored footer labels.
-    "publication/index.html": ("12b51ffd1b30784fbdc57a53197b31ceec550ec0d46b19822eefa89d61f70840",),
+    "publication/index.html": ("656f01d4a3bfac4986cd87dbc537d4a269fe7073f7425ad9d574a368c46ed1f7",),
 }
 # Opening words are unchanged. The #explore anchor is no longer in the opening record.
 OPENING_DIGEST = "e4525a6b1741253a9ddf32a04e183588998f354f737189dab236a889f1f8c39d"
