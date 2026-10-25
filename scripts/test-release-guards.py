@@ -20,7 +20,7 @@ import render_site  # noqa: E402
 # Visible copy of the current interface. Not the retired HTML blob ids.
 REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
 REVIEWED_MAIN_DIGESTS = {
-    "index.html": "e3e40c0e8bf9a86a56bf2310a23d02bd13759c7978939a8bc688b74b5e7b2894",
+    "index.html": "e8ddd4b9be84184d182389f0ad78ee753b2ef507468dc35096395f27030781d6",
     "challenge/index.html": "35017d06fabc4af8fbff1673848242202494987eecc3743498eb030d06bc13d5",
     "company/index.html": "5ee0fce47fe19dbbadb23d2a8515cf169379304802d288904097164da2e4c4a4",
     "research/index.html": "6078f122ecb53179dd0307f1febc7a7065b73fb505575377c69a1cd6d5e4a8d4",
