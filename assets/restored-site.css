@@ -232,3 +232,11 @@ header.site-bar nav>a[aria-current='page'],header.site-bar nav>a:hover{color:var
   header.site-bar::after{transform:scaleX(0);animation:gl-read linear;animation-timeline:scroll(root)}
   .home-content>section.scene-arrive{animation:gl-scene .8s cubic-bezier(.2,0,0,1) both}
 }
+/* Look and type: charcoal and brand blue. The only green is the prototype status dot. */
+:root{--green:var(--accent)}
+.exhibit-caption span:last-child,.flow-direction.return,.work-grid article:first-child .eyebrow{color:var(--accent)}
+.architecture-chain li:before,.architecture-chain li:first-child:before,.architecture-chain li:last-child:before,.architecture-chain li:first-child:after{border-color:var(--accent)}
+.prototype-status:before{background:#a5cbb5}
+.reasoning-exhibit svg [stroke="#9ec6ae"]{stroke:var(--accent)}
+.reasoning-exhibit svg [fill="#a5cbb5"]{fill:var(--accent)}
+h1,h2,h3,.lede,.lead,.eyebrow,.label{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor}
