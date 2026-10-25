@@ -1,4 +1,6 @@
-/* Governed Logic opening. Native rendering; no bitmap identity or external dependency. */
+/* Governed Logic opening. Native rendering; no bitmap identity or external dependency.
+   GL_MARK_TRACE plays the mark. Set it to false for the Spirograph and Earth intro. */
+const GL_MARK_TRACE = true;
 (() => {
   'use strict';
   const TAU = Math.PI * 2;
@@ -220,6 +222,7 @@
   addEventListener('resize',resize,{passive:true});
   try{resize();}catch{ return; }
   if(motion.matches || document.hidden)return;
+  if(GL_MARK_TRACE)return;
   try {
     const count=Math.min(window.innerWidth,window.innerHeight)<=600?3360:5760;
     const loops=24,samples=count/loops;
@@ -358,6 +361,160 @@
     }
     raf=requestAnimationFrame(frame);
   }catch{removeIntro();}
+})();
+
+/* Mark trace. One point of light follows threeLobeCurve for a single closed pass.
+   The permanent hero above is already painted and stays after this overlay leaves. */
+(() => {
+  if (!GL_MARK_TRACE) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  if (reduce.matches || document.hidden) return;
+  const siteCanvas = document.getElementById('siteCanvas');
+  if (!siteCanvas) return;
+  let seen = false;
+  try { seen = sessionStorage.getItem('gl-mark-trace') === '1'; } catch { seen = false; }
+  if (seen) return;
+  try { sessionStorage.setItem('gl-mark-trace', '1'); } catch { /* still play */ }
+
+  const TAU = Math.PI * 2;
+  const K = 0.999;
+  const AMP = 0.46;
+  const SAMPLES = 640;
+  const ASIN_K = Math.asin(K);
+  const ease = x => { x = Math.max(0, Math.min(1, x)); return x * x * x * (x * (x * 6 - 15) + 10); };
+  const pts = Array.from({length: SAMPLES + 1}, (_, i) => {
+    const t = (i / SAMPLES) * TAU;
+    return {
+      x: Math.asin(K * Math.cos(t)) / ASIN_K,
+      y: AMP * Math.sin(3 * t),
+      z: Math.sin(2 * t)
+    };
+  });
+
+  let removed = false;
+  let raf = 0;
+  let skipAt = 0;
+  const offs = [];
+  const listen = (target, type, fn, options) => {
+    target.addEventListener(type, fn, options);
+    offs.push(() => target.removeEventListener(type, fn, options));
+  };
+  const element = document.createElement('div');
+  element.id = 'glIntro';
+  element.className = 'gl-mark';
+  element.setAttribute('aria-hidden', 'true');
+  element.dataset.stage = 'black';
+  element.style.pointerEvents = 'auto';
+  element.style.background = 'transparent';
+  const canvas = document.createElement('canvas');
+  canvas.className = 'intro-canvas';
+  const ctx = canvas.getContext('2d', {alpha: true});
+  if (!ctx) return;
+  element.append(canvas);
+  const remove = () => {
+    if (removed) return;
+    removed = true;
+    clearTimeout(deadline);
+    cancelAnimationFrame(raf);
+    for (const off of offs) off();
+    element.remove();
+  };
+  // Armed before the overlay is shown. 7.6s is inside the 8s limit.
+  const deadline = setTimeout(remove, 7600);
+  const skip = () => { if (!removed && !skipAt) skipAt = performance.now(); };
+  const y0 = scrollY;
+  listen(window, 'pointerdown', skip, true);
+  listen(window, 'keydown', skip, true);
+  listen(window, 'wheel', skip, {passive: true, capture: true});
+  listen(window, 'scroll', () => { if (Math.abs(scrollY - y0) >= 12) skip(); }, {passive: true, capture: true});
+  listen(reduce, 'change', () => { if (reduce.matches) remove(); });
+  listen(document, 'visibilitychange', () => { if (document.hidden) remove(); });
+  document.body.appendChild(element);
+
+  let width = 0;
+  let height = 0;
+  let half = 1;
+  const place = p => [width * 0.5 + p.x * half, height * 0.5 + p.y * half * 0.92];
+  function size() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    const dpr = Math.min(devicePixelRatio || 1, width < 800 ? 1.5 : 2);
+    canvas.width = Math.max(1, Math.round(width * dpr));
+    canvas.height = Math.max(1, Math.round(height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    half = Math.min(width, height) * 0.34;
+  }
+  function strand(over, widthPx, color, scale) {
+    const head = Math.max(2, Math.round(scale * SAMPLES));
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = widthPx;
+    for (let i = 1; i <= head; i++) {
+      const p = pts[i];
+      const under = p.z < 0;
+      if (over ? under : !under) continue;
+      if (!over && Math.abs(p.z) < 0.2) continue;
+      const fade = Math.exp(-((head - i) / SAMPLES) * 2.4);
+      if (fade < 0.035) continue;
+      const [x1, y1] = place(pts[i - 1]);
+      const [x2, y2] = place(p);
+      ctx.strokeStyle = `rgba(${color},${fade})`;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+  }
+  function paint(t) {
+    const stage = t >= 6.2 ? 'fade' : t >= 5.2 ? 'resolve' : t >= 0.4 ? 'trace' : 'black';
+    element.dataset.stage = stage;
+    const travel = t < 0.4 ? 0 : t >= 5.2 ? 1 : ease((t - 0.4) / 4.8);
+    const headAlpha = t < 0.4 ? 0 : t < 0.9 ? (t - 0.4) / 0.5 : t < 4.8 ? 1 : t < 6.4 ? 1 - (t - 4.8) / 1.6 : 0;
+    // The black field itself thins from 5.2s to 7.2s, so the Earth hero comes through.
+    const veil = t < 5.2 ? 1 : Math.max(0, 1 - (t - 5.2) / 2);
+    const overlay = 1;
+    ctx.clearRect(0, 0, width, height);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = `rgba(0,0,0,${veil})`;
+    ctx.fillRect(0, 0, width, height);
+    if (travel > 0 && headAlpha > 0) {
+      strand(false, 5.2, '17,51,87', travel);
+      strand(true, 2.2, '217,238,252', travel);
+      const head = Math.max(2, Math.round(travel * SAMPLES));
+      const [x, y] = place(pts[head]);
+      const radius = Math.min(width, height) * 0.028;
+      const glow = ctx.createRadialGradient(x, y, 0, x, y, radius);
+      glow.addColorStop(0, `rgba(255,255,255,${headAlpha})`);
+      glow.addColorStop(0.22, `rgba(213,240,255,${headAlpha * 0.9})`);
+      glow.addColorStop(0.55, `rgba(140,196,236,${headAlpha * 0.45})`);
+      glow.addColorStop(1, 'rgba(140,196,236,0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, TAU);
+      ctx.fill();
+    }
+    element.style.opacity = String(overlay);
+  }
+  size();
+  listen(window, 'resize', size, {passive: true});
+  const start = performance.now();
+  function frame(now) {
+    if (removed) return;
+    try {
+      if (skipAt) {
+        const fade = (now - skipAt) / 400;
+        element.style.opacity = String(Math.max(0, 1 - fade));
+        if (fade >= 1) remove();
+        else raf = requestAnimationFrame(frame);
+        return;
+      }
+      const t = (now - start) / 1000;
+      if (t >= 7.2) { remove(); return; }
+      paint(t);
+      raf = requestAnimationFrame(frame);
+    } catch { remove(); }
+  }
+  raf = requestAnimationFrame(frame);
 })();
 
 /* Scene depth for the homepage. The permanent hero above is unchanged. Reduced motion never starts this. */

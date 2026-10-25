@@ -59,17 +59,17 @@ test('Opening records its chronological visual sequence',async({page},info)=>{
  await expect(page.locator('#glIntro')).toHaveCount(1);
  const frames=[
   {at:50,name:'01-black',label:'Black field',stage:'black'},
-  {at:1200,name:'02-point',label:'A point of light',stage:'point'},
-  {at:2200,name:'03-star',label:'Light gathers',stage:'star'},
-  {at:3000,name:'04-release',label:'Expansion',stage:'release'},
-  {at:4350,name:'05-orbits',label:'Orbital order',stage:'orbits'},
-  {at:6500,name:'06-spirograph',label:'Coherent structure',stage:'spirograph'},
-  {at:7600,name:'07-green',label:'Green emergence',stage:'green'},
-  {at:9700,name:'08-globe',label:'Particles describe Earth',stage:'globe'},
-  {at:10900,name:'09-material',label:'Earth resolves',stage:'material'},
-  {at:12500,name:'10-horizon',label:'Horizon and depth',stage:'horizon'},
-  {at:14800,name:'11-identity',label:'Company identity arrives',stage:'identity'},
-  {at:16500,name:'12-complete',label:'Completed company identity'}
+  {at:1000,name:'02-trace',label:'Light on the mark',stage:'trace'},
+  {at:2000,name:'03-trace',label:'The band lengthens',stage:'trace'},
+  {at:3000,name:'04-trace',label:'One path, mid circuit',stage:'trace'},
+  {at:4000,name:'05-trace',label:'Crossings woven',stage:'trace'},
+  {at:5000,name:'06-trace',label:'Circuit nearly closed',stage:'trace'},
+  {at:5400,name:'07-resolve',label:'The trace yields to the hero',stage:'resolve'},
+  {at:6000,name:'08-resolve',label:'Earth shows through',stage:'resolve'},
+  {at:6600,name:'09-fade',label:'Overlay recedes',stage:'fade'},
+  {at:7100,name:'10-fade',label:'Hero almost clear',stage:'fade'},
+  {at:7400,name:'11-hero',label:'Permanent Earth hero'},
+  {at:8000,name:'12-complete',label:'Completed company identity'}
  ];
  const directory=path.resolve('visual-qa/motion',info.project.name);await mkdir(directory,{recursive:true});
  const evidence=[];let elapsed=0;
