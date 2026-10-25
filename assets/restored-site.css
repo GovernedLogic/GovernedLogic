@@ -191,23 +191,38 @@ header.site-bar nav>a[aria-current='page'],header.site-bar nav>a:hover{color:var
   .front-door .lede,.front-door .intro-description,.intro-columns p,.book-copy,.foundation-copy p,
   .work-grid article p,.research-body p,.founder-feature .lede,.reading-index p,.faq-item p{font-size:16px}
   header.site-bar{
-    display:flex;flex-wrap:wrap;align-items:center;
-    height:64px;max-height:64px;padding:0 16px;gap:8px;
-    grid-template-columns:none;grid-template-rows:none;
+    display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:64px;
+    align-items:center;justify-content:stretch;flex-direction:row;flex-wrap:nowrap;
+    height:64px;max-height:64px;padding:0 8px 0 16px;gap:8px;
   }
-  header.site-bar:has(details[open]){height:auto;max-height:none}
-  header.site-bar .site-brand{flex-direction:row;grid-column:auto;grid-row:auto;width:auto;font-size:13px;padding:0;min-height:44px}
+  header.site-bar > .gl-go{display:flex;align-items:center;grid-column:1;grid-row:1;min-width:0;height:64px;z-index:1}
+  header.site-bar:has(details[open]){height:auto;max-height:none;grid-template-rows:64px auto}
+  header.site-bar .site-brand{
+    flex-direction:row;align-items:center;justify-content:flex-start;grid-column:auto;grid-row:auto;
+    width:auto;max-width:100%;height:44px;font-size:13px;padding:0;min-height:44px;
+    white-space:nowrap;text-align:left;
+  }
   header.site-bar .site-brand img{width:32px;height:32px}
   header.site-bar .site-brand small{font-size:13px}
-  header.site-bar nav{display:flex;flex-wrap:wrap;justify-content:flex-end;width:auto;height:auto;gap:0;font-size:16px;grid-column:auto;grid-row:auto}
-  .site-menu{display:block}
-  .site-menu summary{display:flex;align-items:center;justify-content:center;width:44px;height:44px;list-style:none;cursor:pointer;color:var(--ink)}
+  header.site-bar nav{
+    display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-end;
+    width:auto;height:64px;gap:0;font-size:16px;grid-column:2;grid-row:1;
+  }
+  .site-menu{display:flex;align-items:center;height:64px}
+  .site-menu summary{display:flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;list-style:none;cursor:pointer;color:var(--ink)}
   .site-menu summary::-webkit-details-marker{display:none}
   header.site-bar nav>a,
   header.site-bar nav .gl-go>button{display:none;flex:1 0 100%;min-height:44px;height:auto;justify-content:flex-start;padding:0 8px;white-space:normal}
-  header.site-bar nav:has(details[open]){width:100%}
+  header.site-bar:has(details[open]) nav{
+    grid-column:1 / -1;grid-row:1 / span 2;display:grid;
+    grid-template-columns:minmax(0,1fr) 44px;grid-template-rows:64px;
+    align-items:center;width:100%;height:auto;pointer-events:none;z-index:2;
+  }
+  header.site-bar:has(details[open]) .site-menu{grid-column:2;grid-row:1;justify-self:end;pointer-events:auto}
   header.site-bar nav:has(details[open])>a,
-  header.site-bar nav:has(details[open]) .gl-go>button{display:flex;width:100%;box-sizing:border-box}
+  header.site-bar nav:has(details[open]) .gl-go>button{
+    display:flex;grid-column:1 / -1;width:100%;box-sizing:border-box;pointer-events:auto;
+  }
   .home-content>section{padding:64px 16px;min-height:auto}
   .front-door{grid-template-columns:1fr;gap:32px}
   .document-main,main.document-main{padding:64px 16px 96px}
