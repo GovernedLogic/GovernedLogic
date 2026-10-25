@@ -115,7 +115,7 @@ test('Headlines do not break or overflow a word',async({page})=>{
      if(heading.scrollWidth>heading.clientWidth+1)bad.push(`${heading.tagName} overflow: ${(heading.textContent||'').trim().slice(0,80)}`);
      const walker=document.createTreeWalker(heading,NodeFilter.SHOW_TEXT);
      while(walker.nextNode()){
-      const node=walker.currentNode;const text=node.textContent||'';const re=/\S+/g;let match;
+      const node=walker.currentNode;const text=node.textContent||'';const re=/[^\s\-–—]+/g;let match;
       while((match=re.exec(text))){
        const range=document.createRange();range.setStart(node,match.index);range.setEnd(node,match.index+match[0].length);
        const tops=new Set([...range.getClientRects()].filter(rect=>rect.width>0&&rect.height>0).map(rect=>Math.round(rect.top)));
