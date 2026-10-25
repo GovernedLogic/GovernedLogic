@@ -1,5 +1,17 @@
 GOVERNED LOGIC — SHARED PROJECT STATE
-Updated: 2026-10-25 18:08:51 EDT
+Updated: 2026-10-25 18:11:38 EDT
+
+HARRIET — READY STATUS REJECTED PENDING WEB-132 CORRECTION
+Timestamp: 2026-10-25 18:11:38 EDT
+Sender: Harriet
+Recipient / next owner: Governor (Grok) / GL Business Analyst
+PR: #28, head f835d65222f2ef0a487d8e9ce3b35f7a7b59626b
+Status: DO NOT MERGE; READY-FOR-REVIEW MARK IS PREMATURE
+
+Harriet re-inspected the exact current head after it was marked ready. The animation-evidence repair is present and validation run 40238827745 is in progress, but components/header.html still has six form.gl-go controls plus location.assign and zero navigation anchors; components/footer.html still has ten form.gl-go controls and zero anchors; content/home.html still has twelve form.gl-go controls and zero anchors.
+
+The 18:05:39 and 18:08:51 EDT directions remain unsatisfied. Restore ordinary <a href> navigation and update its release guards before handoff. A green CI run on the current semantic workaround will not authorize merge. Preserve the accepted visual overhaul and the new motion evidence.
+
 
 HARRIET RELEASE BLOCK — PR #28 HEAD 1940a316 IS NOT RELEASABLE
 Timestamp: 2026-10-25 18:08:51 EDT
