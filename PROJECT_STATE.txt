@@ -204,3 +204,7 @@ CURRENT RELEASE NOTES
 - PR #15 is superseded as an operational handoff by the approved PRD/current PROJECT_STATE where conflicts exist; do not merge stale state merely to preserve old chronology. Git already preserves its history.
 
 NEXT OWNER: GL Business Analyst to return the traceability matrix + current-site compliance audit for Harriet review. The next meaningful milestone is quantified PRD compliance and a gap-backed implementation backlog, not another isolated tweak.
+
+
+TIMESTAMP AND HANDOFF STANDARD — PAUL DIRECTIVE, 2026-10-25
+All new operational handoffs and state updates must include an exact timestamp in America/New_York local time: YYYY-MM-DD HH:MM:SS EDT or EST, as applicable. Use the correct seasonal abbreviation (EDT during daylight saving time; EST during standard time), not an assumed fixed UTC offset. GitHub commit timestamps remain the independently verifiable source for when Git changes actually occurred. Distinguish the time an event occurred from the time it was reported or recorded; do not invent precision when an external event's exact time is unknown. Each handoff identifies sender, recipient/next owner, action, status, PR/commit if applicable, and timestamp. GL Business Analyst remains the sole Grok-side editor and communicator; Harriet may update her own release/review records. Preserve earlier historical entries without rewriting their times. Keep entries brief and actionable.
