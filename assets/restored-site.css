@@ -161,6 +161,15 @@ header.site-bar nav>a[aria-current='page'],header.site-bar nav>a:hover{color:var
 .home-content>section.front-door>.reasoning-exhibit{
   grid-column:2;grid-row:3 / span 4;width:100%;max-width:none;min-height:420px;height:100%;align-self:stretch;margin:0;
 }
+/* No exhibit: one content track, the same width as the other sections. The pre-overhaul
+   46rem centered column is not used; it would leave a different empty margin. */
+.home-content>section.front-door:not(:has(.reasoning-exhibit)){
+  grid-template-columns:minmax(0,1fr);
+  column-gap:0;
+  row-gap:0;
+  justify-content:stretch;
+  align-items:start;
+}
 .hero-field{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .front-door>.front-copy,.front-door>.reasoning-exhibit,.front-door>.section-meta{position:relative;z-index:1}
 .reasoning-exhibit{
