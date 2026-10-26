@@ -38,6 +38,9 @@ REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.h
 # index.html: four footer controls removed, the brand name is its visible text, and button href attributes are gone.
 HOMEPAGE_DIGESTS = (
     "774fe282b185a30f204bda0131d37633f42b8fdf9058e6b1855fb12c835b68bb",
+    # Reviewed removal of the reasoning exhibit, including its description,
+    # five labels, title line, and captions. Paul lifted the D-35 hold.
+    "d58cdd57e78fffc79880e4db3d6af355342c0ba1ebfbd053f30abf911776314c",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
