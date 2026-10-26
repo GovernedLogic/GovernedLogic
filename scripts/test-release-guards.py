@@ -674,6 +674,18 @@ class ReleaseGuardTests(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
 
+    def test_anchor_element_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(
+                site,
+                "index.html",
+                '<main class="home-content" id="content" tabindex="-1">',
+                '<main class="home-content" id="content" tabindex="-1"><a href="/about/">About Paul</a>',
+            )
+            with self.assertRaisesRegex(AssertionError, "Anchor element is not allowed"):
+                check_restored.check(site)
+
     def test_button_href_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
