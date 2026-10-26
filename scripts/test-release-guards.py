@@ -47,8 +47,8 @@ REVIEWED_PAGE_DIGESTS = {
     "company/index.html": ("987c9663a63c29b36a591db0c8f9f012617977f5d51734aeaf4dbc3343c60e88",),
     # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
     "research/index.html": ("f74139c12089d2cf497b96ea458d142fcd0a9e5e9726d0e8cf77eda509de2275",),
-    # about/index.html: same restored footer labels.
-    "about/index.html": ("22a964323bf35591b3b8d430d8faac12f901e0d3507c0c0c4c09c60b2cad6574",),
+    # about/index.html: same restored footer labels; L-BIO-1 removes the invented ending after "What governs the output?".
+    "about/index.html": ("6bed36d5b02ff41f44d695967ad953bcb862e5369dbcdb0f7c5c4a459457ca1b",),
     # faq/index.html: same restored footer labels.
     "faq/index.html": ("fd1897c90cf870c4eba4058f2cadfe0b68bc4588c054182196cb34eca0fec3a6",),
     # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
