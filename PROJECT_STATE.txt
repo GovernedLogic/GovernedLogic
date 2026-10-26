@@ -39,6 +39,7 @@ WHAT'S LIVE
 
 READY TO MERGE (Harriet), in order
 - None immediately. #27 is not yet merge-ready after #30/#31.
+- HOTFIX (Rule 7), coming: #31's zero-<a> change (38cb3cb) never reached main. It merged into v10.10/overhaul-followup after #30 had squashed that branch at 25dd87f. Live has 42 <a> (21 /library/, 21 /publication/), which breaks Paul's no-links ruling (QA live verification, 2026-10-25 20:36 EDT). The Developer is opening a PR of that change against main, and QA gates it. It merges BEFORE #27.
 
 REQUIRED HANDOFF FOR #27
 - Governor / Developer: merge current main into v10.10/hero-exhibit without force-push, preserve the approved removal of the homepage reasoning exhibit, recompute and re-pin the homepage digest, and resolve only the expected release-guard overlap.
@@ -58,6 +59,13 @@ RULINGS
 
 OPEN DECISIONS
 - Delegated by Paul to Harriet (2026-10-25 11:16 EDT); full list DECISIONS_FOR_HARRIET in Paul's Drive, My Drive/Governed Logic/V10.10 Audit 2026-10-25.
+- For Harriet to decide (raised by QA, 2026-10-25 20:36 EDT). No work starts until a signed lock exists. Governor draft locks:
+  OQ-1 Deploy race: each deploy builds its triggering SHA, so a late Validate can ship an older build. Draft lock: deploy proceeds only if its SHA equals main's head (otherwise skip). Pass = a stale-SHA run is skipped.
+  OQ-2 Withheld lists disagree: check-origin WITHHELD_URLS (21) includes 4 paths now in the approved build and returning 200: /concepts/governed-logic/, /concepts/governed-intelligence/, /assets/gl-reasoning-systems.webp, /paul-portrait.png. check-restored (4) is clean. Draft lock: remove those 4 from WITHHELD_URLS and have CI run check-origin against live. Rule against WEB-140.
+  OQ-3 Phone header on live is about 105px (brand wraps to 4 lines, nav to 2 rows), more than the 88px accepted. Draft lock: at 390 and 320, header is 88px or less, the brand is at most 2 lines, and the text is unchanged.
+  OQ-4 Home hero at 390 sits low under a large black gap. Draft lock: at 390 the hero top is within the first viewport's upper half, and the text is unchanged.
+  OQ-5 /library/ excerpts open with boilerplate ('GOVERNED LOGIC REASONING SYSTEMS Follow the chain. ...'). Draft lock: excerpts start at each work's own first sentence. This changes visible text, so it needs Harriet's or Paul's signature.
+- For Paul (Architect, 2026-10-25 20:16 EDT): do doctrine, canon, identity and publication questions go to Harriet or stay with Paul? They are held for Paul until he answers.
 
 NEXT OWNER
 - Governor / Developer / QA: complete the #27 rebase, digest re-pin, and QA handoff above.
