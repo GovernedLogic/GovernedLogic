@@ -9,8 +9,9 @@ bot, such as googlebot or bingbot), visible text (including image alt
 text, the header, footer, and homepage text outside main), image
 sources, and anchor labels and hrefs do.
 Arrows are exact: ↗ and → are different. The reasoning exhibit is part
-of the published homepage. v10.10/hero-exhibit may append one reviewed
-exhibit-removed homepage digest; any other homepage still fails.
+of the published homepage. v10.10/hero-narrative appends one reviewed
+homepage digest (exhibit removed, Paul's narrative restored in section 01);
+any other homepage still fails.
 """
 from __future__ import annotations
 
@@ -33,11 +34,16 @@ import render_site  # noqa: E402
 
 # Whole-page text and links of the current interface. Not the retired HTML blob ids.
 REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
-# Published homepage, exhibit included, arrows exact. Hero appends the one
-# reviewed exhibit-removed digest to this tuple and nothing else.
+# Published homepage, exhibit included, arrows exact. Hero-narrative appends the one
+# reviewed narrative homepage digest to this tuple and nothing else.
 # index.html: four footer controls removed, the brand name is its visible text, and button href attributes are gone.
 HOMEPAGE_DIGESTS = (
     "774fe282b185a30f204bda0131d37633f42b8fdf9058e6b1855fb12c835b68bb",
+    # v10.10/hero-narrative (supersedes #27): reasoning exhibit removed, including its
+    # description, five labels, title line, and captions; Paul's narrative restored after
+    # the hero lead lines (Paul, 2026-10-26 01:00 EDT). Every restored line is Paul's own
+    # text from 2a64a6b index.html or sources/01_Ultimate_Grounding PDF page 15.
+    "271938e034bc528594130b0ecfefe208583c2f9de4cc36643b0e77c8e1b95a0a",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
