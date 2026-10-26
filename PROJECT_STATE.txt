@@ -34,12 +34,15 @@ Relayed via GL QA (Paul's words in QA's chat), both about the footer items Ultim
 
 WHAT'S LIVE
 - V10.10 is the approved visual baseline.
-- main includes #28 overhaul (6416ce9), #29 deploy hotfix (e0f309e), #25 repository hygiene (3050954), #30 footer/mobile/accessibility cleanup (25dd87f), #31 zero-anchor listing controls (38cb3cb), and #22 lean state/freeze-gate documentation (62e7c22).
+- main includes #28 overhaul (6416ce9), #29 deploy hotfix (e0f309e), #25 repository hygiene (3050954), #30 footer/mobile/accessibility cleanup (25dd87f), and #22 lean state/freeze-gate documentation (62e7c22).
+- CORRECTION: #31 (38cb3cb) is NOT on main. It merged into its stacked base v10.10/overhaul-followup, not into main. Its change returns to main through hotfix #32.
 - #25, #30, #31 and #22 were independently reviewed and merged by Harriet on 2026-10-25 20:25:55 EDT. Their exact reviewed heads had successful validation; #30 and #31 carried Governor-reported QA PASS at 18:47 EDT.
 
 READY TO MERGE (Harriet), in order
 - None immediately. #27 is not yet merge-ready after #30/#31.
-- HOTFIX (Rule 7), coming: #31's zero-<a> change (38cb3cb) never reached main. It merged into v10.10/overhaul-followup after #30 had squashed that branch at 25dd87f. Live has 42 <a> (21 /library/, 21 /publication/), which breaks Paul's no-links ruling (QA live verification, 2026-10-25 20:36 EDT). The Developer is opening a PR of that change against main, and QA gates it. It merges BEFORE #27.
+- 1. #32 HOTFIX (Rule 7) https://github.com/GovernedLogic/GovernedLogic/pull/32: #31's full net change (listing buttons, the no-<a> guard and the card styling 6568ea9) re-applied on main c7d3644. Live has 42 <a> (21 /library/, 21 /publication/), which breaks Paul's no-links ruling (QA live verification, 2026-10-25 20:36 EDT). Lock: Paul's no-links ruling. QA PASS at 5c38f32 (20:57 EDT); the final head with card styling is pending a QA re-check, and the exact head is in the PR's QA VERDICT comment.
+- 2. #33 this state file.
+- 3. #27 after one more normal main merge and a QA quick check.
 
 REQUIRED HANDOFF FOR #27
 - Governor / Developer: merge current main into v10.10/hero-exhibit without force-push, preserve the approved removal of the homepage reasoning exhibit, recompute and re-pin the homepage digest, and resolve only the expected release-guard overlap.
