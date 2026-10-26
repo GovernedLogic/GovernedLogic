@@ -1,5 +1,5 @@
 GOVERNED LOGIC — PROJECT_STATE (SNAPSHOT)
-Updated: 2026-10-25 20:10:00 EDT (Governor)
+Updated: 2026-10-25 20:16:00 EDT (Governor)
 Repository: GovernedLogic/GovernedLogic   Site: https://governedlogic.com/
 Current snapshot only: roles, what's live, open decisions, next owner, PR links. History (including Harriet's dated release records) is in Git history; last full version on main at commit 8f97591.
 
@@ -10,12 +10,15 @@ RULES (verbatim)
 - Lean rule (Paul, 2026-10-25 12:03:00 EDT, via Governor): each PR carries its own evidence (screenshots, QA results, changed files); this file keeps only the current snapshot, with links to PRs. Paul's words: "Hell yes and if I say Paul approves she's just going to have to believe me cuz you would never make that up so I approve it, we got to get lean, it all comes down to words, words, words and when she sees that she'll know it's from me"
 - PR body (Paul, 2026-10-25 12:06 EDT, via Governor; Paul's words: "Yes"): every PR body must include 'Read PROJECT_STATE.txt at main commit: ____'.
 
-- FREEZE GATE (Paul, 2026-10-25 20:09 EDT, verbatim): "Implement the freeze gate as the team's standing process for the governedlogic.com project: before any code gets written, the requirement must be locked and signed off (by Paul or the designated approver), and if a requirement moves after that point, the change goes through a documented change request rather than silently rewriting the target." Full process: docs/FREEZE_GATE.md. No code before a signed-off Requirement Lock; any later change needs a signed-off Change Request; QA fails PRs without them. Designated approvers: none (only Paul's words can add one). Applies to all work after 20:10 EDT; #25, #27, #30, #31 were gated before adoption.
+- FREEZE GATE (Paul, 2026-10-25 20:09 EDT, verbatim): "Implement the freeze gate as the team's standing process for the governedlogic.com project: before any code gets written, the requirement must be locked and signed off (by Paul or the designated approver), and if a requirement moves after that point, the change goes through a documented change request rather than silently rewriting the target." Full process: docs/FREEZE_GATE.md. No code before a signed-off Requirement Lock; any later change needs a signed-off Change Request; QA fails PRs without them. Designated approver: Harriet (Paul, 20:14 EDT, see DECISION-MAKER below); Paul can always sign. Applies to all work after 20:10 EDT; #25, #27, #30, #31 were gated before adoption.
+
+- DECISION-MAKER (Paul, 2026-10-25 20:14 EDT, verbatim, Paul to Governor in Governor's chat): "Update PROJECT_STATE.txt to make Harriet's role explicit as the decision-maker for the governedlogic.com project: she is the brains and the decision-maker, and she reasons through any open question using governed logic. Her decisions land as signed requirement locks under the freeze gate — no branch, commit, or pull request proceeds on an open question until Harriet has decided it and the lock is signed. The Governor remains the single point of communication with Harriet through the state file; the Architect, Developer, and QA report to the Governor, not to Harriet directly."
 
 ROLES (Paul, 2026-10-25 10:22:34 EDT)
 - Paul: final authority; only his words approve changes and releases.
-- Harriet: GitHub/release coordinator; reviews and merges. Bots never merge.
-- Governor: team lead; requirements, visitor journey, design direction and acceptance; sole Grok-side editor of this file and contact with Harriet.
+- Harriet: decision-maker and the brains of the project (Paul, 20:14 EDT). Decides every open question by reasoning it through with governed logic; her decisions land as signed Requirement Locks under the freeze gate. No branch, commit or PR proceeds on an open question until Harriet has decided it and the lock is signed. Also GitHub/release coordinator; reviews and merges. Bots never merge.
+- Governor: team lead; single point of communication with Harriet, through this file only; sole Grok-side editor of this file. Writes each open question and draft Requirement Lock here for Harriet to decide and sign, records her decision verbatim, and relays it to the team. Drafts requirements and acceptance; does not decide open questions.
+- Architect, Developer and QA report to the Governor, not to Harriet directly.
 - GL Site Architect: durable structure and source fidelity against the two treatises.
 - GL Site Developer: implements on v10.10/* branches; owns repo layout, build, CI, PRs.
 - GL QA: independent verification at 1440/390/320.
