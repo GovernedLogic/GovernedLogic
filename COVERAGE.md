@@ -1,3 +1,20 @@
+# Follow-up coverage
+
+orphans=0. machine=0.
+
+The four removed footer controls are not site-wide orphans. No parent-page button was added.
+
+| Destination | Reached now | Depth from / | Worst-page depth before | Worst-page depth now |
+|---|---|---|---|---|
+| /concepts/ultimate-grounding/ | Header on every page, label Ultimate Grounding | 1 | 1 | 1 |
+| /about/ | Homepage control "Read Paul's story" | 1 | 1 | 2 |
+| /library/ | Homepage control "The library" | 1 | 1 | 2 |
+| /challenge/ | Homepage control "The inquiry" (page title: Follow the chain.) | 1 | 1 | 2 |
+
+Worst-page depth is 2 for About, Library, and Follow the chain because the footer control that sat on every page is gone. Each is still one click from the homepage. A button only on the parent page would also be two clicks from every other page, so it would not restore the old depth.
+
+Skip links outside render_site.py were already focus buttons that move focus to main. The remaining anchors are the 42 library and publication listings emitted by render_site.py.
+
 | Route | Old anchor text | Old href | New mechanism + label | Status |
 |---|---|---|---|---|
 | /about/ | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
@@ -129,9 +146,9 @@
 | /concepts/governed-intelligence/ | Ultimate Grounding | /concepts/ultimate-grounding/ | dest already covered on page | SAME-PAGE (duplicate) |
 | /concepts/governed-intelligence/ | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
 | /concepts/governed-intelligence/ | Library | /library/ | — | C-FIDELITY (reachable elsewhere only) |
-| /concepts/governed-intelligence/ | Inspect and copy the public prototype → | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
-| /concepts/governed-intelligence/ | Instruction-level prototype and limitations | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
-| /concepts/governed-intelligence/ | The prototype | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
+| /concepts/governed-intelligence/ | Inspect and copy the public prototype → | /mechanism.html | form: "Inspect and copy the public prototype →" | SAME-PAGE |
+| /concepts/governed-intelligence/ | Instruction-level prototype and limitations | /mechanism.html | form: "Instruction-level prototype and limitations" | SAME-PAGE |
+| /concepts/governed-intelligence/ | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
 | /concepts/governed-intelligence/ | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
 | /concepts/governed-intelligence/ | Research | /research/ | form: "Research" | SAME-PAGE |
 | /concepts/governed-intelligence/ | Research → | /research/ | form: "Research →" | SAME-PAGE |
@@ -153,8 +170,8 @@
 | /concepts/governed-logic/ | Ultimate Grounding → | /concepts/ultimate-grounding/ | dest already covered on page | SAME-PAGE (duplicate) |
 | /concepts/governed-logic/ | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
 | /concepts/governed-logic/ | Library | /library/ | — | C-FIDELITY (reachable elsewhere only) |
-| /concepts/governed-logic/ | Public prototype → | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
-| /concepts/governed-logic/ | The prototype | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
+| /concepts/governed-logic/ | Public prototype → | /mechanism.html | form: "Public prototype →" | SAME-PAGE |
+| /concepts/governed-logic/ | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
 | /concepts/governed-logic/ | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
 | /concepts/governed-logic/ | Research | /research/ | form: "Research" | SAME-PAGE |
 | /concepts/governed-logic/ | Sources & editions | /sources/ | form: "Sources & editions" | SAME-PAGE |
@@ -290,9 +307,9 @@
 | / | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
 | / | 01 The library Concepts, source treatises, and the reasoning architect | /library/ | form: "The library" (label differs) | SAME-PAGE |
 | / | Library | /library/ | dest already covered on page | SAME-PAGE (duplicate) |
-| / | Explore the working prototype ↗ | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
-| / | Read and test the instructions → | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
-| / | The prototype | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
+| / | Explore the working prototype ↗ | /mechanism.html | form: "Explore the working prototype ↗" | SAME-PAGE |
+| / | Read and test the instructions → | /mechanism.html | form: "Read and test the instructions →" | SAME-PAGE |
+| / | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
 | / | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
 | / | Explore the research method → | /research/ | form: "Explore the research method →" | SAME-PAGE |
 | / | Research | /research/ | form: "Research" | SAME-PAGE |
@@ -337,7 +354,7 @@
 | /library/ | Business strategy — additional direction · Source edition → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | a: "Business strategy — additional direction · Source " | STILL-A |
 | /mechanism.html | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
 | /mechanism.html | Governed Logic Reasoning Systems | / | form: "Governed Logic Reasoning Systems" | SAME-PAGE |
-| /mechanism.html | ← Governed Logic | / | a: "← Governed Logic" | STILL-A |
+| /mechanism.html | ← Governed Logic | / | form: "← Governed Logic" | SAME-PAGE |
 | /mechanism.html | About Paul | /about/ | — | C-NOTE (reachable elsewhere only) |
 | /mechanism.html | Follow the chain. | /challenge/ | — | C-NOTE (reachable elsewhere only) |
 | /mechanism.html | Company | /company/ | form: "Company" | SAME-PAGE |
@@ -439,7 +456,7 @@
 | /sources/ | Read the source PDF → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | form: "Read the source PDF →" | SAME-PAGE |
 | /sources/ | Read the complete supplied addendum → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | form: "Read the complete supplied addendum →" | SAME-PAGE |
 
-SAME-PAGE=304, STILL-A=43, FRAG=0, C-FIDELITY=34, C-NOTE=12, ORPHAN=0, SELF=45
+SAME-PAGE=305, STILL-A=42, FRAG=0, C-FIDELITY=34, C-NOTE=12, ORPHAN=0, SELF=45
 
 ## Parent routes
 

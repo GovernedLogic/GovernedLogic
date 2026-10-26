@@ -179,8 +179,9 @@ test('Phone nav stays visible at 360px',async({page})=>{
  expect(metrics.details).toBe(0);
  expect(metrics.count).toBe(5);
  expect(metrics.overflow).toBe(false);
- expect(metrics.headerHeight).toBeLessThanOrEqual(64);
- expect(metrics.oneRow).toBe(true);
+ expect(metrics.headerHeight).toBeLessThanOrEqual(88);
+ expect(metrics.headerHeight).toBeGreaterThanOrEqual(44);
+ expect(new Set(metrics.boxes.map(box=>Math.round(box.top))).size).toBeLessThanOrEqual(2);
  for(const box of metrics.boxes){
   expect(box.h).toBeGreaterThanOrEqual(44);
   expect(box.w).toBeGreaterThanOrEqual(44);

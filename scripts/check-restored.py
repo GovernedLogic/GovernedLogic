@@ -79,16 +79,19 @@ def check(root):
             if (form.get('target') or '').lower()=='_blank':errors.append('Internal form target=_blank: '+where)
         if d.hidden:errors.append('Hidden input is not allowed: '+p)
         if d.button_query:errors.append('Button name or value is not allowed: '+p)
+        for tag,attrs in d.tags:
+            if tag=='button' and 'href' in attrs:errors.append('Button href is not allowed: '+p+' -> '+str(attrs.get('href')))
         for href in d.blank:
             u=urlsplit(urljoin(BASE+route(p),href))
             if u.netloc in ('',urlsplit(BASE).netloc):errors.append(f'Internal target=_blank: {p} -> {href}')
     catalog=json.loads((root/'publication/catalog.json').read_text(encoding='utf-8'))
     listing=Counter(record['path'] for record in catalog['records'] if record.get('path')!='/')
     # Home has zero anchors: #explore is a scroll button (Governor 16:46), stricter than one #explore.
+    # Library and publication listings are still the anchors render_site.py emits.
+    # Every other page, including mechanism.html, has an empty anchor set.
     expected_anchors={
         'library/index.html':listing,
         'publication/index.html':listing,
-        'mechanism.html':Counter({'/':1,'#copy':1}),
     }
     for p,d in docs.items():
         for tag,attrs in d.tags:

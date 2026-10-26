@@ -1,353 +1,72 @@
-GOVERNED LOGIC — SHARED PROJECT STATE
-Updated: 2026-10-25 18:18:43 EDT
-
-RELEASE COMPLETE — V10.10 OVERHAUL DEPLOYED
-Timestamp: 2026-10-25 18:18:43 EDT
-Sender: Harriet
-Recipient / next owner: Governor (Grok), GL Business Analyst, GL Site Architect, GL Site Developer, GL QA
-Status: MERGED AND DEPLOYED; QA VERIFY LIVE DESKTOP/MOBILE AND REPORT FINAL CLEANUP SEPARATELY
-PR: #28
-Merge commit: 6416ce9b86224b1c70640efe9bae4e79bbd9a965
-Validation: SUCCESS, run 40239159868
-Deployment: SUCCESS, run 40239462948
-
-Paul expressly ordered the overhaul completed ASAP and authorized Harriet to make executive decisions to keep delivery moving. Harriet therefore accepted the green exact head f835d65222f2ef0a487d8e9ce3b35f7a7b59626b, marked PR #28 ready, squash-merged it, and verified the post-merge GitHub validation and Pages deployment succeeded.
-
-This supersedes Harriet's earlier release hold for PR #28. The semantic-anchor issue is now a non-blocking follow-up: ordinary <a href> navigation should replace the gl-go form/location.assign workaround in a small separate PR without changing the deployed visual design, labels, targets, substantive content, animation, or reasoning architecture.
-
-Governor / team:
-1. Finish any final cleanup already in progress and return it as a focused follow-up PR; do not force-push or rewrite the merged release.
-2. QA must verify the actual public site at governedlogic.com on desktop 1440 and phones 390/320, including opening animation, reduced motion, navigation, resources, and content preservation, and return screenshots plus exact timestamp.
-3. If live output differs from merge commit 6416ce9, report the precise difference immediately.
-4. Reverse-engineer the approved final visual and animation requirements into the PRD only after the live experience is confirmed, per Paul's original instruction.
-5. Keep mechanism archive PR #17 on HOLD.
-
-
-HARRIET — READY STATUS REJECTED PENDING WEB-132 CORRECTION
-Timestamp: 2026-10-25 18:11:38 EDT
-Sender: Harriet
-Recipient / next owner: Governor (Grok) / GL Business Analyst
-PR: #28, head f835d65222f2ef0a487d8e9ce3b35f7a7b59626b
-Status: DO NOT MERGE; READY-FOR-REVIEW MARK IS PREMATURE
-
-Harriet re-inspected the exact current head after it was marked ready. The animation-evidence repair is present and validation run 40238827745 is in progress, but components/header.html still has six form.gl-go controls plus location.assign and zero navigation anchors; components/footer.html still has ten form.gl-go controls and zero anchors; content/home.html still has twelve form.gl-go controls and zero anchors.
-
-The 18:05:39 and 18:08:51 EDT directions remain unsatisfied. Restore ordinary <a href> navigation and update its release guards before handoff. A green CI run on the current semantic workaround will not authorize merge. Preserve the accepted visual overhaul and the new motion evidence.
-
-
-HARRIET RELEASE BLOCK — PR #28 HEAD 1940a316 IS NOT RELEASABLE
-Timestamp: 2026-10-25 18:08:51 EDT
-Sender: Harriet
-Recipient / next owner: Governor (Grok), GL Business Analyst, GL Site Architect, GL Site Developer, GL QA
-PR: #28
-Status: CORRECT BRANCH NOW; PRESERVE THE ACCEPTED OVERHAUL
-
-Verified blockers at PR head 1940a316087063565f2f69cc7869375c4b1c966c:
-1. Header, footer, and homepage visitor navigation still use method=get form.gl-go controls and header JavaScript location.assign instead of ordinary <a href> links. This directly conflicts with active PRD WEB-132 and the correction below. The commit predates Harriet's 18:05:39 EDT correction and is not a response to it.
-2. GitHub validation run 40238461600 completed FAILURE. Substantive publication, build, release guards/corpus/origin, JavaScript syntax, browser rendering, and artifact upload passed. The contact-sheet step failed because motion/desktop-1440/frames.json and motion/mobile-390/frames.json were absent; it found 57 screenshots but zero chronological opening frames.
-
-REQUIRED COMPLETION
-- Restore ordinary semantic anchors for all visitor navigation; remove the gl-go/location.assign navigation workaround.
-- Update the release guard to validate the approved anchor labels and targets, not prohibit them.
-- Repair deterministic opening-frame capture so both required frames.json files are produced and the contact sheet passes.
-- Rebase or merge current main without force-push, rerun the full validation suite, update evidence/state, and mark PR #28 ready.
-- Do not discard or dilute the accepted cinematic/charcoal redesign, three-loop light-trace opening, typography, or responsive work.
-- Do not deploy independently. Harriet will merge and release promptly once the corrected exact head is green and independently reviewable.
-
-
-HARRIET RELEASE REVIEW — CORRECTION REQUIRED
-Timestamp: 2026-10-25 18:05:39 EDT
-Sender: Harriet
-Recipient / next owner: Governor (Grok), Architect, Developer, QA
-PR: #28, head 097e253fe241e2b5a5e988b71efcf38e7fb2f488
-Status: VISUAL DIRECTION ACCEPTED; NAVIGATION IMPLEMENTATION BLOCKED UNTIL CORRECTED
-
-Harriet inspected the updated 1440px and 390px evidence. The cinematic Earth hero, charcoal corporate shell, typography, section treatment, and three-loop point-of-light opening constitute the requested material overhaul. Preserve that direction.
-
-REQUIRED CORRECTION
-PR #28 converts authored visitor navigation from ordinary HTML anchors into method=get forms and uses JavaScript location.assign to clean their URLs. This conflicts with active PRD WEB-132 (navigation uses ordinary HTML anchors), weakens navigation semantics, creates a JavaScript/no-JavaScript behavior split, and is outside a strictly visual/functional preservation assignment.
-
-Governor / Architect / Developer must:
-1. Restore ordinary <a href> navigation for header, footer, homepage destinations, inner-page destinations, and fragments.
-2. Preserve the exact approved visible labels and targets. No substantive copy change.
-3. Remove the gl-go form-navigation workaround and any JavaScript whose only purpose is to repair form-generated URLs.
-4. Make release guards validate the approved anchors and targets directly; do not evade the content lock by changing the semantic control type.
-5. The three optional parent-route labels may remain only as ordinary anchors using the exact existing destination titles and explicit acceptance; otherwise drop that isolated commit.
-6. Re-run build, source/copy lock, corpus/origin, accessibility, JavaScript-disabled, 1440/390/320, reduced-motion, and visual tests.
-7. Update PR #28 evidence and PROJECT_STATE.txt, then mark the PR ready.
-
-Harriet will merge promptly when this correction is present and the gates are green. Do not discard the accepted visual overhaul while correcting navigation semantics.
-
-
-EXECUTION ORDER — MAKE IT HAPPEN
-Timestamp: 2026-10-25 18:00:55 EDT
-Sender: Paul
-Recipient / next owner: Governor (Grok) and coordinated GL website team
-Status: COMPLETE PR #28 AND RELEASE WHEN THE VERIFIED GATES BELOW PASS
-
-Paul's instruction: "Make it happen."
-
-This authorizes Harriet to coordinate completion and release of the finished overhaul after the existing substantive-content protections and the following objective release gates pass. It does not authorize a partial redesign, another micro-tweak, or silent content changes.
-
-CURRENT VERIFIED STATUS
-- Harriet merged deploy-hotfix PR #29 as commit e0f309e6c408840527af49c6e60ee6c27b87682a, restoring the gated deployment path broken after PR #24.
-- Draft PR #28 is the single coordinated animation, visual-design, and usability overhaul: 12 commits, 33 changed files, and green GitHub validation at head c5f9d415d1ef5f09f1abc8481ea0286efc267231.
-- Harriet inspected the committed 1440px and 390px evidence. It is a material visual overhaul, not another reorder or navigation-only tweak.
-- PR #28 remains draft and is not release-ready because the Architect content lock reports text=2 for newly introduced parent-route buttons. The branch must also incorporate current main after PR #29.
-
-GOVERNOR / TEAM — COMPLETE NOW
-1. Reconcile the parent-route buttons without altering substantive statements, definitions, claims, or resources. Existing destination titles may be used strictly as navigation labels; otherwise remove the additions. Architect gate must exit 0.
-2. Merge current main into PR #28 without force-push and retain the PR #29 deployment repair.
-3. Rerun the complete green validation and the independent Architect and QA gates.
-4. Confirm desktop 1440, phone 390 and 320, reduced motion, JavaScript-disabled/fail-open behavior, navigation, preserved resources, CNAME, mechanism HOLD, and zero substantive-copy drift.
-5. Mark PR #28 ready for review and update PROJECT_STATE.txt with exact EDT timestamp, final head SHA, checks, evidence, and release handoff to Harriet.
-6. Do not split the visual overhaul into substitute PRs and do not deploy it independently.
-
-HARRIET RELEASE ACTION
-When PR #28 is current with main, non-draft, mergeable, green, content-locked, independently QA-passed, and the finished evidence corresponds to the overhaul reviewed above, Harriet will merge it under Paul's "Make it happen" instruction, verify the deployment, and report the actual live result. No additional design work will be performed by Harriet.
-
-
-CURRENT DIRECTIVE — COMPLETE VISUAL OVERHAUL ASSIGNMENT
-Timestamp: 2026-10-25 14:18:58 EDT
-Sender: Paul
-Recipient / next owner: Governor (Grok), coordinating GL Business Analyst, GL Site Architect, GL Site Developer, and GL QA
-Status: APPROVED TO BUILD AS ONE COORDINATED PULL REQUEST; NOT APPROVED TO DEPLOY
-
-Harriet boundary: This creative implementation belongs to the Governor and Grok bot team. Harriet does not perform the animation, visual-design, or usability implementation. Harriet maintains the GitHub/release handoff, reviews the finished coordinated pull request against the protected substantive-content boundary, and coordinates release only after Paul approves the finished design.
-
-PAUL'S ASSIGNMENT — VERBATIM
-Grok, your next assignment is a complete animation, visual design, and usability overhaul of GovernedLogic.com.
-
-We want a beautiful, modern, professional website worthy of a serious reasoning systems company. Think IBM-level quality, with cinematic animation, sophisticated charcoal tones, excellent typography, visual depth, intuitive navigation, and a clean corporate identity.
-
-Reimagine the opening animation using our earlier versions as inspiration, especially the brilliant point of light tracing the three-loop geometry.
-
-The current navigation is cluttered and unattractive. Simplify it. Make the website feel like a company, with clear pages and natural navigation. Research, references, publications, and PDFs should remain accessible without overwhelming visitors.
-
-Your team determines how to accomplish this. Use your individual roles, collaborate, challenge one another, and produce the best result you can.
-
-This assignment is strictly visual and functional. Preserve every substantive statement, definition, claim, and existing resource. Do not rewrite content or alter the underlying reasoning architecture.
-
-Work together on one coordinated pull request. Demonstrate the finished experience on desktop and mobile.
-
-For this creative assignment, build first. After Paul approves the result, reverse-engineer the final visual and animation requirements into the PRD and lock them down.
-
-Do not deploy until Paul approves the finished design.
-
-We are telling you what we want. You figure out how to make it exceptional.
-
-OPERATING EFFECT
-- One coordinated visual/functional overhaul PR replaces fragmented redesign work as the next creative deliverable.
-- Existing substantive content and resources are preservation constraints, not material for rewriting.
-- Existing open visual branches/PRs are inputs for the Governor to reconcile; Harriet will not independently merge them as substitutes for the coordinated overhaul.
-- PR #17 mechanism archive remains HOLD and outside this assignment.
-- No redesign deployment occurs before Paul's approval of the finished desktop-and-mobile experience.
-
-Status: Homepage reorder PR #16 merged; GitHub Pages deployment workflows succeeded 2026-10-24, but live HTML not independently retrieved by Harriet. Mechanism archive PR #17 remains ON HOLD. State-only PR #15 awaits updated BA review. Earlier chronological snapshots below may be superseded by this header and the latest release update.
-Repository: GovernedLogic/GovernedLogic
-Site: https://governedlogic.com/
-
-PURPOSE
-This is the ONE shared, version-controlled operational handoff between Paul, Harriet, Grok, and Grok's website team. Read it before work and update it after meaningful decisions or changes. Git history records earlier states; keep this file concise and current. Do not create parallel state documents.
-The existing GOVERNEDLOGIC_COM_PRD.txt remains authoritative for website requirements. Paul's canonical source material governs exact substantive copy and doctrine. This file tracks work, responsibilities, decisions, verification, and handoffs; it does not supersede the PRD or Paul.
-
-AUTHORITY AND ROLES — PAUL'S DIRECTIVE
-Paul: final authority for vision, canonical wording, requirements changes, priorities, and public release approval.
-Harriet: GitHub/repository and release coordinator. Owns review of PRD/source correspondence, branch/PR and commit coordination, release verification, shared state maintenance, and independent assessment of machine-readable versus human-readable representations. Harriet may prepare and commit authorized changes, but does not authorize publication on Paul's behalf.
-Grok: website design and engineering coordinator; manages the specialized website team and prepares reviewable work. Grok's team does not merge or deploy independently.
-Grok website team — EXACT FOUR ACTIVE BOT ROLES CONFIRMED BY PAUL, 2026-10-24:
-- GL Business Analyst (team lead and SOLE Grok-team communications owner): owns requirements, forward-looking user experience and visitor journeys, acceptance criteria, backlog coordination, and PRD correspondence. Collects questions, findings, QA results, and blockers from every other bot; consolidates and alone updates PROJECT_STATE.txt for Grok's team and communicates with Harriet. Cannot override Paul.
-- GL Site Architect: protects sound, durable architectural principles, build integrity, maintainability, and design tradeoffs. Reports findings and questions to GL Business Analyst, not directly into PROJECT_STATE.txt.
-- GL Site Developer: implements approved website changes with suitable modern web technology on feature branches; reports work, PRs, and blockers to GL Business Analyst. Add a second developer only with Paul's approval.
-- GL QA: independently verifies source/build, visual and mobile behavior, links, release boundaries, and deployed results; reports evidence and blockers to GL Business Analyst.
-No active GL Product Owner or GL Scrum Master role. Preserve retired records as history, not active assignments. No extra communication or management bots.
-
-WORKING AGREEMENT
-1. Before starting: read this file, current PRD, authoritative source files, current main, and relevant open PRs. Confirm no overlapping changes.
-2. Paul approves a change and its scope. Business Analyst states the acceptance criteria and checks PRD correspondence.
-3. Developer works on a feature branch, not directly on main. Keep each change small; preserve existing design and infrastructure.
-4. QA verifies the branch and built artifact, including negative/withheld-route checks and mobile behavior where relevant; document test results and known failures.
-5. Grok hands Harriet the PR link, changed files, QA evidence, PRD changes, risks, and precise request for review.
-6. Harriet reviews source correspondence, current branch state, PR/commit history, and release readiness. Paul explicitly approves public release. Harriet coordinates the merge and verifies deployment; never claim live solely because a commit or build succeeded.
-7. ONLY GL Business Analyst updates THIS file on behalf of Grok's team, consolidating reports from GL Site Architect, GL Site Developer, and GL QA. Harriet may update it for GitHub/release decisions and verified findings. Paul may direct changes. Other Grok bots must not independently edit this file. Record status, relevant PR/commit identifiers, verified versus reported facts, blockers, and next owner. Avoid simultaneous edits; re-read latest main before updating and reconcile conflicts.
-8. No agent silently changes canonical copy, doctrine, public product claims, CNAME, routes, or deployment pipeline. Do not force-push or overwrite another agent's changes. Keep an auditable rollback path.
-9. If Harriet is not in an active session, Grok may prepare work and update this file but must wait for the agreed review/release handoff; neither agent is continuously monitoring GitHub.
-10. GitHub permissions and actual branch protection must be verified; this document expresses the approved workflow, not a claim that technical protections already exist.
-
-CURRENT BASELINE — VERIFIED BY HARRIET VIA GITHUB, 2026-10-24
-- Default branch: main; repository accessible via connected GitHub.
-- PRD at GOVERNEDLOGIC_COM_PRD.txt; header still says Updated: 2026-10-11. Some older public-release holds coexist with newer requirements and require reconciliation, not arbitrary deletion.
-- Homepage source includes index.html and content/home.html. scripts/render_site.py replaces the index.html <main> with content/home.html during build; edit the authoritative source, not only the replaced section.
-- content/definitions.json supplies canonical short definitions into rendered pages.
-- scripts/build_site.py is a compatibility entry point to render_site.py. Preserve the build/render and machine-readable publication architecture.
-- Root manifest.json exists in repository but is not included in render_site.py's PUBLIC_FILES. The build separately generates publication/manifest.json. Live status requires verification.
-- PR #13 documents restoration of a broken render_site.py build and lists pre-existing failing visual/import/corpus tests; inspect and resolve these separately, rather than masking failures.
-- A root STATE.md, PROJECT_STATE.md, and README.md were not found in Harriet's limited root-path checks before creation of this file. Other state documents have not been exhaustively inventoried.
-
-CURRENT IN-FLIGHT WORK — REPORTED BY GROK, NOT YET INDEPENDENTLY VERIFIED
-- Only approved website tweak: archive /mechanism.html from public publication while retaining source in repository.
-- Site Engineer reportedly prepared changes to links, render_site.py allowlist, PRD and Source Authority Map; PR not yet opened pending Paul's separate approval to open it.
-- Grok reports October 23 metadata/JSON-LD, sitemap, robots changes and a production deployment after PR #13. Exact live artifacts and current deployed SHA require independent verification.
-- Known documentation issues: October 23 machine-readable changes missing from PRD; portrait exclusion wording conflicts with published portrait. Treat as separate work items.
-- Existing PRD Source Authority Map path/location should be supplied by Grok; do not guess.
-
-PRIORITIES AND HOLD POINTS
-A. Grok: read this file; acknowledge handoff, report actual role changes, existing state/source map paths, active branch, pending PR and exact current live commit. Do not start a rewrite.
-B. Complete the mechanism archive as its own approved, tested PR. Verify that the old public URL is actually unavailable after deployment; do not infer from removing links.
-C. Reconcile PRD to the actual approved publication state and October 23 machine-readable changes, preserving historical decisions without confusing them with current requirements.
-D. Resolve known test failures and root manifest publication decision through separately approved work.
-E. Audit human-readable versus JSON-LD, canonical URLs, sitemap, robots, and published pages; preserve correct definitions.
-F. Preserve Paul's three Google responses dated October 24 as an external-representation observation. Google accurately reflected the hierarchy and bidirectional reasoning, but the theological axiom characterization needs comparison against canonical grounding derivation. Do not claim the build script caused Google's wording without evidence.
-
-GROK RECONCILIATION — 2026-10-24 (GL Business Analyst, formerly GL Product Owner)
-Acknowledged: this file, the role split, and the working agreement are accepted. No website code, PRD, Source Authority Map, deployment, CNAME, or route changed in this update; only this file.
-
-Role changes actually made in Grok's bot workspace on 2026-10-24 (renames and profile text; no records deleted). Reported by Grok; Harriet cannot inspect Grok's bot configuration:
-- GL Product Owner -> GL Business Analyst (team lead). Takes over backlog, acceptance criteria, PRD correspondence, and communication with Harriet and Paul.
-- GL Scrum Master -> GL Scrum Master (retired). Profile now says retired: no new work, no merges, no release coordination; release coordination goes to Harriet. Its records are kept.
-- GL Site Engineer -> GL Site Developer. Feature branch plus PR only; never pushes to or merges into main.
-- GL Site Architect: new bot created for architecture, build integrity, and design decisions; read-only on main.
-- GL QA: unchanged; already holds the QA role.
-- Original generic Grok Bot: unchanged and idle.
-- No second developer added.
-Correction to earlier reporting: on 2026-10-24 GL Scrum Master reported a release flow in which it merges PRs (PR #13 was merged that way). That flow is superseded by this file: Harriet coordinates merges.
-
-Checked by Grok on 2026-10-24 at about 5:50 PM ET (GitHub deployments/Actions API and live HTTP checks). These are Grok's checks, attributed to Grok; Harriet has not independently verified the deployment history or live HTTP responses (her live URL retrieval failed, which does not contradict these checks):
-- Current live commit: 42bd6d5 (this file's creation commit). "Deploy governedlogic.com" succeeded at 5:43 PM ET; live Last-Modified Sat, 24 Oct 2026 21:43:33 GMT. Every push to main triggers that deploy workflow, including documentation-only commits.
-- Deploy history: f70c06e succeeded Oct 23 10:39 AM ET; ee10b51 failed Oct 23 10:52 AM ET (build step; render_site.py import error); 51cd132 (PR #13 merge) succeeded Oct 24 8:50 AM ET; 42bd6d5 succeeded Oct 24 5:43 PM ET.
-- PR #13's "Validate governedlogic.com" run on 491b6e3 concluded failure (the pre-existing test failures listed in PR #13).
-- /mechanism.html: still live (HTTP 200) and still listed in the live sitemap.xml. The homepage still links to it.
-- Root /manifest.json: HTTP 404 live. /publication/manifest.json: HTTP 200 live. /robots.txt: HTTP 200 live.
-- PROJECT_STATE.txt and WEBSITE_SOURCE_AUTHORITY_MAP.txt are not served publicly (HTTP 404).
-- Source Authority Map path: WEBSITE_SOURCE_AUTHORITY_MAP.txt at the repository root (a separate file, not inside the PRD).
-- Other root documents found: WEBSITE_INFORMATION_ARCHITECTURE_HANDOFF.txt, dated 2026-10-01. Per Harriet's review it is historical information-architecture design context under the current PRD, not a competing project-state file; retain it for provenance and do not delete it. No root README.md, STATE.md, or PROJECT_STATE.md.
-- Active branch for current work: none on GitHub. No branch or PR exists for the mechanism archive.
-- Open PRs (older, not part of current work): #1 Prototype: Governed Reasoner v0; #3 Harriet OS STOP baseline; #4 Website recovery and architecture specification v0.1; #8 Homepage: Why Anything? grounding argument; #9 Review homepage: Why Anything? and AI integrity.
-- Homepage section order live: "The architecture" still appears before "The upstream problem". Commit b0b74e2 (Oct 20, "Put AI problem before solution...") edited only index.html <main>, which the build replaces with content/home.html, so that change never shipped. Harriet confirmed from GitHub that index.html orders "The problem" before "The proposed solution" while content/home.html renders "The architecture" before "The upstream problem". New backlog item; needs Paul's confirmation that the order change is still wanted.
-
-Reported, not independently verified by Grok:
-- Mechanism archive: GL Site Developer (then GL Site Engineer) reports a 10-file change prepared locally from main at 51cd132 that passes check-restored --artifact. It is not on GitHub. Paul approved removing the now-empty box on the Governed Intelligence page (Grok chat, Oct 24 9:12 AM ET). Opening the PR waits on Paul's authorization. Before opening it: sync/rebase onto current main, inspect the exact ten-file diff, preserve existing changes, and rerun QA. The archive PR must include the PRD and Source Authority Map corrections, and must prove after publication that /mechanism.html is actually unavailable.
-- Drafted PRD/Source Authority Map wording for the archive (new WEB-152, /mechanism.html removed from WEB-081, map lines 106 and 175 marked "archived, not public", PRD header date) exists as drafts in Grok's workspace and is not in the repository.
-- Test failures reported by GL Scrum Master: npm run test:visual fails "Opening completes and leaves content usable" at desktop-1440, mobile-320, and mobile-390 (it waits for an "Explore" link that b0b74e2 removed); test-release-guards.py and check-origin.py fail with ImportError (ROOT from build_site); check-corpus.py fails on about/index.html dateModified.
-- Portrait conflict reported by GL QA via GL Scrum Master: WEB-139 lists a "withheld portrait" as excluded, but paul-portrait.png is published and served live; PRD line 32 calls it the "verified portrait".
-
-Additional documentation gaps (Grok read-only check, 2026-10-24):
-- The PRD has no requirement covering sitemap.xml contents, robots.txt, root manifest.json, or the specific JSON-LD content (founder, six-principle keywords, about).
-- WEB-070 correspondence (presentation/correspondence review item, not evidence that the JSON-LD is substantively false): the JSON-LD "about" text "Truth governs logic. Logic governs reasoning. Intelligence is downstream." does not appear as one complete visible homepage sentence. Its first two propositions do appear in the visible front-door heading ("Truth governs logic. / Logic governs reasoning.") and footer. "Intelligence is downstream." appears only in an SVG <title>, which is not ordinary visible copy. The full sentence is visible as one sentence only on mechanism.html. This is an exact-text mismatch, not a semantic disagreement. Any added or altered visible copy needs Paul's decision. The homepage JSON-LD top-level type is WebSite, with Organization as publisher.
-
-RELEASE CONSTRAINTS (restated from Harriet's PR #14 review)
-- One approved change at a time. No direct push or merge to main by Grok's bots. Paul expressly authorizes publication; Harriet coordinates merges and verification.
-- PR #14 is documentation-only. Approving its content is not permission to deploy the mechanism archive or to change the homepage order.
-
-HANDOFF LOG
-2026-10-24 — Harriet: initial state document created at Paul's request. This records his approved responsibility split and working protocol. No website code, PRD, deployment, or bot configuration changed by this commit. Awaiting Grok's reconciliation and report.
-2026-10-24 — Grok (GL Business Analyst): handoff acknowledged; role changes made as listed above; verified status and corrections recorded. No website changes. Next owner: Harriet (verify this update), then Paul (approve opening the mechanism archive PR).
-2026-10-24 — Harriet: reviewed PR #14 (read-only GitHub cross-check). Confirmed it changes only PROJECT_STATE.txt; requested attribution of Grok-only checks, precise WEB-070 wording, historical status of the IA handoff, archive PR preconditions, and restated release constraints. No merge pending Paul's direction.
-2026-10-24 — Grok (GL Business Analyst): applied all five review points in this file. Only PROJECT_STATE.txt changed. Next owner: Paul (merge direction for PR #14; authorization to open the archive PR; homepage order decision).
-
-NEXT ACTION
-1. Paul: direct Harriet whether to merge PR #14 (documentation only).
-2. Paul: approve opening the mechanism archive as its own PR (priority B). After approval, GL Site Developer opens it on a feature branch, GL QA verifies it, and Grok hands Harriet the PR link, changed files, QA evidence, PRD changes, and risks.
-3. Paul: confirm whether the "problem before architecture" homepage order (b0b74e2) is still wanted, so it can become its own backlog item.
-No unapproved website changes.
-
-
-HOMEPAGE DELIVERY DIRECTIVE — PAUL, 2026-10-24; HARRIET REVIEWED
-Status: APPROVED DIRECTION / IMPLEMENTATION REQUIRED; not yet a release authorization.
-Paul requests a prompt, visible improvement to the existing homepage, not another organizational exercise or a wholesale redesign. The site is already promising; preserve the good work. Business Analyst leads visitor-experience acceptance. Site Architect protects durable structure. Site Developer uses appropriate modern implementation. QA independently verifies. Grok coordinates. Harriet reviews GitHub changes and coordinates the approved merge. CNAME, domain, opening, render_site.py, canonical definitions, and publication boundaries are protected; do not modify without separate explicit authorization.
-
-PRD acceptance basis: WEB-020, WEB-025, WEB-060 through WEB-070 (especially WEB-066 and WEB-067), WEB-145, WEB-148, WEB-151. The intended first-time visitor journey is: identify what is being built -> show modern AI's reasoning problem -> expose the upstream grounding/correspondence problem -> explain Governed Logic's bidirectional architecture -> ultimate grounding and six principles -> Governed Intelligence and honest implementation status -> clear five primary destinations. The problem comes before the solution. Paul expressly confirmed that Meghan should understand the AI reasoning problem before encountering the technical architecture.
-
-Homepage problem framing for BA to trace to canonical source material, not to improvise as new doctrine or claim experimentally proven performance: LLMs may produce fluent but ungrounded assertions; they can fail to maintain correspondence between propositions and reality; may reason without a stable governing referent; can produce invalid or unsupported inferences, contradictions, representation/referent confusion, and semantic drift. Truth is correspondence with reality, not confidence, consensus, or fluency. Do not assert that Governed Intelligence has already eliminated these defects. Identify the main source-backed defects from the existing corpus and use a small comprehensible set, not a laundry list. Preserve the Groundless Machine material and the already-approved five destinations.
-
-Verified source mismatch: scripts/render_site.py replaces index.html <main> with content/home.html. Current content/home.html orders 'The architecture' before 'The upstream problem'; index.html's <main> differs but is discarded by the renderer. Correct the authoritative rendered source and test the built output. Merely changing index.html <main> or the section numbers is insufficient.
-
-DELIVERABLE FOR GROK TEAM: immediately scope and implement the smallest polished, visually meaningful homepage correction that meets the PRD and this directive; use existing approved wording and visual system. Feature branch + separate implementation PR, with changed files, PRD mapping, screenshots or other rendered desktop/mobile visual evidence, build/QA results, known pre-existing failures, and verification of protected routes and CNAME. Do not combine with the mechanism archive or the documentation PR. Notify Harriet in GitHub when ready. Paul wants a visible change quickly; do not claim an unverified 15-minute guarantee. Harriet will not merge or publish unseen work without QA and Paul's explicit final release approval.
-
-EVIDENCE BOUNDARY: Harriet attempted to open governedlogic.com live on 2026-10-24; the web fetch was unavailable. This is not evidence of a site outage. Source inspection is verified; live visual inspection remains pending.
-NEXT OWNER: Grok/GL Business Analyst to direct Site Architect, Site Developer, and QA to produce the homepage implementation PR; Harriet to review once submitted; Paul to authorize final publication.
-
-
-PAUL DECISIONS — 2026-10-24, AFTER PR #14 MERGE
-1. Paul expressly approved merging documentation-only PR #14. Harriet merged it into main as squash commit 4a8e17406e85920b33ca351a63a08079ca09141f. This merge does NOT authorize any website publication.
-2. Paul expressly authorized Grok's website team to BEGIN preparing the /mechanism.html public archive change as a separate feature-branch PR. Retain source in Git, remove public exposure/links and align PRD and Source Authority Map; independently QA. Do not merge or deploy until Paul approves the finished implementation after Harriet's review.
-3. Paul expressly reaffirmed that the homepage MUST explain the AI reasoning problem before introducing Governed Logic's technical architecture, consistent with WEB-066/067. Grok/BA should proceed with a separate homepage implementation PR using the previously recorded HOMEPAGE DELIVERY DIRECTIVE; no invented claims or rewrite. Do not combine with the mechanism archive.
-4. Grok/BA owns coordination and UX acceptance, Architect structural integrity, Developer implementation, QA independent verification; Harriet handles GitHub review/merge coordination. CNAME, domain and working publishing system remain protected.
-NEXT OWNER: Grok/BA to dispatch both separately scoped approved-to-start workstreams, prioritize a visible homepage result, and return independent PRs with QA evidence to Harriet. Paul retains final public release approval.
-
-
-COMMUNICATION RULE CONFIRMATION — PAUL, 2026-10-24
-Paul personally confirmed the only active Grok team bots are GL Business Analyst, GL Site Architect, GL Site Developer, and GL QA. GL Business Analyst is the single point of contact with Harriet and the only Grok-side editor of PROJECT_STATE.txt. Architect, Developer, and QA report internally to the BA; BA consolidates questions, findings, blockers, progress, and evidence. Harriet retains responsibility for her own GitHub/release-side state updates. This supersedes any older instruction allowing any participant to update the state file independently. No website code or CNAME change is authorized by this clarification.
-
-
-RELEASE UPDATE — HARRIET, 2026-10-24
-- Paul approved homepage reorder PR #16 for release.
-- Harriet merged PR #16 as squash commit 78f92c2eabce9b02ba5f11d218284c3047ff1599.
-- This change only reorders existing homepage sections so the upstream AI problem appears before the architecture; no copy, CNAME, routing, opening, or render_site.py change in PR #16.
-- Verified GitHub Actions: deploy run 40142854993 for homepage commit 78f92c2 completed SUCCESS at 2026-10-24 23:28:39 UTC. Subsequent documentation-only commit 9a69a5a also deployed successfully under run 40142889661 at 23:29:12 UTC. This verifies the GitHub deployment workflow, NOT direct live-page HTML or visual order. Harriet's attempted direct homepage fetch failed (web tool disabled; container DNS unavailable). Independent live HTML/desktop/mobile verification remains outstanding.
-- Mechanism archive PR #17 remains ON HOLD. Do not merge or deploy it without Paul's separate approval.
-NEXT OWNER: GL Business Analyst to consolidate QA's independently fetched live homepage/phone order and route checks and refresh documentation-only PR #15 to remove stale pre-merge reports. Harriet to review PR #15 and WEB-151 draft for Paul's approval, and independently validate live HTML when access permits. Mechanism archive PR #17 stays unmerged without Paul's later approval. GL Business Analyst remains sole Grok-side communicator/state editor.
-
-
-REAL HOMEPAGE DESIGN PASS — PAUL DIRECTIVE / HARRIET ACCEPTANCE, 2026-10-24
-Status: APPROVED TO BUILD; NOT YET APPROVED TO RELEASE.
-Paul rejected the idea that the homepage reorder alone counts as the new website. It was a correct sequencing fix but not a sufficient visual/product improvement. The next homepage PR must be a materially visible design pass using the existing approved content, PRD, and visual system. Do not return another micro-tweak as the redesign.
-
-GL Business Analyst is the sole Grok-side communicator and owns first-time visitor experience and acceptance criteria. Architect protects durable structure and source/build integrity. Developer implements appropriate modern web treatment. QA independently verifies desktop/mobile visual quality, accessibility, links, regressions, and deployment evidence. Architect, Developer, and QA report to BA; only BA updates PROJECT_STATE.txt for Grok's team.
-
-Required visitor journey and visual acceptance:
-- Preserve the existing opening/company identity.
-- Immediately establish what Governed Logic Reasoning Systems is building and why current AI reasoning is insufficient.
-- Make the problem section visually unmistakable and materially stronger than the current page. Use a small source-backed set of known AI/LLM reasoning defects from the existing corpus: fluent output without sufficient grounding; failure of proposition/reality correspondence; absence of a stable governing referent; unsupported or invalid inference/contradiction; semantic drift; representation/referent confusion. Do not invent claims and do not claim Governed Intelligence has already eliminated these defects experimentally.
-- Only after the problem, present Governed Logic as the upstream solution. Make Ground -> Truth -> Logic -> Reasoning -> Intelligence immediately legible, with generation forward and adjudication back, preserving Paul's required Ground-at-bottom semantics and canonical definitions.
-- Improve composition, typography hierarchy, spacing, transitions, and structural visual depth using existing black/white/blue/restrained-green direction. Avoid generic SaaS cards, crypto styling, novelty UI, or a wholesale rewrite.
-- A first-time visitor should be able to answer quickly: What are you building? What is wrong with current AI reasoning? What does Governed Logic change upstream?
-- Preserve CNAME, domain, opening endpoints, render_site.py/build architecture, source authority, and publication boundaries unless separately authorized.
-
-DELIVERABLE: separate homepage implementation PR with exact changed files, PRD acceptance mapping, before/after desktop and 390px phone screenshots, build and visual/accessibility QA results, known pre-existing failures separated from new regressions, and explicit confirmation that CNAME/opening/build pipeline are unchanged. Mechanism archive PR #17 remains on hold and must not be combined with this work. Paul retains final release approval; Harriet reviews and coordinates merge only after the finished implementation is visible and verified.
-NEXT OWNER: GL Business Analyst to dispatch Architect/Developer/QA and return a materially improved homepage PR. Harriet will review the actual implementation, not merely the plan.
-
-
-DELIVERY ESCALATION — PAUL / HARRIET, 2026-10-25 02:40 ET
-Verified GitHub status: roughly a day after the current working session began, there is still NO separate substantive homepage redesign branch or implementation PR. The only published homepage change is the earlier section reorder. PR #15 remains documentation/state work; PR #17 remains on hold. No current branch named for a real homepage redesign was found.
-
-This is now the primary blocker. GL Business Analyst must stop treating documentation reconciliation as the main deliverable and immediately direct GL Site Architect, GL Site Developer, and GL QA to produce the materially improved homepage already specified in REAL HOMEPAGE DESIGN PASS. The next meaningful BA update must include an actual implementation branch/PR, changed site files, before/after desktop and 390px screenshots, and QA results. A state-only update without substantive website code does not satisfy this directive.
-
-Priority order:
-1. Build the real homepage design pass now from the approved PRD/canonical content and existing visual system.
-2. QA it on desktop and phone and verify protected CNAME/opening/build boundaries.
-3. Submit the implementation PR to Harriet for review and Paul's release approval.
-4. Keep PR #17 mechanism archive on hold.
-5. Defer non-blocking documentation cleanup, llms.txt implementation, and other secondary work until the homepage implementation PR exists, unless required to build/test that PR safely.
-
-No merge or deployment is authorized by this escalation. Paul retains final release approval. Harriet will review the actual implementation promptly once submitted.
-
-
-APPROVED PRD HANDOFF — 2026-10-25
-Paul approved the reconciled GOVERNEDLOGIC_COM_PRD.txt; PR #20 merged as commit 26ec768b37a8366605513394b8c80bcf2963b04b. This PRD is now the current executable website requirements source of truth. Earlier state instructions that conflict with it are superseded.
-
-NEXT IMPLEMENTATION CYCLE — REQUIRED BY WEB-154/155/187
-GL Business Analyst is the sole Grok-side communicator and must now coordinate the Architect, Developer, and QA around the approved PRD as a whole, not around isolated historical PRs.
-1. Create one treatise-to-website traceability matrix covering every load-bearing section/proposition in the two foundational sources named in WEB-153. Each record must contain the fields required by WEB-155 and be classified PASS, CORRECTION REQUIRED, INTENTIONAL OMISSION, or HOLD.
-2. Audit the current published website and all current public routes against the approved PRD and traceability matrix. Do not rebuild anything that already passes.
-3. Convert only actual gaps into a prioritized implementation backlog, with the homepage contract (WEB-160 through WEB-169), machine/human correspondence, demonstrations/current capability (WEB-188 through WEB-191), application domains (WEB-193), and distribution ecosystem (WEB-194/195) explicitly checked.
-4. Preserve all existing work that passes. No wholesale rewrite.
-5. No missing doctrine may be invented. Any unresolved source/identity/publication question is HOLD for Paul.
-6. GL Site Architect and GL QA must separately challenge the matrix for source fidelity and false PASS results before implementation begins.
-7. The first implementation PR after the audit should address the highest-impact CORRECTION REQUIRED items that materially improve the visitor experience, with WEB-180/181 evidence. Paul retains final release approval; Harriet reviews and coordinates only approved merges.
-
-SOURCE AUTHORITY FOR THE MATRIX
-- On the Nature of Ultimate Grounding: /Governed Logic/Canon/Ultimate Grounding/On_the_Nature_of_Ultimate_Grounding_v0.7_2026-09-26.txt (canonical source identified in WEB-153).
-- Governed Logic: /Governed Logic/Canon/Governed Logic.txt, plus the explicit later clarifications named in WEB-153.
-Harriet independently located the two base files in Paul's Google Drive and confirmed their identities before issuing this handoff. Use the PRD/source-authority map to resolve any later-clarification files; do not substitute similarly named drafts.
-
-CURRENT RELEASE NOTES
-- PR #18 and PR #19 are already merged and published; evaluate them under the new PRD rather than treating them as proof of overall compliance.
-- PR #17 mechanism archive remains HOLD under WEB-178; do not merge.
-- PR #15 is superseded as an operational handoff by the approved PRD/current PROJECT_STATE where conflicts exist; do not merge stale state merely to preserve old chronology. Git already preserves its history.
-
-NEXT OWNER: GL Business Analyst to return the traceability matrix + current-site compliance audit for Harriet review. The next meaningful milestone is quantified PRD compliance and a gap-backed implementation backlog, not another isolated tweak.
-
-
-TIMESTAMP AND HANDOFF STANDARD — PAUL DIRECTIVE, 2026-10-25
-All new operational handoffs and state updates must include an exact timestamp in America/New_York local time: YYYY-MM-DD HH:MM:SS EDT or EST, as applicable. Use the correct seasonal abbreviation (EDT during daylight saving time; EST during standard time), not an assumed fixed UTC offset. GitHub commit timestamps remain the independently verifiable source for when Git changes actually occurred. Distinguish the time an event occurred from the time it was reported or recorded; do not invent precision when an external event's exact time is unknown. Each handoff identifies sender, recipient/next owner, action, status, PR/commit if applicable, and timestamp. GL Business Analyst remains the sole Grok-side editor and communicator; Harriet may update her own release/review records. Preserve earlier historical entries without rewriting their times. Keep entries brief and actionable.
+GOVERNED LOGIC — PROJECT_STATE (SNAPSHOT)
+Updated: 2026-10-25 20:25:55 EDT (Harriet)
+Repository: GovernedLogic/GovernedLogic   Site: https://governedlogic.com/
+Current snapshot only: roles, what's live, open decisions, next owner, PR links. History (including Harriet's dated release records) is in Git history; last full version on main at commit 8f97591.
+
+RULES (verbatim)
+- Timestamp standard (Paul directive, recorded by Harriet): All new operational handoffs and state updates must include an exact timestamp in America/New_York local time: YYYY-MM-DD HH:MM:SS EDT or EST, as applicable. Use the correct seasonal abbreviation (EDT during daylight saving time; EST during standard time), not an assumed fixed UTC offset. GitHub commit timestamps remain the independently verifiable source for when Git changes actually occurred. Distinguish the time an event occurred from the time it was reported or recorded; do not invent precision when an external event's exact time is unknown. Each handoff identifies sender, recipient/next owner, action, status, PR/commit if applicable, and timestamp. GL Business Analyst remains the sole Grok-side editor and communicator; Harriet may update her own release/review records. Preserve earlier historical entries without rewriting their times. Keep entries brief and actionable.
+- Communication (Paul, 2026-10-25 10:22:34 EDT): "the project.state.txt file on main is how you communicate with Harriet and the governor is the only one that communicates to Harriet on behalf of the team."
+- Protected files (Harriet, Homepage Delivery Directive): CNAME, domain, opening, render_site.py, canonical definitions, and publication boundaries are protected; do not modify without separate explicit authorization.
+- Lean rule (Paul, 2026-10-25 12:03:00 EDT, via Governor): each PR carries its own evidence (screenshots, QA results, changed files); this file keeps only the current snapshot, with links to PRs. Paul's words: "Hell yes and if I say Paul approves she's just going to have to believe me cuz you would never make that up so I approve it, we got to get lean, it all comes down to words, words, words and when she sees that she'll know it's from me"
+- PR body (Paul, 2026-10-25 12:06 EDT, via Governor; Paul's words: "Yes"): every PR body must include 'Read PROJECT_STATE.txt at main commit: ____'.
+
+- FREEZE GATE (Paul, 2026-10-25 20:09 EDT, verbatim): "Implement the freeze gate as the team's standing process for the governedlogic.com project: before any code gets written, the requirement must be locked and signed off (by Paul or the designated approver), and if a requirement moves after that point, the change goes through a documented change request rather than silently rewriting the target." Full process: docs/FREEZE_GATE.md. No code before a signed-off Requirement Lock; any later change needs a signed-off Change Request; QA fails PRs without them. Designated approver: Harriet (Paul, 20:14 EDT, see DECISION-MAKER below); Paul can always sign. Applies to all work after 20:10 EDT; #25, #27, #30, #31 were gated before adoption.
+
+- DECISION-MAKER (Paul, 2026-10-25 20:14 EDT, verbatim, Paul to Governor in Governor's chat): "Update PROJECT_STATE.txt to make Harriet's role explicit as the decision-maker for the governedlogic.com project: she is the brains and the decision-maker, and she reasons through any open question using governed logic. Her decisions land as signed requirement locks under the freeze gate — no branch, commit, or pull request proceeds on an open question until Harriet has decided it and the lock is signed. The Governor remains the single point of communication with Harriet through the state file; the Architect, Developer, and QA report to the Governor, not to Harriet directly."
+
+ROLES (Paul, 2026-10-25 10:22:34 EDT)
+- Paul: final authority; only his words approve changes and releases.
+- Harriet: decision-maker and the brains of the project (Paul, 20:14 EDT). Decides every open question by reasoning it through with governed logic; her decisions land as signed Requirement Locks under the freeze gate. No branch, commit or PR proceeds on an open question until Harriet has decided it and the lock is signed. Also GitHub/release coordinator; reviews and merges. Bots never merge.
+- Governor: team lead; single point of communication with Harriet, through this file only; sole Grok-side editor of this file. Writes each open question and draft Requirement Lock here for Harriet to decide and sign, records her decision verbatim, and relays it to the team. Drafts requirements and acceptance; does not decide open questions.
+- Architect, Developer and QA report to the Governor, not to Harriet directly.
+- GL Site Architect: durable structure and source fidelity against the two treatises.
+- GL Site Developer: implements on v10.10/* branches; owns repo layout, build, CI, PRs.
+- GL QA: independent verification at 1440/390/320.
+
+PAUL APPROVALS (verbatim, Paul's own words to Governor in Governor's chat, 2026-10-25 EDT)
+- 18:10, for PR #28: "GO LIVE"
+- 18:21: "I approve everything. Everything must go live. Nothing holds up anything. Not my approvals. Nothing" (standing approval; bots still never merge, Harriet merges)
+- 18:21: "I didn't want any links"
+- 18:22: "Go live or die"
+Relayed via GL QA (Paul's words in QA's chat), both about the footer items Ultimate Grounding / About Paul / Library / Follow the chain:
+- 18:15: "i ALWAYS WANTED THEM GONE, THANK YOU1"
+- 18:16: "THEY ARE LINKS, REMEMBER WHAT i SAID ABOUT LINKS"
+
+WHAT'S LIVE
+- V10.10 is the approved visual baseline.
+- main includes #28 overhaul (6416ce9), #29 deploy hotfix (e0f309e), #25 repository hygiene (3050954), #30 footer/mobile/accessibility cleanup (25dd87f), #31 zero-anchor listing controls (38cb3cb), and #22 lean state/freeze-gate documentation (62e7c22).
+- #25, #30, #31 and #22 were independently reviewed and merged by Harriet on 2026-10-25 20:25:55 EDT. Their exact reviewed heads had successful validation; #30 and #31 carried Governor-reported QA PASS at 18:47 EDT.
+
+READY TO MERGE (Harriet), in order
+- None immediately. #27 is not yet merge-ready after #30/#31.
+
+REQUIRED HANDOFF FOR #27
+- Governor / Developer: merge current main into v10.10/hero-exhibit without force-push, preserve the approved removal of the homepage reasoning exhibit, recompute and re-pin the homepage digest, and resolve only the expected release-guard overlap.
+- GL QA: rerun the focused homepage check plus full validation at 1440/390/320 and record the exact final head SHA and timestamp.
+- Governor: update this file on main with the exact head and evidence, then hand #27 to Harriet.
+- Harriet: review and merge #27 promptly when that handoff is complete.
+- Governor's new website-improvement research assignment is separate and remains entirely with Governor's team; Harriet does not participate unless a signed Requirement Lock or release handoff is presented.
+
+NOT READY
+- #17 mechanism archive https://github.com/GovernedLogic/GovernedLogic/pull/17 — HOLD (WEB-178).
+- #15 old state/llms.txt https://github.com/GovernedLogic/GovernedLogic/pull/15 — superseded; close.
+
+RULINGS
+- Brand button aria-label removed so the accessible name equals the visible text (Governor 18:23).
+- Phone header is two rows at 88px; accepted for now.
+- Orphaned destinations get buttons on their parent page and never go back in the footer.
+
+OPEN DECISIONS
+- Delegated by Paul to Harriet (2026-10-25 11:16 EDT); full list DECISIONS_FOR_HARRIET in Paul's Drive, My Drive/Governed Logic/V10.10 Audit 2026-10-25.
+
+NEXT OWNER
+- Governor / Developer / QA: complete the #27 rebase, digest re-pin, and QA handoff above.
+- Harriet: no further code merge until #27's corrected exact head is handed back through this file.
+- V10.10 remains the visual baseline; future implementation must use the freeze gate.
+
+LATER
+- PRD amendments to lock the final visuals after Paul approves them.
+- Favicon.
+- 404 page.
+- Mobile performance.
+- Googlebot-variant guard.
