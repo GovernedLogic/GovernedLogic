@@ -473,7 +473,6 @@ These three destinations stay in the generated library and publication listings.
 | Route | Section | Headings |
 |---|---|---|
 | /about/ | paul | h1: Paul André Couchoud |
-| /about/ | section 2 | h2: Why Anything and Alignment |
 | /articles/integrity-in-artificial-intelligence/ | section 1 | h1: Integrity in Artificial Intelligence |
 | /articles/why-anything/ | section 1 | h1: Why Anything? |
 | /challenge/ | section 1 | h1: Follow the chain. |
