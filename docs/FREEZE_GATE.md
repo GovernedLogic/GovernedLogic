@@ -61,7 +61,7 @@ Until a CR is signed off, the original lock governs. Work toward the new target 
 
 ## Rule 5: Evidence
 
-Each PR body links its lock and every CR. QA records its verdict as a PR comment headed "QA VERDICT: PASS" or "QA VERDICT: FAIL", with the head SHA, the Validate run and a link to its report. PROJECT_STATE.txt lists only the lock id and status for each open PR.
+Each PR body links its lock and every CR. QA stays verify-only: it never comments on, commits to, pushes or merges PRs. QA sends its verdict to the Governor headed "QA VERDICT: PASS" or "QA VERDICT: FAIL", with the head SHA, the Validate run and its report path, and the Governor posts it verbatim as a PR comment. PROJECT_STATE.txt lists only the lock id and status for each open PR.
 
 ## Rule 6: Permanent gates (QA, every PR)
 
