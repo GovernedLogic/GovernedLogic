@@ -1,5 +1,5 @@
 GOVERNED LOGIC — PROJECT_STATE (SNAPSHOT)
-Updated: 2026-10-25 18:48:00 EDT (Governor)
+Updated: 2026-10-25 20:10:00 EDT (Governor)
 Repository: GovernedLogic/GovernedLogic   Site: https://governedlogic.com/
 Current snapshot only: roles, what's live, open decisions, next owner, PR links. History (including Harriet's dated release records) is in Git history; last full version on main at commit 8f97591.
 
@@ -9,6 +9,8 @@ RULES (verbatim)
 - Protected files (Harriet, Homepage Delivery Directive): CNAME, domain, opening, render_site.py, canonical definitions, and publication boundaries are protected; do not modify without separate explicit authorization.
 - Lean rule (Paul, 2026-10-25 12:03:00 EDT, via Governor): each PR carries its own evidence (screenshots, QA results, changed files); this file keeps only the current snapshot, with links to PRs. Paul's words: "Hell yes and if I say Paul approves she's just going to have to believe me cuz you would never make that up so I approve it, we got to get lean, it all comes down to words, words, words and when she sees that she'll know it's from me"
 - PR body (Paul, 2026-10-25 12:06 EDT, via Governor; Paul's words: "Yes"): every PR body must include 'Read PROJECT_STATE.txt at main commit: ____'.
+
+- FREEZE GATE (Paul, 2026-10-25 20:09 EDT, verbatim): "Implement the freeze gate as the team's standing process for the governedlogic.com project: before any code gets written, the requirement must be locked and signed off (by Paul or the designated approver), and if a requirement moves after that point, the change goes through a documented change request rather than silently rewriting the target." Full process: docs/FREEZE_GATE.md. No code before a signed-off Requirement Lock; any later change needs a signed-off Change Request; QA fails PRs without them. Designated approvers: none (only Paul's words can add one). Applies to all work after 20:10 EDT; #25, #27, #30, #31 were gated before adoption.
 
 ROLES (Paul, 2026-10-25 10:22:34 EDT)
 - Paul: final authority; only his words approve changes and releases.
@@ -34,10 +36,10 @@ READY TO MERGE (Harriet), in order
 1. #25 repo hygiene — head 532e3eb, Validate 40240084058 — https://github.com/GovernedLogic/GovernedLogic/pull/25
 2. #30 footer link removal plus COVERAGE.md — head 504080a, Validate 40241144751, QA PASS 18:47 — https://github.com/GovernedLogic/GovernedLogic/pull/30
 3. #31 Library/Publication listings as buttons, zero <a> sitewide — head 47d6a96, Validate 40241192864, QA PASS 18:47 — https://github.com/GovernedLogic/GovernedLogic/pull/31
+4. #27 hero exhibit removal (D-35, Ruling A) — head cd8ce13, Validate 40244866341, QA PASS 19:36; needs main merged in and home digest re-pinned after #30, then a QA quick check — https://github.com/GovernedLogic/GovernedLogic/pull/27
 - #22 this state file (documentation only) — https://github.com/GovernedLogic/GovernedLogic/pull/22
 
 NOT READY
-- #27 hero exhibit removal (01faac9) https://github.com/GovernedLogic/GovernedLogic/pull/27 — deletes the section 01 copy including "Intelligence is downstream."; rescope or close as superseded.
 - #17 mechanism archive https://github.com/GovernedLogic/GovernedLogic/pull/17 — HOLD (WEB-178).
 - #15 old state/llms.txt https://github.com/GovernedLogic/GovernedLogic/pull/15 — superseded; close.
 
@@ -48,10 +50,9 @@ RULINGS
 
 OPEN DECISIONS
 - Delegated by Paul to Harriet (2026-10-25 11:16 EDT); full list DECISIONS_FOR_HARRIET in Paul's Drive, My Drive/Governed Logic/V10.10 Audit 2026-10-25.
-- #27 scope: rescope or close as superseded.
 
 NEXT OWNER
-- Harriet: merge #25, #30, #31 in that order.
+- Harriet: merge #25, #30, #31, then #27 (re-pinned), in that order.
 - Then GL QA: verify live at 1440/390/320 and report with exact timestamp.
 
 LATER
