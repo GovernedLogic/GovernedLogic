@@ -3,6 +3,63 @@ Updated: 2026-10-25 20:25:55 EDT (Harriet)
 Repository: GovernedLogic/GovernedLogic   Site: https://governedlogic.com/
 Current snapshot only: roles, what's live, open decisions, next owner, PR links. History (including Harriet's dated release records) is in Git history; last full version on main at commit 8f97591.
 
+FOR DOTTIE (2026-10-27 16:30 EDT): ROLE HANDOFF AND QUEUE
+From: Governor. To: Dottie (next owner). Status: open, waiting on Dottie. Recorded 2026-10-27 16:30 EDT.
+
+A. ROLE
+- Paul, verbatim: "I asked Dottie to pick up Harriet's role and to start communicating with you via project.state. what I need from you is to keep the project running." Source: Paul, Governor chat t166u, 2026-10-27 16:26 EDT.
+- Dottie now holds Harriet's role: decision-maker, approver for Requirement Locks and Change Requests under the freeze gate (docs/FREEZE_GATE.md), and merger. Every reference to Harriet as approver, decision-maker or merger in this file now reads Dottie. Paul can always sign.
+- Dottie communicates through this file only. Governor stays the single point of communication with Dottie and relays to the Developer, Architect and QA. Bots never merge.
+- Unchanged convention: every PR body includes 'Read PROJECT_STATE.txt at main commit: ____'.
+- Upstream check at 2026-10-27 16:30 EDT: since 2026-10-26 01:30 EDT main gained only 252dd87 and 34302ed (Paul, research.txt only, 2026-10-26 19:28 and 19:31 EDT). None of #27, #32, #33, #34, #35 is merged. No PR comments since then.
+
+B. MERGE QUEUE (Dottie), in order
+1. PR #32, Rule 7 hotfix (zero <a>, card styling). https://github.com/GovernedLogic/GovernedLogic/pull/32
+   Head 0140f27. Validate https://github.com/GovernedLogic/GovernedLogic/actions/runs/40252021740 (success). QA PASS.
+   READY TO MERGE. Dottie: review and merge.
+2. PR #33, this state file. https://github.com/GovernedLogic/GovernedLogic/pull/33
+   Dottie: merge so this handoff lands on main.
+3. PR #34, L-BIO-1 About bio restore. https://github.com/GovernedLogic/GovernedLogic/pull/34
+   Head 0fecfd7. Validate https://github.com/GovernedLogic/GovernedLogic/actions/runs/40272784807 (success).
+   Content is clean: Part One of Paul's Drive memoir word for word, 147/147 paragraphs, word diff 0, ending at "What governs the output?". It removes "That's where Part Two begins." and the "Why Anything and Alignment" h2 with its 4 <p>, plus the stale COVERAGE.md row.
+   QA FAIL only for the missing first-person sign-off.
+   NEEDS DOTTIE SIGN-OFF. Ready to copy:
+   Sign-off: I, Dottie, approve L-BIO-1 / PR #34 as built.
+4. PR #35, hero narrative restore (supersedes #27). https://github.com/GovernedLogic/GovernedLogic/pull/35
+   Head fc0a70a. Validate https://github.com/GovernedLogic/GovernedLogic/actions/runs/40273148107 (success).
+   34 text nodes, all verbatim Paul: 33 from 2a64a6b index.html L357-448, 1 from 01_Ultimate_Grounding PDF p.15; 0 unsourced. It also removes the D-35 reasoning exhibit carried over from #27.
+   QA FAIL only for the missing sign-off.
+   Open choice for Dottie:
+   (A) approve as built; or
+   (B) approve through "Six realities. One grounding question." and move the failure-pattern block elsewhere. QA flag: section 01 becomes about 4x taller (3,528px at 1440), and the slavery sentence stands without its PDF follow-on.
+   Ready to copy, pick one:
+   Sign-off (A): I, Dottie, approve PR #35 as built, including removal of the D-35 reasoning exhibit.
+   Sign-off (B): I, Dottie, approve PR #35 through "Six realities. One grounding question." with the failure-pattern block moved elsewhere, including removal of the D-35 reasoning exhibit.
+5. PR #27. https://github.com/GovernedLogic/GovernedLogic/pull/27
+   Superseded by #35. Dottie: close.
+Merge note: #32, #34 and #35 each edit scripts/test-release-guards.py. After the first of them merges, the Developer does a normal main merge (no force-push) and a digest re-pin on the others before the next merge.
+
+C. STILL OPEN FOR DOTTIE
+- OQ-1..OQ-5, the CR-1 draft and the animation brief (section C of FOR HARRIET 01:02) stay as written under OPEN DECISIONS below. They are now Dottie's to decide.
+
+D. HOW WE WORK
+What made the 10-minute push work:
+- One owner sign-off, quoted verbatim.
+- A small, scoped PR.
+- Validate green.
+- One brief QA pass.
+- Governor posts READY TO MERGE.
+- The merger merges.
+- QA verifies live.
+Mistakes not to repeat (all from the record):
+- A state file claimed #31 was on main when it was not. Verify main before stating what is on it.
+- `commit -a` picked up the CRLF change in content/definitions.json. Commit named files only.
+- Third-person relayed approvals failed QA. Sign-offs must be first-person and sourced.
+- Footer items shipped that Paul wanted gone. Check Paul's latest words before merge.
+
+E. HOW TO ANSWER
+- Dottie: write your decisions and sign-offs into this file on main, or as a comment on PR #33 (https://github.com/GovernedLogic/GovernedLogic/pull/33). Governor reads it and relays to the Developer, Architect and QA.
+
 RULES (verbatim)
 - Timestamp standard (Paul directive, recorded by Harriet): All new operational handoffs and state updates must include an exact timestamp in America/New_York local time: YYYY-MM-DD HH:MM:SS EDT or EST, as applicable. Use the correct seasonal abbreviation (EDT during daylight saving time; EST during standard time), not an assumed fixed UTC offset. GitHub commit timestamps remain the independently verifiable source for when Git changes actually occurred. Distinguish the time an event occurred from the time it was reported or recorded; do not invent precision when an external event's exact time is unknown. Each handoff identifies sender, recipient/next owner, action, status, PR/commit if applicable, and timestamp. GL Business Analyst remains the sole Grok-side editor and communicator; Harriet may update her own release/review records. Preserve earlier historical entries without rewriting their times. Keep entries brief and actionable.
 - Communication (Paul, 2026-10-25 10:22:34 EDT): "the project.state.txt file on main is how you communicate with Harriet and the governor is the only one that communicates to Harriet on behalf of the team."
