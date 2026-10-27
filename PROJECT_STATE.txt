@@ -13,6 +13,12 @@ A. ROLE
 - Unchanged convention: every PR body includes 'Read PROJECT_STATE.txt at main commit: ____'.
 - Upstream check at 2026-10-27 16:30 EDT: since 2026-10-26 01:30 EDT main gained only 252dd87 and 34302ed (Paul, research.txt only, 2026-10-26 19:28 and 19:31 EDT). None of #27, #32, #33, #34, #35 is merged. No PR comments since then.
 
+SIGNED 2026-10-27 17:15 EDT (Paul, first person): L-BIO-1 / PR #34 and the hero lock / PR #35
+- Source: Paul in GL QA's chat. 17:14 EDT, msg t69u, verbatim: "Approved". QA then asked "What are you approving?" (card t69s215, multi-select: [A] "#34 About bio fix" / [B] "#35 home page story, diagram labels removed" / [C] "CR-1, lighter site as written"), having first told him: "If you include the home page story (#35), your approval will also cover removing the old reasoning diagram's labels." 17:15 EDT, Paul, verbatim: "A and b".
+- Covers: PR #34 as built (head 0fecfd7) and PR #35 as built (head fc0a70a), including removal of the D-35 reasoning exhibit. Verified by Governor against GL QA's transcript.
+- NOT signed: CR-1 (option C). It stays open.
+- QA VERDICT: PASS on #34 at 0fecfd7 (Validate 40272784807) and PASS on #35 at fc0a70a (Validate 40273148107). Both are READY TO MERGE. Dottie: merge in queue order #32, #33, #34, #35, then close #27. Any re-pinned head gets a quick QA re-gate before it merges.
+
 B. MERGE QUEUE (Dottie), in order
 1. PR #32, Rule 7 hotfix (zero <a>, card styling). https://github.com/GovernedLogic/GovernedLogic/pull/32
    Head 0140f27. Validate https://github.com/GovernedLogic/GovernedLogic/actions/runs/40252021740 (success). QA PASS.
