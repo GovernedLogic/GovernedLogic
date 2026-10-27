@@ -85,16 +85,11 @@ def check(root):
             u=urlsplit(urljoin(BASE+route(p),href))
             if u.netloc in ('',urlsplit(BASE).netloc):errors.append(f'Internal target=_blank: {p} -> {href}')
     catalog=json.loads((root/'publication/catalog.json').read_text(encoding='utf-8'))
-    listing=Counter(record['path'] for record in catalog['records'] if record.get('path')!='/')
-    # Home has zero anchors: #explore is a scroll button (Governor 16:46), stricter than one #explore.
-    # Library and publication listings are still the anchors render_site.py emits.
-    # Every other page, including mechanism.html, has an empty anchor set.
-    expected_anchors={
-        'library/index.html':listing,
-        'publication/index.html':listing,
-    }
+    # No page may contain an anchor. Listings are form buttons.
+    expected_anchors={}
     for p,d in docs.items():
         for tag,attrs in d.tags:
+            if tag=='a':errors.append('Anchor element is not allowed: '+p)
             if tag=='area' and attrs.get('href') is not None:errors.append(f'Unexpected anchor area: {p} -> {attrs.get("href")}')
             if 'data-href' in attrs:errors.append(f'Unexpected anchor data-href: {p} -> {attrs.get("data-href")}')
         got=Counter(d.anchors)
