@@ -161,6 +161,17 @@ header.site-bar nav>a[aria-current='page'],header.site-bar nav>a:hover{color:var
 .home-content>section.front-door>.reasoning-exhibit{
   grid-column:2;grid-row:3 / span 4;width:100%;max-width:none;min-height:420px;height:100%;align-self:stretch;margin:0;
 }
+/* No exhibit: one content track. row-gap stays the phone rule's 28px below 801px. */
+.home-content>section.front-door:not(:has(.reasoning-exhibit)){
+  grid-template-columns:minmax(0,1fr);
+  column-gap:0;
+  justify-content:stretch;
+  align-items:start;
+  align-content:center;
+}
+@media (min-width:801px){
+  .home-content>section.front-door:not(:has(.reasoning-exhibit)){row-gap:0}
+}
 .hero-field{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .front-door>.front-copy,.front-door>.reasoning-exhibit,.front-door>.section-meta{position:relative;z-index:1}
 .reasoning-exhibit{
@@ -516,6 +527,31 @@ details.faq-item>summary{display:flex;align-items:center;min-height:44px;padding
   body:has(#site){display:flex;flex-direction:column;min-height:100svh}
   body:has(#site)>header.site-bar{order:-1;flex:0 0 auto}
   body:has(#site)>#site{order:0;flex:1 0 auto;min-height:calc(100svh - 88px);height:calc(100svh - 88px)}
+}
+/* Section 01 narrative: Paul's "Ask an ordinary model first" exchange, the five whys, and the failure pattern, in the hero's large, calm type. */
+.home-content>section.front-door>.hero-narrative{grid-column:1 / -1;position:relative;z-index:2;max-width:46rem;margin:96px 0 0;padding:0}
+.hero-narrative p{max-width:none;margin:0 0 28px;font-size:clamp(19px,1.55vw,22px);line-height:1.7;color:var(--text-2)}
+.hero-narrative strong{font-weight:500;color:var(--ink)}
+.hero-narrative .narrative-label{margin:0 0 20px;font:500 12px/1.7 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--text-3)}
+.hero-narrative .narrative-question{margin:0 0 20px;font-size:clamp(30px,3vw,44px);line-height:1.2;letter-spacing:-.03em;color:var(--ink)}
+.hero-narrative .narrative-answer{margin:40px 0;padding:0 0 0 24px;border-left:1px solid var(--accent)}
+.hero-narrative .narrative-answer p{margin:0;font-size:clamp(24px,2.3vw,32px);line-height:1.35;letter-spacing:-.02em;color:var(--ink)}
+.hero-narrative .narrative-why{margin-top:48px}
+.hero-narrative .narrative-step{display:block;margin:0 0 8px;font:500 12px/1.7 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.hero-narrative .narrative-six{margin:72px 0 20px;font-size:clamp(22px,2vw,28px);line-height:1.45;letter-spacing:-.01em;color:var(--ink)}
+.hero-narrative .narrative-turn{font-size:clamp(22px,2vw,28px);line-height:1.45;color:var(--ink)}
+.hero-narrative .narrative-heading{margin:96px 0 36px;font-size:clamp(28px,2.8vw,40px);line-height:1.2;letter-spacing:-.03em;color:var(--ink)}
+.hero-narrative .narrative-close{margin:44px 0 0;font-size:clamp(22px,2vw,28px);line-height:1.45;color:var(--ink)}
+@media(max-width:800px){
+  .home-content>section.front-door>.hero-narrative{margin-top:56px}
+  .hero-narrative p{font-size:18px;line-height:1.65;margin-bottom:22px}
+  .hero-narrative .narrative-question{font-size:28px}
+  .hero-narrative .narrative-answer{margin:28px 0;padding-left:18px}
+  .hero-narrative .narrative-answer p{font-size:23px}
+  .hero-narrative .narrative-why{margin-top:36px}
+  .hero-narrative .narrative-six,.hero-narrative .narrative-turn,.hero-narrative .narrative-close{font-size:21px}
+  .hero-narrative .narrative-six{margin-top:52px}
+  .hero-narrative .narrative-heading{margin:68px 0 28px;font-size:26px}
 }
 .library-item h2 .gl-go{display:block}
 .library-item h2 .gl-go>button{
