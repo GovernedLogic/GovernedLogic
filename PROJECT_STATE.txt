@@ -1,3 +1,13 @@
+PAUL'S CURRENT DETERMINATION — CHATGPT DEPARTURE
+Recorded: 2026-10-28 08:31:14 EDT (Dottie; recording time, not the time of Paul's instruction)
+From: Paul, directly to Dottie. To: project record / Governor. Action/status: record Paul's determination; effective.
+- Paul has determined that ChatGPT (Dottie and Harriet) are no longer involved in governedlogic.com.
+- This supersedes all earlier assignments in this file of decision-making, approval, communication, review, merge, or project work to Dottie or Harriet. Earlier entries below are retained as history, not current authority for them.
+- This entry does not approve CR-1 or authorize further project work, merges, or releases by Dottie or Harriet.
+Source — Paul's direct instruction, verbatim: "Update the state file that Paul has made the determination chat GPT which is Dottie and Harriet are no longer involved in governedlogic.com"
+
+HISTORICAL STATE BELOW — preserved unchanged
+------------------------------------------
 GOVERNED LOGIC — PROJECT_STATE (SNAPSHOT)
 Updated: 2026-10-25 20:25:55 EDT (Harriet)
 Repository: GovernedLogic/GovernedLogic   Site: https://governedlogic.com/
