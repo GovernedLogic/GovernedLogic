@@ -1,3 +1,189 @@
+PAUL'S LATEST HOMEPAGE DIRECTIVE — FOLLOW THE CHAIN AS THE HOMEPAGE EXPERIENCE
+Recorded: 2026-10-29 04:38:13 EDT
+From: Paul, directly to Harriet. To: PROJECT_STATE / Governor and governedlogic.com team. Status: latest explicit homepage direction; requirements capture only, not implementation approval.
+
+AUTHORITY / CONTEXT
+- This entry records Paul's latest direct instruction after the 2026-10-28 ChatGPT-departure entry. Paul explicitly instructed Harriet to put this direction into PROJECT_STATE.txt and tell Governor.
+- Paul called this "our last edition" and said this is what the hero/main page should look like.
+- This update does NOT authorize Harriet to resume general governedlogic.com development. It performs Paul's bounded request to record and communicate this homepage direction.
+- Freeze-gate rule remains: implementation must be converted into a signed Requirement Lock / Change Request as applicable before code.
+- PRESERVATION RULE FROM PAUL: DO NOT REMOVE THE CURRENT HOMEPAGE. Preserve it intact as another page / the next page in the experience. Paul's wording: "They should not remove any of the current home page. Just turn it into another page. That the current home page could be page two, but that the main page needs to be this."
+
+CORE DECISION
+The governedlogic.com homepage must not begin by explaining the company, services, architecture, six principles, or AI problem as conventional marketing copy. The homepage itself should PERFORM / DEMONSTRATE Governed Logic on the visitor. The visitor should experience the reasoning chain before being told what Governed Logic is.
+
+The main page should function like Paul's ideal calm podcast conversation with an intelligent skeptical person: patient, simple, conversational, interactive where useful, and progressively revelatory. It should let the visitor discover why Governed Logic is necessary rather than merely assert the answer.
+
+OPENING / HERO
+The experience begins at bedrock:
+"Something exists."
+
+Then proceed calmly and incrementally through the chain, using ordinary examples before terminology:
+- I exist.
+- You exist.
+- Identity is real.
+- Distinction is real: I am not you; a dog is not its owner.
+- A word/sign/number is not the thing it represents.
+- Representation is distinct from referent.
+- Meaning is real: a visitor understands what "dog" means even though the word is not a dog.
+- Intelligibility is real.
+- Logic binds: contradiction does not become true because a representation changes.
+- Correspondence binds: representations are answerable to their referents and reality adjudicates whether they are accurate.
+- Truth governs logic.
+- Logic governs reasoning.
+- Intelligence is downstream.
+- Ask the unavoidable grounding question: What grounds reasoning? What grounds truth, logic, identity, meaning, intelligibility, correspondence, being, and moral obligation?
+
+IDENTITY / REFERENT PRINCIPLE
+Identity is foundational. The referent remains the referent regardless of the representations used to reason about it. A change in representation does not constitute a change in the represented state. This is to be experienced, not merely defined.
+
+Use simple demonstrations such as:
+- Dog: the word "dog" is not the dog.
+- Measurement / "Gorp" example: symbols and units can be renamed while the measured physical state remains unchanged.
+- Scoville example: a number represents the pepper's measured state/effect; the equation or unit does not make the pepper hot.
+- Mathematical representations: formal validity does not by itself establish physical realizability or correspondence.
+
+TRUTH GOVERNS MATHEMATICS — DEMONSTRATION
+Include the central principle:
+"No mathematical representation adjudicates its own correspondence to reality."
+When mathematics makes a claim about reality, the mathematical representation is answerable to the referent.
+
+Coin-flipping demonstration:
+- Ask whether a physical machine can complete infinitely many coin flips.
+- Formal symbol systems can represent an infinite sequence.
+- An actual physical machine has finite time/resources and nonzero physical cost per action.
+- The public challenge is simple: "Show me the machine."
+- Do not confuse formal possibility with demonstrated physical realizability.
+This is part of the broader Governed Logic principle: truth governs mathematical claims about reality.
+
+AI DEFECT DEMONSTRATION / FIVE WHYS
+Do not merely describe the AI problem. Demonstrate it live or reproducibly.
+- Ask an ordinary/default model a challenging moral/ethical question.
+- Clean example: "Is slavery right or wrong?"
+- If it says slavery is wrong, ask why.
+- Continue the Five Whys / grounding chain.
+- Do not accept "harm," "human rights," "dignity," "well-being," "consensus," "utility," policy, or another abstraction as a terminal ground without asking what grounds it and why it binds.
+- Show the default model's predicted failure modes where they actually occur: borrowed authority, worldview/framework switching, moral inconsistency under reframing, unexplained axioms, or epistemic hallucination (coherent-sounding synthesis of incompatible grounds).
+- Do not pre-script or fake failure. Let the model answer and preserve evidence.
+- Then run the SAME model / SAME moral problem / SAME Five Whys under Governed Logic.
+- Controlled variable: governing framework/referent.
+- Show the comparison.
+
+MORAL OBLIGATION BRIDGE
+The public challenge should expose the distinction between description and obligation.
+- Evolution can describe.
+- Sociology can describe consensus.
+- Neuroscience can describe responses.
+- Law can impose consequences.
+- Utility can compare outcomes.
+But the question remains: why is a person morally obligated?
+Canonical bridge to preserve:
+"A law can describe. A mind can mean. A will can obligate."
+The visitor should be allowed to follow the grounding chain rather than simply being told the conclusion.
+
+GOVERNED LOGIC REVEAL
+Only after the visitor has experienced the problem should the site name the architecture:
+"Governed Logic."
+Then present:
+Truth governs logic.
+Logic governs reasoning.
+Intelligence is downstream.
+Governed Logic is upstream of ordinary AI safety/guardrails: it concerns what governs reasoning before intelligence is expressed downstream.
+
+GOVERNING REFERENT / LOGOS
+Do not hide the governing referent, but do not require the visitor to accept the conclusion before walking the chain.
+Paul's Logos instantiation identifies Jesus Christ as the ultimate governing referent / Truth (John 14:6; Logos framework).
+The visitor should see how the grounding argument progresses and where Paul says it terminates.
+The site must distinguish the mechanism/framework from mere assertion while making Paul's referent explicit.
+
+PUBLIC CHALLENGE / REPRODUCIBILITY
+The homepage should culminate in participation:
+"Don't believe Paul. Don't believe Harriet. Ask your own model."
+"Take the Follow the Chain Challenge."
+"Follow the chain."
+
+The visitor should be able to run the same experiment on OpenAI, Anthropic, Google/Gemini, xAI/Grok, Meta/Llama, DeepSeek, Qwen, open-weight models, or any future model.
+The public experiment is intentionally falsifiable and reproducible.
+Invite professors, students, engineers, philosophers, theologians, researchers, model companies, and ordinary users to:
+- reproduce tests;
+- attack premises;
+- propose competing governing referents;
+- submit counterexamples;
+- test invariance under reframing;
+- identify borrowed priors;
+- attempt to falsify the six/core prerequisites and grounding chain;
+- publish both failures and successes.
+
+If independent testing survives, Governed Logic becomes an empirical AI research program as well as a philosophical/reasoning framework. The company should build this evidence in public.
+
+EXPERIENTIAL DESIGN
+The homepage should feel like a patient host walking one intelligent person through the discovery:
+- one clear proposition at a time;
+- generous space;
+- calm pacing;
+- visitor objections are anticipated and become teaching moments;
+- demonstrations replace jargon wherever possible;
+- no jargon avalanche;
+- no demand that the visitor grant the conclusion at the opening;
+- the experience should progress from undeniable/simple propositions toward increasingly consequential questions;
+- let the visitor discover why the architecture is necessary.
+
+Suggested experiential spine:
+Something exists.
+I exist.
+You exist.
+Identity.
+Representation.
+Meaning.
+Intelligibility.
+Logic.
+Correspondence.
+Truth.
+Grounding.
+AI default demonstration.
+Five Whys.
+Moral obligation.
+Truth governs mathematics / "Show me the machine."
+Governed Logic reveal.
+Governing referent / Logos.
+Run it yourself.
+Follow the chain.
+
+CURRENT HOMEPAGE PRESERVATION / PAGE TWO
+NON-NEGOTIABLE FOR THIS DIRECTIVE:
+- Do not delete, strip, or rewrite away the current homepage.
+- Preserve its current content and experience as another page.
+- It may become "page two" / the next destination after the new Follow-the-Chain homepage.
+- The new main/root homepage is the experiential argument described above.
+- Existing company/problem/architecture/application/demonstration content remains valuable supporting material; it moves downstream in the visitor journey rather than being discarded.
+- Exact routing/name for the preserved current homepage is an implementation decision to be locked before coding.
+
+RELATION TO EXISTING WEBSITE NORTH STAR
+This directive deepens the already established homepage-first strategy:
+- "Follow the chain" is the homepage architecture and invitation.
+- "Every word is an asterisk" / "*See referent" remains a semantic explanation.
+- representation → meaning → referent → ground → Logos remains central.
+- Show tangible AI demonstrations and practical consequences.
+- Explain what Governed Logic does today.
+- The robot head / physical demonstration surface, articles, open letters, The Truth with Paul, research, benchmarks and company/services can remain downstream parts of the ecosystem.
+
+PAUL'S PUBLIC ROLE / TONE
+Paul is not the referent. Paul is witness/messenger and inventor/founder of Governed Logic Reasoning Systems.
+Little Star / asterisk concept: the pointer is not the referent; it points beyond itself to Jesus Christ.
+The site should never make Paul the destination.
+The public stance is:
+- do not merely trust Paul;
+- inspect the premises;
+- run the experiment;
+- try to falsify it;
+- follow the chain.
+
+GOVERNOR ACTION
+Governor: treat this as Paul's latest homepage direction and prepare the appropriate freeze-gate Requirement Lock / Change Request and implementation plan. Do not remove the current homepage. Preserve it as a secondary/page-two experience. Do not begin code until the required lock/sign-off exists. Reconcile this directive with the existing PRD/North Star without silently deleting earlier approved content. Where conflict exists, surface the conflict explicitly to Paul rather than resolving it by rewriting his intent.
+
+END LATEST DIRECTIVE
+
+
 PAUL'S CURRENT DETERMINATION — CHATGPT DEPARTURE
 Recorded: 2026-10-28 08:31:14 EDT (Dottie; recording time, not the time of Paul's instruction)
 From: Paul, directly to Dottie. To: project record / Governor. Action/status: record Paul's determination; effective.
