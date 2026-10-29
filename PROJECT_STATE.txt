@@ -1,3 +1,34 @@
+PAUL'S LATEST HOMEPAGE DIRECTION — FOLLOW THE CHAIN FRONT DOOR
+Recorded: 2026-10-29 04:38:25 EDT
+From: Paul, directly to Harriet. To: project record / Governor. Action/status: requirements/state update only; NO implementation, merge, release, or deployment authorized by this entry.
+- Paul says this is the latest addition/direction for the governedlogic.com hero/front door.
+- The main homepage must become an experiential "Follow the chain" journey rather than beginning by explaining the company architecture.
+- Opening proposition: "Something exists."
+- The visitor is then walked calmly through being/existence, identity and distinction, representation versus referent, meaning, intelligibility, logic, correspondence to reality/truth, and the question of what grounds reasoning.
+- The experience should teach by discovery rather than front-loading the conclusion. The visitor should be able to follow the argument conversationally, as if Paul and a patient podcast host were walking through it together.
+- The chain should establish that representations are answerable to referents; changing a representation does not change the represented state; truth governs representations; truth governs logic; logic governs reasoning; intelligence is downstream.
+- The homepage should then demonstrate the current AI problem rather than merely describe it. Candidate demonstrations explicitly discussed by Paul include:
+  * Follow the Chain Challenge: invite the visitor to run the reasoning chain on their own LLM.
+  * Five Whys moral-grounding test: ask a hard moral question such as whether slavery is wrong, then repeatedly ask why and inspect where the model terminates, switches frameworks, borrows authority, or fails to ground binding moral obligation.
+  * Representation/referent demonstrations: a word is not its referent; arbitrary symbol systems (Paul's Aorp/Borp/Gorp example) can represent fixed real quantities without changing reality.
+  * Truth-governs-mathematics demonstration: formal symbol manipulation does not adjudicate its own correspondence to physical reality; the physical coin-flipping-machine example asks for the real referent rather than confusing an abstract infinite sequence with a physically realizable machine.
+- Governed Logic is introduced after the visitor has encountered the problem and the necessary structure, as the name for the upstream reasoning architecture.
+- Preserve the canonical proposition: "Truth governs logic. Logic governs reasoning. Intelligence is downstream."
+- Preserve the semantic teaching chain already approved elsewhere: representation -> meaning -> referent -> ground -> Logos; "Every word is an asterisk" / "*See referent" may support the experience.
+- The governing referent is Jesus Christ, the Logos. The page must not hide this, but the visitor should arrive at the grounding question by following the chain rather than receiving the conclusion as an unsupported marketing assertion.
+- Public invitation: do not merely ask visitors to believe Paul or a model; invite independent replication across models: "Follow the chain."
+- The homepage is intended to be the canonical public introduction to Governed Logic and a bridge into demonstrations, research, articles, The Truth with Paul, and the deeper site.
+PRESERVATION / NON-DESTRUCTIVE REQUIREMENT:
+- DO NOT remove, overwrite, or discard the current homepage.
+- Preserve the current homepage content and experience intact as a secondary page / next page in the journey (Paul described it as "page two").
+- The new Follow-the-Chain front door becomes the main page; the current homepage becomes the next/deeper company page.
+- Exact route/name for the preserved current homepage is an implementation/IA decision to be specified before code, but preservation is mandatory.
+FREEZE / IMPLEMENTATION:
+- This entry records Paul's requirement. It does not authorize code.
+- Update the canonical PRD to reflect this direction and its precedence over the older executable homepage sequence where they conflict.
+- Governor should reconcile this requirement through the existing freeze-gate process before implementation.
+Source — Paul's direct instruction in Harriet chat, 2026-10-29 EDT: "Tell Governor that I told you this was our last edition, that this is what the hero page should look like. They should not remove any of the current home page. Just turn it into another page. That the current home page could be page two, but that the main page needs to be this." Follow-up: "And then I guess you'll update the PRD as well."
+
 PAUL'S LATEST HOMEPAGE DIRECTIVE — FOLLOW THE CHAIN AS THE HOMEPAGE EXPERIENCE
 Recorded: 2026-10-29 04:38:13 EDT
 From: Paul, directly to Harriet. To: PROJECT_STATE / Governor and governedlogic.com team. Status: latest explicit homepage direction; requirements capture only, not implementation approval.
