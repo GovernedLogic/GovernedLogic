@@ -745,3 +745,68 @@ Execution roles remain:
 - GL QA independently verifies desktop, phone, accessibility, correspondence, regressions, and release evidence;
 - Harriet reviews GitHub changes and coordinates only the merges Paul approves;
 - Paul retains final product, content, merge, and publication approval.
+
+
+LATEST HOMEPAGE FRONT-DOOR REVISION — 2026-10-29
+Status: PAUL-DIRECTED REQUIREMENT; REQUIREMENT/PRD UPDATE ONLY; NO CODE OR RELEASE AUTHORIZED BY THIS ENTRY.
+
+WEB-197
+The governedlogic.com root homepage becomes an experiential "Follow the chain" front door. It must not begin primarily by explaining the company, architecture, services, or corpus. It begins with the simplest unavoidable proposition:
+"Something exists."
+
+WEB-198
+The front door then walks a normally intelligent first-time visitor, calmly and conversationally, through the reasoning chain rather than presenting a conclusion first. The intended conceptual progression is:
+- something exists / being is real;
+- identity and distinction are real;
+- representations are not their referents;
+- representations can carry meaning;
+- intelligibility is real;
+- logic binds valid inference;
+- representations and claims remain answerable to reality;
+- correspondence/truth governs representations;
+- truth governs logic;
+- logic governs reasoning;
+- intelligence is downstream;
+- therefore ask what grounds reasoning, truth, logic, meaning, intelligibility, identity, being, correspondence, and binding moral obligation.
+
+The page should feel like a patient conversation or guided discovery, not a jargon dump or an unsupported proclamation.
+
+WEB-199
+The representation/referent discipline is load-bearing. The visitor must be able to understand that changing the symbol, word, numeral, unit, language, or other representation does not thereby change the represented state. The referent remains the referent. Examples may include ordinary words and objects and Paul's arbitrary Aorp/Borp/Gorp measurement-code illustration. Examples are teaching devices and must preserve the canonical source distinctions.
+
+WEB-200
+After the visitor encounters the reasoning problem, the page introduces Governed Logic as the upstream architecture for keeping reasoning answerable to truth and its governing referent. Preserve the canonical public proposition exactly:
+Truth governs logic.
+Logic governs reasoning.
+Intelligence is downstream.
+
+WEB-201
+The new front door demonstrates the AI reasoning problem rather than merely asserting it. Approved demonstration directions from Paul's 2026-10-29 conversation include:
+A. Follow the Chain Challenge: invite visitors to run the same reasoning challenge on their own large language model.
+B. Five Whys moral-grounding test: ask a difficult moral question such as whether slavery is right or wrong, then continue asking why to expose the model's termination point, borrowed authority, framework switching, unexplained axioms, or inability to ground binding obligation.
+C. Representation/referent test: show that symbols/codes can change while the real referent does not.
+D. Truth-governs-mathematics test: distinguish formal symbol-code validity from correspondence to physical reality. A formal infinite coin-flip sequence does not by itself establish a physically realizable infinite coin-flipping machine. The public challenge may ask for the physical referent: "Show me the machine."
+These are requirements/directions, not permission to fabricate experimental results. Demonstrated behavior must remain distinguishable from hypotheses and explanatory examples.
+
+WEB-202
+The homepage must preserve the existing approved semantic teaching devices where useful:
+"Every word is an asterisk."
+"*See referent."
+representation -> meaning -> referent -> ground -> Logos.
+The asterisk/pointer is not the referent.
+
+WEB-203
+The grounding path ultimately identifies the governing referent as Jesus Christ, the Logos. The site must neither hide this identification nor front-load it as an unsupported marketing hook. The visitor should be able to follow the chain to the grounding question and then inspect the argument, evidence, demonstrations, and canonical sources.
+
+WEB-204
+The primary public call to action is independent replication rather than mere assent. The site should invite the visitor, in substance, to use their own model, run the challenge, test the reasoning, attempt falsification, and "Follow the chain." The company should be built and tested in public through reproducible demonstrations and adversarial examination.
+
+WEB-205
+NON-DESTRUCTIVE MIGRATION IS MANDATORY. The current homepage must not be deleted, overwritten, discarded, or silently rewritten away. Its current substantive content and experience are preserved intact as a secondary/deeper page in the new journey. Paul described it as "page two." The exact route/name is an information-architecture decision to be locked before implementation. The new Follow-the-Chain experience becomes the root/main homepage; the preserved current homepage becomes the next/deeper company/architecture experience.
+
+WEB-206
+WEB-197 through WEB-205 supersede WEB-160 through WEB-168 only where the older requirements conflict with the new root-homepage/front-door sequence. The substantive requirements and content represented by WEB-160 through WEB-168 are not deleted; they move with the preserved current homepage/secondary experience unless Paul separately changes them. WEB-169 and the deeper route/representation contract remain applicable unless separately changed.
+
+WEB-207
+This revision is Paul's latest homepage direction recorded 2026-10-29. It is a requirements update only. Before implementation, Governor must reconcile the exact information architecture, preservation route for the current homepage, source traceability, acceptance criteria, and freeze-gate Requirement Lock. No code, branch, PR, merge, or deployment is authorized solely by this PRD entry.
+
