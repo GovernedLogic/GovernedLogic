@@ -330,3 +330,27 @@ body.gl-home-page .gl-chime{position:fixed;z-index:60;margin:0;object-fit:contai
 /* Route to Paul's previous homepage, kept byte-as-is at /page-two/ (WEB-205, WEB-231). Below the mockup's last band. */
 body.gl-home-page .gl-next{display:flex;justify-content:center;padding:0 22px calc(var(--p)*56 + 24px);background:var(--paper)}
 body.gl-home-page .gl-btn-line{height:52px;padding:0 24px;background:transparent;color:#0c3b6c;border:1.5px solid #0c3b6c;font-size:16px}
+
+/* ---- v13 depth (Paul's approval, Nov 1 2026, 12:30 PM ET; QA research 2026-11-01): dark bands only, white stays plain ----
+   Layers, in order: layered deep-blue radial light; a 1px seam where the dark band meets white; card elevation; a
+   pre-rendered grain tile (provisional/grain.png) and a faint Seed of Life kept off the text. Motion only under
+   prefers-reduced-motion: no-preference. Contrast is measured on rendered pixels (stays at or above AA). */
+:is(body.gl-home-page,body.gl-site){--seam:linear-gradient(90deg,rgba(47,156,230,0),rgba(47,156,230,.38) 22%,rgba(108,200,240,.55) 50%,rgba(47,156,230,.38) 78%,rgba(47,156,230,0));--grain:url('provisional/grain.png')}
+/* 1. Problem band. The Seed of Life sits half off the right edge, behind the defect cards' opaque fill. */
+body.gl-home-page .gl-problem{background:
+  var(--seam) top/100% 1px no-repeat,var(--seam) bottom/100% 1px no-repeat,
+  var(--grain) 0 0/128px 128px repeat,
+  radial-gradient(52% 80% at 12% 0%,rgba(10,90,156,.24),rgba(10,90,156,0) 72%),
+  radial-gradient(40% 75% at 92% 100%,rgba(0,67,116,.30),rgba(0,67,116,0) 72%),
+  radial-gradient(90% 120% at 55% 130%,rgba(4,30,52,.55),rgba(4,30,52,0) 62%),
+  #00070d}
+body.gl-home-page .gl-problem::after{content:"";position:absolute;z-index:0;top:50%;right:calc(var(--frame) - var(--p)*190);width:calc(var(--p)*380);aspect-ratio:244/248;translate:0 -50%;
+  background:url('provisional/seed-of-life.png') center/contain no-repeat;opacity:.07;pointer-events:none}
+body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){box-shadow:inset 0 1px 0 rgba(108,200,240,.07),0 2px 6px rgba(0,0,0,.35),0 12px 28px -14px rgba(0,0,0,.8)}
+body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)):hover{box-shadow:inset 0 1px 0 rgba(108,200,240,.12),0 3px 8px rgba(0,0,0,.4),0 18px 36px -14px rgba(0,0,0,.85)}
+@media (max-width:900px){body.gl-home-page .gl-problem::after{display:none}}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes gl-seed-turn{to{rotate:360deg}}
+  body.gl-home-page .gl-problem::after{animation:gl-seed-turn 240s linear infinite}
+  body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){transition:box-shadow .2s ease,border-color .2s ease,background-color .2s ease}
+}
