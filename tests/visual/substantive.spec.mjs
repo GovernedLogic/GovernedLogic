@@ -176,7 +176,7 @@ test('Phone header is 88px or less from 320 to 899 with every item one tap away'
 
 test('Mid-width header is one row of 72px or less from 900 to 1279',async({page})=>{
  // Round 4 (WEB-214, WEB-223, WEB-226): like the mockup, 900-1279 keeps one header row at or under 72px, with the
- // brand, all seven nav items (Company included), Search and the CTA side by side, in view, unclipped and 44px tall.
+ // brand, all five nav items (Company included; PLACEMENT_MAP dropped Applications and About), Search and the CTA side by side, in view, unclipped and 44px tall.
  for(const width of [900,1024,1279]){
   await page.setViewportSize({width,height:900});
   await page.goto('/',{waitUntil:'domcontentloaded'});

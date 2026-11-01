@@ -2,14 +2,14 @@
 
 orphans=0. The built site has zero <a> elements (0 files contain one). Generated from the built artifact with content_lock.py v5 (`--diff --coverage` against baseline-a1a367c-v5.json); machine differences against that baseline are the new provisional homepage assets and the /page-two/ route in the sitemap, feed and manifest (WEB-205, WEB-231).
 
-Paul's previous homepage (The Groundless Machine, "AI does not know what truth is", "Read Paul's story") is kept byte-as-is at /page-two/, one button from the homepage (WEB-205, WEB-231). Applications and the "Truth Governs Mathematics" card are on hold: visible, inert buttons with aria-disabled, not linked (C9, WEB-217, WEB-218).
+Paul's previous homepage (The Groundless Machine, "AI does not know what truth is", "Read Paul's story") is kept byte-as-is at /page-two/, one button from the homepage (WEB-205, WEB-231). Applications and the "Truth Governs Mathematics" card, held under C9 (WEB-217, WEB-218), are no longer on the homepage: PLACEMENT_MAP (2026-11-01, WEB-227 FIFTH) dropped them.
 
 | Destination | Reached now | Depth from / |
 |---|---|---|
 | /page-two/ | Homepage control "See what we are building" (Paul's previous homepage) | 1 |
 | /company/ | Homepage header "Company", at every width | 1 |
-| /library/ | Homepage header Search (aria-label "Search"), and "View All Research" | 1 |
-| /about/ | Homepage header "About"; "Read Paul's story" on /page-two/ | 2 |
+| /library/ | Homepage header Search (aria-label "Search"), at every width | 1 |
+| /about/ | "Read Paul's story" on /page-two/ (the homepage header no longer carries About: PLACEMENT_MAP N8, WEB-227 FIFTH) | 2 |
 | /concepts/ultimate-grounding/ | Homepage card "On the Nature of Ultimate Grounding"; header on every inner page | 1 |
 | /challenge/ | "The inquiry" on /page-two/ (page title: Follow the chain.); not on the new homepage | 2 |
 
@@ -309,7 +309,7 @@ Paul's previous homepage (The Groundless Machine, "AI does not know what truth i
 | / | Read and test the instructions → | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
 | / | The prototype | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
 | / | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
-| / | Explore the research method → | /research/ | form: "Explore the Research" (label differs) | SAME-PAGE |
+| / | Explore the research method → | /research/ | form: "Explore the research method" (label differs) | SAME-PAGE |
 | / | Research | /research/ | form: "Explore the research method" (label differs) | SAME-PAGE |
 | / | Sources & editions | /sources/ | form: "Sources & editions" | SAME-PAGE |
 | /library/ | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |

@@ -22,7 +22,7 @@ const EXPECTED_NAVIGATION = [
   { href: "/research/", label: "Research" }
 ];
 // WEB-228/C9: the homepage carries the approved 2026-10-31 mockup header (provisional targets).
-// Applications is on hold (C9, WEB-217): a visible, inert button outside any form, so it is not listed.
+// Applications (C9, WEB-217) is no longer in the header: PLACEMENT_MAP dropped it (below).
 // WEB-223: Company (/company/) is one click from the homepage header at every width.
 // PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): library labels "The problem" (L20779) and "Governed Logic" (L21431);
 // Applications (N7, HOLD) and About (N8, no source) are dropped from the homepage header.
