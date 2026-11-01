@@ -18,7 +18,7 @@
   seed=971;const count=w<720?330:600;nodes=[];edges=[];dust=[];
   for(let i=0;i<count;i++){
    const y=1-2*(i+.5)/count,a=i*Math.PI*(3-Math.sqrt(5)),r=Math.sqrt(1-y*y),shell=.65+random()*.35;
-   nodes.push({x:Math.cos(a)*r*shell,y:y*shell,z:Math.sin(a)*r*shell,word:words[i%words.length],size:.55+random()*1.5,label:i%5===0,gold:i%19===0,phase:random()*Math.PI*2});
+   nodes.push({x:Math.cos(a)*r*shell,y:y*shell,z:Math.sin(a)*r*shell,word:words[i%words.length],size:.55+random()*1.5,label:i%5===0,accent:i%19===0,phase:random()*Math.PI*2});
   }
   // Preserve a sparse, connected topology as the field rotates.
   const pairs=new Set();
@@ -76,8 +76,8 @@
    for(let k=0;k<edges.length;k++){
     const [i,j]=edges[k],p=pts[i],q=pts[j],alpha=Math.min(p.alpha,q.alpha)*relational;
     if(alpha<.025)continue;
-    const gold=nodes[i].gold,light=k%31===0;
-    stroke(p.x,p.y,q.x,q.y,`rgba(${gold?'197,157,94':light?'149,146,244':'78,152,220'},${alpha*(light?.57:.29)})`,light?.85:.55);
+    const accent=nodes[i].accent,light=k%31===0;
+    stroke(p.x,p.y,q.x,q.y,`rgba(${accent?'22,140,250':light?'149,146,244':'78,152,220'},${alpha*(light?.57:.29)})`,light?.85:.55);
     if(k%71===0&&relational>.5){const x=mix(p.x,q.x,edgePulse),y=mix(p.y,q.y,edgePulse);ctx.fillStyle=`rgba(196,226,255,${alpha})`;ctx.beginPath();ctx.arc(x,y,1.6,0,Math.PI*2);ctx.fill();}
    }
    for(let i=0;i<pts.length;i+=43){const p=pts[i];stroke(cx,cy,p.x,p.y,`rgba(186,162,224,${p.alpha*relational*.09})`,.65);}
@@ -85,7 +85,7 @@
    sorted.forEach(p=>{
     const n=nodes[p.i],r=n.size*p.scale,alpha=p.alpha;
     if(alpha<.03)return;
-    ctx.fillStyle=`rgba(${n.gold?'246,209,135':'171,216,255'},${alpha})`;
+    ctx.fillStyle=`rgba(${n.accent?'22,140,250':'171,216,255'},${alpha})`;
     if(n.label&&p.z>-.45){ctx.font=`${Math.max(8,Math.min(13,9.1*p.scale))}px ui-monospace,monospace`;ctx.fillText(n.word,p.x+4,p.y-4);}
     if(p.z>.62&&p.i%7===0){ctx.shadowColor='#74bfff';ctx.shadowBlur=7;}
     ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
@@ -95,7 +95,7 @@
   // The brief seven-circle motif gives way to the sustained token network.
   const seedAlpha=smooth((t-5.05)/.5)*(1-smooth((t-6.1)/.7));
   if(seedAlpha>0){
-   const r=Math.min(w,h)*.08;ctx.strokeStyle=`rgba(218,189,142,${seedAlpha*.40})`;ctx.lineWidth=.8;
+   const r=Math.min(w,h)*.08;ctx.strokeStyle=`rgba(22,140,250,${seedAlpha*.40})`;ctx.lineWidth=.8;
    for(let i=-1;i<6;i++){const q=i*Math.PI/3,x=i<0?cx:cx+Math.cos(q)*r,y=i<0?cy:cy+Math.sin(q)*r;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2*smooth((t-5.05)/.6));ctx.stroke();}
   }
   if(flash>.002){
