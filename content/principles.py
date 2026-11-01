@@ -9,19 +9,12 @@ Words come only from it, verbatim, in its order. Register headers (sources, Driv
 counts, MISSING notes) stay build-side and are never rendered. Each page's title and single h1 is the principle's name
 (the register's section heading). Nothing MISSING in the register is filled.
 
-Two build-side corrections, both applied to the register's own words and nothing else (CORRECTIONS below):
-1. The "GL-P2"/"GL-P3" codes in two Supporting passages are stripped (codes only).
-2. Two Supporting passages sit under the wrong principle in the register (its library line windows are one line off).
-   The source is unambiguous: CONTENT_LIBRARY_2026-10-31.txt L17632-17637 (the nucleus v0.5 "Invariant Governing
-   Priors" table, ID / Canonical proposition / Role) and the Drive copy of governed-logic-nucleus-v0.5 (1igYxSsot85y...,
-   lines 45 and 47) give
-       GL-P2  Logic is binding and answerable to truth. | Inference must preserve valid relations without treating
-              logical form as the creator of reality.
-       GL-P3  Intelligibility is real. | Reality has apprehensible order and can be meaningfully represented and
-              reasoned about.
-   So "Inference must preserve ..." (register: under Intelligibility, tagged GL-P3) is relabeled to Logic, and
-   "Intelligibility is real. Reality has ..." (register: under Obligation) is relabeled to Intelligibility. Obligation
-   is left with no Supporting passage; its GL-P4 line is not in the register and is not added.
+One build-side correction, applied to the register's own words and nothing else (CODES below): the "GL-P2"/"GL-P3"
+codes in two Supporting passages are stripped (codes only). The Supporting passages stay exactly where the register
+puts them (Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): "Put the Supporting lines back as the register had
+them."): "GL-P2 Logic is binding and answerable to truth." under Logic, "Inference must preserve ... GL-P3" under
+Intelligibility, and "Intelligibility is real. Reality has apprehensible order ..." under Obligation. (3c40dbd had moved
+the last two to Logic and Intelligibility per the nucleus v0.5 table, library L17632-17637; that move is reverted.)
 
 Every slug in SETS that is not in the published set (Truth) is a withheld link target: nothing may link to it, it is
 not built, and the live probe requires it to 404.
@@ -47,12 +40,11 @@ def withheld():
     return tuple(route_path(s) for s in dict.fromkeys(x for v in SETS.values() for x in v) if s not in SETS[SET])
 NAMES={'being':'Being','identity':'Identity','meaning':'Meaning','intelligibility':'Intelligibility','logic':'Logic',
        'correspondence':'Correspondence','obligation':'Obligation','truth':'Truth'}
-# (slug, block kind, exact register paragraph) -> what the build does with it. See the module docstring, item 2.
 CODES=re.compile(r'^GL-P\d+ | GL-P\d+$')
-MOVES=(('intelligibility','Inference must preserve valid relations without treating logical form as the creator of reality. GL-P3','logic'),
-       ('obligation','Intelligibility is real. Reality has apprehensible order and can be meaningfully represented and reasoned about.','intelligibility'))
+# Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): no Supporting passage is moved; the register's placement stands.
+MOVES=()
 def corrected(reg):
-    """Apply the two documented corrections; fail if the register text they rely on is not there exactly."""
+    """Strip the codes (and apply MOVES, now empty); fail if the register text a move relies on is not there exactly."""
     def supporting(slug):
         b=[b for b in reg[slug]['blocks'] if b['header'].startswith('**Supporting')]
         return b[0] if b else None

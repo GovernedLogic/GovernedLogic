@@ -153,14 +153,18 @@ REVIEWED_PAGE_DIGESTS = {
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 7d942e16...b218.
     "publication/index.html": ("0bfe3a8b37c0ecbdb8b66a5a6fb237638b8578e90d5174d0af3b4e4b66b24080",),
     # Principle pages, set B (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)): register text
-    # verbatim (content/principle-register.md) with the documented code strip and Supporting relabel (content/principles.py).
+    # verbatim (content/principle-register.md) with the documented code strip (content/principles.py); Supporting passages
+    # where the register has them (Paul 5:29 PM ET Nov 1 (via QA/Governor, verified)).
     "principles/being/index.html": ("3e40ad19dc39d744008eab2760098c5371ddd5f43efe7c521dc118da5ac1afb5",),
     "principles/identity/index.html": ("91838fcff5362719cacdd3abc966fa7f5804a9baa49600033d89dff8e8d27d34",),
     "principles/meaning/index.html": ("da49702c1fffb3663e829e808e39f35c901c5f7282a46be065352c40625d4997",),
-    "principles/intelligibility/index.html": ("910672b1d97b576326a3cdd5cb0d9d951d9e2830e5fd9517e0557ccdcb05c3b4",),
-    "principles/logic/index.html": ("3f52c58edeba83961429e8948f1118eaf219009031f140c621b5a9bf463841b2",),
+    # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Inference must preserve ..." returns here; "Intelligibility is real. ..." returns to Obligation); replaces 910672b1...c3b4.
+    "principles/intelligibility/index.html": ("176258622a6690fd4b68b9c171f22fee0696827feb62fe0c09f9e4dd69cb96d1",),
+    # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Inference must preserve ..." returns to Intelligibility); replaces 3f52c58e...41b2.
+    "principles/logic/index.html": ("71371afc86361c3e57fe8c65c0c9c56b83ca42af99a19e4f6686c761935387a8",),
     "principles/correspondence/index.html": ("4797de278721e6951b1fdd5cd9ef6b001e846371d6263c6e625c3d67a229b2b6",),
-    "principles/obligation/index.html": ("d01104b95f3c02edf44661de4b2f568bd911feb001458843cef5084c6c600a7c",),
+    # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Intelligibility is real. ..." returns here); replaces d01104b9...0a7c.
+    "principles/obligation/index.html": ("6c530c3ac667e3e4730fd66ec549d9fd75e049f82b1374eb2f6d1d5df57995df",),
 }
 # Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
 # assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
