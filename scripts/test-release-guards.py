@@ -11,7 +11,10 @@ sources, and anchor labels and hrefs do.
 Arrows are exact: ↗ and → are different. The reasoning exhibit is part
 of the published homepage. v10.10/hero-narrative appends one reviewed
 homepage digest (exhibit removed, Paul's narrative restored in section 01);
-any other homepage still fails.
+any other homepage still fails. v11/design-2026-10-31 appends one PROVISIONAL
+homepage digest (WEB-228, WEB-233; C4 unruled); per Paul's C8 ruling (2026-11-01,
+WEB-215) the homepage has no opening region and the hero headline is its h1;
+Paul's previous homepage main is pinned at /page-two/ (WEB-205, WEB-231).
 """
 from __future__ import annotations
 
@@ -44,6 +47,22 @@ HOMEPAGE_DIGESTS = (
     # the hero lead lines (Paul, 2026-10-26 01:00 EDT). Every restored line is Paul's own
     # text from 2a64a6b index.html or sources/01_Ultimate_Grounding PDF page 15.
     "271938e034bc528594130b0ecfefe208583c2f9de4cc36643b0e77c8e1b95a0a",
+    # PROVISIONAL, NOT REVIEWED (WEB-228, WEB-233; C4 unruled): v11/design-2026-10-31 homepage
+    # (Paul's approved 2026-10-31 mockup layout). Its copy is the mockup's provisional layout text
+    # and may not ship as final public copy until Paul rules C4. Main ends with the /page-two/
+    # button (WEB-205, WEB-231). WEB-215 + Paul's C8 ruling (2026-11-01 02:12 ET, "drop the old
+    # opening"): this pin replaces 73f219e1...c7da; the record differs only by the removed opening
+    # text that preceded the header (identity, caption, scroll invite). Header, main, footer,
+    # metadata, JSON-LD and links are unchanged.
+    # Content placement per Rigel's PLACEMENT_MAP.md (2026-11-01, WEB-227 FIFTH): this pin replaces
+    # 00821284...99d6. Every homepage string in main and the header is now library-verbatim (see
+    # COPY_REGISTER.md) except the kept "See what we are building"; title, meta and JSON-LD are unchanged.
+    # Round 5b (WEB-227 FIFTH): N11 places the header CTA text "Explore the research method" (L21394);
+    # this pin replaced 50779ff0...72a1. QA-4 (Round 5b) then restores the header About button
+    # (/about/; label "About" from the approved mockup, MOCKUP-PROVISIONAL, first built in 6eb269e,
+    # not on 64bf60f: QA-8); this pin replaces 43c67665...5925. Those two are
+    # the only changes to text or links.
+    "27762159474904b46b7982da710c7f0f1046b77f76865fd1f9d3440ff461adb7",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
@@ -80,11 +99,17 @@ REVIEWED_PAGE_DIGESTS = {
     # articles/integrity-in-artificial-intelligence/index.html: same restored footer labels.
     "articles/integrity-in-artificial-intelligence/index.html": ("f81193dbcf7a57c81ea7fc1997f372f4e71eda3507d02c7c567f6035c1633411",),
     # library/index.html: generated page picks up the restored footer labels.
-    "library/index.html": ("fb43aa54c07f7c3f3e710c2231cb377ff97d9e1b91fd53cfbeec6779a6d85c27",),
+    # page-two/index.html (WEB-205, WEB-231; shell and injection as in RL-FTC-1 3c768d4): the
+    # 64bf60f homepage main, byte-identical, in its own shell.
+    "page-two/index.html": ("e2b465772bf4a7313b1270bc97ace9906f06a9201a740ca6f705337f84338ab2",),
+    # library/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
+    "library/index.html": ("cb509d13861c53e2b7597747054facaed043b7ae9368a3928b6e643b0bbcde81",),
     # publication/index.html: generated page picks up the restored footer labels.
-    "publication/index.html": ("3837690d0ae39e808c3c7127307f79b3365e13a4f1bd97b8123493b37ce7a4bd",),
+    # publication/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
+    "publication/index.html": ("d3c1dbc3766a379bd502730d8009e5c274ee85f263bc88b887ccf94f78245807",),
 }
-# Opening words are unchanged. The #explore anchor is no longer in the opening record.
+# Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
+# assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
 OPENING_DIGEST = "e4525a6b1741253a9ddf32a04e183588998f354f737189dab236a889f1f8c39d"
 # Header skip/current script, plus the mechanism copy button after it.
 _HEADER_SCRIPT = "56aa3c97ea8b9ef40eee9611ac9dd6f3dda62f9acd1dd9c470b1bb0c34a46fcf"
@@ -295,8 +320,8 @@ def without_exhibit(html: str) -> tuple[str, str | None]:
 def assert_reviewed_copy(site: Path) -> None:
     """Reject unreviewed text, links, metadata, opening copy, or an inline script."""
     homepage = (site / "index.html").read_text(encoding="utf-8")
-    opening = hashlib.sha256(opening_record(homepage).encode()).hexdigest()
-    if opening != OPENING_DIGEST:
+    # WEB-215 + Paul's C8 ruling (2026-11-01, "drop the old opening"): no opening region may return.
+    if '<div id="site"' in homepage:
         raise AssertionError("Unreviewed opening copy")
     for relative in REVIEWED_PAGES:
         html = (site / relative).read_text(encoding="utf-8")
@@ -353,11 +378,13 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_placeholder_phrase_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
+            # Fixture marker moved off the removed opening text (WEB-215 + Paul's C8 ruling, 2026-11-01)
+            # to the same words on the /page-two/ button; the guarded phrase is unchanged.
             self.replace_once(
                 site,
                 "index.html",
-                "See what we are building ↓",
-                "See what we are building ↓ Substantive material remains withheld",
+                ">See what we are building<",
+                ">See what we are building Substantive material remains withheld<",
             )
             with self.assertRaises(AssertionError):
                 check_restored.check(site)
@@ -464,13 +491,15 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 'class="front-door"',
                 'class="front-door redesigned" style="display:block"',
             )
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 '<div class="front-copy">',
                 '<section class="layout-only"><div class="front-copy">',
             )
@@ -483,7 +512,8 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 "We are building Governed Intelligence: the artificial-intelligence instantiation of Governed Logic.",
                 "An unreviewed homepage claim.",
             )
@@ -519,7 +549,8 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 "A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles.",
                 "An unreviewed homepage claim.",
             )
@@ -529,8 +560,9 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_appended_opening_claim_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
+            # WEB-215 + Paul's C8 ruling (2026-11-01): the opening is gone, so re-adding one must fail.
             opening = '<div id="site" role="region" aria-label="Governed Logic Reasoning Systems">'
-            self.replace_once(site, "index.html", opening, opening + "<p>An unreviewed claim.</p>")
+            self.replace_once(site, "index.html", '<body class="gl-home-page">', '<body class="gl-home-page">' + opening + "<p>An unreviewed claim.</p></div>")
             with self.assertRaisesRegex(AssertionError, "Unreviewed opening copy"):
                 assert_reviewed_copy(site)
 
@@ -637,11 +669,12 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 'src="/assets/the-groundless-machine.webp"',
                 'src="/assets/unreviewed-cover.webp"',
             )
-            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: page-two/index.html"):
                 assert_reviewed_copy(site)
 
     def test_og_description_change_fails(self) -> None:
@@ -673,7 +706,8 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 "<p>Truth governs logic.<br>Logic governs reasoning.<br>Intelligence is downstream.</p>",
                 "<p>Truth governs logic.<br>Logic governs reasoning.<br>Intelligence is afterward.</p>",
             )
@@ -758,7 +792,8 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 'Examine the upstream problem <span aria-hidden="true">→</span>',
                 'Examine the upstream problem <span aria-hidden="true">↗</span>',
             )
@@ -770,7 +805,8 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 'Explore the working prototype <span aria-hidden="true">↗</span>',
                 'Explore the working prototype <span aria-hidden="true">→</span>',
             )

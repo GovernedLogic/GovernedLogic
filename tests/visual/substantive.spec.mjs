@@ -2,7 +2,8 @@ import {test,expect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
-const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/library/','/publication/'];
+const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/'];
+// WEB-205/WEB-231: '/page-two/' keeps Paul's previous homepage main reachable.
 for(const route of routes){
  test(`${route} substantive content and usable layout`,async({page},info)=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
@@ -28,7 +29,7 @@ test('Library searches restored full text',async({page})=>{
  await expect(page.locator('#library-search-mode')).toContainText('exact text');
  await expect(page.locator('.library-item:visible')).not.toHaveCount(0);
  await page.getByLabel('Search the library').fill('zzzznomatchzzzz');await expect(page.locator('#library-empty')).toBeVisible();
- await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(21);
+ await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(22); // WEB-205/WEB-231: the library lists /page-two/.
 });
 test('FAQ answers open and match machine data',async({page})=>{
  await page.goto('/faq/');await page.getByText('What exists today?',{exact:true}).click();
@@ -36,69 +37,27 @@ test('FAQ answers open and match machine data',async({page})=>{
 });
 test('Homepage and navigation work without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const page=await context.newPage();
- await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');await expect(page.locator('main')).toContainText('Governed Intelligence');
+ // WEB-205/WEB-231: the previous homepage text ('Governed Intelligence') is one button away, at /page-two/.
+ await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
+ await page.locator('main form.gl-go[method="get"][action="/page-two/"] button[type="submit"]').click();await expect(page).toHaveURL(/\/page-two\/\??$/);await expect(page.locator('main')).toContainText('Governed Intelligence');
+ // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) (N6): the homepage header names /concepts/governed-logic/ 'Governed Logic' (L21431).
+ await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'Governed Logic',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
-test('Opening completes and leaves content usable',async({page})=>{
- test.setTimeout(45000);await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/');
- await expect(page.locator('#glIntro')).toHaveCount(0,{timeout:20000});
- const invite=page.locator('.scroll-invite');
- await expect(invite).toHaveAccessibleName('See what we are building ↓');
- await invite.click();await expect(page.locator('#explore')).toBeInViewport();
-});
-test('Opening records its chronological visual sequence',async({page},info)=>{
- test.skip(info.project.name==='mobile-320','The opening filmstrip covers desktop and the 390-pixel mobile viewport.');
- test.setTimeout(90000);
- const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.emulateMedia({reducedMotion:'no-preference'});
- const startTime=new Date('2026-10-18T12:00:00Z');
- await page.clock.install({time:new Date(startTime.getTime()-1000)});await page.clock.pauseAt(startTime);
- await page.goto('/',{waitUntil:'load'});await page.evaluate(async()=>{await document.fonts.ready});
- await expect(page.locator('#glIntro')).toHaveCount(1);
- const frames=[
-  {at:50,name:'01-black',label:'Black field',stage:'black'},
-  {at:400,name:'02-trace',label:'Light starts',stage:'trace'},
-  {at:800,name:'03-trace',label:'The band lengthens',stage:'trace'},
-  {at:1200,name:'04-trace',label:'One path, mid circuit',stage:'trace'},
-  {at:1500,name:'05-trace',label:'Crossings woven',stage:'trace'},
-  {at:1800,name:'06-resolve',label:'Earth shows through',stage:'resolve'},
-  {at:2200,name:'07-resolve',label:'The page returns',stage:'resolve'},
-  {at:2500,name:'08-resolve',label:'Veil nearly gone',stage:'resolve'},
-  {at:2800,name:'09-fade',label:'Overlay recedes',stage:'fade'},
-  {at:3100,name:'10-fade',label:'Hero almost clear',stage:'fade'},
-  {at:3300,name:'11-fade',label:'Last of the trace',stage:'fade'},
-  {at:3700,name:'12-complete',label:'Page usable'}
- ];
- const directory=path.resolve('visual-qa/motion',info.project.name);await mkdir(directory,{recursive:true});
- const evidence=[];let elapsed=0;
- for(const frame of frames){
-  const delta=frame.at-elapsed;
-  // Jump to the next phase, then execute ordinary animation frames at that time.
-  // Runtime code receives the same clock and animation callbacks as a normal visit.
-  if(delta>34)await page.clock.fastForward(delta-34);
-  await page.clock.runFor(Math.min(delta,34));elapsed=frame.at;
-  if(frame.stage)await expect(page.locator('#glIntro')).toHaveAttribute('data-stage',frame.stage);
-  if(frame.name==='01-black'){
-   const samples=await page.locator('#glIntro .intro-canvas').evaluate(canvas=>{
-    const context=canvas.getContext('2d');
-    return [[.1,.1],[.5,.1],[.9,.1],[.1,.5],[.5,.5],[.9,.5],[.1,.9],[.5,.9],[.9,.9]]
-     .map(([x,y])=>Array.from(context.getImageData(Math.floor(x*canvas.width),Math.floor(y*canvas.height),1,1).data));
-   });
-   expect(samples.every(([r,g,b,a])=>r===0&&g===0&&b===0&&a===255)).toBeTruthy();
-  }
-  const screenshot=await page.screenshot({path:path.join(directory,frame.name+'.png'),animations:'allow'});
-  evidence.push({...frame,path:frame.name+'.png',sha256:createHash('sha256').update(screenshot).digest('hex'),overlayPresent:await page.locator('#glIntro').count()===1});
- }
+test('Homepage lands on the hero with no opening',async({page})=>{
+ // WEB-215 + Paul's C8 ruling (2026-11-01, "drop the old opening"): replaces the opening-completion test. There is no
+ // opening region or overlay; the hero headline is the page's one h1 and is on the first screen at load.
+ await page.goto('/');
+ await expect(page.locator('#site')).toHaveCount(0);
  await expect(page.locator('#glIntro')).toHaveCount(0);
- await expect(page.locator('#site .identity')).toBeVisible();
- await expect(page.locator('#site .brand-sub')).toHaveText('Reasoning Systems');
- expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
- expect(new Set(evidence.slice(0,-1).map(frame=>frame.sha256)).size).toBe(frames.length-1);
- await writeFile(path.join(directory,'frames.json'),JSON.stringify({project:info.project.name,viewport:page.viewportSize(),mode:'Normal motion; Playwright clock controls time without changing runtime behavior',frames:evidence},null,2)+'\n');
- expect(errors).toEqual([]);
+ await expect(page.locator('.scroll-invite')).toHaveCount(0);
+ await expect(page.locator('h1')).toHaveCount(1);
+ await expect(page.locator('#explore h1.gl-hero-title')).toHaveCount(1);
+ await expect(page.locator('#explore h1.gl-hero-title')).toBeInViewport();
 });
-
+// WEB-215 + Paul's C8 ruling (2026-11-01): the opening filmstrip test ("Opening records its chronological visual
+// sequence") is removed with the opening it recorded; contact-sheet.mjs no longer expects motion frames.
 const widths=[320,360,390,768,1440,1920];
 test('Headlines do not break or overflow a word',async({page})=>{
  test.setTimeout(300000);
@@ -143,7 +102,9 @@ test('Section 01 text clears 4.5:1 over its scrim',async({page})=>{
    const L=rgb=>0.2126*lin(rgb[0])+0.7152*lin(rgb[1])+0.0722*lin(rgb[2]);
    const contrast=(a,b)=>{const x=L(a),y=L(b);const hi=Math.max(x,y),lo=Math.min(x,y);return (hi+0.05)/(lo+0.05);};
    const out=[];
-   for(const node of document.querySelectorAll('#explore h2, #explore .lede, #explore .intro-description, #explore .section-meta, #explore .prototype-status, #explore .downstream')){
+   // WEB-233/WEB-220: section 01 is the 2026-10-31 hero; the same 4.5:1 rule covers its heading, copy and chain labels.
+   // WEB-215 + Paul's C8 ruling (2026-11-01): the hero heading is now h1, so h1 is added to keep it covered.
+   for(const node of document.querySelectorAll('#explore h1, #explore h2, #explore p, #explore .gl-chain strong, #explore .gl-chain span')){
     const style=getComputedStyle(node);
     const fg=parse(style.color);const bg=parse(style.backgroundColor);
     if(!fg||!bg){out.push({text:(node.textContent||'').slice(0,40),ratio:0});continue;}
@@ -177,8 +138,10 @@ test('Phone nav stays visible at 360px',async({page})=>{
  });
  expect(metrics.summary).toBe(0);
  expect(metrics.details).toBe(0);
- expect(metrics.count).toBe(5);
+ expect(metrics.count).toBe(6); // C9/WEB-217/WEB-223; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) drops Applications; QA-4 restores About: six linked items; Company kept.
  expect(metrics.overflow).toBe(false);
+ // D8 (WEB-214/WEB-223/WEB-226): the phone header is two 44px rows, brand/search/CTA over one nav row that scrolls
+ // sideways inside the header, so it stays at 88px or less.
  expect(metrics.headerHeight).toBeLessThanOrEqual(88);
  expect(metrics.headerHeight).toBeGreaterThanOrEqual(44);
  expect(new Set(metrics.boxes.map(box=>Math.round(box.top))).size).toBeLessThanOrEqual(2);
@@ -188,21 +151,175 @@ test('Phone nav stays visible at 360px',async({page})=>{
  }
 });
 
-test('Intro skip is immediate and the first click still lands',async({page})=>{
- test.setTimeout(30000);
- await page.emulateMedia({reducedMotion:'no-preference'});
- const startTime=new Date('2026-10-18T12:00:00Z');
- await page.clock.install({time:new Date(startTime.getTime()-1000)});
- await page.clock.pauseAt(startTime);
- await page.goto('/',{waitUntil:'load'});
- await expect(page.locator('#glIntro')).toHaveCount(1);
- await expect(page.locator('.gl-intro-skip')).toHaveAccessibleName('Skip to content');
- await page.clock.runFor(500);
- await page.locator('.scroll-invite').click();
- await expect(page.locator('#glIntro')).toHaveCount(0);
- await expect(page.locator('#explore')).toBeInViewport();
+test('Phone header is 88px or less from 320 to 899 with every item one tap away',async({page})=>{
+ // D8 (WEB-214/WEB-223/WEB-226): at every phone width the header keeps the full brand, Search (/library/) and the CTA in
+ // view, stays at or under 88px, and scrolling the header (not the page) brings Company into view.
+ for(const width of [320,360,390,600,899]){
+  await page.setViewportSize({width,height:800});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const m=await page.evaluate(()=>{
+   const bar=document.querySelector('header#gl-home-bar');
+   const inView=el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth+0.5&&r.top>=0&&r.bottom<=bar.getBoundingClientRect().bottom+0.5;};
+   const fixed=['.gl-brand-name','.site-brand small','form[action="/library/"] > button','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel)));
+   const company=bar.querySelector('form[action="/company/"] > button');
+   company.scrollIntoView({block:'nearest',inline:'nearest'});
+   return {h:bar.getBoundingClientRect().height,fixed,company:inView(company),fixedAfter:['.gl-brand-name','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel))),pageX:scrollX,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+  });
+  expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(88);
+  expect(m.fixed,`brand, subline, search and CTA in view at ${width}`).toEqual([true,true,true,true]);
+  expect(m.company,`Company in view at ${width}`).toBe(true);
+  expect(m.fixedAfter,`brand and CTA stay pinned at ${width}`).toEqual([true,true]);
+  expect(m.pageX).toBe(0);
+  expect(m.overflow).toBe(false);
+ }
 });
 
+test('Mid-width header is one row of 72px or less from 900 to 1279',async({page})=>{
+ // Round 4 (WEB-214, WEB-223, WEB-226): like the mockup, 900-1279 keeps one header row at or under 72px, with the
+ // brand, all six nav items (Company and About included; PLACEMENT_MAP dropped Applications; QA-4 restored About), Search and the CTA side by side, in view, unclipped and 44px tall.
+ for(const width of [900,1024,1279]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const m=await page.evaluate(()=>{
+   const bar=document.querySelector('header#gl-home-bar');const b=bar.getBoundingClientRect();
+   const items=[bar.querySelector('.site-brand'),...bar.querySelectorAll('nav button'),bar.querySelector('form[action="/library/"] > button'),bar.querySelector('.gl-bar-cta')];
+   const boxes=items.map(el=>el.getBoundingClientRect());
+   let ordered=true;for(let i=1;i<boxes.length;i++)if(boxes[i].left<boxes[i-1].right-0.5)ordered=false;
+   return {h:b.height,count:items.length,ordered,
+    inView:boxes.every(r=>r.left>=0&&r.right<=innerWidth+0.5&&r.top>=b.top-0.5&&r.bottom<=b.bottom+0.5),
+    tall:boxes.slice(1).every(r=>r.height>=43.5&&r.width>=43.5),
+    hit:items.every(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}),
+    company:!!bar.querySelector('nav form[action="/company/"] > button'),
+    cta:bar.querySelector('.gl-bar-cta').textContent.trim(),
+    scroll:bar.scrollWidth>bar.clientWidth+1,
+    overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+  });
+  expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(72);
+  expect(m.count).toBe(9); // PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) and QA-4: brand, six nav items (About restored), Search, CTA.
+  expect(m.ordered,`one row, no overlap at ${width}`).toBe(true);
+  expect(m.inView,`every header item in view at ${width}`).toBe(true);
+  expect(m.tall).toBe(true);
+  expect(m.hit,`every header item clickable at ${width}`).toBe(true);
+  expect(m.company).toBe(true);
+  expect(m.cta).toBe('Explore the research method'); // N11 (PLACEMENT_MAP, L21394; Round 5b)
+  expect(m.scroll).toBe(false);
+  expect(m.overflow).toBe(false);
+ }
+});
+
+test('Header CTA reads the N11 text and never collides with brand or Search',async({page})=>{
+ // N11 (PLACEMENT_MAP, L21394; Round 5b): "Explore the research method" in full, at every width; it sets on two lines
+ // at 390-599 and is the compact arrow button (same accessible name) below 390 and at 900-1023.
+ const heights={320:88,360:88,390:88,414:88,440:88,899:88,900:72,1024:72,1279:72,1440:108};
+ for(const [w,hh] of Object.entries(heights)){
+  const width=Number(w);
+  await page.setViewportSize({width,height:900});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const m=await page.evaluate(()=>{
+   const bar=document.querySelector('header#gl-home-bar');
+   const brand=bar.querySelector('.site-brand'),search=bar.querySelector('form[action="/library/"] > button'),cta=bar.querySelector('.gl-bar-cta');
+   const [b,s,c]=[brand,search,cta].map(el=>el.getBoundingClientRect());
+   const sub=bar.querySelector('.site-brand small'),sr=sub.getBoundingClientRect(),ss=getComputedStyle(sub);
+   const lum=x=>{const v=x.match(/[\d.]+/g).slice(0,3).map(n=>{n/=255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4});return .2126*v[0]+.7152*v[1]+.0722*v[2]};
+   const fg=lum(getComputedStyle(cta).color),bg=lum(getComputedStyle(bar).backgroundColor);
+   return {h:Math.round(bar.getBoundingClientRect().height),text:cta.textContent.replace(/\s+/g,' ').trim(),
+    gaps:[s.left-b.right,c.left-s.right],ctaW:c.width,ctaH:c.height,
+    hit:cta.contains(document.elementFromPoint(c.left+c.width/2,c.top+c.height/2)),
+    sub:ss.display!=='none'&&ss.visibility!=='hidden'&&sr.width>0&&sr.right<=s.left,
+    clipped:cta.querySelector('.gl-cta-label').getBoundingClientRect().width>2&&(cta.scrollWidth>cta.clientWidth+1||cta.scrollHeight>cta.clientHeight+1),
+    contrast:(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05),
+    overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+  });
+  expect(m.text).toBe('Explore the research method');
+  await expect(page.locator('#gl-home-bar .gl-bar-cta')).toHaveAccessibleName('Explore the research method');
+  expect(m.h,`header height at ${width}`).toBe(hh);
+  expect(m.gaps[0],`brand clears Search at ${width}`).toBeGreaterThanOrEqual(0);
+  expect(m.gaps[1],`Search clears the CTA at ${width}`).toBeGreaterThanOrEqual(0);
+  expect(m.sub,`REASONING SYSTEMS visible at ${width}`).toBe(true);
+  expect(Math.min(m.ctaW,m.ctaH),`CTA target at ${width}`).toBeGreaterThanOrEqual(44);
+  expect(m.hit).toBe(true);
+  expect(m.clipped,`CTA text unclipped at ${width}`).toBe(false);
+  expect(m.contrast,`CTA contrast at ${width}`).toBeGreaterThanOrEqual(4.5);
+  expect(m.overflow).toBe(false);
+ }
+});
+
+test('Homepage buttons hold their text at every width',async({page})=>{
+ // QA-1, QA-2 (Round 5b): no homepage button's label or arrow may spill out of its box, including the Problem button
+ // "Large Language Model Defects", both "Explore the research method" buttons and the header CTA.
+ for(const width of [320,390,1024,1280,1440]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const bad=await page.evaluate(()=>{
+   const out=[];
+   for(const b of document.querySelectorAll('header#gl-home-bar button, main button')){
+    const r=b.getBoundingClientRect();if(!r.width||b.closest('.site-brand')||b.matches('.site-brand'))continue;
+    const label=b.querySelector('.gl-cta-label');if(label&&label.getBoundingClientRect().width<=2)continue; // compact CTA: label is visually hidden on purpose
+    const range=document.createRange();range.selectNodeContents(b);const t=range.getBoundingClientRect();
+    if(b.scrollWidth>b.clientWidth+1||b.scrollHeight>b.clientHeight+1||t.left<r.left-0.5||t.right>r.right+0.5||t.top<r.top-0.5||t.bottom>r.bottom+0.5)
+     out.push(`${b.textContent.trim()} sw=${b.scrollWidth} cw=${b.clientWidth}`);
+   }
+   return out;
+  });
+  expect(bad,`buttons spilling at ${width}`).toEqual([]);
+  for(const name of ['Large Language Model Defects','Explore the research method']){
+   const count=await page.locator('main button',{hasText:name}).count();
+   expect(count,`${name} present at ${width}`).toBeGreaterThan(0);
+  }
+ }
+});
+
+test('Phone nav edge fade follows the header scroll',async({page})=>{
+ // Round 4 (WEB-214, WEB-226): the right-edge fade shows while the phone nav has more items to the right and is gone at
+ // the scroll end; it never takes pointer events, and a nav that fits shows no fade.
+ const fade=async(left)=>page.evaluate(async(x)=>{const bar=document.querySelector('header#gl-home-bar');if(x!==null)bar.scrollLeft=x;
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+  const a=getComputedStyle(bar,'::after'),b=getComputedStyle(bar,'::before');
+  return {right:+a.opacity,left:+b.opacity,events:a.pointerEvents,scrolls:bar.scrollWidth>bar.clientWidth+1,h:bar.getBoundingClientRect().height};},left);
+ await page.setViewportSize({width:320,height:800});
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ const start=await fade(null);
+ expect(start.scrolls).toBe(true);
+ expect(start.h).toBeLessThanOrEqual(88);
+ expect(start.events).toBe('none');
+ expect(start.right).toBeGreaterThan(0.9);
+ expect(start.left).toBeLessThan(0.1);
+ const end=await fade(99999);
+ expect(end.right).toBeLessThan(0.1);
+ expect(end.left).toBeGreaterThan(0.9);
+ await page.setViewportSize({width:899,height:800});
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ const fits=await fade(null);
+ expect(fits.scrolls).toBe(false);
+ expect(fits.right).toBeLessThan(0.1);
+ expect(fits.left).toBeLessThan(0.1);
+});
+
+// WEB-215 + Paul's C8 ruling (2026-11-01): "Intro skip is immediate and the first click still lands" is removed with the
+// opening overlay (#glIntro) and its scroll invite.
+test('Logo chime never blocks content, plays once, and is skipped under reduced motion',async({page})=>{
+ // Paul, 2026-11-01 (C8, WEB-215; WEB-227 FIFTH): a short logo chime replaces the old opening. Under reduced motion
+ // there is none; otherwise it is aria-hidden, takes no pointer events, the hero h1 is visible at load and the first
+ // click lands, and it does not replay in the same session.
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ await page.waitForTimeout(300);
+ await expect(page.locator('.gl-chime')).toHaveCount(0);
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ const chime=page.locator('.gl-chime');
+ await expect(chime).toHaveCount(1);
+ await expect(chime).toHaveAttribute('aria-hidden','true');
+ await expect(chime).toHaveCSS('pointer-events','none');
+ await expect(page.locator('h1')).toHaveCount(1);
+ await expect(page.locator('#explore h1.gl-hero-title')).toBeInViewport();
+ const cta=page.locator('#explore .gl-actions form[action="/research/"] button');
+ expect(await cta.evaluate(b=>{const r=b.getBoundingClientRect();return b.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));})).toBe(true);
+ await cta.click();
+ await expect(page).toHaveURL(/\/research\/\??$/);
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ await page.waitForTimeout(300);
+ await expect(page.locator('.gl-chime')).toHaveCount(0);
+});
 test('Labels are at least 12px and controls at least 44px',async({page})=>{
  test.setTimeout(180000);
  const problems=[];

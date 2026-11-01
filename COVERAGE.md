@@ -1,17 +1,17 @@
 # Follow-up coverage
 
-orphans=0. machine=0. The built site has zero <a> elements.
+orphans=0. The built site has zero <a> elements (0 files contain one). Generated from the built artifact with content_lock.py v5 (`--diff --coverage` against baseline-a1a367c-v5.json); machine differences against that baseline are the new provisional homepage assets and the /page-two/ route in the sitemap, feed and manifest (WEB-205, WEB-231).
 
-The four removed footer controls are not site-wide orphans. No parent-page button was added.
+Paul's previous homepage (The Groundless Machine, "AI does not know what truth is", "Read Paul's story") is kept byte-as-is at /page-two/, one button from the homepage (WEB-205, WEB-231). Applications and the "Truth Governs Mathematics" card, held under C9 (WEB-217, WEB-218), are no longer on the homepage: PLACEMENT_MAP (2026-11-01, WEB-227 FIFTH) dropped them.
 
-| Destination | Reached now | Depth from / | Worst-page depth before | Worst-page depth now |
-|---|---|---|---|---|
-| /concepts/ultimate-grounding/ | Header on every page, label Ultimate Grounding | 1 | 1 | 1 |
-| /about/ | Homepage control "Read Paul's story" | 1 | 1 | 2 |
-| /library/ | Homepage control "The library", and the library and publication listing buttons | 1 | 1 | 2 |
-| /challenge/ | Homepage control "The inquiry" (page title: Follow the chain.) | 1 | 1 | 2 |
-
-Worst-page depth is 2 for About, Library, and Follow the chain because the footer control that sat on every page is gone. Each is still one click from the homepage. Library and publication listings are form buttons with the existing titles.
+| Destination | Reached now | Depth from / |
+|---|---|---|
+| /page-two/ | Homepage control "See what we are building" (Paul's previous homepage) | 1 |
+| /company/ | Homepage header "Company", at every width | 1 |
+| /library/ | Homepage header Search (aria-label "Search"), at every width | 1 |
+| /about/ | Homepage header "About", at every width (restored, QA-4); "Read Paul's story" on /page-two/ | 1 |
+| /concepts/ultimate-grounding/ | Homepage card "On the Nature of Ultimate Grounding"; header on every inner page | 1 |
+| /challenge/ | "The inquiry" on /page-two/ (page title: Follow the chain.); not on the new homepage | 2 |
 
 | Route | Old anchor text | Old href | New mechanism + label | Status |
 |---|---|---|---|---|
@@ -286,31 +286,31 @@ Worst-page depth is 2 for About, Library, and Follow the chain because the foote
 | / | Governed Logic Reasoning Systems | / | — | SELF (skip/in-page) |
 | / | Skip to content | #content | — | SELF (skip/in-page) |
 | / | See what we are building ↓ | #explore | — | SELF (skip/in-page) |
-| / | About Paul | /about/ | form: "Read Paul’s story →" (label differs) | SAME-PAGE |
+| / | About Paul | /about/ | form: "About" (label differs) | SAME-PAGE |
 | / | Read Paul’s story → | /about/ | dest already covered on page | SAME-PAGE (duplicate) |
-| / | 02 The inquiry The objective is truth. Follow the reasoning. → | /challenge/ | form: "The inquiry" (label differs) | SAME-PAGE |
-| / | Follow the chain. | /challenge/ | dest already covered on page | SAME-PAGE (duplicate) |
+| / | 02 The inquiry The objective is truth. Follow the reasoning. → | /challenge/ | — | C-NOTE (reachable elsewhere only) |
+| / | Follow the chain. | /challenge/ | — | C-NOTE (reachable elsewhere only) |
 | / | 03 The company Research, development, publishing, education, and techn | /company/ | form: "Company" (label differs) | SAME-PAGE |
-| / | Company | /company/ | form: "The company" (label differs) | SAME-PAGE |
-| / | Explore the development work → | /company/#reasoning-engine | form: "Explore the development work →" | SAME-PAGE |
+| / | Company | /company/ | dest already covered on page | SAME-PAGE (duplicate) |
+| / | Explore the development work → | /company/#reasoning-engine | form: /company/ | FRAG (section/page# lost) |
 | / | Definitions | /concepts/ | form: "Definitions" | SAME-PAGE |
-| / | Explore Governed Intelligence → | /concepts/governed-intelligence/ | form: "Explore Governed Intelligence →" | SAME-PAGE |
-| / | Governed Intelligence | /concepts/governed-intelligence/ | form: "Governed Intelligence" | SAME-PAGE |
-| / | Governed Logic | /concepts/governed-logic/ | form: "Governed Logic" | SAME-PAGE |
-| / | Read Governed Logic → | /concepts/governed-logic/ | form: "Read Governed Logic →" | SAME-PAGE |
-| / | Examine the upstream problem → | /concepts/governed-logic/#downstream | form: "Examine the upstream problem →" | SAME-PAGE |
-| / | Read the grounding argument → | /concepts/ultimate-grounding/ | form: "Read the grounding argument →" | SAME-PAGE |
-| / | Ultimate Grounding | /concepts/ultimate-grounding/ | form: "Ultimate Grounding" | SAME-PAGE |
+| / | Explore Governed Intelligence → | /concepts/governed-intelligence/ | form: "Architecture And Evaluation Failure Points" (label differs) | SAME-PAGE |
+| / | Governed Intelligence | /concepts/governed-intelligence/ | dest already covered on page | SAME-PAGE (duplicate) |
+| / | Governed Logic | /concepts/governed-logic/ | form: "" (label differs) | SAME-PAGE |
+| / | Read Governed Logic → | /concepts/governed-logic/ | form: "Governed Logic" (label differs) | SAME-PAGE |
+| / | Examine the upstream problem → | /concepts/governed-logic/#downstream | form: /concepts/governed-logic/ | FRAG (section/page# lost) |
+| / | Read the grounding argument → | /concepts/ultimate-grounding/ | form: "" (label differs) | SAME-PAGE |
+| / | Ultimate Grounding | /concepts/ultimate-grounding/ | dest already covered on page | SAME-PAGE (duplicate) |
 | / | Ultimate Grounding | /concepts/ultimate-grounding/ | dest already covered on page | SAME-PAGE (duplicate) |
 | / | FAQ | /faq/ | form: "FAQ" | SAME-PAGE |
-| / | 01 The library Concepts, source treatises, and the reasoning architect | /library/ | form: "The library" (label differs) | SAME-PAGE |
+| / | 01 The library Concepts, source treatises, and the reasoning architect | /library/ | form: "" (label differs) | SAME-PAGE |
 | / | Library | /library/ | dest already covered on page | SAME-PAGE (duplicate) |
-| / | Explore the working prototype ↗ | /mechanism.html | form: "Explore the working prototype ↗" | SAME-PAGE |
-| / | Read and test the instructions → | /mechanism.html | form: "Read and test the instructions →" | SAME-PAGE |
-| / | The prototype | /mechanism.html | form: "The prototype" | SAME-PAGE |
+| / | Explore the working prototype ↗ | /mechanism.html | form: "The prototype" (label differs) | SAME-PAGE |
+| / | Read and test the instructions → | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
+| / | The prototype | /mechanism.html | dest already covered on page | SAME-PAGE (duplicate) |
 | / | Publication record | /publication/ | form: "Publication record" | SAME-PAGE |
-| / | Explore the research method → | /research/ | form: "Explore the research method →" | SAME-PAGE |
-| / | Research | /research/ | form: "Research" | SAME-PAGE |
+| / | Explore the research method → | /research/ | form: "Explore the research method" (label differs) | SAME-PAGE |
+| / | Research | /research/ | form: "Explore the research method" (label differs) | SAME-PAGE |
 | / | Sources & editions | /sources/ | form: "Sources & editions" | SAME-PAGE |
 | /library/ | GOVERNED LOGIC REASONING SYSTEMS | / | form: "GOVERNED LOGIC REASONING SYSTEMS" | SAME-PAGE |
 | /library/ | Governed Logic Reasoning Systems | / | form: "Governed Logic Reasoning Systems" | SAME-PAGE |
@@ -454,7 +454,7 @@ Worst-page depth is 2 for About, Library, and Follow the chain because the foote
 | /sources/ | Read the source PDF → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | form: "Read the source PDF →" | SAME-PAGE |
 | /sources/ | Read the complete supplied addendum → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | form: "Read the complete supplied addendum →" | SAME-PAGE |
 
-SAME-PAGE=347, STILL-A=0, FRAG=0, C-FIDELITY=34, C-NOTE=12, ORPHAN=0, SELF=45
+SAME-PAGE=343, STILL-A=0, FRAG=2, C-FIDELITY=34, C-NOTE=14, ORPHAN=0, SELF=45
 
 ## Parent routes
 
@@ -520,15 +520,10 @@ These three destinations stay in the generated library and publication listings,
 | /concepts/ultimate-grounding/ | status | h2: A thesis under argument, not a shortcut around argument. |
 | /concepts/ultimate-grounding/ | section 8 | h2: Sources and version |
 | /faq/ | section 1 | h1: Questions & answers |
-| / | section 1 | h1: Governed Logic Governed Logic Governed Logic |
-| / | explore | h2: Truth governs logic.Logic governs reasoning.Intelligence is downstream. |
-| / | section 3 | h2: The Groundless Machine. |
-| / | section 4 | h2: Generate forward.Adjudicate back. |
-| / | section 5 | h2: Why anything? |
-| / | section 6 | h2: Governed Intelligence. <br> h3: Inspect the mechanism. <br> h3: Reasoning engine & API. |
-| / | section 7 | h2: The objective is truth. |
-| / | section 8 | h2: Paul André Couchoud |
-| / | section 9 | h2: Follow the chain. <br> h3: The library <br> h3: The inquiry <br> h3: The company |
+| / | explore | h1: Governed Logic Reasoning Systems |
+| / | section 2 | h2: Truth governs logic.Logic governs reasoning.Intelligence is downstream. <br> h3: Being <br> h3: Logic <br> h3: Meaning <br> h3: Intelligibility <br> h3: Obligation |
+| / | the-problem | h2: Large Language Model Defects |
+| / | section 4 | h3: On the Nature of Ultimate Grounding <br> h3: Governed Logic |
 | /library/ | section 1 | h1: The library |
 | /library/ | section 2 | h2: Follow the chain. → |
 | /library/ | section 3 | h2: A reasoning systems company. → |
@@ -546,17 +541,27 @@ These three destinations stay in the generated library and publication listings,
 | /library/ | section 15 | h2: Sources and editions → |
 | /library/ | section 16 | h2: Why Anything? → |
 | /library/ | section 17 | h2: Integrity in Artificial Intelligence → |
-| /library/ | section 18 | h2: On the Nature of Ultimate Grounding · Source edition → |
-| /library/ | section 19 | h2: Governed Logic · Source edition → |
-| /library/ | section 20 | h2: Alpha and Omega Reasoning · Source edition → |
-| /library/ | section 21 | h2: Governed Intelligence · Source edition → |
-| /library/ | section 22 | h2: Business strategy — additional direction · Source edition → |
+| /library/ | section 18 | h2: Governed Logic Reasoning Systems → |
+| /library/ | section 19 | h2: On the Nature of Ultimate Grounding · Source edition → |
+| /library/ | section 20 | h2: Governed Logic · Source edition → |
+| /library/ | section 21 | h2: Alpha and Omega Reasoning · Source edition → |
+| /library/ | section 22 | h2: Governed Intelligence · Source edition → |
+| /library/ | section 23 | h2: Business strategy — additional direction · Source edition → |
 | /mechanism.html | section 1 | h1: The mechanism. |
 | /mechanism.html | section 2 | h2: The architecture is not the prompt. |
 | /mechanism.html | section 3 | h2: Copy the current prototype. |
 | /mechanism.html | section 4 | h2: What this prototype can—and cannot—do. |
 | /mechanism.html | section 5 | h2: How to test it. |
 | /mechanism.html | section 6 | h2: Follow the chain. |
+| /page-two/ | section 1 | h1: Governed Logic Reasoning Systems |
+| /page-two/ | explore | h2: Truth governs logic.Logic governs reasoning.Intelligence is downstream. <br> h3: The familiar failures are symptoms. The disease is upstream. |
+| /page-two/ | section 3 | h2: The Groundless Machine. |
+| /page-two/ | section 4 | h2: Generate forward.Adjudicate back. |
+| /page-two/ | section 5 | h2: Why anything? |
+| /page-two/ | section 6 | h2: Governed Intelligence. <br> h3: Inspect the mechanism. <br> h3: Reasoning engine & API. |
+| /page-two/ | section 7 | h2: The objective is truth. |
+| /page-two/ | section 8 | h2: Paul André Couchoud |
+| /page-two/ | section 9 | h2: Follow the chain. <br> h3: The library <br> h3: The inquiry <br> h3: The company |
 | /publication/ | section 1 | h1: Publication record |
 | /publication/ | section 2 | h2: Follow the chain. → |
 | /publication/ | section 3 | h2: A reasoning systems company. → |
@@ -574,11 +579,12 @@ These three destinations stay in the generated library and publication listings,
 | /publication/ | section 15 | h2: Sources and editions → |
 | /publication/ | section 16 | h2: Why Anything? → |
 | /publication/ | section 17 | h2: Integrity in Artificial Intelligence → |
-| /publication/ | section 18 | h2: On the Nature of Ultimate Grounding · Source edition → |
-| /publication/ | section 19 | h2: Governed Logic · Source edition → |
-| /publication/ | section 20 | h2: Alpha and Omega Reasoning · Source edition → |
-| /publication/ | section 21 | h2: Governed Intelligence · Source edition → |
-| /publication/ | section 22 | h2: Business strategy — additional direction · Source edition → |
+| /publication/ | section 18 | h2: Governed Logic Reasoning Systems → |
+| /publication/ | section 19 | h2: On the Nature of Ultimate Grounding · Source edition → |
+| /publication/ | section 20 | h2: Governed Logic · Source edition → |
+| /publication/ | section 21 | h2: Alpha and Omega Reasoning · Source edition → |
+| /publication/ | section 22 | h2: Governed Intelligence · Source edition → |
+| /publication/ | section 23 | h2: Business strategy — additional direction · Source edition → |
 | /research/ | section 1 | h1: Research |
 | /research/ | method | h2: Hold the framework constant. Change the governing referent. |
 | /research/ | evaluation | h2: Coherence is not correspondence. |
@@ -597,23 +603,32 @@ These three destinations stay in the generated library and publication listings,
 
 ## Resources
 
-24 visitor destinations are the rows of the table above (19 pages and 5 source editions). These 14 assets only need to load. Together that is 38 resources.
+25 visitor destinations are the rows of the table above (20 pages and 5 source editions). These 23 assets only need to load. Together that is 48 resources.
 
 | Resource | How it loads |
 |---|---|
 | /assets/opening.css | stylesheet link on the homepage |
-| /assets/restored-site.css | stylesheet link on every page |
+| /assets/home.css | stylesheet link on the homepage |
+| /assets/restored-site.css | stylesheet link on every other page |
 | /assets/opening.js | script src on the homepage; mark trace, light field, scroll invite |
 | /assets/earth-renderer.js | script src on the homepage; permanent Earth painting |
 | /assets/material-environment.js | script src on the homepage |
 | /assets/library.js | script src on /library/ |
-| /assets/materials/cinzel.ttf | @font-face in opening.css and restored-site.css |
-| /assets/materials/ibm-plex-sans.ttf | @font-face in restored-site.css |
+| /assets/materials/cinzel.ttf | @font-face in opening.css; preload on the homepage |
+| /assets/materials/ibm-plex-sans.ttf | @font-face in restored-site.css and home.css (opening caption and invite) |
+| /assets/materials/source-serif-4-latin-opsz.woff2 | @font-face in home.css; preload on the homepage |
+| /assets/materials/inter-latin-wght.woff2 | @font-face in home.css; preload on the homepage |
 | /assets/materials/earth-day.jpg | sampled by earth-renderer.js |
 | /assets/materials/earth-night.jpg | sampled by earth-renderer.js |
 | /assets/materials/earth-clouds.jpg | sampled by earth-renderer.js |
-| /assets/governed-logic-mark.webp | img in the header brand |
-| /assets/the-groundless-machine.webp | img in homepage section 02 |
-| /paul-portrait.png | img in the homepage founder section and /about/ |
+| /assets/governed-logic-mark.webp | img in the header brand on every other page |
+| /assets/provisional/seed-of-life.png | img in the homepage header brand (provisional) |
+| /assets/provisional/head-artwork.webp | img in the homepage hero (provisional) |
+| /assets/provisional/problem-network.webp | background in home.css, The Problem band (provisional) |
+| /assets/provisional/card-grounding.webp | img in the homepage Latest Research card (provisional) |
+| /assets/provisional/card-mathematics.webp | img in the homepage Latest Research card (provisional) |
+| /assets/provisional/card-framework.webp | img in the homepage Latest Research card (provisional) |
+| /assets/the-groundless-machine.webp | img in /page-two/ section 02 |
+| /paul-portrait.png | img in the /page-two/ founder section and /about/ |
 
-License notes shipped beside the fonts (`assets/materials/Cinzel-OFL.txt`, `IBM-Plex-OFL.txt`, `SOURCES.txt`) and `assets/gl-reasoning-systems.webp` are in the publication boundary and load only if a stylesheet or page references them. `gl-reasoning-systems.webp` is an allowed image and is not required for the first screen.
+License notes shipped beside the fonts (`assets/materials/Cinzel-OFL.txt`, `IBM-Plex-OFL.txt`, `SourceSerif4-OFL.txt`, `Inter-OFL.txt`, `SOURCES.txt`) and `assets/gl-reasoning-systems.webp` are in the publication boundary and load only if a stylesheet or page references them. `gl-reasoning-systems.webp` is an allowed image and is not required for the first screen.

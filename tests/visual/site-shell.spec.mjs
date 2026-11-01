@@ -10,7 +10,9 @@ const ROUTES = [
   { path: "/company/", slug: "company" },
   { path: "/research/", slug: "research" },
   { path: "/library/", slug: "library" },
-  { path: "/faq/", slug: "faq" }
+  { path: "/faq/", slug: "faq" },
+  // WEB-205/WEB-231: Paul's previous homepage main, kept byte-as-is.
+  { path: "/page-two/", slug: "page-two" }
 ];
 const EXPECTED_NAVIGATION = [
   { href: "/concepts/governed-logic/", label: "Governed Logic" },
@@ -18,6 +20,20 @@ const EXPECTED_NAVIGATION = [
   { href: "/concepts/governed-intelligence/", label: "Governed Intelligence" },
   { href: "/company/", label: "Company" },
   { href: "/research/", label: "Research" }
+];
+// WEB-228/C9: the homepage carries the approved 2026-10-31 mockup header (provisional targets).
+// Applications (C9, WEB-217) is no longer in the header: PLACEMENT_MAP dropped it (below).
+// WEB-223: Company (/company/) is one click from the homepage header at every width.
+// PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): library labels "The problem" (L20779) and "Governed Logic" (L21431);
+// Applications (N7, HOLD) is dropped from the homepage header. About (N8) is restored with the approved mockup's label
+// (MOCKUP-PROVISIONAL, not on 64bf60f: QA-8) and the existing /about/ page so /about/ stays one click away at every width (QA-4, WEB-223).
+const HOME_NAVIGATION = [
+  { href: "/", label: "Home" },
+  { href: "/index.html#the-problem", label: "The problem" },
+  { href: "/research/", label: "Research" },
+  { href: "/concepts/governed-logic/", label: "Governed Logic" },
+  { href: "/about/", label: "About" }, // QA-4
+  { href: "/company/", label: "Company" }
 ];
 
 for (const routeDefinition of ROUTES) {
@@ -74,18 +90,47 @@ for (const routeDefinition of ROUTES) {
     await expect(page.getByRole("main")).toBeVisible();
 
     if (routeDefinition.path === "/") {
+      // WEB-215 + Paul's C8 ruling (2026-11-01, "drop the old opening"): no opening region; the hero h1 is the one h1.
       const openingRegion = page.getByRole("region", { name: "Governed Logic Reasoning Systems" });
-      await expect(openingRegion).toHaveCount(1);
-      await expect(openingRegion).toBeVisible();
+      await expect(openingRegion).toHaveCount(0);
+      await expect(page.locator("h1")).toHaveCount(1);
+      await expect(page.locator("main #explore h1.gl-hero-title")).toHaveCount(1);
+      // WEB-205/WEB-231: one GET-form button on the homepage reaches /page-two/.
+      const pageTwoForms = page.locator('main form.gl-go[method="get"][action="/page-two/"]');
+      await expect(pageTwoForms).toHaveCount(1);
+      await expect(pageTwoForms.locator('button[type="submit"]')).toHaveText("See what we are building");
+      // C9/WEB-217 and WEB-218 held Applications and the Truth Governs Mathematics card. PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) drops
+      // both (N7, R6-R8), so no held control remains; none may sit inside a form.
+      const held = page.locator('button.gl-hold[aria-disabled="true"]');
+      await expect(held).toHaveCount(0);
+      await expect(page.locator("form button.gl-hold")).toHaveCount(0);
+      // WEB-223/WEB-214: /company/ and the library (Search) are one click from the header, and the brand name shows.
+      const header = page.locator("header.site-bar");
+      await expect(header.locator('form.gl-go[action="/company/"] > button')).toBeVisible();
+      await expect(header.locator('form.gl-go[action="/library/"] > button')).toBeVisible();
+      await expect(header.locator(".gl-brand-name")).toBeVisible();
+      // D8 (WEB-214/WEB-226): "Reasoning Systems" and the CTA show at every width; below 390px the CTA is a
+      // compact arrow button that keeps its accessible name.
+      await expect(header.locator(".site-brand small")).toBeVisible();
+      await expect(header.locator(".gl-bar-cta")).toBeVisible();
+      await expect(header.locator(".gl-bar-cta")).toHaveAccessibleName("Explore the research method"); // N11 (PLACEMENT_MAP, L21394; Round 5b)
+    }
+
+    if (routeDefinition.path === "/page-two/") {
+      // WEB-205/WEB-231: page two carries the preserved homepage main and no opening region.
+      await expect(page.locator("#site")).toHaveCount(0);
+      await expect(page.locator("main.home-content #explore")).toHaveCount(1);
     }
 
     const isMobile = testInfo.project.name.startsWith("mobile-");
+    // WEB-228/C9: the homepage header lists its own items; every other route keeps the reviewed shell.
+    const expectedNavigation = routeDefinition.path === "/" ? HOME_NAVIGATION : EXPECTED_NAVIGATION;
     if (isMobile) {
       // The disclosure is gone. The five doors stay visible, each at least 44px, with no horizontal overflow.
       await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
       await expect(page.locator('nav[aria-label="Primary"] details')).toHaveCount(0);
       const navButtons = page.locator('nav[aria-label="Primary"] form.gl-go > button');
-      await expect(navButtons).toHaveCount(5);
+      await expect(navButtons).toHaveCount(expectedNavigation.length); // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) and QA-4 (About restored): six on the homepage
       for (const button of await navButtons.all()) {
         await button.scrollIntoViewIfNeeded();
         await expect(button).toBeVisible();
@@ -196,7 +241,7 @@ for (const routeDefinition of ROUTES) {
             !mobile || linkMetrics.every(link => link.height >= 43.5)
         };
       },
-      { expectedNavigation: EXPECTED_NAVIGATION, mobile: isMobile }
+      { expectedNavigation, mobile: isMobile }
     );
 
     const screenshotDirectory = path.resolve(

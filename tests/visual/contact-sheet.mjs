@@ -4,8 +4,9 @@ import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const PROJECTS = ["desktop-1440", "mobile-320", "mobile-390"];
-const MOTION_PROJECTS = ["desktop-1440", "mobile-390"];
-const ROUTES = ["home", "challenge", "company", "research", "about", "faq", "concepts", "concepts-governed-logic", "concepts-governed-intelligence", "concepts-ultimate-grounding", "concepts-alpha-and-omega-reasoning", "concepts-governing-referent", "concepts-sufficient-grounding", "mechanism.html", "sources", "articles-why-anything", "articles-integrity-in-artificial-intelligence", "library", "publication"];
+// WEB-215 + Paul's C8 ruling (2026-11-01): the opening and its filmstrip test are removed, so no motion frames are expected.
+const MOTION_PROJECTS = [];
+const ROUTES = ["home", "challenge", "company", "research", "about", "faq", "concepts", "concepts-governed-logic", "concepts-governed-intelligence", "concepts-ultimate-grounding", "concepts-alpha-and-omega-reasoning", "concepts-governing-referent", "concepts-sufficient-grounding", "mechanism.html", "sources", "articles-why-anything", "articles-integrity-in-artificial-intelligence", "page-two", "library", "publication"];
 const outputRoot = path.resolve("visual-qa");
 const cards = [];
 const missing = [];

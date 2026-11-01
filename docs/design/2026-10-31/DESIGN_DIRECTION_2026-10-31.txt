@@ -1,0 +1,80 @@
+Paul, 7:55 PM EDT Oct 31 2026, verbatim in GL QA chat (t84u):
+"Please update the PRD or have Governor update the PRD. I don't care but this is the new aesthetic everything about it." [the direction below + approved-mockup.png]
+"I've already addressed the gold issue, so in the notes you can just skip that you can see I already corrected the colors. This is the new look and feel of the website. The PRD must be updated and then y'all have to change the website to look like this identical. This is the only thing I care about right now is this lookout. Once I have this layout I can give you all the content. This is the most important thing. All other projects cease nothing else."
+
+GOVERNED LOGIC REASONING SYSTEMS
+WEBSITE DESIGN DIRECTION
+October 31, 2026
+STATUS: APPROVED VISUAL DIRECTION WITH TARGETED REVISIONS
+
+1. PRESERVE THE APPROVED MOCKUP
+Use the original research-institute mockup with the dark navigation, white content sections, strong typography, research panels, and article cards.
+Do not redesign the layout.
+Do not remove the contrast between black and white.
+Do not replace the institutional aesthetic with a spiritual, religious, or consciousness-themed design.
+The visual reference is a serious research institution, comparable in professionalism to MIT, Stanford, and leading AI research laboratories.
+The website must also retain Paul's unique personality, artistic sensibility, and identity as founder.
+
+2. COLOR CORRECTION — THE PRIMARY CHANGE
+REMOVE: Gold accents; Yellow-gold buttons; Gold navigation highlights; Gold icons and decorative elements
+REPLACE WITH: Deep, rich blue, or Restrained Matrix green
+Preferred treatment: Dark blue with depth and luminosity; Very subtle blue or green background tinting; Black and near-black areas with layered depth; Crisp white typography and white content surfaces; High contrast without excessive brightness
+Dark should feel deep, dimensional, and sophisticated, not flat or muddy.
+White should stand out dramatically against dark areas.
+Preserve the existing black-and-white composition.
+
+3. ELEMENTS PAUL EXPLICITLY LIKED
+PRESERVE: Professional research-institute aesthetic; Dark navigation/header; Strong black-and-white contrast; Large, prominent article-style headings; The prominent central article title; Research-focused content presentation; Research section and its visual hierarchy; Familiar article-card layout at the bottom; Clean, readable article previews; Editorial typography; Structured research navigation; Strong information hierarchy; Technical and scientific visual language; The distinctive Seed of Life brand identity; Artwork and visual personality throughout the site
+The article presentation is especially important.
+Paul likes how familiar and immediately understandable the article layout feels to visitors.
+Do not sacrifice that usability for novelty.
+
+4. HOMEPAGE CONTENT STRATEGY
+START WITH THE PROBLEM.
+The homepage should initially address defects in modern large language models and AI reasoning.
+Explain the actual problem before introducing the proposed framework or solution.
+The opening narrative should examine: Problems with current large language models; Groundless or insufficiently grounded reasoning; Defects in reasoning chains; Failures of correspondence with reality; Why convincing outputs can still be wrong
+Use the existing article on Google Drive provisionally identified as "LLM Defects" or "AI Defects."
+Locate and read the actual document before writing final homepage copy.
+Preserve its arguments accurately.
+Do not invent claims, evidence, statistics, or findings.
+The detailed reasoning discussion from October 31 should also inform the content after its source is reviewed.
+The homepage must make the problem understandable to a general audience.
+
+5. CONTENT AND INFORMATION HIERARCHY
+Lead with the problem in current AI systems.
+Give the visitor a clear path to read the research.
+Use prominent article titles and visually compelling research previews.
+Provide understandable navigation to research, publications, the framework, and the organization.
+The framework is introduced after the problem has been established.
+Do not turn the homepage into a theological argument, a spirituality website, or a consciousness model.
+
+6. ARTWORK AND VISUAL IDENTITY
+Paul wants artwork on every page.
+Artwork is a core design requirement, not an afterthought.
+Include distinctive, thoughtful visual imagery.
+Explore the previously discussed skull/head artwork as a visual direction.
+Use art to support the intellectual subject and create an unmistakable institutional identity.
+Artwork should feel: Original; Intelligent; Technical; Bold; Sophisticated; Visually memorable
+Avoid: Greek pillars; Generic mountain landscapes; Spiritual stock imagery; Decorative religious symbolism; Generic AI startup imagery
+
+7. BRAND POSITIONING
+Company: Governed Logic Reasoning Systems
+Identity: An original research-driven reasoning systems company.
+Presentation: Credible, rigorous, distinctive, ambitious, and intellectually serious.
+Personality: Paul's voice, creativity, originality, and mission should remain visible.
+The website should be recognizable as his company, not a generic institutional template.
+The site must communicate seriousness without losing individuality.
+
+8. EXECUTION INSTRUCTIONS FOR GROK AND TEAM
+DO NOT rebuild the approved mockup from scratch.
+FIRST: Preserve its composition, layout, typography, research sections, article cards, and contrast.
+SECOND: Replace gold/yellow accents with the selected deep-blue or restrained Matrix-green treatment.
+THIRD: Locate and review the actual LLM/AI defects article and related reasoning research.
+FOURTH: Revise the homepage content hierarchy so the problem comes before the framework.
+FIFTH: Develop a consistent artwork direction for all pages.
+SIXTH: Produce the updated mockup for Paul's review before implementing additional structural changes.
+IMPORTANT: Visual approval does not constitute approval of unverified copy, invented publication descriptions, or changes to the underlying framework.
+
+DESIGN PRINCIPLE:
+PRESERVE WHAT WORKS. CHANGE ONLY WHAT WAS REQUESTED. MAKE THE RESEARCH THE STORY. LET THE ART GIVE IT PERSONALITY.
