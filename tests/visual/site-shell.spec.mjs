@@ -111,7 +111,7 @@ for (const routeDefinition of ROUTES) {
       // compact arrow button that keeps its accessible name.
       await expect(header.locator(".site-brand small")).toBeVisible();
       await expect(header.locator(".gl-bar-cta")).toBeVisible();
-      await expect(header.locator(".gl-bar-cta")).toHaveAccessibleName("Explore the Research");
+      await expect(header.locator(".gl-bar-cta")).toHaveAccessibleName("Explore the research method"); // N11 (PLACEMENT_MAP, L21394; Round 5b)
     }
 
     if (routeDefinition.path === "/page-two/") {

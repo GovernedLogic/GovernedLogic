@@ -29,7 +29,8 @@ body.gl-home-page .gl-search svg{width:calc(var(--p)*27);min-width:18px;height:a
 /* Buttons */
 body.gl-home-page .gl-btn{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--p)*14);min-height:44px;margin:0;border-radius:calc(var(--p)*4);font:500 max(14px,calc(var(--p)*19))/1.2 var(--sans);letter-spacing:0;cursor:pointer;text-decoration:none;white-space:nowrap;transition:filter .2s,background .2s}
 body.gl-home-page .gl-btn:hover{filter:brightness(1.12)}
-body.gl-home-page .gl-bar-cta{width:calc(var(--p)*217);height:calc(var(--p)*49);padding:0;font-size:max(12px,calc(var(--p)*16));font-weight:400}
+body.gl-home-page .gl-bar-cta{width:auto;min-width:calc(var(--p)*217);height:calc(var(--p)*49);padding:0 calc(var(--p)*18);font-size:max(12px,calc(var(--p)*16));font-weight:400}
+/* N11 (PLACEMENT_MAP, L21394): the header CTA reads "Explore the research method"; it sizes to its text. */
 body.gl-home-page .gl-btn-outline{background:transparent;color:#58bdf0;border:1px solid #2f8fd2}
 body.gl-home-page .gl-btn-bright{width:calc(var(--p)*318);height:calc(var(--p)*59);padding:0 calc(var(--p)*20);background:linear-gradient(90deg,#00477a 0%,#0a6fb4 38%,#1a76bb 100%);color:#fff;border:0;box-shadow:0 0 calc(var(--p)*28) rgba(30,140,220,.18)}
 /* WEB-220: white label stays at or above 4.5:1 across the whole gradient (end stop #1a76bb = 4.82:1), including hover. */
@@ -253,7 +254,7 @@ body.gl-home-page .gl-card-go.gl-hold{color:#8a97a4;cursor:default}
   body.gl-home-page .gl-bar-cta{width:auto;height:44px;padding:0 14px;font-size:13.5px;gap:8px}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:none}
 }
-/* 900-1023: the CTA is the compact arrow button; its accessible name stays "Explore the Research". */
+/* 900-1023: the CTA is the compact arrow button; its accessible name stays "Explore the research method" (N11). */
 @media (min-width:900px) and (max-width:1023px){
   body.gl-home-page .gl-bar-cta{width:44px;min-width:44px;padding:0;justify-content:center}
   body.gl-home-page .gl-bar-cta .gl-cta-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
@@ -269,7 +270,7 @@ body.gl-home-page .gl-chime{position:fixed;z-index:60;margin:0;object-fit:contai
    nothing is hidden in a menu. */
 @media (max-width:899px){
   html{scroll-padding-top:0}
-  body.gl-home-page{--gl-bar-h:88px;--gl-tools-w:199px}
+  body.gl-home-page{--gl-bar-h:88px;--gl-tools-w:245px}
   body.gl-home-page header#gl-home-bar{position:relative;grid-template-columns:minmax(0,1fr);grid-template-rows:44px 44px;height:88px;max-height:88px;column-gap:0;padding:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none}
   body.gl-home-page header#gl-home-bar::-webkit-scrollbar{display:none}
   body.gl-home-page #gl-home-bar>.gl-go{position:sticky;left:0;z-index:2;grid-column:1;grid-row:1;align-self:center;justify-self:start;padding-left:8px}
@@ -300,7 +301,12 @@ body.gl-home-page .gl-chime{position:fixed;z-index:60;margin:0;object-fit:contai
 }
 @keyframes gl-fade-in{from{opacity:0}to{opacity:1}}
 @keyframes gl-fade-out{0%,80%{opacity:1}100%{opacity:0}}
-/* Below 390px the CTA is the compact arrow button; its accessible name stays "Explore the Research". */
+/* 390-599 (N11): the CTA text sets on two centred lines in a 118px button, so Search clears the brand. */
+@media (min-width:390px) and (max-width:599px){
+  body.gl-home-page{--gl-tools-w:172px}
+  body.gl-home-page .gl-bar-cta{width:118px;padding:0 8px;font-size:12px;line-height:1.15;white-space:normal;text-align:center}
+}
+/* Below 390px the CTA is the compact arrow button; its accessible name stays "Explore the research method" (N11). */
 @media (max-width:389px){
   body.gl-home-page{--gl-tools-w:98px}
   body.gl-home-page .gl-bar-cta{width:44px;min-width:44px;padding:0;justify-content:center}

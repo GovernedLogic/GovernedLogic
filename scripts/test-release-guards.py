@@ -56,8 +56,10 @@ HOMEPAGE_DIGESTS = (
     # metadata, JSON-LD and links are unchanged.
     # Content placement per Rigel's PLACEMENT_MAP.md (2026-11-01, WEB-227 FIFTH): this pin replaces
     # 00821284...99d6. Every homepage string in main and the header is now library-verbatim (see
-    # COPY_REGISTER.md) except the kept "See what we are building" and header "Explore the Research"; title, meta and JSON-LD are unchanged.
-    "50779ff0e069e22699bfd0da2cd4180520d40cd7776f898a14edbce64cd772a1",
+    # COPY_REGISTER.md) except the kept "See what we are building"; title, meta and JSON-LD are unchanged.
+    # Round 5b (WEB-227 FIFTH): N11 places the header CTA text "Explore the research method" (L21394);
+    # this pin replaces 50779ff0...72a1. That one string is the only change to text or links.
+    "43c676657187333d3e61ec4bd077509c8833629991bd7393bf4e1a292b095925",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,

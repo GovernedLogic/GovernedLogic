@@ -9,7 +9,7 @@ Statuses:
 
 Library: `CONTENT_LIBRARY_2026-10-31.txt` (sha256 `f0b19e4caf6a89956588bb38debfa21b89b34d031ffda6e524b5190094191ce9`); line numbers are lines of that file, with the package file named. Content placed per Rigel's `PLACEMENT_MAP.md` (2026-11-01) with its default verdicts; the Map slot column gives each slot, and skipped or unmapped strings are noted. Each LIBRARY-VERBATIM citation was checked line by line by the generator (`/workspace/crops/copy_register.py`), which also fails if any visible text on the built page is missing from this table.
 
-Counts: 58 visible strings; LIBRARY-VERBATIM 56, MOCKUP-PROVISIONAL 1, EXISTING-SITE 1. CSS `text-transform` (uppercase eyebrows, subline and chain labels) is not counted as a change of text.
+Counts: 58 visible strings; LIBRARY-VERBATIM 57, MOCKUP-PROVISIONAL 0, EXISTING-SITE 1. CSS `text-transform` (uppercase eyebrows, subline and chain labels) is not counted as a change of text.
 
 Band order on this branch: header, hero, core and principles, problem, published work, page-two route, footer. The shelved variant `v11/design-problem-first` was not updated.
 
@@ -23,7 +23,7 @@ Band order on this branch: header, hero, core and principles, problem, published
 | 6 | Header | nav 3 | Research | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21435 (WEB-24) | N5 | KEEP-EXISTING. |
 | 7 | Header | nav 4 (/concepts/governed-logic/) | Governed Logic | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21431 (WEB-24) | N6 | KEEP-EXISTING. |
 | 8 | Header | nav 5 | Company | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21434 (WEB-24) | N9 | KEEP-EXISTING. |
-| 9 | Header | CTA (text visually hidden below 390px and 900-1023px; still its accessible name) | Explore the Research | MOCKUP-PROVISIONAL |  | N11 | SKIPPED: the map's "Explore the research method" (L21394) is 46px wider and makes Search overlap the brand at 390-440px; the fix needs home.css, outside this placement round. |
+| 9 | Header | CTA (text visually hidden below 390px and 900-1023px; still its accessible name) | Explore the research method | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21394 (WEB-23) | N11 | PLACE (Round 5b). Sets on two lines at 390-599px; home.css changed for the CTA only. |
 | 10 | Hero | h1 | Governed Logic Reasoning Systems | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L20763 (WEB-12) | H2 | KEEP-EXISTING. |
 | 11 | Hero | lede | We are building Governed Intelligence: the artificial-intelligence instantiation of Governed Logic. A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles. | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L20766, L20767 (WEB-12) | H3 | KEEP-EXISTING; the two source lines joined by a space. The status line L20768 is not placed. |
 | 12 | Hero | button 1 | Explore the research method | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21394 (WEB-23) | H4 | KEEP-EXISTING (the source line's trailing space is not carried). |

@@ -201,8 +201,45 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
   expect(m.tall).toBe(true);
   expect(m.hit,`every header item clickable at ${width}`).toBe(true);
   expect(m.company).toBe(true);
-  expect(m.cta).toBe('Explore the Research');
+  expect(m.cta).toBe('Explore the research method'); // N11 (PLACEMENT_MAP, L21394; Round 5b)
   expect(m.scroll).toBe(false);
+  expect(m.overflow).toBe(false);
+ }
+});
+
+test('Header CTA reads the N11 text and never collides with brand or Search',async({page})=>{
+ // N11 (PLACEMENT_MAP, L21394; Round 5b): "Explore the research method" in full, at every width; it sets on two lines
+ // at 390-599 and is the compact arrow button (same accessible name) below 390 and at 900-1023.
+ const heights={320:88,360:88,390:88,414:88,440:88,899:88,900:72,1024:72,1279:72,1440:108};
+ for(const [w,hh] of Object.entries(heights)){
+  const width=Number(w);
+  await page.setViewportSize({width,height:900});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const m=await page.evaluate(()=>{
+   const bar=document.querySelector('header#gl-home-bar');
+   const brand=bar.querySelector('.site-brand'),search=bar.querySelector('form[action="/library/"] > button'),cta=bar.querySelector('.gl-bar-cta');
+   const [b,s,c]=[brand,search,cta].map(el=>el.getBoundingClientRect());
+   const sub=bar.querySelector('.site-brand small'),sr=sub.getBoundingClientRect(),ss=getComputedStyle(sub);
+   const lum=x=>{const v=x.match(/[\d.]+/g).slice(0,3).map(n=>{n/=255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4});return .2126*v[0]+.7152*v[1]+.0722*v[2]};
+   const fg=lum(getComputedStyle(cta).color),bg=lum(getComputedStyle(bar).backgroundColor);
+   return {h:Math.round(bar.getBoundingClientRect().height),text:cta.textContent.replace(/\s+/g,' ').trim(),
+    gaps:[s.left-b.right,c.left-s.right],ctaW:c.width,ctaH:c.height,
+    hit:cta.contains(document.elementFromPoint(c.left+c.width/2,c.top+c.height/2)),
+    sub:ss.display!=='none'&&ss.visibility!=='hidden'&&sr.width>0&&sr.right<=s.left,
+    clipped:cta.querySelector('.gl-cta-label').getBoundingClientRect().width>2&&(cta.scrollWidth>cta.clientWidth+1||cta.scrollHeight>cta.clientHeight+1),
+    contrast:(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05),
+    overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+  });
+  expect(m.text).toBe('Explore the research method');
+  await expect(page.locator('#gl-home-bar .gl-bar-cta')).toHaveAccessibleName('Explore the research method');
+  expect(m.h,`header height at ${width}`).toBe(hh);
+  expect(m.gaps[0],`brand clears Search at ${width}`).toBeGreaterThanOrEqual(0);
+  expect(m.gaps[1],`Search clears the CTA at ${width}`).toBeGreaterThanOrEqual(0);
+  expect(m.sub,`REASONING SYSTEMS visible at ${width}`).toBe(true);
+  expect(Math.min(m.ctaW,m.ctaH),`CTA target at ${width}`).toBeGreaterThanOrEqual(44);
+  expect(m.hit).toBe(true);
+  expect(m.clipped,`CTA text unclipped at ${width}`).toBe(false);
+  expect(m.contrast,`CTA contrast at ${width}`).toBeGreaterThanOrEqual(4.5);
   expect(m.overflow).toBe(false);
  }
 });
