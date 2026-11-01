@@ -58,8 +58,9 @@ HOMEPAGE_DIGESTS = (
     # 00821284...99d6. Every homepage string in main and the header is now library-verbatim (see
     # COPY_REGISTER.md) except the kept "See what we are building"; title, meta and JSON-LD are unchanged.
     # Round 5b (WEB-227 FIFTH): N11 places the header CTA text "Explore the research method" (L21394);
-    # this pin replaced 50779ff0...72a1. QA-4 (Round 5b) then restores the existing header About
-    # button (/about/, label "About" as on 64bf60f); this pin replaces 43c67665...5925. Those two are
+    # this pin replaced 50779ff0...72a1. QA-4 (Round 5b) then restores the header About button
+    # (/about/; label "About" from the approved mockup, MOCKUP-PROVISIONAL, first built in 6eb269e,
+    # not on 64bf60f: QA-8); this pin replaces 43c67665...5925. Those two are
     # the only changes to text or links.
     "27762159474904b46b7982da710c7f0f1046b77f76865fd1f9d3440ff461adb7",
 )

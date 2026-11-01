@@ -25,8 +25,8 @@ const EXPECTED_NAVIGATION = [
 // Applications (C9, WEB-217) is no longer in the header: PLACEMENT_MAP dropped it (below).
 // WEB-223: Company (/company/) is one click from the homepage header at every width.
 // PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): library labels "The problem" (L20779) and "Governed Logic" (L21431);
-// Applications (N7, HOLD) is dropped from the homepage header. About (N8) is restored with its existing label and
-// /about/ page so /about/ stays one click away at every width (QA-4, WEB-223).
+// Applications (N7, HOLD) is dropped from the homepage header. About (N8) is restored with the approved mockup's label
+// (MOCKUP-PROVISIONAL, not on 64bf60f: QA-8) and the existing /about/ page so /about/ stays one click away at every width (QA-4, WEB-223).
 const HOME_NAVIGATION = [
   { href: "/", label: "Home" },
   { href: "/index.html#the-problem", label: "The problem" },

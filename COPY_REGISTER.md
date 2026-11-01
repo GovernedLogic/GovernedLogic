@@ -9,7 +9,7 @@ Statuses:
 
 Library: `CONTENT_LIBRARY_2026-10-31.txt` (sha256 `f0b19e4caf6a89956588bb38debfa21b89b34d031ffda6e524b5190094191ce9`); line numbers are lines of that file, with the package file named. Content placed per Rigel's `PLACEMENT_MAP.md` (2026-11-01) with its default verdicts; the Map slot column gives each slot, and skipped or unmapped strings are noted. Each LIBRARY-VERBATIM citation was checked line by line by the generator (`/workspace/crops/copy_register.py`), which also fails if any visible text on the built page is missing from this table.
 
-Counts: 59 visible strings; LIBRARY-VERBATIM 57, MOCKUP-PROVISIONAL 0, EXISTING-SITE 2. CSS `text-transform` (uppercase eyebrows, subline and chain labels) is not counted as a change of text.
+Counts: 59 visible strings; LIBRARY-VERBATIM 57, MOCKUP-PROVISIONAL 1, EXISTING-SITE 1. CSS `text-transform` (uppercase eyebrows, subline and chain labels) is not counted as a change of text.
 
 Band order on this branch: header, hero, core and principles, problem, published work, page-two route, footer. The shelved variant `v11/design-problem-first` was not updated.
 
@@ -22,7 +22,7 @@ Band order on this branch: header, hero, core and principles, problem, published
 | 5 | Header | nav 2 | The problem | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L20779 (WEB-12) | N4 | KEEP-EXISTING. |
 | 6 | Header | nav 3 | Research | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21435 (WEB-24) | N5 | KEEP-EXISTING. |
 | 7 | Header | nav 4 (/concepts/governed-logic/) | Governed Logic | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21431 (WEB-24) | N6 | KEEP-EXISTING. |
-| 8 | Header | nav 5 (/about/) | About | EXISTING-SITE |  | N8 | RESTORED (QA-4, Round 5b): the map drops it (no library source), but /about/ must stay one click away (WEB-223); the live 64bf60f header label and page are reused. |
+| 8 | Header | nav 5 (/about/) | About | MOCKUP-PROVISIONAL |  | N8 | RESTORED (QA-4, Round 5b): the map drops it (no library source), but /about/ must stay one click away (WEB-223). Label from the approved mockup header, last nav item (`docs/design/2026-10-31/approved-mockup.png`; PRD_DESIGN_DIRECTION_PATCH WEB-214 lists "Home · The Problem · Research · The Framework · Applications · About"), first built in 6eb269e; not on 64bf60f, whose header and pages never label /about/ "About" (QA-8; corrects the Round 5b EXISTING-SITE entry). The /about/ page is 64bf60f's. |
 | 9 | Header | nav 6 | Company | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21434 (WEB-24) | N9 | KEEP-EXISTING. |
 | 10 | Header | CTA (text visually hidden below 390px and 900-1023px; still its accessible name) | Explore the research method | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L21394 (WEB-23) | N11 | PLACE (Round 5b). Sets on two lines at 390-599px; home.css changed for the CTA only. |
 | 11 | Hero | h1 | Governed Logic Reasoning Systems | LIBRARY-VERBATIM | 05_WEBSITE_COPY_CURRENT L20763 (WEB-12) | H2 | KEEP-EXISTING. |
