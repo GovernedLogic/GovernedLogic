@@ -593,7 +593,8 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             # WEB-215 + Paul's C8 ruling (2026-11-01): the opening is gone, so re-adding one must fail.
             opening = '<div id="site" role="region" aria-label="Governed Logic Reasoning Systems">'
-            self.replace_once(site, "index.html", '<body class="gl-home-page">', '<body class="gl-home-page">' + opening + "<p>An unreviewed claim.</p></div>")
+            # The homepage <body> carries id="website" (Governor's 2:01 PM ET ruling (a): the #website JSON-LD anchor).
+            self.replace_once(site, "index.html", '<body class="gl-home-page" id="website">', '<body class="gl-home-page" id="website">' + opening + "<p>An unreviewed claim.</p></div>")
             with self.assertRaisesRegex(AssertionError, "Unreviewed opening copy"):
                 assert_reviewed_copy(site)
 
@@ -747,6 +748,13 @@ class ReleaseGuardTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(site, "index.html", '"governed intelligence"]', '"superintelligence"]')
+            self.assertEqual(self.parity(site), 1)
+
+    def test_parity_fails_on_jsonld_url_to_missing_anchor(self) -> None:
+        # Governor's 2:01 PM ET ruling (a) on Paul's parity rule: no JSON-LD @id or url may point at a missing anchor.
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(site, "company/index.html", '"url": "https://governedlogic.com/company/#reasoning-api"', '"url": "https://governedlogic.com/company/#novelty"')
             self.assertEqual(self.parity(site), 1)
 
     def test_jsonld_description_change_fails(self) -> None:

@@ -152,6 +152,24 @@ def lastmod(source,url):
                 stack+=list(n.values())
     return None
 FONT_PRELOADS=''.join(f'<link rel="preload" href="/assets/materials/{font}" as="font" type="font/woff2" crossorigin>' for font in ('source-serif-4-latin-opsz.woff2','inter-latin-wght.woff2'))
+def anchors(source,path):
+    """Governor's 2:01 PM ET ruling (a) on Paul's parity rule: no JSON-LD @id or url may point at a missing anchor.
+    The existing node identifiers get an id on the element they name, markup only (no word changes): <url>#page on
+    the page's <body>; /#website on the homepage <body> and /#organization on its h1 (the company name);
+    #breadcrumb on the breadcrumb nav; /concepts/#terms on the h1 "Canonical definitions"."""
+    own=BASE+route(path)
+    def add(pattern,ident):
+        nonlocal source
+        if re.search(r'\sid="'+ident+'"',source):return
+        source,n=re.subn(pattern,lambda m:m.group(0)[:-1]+f' id="{ident}">',source,count=1)
+        if not n:raise ValueError(f'No element for #{ident} on {path}')
+    jsonld=''.join(re.findall(r'<script type="application/ld\+json">([\s\S]*?)</script>',source))
+    if path=='index.html':
+        add(r'<body\b[^>]*>','website');add(r'<h1\b[^>]*>','organization')
+    elif f'"{own}#page"' in jsonld:add(r'<body\b[^>]*>','page')
+    if f'"{own}#breadcrumb"' in jsonld:add(r'<nav\b[^>]*aria-label="Breadcrumb"[^>]*>','breadcrumb')
+    if path==TERMS.SET_PAGE:add(r'<h1\b[^>]*>','terms')
+    return source
 def render(source,path):
     if path=='index.html':
         source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/home.html').read_text(encoding='utf-8').strip(),source,count=1)
@@ -188,7 +206,7 @@ def render(source,path):
         # Link slot (published principle pages only): each principle heading on /concepts/ links to its page.
         for slug,(href,_) in PRINCIPLES.links().items():
             source=re.sub(r'(<article id="'+slug+r'"><h3>)([\s\S]*?)(</h3>)',lambda m:m.group(1)+f'<span class="gl-go"><a href="{href}" class="gl-link">'+m.group(2)+'</a></span>'+m.group(3),source,count=1)
-    return links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer))
+    return anchors(links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer)),path)
 def document(title,path,body,extra=''):
     data={'@context':'https://schema.org','@type':'CollectionPage','name':title,'url':BASE+route(path),'isPartOf':{'@id':BASE+'/#website'}}
     source=f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(title)} | Governed Logic</title><meta name="description" content="Governed Logic source works, concepts, research, and publications by Paul André Couchoud."><link rel="canonical" href="{BASE+route(path)}"><meta name="robots" content="index,follow"><link rel="stylesheet" href="/assets/restored-site.css"><script type="application/ld+json">{json.dumps(data)}</script>{extra}</head><body><!--SITE_HEADER--><main class="document-main" id="content"><p class="eyebrow">GOVERNED LOGIC REASONING SYSTEMS</p><h1>{escape(title)}</h1>{body}</main><!--SITE_FOOTER--></body></html>'

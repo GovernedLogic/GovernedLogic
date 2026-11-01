@@ -8,6 +8,8 @@ Checks the built artifact against content/terms.py (the one source per term):
      (concept pages: <dfn id="concept">), its definition is visible on its page, its name on its page or /concepts/;
   3. every name/description/text/headline-like string in every JSON-LD block (and in terms.jsonld) is visible on the
      page it describes; termCode is an identifier and must equal the slug of its own URI;
+  3b. every same-site URL in JSON-LD (@id, url, item, citation, image, ...) resolves to a published file, and its
+     fragment is an id on that page (Governor's 2:01 PM ET ruling (a): nothing points at a missing anchor);
   4. llms.txt: every link resolves to a published, non-withheld file, and its label and text are visible there;
   5. ScholarlyArticle on /sources/: name, author and date line visible in its own section, which links its file;
   6. sitemap lastmod equals the page's own dateModified.
@@ -115,6 +117,22 @@ def main(root):
     for node in tj['hasDefinedTerm']:
         page=next(t['page'] for t in terms if t['id']==node['@id'])
         if norm(node['description']) not in pages[page].visible:errors.append('terms.jsonld description not visible: '+node['@id'])
+    # 3b. Governor's 2:01 PM ET ruling (a): every same-site URL in JSON-LD (@id, url, item, citation, image, ...)
+    # resolves to a published file, and its fragment, if any, is an id on that page. Nothing points at a missing anchor.
+    def urls(o,out):
+        if isinstance(o,dict):
+            for k,v in o.items():
+                if k!='@context':urls(v,out)
+        elif isinstance(o,list):
+            for v in o:urls(v,out)
+        elif isinstance(o,str) and o.startswith(R.BASE):out.append(o)
+    sources=[(name,json.loads(b)) for name,pg in sorted(pages.items()) for b in pg.ld]+[('terms.jsonld',tj)]
+    for name,data in sources:
+        found=[];urls(data,found)
+        for u in sorted(set(found)):
+            t=target(u);frag=urlsplit(u).fragment
+            if t is None or not (root/t).is_file():errors.append(f'JSON-LD URL on {name} does not resolve: {u}');continue
+            if frag and (t not in pages or frag not in pages[t].ids):errors.append(f'JSON-LD URL on {name} points at a missing anchor: {u}')
     # 4. llms.txt links
     for label,url,text in re.findall(r'^- \[(.+?)\]\((\S+?)\)(?:: (.*))?$',llms,re.M):
         t=target(url)
