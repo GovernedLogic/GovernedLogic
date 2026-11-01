@@ -33,13 +33,18 @@ def render(source,path):
     if path=='page-two/index.html':
         source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/page-two.html').read_text(encoding='utf-8').strip(),source,count=1)
     source=definitions(source)
+    if path!='index.html':
+        # v12 site-wide look (Paul, Nov 1 2026; WEB-227 SIXTH): every other page shares the homepage header, footer
+        # and tokens (home.css, selectors :is(body.gl-home-page,body.gl-site)). Style only.
+        source=re.sub(r'<body(?: class="([^"]*)")?>',lambda m:'<body class="'+((m.group(1)+' ') if m.group(1) else '')+'gl-site">',source,count=1)
+        source=source.replace('</head>','<link rel="stylesheet" href="/assets/home.css"></head>',1)
     for sheet in ('restored-site.css','home.css'):
         style_version=hashlib.sha256((ROOT/'assets'/sheet).read_bytes()).hexdigest()[:12]
         source=source.replace(f'href="/assets/{sheet}"',f'href="/assets/{sheet}?v={style_version}"')
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)
     anchor=main.group(1) if main else 'content'
     header=(ROOT/'components/header.html').read_text(encoding='utf-8').replace('href="#content"',f'href="#{anchor}"')
-    if path=='index.html':header=re.sub(r'<header class="site-bar">[\s\S]*?</header>',lambda _: (ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip(),header,count=1)
+    if path=='index.html':header=re.sub(r'<header class="site-bar"[^>]*>[\s\S]*?</header>',lambda _: (ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip(),header,count=1)
     current=route(path)
     if current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
     footer=(ROOT/'components/footer.html').read_text(encoding='utf-8')
