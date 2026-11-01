@@ -7,7 +7,7 @@ if (!siteRoot) {
 
 export default defineConfig({
   testDir: ".",
-  testMatch: ["substantive.spec.mjs", "site-shell.spec.mjs"],
+  testMatch: ["substantive.spec.mjs", "site-shell.spec.mjs", "v13.spec.mjs"],
   fullyParallel: false,
   forbidOnly: true,
   retries: 0,

@@ -47,6 +47,7 @@ jobs:
           node --check assets/library.js
           node --check tests/visual/playwright.config.mjs
           node --check tests/visual/site-shell.spec.mjs
+          node --check tests/visual/v13.spec.mjs
           node --check tests/visual/contact-sheet.mjs
       - name: Set up Node.js
         uses: actions/setup-node@v7
