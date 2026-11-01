@@ -25,12 +25,14 @@ const EXPECTED_NAVIGATION = [
 // Applications (C9, WEB-217) is no longer in the header: PLACEMENT_MAP dropped it (below).
 // WEB-223: Company (/company/) is one click from the homepage header at every width.
 // PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): library labels "The problem" (L20779) and "Governed Logic" (L21431);
-// Applications (N7, HOLD) and About (N8, no source) are dropped from the homepage header.
+// Applications (N7, HOLD) is dropped from the homepage header. About (N8) is restored with its existing label and
+// /about/ page so /about/ stays one click away at every width (QA-4, WEB-223).
 const HOME_NAVIGATION = [
   { href: "/", label: "Home" },
   { href: "/index.html#the-problem", label: "The problem" },
   { href: "/research/", label: "Research" },
   { href: "/concepts/governed-logic/", label: "Governed Logic" },
+  { href: "/about/", label: "About" }, // QA-4
   { href: "/company/", label: "Company" }
 ];
 
@@ -128,7 +130,7 @@ for (const routeDefinition of ROUTES) {
       await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
       await expect(page.locator('nav[aria-label="Primary"] details')).toHaveCount(0);
       const navButtons = page.locator('nav[aria-label="Primary"] form.gl-go > button');
-      await expect(navButtons).toHaveCount(expectedNavigation.length); // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): five on the homepage
+      await expect(navButtons).toHaveCount(expectedNavigation.length); // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) and QA-4 (About restored): six on the homepage
       for (const button of await navButtons.all()) {
         await button.scrollIntoViewIfNeeded();
         await expect(button).toBeVisible();

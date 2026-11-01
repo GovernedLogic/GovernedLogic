@@ -227,10 +227,10 @@ body.gl-home-page>header#gl-home-bar{order:-1;flex:0 0 auto}
 body.gl-home-page>main,body.gl-home-page>footer{flex:0 0 auto}
 
 /* Header at every width: brand name, search (/library/), Company (/company/) and the CTA stay one click away
-   (WEB-214, WEB-223, WEB-226). Applications and About were dropped by PLACEMENT_MAP (2026-11-01, WEB-227 FIFTH). */
+   (WEB-214, WEB-223, WEB-226). Applications was dropped by PLACEMENT_MAP (2026-11-01, WEB-227 FIFTH); About is kept (QA-4). */
 body.gl-home-page #gl-home-bar nav button.gl-hold,body.gl-home-page #gl-home-bar nav button.gl-hold:hover{color:#eef2f5;cursor:default}
 body.gl-home-page .gl-card-go.gl-hold{color:#8a97a4;cursor:default}
-/* 900-1279 (WEB-214, WEB-223, WEB-226; Round 4): one row, 72px, like the mockup. Brand, the five nav items (Company
+/* 900-1279 (WEB-214, WEB-223, WEB-226; Round 4): one row, 72px, like the mockup. Brand, the six nav items (Company, About
    included), Search (/library/) and the CTA all sit in the row, one click each; brand, gaps and CTA are compacted. */
 @media (max-width:1279px){
   body.gl-home-page header#gl-home-bar{grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:72px;height:72px;min-height:0;column-gap:clamp(8px,calc(100vw * .016),20px);padding:0 max(14px,var(--frame))}

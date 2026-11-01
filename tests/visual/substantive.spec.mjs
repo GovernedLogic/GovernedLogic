@@ -138,7 +138,7 @@ test('Phone nav stays visible at 360px',async({page})=>{
  });
  expect(metrics.summary).toBe(0);
  expect(metrics.details).toBe(0);
- expect(metrics.count).toBe(5); // C9/WEB-217/WEB-223; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): five linked items (Applications and About dropped); Company kept.
+ expect(metrics.count).toBe(6); // C9/WEB-217/WEB-223; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) drops Applications; QA-4 restores About: six linked items; Company kept.
  expect(metrics.overflow).toBe(false);
  // D8 (WEB-214/WEB-223/WEB-226): the phone header is two 44px rows, brand/search/CTA over one nav row that scrolls
  // sideways inside the header, so it stays at 88px or less.
@@ -176,7 +176,7 @@ test('Phone header is 88px or less from 320 to 899 with every item one tap away'
 
 test('Mid-width header is one row of 72px or less from 900 to 1279',async({page})=>{
  // Round 4 (WEB-214, WEB-223, WEB-226): like the mockup, 900-1279 keeps one header row at or under 72px, with the
- // brand, all five nav items (Company included; PLACEMENT_MAP dropped Applications and About), Search and the CTA side by side, in view, unclipped and 44px tall.
+ // brand, all six nav items (Company and About included; PLACEMENT_MAP dropped Applications; QA-4 restored About), Search and the CTA side by side, in view, unclipped and 44px tall.
  for(const width of [900,1024,1279]){
   await page.setViewportSize({width,height:900});
   await page.goto('/',{waitUntil:'domcontentloaded'});
@@ -195,7 +195,7 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(72);
-  expect(m.count).toBe(8); // PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): brand, five nav items, Search, CTA (Applications and About dropped).
+  expect(m.count).toBe(9); // PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) and QA-4: brand, six nav items (About restored), Search, CTA.
   expect(m.ordered,`one row, no overlap at ${width}`).toBe(true);
   expect(m.inView,`every header item in view at ${width}`).toBe(true);
   expect(m.tall).toBe(true);

@@ -9,7 +9,7 @@ Paul's previous homepage (The Groundless Machine, "AI does not know what truth i
 | /page-two/ | Homepage control "See what we are building" (Paul's previous homepage) | 1 |
 | /company/ | Homepage header "Company", at every width | 1 |
 | /library/ | Homepage header Search (aria-label "Search"), at every width | 1 |
-| /about/ | "Read Paul's story" on /page-two/ (the homepage header no longer carries About: PLACEMENT_MAP N8, WEB-227 FIFTH) | 2 |
+| /about/ | Homepage header "About", at every width (restored, QA-4); "Read Paul's story" on /page-two/ | 1 |
 | /concepts/ultimate-grounding/ | Homepage card "On the Nature of Ultimate Grounding"; header on every inner page | 1 |
 | /challenge/ | "The inquiry" on /page-two/ (page title: Follow the chain.); not on the new homepage | 2 |
 
@@ -286,8 +286,8 @@ Paul's previous homepage (The Groundless Machine, "AI does not know what truth i
 | / | Governed Logic Reasoning Systems | / | — | SELF (skip/in-page) |
 | / | Skip to content | #content | — | SELF (skip/in-page) |
 | / | See what we are building ↓ | #explore | — | SELF (skip/in-page) |
-| / | About Paul | /about/ | — | C-NOTE (reachable elsewhere only) |
-| / | Read Paul’s story → | /about/ | — | C-NOTE (reachable elsewhere only) |
+| / | About Paul | /about/ | form: "About" (label differs) | SAME-PAGE |
+| / | Read Paul’s story → | /about/ | dest already covered on page | SAME-PAGE (duplicate) |
 | / | 02 The inquiry The objective is truth. Follow the reasoning. → | /challenge/ | — | C-NOTE (reachable elsewhere only) |
 | / | Follow the chain. | /challenge/ | — | C-NOTE (reachable elsewhere only) |
 | / | 03 The company Research, development, publishing, education, and techn | /company/ | form: "Company" (label differs) | SAME-PAGE |
@@ -454,7 +454,7 @@ Paul's previous homepage (The Groundless Machine, "AI does not know what truth i
 | /sources/ | Read the source PDF → | /sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf | form: "Read the source PDF →" | SAME-PAGE |
 | /sources/ | Read the complete supplied addendum → | /sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt | form: "Read the complete supplied addendum →" | SAME-PAGE |
 
-SAME-PAGE=341, STILL-A=0, FRAG=2, C-FIDELITY=34, C-NOTE=16, ORPHAN=0, SELF=45
+SAME-PAGE=343, STILL-A=0, FRAG=2, C-FIDELITY=34, C-NOTE=14, ORPHAN=0, SELF=45
 
 ## Parent routes
 
