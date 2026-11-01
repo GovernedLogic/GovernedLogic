@@ -118,7 +118,8 @@ def live(root,base,attempts,delay):
         except (HTTPError,URLError,TimeoutError) as e:return p+': '+str(e)
     for attempt in range(attempts):
         with ThreadPoolExecutor(max_workers=6) as pool:errors=[x for x in pool.map(fetch,served_files) if x]
-        for p in ('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json'):
+        # QA v12-live-187fdb4 G1 (WEB-227 SIXTH): the 9 retired files (QA v12-0347ff2 L1) must stay 404 live as well.
+        for p in ('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json',*RETIRED_ASSETS):
             try:
                 with urlopen(base.rstrip('/')+'/'+p,timeout=15) as r:errors.append('Internal file exposed: '+p)
             except HTTPError as e:

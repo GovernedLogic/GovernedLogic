@@ -66,6 +66,10 @@ jobs:
       - name: Verify artifact boundary
         run: |
           python3 scripts/check-restored.py --root "${{ runner.temp }}/site" --artifact
+      # QA v12-live-187fdb4 G2: syntax-check every published script in the built artifact.
+      - name: Check published JavaScript syntax
+        run: |
+          for f in $(find "${{ runner.temp }}/site" -name '*.js'); do node --check "$f"; done
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:

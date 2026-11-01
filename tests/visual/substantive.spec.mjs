@@ -373,7 +373,7 @@ test('Inner pages: dark title band, full-width footer, Sources sidebar and butto
  test.setTimeout(120_000);
  // v12 round 2 (QA F4, Q1, Q2; WEB-227 SIXTH). Every inner route opens on a dark band behind its h1 (homepage hero
  // rhythm) with light h1 text, the footer spans the page, nothing (body included) is wider than the viewport, the
- // two buttons atop /mechanism.html are at least 16px apart, and Sources-sidebar URLs never overflow or break mid-word.
+ // two buttons atop /mechanism.html are at least 8px apart (QA v12-cc71761 T1: CSS gap is 32px across, 8px when wrapped), and Sources-sidebar URLs never overflow or break mid-word.
  for(const width of [390,1440]){
   await page.setViewportSize({width,height:900});
   for(const route of routes.filter(r=>r!=='/')){

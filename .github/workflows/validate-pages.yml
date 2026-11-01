@@ -38,9 +38,9 @@ jobs:
           python3 scripts/check-origin.py
       - name: Check JavaScript syntax
         run: |
-          node --check assets/opening.js
-          node --check assets/earth-renderer.js
-          node --check assets/material-environment.js
+          # QA v12-live-187fdb4 G2: check the scripts that are published, not the retired copies (L1).
+          node --check assets/home-chime.js
+          node --check assets/library.js
           node --check tests/visual/playwright.config.mjs
           node --check tests/visual/site-shell.spec.mjs
           node --check tests/visual/contact-sheet.mjs
