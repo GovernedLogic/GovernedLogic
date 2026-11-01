@@ -11,9 +11,9 @@ sources, and anchor labels and hrefs do.
 Arrows are exact: ↗ and → are different. The reasoning exhibit is part
 of the published homepage. v10.10/hero-narrative appends one reviewed
 homepage digest (exhibit removed, Paul's narrative restored in section 01);
-any other homepage still fails. v11/design-2026-10-31 appends one reviewed
-homepage digest for Paul's approved 2026-10-31 mockup layout (provisional
-mockup copy) and removes the opening region; any reintroduced opening fails.
+any other homepage still fails. v11/design-2026-10-31 appends one PROVISIONAL
+homepage digest (WEB-228, WEB-233; C4 unruled) and keeps the opening contract;
+Paul's previous homepage main is pinned at /page-two/ (WEB-205, WEB-231).
 """
 from __future__ import annotations
 
@@ -46,10 +46,11 @@ HOMEPAGE_DIGESTS = (
     # the hero lead lines (Paul, 2026-10-26 01:00 EDT). Every restored line is Paul's own
     # text from 2a64a6b index.html or sources/01_Ultimate_Grounding PDF page 15.
     "271938e034bc528594130b0ecfefe208583c2f9de4cc36643b0e77c8e1b95a0a",
-    # v11/design-2026-10-31: Paul's approved mockup layout (2026-10-31 19:55 EDT). The opening
-    # region is removed; the homepage header, hero, core idea, problem, and latest-research
-    # text is the mockup's own provisional layout copy, pending Paul's content.
-    "e456e97c5710fcfccdc8dab9e65e2bbf3cfd89f9fde87f26fdcdb5cfb56ef21d",
+    # PROVISIONAL, NOT REVIEWED (WEB-228, WEB-233; C4 unruled): v11/design-2026-10-31 homepage
+    # (Paul's approved 2026-10-31 mockup layout). Its copy is the mockup's provisional layout text
+    # and may not ship as final public copy until Paul rules C4. The protected opening is unchanged
+    # (OPENING_DIGEST below, WEB-111..137, C8); main ends with the /page-two/ button (WEB-205, WEB-231).
+    "73f219e172ade8fc01ec53c18262fd5055e4f377356bbbe58a0a1ec53149c7da",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
@@ -86,13 +87,17 @@ REVIEWED_PAGE_DIGESTS = {
     # articles/integrity-in-artificial-intelligence/index.html: same restored footer labels.
     "articles/integrity-in-artificial-intelligence/index.html": ("f81193dbcf7a57c81ea7fc1997f372f4e71eda3507d02c7c567f6035c1633411",),
     # library/index.html: generated page picks up the restored footer labels.
-    "library/index.html": ("fb43aa54c07f7c3f3e710c2231cb377ff97d9e1b91fd53cfbeec6779a6d85c27",),
+    # page-two/index.html (WEB-205, WEB-231; shell and injection as in RL-FTC-1 3c768d4): the
+    # 64bf60f homepage main, byte-identical, in its own shell.
+    "page-two/index.html": ("e2b465772bf4a7313b1270bc97ace9906f06a9201a740ca6f705337f84338ab2",),
+    # library/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
+    "library/index.html": ("cb509d13861c53e2b7597747054facaed043b7ae9368a3928b6e643b0bbcde81",),
     # publication/index.html: generated page picks up the restored footer labels.
-    "publication/index.html": ("3837690d0ae39e808c3c7127307f79b3365e13a4f1bd97b8123493b37ce7a4bd",),
+    # publication/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
+    "publication/index.html": ("d3c1dbc3766a379bd502730d8009e5c274ee85f263bc88b887ccf94f78245807",),
 }
-# v11/design-2026-10-31 removed the opening region, so its record is empty. Any
-# reintroduced opening region is unreviewed. (Prior digest: e4525a6b…f8c39d.)
-OPENING_DIGEST = hashlib.sha256(b"").hexdigest()
+# Opening words are unchanged. The #explore anchor is no longer in the opening record.
+OPENING_DIGEST = "e4525a6b1741253a9ddf32a04e183588998f354f737189dab236a889f1f8c39d"
 # Header skip/current script, plus the mechanism copy button after it.
 _HEADER_SCRIPT = "56aa3c97ea8b9ef40eee9611ac9dd6f3dda62f9acd1dd9c470b1bb0c34a46fcf"
 _COPY_SCRIPT = "84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e"
@@ -269,10 +274,8 @@ def page_digest(html: str) -> str:
 
 def opening_record(html: str) -> str:
     start = html.find('<div id="site"')
-    if start < 0:
-        return ""
     end = html.find('<header class="site-bar"')
-    if end < 0:
+    if start < 0 or end < 0:
         raise AssertionError("Unreviewed opening copy")
     text, links = visible("<body>" + html[start:end] + "</body>")
     return text + "\n" + "\n".join(links)
@@ -365,8 +368,8 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                "View the Framework</button>",
-                "View the Framework Substantive material remains withheld</button>",
+                "See what we are building ↓",
+                "See what we are building ↓ Substantive material remains withheld",
             )
             with self.assertRaises(AssertionError):
                 check_restored.check(site)
@@ -393,8 +396,8 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_copy_guard_rejects_query_leaks_and_anchors(self) -> None:
         mutations = (
             (
-                '<form class="gl-go" method="get" action="/about/"><button type="submit">About</button>',
-                '<form class="gl-go" method="post" action="/about/"><button type="submit">About</button>',
+                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
+                '<form class="gl-go" method="post" action="/company/"><button type="submit">Company</button>',
                 "Form method must be get",
             ),
             (
@@ -403,13 +406,13 @@ class ReleaseGuardTests(unittest.TestCase):
                 "Button name or value",
             ),
             (
-                '<form class="gl-go" method="get" action="/about/"><button type="submit">About</button>',
-                '<form class="gl-go" method="get" action="/about/"><input type="hidden" name="q" value="1"><button type="submit">About</button>',
+                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
+                '<form class="gl-go" method="get" action="/company/"><input type="hidden" name="q" value="1"><button type="submit">Company</button>',
                 "Hidden input",
             ),
             (
-                '<form class="gl-go" method="get" action="/about/"><button type="submit">About</button>',
-                '<form class="gl-go" method="get" action="/about/" target="_blank"><button type="submit">About</button>',
+                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
+                '<form class="gl-go" method="get" action="/company/" target="_blank"><button type="submit">Company</button>',
                 "target=_blank",
             ),
             (
@@ -473,15 +476,17 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
-                'class="gl-hero"',
-                'class="gl-hero redesigned" style="display:block"',
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
+                'class="front-door"',
+                'class="front-door redesigned" style="display:block"',
             )
             self.replace_once(
                 site,
-                "index.html",
-                '<div class="gl-hero-copy">',
-                '<section class="layout-only"><div class="gl-hero-copy">',
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
+                '<div class="front-copy">',
+                '<section class="layout-only"><div class="front-copy">',
             )
             css = site / "assets" / "restored-site.css"
             css.write_text(css.read_text(encoding="utf-8") + "\n/* redesign */\n", encoding="utf-8")
@@ -492,8 +497,9 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
-                "Large language models can produce fluent, convincing, and useful",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
+                "We are building Governed Intelligence: the artificial-intelligence instantiation of Governed Logic.",
                 "An unreviewed homepage claim.",
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
@@ -528,8 +534,9 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
-                "A formal examination of truth, logic,",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
+                "A reasoning engine designed to generate and adjudicate candidate conclusions under explicit governing principles.",
                 "An unreviewed homepage claim.",
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
@@ -538,9 +545,8 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_appended_opening_claim_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
-            body = '<body class="gl-home-page">'
             opening = '<div id="site" role="region" aria-label="Governed Logic Reasoning Systems">'
-            self.replace_once(site, "index.html", body, body + opening + "<p>An unreviewed claim.</p></div>")
+            self.replace_once(site, "index.html", opening, opening + "<p>An unreviewed claim.</p>")
             with self.assertRaisesRegex(AssertionError, "Unreviewed opening copy"):
                 assert_reviewed_copy(site)
 
@@ -647,11 +653,12 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
-                'src="/assets/provisional/card-grounding.webp"',
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
+                'src="/assets/the-groundless-machine.webp"',
                 'src="/assets/unreviewed-cover.webp"',
             )
-            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: index.html"):
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: page-two/index.html"):
                 assert_reviewed_copy(site)
 
     def test_og_description_change_fails(self) -> None:
@@ -683,7 +690,8 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "index.html",
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
                 "<p>Truth governs logic.<br>Logic governs reasoning.<br>Intelligence is downstream.</p>",
                 "<p>Truth governs logic.<br>Logic governs reasoning.<br>Intelligence is afterward.</p>",
             )
@@ -768,9 +776,10 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "research/index.html",
-                '<button type="submit">Company →</button>',
-                '<button type="submit">Company ↗</button>',
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
+                'Examine the upstream problem <span aria-hidden="true">→</span>',
+                'Examine the upstream problem <span aria-hidden="true">↗</span>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
@@ -780,9 +789,10 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
-                "sources/index.html",
-                'Read the complete supplied addendum →</button>',
-                'Read the complete supplied addendum ↗</button>',
+                # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
+                "page-two/index.html",
+                'Explore the working prototype <span aria-hidden="true">↗</span>',
+                'Explore the working prototype <span aria-hidden="true">→</span>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)

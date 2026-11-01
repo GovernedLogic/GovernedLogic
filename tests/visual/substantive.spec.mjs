@@ -2,7 +2,8 @@ import {test,expect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
-const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/library/','/publication/'];
+const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/'];
+// WEB-205/WEB-231: '/page-two/' keeps Paul's previous homepage main reachable.
 for(const route of routes){
  test(`${route} substantive content and usable layout`,async({page},info)=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
@@ -28,7 +29,7 @@ test('Library searches restored full text',async({page})=>{
  await expect(page.locator('#library-search-mode')).toContainText('exact text');
  await expect(page.locator('.library-item:visible')).not.toHaveCount(0);
  await page.getByLabel('Search the library').fill('zzzznomatchzzzz');await expect(page.locator('#library-empty')).toBeVisible();
- await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(21);
+ await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(22); // WEB-205/WEB-231: the library lists /page-two/.
 });
 test('FAQ answers open and match machine data',async({page})=>{
  await page.goto('/faq/');await page.getByText('What exists today?',{exact:true}).click();
@@ -36,19 +37,22 @@ test('FAQ answers open and match machine data',async({page})=>{
 });
 test('Homepage and navigation work without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const page=await context.newPage();
- await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');await expect(page.locator('main')).toContainText('Governed Logic');
+ // WEB-205/WEB-231: the previous homepage text ('Governed Intelligence') is one button away, at /page-two/.
+ await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
+ await page.locator('main form.gl-go[method="get"][action="/page-two/"] button[type="submit"]').click();await expect(page).toHaveURL(/\/page-two\/\??$/);await expect(page.locator('main')).toContainText('Governed Intelligence');
+ // WEB-228/C9 (provisional mockup nav): the homepage header names /concepts/governed-logic/ 'The Framework'.
+ await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'The Framework',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
-// v11/design-2026-10-31 removed the homepage opening (#glIntro, .scroll-invite); its three tests are skipped, not deleted.
-test.skip('Opening completes and leaves content usable',async({page})=>{
+test('Opening completes and leaves content usable',async({page})=>{
  test.setTimeout(45000);await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/');
  await expect(page.locator('#glIntro')).toHaveCount(0,{timeout:20000});
  const invite=page.locator('.scroll-invite');
  await expect(invite).toHaveAccessibleName('See what we are building ↓');
  await invite.click();await expect(page.locator('#explore')).toBeInViewport();
 });
-test.skip('Opening records its chronological visual sequence',async({page},info)=>{
+test('Opening records its chronological visual sequence',async({page},info)=>{
  test.skip(info.project.name==='mobile-320','The opening filmstrip covers desktop and the 390-pixel mobile viewport.');
  test.setTimeout(90000);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -144,7 +148,8 @@ test('Section 01 text clears 4.5:1 over its scrim',async({page})=>{
    const L=rgb=>0.2126*lin(rgb[0])+0.7152*lin(rgb[1])+0.0722*lin(rgb[2]);
    const contrast=(a,b)=>{const x=L(a),y=L(b);const hi=Math.max(x,y),lo=Math.min(x,y);return (hi+0.05)/(lo+0.05);};
    const out=[];
-   for(const node of document.querySelectorAll('#explore h1, #explore p, #explore .gl-chain strong, #explore .gl-chain span')){
+   // WEB-233/WEB-220: section 01 is the 2026-10-31 hero; the same 4.5:1 rule covers its heading, copy and chain labels.
+   for(const node of document.querySelectorAll('#explore h2, #explore p, #explore .gl-chain strong, #explore .gl-chain span')){
     const style=getComputedStyle(node);
     const fg=parse(style.color);const bg=parse(style.backgroundColor);
     if(!fg||!bg){out.push({text:(node.textContent||'').slice(0,40),ratio:0});continue;}
@@ -178,9 +183,10 @@ test('Phone nav stays visible at 360px',async({page})=>{
  });
  expect(metrics.summary).toBe(0);
  expect(metrics.details).toBe(0);
- expect(metrics.count).toBe(6);
+ expect(metrics.count).toBe(6); // C9/WEB-217/WEB-223: six linked items (Applications is held, not a form); Company added.
  expect(metrics.overflow).toBe(false);
- expect(metrics.headerHeight).toBeLessThanOrEqual(88);
+ // WEB-214/WEB-223/WEB-226: the phone header adds a brand-name, search and CTA row above the two nav rows (52px + 2x44px).
+ expect(metrics.headerHeight).toBeLessThanOrEqual(140);
  expect(metrics.headerHeight).toBeGreaterThanOrEqual(44);
  expect(new Set(metrics.boxes.map(box=>Math.round(box.top))).size).toBeLessThanOrEqual(2);
  for(const box of metrics.boxes){
@@ -189,7 +195,7 @@ test('Phone nav stays visible at 360px',async({page})=>{
  }
 });
 
-test.skip('Intro skip is immediate and the first click still lands',async({page})=>{
+test('Intro skip is immediate and the first click still lands',async({page})=>{
  test.setTimeout(30000);
  await page.emulateMedia({reducedMotion:'no-preference'});
  const startTime=new Date('2026-10-18T12:00:00Z');

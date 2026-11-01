@@ -10,7 +10,9 @@ const ROUTES = [
   { path: "/company/", slug: "company" },
   { path: "/research/", slug: "research" },
   { path: "/library/", slug: "library" },
-  { path: "/faq/", slug: "faq" }
+  { path: "/faq/", slug: "faq" },
+  // WEB-205/WEB-231: Paul's previous homepage main, kept byte-as-is.
+  { path: "/page-two/", slug: "page-two" }
 ];
 const EXPECTED_NAVIGATION = [
   { href: "/concepts/governed-logic/", label: "Governed Logic" },
@@ -19,14 +21,16 @@ const EXPECTED_NAVIGATION = [
   { href: "/company/", label: "Company" },
   { href: "/research/", label: "Research" }
 ];
-// v11/design-2026-10-31: the homepage carries the approved mockup's own header.
+// WEB-228/C9: the homepage carries the approved 2026-10-31 mockup header (provisional targets).
+// Applications is on hold (C9, WEB-217): a visible, inert button outside any form, so it is not listed.
+// WEB-223: Company (/company/) is one click from the homepage header at every width.
 const HOME_NAVIGATION = [
   { href: "/", label: "Home" },
   { href: "/index.html#the-problem", label: "The Problem" },
   { href: "/research/", label: "Research" },
   { href: "/concepts/governed-logic/", label: "The Framework" },
-  { href: "/concepts/governed-intelligence/", label: "Applications" },
-  { href: "/about/", label: "About" }
+  { href: "/about/", label: "About" },
+  { href: "/company/", label: "Company" }
 ];
 
 for (const routeDefinition of ROUTES) {
@@ -82,20 +86,43 @@ for (const routeDefinition of ROUTES) {
     await expect(page.getByRole("main")).toHaveCount(1);
     await expect(page.getByRole("main")).toBeVisible();
 
-    const expectedNavigation = routeDefinition.path === "/" ? HOME_NAVIGATION : EXPECTED_NAVIGATION;
     if (routeDefinition.path === "/") {
-      // The 2026-10-31 design removes the opening region; the hero heading leads the page.
+      const openingRegion = page.getByRole("region", { name: "Governed Logic Reasoning Systems" });
+      await expect(openingRegion).toHaveCount(1);
+      await expect(openingRegion).toBeVisible();
+      // WEB-205/WEB-231: one GET-form button on the homepage reaches /page-two/.
+      const pageTwoForms = page.locator('main form.gl-go[method="get"][action="/page-two/"]');
+      await expect(pageTwoForms).toHaveCount(1);
+      await expect(pageTwoForms.locator('button[type="submit"]')).toHaveText("See what we are building");
+      // C9/WEB-217 and WEB-218: Applications and the Truth Governs Mathematics card are held: visible, inert, unlinked.
+      const held = page.locator('button.gl-hold[aria-disabled="true"]');
+      await expect(held).toHaveCount(2);
+      await expect(page.locator("form button.gl-hold")).toHaveCount(0);
+      // WEB-223/WEB-214: /company/ and the library (Search) are one click from the header, and the brand name shows.
+      const header = page.locator("header.site-bar");
+      await expect(header.locator('form.gl-go[action="/company/"] > button')).toBeVisible();
+      await expect(header.locator('form.gl-go[action="/library/"] > button')).toBeVisible();
+      await expect(header.locator(".gl-brand-name")).toBeVisible();
+      if (testInfo.project.name !== "mobile-320") {
+        await expect(header.locator(".gl-bar-cta")).toBeVisible();
+      }
+    }
+
+    if (routeDefinition.path === "/page-two/") {
+      // WEB-205/WEB-231: page two carries the preserved homepage main and no opening region.
       await expect(page.locator("#site")).toHaveCount(0);
-      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+      await expect(page.locator("main.home-content #explore")).toHaveCount(1);
     }
 
     const isMobile = testInfo.project.name.startsWith("mobile-");
+    // WEB-228/C9: the homepage header lists its own items; every other route keeps the reviewed shell.
+    const expectedNavigation = routeDefinition.path === "/" ? HOME_NAVIGATION : EXPECTED_NAVIGATION;
     if (isMobile) {
       // The disclosure is gone. The five doors stay visible, each at least 44px, with no horizontal overflow.
       await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
       await expect(page.locator('nav[aria-label="Primary"] details')).toHaveCount(0);
       const navButtons = page.locator('nav[aria-label="Primary"] form.gl-go > button');
-      await expect(navButtons).toHaveCount(expectedNavigation.length);
+      await expect(navButtons).toHaveCount(expectedNavigation.length); // WEB-228/C9: six on the homepage
       for (const button of await navButtons.all()) {
         await button.scrollIntoViewIfNeeded();
         await expect(button).toBeVisible();
