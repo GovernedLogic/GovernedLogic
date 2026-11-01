@@ -62,7 +62,10 @@ HOMEPAGE_DIGESTS = (
     # (/about/; label "About" from the approved mockup, MOCKUP-PROVISIONAL, first built in 6eb269e,
     # not on 64bf60f: QA-8); this pin replaces 43c67665...5925. Those two are
     # the only changes to text or links.
-    "27762159474904b46b7982da710c7f0f1046b77f76865fd1f9d3440ff461adb7",
+    # Round 6, Paul's hero ruling (Nov 1, 2026): the computer-head hero art is replaced by abstract
+    # Seed of Life geometry; the hero img and its preload move from head-artwork.webp to
+    # hero-geometry.svg. This pin replaces 27762159...adb7; text is unchanged, only that resource.
+    "ad037f66453b0682777fb00c441cf197a76ea14ae5bc6e90a1726da4d299834d",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,

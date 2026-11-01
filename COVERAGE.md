@@ -603,7 +603,7 @@ These three destinations stay in the generated library and publication listings,
 
 ## Resources
 
-25 visitor destinations are the rows of the table above (20 pages and 5 source editions). These 23 assets only need to load. Together that is 48 resources.
+25 visitor destinations are the rows of the table above (20 pages and 5 source editions). These 24 assets are published (one, head-artwork.webp, is no longer loaded). Together that is 49 resources.
 
 | Resource | How it loads |
 |---|---|
@@ -623,7 +623,8 @@ These three destinations stay in the generated library and publication listings,
 | /assets/materials/earth-clouds.jpg | sampled by earth-renderer.js |
 | /assets/governed-logic-mark.webp | img in the header brand on every other page |
 | /assets/provisional/seed-of-life.png | img in the homepage header brand (provisional) |
-| /assets/provisional/head-artwork.webp | img in the homepage hero (provisional) |
+| /assets/provisional/hero-geometry.svg | img and preload in the homepage hero (provisional; abstract Seed of Life geometry, Paul hero ruling, Nov 1) |
+| /assets/provisional/head-artwork.webp | published but unused since Round 6 (Paul rejected the head art, Nov 1); kept in the allowlist |
 | /assets/provisional/problem-network.webp | background in home.css, The Problem band (provisional) |
 | /assets/provisional/card-grounding.webp | img in the homepage Latest Research card (provisional) |
 | /assets/provisional/card-mathematics.webp | img in the homepage Latest Research card (provisional) |
