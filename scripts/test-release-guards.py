@@ -67,7 +67,8 @@ HOMEPAGE_DIGESTS = (
     # hero-geometry.svg. This pin replaces 27762159...adb7; text is unchanged, only that resource.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebSite description = the hero lede); this pin replaces ad037f66...834d. Text, links, title,
     # meta and Open Graph are unchanged.
-    "a647098d1dcf6fde2473abfeb40625cc5887e4c85245ffaacf8bee7bc54d2dfd",
+    # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible hero lede (= its JSON-LD description); this pin replaces a647098d...2dfd.
+    "988fd968987df73eff192a92cd9de6db18db4b408c266f380eedf939358def85",
 )
 REVIEWED_PAGE_DIGESTS = {
     # v12 site-wide look (Paul, Nov 1 2026: "the rest of the site needs to be updated to match the look and feel";
@@ -105,7 +106,8 @@ REVIEWED_PAGE_DIGESTS = {
     "concepts/sufficient-grounding/index.html": ("de5e27c9e1164df8709ecea29e840ecbc75d188f56275754a3f7871e92492605",),
     # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lead paragraph); replaces 495816e5...3c10.
-    "mechanism.html": ("b6e8994082ac49003ef8882535f6106c38783bc57c5194109280c7d409fb5a65",),
+    # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lead paragraph (= its JSON-LD description); replaces b6e89940...5a65.
+    "mechanism.html": ("08ca380a98730dec9e30c924f0f1b32db3ab7a62433b313c3e43a89538a34e3a",),
     # sources/index.html: same restored footer labels.
     "sources/index.html": ("92144731fe8b332d1a3498f263d9304452352f71ec3e83fee93c9fd429136add",),
     # articles/why-anything/index.html: same restored footer labels.
@@ -116,12 +118,15 @@ REVIEWED_PAGE_DIGESTS = {
     # page-two/index.html (WEB-205, WEB-231; shell and injection as in RL-FTC-1 3c768d4): the
     # 64bf60f homepage main, byte-identical, in its own shell.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lede); replaces 9a386e37...f5d0.
-    "page-two/index.html": ("71804557c363b76e5640d58b3e1c0a164287f23b535ed6ec264b5dd60d402489",),
+    # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede (= its JSON-LD description); replaces 71804557...2489.
+    "page-two/index.html": ("859393ecac2554874715c4f7ee109982ef0582c1f0c2a2af90af15d0dfd1670f",),
     # library/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
-    "library/index.html": ("86061a5cf2bcf8feea23121f1c3e516720b5bd97eae2926088338f35e8986e0e",),
+    # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 86061a5c...6e0e.
+    "library/index.html": ("ef54845a89fdf98359e9354be5e1d7eb0f683f0ef93e670703842b434732ca2e",),
     # publication/index.html: generated page picks up the restored footer labels.
     # publication/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
-    "publication/index.html": ("7d942e1618a2be700a467454da35a85087a3614542293ac61ce66355c268b218",),
+    # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 7d942e16...b218.
+    "publication/index.html": ("2ed87896660ce026759d37a6e166d2fa6c10f3f58f703199d3cdd6dffa548ad5",),
 }
 # Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
 # assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
@@ -723,39 +728,61 @@ class ReleaseGuardTests(unittest.TestCase):
 
     # Paul's parity rule (Nov 1 2026; Governor's 1:51 PM ET relay): every machine claim is identical to the visible
     # claim, with no allowlist. A seeded mismatch in pre-existing JSON-LD (not a v13 surface) must fail check-parity.
-    def parity(self, site: Path) -> int:
+    def parity(self, site: Path) -> tuple[int, str]:
         import contextlib, io
-        with contextlib.redirect_stdout(io.StringIO()):
-            return check_parity.main(site)
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = check_parity.main(site)
+        return code, out.getvalue()
+
+    def assert_parity_fails(self, site: Path, message: str) -> None:
+        # Fails, and fails for the seeded reason (not for another mismatch elsewhere).
+        code, out = self.parity(site)
+        self.assertEqual(code, 1)
+        self.assertIn(message, out)
 
     def test_parity_passes_on_reviewed_artifact(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            self.assertEqual(self.parity(self.build_artifact(directory)), 0)
+            self.assertEqual(self.parity(self.build_artifact(directory))[0], 0)
 
     def test_parity_fails_on_seeded_jsonld_description_mismatch(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(site, "company/index.html", 'other software systems and AI applications.",', 'other software systems.",')
-            self.assertEqual(self.parity(site), 1)
+            self.assert_parity_fails(site, 'JSON-LD description not visible on company/index.html')
 
     def test_parity_fails_on_restored_pre_existing_jsonld_name(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(site, "research/index.html", '"name": "Coherence is not correspondence.",', '"name": "Reasoning-system and governing-referent evaluation",')
-            self.assertEqual(self.parity(site), 1)
+            self.assert_parity_fails(site, 'JSON-LD name not visible on research/index.html: Reasoning-system')
 
     def test_parity_fails_on_seeded_jsonld_keyword(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(site, "index.html", '"governed intelligence"]', '"superintelligence"]')
-            self.assertEqual(self.parity(site), 1)
+            self.assert_parity_fails(site, 'JSON-LD keyword not visible on index.html: superintelligence')
 
     def test_parity_fails_on_jsonld_url_to_missing_anchor(self) -> None:
         # Governor's 2:01 PM ET ruling (a) on Paul's parity rule: no JSON-LD @id or url may point at a missing anchor.
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(site, "company/index.html", '"url": "https://governedlogic.com/company/#reasoning-api"', '"url": "https://governedlogic.com/company/#novelty"')
-            self.assertEqual(self.parity(site), 1)
+            self.assert_parity_fails(site, 'points at a missing anchor: https://governedlogic.com/company/#novelty')
+
+    # Governor's 2:01 PM ET ruling (c) on Paul's parity rule: meta, og and twitter descriptions are machine claims.
+    def test_parity_fails_on_seeded_og_description_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(site, "company/index.html", '<meta property="og:description" content="Governed Logic Reasoning Systems is a reasoning systems company.">', '<meta property="og:description" content="Governed Logic Reasoning Systems is a reasoning company.">')
+            self.assert_parity_fails(site, 'og:description not visible on company/index.html')
+
+    def test_parity_fails_on_meta_description_other_than_jsonld(self) -> None:
+        # Visible on the page, but not the page's JSON-LD description: still a mismatch.
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(site, "research/index.html", '<meta name="description" content="The objective is not confirmation. The objective is truth.">', '<meta name="description" content="Coherence is not correspondence.">')
+            self.assert_parity_fails(site, 'description differs from the JSON-LD description on research/index.html')
 
     def test_jsonld_description_change_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

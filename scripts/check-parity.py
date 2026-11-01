@@ -10,6 +10,8 @@ Checks the built artifact against content/terms.py (the one source per term):
      page it describes; termCode is an identifier and must equal the slug of its own URI;
   3b. every same-site URL in JSON-LD (@id, url, item, citation, image, ...) resolves to a published file, and its
      fragment is an id on that page (Governor's 2:01 PM ET ruling (a): nothing points at a missing anchor);
+  3c. every <meta name=description>, og:description and twitter:description is visible on its page and equals the
+     page's JSON-LD description where it has one (Governor's 2:01 PM ET ruling (c));
   4. llms.txt: every link resolves to a published, non-withheld file, and its label and text are visible there;
   5. ScholarlyArticle on /sources/: name, author and date line visible in its own section, which links its file;
   6. sitemap lastmod equals the page's own dateModified.
@@ -28,18 +30,21 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 import render_site as R
 INLINE={'a','abbr','b','cite','code','dfn','em','i','q','small','span','strong','sub','sup','time','wbr'}
+PAGE_TYPES={'WebPage','WebSite','CollectionPage','AboutPage','FAQPage','ProfilePage','Article','BlogPosting','ScholarlyArticle'}
 KEYS={'name','description','text','headline','alternateName','abstract','caption','alternativeHeadline','disambiguatingDescription','slogan','version','jobTitle'}
 def norm(x):
     for a,b in (('\u2019',"'"),('\u2018',"'"),('\u201c','"'),('\u201d','"'),('\u2014','-'),('\u2013','-'),('\u00a0',' ')):x=x.replace(a,b)
     return re.sub(r'\s+',' ',x).strip()
 class Page(HTMLParser):
     def __init__(self,source):
-        super().__init__();self.text=[];self.skip=0;self.inld=False;self.ld=[];self.ids=set();self.dfn=[];self.stack=[];self.sections={};self.hrefs={}
+        super().__init__();self.text=[];self.skip=0;self.inld=False;self.ld=[];self.ids=set();self.dfn=[];self.stack=[];self.sections={};self.hrefs={};self.meta=[]
         self.feed(source);self.close()
     def gap(self,tag):
         if tag not in INLINE and not self.skip:self.text.append(' ');[s['text'].append(' ') for s in self.stack]
     def handle_starttag(self,tag,attrs):
         a=dict(attrs);self.gap(tag)
+        if tag=='meta' and (a.get('name') or a.get('property') or '').lower() in ('description','og:description','twitter:description'):
+            self.meta.append(((a.get('name') or a.get('property')).lower(),a.get('content') or ''))
         if a.get('id'):self.ids.add(a['id'])
         if tag in('script','style','template'):self.skip+=1;self.inld=a.get('type')=='application/ld+json';self.ld.append('') if self.inld else None
         if tag=='dfn':self.dfn.append({'id':a.get('id'),'text':'','context':self.stack[-1]['text'] if self.stack else None,'node':self.stack[-1] if self.stack else None})
@@ -133,6 +138,21 @@ def main(root):
             t=target(u);frag=urlsplit(u).fragment
             if t is None or not (root/t).is_file():errors.append(f'JSON-LD URL on {name} does not resolve: {u}');continue
             if frag and (t not in pages or frag not in pages[t].ids):errors.append(f'JSON-LD URL on {name} points at a missing anchor: {u}')
+    # 3c. Governor's 2:01 PM ET ruling (c): meta, og and twitter descriptions are machine claims too. Each must be
+    # visible on its page and, where the page has a page-level JSON-LD description, be that same text.
+    for name,pg in sorted(pages.items()):
+        url=R.BASE+R.route(name)
+        own=[]
+        def page_desc(o):
+            if isinstance(o,dict):
+                if o.get('url')==url and isinstance(o.get('description'),str) and o.get('@type') in PAGE_TYPES:own.append(o['description'])
+                for v in o.values():page_desc(v)
+            elif isinstance(o,list):
+                for v in o:page_desc(v)
+        for b in pg.ld:page_desc(json.loads(b))
+        for kind,text in pg.meta:
+            if norm(text) not in pg.visible:errors.append(f'{kind} not visible on {name}: {text[:120]}')
+            elif own and norm(text)!=norm(own[0]):errors.append(f'{kind} differs from the JSON-LD description on {name}: {text[:80]}')
     # 4. llms.txt links
     for label,url,text in re.findall(r'^- \[(.+?)\]\((\S+?)\)(?:: (.*))?$',llms,re.M):
         t=target(url)
