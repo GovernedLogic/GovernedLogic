@@ -350,3 +350,55 @@ test('Labels are at least 12px and controls at least 44px',async({page})=>{
  }
  expect(problems).toEqual([]);
 });
+
+test('Every route has the shared header and no horizontal overflow at 390 and 1440',async({page})=>{
+ // v12 site-wide look (Paul, Nov 1 2026; WEB-227 SIXTH): all 20 routes carry the homepage header (header#gl-home-bar)
+ // and footer, and no route scrolls sideways at the phone or desktop width (viewports set explicitly).
+ for(const width of [390,1440]){
+  await page.setViewportSize({width,height:900});
+  for(const route of routes){
+   await page.goto(route,{waitUntil:'domcontentloaded'});
+   const m=await page.evaluate(()=>{const h=document.querySelector('header#gl-home-bar.site-bar');const r=h&&h.getBoundingClientRect();
+    return {header:!!h&&r.height>=44&&r.top<=0.5&&getComputedStyle(h).visibility!=='hidden',footer:!!document.querySelector('footer.site-footer'),
+     brand:!!(h&&h.querySelector('.site-brand img')),overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};});
+   expect(m.header,`header on ${route} at ${width}`).toBe(true);
+   expect(m.brand,`brand mark on ${route} at ${width}`).toBe(true);
+   expect(m.footer,`footer on ${route} at ${width}`).toBe(true);
+   expect(m.overflow,`horizontal overflow on ${route} at ${width}`).toBe(false);
+  }
+ }
+});
+
+test('Inner pages: dark title band, full-width footer, Sources sidebar and button gaps hold at 390 and 1440',async({page})=>{
+ test.setTimeout(120_000);
+ // v12 round 2 (QA F4, Q1, Q2; WEB-227 SIXTH). Every inner route opens on a dark band behind its h1 (homepage hero
+ // rhythm) with light h1 text, the footer spans the page, nothing (body included) is wider than the viewport, the
+ // two buttons atop /mechanism.html are at least 16px apart, and Sources-sidebar URLs never overflow or break mid-word.
+ for(const width of [390,1440]){
+  await page.setViewportSize({width,height:900});
+  for(const route of routes.filter(r=>r!=='/')){
+   await page.goto(route,{waitUntil:'load'});await page.waitForTimeout(300);
+   const m=await page.evaluate(()=>{
+    const h1=document.querySelector('h1');const band=h1.closest('.gl-intro,.about-hero')||document.querySelector('main .front-door');
+    const bg=band?getComputedStyle(band,'::before').backgroundImage:'';
+    const f=document.querySelector('footer.site-footer').getBoundingClientRect();
+    const urls=[...document.querySelectorAll('aside.provenance button')].filter(b=>/^https:\/\//.test(b.textContent));
+    const midword=urls.some(b=>{const r=document.createRange();const t=b.firstChild&&b.textContent;let lines=new Map();
+     for(const n of b.childNodes){if(n.nodeType!==3)continue;for(let i=0;i<n.length;i++){r.setStart(n,i);r.setEnd(n,i+1);const y=Math.round(r.getBoundingClientRect().top);const prev=lines.get('last');
+      if(prev!==undefined&&y>prev+2&&i>0&&n.data[i-1]!=='/')return true;lines.set('last',y);}}return false;});
+    const head=band&&!band.contains(h1)?band.querySelector('h2'):h1; // /page-two/ keeps its visually hidden h1 outside main; its band headline is the h2
+    return {band:!!band&&bg.includes('rgb(0, 5, 10)'),h1:getComputedStyle(head).color,footer:Math.abs(f.width-document.documentElement.clientWidth)<=1,
+     body:document.body.scrollWidth<=document.documentElement.clientWidth+1,urlOverflow:urls.some(b=>b.scrollWidth>b.clientWidth+1),midword};});
+   expect(m.band,`dark title band on ${route} at ${width}`).toBe(true);
+   expect(m.h1,`light h1 on the band on ${route} at ${width}`).toBe('rgb(255, 255, 255)');
+   expect(m.footer,`full-width footer on ${route} at ${width}`).toBe(true);
+   expect(m.body,`body wider than the viewport on ${route} at ${width}`).toBe(true);
+   expect(m.urlOverflow,`Sources URL overflow on ${route} at ${width}`).toBe(false);
+   expect(m.midword,`Sources URL broken mid-word on ${route} at ${width}`).toBe(false);
+  }
+  await page.goto('/mechanism.html',{waitUntil:'load'});await page.waitForTimeout(300);
+  const gap=await page.evaluate(()=>{const b=[...document.querySelectorAll('main .gl-intro>nav .gl-go>button')].map(x=>x.getBoundingClientRect());
+   return b.length===2?(Math.abs(b[0].top-b[1].top)<2?b[1].left-b[0].right:b[1].top-b[0].bottom):-1;});
+  expect(gap,`gap between the /mechanism.html buttons at ${width}`).toBeGreaterThanOrEqual(8);
+ }
+});

@@ -6,7 +6,13 @@ import argparse, hashlib, json, re, shutil
 ROOT=Path(__file__).resolve().parents[1]
 PAGES=('index.html','challenge/index.html','company/index.html','research/index.html','about/index.html','faq/index.html','concepts/index.html','concepts/governed-logic/index.html','concepts/governed-intelligence/index.html','concepts/ultimate-grounding/index.html','concepts/alpha-and-omega-reasoning/index.html','concepts/governing-referent/index.html','concepts/sufficient-grounding/index.html','mechanism.html','sources/index.html','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html','page-two/index.html')
 SOURCE_FILES=('sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf','sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf','sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf','sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf','sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt')
-ASSETS=('assets/home-chime.js','assets/opening.css','assets/restored-site.css','assets/library.js','assets/material-environment.js','assets/earth-renderer.js','assets/opening.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/materials/cinzel.ttf','assets/materials/earth-clouds.jpg','assets/materials/earth-day.jpg','assets/materials/earth-night.jpg','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/head-artwork.webp','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png')
+# v12 round 2 (QA L1; WEB-227 SIXTH): no longer published, because nothing in the built site loads them (the homepage
+# dropped the Earth opening under C8/WEB-215 and the head art under Paul's Nov 1 hero ruling): assets/opening.css,
+# assets/opening.js, assets/earth-renderer.js, assets/material-environment.js, assets/materials/earth-{clouds,day,night}.jpg,
+# assets/materials/cinzel.ttf, assets/provisional/head-artwork.webp. The files stay in the repo. Kept: governed-logic-mark.webp
+# (restored-site.css .reasoning-exhibit background), Cinzel-OFL.txt and SOURCES.txt (SOURCES.txt cites the licence).
+RETIRED_ASSETS=('assets/opening.css', 'assets/opening.js', 'assets/earth-renderer.js', 'assets/material-environment.js', 'assets/materials/earth-clouds.jpg', 'assets/materials/earth-day.jpg', 'assets/materials/earth-night.jpg', 'assets/materials/cinzel.ttf', 'assets/provisional/head-artwork.webp')
+ASSETS=('assets/home-chime.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png')
 GENERATED=('library/index.html','publication/index.html','publication/catalog.json','publication/search-index.json','publication/manifest.json','feed.xml','robots.txt','sitemap.xml')
 PUBLIC_FILES=(*PAGES,*SOURCE_FILES,*ASSETS,'challenge/index.json','faq/index.json','CNAME','.nojekyll',*GENERATED)
 BASE='https://governedlogic.com'
@@ -27,19 +33,62 @@ def definitions(source):
     for key,value in json.loads((ROOT/'content/definitions.json').read_text(encoding='utf-8')).items():
         source=source.replace('{{definition:'+key+'}}',value)
     return source
+VOID={'area','base','br','col','embed','hr','img','input','link','meta','source','track','wbr'}
+class Spans(HTMLParser):
+    """Start/end offsets of every element inside the first <main>, for intro_band()."""
+    def __init__(self,source):
+        super().__init__(convert_charrefs=False);self.src=source;self.lines=[0]
+        for m in re.finditer('\n',source):self.lines.append(m.end())
+        self.stack=[];self.items=[];self.feed(source);self.close()
+    def at(self):l,c=self.getpos();return self.lines[l-1]+c
+    def handle_starttag(self,tag,attrs):
+        start=self.at();end=start+len(self.get_starttag_text())
+        item={'tag':tag,'cls':dict(attrs).get('class') or '','start':start,'open_end':end,'end':end,'parent':self.stack[-1] if self.stack else None}
+        self.items.append(item)
+        if tag not in VOID:self.stack.append(item)
+    def handle_startendtag(self,tag,attrs):self.handle_starttag(tag,attrs);self.stack.pop() if tag not in VOID else None
+    def handle_endtag(self,tag):
+        for i in range(len(self.stack)-1,-1,-1):
+            if self.stack[i]['tag']==tag:
+                item=self.stack[i];item['end']=self.at()+len(tag)+3;del self.stack[i:];return
+def intro_band(source):
+    """v12 round 2 (F4; WEB-227 SIXTH): wrap each page's title block (what precedes the h1 in its parent, the h1, and
+    a directly following lede/lead paragraph) in <div class="gl-intro"> so site.css can set it on a dark band like the
+    homepage hero. Markup only: no text, attribute or order change. Pages whose h1 already sits in a hero section
+    (about-hero) or outside main (page-two) are left as they are; site.css styles those sections."""
+    sp=Spans(source);main=next((i for i in sp.items if i['tag']=='main'),None)
+    h1=next((i for i in sp.items if i['tag']=='h1' and main and main['start']<i['start']<main['end']),None)
+    if not h1:return source
+    a=h1['parent']
+    while a is not None and a is not main:
+        if re.search(r'\b(about-hero|front-door)\b',a['cls']):return source
+        a=a['parent']
+    parent=h1['parent'];kids=[i for i in sp.items if i['parent'] is parent]
+    k=kids.index(h1);start=kids[0]['start'] if k else h1['start'];end=h1['end']
+    if k+1<len(kids) and kids[k+1]['tag']=='p' and re.search(r'\b(lede|lead)\b',kids[k+1]['cls']):end=kids[k+1]['end']
+    return source[:start]+'<div class="gl-intro">'+source[start:end]+'</div>'+source[end:]
 def render(source,path):
     if path=='index.html':
         source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/home.html').read_text(encoding='utf-8').strip(),source,count=1)
     if path=='page-two/index.html':
         source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/page-two.html').read_text(encoding='utf-8').strip(),source,count=1)
     source=definitions(source)
-    for sheet in ('restored-site.css','home.css'):
+    if path!='index.html':
+        # v12 site-wide look (Paul, Nov 1 2026; WEB-227 SIXTH): every other page shares the homepage header, footer
+        # and tokens (home.css, selectors :is(body.gl-home-page,body.gl-site)) plus site.css for page content. Style only.
+        source=intro_band(source)
+        # v12 round 2 (Q2; WEB-227 SIXTH): let the canonical URL in the Sources sidebar wrap after a slash instead of
+        # mid-word. <wbr> adds a break opportunity only; the button text is unchanged.
+        source=re.sub(r'(<aside class="provenance">[\s\S]*?</aside>)',lambda m: re.sub(r'(<button type="submit">)(https://[^<]+)(</button>)',lambda b: b.group(1)+'https://<wbr>'+re.sub(r'/(?=.)','/<wbr>',b.group(2)[8:])+b.group(3),m.group(1)),source)
+        source=re.sub(r'<body(?: class="([^"]*)")?>',lambda m:'<body class="'+((m.group(1)+' ') if m.group(1) else '')+'gl-site">',source,count=1)
+        source=source.replace('</head>','<link rel="stylesheet" href="/assets/home.css"><link rel="stylesheet" href="/assets/site.css"></head>',1)
+    for sheet in ('restored-site.css','home.css','site.css'):
         style_version=hashlib.sha256((ROOT/'assets'/sheet).read_bytes()).hexdigest()[:12]
         source=source.replace(f'href="/assets/{sheet}"',f'href="/assets/{sheet}?v={style_version}"')
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)
     anchor=main.group(1) if main else 'content'
     header=(ROOT/'components/header.html').read_text(encoding='utf-8').replace('href="#content"',f'href="#{anchor}"')
-    if path=='index.html':header=re.sub(r'<header class="site-bar">[\s\S]*?</header>',lambda _: (ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip(),header,count=1)
+    if path=='index.html':header=re.sub(r'<header class="site-bar"[^>]*>[\s\S]*?</header>',lambda _: (ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip(),header,count=1)
     current=route(path)
     if current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
     footer=(ROOT/'components/footer.html').read_text(encoding='utf-8')

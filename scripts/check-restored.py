@@ -7,7 +7,7 @@ from urllib.error import HTTPError,URLError
 from concurrent.futures import ThreadPoolExecutor
 from collections import Counter
 import argparse,hashlib,json,re,tempfile,time
-from render_site import ROOT,PAGES,PUBLIC_FILES,ASSETS,SOURCE_FILES,build,route,main_text,BASE
+from render_site import ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS,SOURCE_FILES,build,route,main_text,BASE
 class Doc(HTMLParser):
     def __init__(self):
         super().__init__();self.tags=[];self.ids=[];self.refs=[];self.canonical=[];self.json=[];self.capture=None
@@ -101,8 +101,10 @@ def check(root):
         if q['name'] not in visible or q['acceptedAnswer']['text'] not in visible:errors.append('FAQ human/machine mismatch')
     for p in SOURCE_FILES:
         if (root/p).read_bytes()!=(ROOT/p).read_bytes():errors.append('Source edition altered: '+p)
-    for p in ('assets/opening.js','assets/opening.css','assets/material-environment.js','assets/earth-renderer.js'):
-        if (root/p).read_bytes()!=(ROOT/p).read_bytes():errors.append('Opening asset altered: '+p)
+    # v12 round 2 (QA L1): the opening assets are no longer published (render_site.RETIRED_ASSETS); one reappearing in
+    # the artifact fails here as well as on the boundary check above. Was: each opening asset byte-equal to source.
+    for p in RETIRED_ASSETS:
+        if (root/p).exists():errors.append('Retired asset published: '+p)
     if errors:raise AssertionError('\n'.join(sorted(set(errors))))
     print(f'Passed: {len(docs)} substantive pages, all links and anchors, structured data, exact source editions, and {len(PUBLIC_FILES)}-file boundary.')
 def live(root,base,attempts,delay):
