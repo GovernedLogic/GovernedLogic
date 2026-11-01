@@ -87,9 +87,11 @@ for (const routeDefinition of ROUTES) {
     await expect(page.getByRole("main")).toBeVisible();
 
     if (routeDefinition.path === "/") {
+      // WEB-215 + Paul's C8 ruling (2026-11-01, "drop the old opening"): no opening region; the hero h1 is the one h1.
       const openingRegion = page.getByRole("region", { name: "Governed Logic Reasoning Systems" });
-      await expect(openingRegion).toHaveCount(1);
-      await expect(openingRegion).toBeVisible();
+      await expect(openingRegion).toHaveCount(0);
+      await expect(page.locator("h1")).toHaveCount(1);
+      await expect(page.locator("main #explore h1.gl-hero-title")).toHaveCount(1);
       // WEB-205/WEB-231: one GET-form button on the homepage reaches /page-two/.
       const pageTwoForms = page.locator('main form.gl-go[method="get"][action="/page-two/"]');
       await expect(pageTwoForms).toHaveCount(1);

@@ -520,11 +520,10 @@ These three destinations stay in the generated library and publication listings,
 | /concepts/ultimate-grounding/ | status | h2: A thesis under argument, not a shortcut around argument. |
 | /concepts/ultimate-grounding/ | section 8 | h2: Sources and version |
 | /faq/ | section 1 | h1: Questions & answers |
-| / | section 1 | h1: Governed Logic Governed Logic Governed Logic |
-| / | explore | h2: A Clearer Foundation for Intelligent Systems. |
-| / | section 3 | h2: Truth governs logic.Logic governs reasoning.Intelligence is downstream. <br> h3: Being / Existence <br> h3: Binary Truth <br> h3: Binding Logic <br> h3: Meaning <br> h3: Intelligibility <br> h3: Moral Obligation |
+| / | explore | h1: A Clearer Foundation for Intelligent Systems. |
+| / | section 2 | h2: Truth governs logic.Logic governs reasoning.Intelligence is downstream. <br> h3: Being / Existence <br> h3: Binary Truth <br> h3: Binding Logic <br> h3: Meaning <br> h3: Intelligibility <br> h3: Moral Obligation |
 | / | the-problem | h2: Current AI Reasoning Has Fundamental Defects. |
-| / | section 5 | h3: On the Nature of Ultimate Grounding <br> h3: Truth Governs Mathematics <br> h3: The Governed Logic Framework |
+| / | section 4 | h3: On the Nature of Ultimate Grounding <br> h3: Truth Governs Mathematics <br> h3: The Governed Logic Framework |
 | /library/ | section 1 | h1: The library |
 | /library/ | section 2 | h2: Follow the chain. → |
 | /library/ | section 3 | h2: A reasoning systems company. → |

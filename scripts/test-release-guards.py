@@ -12,7 +12,8 @@ Arrows are exact: ↗ and → are different. The reasoning exhibit is part
 of the published homepage. v10.10/hero-narrative appends one reviewed
 homepage digest (exhibit removed, Paul's narrative restored in section 01);
 any other homepage still fails. v11/design-2026-10-31 appends one PROVISIONAL
-homepage digest (WEB-228, WEB-233; C4 unruled) and keeps the opening contract;
+homepage digest (WEB-228, WEB-233; C4 unruled); per Paul's C8 ruling (2026-11-01,
+WEB-215) the homepage has no opening region and the hero headline is its h1;
 Paul's previous homepage main is pinned at /page-two/ (WEB-205, WEB-231).
 """
 from __future__ import annotations
@@ -48,9 +49,12 @@ HOMEPAGE_DIGESTS = (
     "271938e034bc528594130b0ecfefe208583c2f9de4cc36643b0e77c8e1b95a0a",
     # PROVISIONAL, NOT REVIEWED (WEB-228, WEB-233; C4 unruled): v11/design-2026-10-31 homepage
     # (Paul's approved 2026-10-31 mockup layout). Its copy is the mockup's provisional layout text
-    # and may not ship as final public copy until Paul rules C4. The protected opening is unchanged
-    # (OPENING_DIGEST below, WEB-111..137, C8); main ends with the /page-two/ button (WEB-205, WEB-231).
-    "73f219e172ade8fc01ec53c18262fd5055e4f377356bbbe58a0a1ec53149c7da",
+    # and may not ship as final public copy until Paul rules C4. Main ends with the /page-two/
+    # button (WEB-205, WEB-231). WEB-215 + Paul's C8 ruling (2026-11-01 02:12 ET, "drop the old
+    # opening"): this pin replaces 73f219e1...c7da; the record differs only by the removed opening
+    # text that preceded the header (identity, caption, scroll invite). Header, main, footer,
+    # metadata, JSON-LD and links are unchanged.
+    "00821284623ed13750359e5382dfba14279a6114b9236f93713dde5b54af99d6",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,
@@ -96,7 +100,8 @@ REVIEWED_PAGE_DIGESTS = {
     # publication/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
     "publication/index.html": ("d3c1dbc3766a379bd502730d8009e5c274ee85f263bc88b887ccf94f78245807",),
 }
-# Opening words are unchanged. The #explore anchor is no longer in the opening record.
+# Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
+# assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
 OPENING_DIGEST = "e4525a6b1741253a9ddf32a04e183588998f354f737189dab236a889f1f8c39d"
 # Header skip/current script, plus the mechanism copy button after it.
 _HEADER_SCRIPT = "56aa3c97ea8b9ef40eee9611ac9dd6f3dda62f9acd1dd9c470b1bb0c34a46fcf"
@@ -307,8 +312,8 @@ def without_exhibit(html: str) -> tuple[str, str | None]:
 def assert_reviewed_copy(site: Path) -> None:
     """Reject unreviewed text, links, metadata, opening copy, or an inline script."""
     homepage = (site / "index.html").read_text(encoding="utf-8")
-    opening = hashlib.sha256(opening_record(homepage).encode()).hexdigest()
-    if opening != OPENING_DIGEST:
+    # WEB-215 + Paul's C8 ruling (2026-11-01, "drop the old opening"): no opening region may return.
+    if '<div id="site"' in homepage:
         raise AssertionError("Unreviewed opening copy")
     for relative in REVIEWED_PAGES:
         html = (site / relative).read_text(encoding="utf-8")
@@ -365,11 +370,13 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_placeholder_phrase_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
+            # Fixture marker moved off the removed opening text (WEB-215 + Paul's C8 ruling, 2026-11-01)
+            # to the same words on the /page-two/ button; the guarded phrase is unchanged.
             self.replace_once(
                 site,
                 "index.html",
-                "See what we are building ↓",
-                "See what we are building ↓ Substantive material remains withheld",
+                ">See what we are building<",
+                ">See what we are building Substantive material remains withheld<",
             )
             with self.assertRaises(AssertionError):
                 check_restored.check(site)
@@ -545,8 +552,9 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_appended_opening_claim_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
+            # WEB-215 + Paul's C8 ruling (2026-11-01): the opening is gone, so re-adding one must fail.
             opening = '<div id="site" role="region" aria-label="Governed Logic Reasoning Systems">'
-            self.replace_once(site, "index.html", opening, opening + "<p>An unreviewed claim.</p>")
+            self.replace_once(site, "index.html", '<body class="gl-home-page">', '<body class="gl-home-page">' + opening + "<p>An unreviewed claim.</p></div>")
             with self.assertRaisesRegex(AssertionError, "Unreviewed opening copy"):
                 assert_reviewed_copy(site)
 

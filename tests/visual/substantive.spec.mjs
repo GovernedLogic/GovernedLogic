@@ -45,65 +45,19 @@ test('Homepage and navigation work without JavaScript',async({browser})=>{
  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'The Framework',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
-test('Opening completes and leaves content usable',async({page})=>{
- test.setTimeout(45000);await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/');
- await expect(page.locator('#glIntro')).toHaveCount(0,{timeout:20000});
- const invite=page.locator('.scroll-invite');
- await expect(invite).toHaveAccessibleName('See what we are building ↓');
- await invite.click();await expect(page.locator('#explore')).toBeInViewport();
-});
-test('Opening records its chronological visual sequence',async({page},info)=>{
- test.skip(info.project.name==='mobile-320','The opening filmstrip covers desktop and the 390-pixel mobile viewport.');
- test.setTimeout(90000);
- const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.emulateMedia({reducedMotion:'no-preference'});
- const startTime=new Date('2026-10-18T12:00:00Z');
- await page.clock.install({time:new Date(startTime.getTime()-1000)});await page.clock.pauseAt(startTime);
- await page.goto('/',{waitUntil:'load'});await page.evaluate(async()=>{await document.fonts.ready});
- await expect(page.locator('#glIntro')).toHaveCount(1);
- const frames=[
-  {at:50,name:'01-black',label:'Black field',stage:'black'},
-  {at:400,name:'02-trace',label:'Light starts',stage:'trace'},
-  {at:800,name:'03-trace',label:'The band lengthens',stage:'trace'},
-  {at:1200,name:'04-trace',label:'One path, mid circuit',stage:'trace'},
-  {at:1500,name:'05-trace',label:'Crossings woven',stage:'trace'},
-  {at:1800,name:'06-resolve',label:'Earth shows through',stage:'resolve'},
-  {at:2200,name:'07-resolve',label:'The page returns',stage:'resolve'},
-  {at:2500,name:'08-resolve',label:'Veil nearly gone',stage:'resolve'},
-  {at:2800,name:'09-fade',label:'Overlay recedes',stage:'fade'},
-  {at:3100,name:'10-fade',label:'Hero almost clear',stage:'fade'},
-  {at:3300,name:'11-fade',label:'Last of the trace',stage:'fade'},
-  {at:3700,name:'12-complete',label:'Page usable'}
- ];
- const directory=path.resolve('visual-qa/motion',info.project.name);await mkdir(directory,{recursive:true});
- const evidence=[];let elapsed=0;
- for(const frame of frames){
-  const delta=frame.at-elapsed;
-  // Jump to the next phase, then execute ordinary animation frames at that time.
-  // Runtime code receives the same clock and animation callbacks as a normal visit.
-  if(delta>34)await page.clock.fastForward(delta-34);
-  await page.clock.runFor(Math.min(delta,34));elapsed=frame.at;
-  if(frame.stage)await expect(page.locator('#glIntro')).toHaveAttribute('data-stage',frame.stage);
-  if(frame.name==='01-black'){
-   const samples=await page.locator('#glIntro .intro-canvas').evaluate(canvas=>{
-    const context=canvas.getContext('2d');
-    return [[.1,.1],[.5,.1],[.9,.1],[.1,.5],[.5,.5],[.9,.5],[.1,.9],[.5,.9],[.9,.9]]
-     .map(([x,y])=>Array.from(context.getImageData(Math.floor(x*canvas.width),Math.floor(y*canvas.height),1,1).data));
-   });
-   expect(samples.every(([r,g,b,a])=>r===0&&g===0&&b===0&&a===255)).toBeTruthy();
-  }
-  const screenshot=await page.screenshot({path:path.join(directory,frame.name+'.png'),animations:'allow'});
-  evidence.push({...frame,path:frame.name+'.png',sha256:createHash('sha256').update(screenshot).digest('hex'),overlayPresent:await page.locator('#glIntro').count()===1});
- }
+test('Homepage lands on the hero with no opening',async({page})=>{
+ // WEB-215 + Paul's C8 ruling (2026-11-01, "drop the old opening"): replaces the opening-completion test. There is no
+ // opening region or overlay; the hero headline is the page's one h1 and is on the first screen at load.
+ await page.goto('/');
+ await expect(page.locator('#site')).toHaveCount(0);
  await expect(page.locator('#glIntro')).toHaveCount(0);
- await expect(page.locator('#site .identity')).toBeVisible();
- await expect(page.locator('#site .brand-sub')).toHaveText('Reasoning Systems');
- expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
- expect(new Set(evidence.slice(0,-1).map(frame=>frame.sha256)).size).toBe(frames.length-1);
- await writeFile(path.join(directory,'frames.json'),JSON.stringify({project:info.project.name,viewport:page.viewportSize(),mode:'Normal motion; Playwright clock controls time without changing runtime behavior',frames:evidence},null,2)+'\n');
- expect(errors).toEqual([]);
+ await expect(page.locator('.scroll-invite')).toHaveCount(0);
+ await expect(page.locator('h1')).toHaveCount(1);
+ await expect(page.locator('#explore h1.gl-hero-title')).toHaveCount(1);
+ await expect(page.locator('#explore h1.gl-hero-title')).toBeInViewport();
 });
-
+// WEB-215 + Paul's C8 ruling (2026-11-01): the opening filmstrip test ("Opening records its chronological visual
+// sequence") is removed with the opening it recorded; contact-sheet.mjs no longer expects motion frames.
 const widths=[320,360,390,768,1440,1920];
 test('Headlines do not break or overflow a word',async({page})=>{
  test.setTimeout(300000);
@@ -149,7 +103,8 @@ test('Section 01 text clears 4.5:1 over its scrim',async({page})=>{
    const contrast=(a,b)=>{const x=L(a),y=L(b);const hi=Math.max(x,y),lo=Math.min(x,y);return (hi+0.05)/(lo+0.05);};
    const out=[];
    // WEB-233/WEB-220: section 01 is the 2026-10-31 hero; the same 4.5:1 rule covers its heading, copy and chain labels.
-   for(const node of document.querySelectorAll('#explore h2, #explore p, #explore .gl-chain strong, #explore .gl-chain span')){
+   // WEB-215 + Paul's C8 ruling (2026-11-01): the hero heading is now h1, so h1 is added to keep it covered.
+   for(const node of document.querySelectorAll('#explore h1, #explore h2, #explore p, #explore .gl-chain strong, #explore .gl-chain span')){
     const style=getComputedStyle(node);
     const fg=parse(style.color);const bg=parse(style.backgroundColor);
     if(!fg||!bg){out.push({text:(node.textContent||'').slice(0,40),ratio:0});continue;}
@@ -278,21 +233,8 @@ test('Phone nav edge fade follows the header scroll',async({page})=>{
  expect(fits.left).toBeLessThan(0.1);
 });
 
-test('Intro skip is immediate and the first click still lands',async({page})=>{
- test.setTimeout(30000);
- await page.emulateMedia({reducedMotion:'no-preference'});
- const startTime=new Date('2026-10-18T12:00:00Z');
- await page.clock.install({time:new Date(startTime.getTime()-1000)});
- await page.clock.pauseAt(startTime);
- await page.goto('/',{waitUntil:'load'});
- await expect(page.locator('#glIntro')).toHaveCount(1);
- await expect(page.locator('.gl-intro-skip')).toHaveAccessibleName('Skip to content');
- await page.clock.runFor(500);
- await page.locator('.scroll-invite').click();
- await expect(page.locator('#glIntro')).toHaveCount(0);
- await expect(page.locator('#explore')).toBeInViewport();
-});
-
+// WEB-215 + Paul's C8 ruling (2026-11-01): "Intro skip is immediate and the first click still lands" is removed with the
+// opening overlay (#glIntro) and its scroll invite.
 test('Labels are at least 12px and controls at least 44px',async({page})=>{
  test.setTimeout(180000);
  const problems=[];
