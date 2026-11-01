@@ -7,7 +7,16 @@
    Desktop sizes are written in mockup pixels at 1440 wide: calc(var(--p)*N). */
 @font-face{font-family:'GL Serif';src:url('materials/source-serif-4-latin-opsz.woff2') format('woff2');font-style:normal;font-weight:200 900;font-display:swap}
 @font-face{font-family:'GL Sans';src:url('materials/inter-latin-wght.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap}
-:is(body.gl-home-page,body.gl-site){--p:min(1px,calc(100vw / 1440));--serif:'GL Serif','Source Serif 4',Georgia,'Times New Roman',serif;--sans:'GL Sans',Inter,'Helvetica Neue',Arial,sans-serif;--night:#00060c;--bar:#020b13;--blue:#2f9ce6;--blue-deep:#004374;--sky:#56c4f2;--navy:#003059;--paper:#f9f8f8;--ink-dark:#0b1118;--frame:max(0px,calc((100% - 1440px) / 2));background:var(--night);color:#e9edf0;font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:clip}
+/* v13 CLS (QA research 2026-11-01; Paul's v13 approval, Nov 1 2026, 12:30 PM ET): size-matched fallbacks shown until the web
+   fonts arrive, so lines wrap the same before and after the swap. size-adjust is the measured advance-width ratio of the page
+   text, regular and bold faces separately (Source Serif 4 to Liberation Serif 1.064 and 0.998; Inter to Liberation
+   Sans 1.085 and 1.034); ascent/descent are each web font's hhea metrics divided by it (Source Serif 4: 1036/335 per
+   1000; Inter: 1984/494 per 2048). Liberation is metric-compatible with Times New Roman and Arial, so either can stand in. */
+@font-face{font-family:'GL Serif Fallback';src:local('Liberation Serif'),local('LiberationSerif'),local('Times New Roman'),local('TimesNewRomanPSMT'),local('Tinos');font-weight:100 500;size-adjust:106.4%;ascent-override:97.4%;descent-override:31.5%;line-gap-override:0%}
+@font-face{font-family:'GL Serif Fallback';src:local('Liberation Serif Bold'),local('LiberationSerif-Bold'),local('Times New Roman Bold'),local('TimesNewRomanPS-BoldMT'),local('Tinos Bold');font-weight:501 900;size-adjust:99.8%;ascent-override:103.8%;descent-override:33.6%;line-gap-override:0%}
+@font-face{font-family:'GL Sans Fallback';src:local('Liberation Sans'),local('LiberationSans'),local('Arial'),local('ArialMT'),local('Arimo');font-weight:100 500;size-adjust:108.5%;ascent-override:89.3%;descent-override:22.2%;line-gap-override:0%}
+@font-face{font-family:'GL Sans Fallback';src:local('Liberation Sans Bold'),local('LiberationSans-Bold'),local('Arial Bold'),local('Arial-BoldMT'),local('Arimo Bold');font-weight:501 900;size-adjust:103.4%;ascent-override:93.7%;descent-override:23.3%;line-gap-override:0%}
+:is(body.gl-home-page,body.gl-site){--p:min(1px,calc(100vw / 1440));--serif:'GL Serif','GL Serif Fallback','Source Serif 4',Georgia,'Times New Roman',serif;--sans:'GL Sans','GL Sans Fallback',Inter,'Helvetica Neue',Arial,sans-serif;--night:#00060c;--bar:#020b13;--blue:#2f9ce6;--blue-deep:#004374;--sky:#56c4f2;--navy:#003059;--paper:#f9f8f8;--ink-dark:#0b1118;--frame:max(0px,calc((100% - 1440px) / 2));background:var(--night);color:#e9edf0;font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:clip}
 body.gl-home-page .gl-arrow{width:calc(var(--p)*19);min-width:15px;height:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
 /* Header */
