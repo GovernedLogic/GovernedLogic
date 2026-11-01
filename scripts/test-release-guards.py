@@ -54,7 +54,10 @@ HOMEPAGE_DIGESTS = (
     # opening"): this pin replaces 73f219e1...c7da; the record differs only by the removed opening
     # text that preceded the header (identity, caption, scroll invite). Header, main, footer,
     # metadata, JSON-LD and links are unchanged.
-    "00821284623ed13750359e5382dfba14279a6114b9236f93713dde5b54af99d6",
+    # Content placement per Rigel's PLACEMENT_MAP.md (2026-11-01, WEB-227 FIFTH): this pin replaces
+    # 00821284...99d6. Every homepage string in main and the header is now library-verbatim (see
+    # COPY_REGISTER.md) except the kept "See what we are building" and header "Explore the Research"; title, meta and JSON-LD are unchanged.
+    "50779ff0e069e22699bfd0da2cd4180520d40cd7776f898a14edbce64cd772a1",
 )
 REVIEWED_PAGE_DIGESTS = {
     "index.html": HOMEPAGE_DIGESTS,

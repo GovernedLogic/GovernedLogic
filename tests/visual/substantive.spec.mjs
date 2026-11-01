@@ -40,9 +40,9 @@ test('Homepage and navigation work without JavaScript',async({browser})=>{
  // WEB-205/WEB-231: the previous homepage text ('Governed Intelligence') is one button away, at /page-two/.
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
  await page.locator('main form.gl-go[method="get"][action="/page-two/"] button[type="submit"]').click();await expect(page).toHaveURL(/\/page-two\/\??$/);await expect(page.locator('main')).toContainText('Governed Intelligence');
- // WEB-228/C9 (provisional mockup nav): the homepage header names /concepts/governed-logic/ 'The Framework'.
+ // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) (N6): the homepage header names /concepts/governed-logic/ 'Governed Logic' (L21431).
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
- await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'The Framework',exact:true}).click();
+ await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'Governed Logic',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
 test('Homepage lands on the hero with no opening',async({page})=>{
@@ -138,7 +138,7 @@ test('Phone nav stays visible at 360px',async({page})=>{
  });
  expect(metrics.summary).toBe(0);
  expect(metrics.details).toBe(0);
- expect(metrics.count).toBe(6); // C9/WEB-217/WEB-223: six linked items (Applications is held, not a form); Company added.
+ expect(metrics.count).toBe(5); // C9/WEB-217/WEB-223; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): five linked items (Applications and About dropped); Company kept.
  expect(metrics.overflow).toBe(false);
  // D8 (WEB-214/WEB-223/WEB-226): the phone header is two 44px rows, brand/search/CTA over one nav row that scrolls
  // sideways inside the header, so it stays at 88px or less.
@@ -195,7 +195,7 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(72);
-  expect(m.count).toBe(10);
+  expect(m.count).toBe(8); // PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): brand, five nav items, Search, CTA (Applications and About dropped).
   expect(m.ordered,`one row, no overlap at ${width}`).toBe(true);
   expect(m.inView,`every header item in view at ${width}`).toBe(true);
   expect(m.tall).toBe(true);

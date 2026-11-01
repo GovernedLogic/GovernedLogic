@@ -24,12 +24,13 @@ const EXPECTED_NAVIGATION = [
 // WEB-228/C9: the homepage carries the approved 2026-10-31 mockup header (provisional targets).
 // Applications is on hold (C9, WEB-217): a visible, inert button outside any form, so it is not listed.
 // WEB-223: Company (/company/) is one click from the homepage header at every width.
+// PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): library labels "The problem" (L20779) and "Governed Logic" (L21431);
+// Applications (N7, HOLD) and About (N8, no source) are dropped from the homepage header.
 const HOME_NAVIGATION = [
   { href: "/", label: "Home" },
-  { href: "/index.html#the-problem", label: "The Problem" },
+  { href: "/index.html#the-problem", label: "The problem" },
   { href: "/research/", label: "Research" },
-  { href: "/concepts/governed-logic/", label: "The Framework" },
-  { href: "/about/", label: "About" },
+  { href: "/concepts/governed-logic/", label: "Governed Logic" },
   { href: "/company/", label: "Company" }
 ];
 
@@ -96,9 +97,10 @@ for (const routeDefinition of ROUTES) {
       const pageTwoForms = page.locator('main form.gl-go[method="get"][action="/page-two/"]');
       await expect(pageTwoForms).toHaveCount(1);
       await expect(pageTwoForms.locator('button[type="submit"]')).toHaveText("See what we are building");
-      // C9/WEB-217 and WEB-218: Applications and the Truth Governs Mathematics card are held: visible, inert, unlinked.
+      // C9/WEB-217 and WEB-218 held Applications and the Truth Governs Mathematics card. PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) drops
+      // both (N7, R6-R8), so no held control remains; none may sit inside a form.
       const held = page.locator('button.gl-hold[aria-disabled="true"]');
-      await expect(held).toHaveCount(2);
+      await expect(held).toHaveCount(0);
       await expect(page.locator("form button.gl-hold")).toHaveCount(0);
       // WEB-223/WEB-214: /company/ and the library (Search) are one click from the header, and the brand name shows.
       const header = page.locator("header.site-bar");
@@ -126,7 +128,7 @@ for (const routeDefinition of ROUTES) {
       await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
       await expect(page.locator('nav[aria-label="Primary"] details')).toHaveCount(0);
       const navButtons = page.locator('nav[aria-label="Primary"] form.gl-go > button');
-      await expect(navButtons).toHaveCount(expectedNavigation.length); // WEB-228/C9: six on the homepage
+      await expect(navButtons).toHaveCount(expectedNavigation.length); // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH): five on the homepage
       for (const button of await navButtons.all()) {
         await button.scrollIntoViewIfNeeded();
         await expect(button).toBeVisible();
