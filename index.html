@@ -6,23 +6,52 @@
 <title>Governed Logic Reasoning Systems</title>
 <meta name="description" content="Governed Logic Reasoning Systems is building Governed Intelligence, a reasoning engine and API. Explore the architecture, prototype, research, and source works.">
 <meta name="author" content="Paul André Couchoud">
-<meta name="theme-color" content="#01090f">
+<meta name="theme-color" content="#000000">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://governedlogic.com/">
+<link rel="stylesheet" href="assets/opening.css">
 <link rel="stylesheet" href="/assets/home.css">
+<link rel="preload" href="assets/materials/cinzel.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="preload" href="/assets/materials/source-serif-4-latin-opsz.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/materials/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/provisional/head-artwork.webp" as="image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Governed Logic Reasoning Systems","url":"https://governedlogic.com/","description":"Governed Logic Reasoning Systems is building Governed Intelligence, a reasoning engine and API. Explore the architecture, prototype, research, and source works.","publisher":{"@type":"Organization","name":"Governed Logic Reasoning Systems","url":"https://governedlogic.com/","founder":{"@type":"Person","name":"Paul André Couchoud"},"keywords":["being","truth","logic","meaning","intelligibility","obligation","governed logic","governed intelligence"],"about":{"@type":"Thing","name":"Governed Logic","description":"Truth governs logic. Logic governs reasoning. Intelligence is downstream."}}}</script>
+<script src="assets/material-environment.js" defer></script>
+<script src="assets/earth-renderer.js" defer></script>
+<script src="assets/opening.js" defer></script>
 </head>
 <body class="gl-home-page">
+<div id="site" role="region" aria-label="Governed Logic Reasoning Systems">
+  <canvas id="siteCanvas" aria-hidden="true"></canvas>
+  <div class="identity">
+    <h1 class="brand-title"><span class="semantic-title">Governed Logic</span>
+      <svg class="metal-title" viewBox="0 0 1600 205" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="chrome" x1="0" y1="0" x2=".06" y2="1"><stop offset="0" stop-color="#f3faff"/><stop offset=".16" stop-color="#b9d1e3"/><stop offset=".33" stop-color="#7d96ab"/><stop offset=".38" stop-color="#dae9f6"/><stop offset=".48" stop-color="#829bae"/><stop offset=".505" stop-color="#405c72"/><stop offset=".72" stop-color="#152d42"/><stop offset=".91" stop-color="#8ba7bc"/><stop offset="1" stop-color="#e8f5ff"/></linearGradient>
+          <linearGradient id="edge" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#fff"/><stop offset=".28" stop-color="#edf8ff"/><stop offset=".5" stop-color="#6c90ae"/><stop offset=".7" stop-color="#112c42"/><stop offset="1" stop-color="#acc4d5"/></linearGradient>
+          <filter id="metalBevel" x="-5%" y="-10%" width="110%" height="130%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceAlpha" stdDeviation=".6" result="bump"/>
+            <feSpecularLighting in="bump" surfaceScale="2.5" specularConstant=".72" specularExponent="26" lighting-color="#d6ecff" result="specular"><feDistantLight azimuth="230" elevation="48"/></feSpecularLighting>
+            <feComposite in="specular" in2="SourceAlpha" operator="in" result="lit"/>
+            <feComposite in="SourceGraphic" in2="lit" operator="arithmetic" k1="0" k2="1" k3=".85" k4="0"/>
+          </filter>
+        </defs>
+        <text x="800" y="175" text-anchor="middle" textLength="1540" lengthAdjust="spacingAndGlyphs" fill="#050b13" stroke="#07131e" stroke-width="3" transform="translate(1 4)">Governed Logic</text>
+        <text x="800" y="175" text-anchor="middle" textLength="1540" lengthAdjust="spacingAndGlyphs" fill="url(#chrome)" stroke="url(#edge)" stroke-width="1.15" paint-order="stroke fill" filter="url(#metalBevel)">Governed Logic</text>
+      </svg></h1>
+    <div class="brand-rule" aria-hidden="true"><i></i></div>
+    <p class="brand-sub">Reasoning Systems</p>
+  </div>
+  <p class="intro-caption">Building Governed Intelligence.<br>Research · Development · Publishing · Education</p>
+  <button type="button" class="scroll-invite">See what we are building ↓</button>
+</div>
 <!--SITE_HEADER-->
 <main class="home-content" id="content" tabindex="-1">
 <section class="gl-hero" id="explore">
   <div class="gl-hero-art" aria-hidden="true"><img src="/assets/provisional/head-artwork.webp" alt="" width="1004" height="894" fetchpriority="high"></div>
   <div class="gl-hero-copy">
     <p class="gl-eyebrow">A Research Framework for Reality</p>
-    <h1>A Clearer <br class="gl-br">Foundation for <br class="gl-br">Intelligent Systems<span class="gl-dot">.</span></h1>
+    <h2 class="gl-hero-title">A Clearer <br class="gl-br">Foundation for <br class="gl-br">Intelligent Systems<span class="gl-dot">.</span></h2>
     <p class="gl-hero-lede">Governed Logic develops and tests a unified framework for <br class="gl-br">reasoning about reality, integrating truth, logic, reasoning, <br class="gl-br">and moral foundations to build more reliable human and <br class="gl-br">artificial intelligence systems.</p>
     <div class="gl-actions"><form class="gl-go" method="get" action="/research/"><button type="submit" class="gl-btn gl-btn-bright">Explore the Research<svg class="gl-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><path d="M1 6h17M13 1l5 5-5 5"/></svg></button></form><form class="gl-go" method="get" action="/concepts/governed-logic/"><button type="submit" class="gl-btn gl-btn-ghost">View the Framework</button></form></div>
   </div>
@@ -70,10 +99,11 @@
   <div class="gl-latest-head"><p class="gl-eyebrow">Latest Research</p><form class="gl-go" method="get" action="/library/"><button type="submit" class="gl-view-all">View All Research<svg class="gl-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><path d="M1 6h17M13 1l5 5-5 5"/></svg></button></form></div>
   <div class="gl-cards">
     <article class="gl-card"><img src="/assets/provisional/card-grounding.webp" alt="" width="867" height="291" loading="lazy"><div class="gl-card-body"><p class="gl-card-kind">Paper</p><h3 id="gl-card-grounding">On the Nature of Ultimate <br class="gl-br">Grounding</h3><p>A formal examination of truth, logic, <br class="gl-br">reasoning, and ultimate grounding.</p><form class="gl-go" method="get" action="/concepts/ultimate-grounding/"><button type="submit" class="gl-card-go" aria-labelledby="gl-card-grounding"><svg class="gl-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><path d="M1 6h17M13 1l5 5-5 5"/></svg></button></form></div></article>
-    <article class="gl-card"><img src="/assets/provisional/card-mathematics.webp" alt="" width="861" height="291" loading="lazy"><div class="gl-card-body"><p class="gl-card-kind">Research</p><h3 id="gl-card-mathematics">Truth Governs Mathematics</h3><p>Why mathematics requires truth and <br class="gl-br">correspondence with reality.</p><form class="gl-go" method="get" action="/research/"><button type="submit" class="gl-card-go" aria-labelledby="gl-card-mathematics"><svg class="gl-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><path d="M1 6h17M13 1l5 5-5 5"/></svg></button></form></div></article>
+    <article class="gl-card"><img src="/assets/provisional/card-mathematics.webp" alt="" width="861" height="291" loading="lazy"><div class="gl-card-body"><p class="gl-card-kind">Research</p><h3 id="gl-card-mathematics">Truth Governs Mathematics</h3><p>Why mathematics requires truth and <br class="gl-br">correspondence with reality.</p><button type="button" class="gl-card-go gl-hold" aria-disabled="true" aria-labelledby="gl-card-mathematics"><svg class="gl-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><path d="M1 6h17M13 1l5 5-5 5"/></svg></button></div></article>
     <article class="gl-card"><img src="/assets/provisional/card-framework.webp" alt="" width="864" height="291" loading="lazy"><div class="gl-card-body"><p class="gl-card-kind">Note</p><h3 id="gl-card-framework">The Governed Logic Framework</h3><p>The chain, the six principles, <br class="gl-br">and practical applications.</p><form class="gl-go" method="get" action="/concepts/governed-logic/"><button type="submit" class="gl-card-go" aria-labelledby="gl-card-framework"><svg class="gl-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><path d="M1 6h17M13 1l5 5-5 5"/></svg></button></form></div></article>
   </div>
 </section>
+<div class="gl-next"><form class="gl-go" method="get" action="/page-two/"><button type="submit" class="gl-btn gl-btn-line">See what we are building<svg class="gl-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false"><path d="M1 6h17M13 1l5 5-5 5"/></svg></button></form></div>
 </main>
 
 <!--SITE_FOOTER-->
