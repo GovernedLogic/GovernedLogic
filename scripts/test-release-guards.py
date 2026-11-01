@@ -88,7 +88,9 @@ REVIEWED_PAGE_DIGESTS = {
     "about/index.html": ("f3ee4d69eb00da91491210d8da546f596888cfa9abfb5b2079615a094cbc7e75",),
     # faq/index.html: same restored footer labels.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description removed (the page has no lead or intro passage)); replaces 0cf2535c...f1bb.
-    "faq/index.html": ("16c09af5680877f7019bf043fd929daff0ba1b1e5090f629a7a185743f41ff0c",),
+    # Paul's parity rule, Governor's 2:01 PM ET ruling (c); Site Manager's 2:11 PM ET decision (Nov 1 2026): FAQ meta description
+    # removed (no visible sentence fits it; nothing invented); replaces 16c09af5...ff0c.
+    "faq/index.html": ("b35a3b248a175dcda15ca8f53e7337ec3e22b282f827e42109c652fe8e5f941a",),
     # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Truth DefinedTerm description = its visible h3 and p); replaces 24c631cb...0de3.
     "concepts/index.html": ("ba8043aaf25b954c38d2c176c2903c22a6d0ce09e4c9e9dc7e94347e4d73a505",),
