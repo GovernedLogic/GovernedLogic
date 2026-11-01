@@ -187,3 +187,7 @@ body.gl-site :is(.gl-intro,.about-hero,.home-content>section.front-door)::before
 /* v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET): <dfn> marks a defined term for machines only;
    it must not change how the words render. */
 body.gl-site dfn{font-style:inherit}
+/* Principle pages (Paul, Nov 1 2026, 12:31 PM ET). Unpublished while content/principles.py PUBLISH is off; this styles
+   the local previews and the pages once published. Passages sit on the shared spine and measure. */
+body.gl-site .principle-main .principle-passage+.principle-passage{margin-top:clamp(32px,4vw,56px);padding-top:clamp(32px,4vw,56px);border-top:1px solid rgba(23,32,51,.14)}
+body.gl-site .principle-main .principle-passage h2{font-size:var(--fs-h3);margin:1.6em 0 .6em}
