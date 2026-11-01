@@ -11,20 +11,20 @@ Checks the built artifact against content/terms.py (the one source per term):
   4. llms.txt: every link resolves to a published, non-withheld file, and its label and text are visible there;
   5. ScholarlyArticle on /sources/: name, author and date line visible in its own section, which links its file;
   6. sitemap lastmod equals the page's own dateModified.
-Comparison folds typographic quotes, dashes and whitespace only; it reports and never rewrites.
+Comparison folds typographic quotes, dashes and whitespace only (keywords also fold case: they are tags); it
+reports and never rewrites.
 
-BASELINE pins the JSON-LD strings that already differed from the visible text at 187fdb4 (before v13; none of them is
-in a machine surface v13 adds). They are reported on every run and await Paul's ruling; any new or changed mismatch
-fails, and so does a pinned entry that no longer occurs (remove it from BASELINE when it is resolved).
+No allowlist (Paul's parity rule, Nov 1 2026; Governor's 1:51 PM ET relay): any JSON-LD name, description, text,
+headline-like string or keyword not visible on its own page fails, including strings that predate v13.
+Identifiers, URLs and dates are not text claims and are not compared here (dates: see the v13 report).
 """
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
-import hashlib, json, re, sys
+import json, re, sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 import render_site as R
-BASELINE={}  # Emptied: all 14 pre-existing mismatches are aligned to the visible text (Paul's parity rule, Nov 1 2026; Governor 1:51 PM ET relay).
 INLINE={'a','abbr','b','cite','code','dfn','em','i','q','small','span','strong','sub','sup','time','wbr'}
 KEYS={'name','description','text','headline','alternateName','abstract','caption','alternativeHeadline','disambiguatingDescription','slogan','version','jobTitle'}
 def norm(x):
@@ -65,17 +65,17 @@ def strings(o,out,path=''):
     if isinstance(o,dict):
         for k,v in o.items():
             if k in KEYS and isinstance(v,str):out.append((k,v))
+            elif k=='keywords':out+=[('keywords',x) for x in (v if isinstance(v,list) else [v]) if isinstance(x,str)]
             elif k=='termCode':out.append(('termCode',v,o.get('@id')))
             else:strings(v,out)
     elif isinstance(o,list):
         for v in o:strings(v,out)
-def pin(page,key,value):return hashlib.sha256(f'{page}\t{key}\t{value}'.encode()).hexdigest()[:16]
 def target(url):
     u=urlsplit(url)
     if u.netloc!=urlsplit(R.BASE).netloc:return None
     t=u.path.lstrip('/');return t+'index.html' if (t.endswith('/') or not t) else t
 def main(root):
-    root=Path(root);errors=[];seen=set();report=[]
+    root=Path(root);errors=[]
     pages={p.relative_to(root).as_posix():Page(p.read_text(encoding='utf-8')) for p in root.rglob('*.html')}
     terms=R.term_records()
     # 1. generated surfaces equal the source
@@ -106,10 +106,10 @@ def main(root):
                     if t is None or t['code']!=code or (t['fragment']!=code and not uri.endswith('/'+code+'/#concept')):errors.append(f'termCode {code!r} does not match its URI {uri} on {name}')
                     continue
                 k,v=item
-                if norm(v) in pg.visible:continue
-                h=pin(name,k,v)
-                if h in BASELINE:seen.add(h);report.append(f'  pinned (pre-existing, awaiting Paul): {name} {k}: {v[:90]}')
-                else:errors.append(f'JSON-LD {k} not visible on {name} [{h}]: {v[:120]}')
+                if k=='keywords':
+                    if norm(v).lower() not in pg.visible.lower():errors.append(f'JSON-LD keyword not visible on {name}: {v}')
+                    continue
+                if norm(v) not in pg.visible:errors.append(f'JSON-LD {k} not visible on {name}: {v[:120]}')
     tj=json.loads((root/'terms.jsonld').read_text(encoding='utf-8'))
     if tj['name'] not in pages[R.TERMS.SET_PAGE].visible:errors.append('terms.jsonld set name not visible on /concepts/')
     for node in tj['hasDefinedTerm']:
@@ -137,10 +137,7 @@ def main(root):
         t=target(loc)
         want=R.lastmod((root/t).read_text(encoding='utf-8'),loc) if (root/t).is_file() else None
         if (mod or None)!=want:errors.append(f'sitemap lastmod for {loc}: {mod!r}, page dateModified {want!r}')
-    stale=set(BASELINE)-seen
-    for h in sorted(stale):errors.append(f'Pinned baseline entry no longer occurs (resolved? remove it): {h} {BASELINE[h]}')
-    print(f'Parity: {len(terms)} terms, {len(pages)} pages, {len(seen)} pinned pre-existing JSON-LD mismatches (awaiting Paul):')
-    print('\n'.join(sorted(set(report))))
+    print(f'Parity: {len(terms)} terms, {len(pages)} pages, no allowlist')
     if errors:print('PARITY FAILED:\n'+'\n'.join('  '+e for e in errors));return 1
     print('Parity OK');return 0
 if __name__=='__main__':sys.exit(main(sys.argv[1] if len(sys.argv)>1 else 'dist'))

@@ -363,6 +363,14 @@ check_origin = importlib.util.module_from_spec(CHECK_SPEC)
 CHECK_SPEC.loader.exec_module(check_origin)
 
 
+# Paul's parity rule (Nov 1 2026; Governor's 1:51 PM ET relay): check-parity has no allowlist.
+PARITY_SPEC = importlib.util.spec_from_file_location("check_parity", SCRIPTS / "check-parity.py")
+if PARITY_SPEC is None or PARITY_SPEC.loader is None:
+    raise RuntimeError("Unable to load scripts/check-parity.py")
+check_parity = importlib.util.module_from_spec(PARITY_SPEC)
+PARITY_SPEC.loader.exec_module(check_parity)
+
+
 RESTORED_SPEC = importlib.util.spec_from_file_location("check_restored", SCRIPTS / "check-restored.py")
 if RESTORED_SPEC is None or RESTORED_SPEC.loader is None:
     raise RuntimeError("Unable to load scripts/check-restored.py")
@@ -711,6 +719,35 @@ class ReleaseGuardTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: company/index.html"):
                 assert_reviewed_copy(site)
+
+    # Paul's parity rule (Nov 1 2026; Governor's 1:51 PM ET relay): every machine claim is identical to the visible
+    # claim, with no allowlist. A seeded mismatch in pre-existing JSON-LD (not a v13 surface) must fail check-parity.
+    def parity(self, site: Path) -> int:
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()):
+            return check_parity.main(site)
+
+    def test_parity_passes_on_reviewed_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            self.assertEqual(self.parity(self.build_artifact(directory)), 0)
+
+    def test_parity_fails_on_seeded_jsonld_description_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(site, "company/index.html", 'other software systems and AI applications.",', 'other software systems.",')
+            self.assertEqual(self.parity(site), 1)
+
+    def test_parity_fails_on_restored_pre_existing_jsonld_name(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(site, "research/index.html", '"name": "Coherence is not correspondence.",', '"name": "Reasoning-system and governing-referent evaluation",')
+            self.assertEqual(self.parity(site), 1)
+
+    def test_parity_fails_on_seeded_jsonld_keyword(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(site, "index.html", '"governed intelligence"]', '"superintelligence"]')
+            self.assertEqual(self.parity(site), 1)
 
     def test_jsonld_description_change_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
