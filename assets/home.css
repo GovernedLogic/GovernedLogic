@@ -259,6 +259,10 @@ body.gl-home-page .gl-card-go.gl-hold{color:#8a97a4;cursor:default}
   body.gl-home-page .gl-bar-cta .gl-cta-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:block;width:18px}
 }
+/* Logo chime (Paul, 2026-11-01; C8, WEB-215): home-chime.js adds this decorative copy of the header mark for about
+   1.6s, once per session. It sits above the page but takes no pointer events and is hidden from assistive tech. */
+body.gl-home-page .gl-chime{position:fixed;z-index:60;margin:0;object-fit:contain;transform-origin:0 0;pointer-events:none;will-change:transform,opacity}
+@media (prefers-reduced-motion:reduce){body.gl-home-page .gl-chime{display:none}}
 /* Phones, 320-899 (D8; WEB-214, WEB-223, WEB-226): an 88px header in two 44px rows. Row 1 keeps the full name
    (Governed Logic / Reasoning Systems), Search (/library/) and the CTA pinned; row 2 is the nav on one line. When the
    nav is wider than the screen the header scrolls sideways, so every item, Company included, stays one tap away and
