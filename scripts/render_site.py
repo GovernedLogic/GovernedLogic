@@ -139,7 +139,11 @@ def llms_txt(records):
     by their visible h1. Nothing here is not on the page it links to."""
     lines=['# Governed Logic Reasoning Systems','','## '+TERMS.SET_NAME,'']
     lines+=[f'- [{t["name"]}]({t["url"]}): {t["definition"]}' for t in term_records()]
-    lines+=['','## Pages','']+[f'- [{r["title"]}]({r["url"]})' for r in records if r['type']!='source']
+    lines+=['','## Pages','']+[f'- [{r["title"]}]({r["url"]})' for r in records if r['type'] not in ('source','principle')]
+    principles=[r for r in records if r['type']=='principle']
+    # Published principle pages (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)): name (the
+    # page's h1) and the page's own description (its first visible sentence).
+    if principles:lines+=['','## Principles','']+[f'- [{r["title"]}]({r["url"]}): {r["description"]}' for r in principles]
     lines+=['','## Sources','']+[f'- [{d["name"]}]({BASE}/{d["file"]})' for d in TERMS.SOURCE_DOCS]
     return '\n'.join(lines)+'\n'
 # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the sitemap carries no lastmod.
@@ -200,6 +204,7 @@ def render(source,path):
     if path==TERMS.SET_PAGE:
         # Link slot (published principle pages only): each principle heading on /concepts/ links to its page.
         for slug,(href,_) in PRINCIPLES.links().items():
+            if f'<article id="{slug}"><h3>' not in source:continue   # Identity, Correspondence: no heading on /concepts/
             source=re.sub(r'(<article id="'+slug+r'"><h3>)([\s\S]*?)(</h3>)',lambda m:m.group(1)+f'<span class="gl-go"><a href="{href}" class="gl-link">'+m.group(2)+'</a></span>'+m.group(3),source,count=1)
     return anchors(links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer)),path)
 # Governor's 2:01 PM ET ruling (c) on Paul's parity rule: a generated page's meta description is its own visible lede,
@@ -228,17 +233,20 @@ def build(destination):
         else:shutil.copy2(ROOT/p,target)
     principle_pages=[]
     if PRINCIPLES.PUBLISH:
-        for slug,entry in PRINCIPLES.available(PRINCIPLES.REGISTER.read_text(encoding='utf-8')):
+        # Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified).
+        available=PRINCIPLES.available(PRINCIPLES.REGISTER.read_text(encoding='utf-8'))
+        term_ids={t['code']:t['id'] for t in term_records() if t['page']==TERMS.SET_PAGE}
+        for slug,entry in available:
             p=PRINCIPLES.route_path(slug);target=destination/p;target.parent.mkdir(parents=True,exist_ok=True)
-            target.write_text(render(PRINCIPLES.page(slug,entry,BASE,True),p),encoding='utf-8',newline='\n');principle_pages.append(p)
+            target.write_text(render(PRINCIPLES.page(slug,entry,BASE,True,available,term_ids.get(slug)),p),encoding='utf-8',newline='\n');principle_pages.append(p)
     records=[]
     for p in (*PAGES,*principle_pages):
         source=(destination/p).read_text(encoding='utf-8');title=re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)
         title=unescape(re.sub('<[^>]+>','',title.group(1))).strip() if title else 'Governed Logic Reasoning Systems'
         if p=='index.html':title='Governed Logic Reasoning Systems'
-        records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'page','text':main_text(source),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
+        records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'principle' if p in principle_pages else 'page','text':main_text(source),**({'description':unescape(re.search(r'<meta name="description" content="([^"]*)"',source).group(1))} if p in principle_pages else {}),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
     for p,title in zip(SOURCE_FILES,SOURCE_TITLES):records.append({'id':BASE+'/'+p,'title':title+' · Source edition','url':BASE+'/'+p,'path':'/'+p,'type':'source','text':title+' · September 2026','sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
-    entries=''.join(f'<article class="library-item" data-record="{r["id"]}" data-kind="{r["type"]}"><span class="eyebrow">{r["type"]}</span><h2 style="font-size:27px"><form class="gl-go" method="get" action="{r["path"]}"><button type="submit">{escape(r["title"])} →</button></form></h2><p>{escape(r["text"][:200])}…</p></article>' for r in records if r['path']!='/')
+    entries=''.join(f'<article class="library-item" data-record="{r["id"]}" data-kind="{r["type"]}"><span class="eyebrow">{r["type"]}</span><h2 style="font-size:27px"><form class="gl-go" method="get" action="{r["path"]}"><button type="submit">{escape(r["title"])} →</button></form></h2><p>{escape(r["text"][:200])}…</p></article>' for r in records if r['path']!='/' and r['type']!='principle')
     form='<p class="lede">Explore the reasoning architecture, the research, and the original source editions.</p><form class="library-search" role="search" action="/library/"><div class="library-query"><label for="library-query">Search the library</label><input id="library-query" name="q" type="search" placeholder="A concept, title, or phrase" aria-controls="library-results"></div><div><label for="library-kind">Show</label><select id="library-kind" name="type"><option value="">All works</option><option value="concept">Concepts</option><option value="page">Pages &amp; articles</option><option value="source">Source editions</option></select></div><button id="library-clear" type="button" hidden>Clear</button></form><p id="library-search-mode">All works are available below.</p><p id="library-count" role="status"></p><p id="library-empty" hidden>No matching works. Try a different term.</p>'
     generated={'library/index.html':document('The library','library/index.html',form+'<div id="library-results">'+entries+'</div>','<script src="/assets/library.js" defer></script>'),
     'publication/index.html':document('Publication record','publication/index.html','<p class="lede">Source editions and the works they support.</p><p>The source documents retain their original September 2026 edition dates. The October 2026 articles remain separately identifiable.</p>'+entries),
@@ -246,7 +254,7 @@ def build(destination):
     'robots.txt':'User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',
     'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+''+'</url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html'))+'</urlset>',
     'terms.jsonld':terms_jsonld(),'llms.txt':llms_txt(records),
-    'feed.xml':'<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>Governed Logic publications</title><id>'+BASE+'/</id><updated>2026-10-18T00:00:00Z</updated>'+''.join('<entry><title>'+escape(r['title'])+'</title><id>'+r['id']+'</id><link href="'+r['url']+'"/><updated>2026-10-18T00:00:00Z</updated></entry>' for r in records)+'</feed>'}
+    'feed.xml':'<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>Governed Logic publications</title><id>'+BASE+'/</id><updated>2026-10-18T00:00:00Z</updated>'+''.join('<entry><title>'+escape(r['title'])+'</title><id>'+r['id']+'</id><link href="'+r['url']+'"/><updated>2026-10-18T00:00:00Z</updated></entry>' for r in records if r['type']!='principle')+'</feed>'}
     for p,value in generated.items():
         target=destination/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(value,encoding='utf-8',newline='\n')
     manifest={'release':'2026-10-18-substantive-restoration','files':{p:hashlib.sha256((destination/p).read_bytes()).hexdigest() for p in PUBLIC_FILES if p!='publication/manifest.json'}}

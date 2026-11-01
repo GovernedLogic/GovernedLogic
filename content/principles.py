@@ -1,17 +1,30 @@
-"""Principle pages (Paul, Nov 1 2026, 12:31 PM ET: "I want a page for each individual principle"). Data-driven and OFF.
+"""Principle pages (Paul, Nov 1 2026, 12:31 PM ET: "I want a page for each individual principle").
 
-Status (Rigel 12:36 PM ET; Governor): the copy register is DRAFT, not approved, and Paul has not chosen between set A
-(the live six) and set B (the library seven). The text is on HOLD. Until PUBLISH is True nothing about these pages is
-published: no route in the artifact allowlist, no sitemap entry, no link or nav slot, no machine-layer entry, and every
-route is a withheld link target, so check-restored fails if anything links to one. Local previews only:
-    python3 scripts/preview_principles.py --register <PRINCIPLE_PAGES_COPY.md> --output <new dir>
+PUBLISHED as set B: Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified). The ruling: "principle
+set = LIBRARY SEVEN (set B): Being, Identity, Meaning, Intelligibility, Logic, Correspondence, Obligation. Yes, publish
+the draft text as written." No Truth principle page.
 
-To publish once Paul approves: commit the approved register at content/principle-register.md, set SET to his choice
-(one line) and PUBLISH = True. render_site.py then adds, from this same list, the routes, the link from each principle
-on /concepts/, the sitemap entries, the llms.txt lines and the term url in the machine layer.
+content/principle-register.md is Rigel's copy register (PRINCIPLE_PAGES_COPY.md, 2026-11-01), committed byte for byte.
+Words come only from it, verbatim, in its order. Register headers (sources, Drive ids, library lines, statuses, word
+counts, MISSING notes) stay build-side and are never rendered. Each page's title and single h1 is the principle's name
+(the register's section heading). Nothing MISSING in the register is filled.
 
-Words come only from the register, verbatim, in its order. Register headers (sources, Drive ids, library lines,
-statuses) stay build-side and are never rendered. Items whose title is MISSING in the register are skipped, not filled.
+Two build-side corrections, both applied to the register's own words and nothing else (CORRECTIONS below):
+1. The "GL-P2"/"GL-P3" codes in two Supporting passages are stripped (codes only).
+2. Two Supporting passages sit under the wrong principle in the register (its library line windows are one line off).
+   The source is unambiguous: CONTENT_LIBRARY_2026-10-31.txt L17632-17637 (the nucleus v0.5 "Invariant Governing
+   Priors" table, ID / Canonical proposition / Role) and the Drive copy of governed-logic-nucleus-v0.5 (1igYxSsot85y...,
+   lines 45 and 47) give
+       GL-P2  Logic is binding and answerable to truth. | Inference must preserve valid relations without treating
+              logical form as the creator of reality.
+       GL-P3  Intelligibility is real. | Reality has apprehensible order and can be meaningfully represented and
+              reasoned about.
+   So "Inference must preserve ..." (register: under Intelligibility, tagged GL-P3) is relabeled to Logic, and
+   "Intelligibility is real. Reality has ..." (register: under Obligation) is relabeled to Intelligibility. Obligation
+   is left with no Supporting passage; its GL-P4 line is not in the register and is not added.
+
+Every slug in SETS that is not in the published set (Truth) is a withheld link target: nothing may link to it, it is
+not built, and the live probe requires it to 404.
 """
 from html import escape
 from pathlib import Path
@@ -21,33 +34,59 @@ SETS={
     'A':('truth','logic','being','meaning','intelligibility','obligation'),                         # live six, /concepts/ order
     'B':('being','identity','meaning','intelligibility','logic','correspondence','obligation'),     # library seven (MB01)
 }
-SET='A'          # Paul has not chosen (register: DECISION NEEDED). Switching to B is this one line.
-PUBLISH=False    # text on HOLD until Paul picks the set and approves the register.
+SET='B'          # Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified).
+PUBLISH=True
 REGISTER=ROOT/'content/principle-register.md'
 INCLUDE_SUPPORTING=True   # the register's "Supporting (older prior set, optional)" blocks; its word counts include them.
 TEMPLATE=ROOT/'components/principle.html'
 def route_path(slug):return f'principles/{slug}/index.html'
-def withheld():return () if PUBLISH else tuple(route_path(s) for s in SETS[SET])
+def withheld():
+    """Principle routes that must not be linked or served: every set slug when unpublished; once published, every
+    slug of another set that is not in the published set (Truth)."""
+    if not PUBLISH:return tuple(route_path(s) for s in SETS[SET])
+    return tuple(route_path(s) for s in dict.fromkeys(x for v in SETS.values() for x in v) if s not in SETS[SET])
+NAMES={'being':'Being','identity':'Identity','meaning':'Meaning','intelligibility':'Intelligibility','logic':'Logic',
+       'correspondence':'Correspondence','obligation':'Obligation','truth':'Truth'}
+# (slug, block kind, exact register paragraph) -> what the build does with it. See the module docstring, item 2.
+CODES=re.compile(r'^GL-P\d+ | GL-P\d+$')
+MOVES=(('intelligibility','Inference must preserve valid relations without treating logical form as the creator of reality. GL-P3','logic'),
+       ('obligation','Intelligibility is real. Reality has apprehensible order and can be meaningfully represented and reasoned about.','intelligibility'))
+def corrected(reg):
+    """Apply the two documented corrections; fail if the register text they rely on is not there exactly."""
+    def supporting(slug):
+        b=[b for b in reg[slug]['blocks'] if b['header'].startswith('**Supporting')]
+        return b[0] if b else None
+    for src,text,dst in MOVES:
+        sb=supporting(src)
+        if sb is None or text not in sb['paragraphs']:raise ValueError(f'Register Supporting passage under {src} changed; correction no longer applies')
+        sb['paragraphs'].remove(text)
+        db=supporting(dst)
+        if db is None:db={'header':'**Supporting (relabeled)','paragraphs':[]};reg[dst]['blocks'].append(db)
+        db['paragraphs'].append(text)
+    for slug,e in reg.items():
+        if 'blocks' not in e:continue
+        e['blocks']=[b for b in e['blocks'] if b['paragraphs']]
+        for b in e['blocks']:
+            if b['header'].startswith('**Supporting'):b['paragraphs']=[CODES.sub('',p) for p in b['paragraphs']]
+    return reg
 def parse(text):
-    """{slug: {'title', 'blocks': [{'header', 'paragraphs'}], 'count', 'skipped'}} from the register, verbatim."""
+    """{slug: {'title', 'blocks': [{'header', 'paragraphs'}], 'count'}} from the register, verbatim. The title is the
+    principle's name (the section heading); the register's "Page title" field is not used."""
     out={}
     for sec in re.split(r'^### ',text,flags=re.M)[1:]:
         head,_,rest=sec.partition('\n');slug=head.strip().lower()
         if not re.fullmatch(r'[a-z]+',slug):continue
-        title=re.search(r'^\*\*Page title[^*]*:\*\* (.*)$',rest,re.M)
-        if not title or title.group(1).startswith('MISSING'):out[slug]={'skipped':'Page title MISSING in the register'};continue
-        t=re.match(r'"(.*?)"\.',title.group(1))
-        if not t:out[slug]={'skipped':'Page title not quoted in the register'};continue
         blocks=[];cur=None;count=None
         for line in rest.split('\n'):
-            if line.startswith('**Passage') or (INCLUDE_SUPPORTING and line.startswith('**Supporting')):cur={'header':line,'paragraphs':[]};blocks.append(cur)
+            if line.startswith(('**Passage','Passage source:')) or (INCLUDE_SUPPORTING and line.startswith('**Supporting')):cur={'header':line,'paragraphs':[]};blocks.append(cur)
             elif line.startswith('**Supporting'):cur=None
             elif line.startswith('_Word count'):count=int(re.search(r'(\d+)',line).group(1));cur=None
-            elif line.startswith(('**','#','>','- ')):cur=None
+            elif line.startswith(('**','#','>','- ','Article or treatise narrative')):cur=None
             elif cur is not None and line.strip():cur['paragraphs'].append(line)
         if not blocks:out[slug]={'skipped':'No passages in the register'};continue
-        out[slug]={'title':t.group(1),'blocks':blocks,'count':count}
-    return out
+        out[slug]={'title':NAMES[slug],'blocks':blocks,'count':count}
+    return corrected(out)
+def words(entry):return sum(len(p.split()) for b in entry['blocks'] for p in b['paragraphs'])
 def heading(p):
     """A chapter or step heading line of the treatise (all capitals, or "WHY ONE: ...?"): an h2, words unchanged."""
     letters=re.sub(r'[^A-Za-z]','',p)
@@ -57,10 +96,27 @@ def body(entry):
     for b in entry['blocks']:
         html.append('<section class="principle-passage">'+''.join(('<h2>' if heading(p) else '<p>')+escape(p,quote=False)+('</h2>' if heading(p) else '</p>') for p in b['paragraphs'])+'</section>')
     return ''.join(html)
-def page(slug,entry,base,published):
+def description(entry):
+    """The page's meta/og/JSON-LD description: the first sentence of its first passage, verbatim (visible on the page)."""
+    first=entry['blocks'][0]['paragraphs'][0]
+    m=re.match(r'(.+?[.!?])(?:\s|$)',first)
+    return m.group(1) if m else first
+def nav(slug,base_entries):
+    """Ordinary links among the published principle pages, by name only (Identity and Correspondence have no /concepts/
+    heading to carry their link)."""
+    items=''.join(f'<span class="gl-go"><a href="/{route_path(s)[:-10]}" class="gl-link"'+(' aria-current="page"' if s==slug else '')+f'>{escape(NAMES[s])}</a></span>' for s,_ in base_entries)
+    return f'<nav class="principle-nav" aria-label="Principles">{items}</nav>'
+def page(slug,entry,base,published,entries=(),term_id=None):
+    import json
+    url=base+'/'+route_path(slug)[:-10]
+    ld={'@context':'https://schema.org','@type':'WebPage','@id':url+'#page','url':url,'name':NAMES[slug],
+        'description':description(entry),'isPartOf':{'@id':base+'/#website'}}
+    if term_id:ld['about']={'@id':term_id}
     t=TEMPLATE.read_text(encoding='utf-8')
-    return (t.replace('{{title}}',escape(entry['title'])).replace('{{canonical}}',base+'/'+route_path(slug)[:-10])
-             .replace('{{robots}}','index,follow' if published else 'noindex,nofollow').replace('{{body}}',body(entry)))
+    return (t.replace('{{title}}',escape(entry['title'])).replace('{{description}}',escape(description(entry)))
+             .replace('{{canonical}}',url).replace('{{jsonld}}',json.dumps(ld,ensure_ascii=False))
+             .replace('{{robots}}','index,follow' if published else 'noindex,nofollow').replace('{{body}}',body(entry))
+             .replace('{{nav}}',nav(slug,entries) if entries else ''))
 def available(text):
     reg=parse(text);return [(s,reg[s]) for s in SETS[SET] if s in reg and 'skipped' not in reg[s]]
 def routes():

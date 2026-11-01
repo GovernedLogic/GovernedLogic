@@ -36,7 +36,7 @@ import build_site  # noqa: E402
 import render_site  # noqa: E402
 
 # Whole-page text and links of the current interface. Not the retired HTML blob ids.
-REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html")
+REVIEWED_PAGES = (*render_site.PAGES, "library/index.html", "publication/index.html", *render_site.PRINCIPLES.routes())
 # Published homepage, exhibit included, arrows exact. Hero-narrative appends the one
 # reviewed narrative homepage digest to this tuple and nothing else.
 # index.html: four footer controls removed, the brand name is its visible text, and button href attributes are gone.
@@ -101,7 +101,10 @@ REVIEWED_PAGE_DIGESTS = {
     "faq/index.html": ("0881cf79b2e45a973d5a24476642c453903a24b2ded9255e8db3205c5b336852",),
     # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Truth DefinedTerm description = its visible h3 and p); replaces 24c631cb...0de3.
-    "concepts/index.html": ("759cc2245aa0f188e318c182094429602e9c87afd9a9a7b4b0121f741b4f2154",),
+    # Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified): the five principle headings that
+    # have a published page (Logic, Being, Meaning, Intelligibility, Obligation) link to it; markup only, words
+    # unchanged; Truth stays unlinked. Replaces 759cc224...2154.
+    "concepts/index.html": ("bdffef8228403acfbfadecde153b1306d77d21b33c0a63a7dc9a83b18b479cac",),
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 7dd18ad7...78d0.
@@ -149,6 +152,15 @@ REVIEWED_PAGE_DIGESTS = {
     # publication/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 7d942e16...b218.
     "publication/index.html": ("0bfe3a8b37c0ecbdb8b66a5a6fb237638b8578e90d5174d0af3b4e4b66b24080",),
+    # Principle pages, set B (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)): register text
+    # verbatim (content/principle-register.md) with the documented code strip and Supporting relabel (content/principles.py).
+    "principles/being/index.html": ("3e40ad19dc39d744008eab2760098c5371ddd5f43efe7c521dc118da5ac1afb5",),
+    "principles/identity/index.html": ("91838fcff5362719cacdd3abc966fa7f5804a9baa49600033d89dff8e8d27d34",),
+    "principles/meaning/index.html": ("da49702c1fffb3663e829e808e39f35c901c5f7282a46be065352c40625d4997",),
+    "principles/intelligibility/index.html": ("910672b1d97b576326a3cdd5cb0d9d951d9e2830e5fd9517e0557ccdcb05c3b4",),
+    "principles/logic/index.html": ("3f52c58edeba83961429e8948f1118eaf219009031f140c621b5a9bf463841b2",),
+    "principles/correspondence/index.html": ("4797de278721e6951b1fdd5cd9ef6b001e846371d6263c6e625c3d67a229b2b6",),
+    "principles/obligation/index.html": ("d01104b95f3c02edf44661de4b2f568bd911feb001458843cef5084c6c600a7c",),
 }
 # Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
 # assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
@@ -880,7 +892,7 @@ class ReleaseGuardTests(unittest.TestCase):
     # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F12): the live probe requires every unpublished /principles/
     # route to be 404, as a file and as a directory URL. Served locally here; the real probe runs against the live site.
     def test_live_probe_fails_on_served_principle_route(self) -> None:
-        import functools, http.server, threading, contextlib, io
+        import functools, http.server, threading, contextlib, io, shutil
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(site))
@@ -891,13 +903,39 @@ class ReleaseGuardTests(unittest.TestCase):
             try:
                 with contextlib.redirect_stdout(io.StringIO()):
                     check_restored.live(site, base, 1, 0)
-                (site / "principles" / "being").mkdir(parents=True)
-                (site / "principles" / "being" / "index.html").write_text("<!doctype html><title>Being</title>", encoding="utf-8")
-                with self.assertRaisesRegex(AssertionError, r"Internal file exposed: principles/being/index\.html(.|\n)*Internal file exposed: principles/being/"):
+                # Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified): set B is published, so the
+                # set-A page not in B (Truth) is the withheld route that must 404; a published page must be served.
+                (site / "principles" / "truth").mkdir(parents=True)
+                (site / "principles" / "truth" / "index.html").write_text("<!doctype html><title>Truth</title>", encoding="utf-8")
+                with self.assertRaisesRegex(AssertionError, r"Internal file exposed: principles/truth/index\.html(.|\n)*Internal file exposed: principles/truth/"):
                     check_restored.live(site, base, 1, 0)
+                (site / "principles" / "truth" / "index.html").unlink()
+                (site / "principles" / "truth").rmdir()
+                expected = Path(directory) / "expected"
+                shutil.copytree(site, expected)
+                shutil.rmtree(site / "principles" / "being")
+                with self.assertRaisesRegex(AssertionError, r"principles/being/index\.html: HTTP Error 404(.|\n)*principles/being/: HTTP Error 404"):
+                    check_restored.live(expected, base, 1, 0)
             finally:
                 server.shutdown()
                 server.server_close()
+
+    # Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified): the seven pages each have one h1 that is
+    # the principle's name and an inbound link; no other /principles/ page may be built.
+    def test_principle_page_guards(self) -> None:
+        import contextlib, io
+        cases = [
+            (lambda site: self.replace_once(site, "principles/identity/index.html", "<h1>Identity</h1>", "<h1>Identity is foundational.</h1>"), r"Principle h1 is not exactly its name: principles/identity/index\.html"),
+            (lambda site: ((site / "principles" / "truth").mkdir(), (site / "principles" / "truth" / "index.html").write_text("<!doctype html><title>Truth</title>", encoding="utf-8")), r"Unpublished principle page in the artifact: principles/truth/index\.html"),
+            (lambda site: [self.replace_once(site, f"principles/{slug}/index.html", '<a href="/principles/identity/" class="gl-link">Identity</a>', 'Identity')
+                           for slug in ("being", "meaning", "intelligibility", "logic", "correspondence", "obligation")], r"Principle page not linked from another page: principles/identity/index\.html"),
+        ]
+        for seed, message in cases:
+            with self.subTest(message=message), tempfile.TemporaryDirectory() as directory:
+                site = self.build_artifact(directory)
+                seed(site)
+                with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(AssertionError, message):
+                    check_restored.check(site)
 
     def test_jsonld_description_change_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

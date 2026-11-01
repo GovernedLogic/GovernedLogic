@@ -188,7 +188,10 @@ body.gl-site :is(.gl-intro,.about-hero,.home-content>section.front-door)::before
 /* v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET): <dfn> marks a defined term for machines only;
    it must not change how the words render. */
 body.gl-site dfn{font-style:inherit}
-/* Principle pages (Paul, Nov 1 2026, 12:31 PM ET). Unpublished while content/principles.py PUBLISH is off; this styles
-   the local previews and the pages once published. Passages sit on the shared spine and measure. */
+/* Principle pages (Paul, Nov 1 2026, 12:31 PM ET; published as set B: Paul 4:48 PM ET Nov 1, set B, publish as written
+   (via Governor, verified)). Passages sit on the shared spine and measure; the names-only nav to the other six pages
+   wraps as a spaced row. */
 body.gl-site .principle-main .principle-passage+.principle-passage{margin-top:clamp(32px,4vw,56px);padding-top:clamp(32px,4vw,56px);border-top:1px solid rgba(23,32,51,.14)}
 body.gl-site .principle-main .principle-passage h2{font-size:var(--fs-h3);margin:1.6em 0 .6em}
+body.gl-site .principle-main .principle-nav{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:clamp(40px,5vw,64px);padding-top:clamp(24px,3vw,32px);border-top:1px solid rgba(23,32,51,.14)}
+body.gl-site .principle-main .principle-nav a[aria-current="page"]{color:inherit;text-decoration:none}

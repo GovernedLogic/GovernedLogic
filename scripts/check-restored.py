@@ -6,7 +6,7 @@ from urllib.request import Request,urlopen
 from urllib.error import HTTPError,URLError
 from concurrent.futures import ThreadPoolExecutor
 import argparse,hashlib,json,re,tempfile,time
-from render_site import ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS,WITHHELD_LINK_TARGETS,SOURCE_FILES,build,route,main_text,BASE
+from render_site import PRINCIPLES,ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS,WITHHELD_LINK_TARGETS,SOURCE_FILES,build,route,main_text,BASE
 class Doc(HTMLParser):
     def __init__(self):
         super().__init__();self.tags=[];self.ids=[];self.refs=[];self.canonical=[];self.json=[];self.capture=None
@@ -116,7 +116,29 @@ def check(root):
     # the artifact fails here as well as on the boundary check above. Was: each opening asset byte-equal to source.
     for p in RETIRED_ASSETS:
         if (root/p).exists():errors.append('Retired asset published: '+p)
+    # Principle pages (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)): each published page
+    # has its canonical, one main, one h1 equal to the principle's name, a sitemap entry, and at least one ordinary
+    # <a href> link from another page; no other /principles/ page exists (Truth is withheld, see live()).
+    principle_routes=PRINCIPLES.routes()
+    for p in sorted(x for x in actual if x.startswith('principles/') and x not in principle_routes):errors.append('Unpublished principle page in the artifact: '+p)
+    sitemap=(root/'sitemap.xml').read_text(encoding='utf-8')
+    linked={}
+    for path in sorted(root.rglob('*.html')):
+        d=Doc();d.feed(path.read_text(encoding='utf-8'));rel=path.relative_to(root).as_posix()
+        for href in d.anchors:
+            u=urlsplit(urljoin(BASE+route(rel),href))
+            if u.netloc==urlsplit(BASE).netloc and u.path.startswith('/principles/'):linked.setdefault(u.path.lstrip('/')+('index.html' if u.path.endswith('/') else ''),set()).add(rel)
+    for p in principle_routes:
+        if not (root/p).is_file():errors.append('Principle page missing: '+p);continue
+        source=(root/p).read_text(encoding='utf-8');d=Doc();d.feed(source)
+        if d.canonical!=[BASE+route(p)]:errors.append('Canonical mismatch: '+p)
+        if sum(t=='main' for t,a in d.tags)!=1:errors.append('Main landmark count: '+p)
+        h1=re.findall(r'<h1[^>]*>([\s\S]*?)</h1>',source)
+        if [re.sub('<[^>]+>','',x).strip() for x in h1]!=[PRINCIPLES.NAMES[p.split('/')[1]]]:errors.append('Principle h1 is not exactly its name: '+p)
+        if '<loc>'+BASE+route(p)+'</loc>' not in sitemap:errors.append('Principle page missing from sitemap: '+p)
+        if not (linked.get(p,set())-{p}):errors.append('Principle page not linked from another page: '+p)
     if errors:raise AssertionError('\n'.join(sorted(set(errors))))
+    print(f'Principle pages: {len(principle_routes)} published, each linked and in the sitemap; withheld: '+', '.join(t for t in WITHHELD_LINK_TARGETS if t.startswith('principles/')))
     print(f'Passed: {len(docs)} substantive pages, all links and anchors, structured data, exact source editions, and {len(PUBLIC_FILES)}-file boundary.')
 def live(root,base,attempts,delay):
     # Pages consumes this hidden build marker; it is not a public resource.
@@ -138,6 +160,12 @@ def live(root,base,attempts,delay):
                 with urlopen(base.rstrip('/')+'/'+p,timeout=15) as r:errors.append('Internal file exposed: '+p)
             except HTTPError as e:
                 if e.code!=404:errors.append('Unexpected boundary status: '+p)
+        # Published principle pages must be served (200, built bytes) at their directory URL too.
+        for p in PRINCIPLES.routes():
+            try:
+                with urlopen(Request(base.rstrip('/')+'/'+p[:-len('index.html')],headers={'Cache-Control':'no-cache'}),timeout=30) as r:
+                    if r.read()!=(root/p).read_bytes():errors.append('Stale bytes: '+p[:-len('index.html')])
+            except (HTTPError,URLError,TimeoutError) as e:errors.append(p[:-len('index.html')]+': '+str(e))
         if not errors:print(f'Live verification passed: all {len(served_files)} served files match the built release; internal sources remain excluded.');return
         if attempt+1<attempts:time.sleep(delay)
     raise AssertionError('\n'.join(errors))

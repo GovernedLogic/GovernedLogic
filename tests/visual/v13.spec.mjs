@@ -3,6 +3,9 @@
 // once (desktop-1440 project).
 import {test,expect} from '@playwright/test';
 const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/'];
+// Principle pages, set B (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)). No Truth page.
+const principles={'/principles/being/':'Being','/principles/identity/':'Identity','/principles/meaning/':'Meaning','/principles/intelligibility/':'Intelligibility','/principles/logic/':'Logic','/principles/correspondence/':'Correspondence','/principles/obligation/':'Obligation'};
+const withheldPrinciples=['/principles/truth/'];
 const norm=s=>s.replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"').replace(/[\u2013\u2014]/g,'-').replace(/\s+/g,' ').trim();
 test.beforeEach(({},info)=>{test.skip(info.project.name!=='desktop-1440','sets its own viewports');});
 
@@ -11,7 +14,7 @@ test('Inner pages start title, cards and footer on one spine (73px at 1440, 22px
  // /page-two/ is Paul's previous homepage and keeps its own layout; / is the homepage hero.
  for(const [width,spine] of [[1440,73],[390,22]]){
   await page.setViewportSize({width,height:900});
-  for(const route of routes.filter(r=>r!=='/'&&r!=='/page-two/')){
+  for(const route of [...routes.filter(r=>r!=='/'&&r!=='/page-two/'),...Object.keys(principles)]){
    await page.goto(route,{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
    const m=await page.evaluate(()=>{const rg=document.createRange();
     const left=e=>{if(!e)return null;rg.selectNodeContents(e);const r=[...rg.getClientRects()].filter(x=>x.width>0);return r.length?Math.round(r[0].left):null};
@@ -61,22 +64,27 @@ test('Machine layer matches the visible text (terms.jsonld, dfn, llms.txt)',asyn
  }
 });
 
-test('Link coverage: every page reachable by ordinary links, every link resolves, nothing unpublished linked',async({page,request})=>{
+test('Link coverage: every page and the seven principle pages reachable by ordinary links, every link resolves, nothing unpublished linked',async({page,request})=>{
  test.setTimeout(180_000);
  const seen=new Set(['/']);const queue=['/'];const bad=[];const checked=new Map();
  while(queue.length){
   const route=queue.shift();await page.goto(route,{waitUntil:'domcontentloaded'});
   const hrefs=await page.evaluate(()=>[...document.querySelectorAll('a[href]')].map(a=>a.href));
   for(const h of hrefs){const u=new URL(h);if(u.origin!==new URL(page.url()).origin)continue;
-   if(/^\/principles\//.test(u.pathname))bad.push(`${route} links unpublished ${u.pathname}`);
+   if(/^\/principles\//.test(u.pathname)&&!(u.pathname in principles))bad.push(`${route} links unpublished ${u.pathname}`);
    if(!checked.has(u.pathname))checked.set(u.pathname,(await request.get(u.pathname)).status());
    if(checked.get(u.pathname)!==200)bad.push(`${route} -> ${u.pathname} ${checked.get(u.pathname)}`);
    const p=u.pathname.replace(/\/index\.html$/,'/');
-   if(routes.includes(p)&&!seen.has(p)){seen.add(p);queue.push(p);}}
+   if((routes.includes(p)||p in principles)&&!seen.has(p)){seen.add(p);queue.push(p);}}
  }
  expect(bad).toEqual([]);
- expect([...seen].sort()).toEqual([...routes].sort());
- expect((await request.get('/principles/being/')).status(),'principle pages unpublished').toBe(404);
+ expect([...seen].sort()).toEqual([...routes,...Object.keys(principles)].sort());
+ for(const p of Object.keys(principles))expect((await request.get(p)).status(),`${p} served`).toBe(200);
+ for(const p of withheldPrinciples){expect((await request.get(p)).status(),`${p} not published`).toBe(404);expect((await request.get(p+'index.html')).status()).toBe(404);}
+ const sitemap=await (await request.get('/sitemap.xml')).text();
+ for(const p of Object.keys(principles))expect(sitemap.includes(`<loc>https://governedlogic.com${p}</loc>`),`${p} in sitemap`).toBe(true);
+ for(const p of withheldPrinciples)expect(sitemap.includes(p),`${p} absent from sitemap`).toBe(false);
+ expect(sitemap.includes('<lastmod>'),'no page dates (Paul 4:50 PM ET Nov 1)').toBe(false);
 });
 
 // GL QA F1 on 0ee4a0f (v13 regression): the hero chain label "INTELLIGENCE" was clipped from 920 to 1200px (24px at
@@ -127,4 +135,31 @@ test('Type: homepage and Sources card titles at 187fdb4 sizes; inner pages on th
  await page.goto('/sources/',{waitUntil:'load'});
  const titles=await page.evaluate(()=>[...document.querySelectorAll('main .source-entry h2')].map(e=>getComputedStyle(e).fontSize));
  expect(titles.length).toBeGreaterThan(0);expect(new Set(titles),'Sources card titles at 1440 (187fdb4: 56px)').toEqual(new Set(['56px']));
+});
+
+// Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified): each principle page has exactly one h1, its
+// name, as its title, no page date, and no text in main or the footer clipped or past the viewport at 1440, 1024, 390 and
+// 320. (The shared header's nav is a sideways-scrolling strip below 1024px on every page, by design; it is not checked here.)
+test('Principle pages: one h1 (the name), no page date, nothing clipped at 1440/1024/390/320',async({page})=>{
+ test.setTimeout(180_000);
+ for(const width of [1440,1024,390,320]){
+  await page.setViewportSize({width,height:900});
+  for(const [route,name] of Object.entries(principles)){
+   await page.goto(route,{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
+   const m=await page.evaluate(()=>{const out=[];const rg=document.createRange();
+    for(const e of document.querySelectorAll('main :is(h1,h2,h3,p,a,li,span), footer :is(a,p)')){
+     if(!e.textContent.trim())continue;rg.selectNodeContents(e);const r=rg.getBoundingClientRect();if(!r.width)continue;
+     const label=e.tagName+' '+e.textContent.trim().slice(0,40);
+     if(e.scrollWidth>e.clientWidth+1&&getComputedStyle(e).overflowX!=='visible')out.push(`${label} overflows its box`);
+     if(r.right>innerWidth+0.5||r.left<-0.5)out.push(`${label} outside the viewport (${r.left.toFixed(1)}..${r.right.toFixed(1)})`);
+     for(let a=e.parentElement;a;a=a.parentElement){const cs=getComputedStyle(a);if(cs.overflowX!=='visible'||cs.overflowY!=='visible'){const ar=a.getBoundingClientRect();
+      if(r.right>ar.right+0.5||r.left<ar.left-0.5||r.bottom>ar.bottom+0.5&&cs.overflowY!=='visible')out.push(`${label} clipped by ${a.tagName}.${a.className}`);}}}
+    if(document.documentElement.scrollWidth>innerWidth)out.push(`page scrolls sideways (${document.documentElement.scrollWidth}px)`);
+    return {h1:[...document.querySelectorAll('h1')].map(h=>h.textContent.trim()),title:document.title,text:document.body.innerText,out};});
+   expect(m.h1,`h1 on ${route} at ${width}`).toEqual([name]);
+   expect(m.title,`title on ${route}`).toBe(`${name} | Governed Logic`);
+   expect(/Published\s*\/\s*modified/i.test(m.text),`page date on ${route}`).toBe(false);
+   expect(m.out,`clipping on ${route} at ${width}px`).toEqual([]);
+  }
+ }
 });
