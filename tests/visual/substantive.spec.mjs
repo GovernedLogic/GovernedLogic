@@ -185,13 +185,37 @@ test('Phone nav stays visible at 360px',async({page})=>{
  expect(metrics.details).toBe(0);
  expect(metrics.count).toBe(6); // C9/WEB-217/WEB-223: six linked items (Applications is held, not a form); Company added.
  expect(metrics.overflow).toBe(false);
- // WEB-214/WEB-223/WEB-226: the phone header adds a brand-name, search and CTA row above the two nav rows (52px + 2x44px).
- expect(metrics.headerHeight).toBeLessThanOrEqual(140);
+ // D8 (WEB-214/WEB-223/WEB-226): the phone header is two 44px rows, brand/search/CTA over one nav row that scrolls
+ // sideways inside the header, so it stays at 88px or less.
+ expect(metrics.headerHeight).toBeLessThanOrEqual(88);
  expect(metrics.headerHeight).toBeGreaterThanOrEqual(44);
  expect(new Set(metrics.boxes.map(box=>Math.round(box.top))).size).toBeLessThanOrEqual(2);
  for(const box of metrics.boxes){
   expect(box.h).toBeGreaterThanOrEqual(44);
   expect(box.w).toBeGreaterThanOrEqual(44);
+ }
+});
+
+test('Phone header is 88px or less from 320 to 899 with every item one tap away',async({page})=>{
+ // D8 (WEB-214/WEB-223/WEB-226): at every phone width the header keeps the full brand, Search (/library/) and the CTA in
+ // view, stays at or under 88px, and scrolling the header (not the page) brings Company into view.
+ for(const width of [320,360,390,600,899]){
+  await page.setViewportSize({width,height:800});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const m=await page.evaluate(()=>{
+   const bar=document.querySelector('header#gl-home-bar');
+   const inView=el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth+0.5&&r.top>=0&&r.bottom<=bar.getBoundingClientRect().bottom+0.5;};
+   const fixed=['.gl-brand-name','.site-brand small','form[action="/library/"] > button','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel)));
+   const company=bar.querySelector('form[action="/company/"] > button');
+   company.scrollIntoView({block:'nearest',inline:'nearest'});
+   return {h:bar.getBoundingClientRect().height,fixed,company:inView(company),fixedAfter:['.gl-brand-name','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel))),pageX:scrollX,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+  });
+  expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(88);
+  expect(m.fixed,`brand, subline, search and CTA in view at ${width}`).toEqual([true,true,true,true]);
+  expect(m.company,`Company in view at ${width}`).toBe(true);
+  expect(m.fixedAfter,`brand and CTA stay pinned at ${width}`).toEqual([true,true]);
+  expect(m.pageX).toBe(0);
+  expect(m.overflow).toBe(false);
  }
 });
 

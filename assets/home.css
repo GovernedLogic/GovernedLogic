@@ -6,7 +6,8 @@ body.gl-home-page{--p:min(1px,calc(100vw / 1440));--serif:'GL Serif','Source Ser
 body.gl-home-page .gl-arrow{width:calc(var(--p)*19);min-width:15px;height:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
 /* Header */
-body.gl-home-page header#gl-home-bar{max-height:none;overflow:visible;flex-flow:initial;position:sticky;top:0;z-index:40;display:grid;grid-template-columns:calc(var(--p)*400) 1fr auto;align-items:center;gap:0;height:calc(var(--p)*108);min-height:64px;padding:0 calc(var(--frame) + var(--p)*38);background:var(--bar);border:0;backdrop-filter:none;box-shadow:0 1px 0 #0b1a26}
+body.gl-home-page header#gl-home-bar{max-height:none;overflow:visible;flex-flow:initial;position:sticky;top:0;z-index:40;display:grid;grid-template-columns:calc(var(--p)*400) 1fr auto;align-items:center;gap:0;height:calc(var(--p)*108);min-height:64px;padding:0 calc(var(--frame) + var(--p)*38);background:var(--bar);background-image:radial-gradient(120% 160% at 56% 0%,#04121e 0%,#020c15 46%,rgba(0,7,13,0) 100%),linear-gradient(180deg,#020c15 0%,#010910 100%);border:0;backdrop-filter:none;box-shadow:0 1px 0 #0b1a26}
+/* D13c: the mockup header has subtle depth, a lighter centre-top falling to near-black edges, so no flat fill. */
 body.gl-home-page header#gl-home-bar::after{display:none}
 body.gl-home-page #gl-home-bar .gl-go{margin:0}
 body.gl-home-page #gl-home-bar .site-brand{display:flex;align-items:center;gap:calc(var(--p)*19);min-height:44px;padding:0;background:none;border:0;color:#fff;cursor:pointer;text-align:left;letter-spacing:0;font:inherit}
@@ -245,28 +246,35 @@ body.gl-home-page .gl-card-go.gl-hold{color:#8a97a4;cursor:default}
   body.gl-home-page #gl-home-bar nav button{height:44px;font-size:14px}
   body.gl-home-page .gl-bar-cta{width:auto;height:44px;padding:0 16px;font-size:14px}
 }
-@media (max-width:900px){
+/* Phones, 320-899 (D8; WEB-214, WEB-223, WEB-226): an 88px header in two 44px rows. Row 1 keeps the full name
+   (Governed Logic / Reasoning Systems), Search (/library/) and the CTA pinned; row 2 is the nav on one line. When the
+   nav is wider than the screen the header scrolls sideways, so every item, Company included, stays one tap away and
+   nothing is hidden in a menu. */
+@media (max-width:899px){
   html{scroll-padding-top:0}
-  body.gl-home-page{--gl-bar-h:140px}
-  body.gl-home-page header#gl-home-bar{position:relative;grid-template-rows:52px 88px;height:140px;column-gap:6px;padding:0 8px}
+  body.gl-home-page{--gl-bar-h:88px;--gl-tools-w:199px}
+  body.gl-home-page header#gl-home-bar{position:relative;grid-template-columns:minmax(0,1fr);grid-template-rows:44px 44px;height:88px;max-height:88px;column-gap:0;padding:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none}
+  body.gl-home-page header#gl-home-bar::-webkit-scrollbar{display:none}
+  body.gl-home-page #gl-home-bar>.gl-go{position:sticky;left:0;z-index:2;grid-column:1;grid-row:1;align-self:center;justify-self:start;padding-left:8px}
+  body.gl-home-page .gl-home-tools{position:sticky;left:calc(100% - var(--gl-tools-w));z-index:2;grid-column:1;grid-row:1;justify-self:end;width:var(--gl-tools-w);padding-right:8px;gap:2px;justify-content:flex-end}
   body.gl-home-page #gl-home-bar .site-brand{gap:6px;min-height:44px}
-  body.gl-home-page #gl-home-bar .site-brand img{width:40px;height:40px;min-width:40px;min-height:40px;margin:0 -2px}
-  body.gl-home-page .gl-brand-name{font-size:18px}
-  body.gl-home-page #gl-home-bar .site-brand small{display:none}
-  body.gl-home-page .gl-home-tools{gap:2px}
-  body.gl-home-page .gl-bar-cta{height:44px;padding:0 10px;gap:6px;font-size:12.5px;border-radius:4px}
+  body.gl-home-page #gl-home-bar .site-brand img{width:36px;height:36px;min-width:36px;min-height:36px;margin:0 -1px}
+  body.gl-home-page .gl-brand-text{gap:1px}
+  body.gl-home-page .gl-brand-name{font-size:16px;line-height:1.1}
+  body.gl-home-page #gl-home-bar .site-brand small{display:block;font-size:11.5px;line-height:1.15;letter-spacing:.05em}
+  body.gl-home-page .gl-bar-cta{width:auto;height:44px;padding:0 8px;gap:6px;font-size:12.5px;border-radius:4px}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:none}
-  body.gl-home-page #gl-home-bar nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:44px 44px;gap:0 4px;width:100%}
-  body.gl-home-page #gl-home-bar nav button{justify-content:center;width:100%;height:44px;padding:0 2px;font-size:13px;line-height:1.1;white-space:normal;text-align:center}
-  body.gl-home-page #gl-home-bar nav button::after{left:20%;right:20%}
+  body.gl-home-page #gl-home-bar nav{display:flex;grid-column:1;grid-row:2;justify-self:start;width:max-content;min-width:100%;height:44px;gap:0;padding:0 4px;justify-content:space-between}
+  body.gl-home-page #gl-home-bar nav button{justify-content:center;width:auto;height:44px;padding:0 10px;font-size:13px;line-height:1.1;white-space:nowrap;text-align:center}
+  body.gl-home-page #gl-home-bar nav button::after{left:10px;right:10px}
 }
-@media (max-width:379px){
-  body.gl-home-page .gl-brand-name{font-size:16px}
-  body.gl-home-page .gl-bar-cta{padding:0 8px;font-size:12px;letter-spacing:-.01em}
-  body.gl-home-page #gl-home-bar nav button{font-size:12px}
-}
-@media (max-width:349px){
-  body.gl-home-page .gl-bar-cta{display:none}
+/* Below 390px the CTA is the compact arrow button; its accessible name stays "Explore the Research". */
+@media (max-width:389px){
+  body.gl-home-page{--gl-tools-w:98px}
+  body.gl-home-page .gl-bar-cta{width:44px;min-width:44px;padding:0;justify-content:center}
+  body.gl-home-page .gl-bar-cta .gl-cta-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  body.gl-home-page .gl-bar-cta .gl-arrow{display:block;width:18px}
+  body.gl-home-page #gl-home-bar nav button{padding:0 8px}
 }
 
 /* Route to Paul's previous homepage, kept byte-as-is at /page-two/ (WEB-205, WEB-231). Below the mockup's last band. */

@@ -103,9 +103,11 @@ for (const routeDefinition of ROUTES) {
       await expect(header.locator('form.gl-go[action="/company/"] > button')).toBeVisible();
       await expect(header.locator('form.gl-go[action="/library/"] > button')).toBeVisible();
       await expect(header.locator(".gl-brand-name")).toBeVisible();
-      if (testInfo.project.name !== "mobile-320") {
-        await expect(header.locator(".gl-bar-cta")).toBeVisible();
-      }
+      // D8 (WEB-214/WEB-226): "Reasoning Systems" and the CTA show at every width; below 390px the CTA is a
+      // compact arrow button that keeps its accessible name.
+      await expect(header.locator(".site-brand small")).toBeVisible();
+      await expect(header.locator(".gl-bar-cta")).toBeVisible();
+      await expect(header.locator(".gl-bar-cta")).toHaveAccessibleName("Explore the Research");
     }
 
     if (routeDefinition.path === "/page-two/") {
