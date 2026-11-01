@@ -66,6 +66,14 @@ jobs:
       - name: Verify artifact boundary
         run: |
           python3 scripts/check-restored.py --root "${{ runner.temp }}/site" --artifact
+      # v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET; Paul's parity rule): never deploy an artifact
+      # whose machine layer differs from its visible text.
+      - name: Check machine-layer parity
+        run: python3 scripts/check-parity.py "${{ runner.temp }}/site"
+      # QA v12-live-187fdb4 G2: syntax-check every published script in the built artifact.
+      - name: Check published JavaScript syntax
+        run: |
+          for f in $(find "${{ runner.temp }}/site" -name '*.js'); do node --check "$f"; done
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:

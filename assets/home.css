@@ -1,8 +1,28 @@
+/* C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): navigation is ordinary <a href> links. Each link keeps the box the GET-form
+   button had: the wrapper takes the form's block display and the link takes the browser's button defaults. Zero
+   specificity (:where), so every existing rule still wins; Paul wants the links to look like the buttons, not prose links. */
+:where(span.gl-go){display:block}
+:where(a.gl-link){display:inline-block;box-sizing:border-box;width:fit-content;align-content:center;text-align:center;text-decoration:none;font:-webkit-small-control;font-size:13.3333px;letter-spacing:normal;word-spacing:normal;line-height:normal;text-transform:none;text-indent:0;text-shadow:none;color:buttontext;cursor:pointer}
 /* Homepage design, 2026-10-31 approved mockup. Provisional layout; deep blue accents, no gold.
    Desktop sizes are written in mockup pixels at 1440 wide: calc(var(--p)*N). */
 @font-face{font-family:'GL Serif';src:url('materials/source-serif-4-latin-opsz.woff2') format('woff2');font-style:normal;font-weight:200 900;font-display:swap}
 @font-face{font-family:'GL Sans';src:url('materials/inter-latin-wght.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap}
-:is(body.gl-home-page,body.gl-site){--p:min(1px,calc(100vw / 1440));--serif:'GL Serif','Source Serif 4',Georgia,'Times New Roman',serif;--sans:'GL Sans',Inter,'Helvetica Neue',Arial,sans-serif;--night:#00060c;--bar:#020b13;--blue:#2f9ce6;--blue-deep:#004374;--sky:#56c4f2;--navy:#003059;--paper:#f9f8f8;--ink-dark:#0b1118;--frame:max(0px,calc((100% - 1440px) / 2));background:var(--night);color:#e9edf0;font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:clip}
+/* v13 CLS (QA research 2026-11-01; Paul's v13 approval, Nov 1 2026, 12:30 PM ET): size-matched fallbacks shown until the web
+   fonts arrive, so lines wrap the same before and after the swap. size-adjust is the measured advance-width ratio of the page
+   text, regular and bold faces separately (Source Serif 4 to Liberation Serif 1.064 and 0.998; Inter to Liberation
+   Sans 1.085 and 1.034); ascent/descent are each web font's hhea metrics divided by it (Source Serif 4: 1036/335 per
+   1000; Inter: 1984/494 per 2048). Liberation is metric-compatible with Times New Roman and Arial, so either can stand in. */
+@font-face{font-family:'GL Serif Fallback';src:local('Liberation Serif'),local('LiberationSerif'),local('Times New Roman'),local('TimesNewRomanPSMT'),local('Tinos');font-weight:100 500;size-adjust:106.4%;ascent-override:97.4%;descent-override:31.5%;line-gap-override:0%}
+@font-face{font-family:'GL Serif Fallback';src:local('Liberation Serif Bold'),local('LiberationSerif-Bold'),local('Times New Roman Bold'),local('TimesNewRomanPS-BoldMT'),local('Tinos Bold');font-weight:501 900;size-adjust:99.8%;ascent-override:103.8%;descent-override:33.6%;line-gap-override:0%}
+@font-face{font-family:'GL Sans Fallback';src:local('Liberation Sans'),local('LiberationSans'),local('Arial'),local('ArialMT'),local('Arimo');font-weight:100 500;size-adjust:108.5%;ascent-override:89.3%;descent-override:22.2%;line-gap-override:0%}
+@font-face{font-family:'GL Sans Fallback';src:local('Liberation Sans Bold'),local('LiberationSans-Bold'),local('Arial Bold'),local('Arial-BoldMT'),local('Arimo Bold');font-weight:501 900;size-adjust:103.4%;ascent-override:93.7%;descent-override:23.3%;line-gap-override:0%}
+:is(body.gl-home-page,body.gl-site){--p:min(1px,calc(100vw / 1440));--serif:'GL Serif','GL Serif Fallback','Source Serif 4',Georgia,'Times New Roman',serif;--sans:'GL Sans','GL Sans Fallback',Inter,'Helvetica Neue',Arial,sans-serif;--night:#00060c;--bar:#020b13;--blue:#2f9ce6;--blue-deep:#004374;--sky:#56c4f2;--navy:#003059;--paper:#f9f8f8;--ink-dark:#0b1118;--frame:max(0px,calc((100% - 1440px) / 2));--spine:calc(var(--frame) + max(22px,calc(var(--p)*73)));--measure:34rem;--fs-caption:12px;--fs-small:14px;--fs-body:16px;--fs-lead:max(16px,calc(var(--p)*20));--fs-h3:max(17px,calc(var(--p)*24));--fs-h2:max(28px,calc(var(--p)*40));--fs-h1:max(34px,calc(var(--p)*64));--fs-display:calc(var(--p)*81);background:var(--night);color:#e9edf0;font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:clip}
+/* v13 (Paul's approval, Nov 1 2026, 12:30 PM ET; QA research 2026-11-01): one left spine and one type scale for every page.
+   --spine is the homepage's left edge (x=73 at 1440, 22 at 600 and below); --measure caps prose near 68 characters.
+   Seven steps, at 1440: caption 12, small 14, body 16, lead 20, h3 24, h2 40, h1 64; the homepage hero title keeps its
+   81px display size. The brand lockup in the header keeps its own sizes (logo). */
+@media (max-width:900px){:is(body.gl-home-page,body.gl-site){--fs-h2:clamp(28px,8.4vw,40px);--fs-h1:clamp(34px,10.4vw,64px)}}
+@media (max-width:600px){:is(body.gl-home-page,body.gl-site){--spine:22px}}
 body.gl-home-page .gl-arrow{width:calc(var(--p)*19);min-width:15px;height:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
 /* Header */
@@ -17,11 +37,13 @@ body.gl-home-page .gl-arrow{width:calc(var(--p)*19);min-width:15px;height:auto;f
 :is(body.gl-home-page,body.gl-site) #gl-home-bar .site-brand small{display:block;font-family:var(--sans);font-size:max(12px,calc(var(--p)*14.5));font-weight:500;line-height:1.3;letter-spacing:.3em;text-transform:uppercase;color:#e2e7eb;white-space:nowrap}
 :is(body.gl-home-page,body.gl-site) #gl-home-bar nav{display:flex;align-items:center;height:auto;gap:calc(var(--p)*22);margin:0;padding:0;font-size:inherit;justify-self:start}
 :is(body.gl-home-page,body.gl-site) #gl-home-bar nav .gl-go{display:block}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button{position:relative;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;height:calc(var(--p)*46);padding:0;margin:0;border:0;background:none;color:#eef2f5;font:400 max(12px,calc(var(--p)*15.5))/1.2 var(--sans);letter-spacing:0;white-space:nowrap;cursor:pointer;text-decoration:none}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button[aria-current="page"]{color:var(--sky)}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button[aria-current="page"]::after{background:var(--sky)}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button:hover{color:#fff}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)){position:relative;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;height:calc(var(--p)*46);padding:0;margin:0;border:0;background:none;color:#eef2f5;font:400 var(--fs-small)/1.2 var(--sans);letter-spacing:0;white-space:nowrap;cursor:pointer;text-decoration:none}
+/* Governor 2:16 PM ET ruling (Nov 1 2026; Paul loved the homepage sizing): the homepage keeps its 187fdb4 type scale, header included. */
+body.gl-home-page #gl-home-bar nav :is(button,:where(a.gl-link)){font:400 max(12px,calc(var(--p)*15.5))/1.2 var(--sans)}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link))::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link))[aria-current="page"]{color:var(--sky)}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link))[aria-current="page"]::after{background:var(--sky)}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)):hover{color:#fff}
 body.gl-home-page .gl-home-tools{display:flex;align-items:center;gap:calc(var(--p)*24)}
 body.gl-home-page .gl-search{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;background:none;color:#f2f5f7;cursor:pointer}
 body.gl-home-page .gl-search svg{width:calc(var(--p)*27);min-width:18px;height:auto;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round}
@@ -59,6 +81,11 @@ body.gl-home-page .gl-hero .gl-hero-title{margin-top:calc(var(--p)*16);width:aut
 body.gl-home-page .gl-hero-lede{margin-top:calc(var(--p)*28)!important;width:auto;font-size:max(15px,calc(var(--p)*20.8));line-height:calc(var(--p)*33.5);color:#d3d9de;font-weight:400}
 body.gl-home-page .gl-actions{display:flex;gap:calc(var(--p)*26);margin-top:calc(var(--p)*37)}
 body.gl-home-page .gl-chain{position:absolute;z-index:2;top:calc(var(--p)*72);left:calc(var(--frame) + var(--p)*1266);margin:0;padding:0;list-style:none;display:grid;row-gap:calc(var(--p)*72)}
+/* GL QA F1 on 0ee4a0f (WEB-227 SIXTH; Governor 2:16 PM ET ruling keeps the 187fdb4 sizes): below 1280px the chain's
+   12px type floor makes "INTELLIGENCE" reach the hero's clipped right edge (0.6px past it at 901px even at 187fdb4).
+   Ease the column left by up to 15px as the viewport narrows (0 at 1280 and wider, 15px at 901), so the words always
+   end inside the hero. Sizes unchanged. */
+@media (min-width:901px) and (max-width:1279px){body.gl-home-page .gl-chain{left:calc(var(--frame) + var(--p)*1266 - (1280px - 100vw) * .04)}}
 body.gl-home-page .gl-chain li{display:flex;flex-direction:column;gap:calc(var(--p)*6);position:relative}
 body.gl-home-page .gl-chain li::before{content:"";position:absolute;right:calc(100% + var(--p)*12);top:calc(var(--p)*10);width:calc(var(--p)*34);height:1px;background:rgba(170,205,230,.55)}
 body.gl-home-page .gl-chain strong{font:600 max(12px,calc(var(--p)*17.5))/1.2 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:#f4f6f8}
@@ -93,8 +120,8 @@ body.gl-home-page .gl-problem-copy .gl-go{margin-top:calc(var(--p)*25)}
 body.gl-home-page .gl-problem-links{position:relative;z-index:1;display:grid;gap:calc(var(--p)*8.5);margin:calc(var(--p)*-14) 0 0;padding:0;list-style:none;align-content:start;align-self:start}
 :is(body.gl-home-page,body.gl-site) .gl-go{margin:0}
 body.gl-home-page .gl-problem-links li{display:flex;flex-direction:column}
-body.gl-home-page .gl-problem-links button{display:flex;align-items:center;width:100%;height:calc(var(--p)*90);min-height:56px;padding:0 calc(var(--p)*26) 0 calc(var(--p)*30);background:rgba(3,14,23,.72);border:1px solid #1b3341;border-radius:calc(var(--p)*4);color:#fff;text-align:left;cursor:pointer;font:inherit}
-body.gl-home-page .gl-problem-links button:hover{border-color:#2f6f99;background:rgba(6,24,38,.85)}
+body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){display:flex;align-items:center;width:100%;height:calc(var(--p)*90);min-height:56px;padding:0 calc(var(--p)*26) 0 calc(var(--p)*30);background:rgba(3,14,23,.72);border:1px solid #1b3341;border-radius:calc(var(--p)*4);color:#fff;text-align:left;cursor:pointer;font:inherit}
+body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)):hover{border-color:#2f6f99;background:rgba(6,24,38,.85)}
 body.gl-home-page .gl-picon{width:calc(var(--p)*56);height:calc(var(--p)*56);min-width:26px;min-height:26px;flex:none;fill:none;stroke:#4fb8f0;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 body.gl-home-page .gl-ptext{display:flex;flex-direction:column;gap:calc(var(--p)*6);margin-left:calc(var(--p)*33);flex:1;min-width:0}
 body.gl-home-page .gl-ptitle{font:500 max(16px,calc(var(--p)*21))/1.2 var(--serif);font-variation-settings:'opsz' 24;color:#fff}
@@ -124,24 +151,26 @@ body.gl-home-page .gl-card-go .gl-arrow{width:calc(var(--p)*22);min-width:18px;s
 html{scroll-behavior:smooth;scroll-padding-top:110px}
 :is(body.gl-home-page,body.gl-site){margin:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 :is(body.gl-home-page,body.gl-site) img{max-width:100%}
-:is(body.gl-home-page,body.gl-site) button{font-family:inherit}
+:is(body.gl-home-page,body.gl-site) :is(button,:where(a.gl-link)){font-family:inherit}
 :is(body.gl-home-page,body.gl-site) .skip-link{position:fixed;top:-100px;left:16px;z-index:2147483640;min-height:44px;padding:12px 16px;border:0;background:#fff;color:#000;font:500 14px/1.2 var(--sans);cursor:pointer}
 :is(body.gl-home-page,body.gl-site) .skip-link:focus{top:12px}
 
 /* Footer: the site footer, set in the homepage palette */
 :is(body.gl-home-page,body.gl-site) .site-footer{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;padding:56px calc(var(--frame) + max(22px,var(--p)*73)) 30px;background:#00060c;border-top:1px solid #0b1a26;color:#c3cbd1;font:400 14px/1.6 var(--sans)}
 :is(body.gl-home-page,body.gl-site) .site-footer .gl-go{margin:0}
-:is(body.gl-home-page,body.gl-site) .site-footer .footer-name{min-height:44px;padding:0;border:0;background:none;color:#fff;font:500 22px/1.3 var(--serif);text-align:left;cursor:pointer}
+:is(body.gl-home-page,body.gl-site) .site-footer .footer-name{min-height:44px;padding:0;border:0;background:none;color:#fff;font:500 var(--fs-h3)/1.3 var(--serif);text-align:left;cursor:pointer}
+/* Governor 2:16 PM ET ruling: the homepage footer name keeps its 187fdb4 size. */
+body.gl-home-page .site-footer .footer-name{font:500 22px/1.3 var(--serif)}
 :is(body.gl-home-page,body.gl-site) .site-footer p{margin:14px 0 0;color:#9fa9b1}
 :is(body.gl-home-page,body.gl-site) .site-footer nav{display:grid;grid-template-columns:1fr 1fr;gap:0 25px;align-content:start}
-:is(body.gl-home-page,body.gl-site) .site-footer nav button{display:flex;align-items:center;width:100%;min-height:44px;padding:0;border:0;background:none;color:#c7d0d6;font:400 14px/1.3 var(--sans);text-align:left;cursor:pointer}
-:is(body.gl-home-page,body.gl-site) .site-footer nav button:hover,:is(body.gl-home-page,body.gl-site) .site-footer .footer-name:hover{color:#56c4f2}
+:is(body.gl-home-page,body.gl-site) .site-footer nav :is(button,:where(a.gl-link)){display:flex;align-items:center;width:100%;min-height:44px;padding:0;border:0;background:none;color:#c7d0d6;font:400 14px/1.3 var(--sans);text-align:left;cursor:pointer}
+:is(body.gl-home-page,body.gl-site) .site-footer nav :is(button,:where(a.gl-link)):hover,:is(body.gl-home-page,body.gl-site) .site-footer .footer-name:hover{color:#56c4f2}
 :is(body.gl-home-page,body.gl-site) .site-footer .footer-credit{grid-column:1/-1;margin:0;padding-top:24px;border-top:1px solid #12222e;font-size:12px;color:#8e99a2}
 :is(body.gl-home-page,body.gl-site) .site-footer .footer-credit span{display:inline-block;margin-top:8px;color:#56c4f2}
 @media (max-width:600px){:is(body.gl-home-page,body.gl-site) .site-footer{grid-template-columns:1fr;gap:24px;padding:44px 22px 28px}}
 
 /* Focus */
-:is(body.gl-home-page,body.gl-site) button:focus-visible{outline:2px solid #56c4f2;outline-offset:3px}
+:is(body.gl-home-page,body.gl-site) :is(button,:where(a.gl-link)):focus-visible{outline:2px solid #56c4f2;outline-offset:3px}
 
 /* Mid widths: keep the desktop composition but stop the header from crowding */
 
@@ -189,7 +218,7 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}
   body.gl-home-page .gl-problem-copy>p:not(.gl-eyebrow){width:auto;max-width:640px;margin-top:16px!important;font-size:16px;line-height:1.65}
   body.gl-home-page .gl-problem-copy .gl-go{margin-top:24px}
   body.gl-home-page .gl-problem-links{margin-top:34px;gap:10px}
-  body.gl-home-page .gl-problem-links button{height:auto;min-height:84px;padding:16px 16px 16px 18px}
+  body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){height:auto;min-height:84px;padding:16px 16px 16px 18px}
   body.gl-home-page .gl-picon{width:32px;height:32px}
   body.gl-home-page .gl-ptext{margin-left:18px}
   body.gl-home-page .gl-ptitle{font-size:17px}
@@ -228,7 +257,7 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}
 
 /* Header at every width: brand name, search (/library/), Company (/company/) and the CTA stay one click away
    (WEB-214, WEB-223, WEB-226). Applications was dropped by PLACEMENT_MAP (2026-11-01, WEB-227 FIFTH); About is kept (QA-4). */
-body.gl-home-page #gl-home-bar nav button.gl-hold,body.gl-home-page #gl-home-bar nav button.gl-hold:hover{color:#eef2f5;cursor:default}
+body.gl-home-page #gl-home-bar nav :is(button,:where(a.gl-link)).gl-hold,body.gl-home-page #gl-home-bar nav :is(button,:where(a.gl-link)).gl-hold:hover{color:#eef2f5;cursor:default}
 body.gl-home-page .gl-card-go.gl-hold{color:#8a97a4;cursor:default}
 /* 900-1279 (WEB-214, WEB-223, WEB-226; Round 4): one row, 72px, like the mockup. Brand, the six nav items (Company, About
    included), Search (/library/) and the CTA all sit in the row, one click each; brand, gaps and CTA are compacted. */
@@ -242,7 +271,7 @@ body.gl-home-page .gl-card-go.gl-hold{color:#8a97a4;cursor:default}
   :is(body.gl-home-page,body.gl-site) .gl-brand-text{gap:1px}
   :is(body.gl-home-page,body.gl-site) .gl-brand-name{font-size:19px}
   :is(body.gl-home-page,body.gl-site) #gl-home-bar .site-brand small{font-size:11.5px;letter-spacing:.08em}
-  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav button{height:44px;padding:0 6px;font-size:13.5px}
+  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)){height:44px;padding:0 6px;font-size:13.5px}
   body.gl-home-page .gl-bar-cta{width:auto;height:44px;padding:0 14px;font-size:13.5px;gap:8px}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:none}
 }
@@ -275,8 +304,8 @@ body.gl-home-page .gl-chime{position:fixed;z-index:60;margin:0;object-fit:contai
   body.gl-home-page .gl-bar-cta{width:auto;height:44px;padding:0 8px;gap:6px;font-size:12.5px;border-radius:4px}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:none}
   :is(body.gl-home-page,body.gl-site) #gl-home-bar nav{display:flex;grid-column:1;grid-row:2;justify-self:start;width:max-content;min-width:100%;height:44px;gap:0;padding:0 4px;justify-content:space-between}
-  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav button{justify-content:center;width:auto;height:44px;padding:0 10px;font-size:13px;line-height:1.1;white-space:nowrap;text-align:center}
-  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav button::after{left:10px;right:10px}
+  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)){justify-content:center;width:auto;height:44px;padding:0 10px;font-size:13px;line-height:1.1;white-space:nowrap;text-align:center}
+  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link))::after{left:10px;right:10px}
 }
 /* Round 4 (WEB-214, WEB-226): edge fades on the phone nav row show that it scrolls sideways. They are pinned to
    the row's edges, ignore pointers, and follow the header's own scroll: the right fade shows while more items lie
@@ -304,9 +333,45 @@ body.gl-home-page .gl-chime{position:fixed;z-index:60;margin:0;object-fit:contai
   body.gl-home-page .gl-bar-cta{width:44px;min-width:44px;padding:0;justify-content:center}
   body.gl-home-page .gl-bar-cta .gl-cta-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:block;width:18px}
-  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav button{padding:0 8px}
+  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)){padding:0 8px}
 }
 
 /* Route to Paul's previous homepage, kept byte-as-is at /page-two/ (WEB-205, WEB-231). Below the mockup's last band. */
 body.gl-home-page .gl-next{display:flex;justify-content:center;padding:0 22px calc(var(--p)*56 + 24px);background:var(--paper)}
 body.gl-home-page .gl-btn-line{height:52px;padding:0 24px;background:transparent;color:#0c3b6c;border:1.5px solid #0c3b6c;font-size:16px}
+
+/* ---- v13 depth (Paul's approval, Nov 1 2026, 12:30 PM ET; QA research 2026-11-01): dark bands only, white stays plain ----
+   Layers, in order: layered deep-blue radial light; a 1px seam where the dark band meets white; card elevation; a
+   pre-rendered grain tile (provisional/grain.png) and a faint Seed of Life kept off the text. Motion only under
+   prefers-reduced-motion: no-preference. Contrast is measured on rendered pixels (stays at or above AA). */
+:is(body.gl-home-page,body.gl-site){--seam:linear-gradient(90deg,rgba(47,156,230,0),rgba(47,156,230,.38) 22%,rgba(108,200,240,.55) 50%,rgba(47,156,230,.38) 78%,rgba(47,156,230,0));--grain:url('provisional/grain.png')}
+/* 1. Problem band. The Seed of Life sits half off the right edge, behind the defect cards' opaque fill. */
+body.gl-home-page .gl-problem{background:
+  var(--seam) top/100% 1px no-repeat,var(--seam) bottom/100% 1px no-repeat,
+  var(--grain) 0 0/128px 128px repeat,
+  radial-gradient(52% 80% at 12% 0%,rgba(10,90,156,.24),rgba(10,90,156,0) 72%),
+  radial-gradient(40% 75% at 92% 100%,rgba(0,67,116,.30),rgba(0,67,116,0) 72%),
+  radial-gradient(90% 120% at 55% 130%,rgba(4,30,52,.55),rgba(4,30,52,0) 62%),
+  #00070d}
+body.gl-home-page .gl-problem::after{content:"";position:absolute;z-index:0;top:50%;right:calc(var(--frame) - var(--p)*190);width:calc(var(--p)*380);aspect-ratio:244/248;translate:0 -50%;
+  background:url('provisional/seed-of-life.png') center/contain no-repeat;opacity:.07;pointer-events:none}
+body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){box-shadow:inset 0 1px 0 rgba(108,200,240,.07),0 2px 6px rgba(0,0,0,.35),0 12px 28px -14px rgba(0,0,0,.8)}
+body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)):hover{box-shadow:inset 0 1px 0 rgba(108,200,240,.12),0 3px 8px rgba(0,0,0,.4),0 18px 36px -14px rgba(0,0,0,.85)}
+@media (max-width:900px){body.gl-home-page .gl-problem::after{display:none}}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes gl-seed-turn{to{rotate:360deg}}
+  body.gl-home-page .gl-problem::after{animation:gl-seed-turn 240s linear infinite}
+  body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){transition:box-shadow .2s ease,border-color .2s ease,background-color .2s ease}
+}
+/* 2. Footer: the seam on its top edge (it meets the white page on every inner page and the white Explore band on the
+   homepage), deep-blue light from the lower left, grain, and the Seed of Life half off the lower right corner. */
+:is(body.gl-home-page,body.gl-site) .site-footer{position:relative;isolation:isolate;overflow:hidden;border-top-color:transparent;background:
+  var(--seam) top/100% 1px no-repeat,
+  var(--grain) 0 0/128px 128px repeat,
+  radial-gradient(55% 90% at 8% 100%,rgba(10,90,156,.22),rgba(10,90,156,0) 70%),
+  radial-gradient(45% 70% at 70% 0%,rgba(0,67,116,.20),rgba(0,67,116,0) 70%),
+  #00060c}
+:is(body.gl-home-page,body.gl-site) .site-footer::after{content:"";position:absolute;z-index:-1;right:calc(var(--frame) - var(--p)*150);bottom:calc(var(--p)*-150);width:calc(var(--p)*360);aspect-ratio:244/248;
+  background:url('provisional/seed-of-life.png') center/contain no-repeat;opacity:.06;pointer-events:none}
+@media (max-width:900px){:is(body.gl-home-page,body.gl-site) .site-footer::after{display:none}}
+@media (prefers-reduced-motion:no-preference){:is(body.gl-home-page,body.gl-site) .site-footer::after{animation:gl-seed-turn 300s linear infinite reverse}}

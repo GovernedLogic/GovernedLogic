@@ -4,17 +4,9 @@
   var skip=document.querySelector('button.skip-link');
   function mainEl(){return document.querySelector('main');}
   function path(p){try{var u=new URL(p,location.origin);var x=u.pathname;if(x.length>1&&x.endsWith('/'))x=x.slice(0,-1);return x;}catch(e){return '';}}
-  function mark(root){if(!root)return;var here=path(location.pathname);root.querySelectorAll('form.gl-go').forEach(function(form){var btn=form.querySelector('button');if(btn&&path(form.getAttribute('action')||'')===here)btn.setAttribute('aria-current','page');});}
+  function mark(root){if(!root)return;var here=path(location.pathname);root.querySelectorAll('.gl-go>a[href]').forEach(function(link){if(path(link.getAttribute('href')||'')===here)link.setAttribute('aria-current','page');});}
   function go(){var m=mainEl();if(m&&!m.hasAttribute('tabindex'))m.setAttribute('tabindex','-1');mark(document.querySelector('header.site-bar'));mark(document.querySelector('footer.site-footer'));}
   if(skip)skip.addEventListener('click',function(){var m=mainEl();if(!m)return;if(!m.hasAttribute('tabindex'))m.setAttribute('tabindex','-1');m.focus();});
-  document.addEventListener('submit',function(event){
-    var form=event.target;
-    if(!form||form.nodeName!=='FORM'||!form.classList.contains('gl-go'))return;
-    event.preventDefault();
-    var raw=form.getAttribute('action')||'/';
-    var url=new URL(raw,location.href);
-    location.assign(url.pathname+url.hash);
-  },true);
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
 })();
 </script>

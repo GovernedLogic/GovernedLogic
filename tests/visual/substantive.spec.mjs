@@ -1,3 +1,4 @@
+// C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): navigation is <a href> links now, not GET-form buttons; selectors follow.
 import {test,expect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -16,7 +17,7 @@ for(const route of routes){
   const images=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.src));expect(images).toEqual([]);
   const headings=await page.locator('main h1,main h2,main h3').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+1).map(n=>n.textContent));expect(headings).toEqual([]);
   await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
-  const links=page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button');
+  const links=page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link');
   for(const link of await links.all()){await link.scrollIntoViewIfNeeded();const box=await link.boundingBox();expect(box.height).toBeGreaterThanOrEqual(43);expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(page.viewportSize().width+1);}
   if(route==='/')await page.locator('#explore').scrollIntoViewIfNeeded();
   const dir=path.resolve('visual-qa/screenshots',info.project.name);await mkdir(dir,{recursive:true});
@@ -39,10 +40,10 @@ test('Homepage and navigation work without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const page=await context.newPage();
  // WEB-205/WEB-231: the previous homepage text ('Governed Intelligence') is one button away, at /page-two/.
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
- await page.locator('main form.gl-go[method="get"][action="/page-two/"] button[type="submit"]').click();await expect(page).toHaveURL(/\/page-two\/\??$/);await expect(page.locator('main')).toContainText('Governed Intelligence');
+ await page.locator('main .gl-go > a[href="/page-two/"]').click();await expect(page).toHaveURL(/\/page-two\/\??$/);await expect(page.locator('main')).toContainText('Governed Intelligence');
  // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) (N6): the homepage header names /concepts/governed-logic/ 'Governed Logic' (L21431).
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
- await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'Governed Logic',exact:true}).click();
+ await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Governed Logic',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
 test('Homepage lands on the hero with no opening',async({page})=>{
@@ -123,7 +124,7 @@ test('Phone nav stays visible at 360px',async({page})=>{
  await page.locator('header.site-bar').scrollIntoViewIfNeeded();
  const metrics=await page.evaluate(()=>{
   const bar=document.querySelector('header.site-bar');
-  const buttons=[...document.querySelectorAll('nav[aria-label="Primary"] form.gl-go > button')];
+  const buttons=[...document.querySelectorAll('nav[aria-label="Primary"] .gl-go > a')];
   const boxes=buttons.map(button=>{const r=button.getBoundingClientRect();return {w:r.width,h:r.height,top:r.top,name:(button.textContent||'').trim()};});
   const tops=boxes.map(box=>Math.round(box.top));
   return {
@@ -160,8 +161,8 @@ test('Phone header is 88px or less from 320 to 899 with every item one tap away'
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');
    const inView=el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth+0.5&&r.top>=0&&r.bottom<=bar.getBoundingClientRect().bottom+0.5;};
-   const fixed=['.gl-brand-name','.site-brand small','form[action="/library/"] > button','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel)));
-   const company=bar.querySelector('form[action="/company/"] > button');
+   const fixed=['.gl-brand-name','.site-brand small','.gl-go > a[href="/library/"]','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel)));
+   const company=bar.querySelector('.gl-go > a[href="/company/"]');
    company.scrollIntoView({block:'nearest',inline:'nearest'});
    return {h:bar.getBoundingClientRect().height,fixed,company:inView(company),fixedAfter:['.gl-brand-name','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel))),pageX:scrollX,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
@@ -182,14 +183,14 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');const b=bar.getBoundingClientRect();
-   const items=[bar.querySelector('.site-brand'),...bar.querySelectorAll('nav button'),bar.querySelector('form[action="/library/"] > button'),bar.querySelector('.gl-bar-cta')];
+   const items=[bar.querySelector('.site-brand'),...bar.querySelectorAll('nav a'),bar.querySelector('.gl-go > a[href="/library/"]'),bar.querySelector('.gl-bar-cta')];
    const boxes=items.map(el=>el.getBoundingClientRect());
    let ordered=true;for(let i=1;i<boxes.length;i++)if(boxes[i].left<boxes[i-1].right-0.5)ordered=false;
    return {h:b.height,count:items.length,ordered,
     inView:boxes.every(r=>r.left>=0&&r.right<=innerWidth+0.5&&r.top>=b.top-0.5&&r.bottom<=b.bottom+0.5),
     tall:boxes.slice(1).every(r=>r.height>=43.5&&r.width>=43.5),
     hit:items.every(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}),
-    company:!!bar.querySelector('nav form[action="/company/"] > button'),
+    company:!!bar.querySelector('nav .gl-go > a[href="/company/"]'),
     cta:bar.querySelector('.gl-bar-cta').textContent.trim(),
     scroll:bar.scrollWidth>bar.clientWidth+1,
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
@@ -217,7 +218,7 @@ test('Header CTA reads the N11 text and never collides with brand or Search',asy
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');
-   const brand=bar.querySelector('.site-brand'),search=bar.querySelector('form[action="/library/"] > button'),cta=bar.querySelector('.gl-bar-cta');
+   const brand=bar.querySelector('.site-brand'),search=bar.querySelector('.gl-go > a[href="/library/"]'),cta=bar.querySelector('.gl-bar-cta');
    const [b,s,c]=[brand,search,cta].map(el=>el.getBoundingClientRect());
    const sub=bar.querySelector('.site-brand small'),sr=sub.getBoundingClientRect(),ss=getComputedStyle(sub);
    const lum=x=>{const v=x.match(/[\d.]+/g).slice(0,3).map(n=>{n/=255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4});return .2126*v[0]+.7152*v[1]+.0722*v[2]};
@@ -252,7 +253,7 @@ test('Homepage buttons hold their text at every width',async({page})=>{
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const bad=await page.evaluate(()=>{
    const out=[];
-   for(const b of document.querySelectorAll('header#gl-home-bar button, main button')){
+   for(const b of document.querySelectorAll('header#gl-home-bar button, main button, header#gl-home-bar a.gl-link, main a.gl-link')){
     const r=b.getBoundingClientRect();if(!r.width||b.closest('.site-brand')||b.matches('.site-brand'))continue;
     const label=b.querySelector('.gl-cta-label');if(label&&label.getBoundingClientRect().width<=2)continue; // compact CTA: label is visually hidden on purpose
     const range=document.createRange();range.selectNodeContents(b);const t=range.getBoundingClientRect();
@@ -263,7 +264,7 @@ test('Homepage buttons hold their text at every width',async({page})=>{
   });
   expect(bad,`buttons spilling at ${width}`).toEqual([]);
   for(const name of ['Large Language Model Defects','Explore the research method']){
-   const count=await page.locator('main button',{hasText:name}).count();
+   const count=await page.locator('main a.gl-link, main button',{hasText:name}).count();
    expect(count,`${name} present at ${width}`).toBeGreaterThan(0);
   }
  }
@@ -312,7 +313,7 @@ test('Logo chime never blocks content, plays once, and is skipped under reduced 
  await expect(chime).toHaveCSS('pointer-events','none');
  await expect(page.locator('h1')).toHaveCount(1);
  await expect(page.locator('#explore h1.gl-hero-title')).toBeInViewport();
- const cta=page.locator('#explore .gl-actions form[action="/research/"] button');
+ const cta=page.locator('#explore .gl-actions .gl-go > a[href="/research/"]');
  expect(await cta.evaluate(b=>{const r=b.getBoundingClientRect();return b.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));})).toBe(true);
  await cta.click();
  await expect(page).toHaveURL(/\/research\/\??$/);
@@ -373,7 +374,7 @@ test('Inner pages: dark title band, full-width footer, Sources sidebar and butto
  test.setTimeout(120_000);
  // v12 round 2 (QA F4, Q1, Q2; WEB-227 SIXTH). Every inner route opens on a dark band behind its h1 (homepage hero
  // rhythm) with light h1 text, the footer spans the page, nothing (body included) is wider than the viewport, the
- // two buttons atop /mechanism.html are at least 16px apart, and Sources-sidebar URLs never overflow or break mid-word.
+ // two buttons atop /mechanism.html are at least 8px apart (QA v12-cc71761 T1: CSS gap is 32px across, 8px when wrapped), and Sources-sidebar URLs never overflow or break mid-word.
  for(const width of [390,1440]){
   await page.setViewportSize({width,height:900});
   for(const route of routes.filter(r=>r!=='/')){
@@ -382,7 +383,7 @@ test('Inner pages: dark title band, full-width footer, Sources sidebar and butto
     const h1=document.querySelector('h1');const band=h1.closest('.gl-intro,.about-hero')||document.querySelector('main .front-door');
     const bg=band?getComputedStyle(band,'::before').backgroundImage:'';
     const f=document.querySelector('footer.site-footer').getBoundingClientRect();
-    const urls=[...document.querySelectorAll('aside.provenance button')].filter(b=>/^https:\/\//.test(b.textContent));
+    const urls=[...document.querySelectorAll('aside.provenance a')].filter(b=>/^https:\/\//.test(b.textContent));
     const midword=urls.some(b=>{const r=document.createRange();const t=b.firstChild&&b.textContent;let lines=new Map();
      for(const n of b.childNodes){if(n.nodeType!==3)continue;for(let i=0;i<n.length;i++){r.setStart(n,i);r.setEnd(n,i+1);const y=Math.round(r.getBoundingClientRect().top);const prev=lines.get('last');
       if(prev!==undefined&&y>prev+2&&i>0&&n.data[i-1]!=='/')return true;lines.set('last',y);}}return false;});
@@ -397,7 +398,7 @@ test('Inner pages: dark title band, full-width footer, Sources sidebar and butto
    expect(m.midword,`Sources URL broken mid-word on ${route} at ${width}`).toBe(false);
   }
   await page.goto('/mechanism.html',{waitUntil:'load'});await page.waitForTimeout(300);
-  const gap=await page.evaluate(()=>{const b=[...document.querySelectorAll('main .gl-intro>nav .gl-go>button')].map(x=>x.getBoundingClientRect());
+  const gap=await page.evaluate(()=>{const b=[...document.querySelectorAll('main .gl-intro>nav .gl-go>a')].map(x=>x.getBoundingClientRect());
    return b.length===2?(Math.abs(b[0].top-b[1].top)<2?b[1].left-b[0].right:b[1].top-b[0].bottom):-1;});
   expect(gap,`gap between the /mechanism.html buttons at ${width}`).toBeGreaterThanOrEqual(8);
  }
