@@ -24,22 +24,7 @@ import hashlib, json, re, sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 import render_site as R
-BASELINE={  # sha256(page \t key \t value)[:16]: what it is. All 14 occur identically in the 187fdb4 build.
-    '44163aa06c922be7':'company/index.html description: Governed Intelligence product description',
-    'd67d62e0304cb0dd':'company/index.html description: reasoning engine description',
-    '191c772646c81f7c':'company/index.html description: reasoning API description',
-    '41af504411f3d652':'company/index.html name: Novelty',
-    '7e36d2fc5623645d':'company/index.html description: Novelty description',
-    '80c98d8d5c5cd7ec':'concepts/index.html description: Truth DefinedTerm ("As a governing principle, truth is ..."; visible text differs)',
-    '97931538a63f9402':'concepts/ultimate-grounding/index.html name: "Ultimate grounding" (its h1 is "On the Nature of Ultimate Grounding")',
-    'cc1210e818da5798':'faq/index.html description: WebPage description',
-    '0e4e4d925611bc18':'index.html description: WebPage description',
-    'aab4cb5cea49cff0':'mechanism.html description: WebPage description',
-    'ae560004382cd497':'page-two/index.html description: WebPage description',
-    '99940a3fb7ef7ea1':'research/index.html description: WebPage description',
-    'e318bf12cc16e013':'research/index.html name: "Governed Logic research"',
-    '98979492dc02e0de':'research/index.html name: "Reasoning-system and governing-referent evaluation"',
-}
+BASELINE={}  # Emptied: all 14 pre-existing mismatches are aligned to the visible text (Paul's parity rule, Nov 1 2026; Governor 1:51 PM ET relay).
 INLINE={'a','abbr','b','cite','code','dfn','em','i','q','small','span','strong','sub','sup','time','wbr'}
 KEYS={'name','description','text','headline','alternateName','abstract','caption','alternativeHeadline','disambiguatingDescription','slogan','version','jobTitle'}
 def norm(x):

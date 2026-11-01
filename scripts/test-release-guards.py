@@ -65,7 +65,9 @@ HOMEPAGE_DIGESTS = (
     # Round 6, Paul's hero ruling (Nov 1, 2026): the computer-head hero art is replaced by abstract
     # Seed of Life geometry; the hero img and its preload move from head-artwork.webp to
     # hero-geometry.svg. This pin replaces 27762159...adb7; text is unchanged, only that resource.
-    "ad037f66453b0682777fb00c441cf197a76ea14ae5bc6e90a1726da4d299834d",
+    # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebSite description = the hero lede); this pin replaces ad037f66...834d. Text, links, title,
+    # meta and Open Graph are unchanged.
+    "a647098d1dcf6fde2473abfeb40625cc5887e4c85245ffaacf8bee7bc54d2dfd",
 )
 REVIEWED_PAGE_DIGESTS = {
     # v12 site-wide look (Paul, Nov 1 2026: "the rest of the site needs to be updated to match the look and feel";
@@ -76,15 +78,19 @@ REVIEWED_PAGE_DIGESTS = {
     # challenge/index.html: footer labels restored. The brand aria-label Governed Logic home is restored, so every page digest moved.
     "challenge/index.html": ("847f7d49b14a217d71dcb46473aa17585485f7c85f1f961660df66915080cc69",),
     # company/index.html: same restored footer labels.
-    "company/index.html": ("83bd969242c7ebb7d1a6b29cfc87b17362c1d63079ef8971b54fc81d3b9aeec8",),
+    # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (three Thing descriptions = each section's first paragraph; Novelty name and description removed (not on the page)); replaces 83bd9692...eec8.
+    "company/index.html": ("e9ffa01d44e968cbfacd2d2a8b868117302edab656704f92aaf18a784559efe9",),
     # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
-    "research/index.html": ("c2316f58a0d703c37321cfdbd39334b058e6d454617fc80524cd954111e7bb80",),
+    # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Organization description removed (no visible passage on this page); names = the h1 and the #evaluation h2); replaces c2316f58...bb80.
+    "research/index.html": ("879c7e55bc1caacd0b47edf430f96af799d73a1de50069404422aceb074286c9",),
     # about/index.html: same restored footer labels; L-BIO-1 removes the invented ending after "What governs the output?".
     "about/index.html": ("f3ee4d69eb00da91491210d8da546f596888cfa9abfb5b2079615a094cbc7e75",),
     # faq/index.html: same restored footer labels.
-    "faq/index.html": ("0cf2535cb55d7bf53de59ffe1b76d1c34bf52a17c7b3bea5738e13ae61ddf1bb",),
+    # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description removed (the page has no lead or intro passage)); replaces 0cf2535c...f1bb.
+    "faq/index.html": ("16c09af5680877f7019bf043fd929daff0ba1b1e5090f629a7a185743f41ff0c",),
     # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
-    "concepts/index.html": ("24c631cba54e5a2fc9a05f4c68d48c12ac68e4d1fe0dfd686a9dff3b61c60de3",),
+    # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Truth DefinedTerm description = its visible h3 and p); replaces 24c631cb...0de3.
+    "concepts/index.html": ("ba8043aaf25b954c38d2c176c2903c22a6d0ce09e4c9e9dc7e94347e4d73a505",),
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
     "concepts/governed-logic/index.html": ("d00b7fe6fb683dcd234172b1d876afd18bb3d1f6ca8777cd9b3c6a69786fe8be",),
     # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
@@ -98,7 +104,8 @@ REVIEWED_PAGE_DIGESTS = {
     # concepts/sufficient-grounding/index.html: same restored footer labels.
     "concepts/sufficient-grounding/index.html": ("de5e27c9e1164df8709ecea29e840ecbc75d188f56275754a3f7871e92492605",),
     # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
-    "mechanism.html": ("495816e5102afa1047ca361c59deef57402a93ee93d5c532468227a9282c3c10",),
+    # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lead paragraph); replaces 495816e5...3c10.
+    "mechanism.html": ("b6e8994082ac49003ef8882535f6106c38783bc57c5194109280c7d409fb5a65",),
     # sources/index.html: same restored footer labels.
     "sources/index.html": ("92144731fe8b332d1a3498f263d9304452352f71ec3e83fee93c9fd429136add",),
     # articles/why-anything/index.html: same restored footer labels.
@@ -108,7 +115,8 @@ REVIEWED_PAGE_DIGESTS = {
     # library/index.html: generated page picks up the restored footer labels.
     # page-two/index.html (WEB-205, WEB-231; shell and injection as in RL-FTC-1 3c768d4): the
     # 64bf60f homepage main, byte-identical, in its own shell.
-    "page-two/index.html": ("9a386e37b68de4d54726200c557e1084a96811ef89bee8b6b56f082bc17ff5d0",),
+    # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lede); replaces 9a386e37...f5d0.
+    "page-two/index.html": ("71804557c363b76e5640d58b3e1c0a164287f23b535ed6ec264b5dd60d402489",),
     # library/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
     "library/index.html": ("86061a5cf2bcf8feea23121f1c3e516720b5bd97eae2926088338f35e8986e0e",),
     # publication/index.html: generated page picks up the restored footer labels.
@@ -528,8 +536,9 @@ class ReleaseGuardTests(unittest.TestCase):
                 site,
                 # WEB-205/WEB-231: this homepage copy now lives at /page-two/.
                 "page-two/index.html",
-                "We are building Governed Intelligence: the artificial-intelligence instantiation of Governed Logic.",
-                "An unreviewed homepage claim.",
+                # The visible lede; its JSON-LD copy (Paul's parity rule, Nov 1 2026) is not the marker.
+                '<p class="lede">We are building Governed Intelligence: the artificial-intelligence instantiation of Governed Logic.',
+                '<p class="lede">An unreviewed homepage claim.',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
@@ -709,8 +718,9 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "company/index.html",
-                "Novelty is a named part",
-                "Newness is a named part",
+                # Novelty's JSON-LD was removed under Paul's parity rule (Nov 1 2026; Governor 1:51 PM ET relay).
+                'governing principles.",',
+                'governing principle.",',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: company/index.html"):
                 assert_reviewed_copy(site)
