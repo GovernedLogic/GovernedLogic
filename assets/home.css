@@ -354,3 +354,15 @@ body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)):hover{box-shad
   body.gl-home-page .gl-problem::after{animation:gl-seed-turn 240s linear infinite}
   body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){transition:box-shadow .2s ease,border-color .2s ease,background-color .2s ease}
 }
+/* 2. Footer: the seam on its top edge (it meets the white page on every inner page and the white Explore band on the
+   homepage), deep-blue light from the lower left, grain, and the Seed of Life half off the lower right corner. */
+:is(body.gl-home-page,body.gl-site) .site-footer{position:relative;isolation:isolate;overflow:hidden;border-top-color:transparent;background:
+  var(--seam) top/100% 1px no-repeat,
+  var(--grain) 0 0/128px 128px repeat,
+  radial-gradient(55% 90% at 8% 100%,rgba(10,90,156,.22),rgba(10,90,156,0) 70%),
+  radial-gradient(45% 70% at 70% 0%,rgba(0,67,116,.20),rgba(0,67,116,0) 70%),
+  #00060c}
+:is(body.gl-home-page,body.gl-site) .site-footer::after{content:"";position:absolute;z-index:-1;right:calc(var(--frame) - var(--p)*150);bottom:calc(var(--p)*-150);width:calc(var(--p)*360);aspect-ratio:244/248;
+  background:url('provisional/seed-of-life.png') center/contain no-repeat;opacity:.06;pointer-events:none}
+@media (max-width:900px){:is(body.gl-home-page,body.gl-site) .site-footer::after{display:none}}
+@media (prefers-reduced-motion:no-preference){:is(body.gl-home-page,body.gl-site) .site-footer::after{animation:gl-seed-turn 300s linear infinite reverse}}
