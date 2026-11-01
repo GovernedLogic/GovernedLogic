@@ -241,12 +241,12 @@ html:not(.gl-intro-loading):not(.gl-intro-ready) .origin-experience + .hero,
   transition:background .35s ease,padding-left .35s ease,border-color .35s ease;
 }
 .primary-doors>a:hover,.primary-doors>a:focus-visible{padding-left:24px;background:linear-gradient(90deg,rgba(141,120,255,.10),transparent 72%);border-color:#554b67}
-.primary-doors .door-number{color:var(--gold);font:700 10px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.2em}
+.primary-doors .door-number{color:var(--accent);font:700 10px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.2em}
 .primary-doors h2{margin:0;font-size:clamp(30px,4vw,48px)}
 .home-machine{padding-top:0;border-top:0}
 .home-machine .artifact{margin-top:0}
 .home-machine .artifact h2{font-size:clamp(34px,5vw,58px);line-height:1.04;margin:10px 0 18px;color:#f3e4c6}
-.home-machine .artifact h2 span{display:block;color:var(--gold)}
+.home-machine .artifact h2 span{display:block;color:var(--accent)}
 .text-link{display:inline-block;margin-top:18px;color:#c5aff0;text-underline-offset:5px}
 .home-library{margin-top:clamp(70px,10vw,120px)}
 .home-library p{max-width:54ch}
