@@ -30,7 +30,9 @@ CONCEPTS=(
     dict(code='alpha-and-omega-reasoning',name='Alpha and Omega Reasoning',dfn='Alpha and Omega reasoning'),
     dict(code='governing-referent',name='Governing referent',dfn='referent'),
     dict(code='sufficient-grounding',name='Sufficient grounding',dfn='Sufficiency'),
-    dict(code='ultimate-grounding',name='Ultimate grounding',dfn='ultimate ground'),
+    # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F5): one name for this term on every machine surface, the page's
+    # visible title (its h1 and its own JSON-LD DefinedTerm name); was 'Ultimate grounding' in terms.jsonld and llms.txt.
+    dict(code='ultimate-grounding',name='On the Nature of Ultimate Grounding',dfn='ultimate ground'),
 )
 # The four September 22 source PDFs on /sources/, described as ScholarlyArticle with only what that page shows: the
 # heading, the author and date line, and the file. section is the entry's existing fragment id.
