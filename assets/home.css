@@ -221,7 +221,7 @@ body.gl-home-page button:focus-visible{outline:2px solid #56c4f2;outline-offset:
 @font-face{font-family:'Plex Fallback';src:local('Arial'),local('Helvetica Neue'),local('Liberation Sans'),local('Nimbus Sans');size-adjust:107.9%;ascent-override:92%;descent-override:22%;line-gap-override:0%}
 body.gl-home-page{--gl-bar-h:max(64px,calc(var(--p)*108));display:flex;flex-direction:column;min-height:100svh}
 body.gl-home-page>header#gl-home-bar{order:-1;flex:0 0 auto}
-body.gl-home-page>#site{order:0;flex:0 0 auto;min-height:calc(100svh - var(--gl-bar-h));height:calc(100svh - var(--gl-bar-h));font-family:'Plex','Plex Fallback','Helvetica Neue',Arial,sans-serif;color:#eef1f3}
+body.gl-home-page>#site{order:0;flex:0 0 auto;min-height:max(1px,calc(100svh - var(--gl-bar-h)));height:max(1px,calc(100svh - var(--gl-bar-h)));font-family:'Plex','Plex Fallback','Helvetica Neue',Arial,sans-serif;color:#eef1f3}
 body.gl-home-page>main,body.gl-home-page>footer{flex:0 0 auto}
 body.gl-home-page #site .identity{width:min(80vw,1260px);top:49%}
 body.gl-home-page .brand-sub{font-size:clamp(12px,2.45vw,46px);letter-spacing:.52em;text-indent:.52em;line-height:1.4;color:#dce7ef}
