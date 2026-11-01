@@ -95,7 +95,9 @@ def render(source,path):
         source=intro_band(source)
         # v12 round 2 (Q2; WEB-227 SIXTH): let the canonical URL in the Sources sidebar wrap after a slash instead of
         # mid-word. <wbr> adds a break opportunity only; the button text is unchanged.
-        source=re.sub(r'(<aside class="provenance">[\s\S]*?</aside>)',lambda m: re.sub(r'(<button type="submit">)(https://[^<]+)(</button>)',lambda b: b.group(1)+'https://<wbr>'+re.sub(r'/(?=.)','/<wbr>',b.group(2)[8:])+b.group(3),m.group(1)),source)
+        # v13: the URL is marked gl-url so it can be kept off its hyphens (white-space:nowrap; Chrome, Firefox and Safari
+        # still break at <wbr>), since the narrower 390px column made "alpha-" a break point.
+        source=re.sub(r'(<aside class="provenance">[\s\S]*?</aside>)',lambda m: re.sub(r'(<button type="submit">)(https://[^<]+)(</button>)',lambda b: '<button type="submit" class="gl-url">'+'https://<wbr>'+re.sub(r'/(?=.)','/<wbr>',b.group(2)[8:])+b.group(3),m.group(1)),source)
         source=re.sub(r'<body(?: class="([^"]*)")?>',lambda m:'<body class="'+((m.group(1)+' ') if m.group(1) else '')+'gl-site">',source,count=1)
         # v13 CLS (QA research 2026-11-01; Paul's v13 approval, Nov 1 2026, 12:30 PM ET): inner pages preload the two
         # text fonts as the homepage does, so text lays out once instead of reflowing when the fonts arrive.

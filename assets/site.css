@@ -133,3 +133,38 @@ body.gl-site details.faq-item+details.faq-item{margin-top:12px}
 body.gl-site .site-footer{max-width:none;width:100%;margin:0;box-sizing:border-box;align-self:stretch}
 /* Inside a card the title button is plain deep-blue type (no pill or shadow inside the card). */
 body.gl-site .library-item h2 .gl-go>:is(button,:where(a.gl-link)){background:transparent;border:0;box-shadow:none;padding:0;text-align:left;min-height:44px}
+
+/* ---- v13 (Paul's approval, Nov 1 2026, 12:30 PM ET; QA research 2026-11-01): one spine, one measure, one type scale ---- */
+/* Spine: the page title, the first line of card text and the footer start on the homepage's left edge (--spine, x=73 at
+   1440, 22 at 600 and below). The column keeps its 1144px width, now starting on the spine instead of centred. */
+body.gl-site main.document-main,body.gl-site.document-page main.document-main{padding-left:var(--spine);padding-right:max(var(--spine),calc(100% - var(--spine) - 1144px))}
+/* Cards keep their padding but move out by it (and the 1px border), so their text sits on the spine. Below 600px they run
+   edge to edge with the spine as their padding. */
+body.gl-site{--card-pad:clamp(20px,2.3vw,32px)}
+body.gl-site main :is(.business-section,.concept-card,details.faq-item,.library-item,.source-entry,.library-search):not(:is(.business-section,.concept-card,.library-item,.source-entry,details) *){
+  padding-left:var(--card-pad);padding-right:var(--card-pad);margin-left:calc(-1px - var(--card-pad))}
+@media(max-width:600px){
+  body.gl-site main :is(.business-section,.concept-card,details.faq-item,.library-item,.source-entry,.library-search):not(:is(.business-section,.concept-card,.library-item,.source-entry,details) *){
+    --card-pad:var(--spine);margin-left:calc(0px - var(--spine));margin-right:calc(0px - var(--spine));border-left:0;border-right:0;border-radius:0}
+}
+/* The Sources box is a card too while it sits in the column (below 1100px); from 1100px it is the sidebar. */
+@media(max-width:1099px){body.gl-site main .provenance{padding-left:var(--card-pad);padding-right:var(--card-pad);margin-left:calc(-1px - var(--card-pad))}}
+@media(max-width:600px){body.gl-site main .provenance{margin-left:calc(0px - var(--spine));margin-right:calc(0px - var(--spine));border-left:0;border-right:0;border-radius:0}}
+/* Sources URLs break only after a slash (<wbr>), never at a hyphen inside a path segment. */
+body.gl-site .provenance .gl-go>a.gl-url{white-space:nowrap}
+/* Measure: prose lines stop near 68 characters of 16px text (Baymard 50-75; WCAG 1.4.8 at most 80); 34rem, so a lead or
+   quote in the same column ends on the same line as the body. /page-two/ (Paul's previous homepage, kept as it was) is
+   not a document page and keeps its own layout. */
+body.gl-site main.document-main :is(p,li,dd,blockquote,figcaption,.lede,.lead){max-width:var(--measure)}
+body.gl-site main.document-main h1{max-width:14em}
+body.gl-site main.document-main :is(h2,h3){max-width:22em}
+/* Type scale (tokens in home.css): h1 64, h2 40, h3 24, lead 20, body 16, small 14, caption 12 at 1440. */
+body.gl-site main.document-main h1{font-size:var(--fs-h1)}
+body.gl-site main.document-main h2{font-size:var(--fs-h2)}
+body.gl-site main.document-main :is(.provenance,.concept-card,.source-entry) h2,body.gl-site main.document-main :is(h3,blockquote,summary){font-size:var(--fs-h3)}
+/* !important only where the old value is itself !important (.library-item h2) or an inline style (the Sources h2). */
+body.gl-site main.document-main :is(.library-item,.provenance) h2{font-size:var(--fs-h3)!important}
+body.gl-site main.document-main :is(p,li,dd,blockquote p){font-size:var(--fs-body)}
+body.gl-site main.document-main :is(.lede,.lead,.gl-intro>p){font-size:var(--fs-lead)}
+body.gl-site main.document-main :is(.eyebrow,.label,.section-meta,.chain-label){font-size:var(--fs-caption)}
+body.gl-site main.document-main :is(dt,time,.provenance dd,small){font-size:var(--fs-small)}
