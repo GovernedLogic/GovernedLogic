@@ -244,6 +244,31 @@ test('Header CTA reads the N11 text and never collides with brand or Search',asy
  }
 });
 
+test('Homepage buttons hold their text at every width',async({page})=>{
+ // QA-1, QA-2 (Round 5b): no homepage button's label or arrow may spill out of its box, including the Problem button
+ // "Large Language Model Defects", both "Explore the research method" buttons and the header CTA.
+ for(const width of [320,390,1024,1280,1440]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const bad=await page.evaluate(()=>{
+   const out=[];
+   for(const b of document.querySelectorAll('header#gl-home-bar button, main button')){
+    const r=b.getBoundingClientRect();if(!r.width||b.closest('.site-brand')||b.matches('.site-brand'))continue;
+    const label=b.querySelector('.gl-cta-label');if(label&&label.getBoundingClientRect().width<=2)continue; // compact CTA: label is visually hidden on purpose
+    const range=document.createRange();range.selectNodeContents(b);const t=range.getBoundingClientRect();
+    if(b.scrollWidth>b.clientWidth+1||b.scrollHeight>b.clientHeight+1||t.left<r.left-0.5||t.right>r.right+0.5||t.top<r.top-0.5||t.bottom>r.bottom+0.5)
+     out.push(`${b.textContent.trim()} sw=${b.scrollWidth} cw=${b.clientWidth}`);
+   }
+   return out;
+  });
+  expect(bad,`buttons spilling at ${width}`).toEqual([]);
+  for(const name of ['Large Language Model Defects','Explore the research method']){
+   const count=await page.locator('main button',{hasText:name}).count();
+   expect(count,`${name} present at ${width}`).toBeGreaterThan(0);
+  }
+ }
+});
+
 test('Phone nav edge fade follows the header scroll',async({page})=>{
  // Round 4 (WEB-214, WEB-226): the right-edge fade shows while the phone nav has more items to the right and is gone at
  // the scroll end; it never takes pointer events, and a nav that fits shows no fade.

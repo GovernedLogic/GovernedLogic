@@ -32,12 +32,13 @@ body.gl-home-page .gl-btn:hover{filter:brightness(1.12)}
 body.gl-home-page .gl-bar-cta{width:auto;min-width:calc(var(--p)*217);height:calc(var(--p)*49);padding:0 calc(var(--p)*18);font-size:max(12px,calc(var(--p)*16));font-weight:400}
 /* N11 (PLACEMENT_MAP, L21394): the header CTA reads "Explore the research method"; it sizes to its text. */
 body.gl-home-page .gl-btn-outline{background:transparent;color:#58bdf0;border:1px solid #2f8fd2}
-body.gl-home-page .gl-btn-bright{width:calc(var(--p)*318);height:calc(var(--p)*59);padding:0 calc(var(--p)*20);background:linear-gradient(90deg,#00477a 0%,#0a6fb4 38%,#1a76bb 100%);color:#fff;border:0;box-shadow:0 0 calc(var(--p)*28) rgba(30,140,220,.18)}
+body.gl-home-page .gl-btn-bright{width:auto;min-width:calc(var(--p)*318);height:calc(var(--p)*59);padding:0 calc(var(--p)*20);background:linear-gradient(90deg,#00477a 0%,#0a6fb4 38%,#1a76bb 100%);color:#fff;border:0;box-shadow:0 0 calc(var(--p)*28) rgba(30,140,220,.18)}
 /* WEB-220: white label stays at or above 4.5:1 across the whole gradient (end stop #1a76bb = 4.82:1), including hover. */
 body.gl-home-page .gl-btn-bright:hover{filter:none;box-shadow:0 0 calc(var(--p)*34) rgba(30,140,220,.32)}
-body.gl-home-page .gl-btn-ghost{width:calc(var(--p)*258);height:calc(var(--p)*59);padding:0 calc(var(--p)*20);background:rgba(0,0,0,.25);color:#fff;border:1.5px solid #e2e6ea}
-body.gl-home-page .gl-btn-navy{width:calc(var(--p)*294);height:calc(var(--p)*58);padding:0 calc(var(--p)*20);background:var(--navy);color:#fff;border:0}
-body.gl-home-page .gl-btn-sky{width:calc(var(--p)*282);height:calc(var(--p)*57);padding:0 calc(var(--p)*20);background:#379fe8;color:#04121f;border:0}
+body.gl-home-page .gl-btn-ghost{width:auto;min-width:calc(var(--p)*258);height:calc(var(--p)*59);padding:0 calc(var(--p)*20);background:rgba(0,0,0,.25);color:#fff;border:1.5px solid #e2e6ea}
+body.gl-home-page .gl-btn-navy{width:auto;min-width:calc(var(--p)*294);height:calc(var(--p)*58);padding:0 calc(var(--p)*20);background:var(--navy);color:#fff;border:0}
+body.gl-home-page .gl-btn-sky{width:auto;min-width:calc(var(--p)*282);height:calc(var(--p)*57);padding:0 calc(var(--p)*20);background:#379fe8;color:#04121f;border:0}
+/* QA-1, QA-2 (Round 5b): the four fixed-width buttons keep the mockup width as a minimum and grow to fit their label. */
 
 /* Shared */
 body.gl-home-page main.home-content{display:block;padding:0;margin:0;max-width:none;background:var(--paper);color:var(--ink-dark)}
