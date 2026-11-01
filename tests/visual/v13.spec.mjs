@@ -78,3 +78,53 @@ test('Link coverage: every page reachable by ordinary links, every link resolves
  expect([...seen].sort()).toEqual([...routes].sort());
  expect((await request.get('/principles/being/')).status(),'principle pages unpublished').toBe(404);
 });
+
+// GL QA F1 on 0ee4a0f (v13 regression): the hero chain label "INTELLIGENCE" was clipped from 920 to 1200px (24px at
+// 1024). Every width from 900 to 1280, 1px apart, plus 1024 named: no chain label may overflow its box, a clipping
+// ancestor or the viewport.
+test('Homepage hero chain labels are never clipped, 900 to 1280px',async({page})=>{
+ test.setTimeout(120_000);
+ await page.setViewportSize({width:1024,height:900});await page.goto('/',{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
+ for(let width=900;width<=1280;width++){
+  await page.setViewportSize({width,height:900});
+  // The text itself (a Range over the label), not the label's box: a block box may be wider than its words.
+  const bad=await page.evaluate(()=>{const out=[];const rg=document.createRange();for(const e of document.querySelectorAll('.gl-chain li > *')){rg.selectNodeContents(e);const r=rg.getBoundingClientRect();
+   if(e.scrollWidth>e.clientWidth+1)out.push(`${e.textContent.trim()} overflows its box`);
+   if(r.right>innerWidth+0.5)out.push(`${e.textContent.trim()} ends at ${r.right.toFixed(1)} past the viewport`);
+   for(let a=e.parentElement;a;a=a.parentElement){const cs=getComputedStyle(a);if(cs.overflowX!=='visible'){const ar=a.getBoundingClientRect();
+    if(r.right>ar.right+0.5||r.left<ar.left-0.5)out.push(`${e.textContent.trim()} clipped by ${a.tagName}.${a.className} (${(r.right-ar.right).toFixed(1)}px)`);}}}
+   return out;});
+  expect(bad,`chain labels at ${width}px`).toEqual([]);
+ }
+});
+
+// Governor's 2:16 PM ET ruling (Nov 1 2026): Paul loved the homepage sizing, so the homepage keeps the 187fdb4 type
+// scale (computed sizes pinned from the 187fdb4 build); the /sources/ card titles keep their 187fdb4 size; the seven-step
+// scale (12, 14, 16, 20, 24, 40, 64 at 1440) applies to the other inner pages only.
+test('Type: homepage and Sources card titles at 187fdb4 sizes; inner pages on the seven-step scale',async({page})=>{
+ test.setTimeout(120_000);
+ const home={
+  1440:{'#gl-home-bar nav a':'15.5px','.gl-hero-title':'81px','.gl-hero-lede':'20.8px','.gl-chain strong':'17.5px','.gl-core h2':'51.5px','.gl-core-copy>p:not(.gl-eyebrow)':'20.5px','.gl-principles h3':'21px','.gl-problem h2':'52px','.gl-ptitle':'21px','.gl-card-kind':'13px','.gl-card h3':'24.5px','.site-footer .footer-name':'22px'},
+  1024:{'#gl-home-bar nav a':'13.5px','.gl-hero-title':'57.6px','.gl-hero-lede':'15px','.gl-chain strong':'12.4444px','.gl-core h2':'36.6222px','.gl-core-copy>p:not(.gl-eyebrow)':'15px','.gl-principles h3':'16px','.gl-problem h2':'36.9778px','.gl-ptitle':'16px','.gl-card-kind':'12px','.gl-card h3':'17.4222px','.site-footer .footer-name':'22px'},
+  390:{'#gl-home-bar nav a':'13px','.gl-hero-title':'40.56px','.gl-hero-lede':'16px','.gl-chain strong':'12px','.gl-core h2':'32.76px','.gl-core-copy>p:not(.gl-eyebrow)':'16px','.gl-principles h3':'17px','.gl-problem h2':'32.76px','.gl-ptitle':'17px','.gl-card-kind':'12px','.gl-card h3':'20px','.site-footer .footer-name':'22px'}};
+ for(const [width,pins] of Object.entries(home)){
+  await page.setViewportSize({width:+width,height:900});await page.goto('/',{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
+  const got=await page.evaluate(s=>Object.fromEntries(s.map(x=>[x,(e=>e?getComputedStyle(e).fontSize:null)(document.querySelector('body.gl-home-page '+x))])),Object.keys(pins));
+  expect(got,`homepage type at ${width}px`).toEqual(pins);
+  // Problem-band card titles wrap as they did at 187fdb4 (2 of 4 on two lines at 1440).
+  if(width==='1440'){const lines=await page.evaluate(()=>[...document.querySelectorAll('.gl-ptitle')].map(e=>Math.round(e.getBoundingClientRect().height/parseFloat(getComputedStyle(e).lineHeight))));
+   expect(lines,'Problem-band card title lines at 1440').toEqual([1,2,2,1]);}
+ }
+ await page.setViewportSize({width:1440,height:900});
+ const scale=new Set(['12px','14px','16px','20px','24px','40px','64px']);
+ for(const route of routes.filter(r=>r!=='/'&&r!=='/page-two/')){
+  await page.goto(route,{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
+  const off=await page.evaluate(()=>{const o=[];for(const e of document.querySelectorAll('main *')){if(![...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))continue;
+   if(!e.getBoundingClientRect().width||e.closest('.source-entry')&&e.tagName==='H2')continue;o.push([e.tagName,getComputedStyle(e).fontSize]);}return o;});
+  const bad=off.filter(([,f])=>!scale.has(f));
+  expect(bad,`sizes off the seven-step scale on ${route}`).toEqual([]);
+ }
+ await page.goto('/sources/',{waitUntil:'load'});
+ const titles=await page.evaluate(()=>[...document.querySelectorAll('main .source-entry h2')].map(e=>getComputedStyle(e).fontSize));
+ expect(titles.length).toBeGreaterThan(0);expect(new Set(titles),'Sources card titles at 1440 (187fdb4: 56px)').toEqual(new Set(['56px']));
+});

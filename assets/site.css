@@ -160,8 +160,9 @@ body.gl-site main.document-main h1{max-width:14em}
 body.gl-site main.document-main :is(h2,h3){max-width:22em}
 /* Type scale (tokens in home.css): h1 64, h2 40, h3 24, lead 20, body 16, small 14, caption 12 at 1440. */
 body.gl-site main.document-main h1{font-size:var(--fs-h1)}
-body.gl-site main.document-main h2{font-size:var(--fs-h2)}
-body.gl-site main.document-main :is(.provenance,.concept-card,.source-entry) h2,body.gl-site main.document-main :is(h3,blockquote,summary){font-size:var(--fs-h3)}
+/* Governor 2:16 PM ET ruling (Nov 1 2026): the /sources/ card titles (.source-entry h2) keep their 187fdb4 size, outside the scale. */
+body.gl-site main.document-main h2:not(.source-entry h2){font-size:var(--fs-h2)}
+body.gl-site main.document-main :is(.provenance,.concept-card) h2,body.gl-site main.document-main :is(h3,blockquote,summary){font-size:var(--fs-h3)}
 /* !important only where the old value is itself !important (.library-item h2) or an inline style (the Sources h2). */
 body.gl-site main.document-main :is(.library-item,.provenance) h2{font-size:var(--fs-h3)!important}
 body.gl-site main.document-main :is(p,li,dd,blockquote p){font-size:var(--fs-body)}
