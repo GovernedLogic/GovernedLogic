@@ -68,8 +68,12 @@ HOMEPAGE_DIGESTS = (
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebSite description = the hero lede); this pin replaces ad037f66...834d. Text, links, title,
     # meta and Open Graph are unchanged.
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible hero lede (= its JSON-LD description); this pin replaces a647098d...2dfd.
-    "988fd968987df73eff192a92cd9de6db18db4b408c266f380eedf939358def85",
+    "8f9a4d92a9b04e99a68824f95c819439eb384ee6ad3aa37b434c2a6d7397b0fc",
 )
+# Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F15): page_record now also hashes JSON-LD names and meta author, so
+# every page's current pin was re-pinned for that record change alone (no visible text, link, image, title, meta
+# description, Open Graph or JSON-LD description changed). Older homepage variants above stay listed as history; they
+# were pinned under the earlier record and do not match the new one.
 REVIEWED_PAGE_DIGESTS = {
     # v12 site-wide look (Paul, Nov 1 2026: "the rest of the site needs to be updated to match the look and feel";
     # WEB-227 SIXTH): every pin below except the homepage was re-pinned once because the shared header's brand
@@ -77,58 +81,58 @@ REVIEWED_PAGE_DIGESTS = {
     # That img src is the only change in each page record; text, links, title, meta and JSON-LD are unchanged.
     "index.html": HOMEPAGE_DIGESTS,
     # challenge/index.html: footer labels restored. The brand aria-label Governed Logic home is restored, so every page digest moved.
-    "challenge/index.html": ("847f7d49b14a217d71dcb46473aa17585485f7c85f1f961660df66915080cc69",),
+    "challenge/index.html": ("008e049e670c95e9726f68370a1f6106a51335bde4066c6681990623eb968814",),
     # company/index.html: same restored footer labels.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (three Thing descriptions = each section's first paragraph; Novelty name and description removed (not on the page)); replaces 83bd9692...eec8.
-    "company/index.html": ("e9ffa01d44e968cbfacd2d2a8b868117302edab656704f92aaf18a784559efe9",),
+    "company/index.html": ("b25a0ea5bf233493b2a5cfddedb273261159cd75b4c625c357031275f3379792",),
     # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Organization description removed (no visible passage on this page); names = the h1 and the #evaluation h2); replaces c2316f58...bb80.
-    "research/index.html": ("879c7e55bc1caacd0b47edf430f96af799d73a1de50069404422aceb074286c9",),
+    "research/index.html": ("54620889448bb8a84bd7e36fce5eb8331f7bf4a2bc368aec8aa41c517f0b82b7",),
     # about/index.html: same restored footer labels; L-BIO-1 removes the invented ending after "What governs the output?".
-    "about/index.html": ("f3ee4d69eb00da91491210d8da546f596888cfa9abfb5b2079615a094cbc7e75",),
+    "about/index.html": ("b6608ef81a67ee0dc37bc9c730a8dd26d73080f374462aeb2f5da81cfa8e497b",),
     # faq/index.html: same restored footer labels.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description removed (the page has no lead or intro passage)); replaces 0cf2535c...f1bb.
     # Paul's parity rule, Governor's 2:01 PM ET ruling (c); Site Manager's 2:11 PM ET decision (Nov 1 2026): FAQ meta description
     # removed (no visible sentence fits it; nothing invented); replaces 16c09af5...ff0c.
-    "faq/index.html": ("b35a3b248a175dcda15ca8f53e7337ec3e22b282f827e42109c652fe8e5f941a",),
+    "faq/index.html": ("0881cf79b2e45a973d5a24476642c453903a24b2ded9255e8db3205c5b336852",),
     # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Truth DefinedTerm description = its visible h3 and p); replaces 24c631cb...0de3.
-    "concepts/index.html": ("ba8043aaf25b954c38d2c176c2903c22a6d0ce09e4c9e9dc7e94347e4d73a505",),
+    "concepts/index.html": ("759cc2245aa0f188e318c182094429602e9c87afd9a9a7b4b0121f741b4f2154",),
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
-    "concepts/governed-logic/index.html": ("d00b7fe6fb683dcd234172b1d876afd18bb3d1f6ca8777cd9b3c6a69786fe8be",),
+    "concepts/governed-logic/index.html": ("7dd18ad7c43aa092cf8d3f75bf4a950b6f9ae330e0548c17b09c26327a6578d0",),
     # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
-    "concepts/governed-intelligence/index.html": ("00458d55ec7fa1fc7907e6b05eef2a270779ed6fa50f916e6acd25a2ae4349d7",),
+    "concepts/governed-intelligence/index.html": ("5771482fe3d80fb4cc6b9e30faf51863a145a78287beefb3ab6271c6e4fde531",),
     # concepts/ultimate-grounding/index.html: same restored footer labels.
-    "concepts/ultimate-grounding/index.html": ("b4e753d094729f7e8a0c484e892decec27df264c6dd83b3bc150574e0e82ae56",),
+    "concepts/ultimate-grounding/index.html": ("fb801b1a9cb6c4dfc87ad4f3482291e3dfec93439a9759469dc3856bbdb41a70",),
     # concepts/alpha-and-omega-reasoning/index.html: same restored footer labels.
-    "concepts/alpha-and-omega-reasoning/index.html": ("f03018d1ac8f7549f604e270547322f5f30f3e741ea528ff1a28392d05453ac7",),
+    "concepts/alpha-and-omega-reasoning/index.html": ("f2f477ad24672009b61d307cd46f35c0b78e7d88967281d0071e8eccd5b13cba",),
     # concepts/governing-referent/index.html: same restored footer labels.
-    "concepts/governing-referent/index.html": ("2650db0f90e425b75f77a50b16b02bb2f37059352ca941debaddf530e2576b2e",),
+    "concepts/governing-referent/index.html": ("8a917fea2fd4e8878cec2cac589e0a2df14f2e82ac0515e7f20185b99032443c",),
     # concepts/sufficient-grounding/index.html: same restored footer labels.
-    "concepts/sufficient-grounding/index.html": ("de5e27c9e1164df8709ecea29e840ecbc75d188f56275754a3f7871e92492605",),
+    "concepts/sufficient-grounding/index.html": ("957a8840da89c30500812fd96de6c1231f4375a62ce684247b4e1c01f58e4186",),
     # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lead paragraph); replaces 495816e5...3c10.
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lead paragraph (= its JSON-LD description); replaces b6e89940...5a65.
-    "mechanism.html": ("08ca380a98730dec9e30c924f0f1b32db3ab7a62433b313c3e43a89538a34e3a",),
+    "mechanism.html": ("134486440cbeed981c039bbbe4d4e10947ab9f1f12e7fbfc4c88e54a81a4557d",),
     # sources/index.html: same restored footer labels.
-    "sources/index.html": ("92144731fe8b332d1a3498f263d9304452352f71ec3e83fee93c9fd429136add",),
+    "sources/index.html": ("6286a2fdcd67de1ef809ba24f263eaabe05dc4166dd11edd550609d134600c6e",),
     # articles/why-anything/index.html: same restored footer labels.
-    "articles/why-anything/index.html": ("ecf0a733fb02164a3b223105b9dab062489a23dc701190458bf5eae657fbdf4c",),
+    "articles/why-anything/index.html": ("014f1ebd4106afcd2af9e7d9c5172f1afd2714f66b553be66e85013739c58e05",),
     # articles/integrity-in-artificial-intelligence/index.html: same restored footer labels.
-    "articles/integrity-in-artificial-intelligence/index.html": ("5948887e7565869438a93ab6c4ecb3998a869f3f576b40c341c834cf998e38f5",),
+    "articles/integrity-in-artificial-intelligence/index.html": ("83aa7f264ab5e90825f9f5f04818dc4c6757451f004ef0f9d1995fb011898131",),
     # library/index.html: generated page picks up the restored footer labels.
     # page-two/index.html (WEB-205, WEB-231; shell and injection as in RL-FTC-1 3c768d4): the
     # 64bf60f homepage main, byte-identical, in its own shell.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lede); replaces 9a386e37...f5d0.
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede (= its JSON-LD description); replaces 71804557...2489.
-    "page-two/index.html": ("859393ecac2554874715c4f7ee109982ef0582c1f0c2a2af90af15d0dfd1670f",),
+    "page-two/index.html": ("c674f3283ef1cfe94b9e2cbf495af82c246132690c73fdc3174be5f891643faf",),
     # library/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 86061a5c...6e0e.
-    "library/index.html": ("ef54845a89fdf98359e9354be5e1d7eb0f683f0ef93e670703842b434732ca2e",),
+    "library/index.html": ("278bac4ade6ec2d136a133fff9b973531143df8810d8c4806fe4fedb99ed3927",),
     # publication/index.html: generated page picks up the restored footer labels.
     # publication/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 7d942e16...b218.
-    "publication/index.html": ("2ed87896660ce026759d37a6e166d2fa6c10f3f58f703199d3cdd6dffa548ad5",),
+    "publication/index.html": ("0bfe3a8b37c0ecbdb8b66a5a6fb237638b8578e90d5174d0af3b4e4b66b24080",),
 }
 # Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
 # assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
@@ -248,6 +252,19 @@ def _descriptions(node: object, found: list[str]) -> None:
             _descriptions(item, found)
 
 
+def _names(node: object, found: list[str]) -> None:
+    # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F15): JSON-LD names are hashed too, not only descriptions.
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key == "name" and isinstance(value, str):
+                found.append(value)
+            else:
+                _names(value, found)
+    elif isinstance(node, list):
+        for item in node:
+            _names(item, found)
+
+
 def visible(html: str) -> tuple[str, list[str]]:
     parser = Visible()
     parser.feed(html)
@@ -258,6 +275,7 @@ def visible(html: str) -> tuple[str, list[str]]:
 def page_record(html: str) -> str:
     """Canonical text, links, image sources, and publication metadata.
 
+    JSON-LD names and meta author are recorded with the descriptions (Governor 2:16 PM ET ruling, GL QA F15).
     Markup other than anchors and img sources is not recorded. Robots is
     the content of every meta name=robots and every meta whose name ends
     in "bot" (googlebot, bingbot, any case), in document order, so adding,
@@ -269,6 +287,7 @@ def page_record(html: str) -> str:
     og_titles: list[str] = []
     og: list[str] = []
     robots: list[str] = []
+    authors: list[str] = []
     for raw in META_TAG.findall(html):
         attrs = _attrs(raw)
         if "description" in attrs.get("name", "").split():
@@ -280,15 +299,20 @@ def page_record(html: str) -> str:
             og_titles.append(_collapse(attrs.get("content", "")))
         if property_name == "og:description":
             og.append(attrs.get("content", ""))
+        if "author" in attrs.get("name", "").lower().split():
+            authors.append(_collapse(attrs.get("content", "")))
     images = [
         f"{_collapse(attrs.get('src', ''))}\t{_collapse(attrs.get('alt', ''))}"
         for attrs in (_attrs(raw) for raw in IMG_TAG.findall(html))
     ]
     jsonld: list[str] = []
+    jsonld_names: list[str] = []
     for attrs, body in INLINE_SCRIPT.findall(html):
         if not JSON_SCRIPT.search(attrs):
             continue
-        _descriptions(json.loads(body), jsonld)
+        data = json.loads(body)
+        _descriptions(data, jsonld)
+        _names(data, jsonld_names)
     text, links = visible(html)
     return "\n".join((
         "title: " + title,
@@ -297,6 +321,8 @@ def page_record(html: str) -> str:
         "robots: " + "\n".join(robots),
         "og: " + "\n".join(og),
         "jsonld: " + "\n".join(jsonld),
+        "jsonld-names: " + "\n".join(jsonld_names),
+        "meta-author: " + "\n".join(authors),
         "text: " + text,
         "images:",
         *images,
@@ -785,6 +811,36 @@ class ReleaseGuardTests(unittest.TestCase):
             site = self.build_artifact(directory)
             self.replace_once(site, "research/index.html", '<meta name="description" content="The objective is not confirmation. The objective is truth.">', '<meta name="description" content="Coherence is not correspondence.">')
             self.assert_parity_fails(site, 'description differs from the JSON-LD description on research/index.html')
+
+    # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F15): page digests hash JSON-LD names, not only descriptions.
+    def test_jsonld_name_change_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.replace_once(site, "company/index.html", '"name": "Home"', '"name": "Start"')
+            with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs: company/index.html"):
+                assert_reviewed_copy(site)
+
+    # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F12): the live probe requires every unpublished /principles/
+    # route to be 404, as a file and as a directory URL. Served locally here; the real probe runs against the live site.
+    def test_live_probe_fails_on_served_principle_route(self) -> None:
+        import functools, http.server, threading, contextlib, io
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(site))
+            handler.log_message = lambda *args: None
+            server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
+            threading.Thread(target=server.serve_forever, daemon=True).start()
+            base = f"http://127.0.0.1:{server.server_address[1]}/"
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    check_restored.live(site, base, 1, 0)
+                (site / "principles" / "being").mkdir(parents=True)
+                (site / "principles" / "being" / "index.html").write_text("<!doctype html><title>Being</title>", encoding="utf-8")
+                with self.assertRaisesRegex(AssertionError, r"Internal file exposed: principles/being/index\.html(.|\n)*Internal file exposed: principles/being/"):
+                    check_restored.live(site, base, 1, 0)
+            finally:
+                server.shutdown()
+                server.server_close()
 
     def test_jsonld_description_change_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
