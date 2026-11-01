@@ -219,6 +219,65 @@ test('Phone header is 88px or less from 320 to 899 with every item one tap away'
  }
 });
 
+test('Mid-width header is one row of 72px or less from 900 to 1279',async({page})=>{
+ // Round 4 (WEB-214, WEB-223, WEB-226): like the mockup, 900-1279 keeps one header row at or under 72px, with the
+ // brand, all seven nav items (Company included), Search and the CTA side by side, in view, unclipped and 44px tall.
+ for(const width of [900,1024,1279]){
+  await page.setViewportSize({width,height:900});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const m=await page.evaluate(()=>{
+   const bar=document.querySelector('header#gl-home-bar');const b=bar.getBoundingClientRect();
+   const items=[bar.querySelector('.site-brand'),...bar.querySelectorAll('nav button'),bar.querySelector('form[action="/library/"] > button'),bar.querySelector('.gl-bar-cta')];
+   const boxes=items.map(el=>el.getBoundingClientRect());
+   let ordered=true;for(let i=1;i<boxes.length;i++)if(boxes[i].left<boxes[i-1].right-0.5)ordered=false;
+   return {h:b.height,count:items.length,ordered,
+    inView:boxes.every(r=>r.left>=0&&r.right<=innerWidth+0.5&&r.top>=b.top-0.5&&r.bottom<=b.bottom+0.5),
+    tall:boxes.slice(1).every(r=>r.height>=43.5&&r.width>=43.5),
+    hit:items.every(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}),
+    company:!!bar.querySelector('nav form[action="/company/"] > button'),
+    cta:bar.querySelector('.gl-bar-cta').textContent.trim(),
+    scroll:bar.scrollWidth>bar.clientWidth+1,
+    overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+  });
+  expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(72);
+  expect(m.count).toBe(10);
+  expect(m.ordered,`one row, no overlap at ${width}`).toBe(true);
+  expect(m.inView,`every header item in view at ${width}`).toBe(true);
+  expect(m.tall).toBe(true);
+  expect(m.hit,`every header item clickable at ${width}`).toBe(true);
+  expect(m.company).toBe(true);
+  expect(m.cta).toBe('Explore the Research');
+  expect(m.scroll).toBe(false);
+  expect(m.overflow).toBe(false);
+ }
+});
+
+test('Phone nav edge fade follows the header scroll',async({page})=>{
+ // Round 4 (WEB-214, WEB-226): the right-edge fade shows while the phone nav has more items to the right and is gone at
+ // the scroll end; it never takes pointer events, and a nav that fits shows no fade.
+ const fade=async(left)=>page.evaluate(async(x)=>{const bar=document.querySelector('header#gl-home-bar');if(x!==null)bar.scrollLeft=x;
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+  const a=getComputedStyle(bar,'::after'),b=getComputedStyle(bar,'::before');
+  return {right:+a.opacity,left:+b.opacity,events:a.pointerEvents,scrolls:bar.scrollWidth>bar.clientWidth+1,h:bar.getBoundingClientRect().height};},left);
+ await page.setViewportSize({width:320,height:800});
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ const start=await fade(null);
+ expect(start.scrolls).toBe(true);
+ expect(start.h).toBeLessThanOrEqual(88);
+ expect(start.events).toBe('none');
+ expect(start.right).toBeGreaterThan(0.9);
+ expect(start.left).toBeLessThan(0.1);
+ const end=await fade(99999);
+ expect(end.right).toBeLessThan(0.1);
+ expect(end.left).toBeGreaterThan(0.9);
+ await page.setViewportSize({width:899,height:800});
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ const fits=await fade(null);
+ expect(fits.scrolls).toBe(false);
+ expect(fits.right).toBeLessThan(0.1);
+ expect(fits.left).toBeLessThan(0.1);
+});
+
 test('Intro skip is immediate and the first click still lands',async({page})=>{
  test.setTimeout(30000);
  await page.emulateMedia({reducedMotion:'no-preference'});
