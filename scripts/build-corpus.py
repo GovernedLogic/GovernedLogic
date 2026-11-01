@@ -226,22 +226,25 @@ def load_pages(root):
                  (node.tag == "header" and "hero" in node.attrs.get("class", "").split())]
         text = normalized(" ".join(node.text() for node in nodes)) or main.text()
         author = meta.get("author")
-        # A date-only meta value is not an event timestamp. Keep the structured
-        # timestamp, which is what /about/ publishes for dateModified.
-        def zoned_timestamp(value):
-            if value and re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:Z|[+-]\d\d:\d\d)", value):
-                return value
-            return None
-        published = zoned_timestamp(meta.get("gl-date-published")) or entity.get("datePublished")
-        modified = zoned_timestamp(meta.get("gl-date-modified")) or entity.get("dateModified")
+        # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): a page carries no
+        # publication or revision date anywhere (no gl-date-* meta, no JSON-LD datePublished/dateModified, no visible
+        # "Published / modified" line). Source edition dates live on /sources/, /library/ and /publication/.
+        published = modified = None
+        for key in [k for k in meta if k and k.startswith("gl-date-")]:
+            raise ValueError(f"{path}: {key} meta is a page date; pages carry no dates")
+        for node in ld:
+            for key in ("datePublished", "dateModified", "dateCreated"):
+                if key in node:
+                    raise ValueError(f"{path}: JSON-LD {key} on a page node; pages carry no dates")
+        if re.search(r"Published\s*/\s*modified", text, re.I):
+            raise ValueError(f"{path}: visible page date line; pages carry no dates")
         description = meta.get("description", "")
         if description and normalized(description) not in text:
             if path not in LEGACY_PATHS:
                 raise ValueError(f"{path}: description must be an exact visible sentence")
             warnings.append(f"Legacy metadata preserved: {path} description is not an exact visible passage; omitted from discovery excerpts.")
         if path not in LEGACY_PATHS:
-            for label, value in {"author": author, "gl-type": meta.get("gl-type"), "datePublished": published,
-                                 "dateModified": modified, "gl-approval": meta.get("gl-approval"),
+            for label, value in {"author": author, "gl-type": meta.get("gl-type"), "gl-approval": meta.get("gl-approval"),
                                  "description": description, "structured page": entity}.items():
                 if not value:
                     raise ValueError(f"{path}: approved canonical HTML requires {label}")
@@ -249,22 +252,12 @@ def load_pages(root):
                 raise ValueError(f"{path}: unsupported gl-type {meta['gl-type']!r}")
             if not h1 or normalized(title) != h1.text():
                 raise ValueError(f"{path}: structured title must equal visible h1")
-            for label, value in [("datePublished", published), ("dateModified", modified)]:
-                if not re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:Z|[+-]\d\d:\d\d)", value):
-                    raise ValueError(f"{path}: {label} requires an actual event timestamp with timezone")
-                from datetime import datetime
-                datetime.fromisoformat(value.replace("Z", "+00:00"))
-            if datetime.fromisoformat(modified.replace("Z", "+00:00")) < datetime.fromisoformat(published.replace("Z", "+00:00")):
-                raise ValueError(f"{path}: revision date precedes publication date")
             identity = entity.get("author", {})
             if isinstance(identity, dict) and identity.get("@id"):
                 identity = next((node for node in ld if node.get("@id") == identity["@id"] and node.get("name")), identity)
             author_name = identity.get("name") if isinstance(identity, dict) else identity
             if author_name != author:
                 raise ValueError(f"{path}: HTML author and structured author must agree")
-        for key, value in [("datePublished", published), ("dateModified", modified)]:
-            if entity.get(key) and entity[key] != value:
-                raise ValueError(f"{path}: {key} conflicts between HTML metadata and structured data")
         if meta.get("og:url", canonical) != canonical:
             raise ValueError(f"{path}: og:url differs from canonical URL")
         if entity.get("description") and description and entity["description"] != description:

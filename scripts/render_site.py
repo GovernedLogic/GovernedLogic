@@ -26,6 +26,8 @@ GENERATED=('library/index.html','publication/index.html','publication/catalog.js
 *PRINCIPLES.routes())
 PUBLIC_FILES=(*PAGES,*SOURCE_FILES,*ASSETS,'challenge/index.json','faq/index.json','CNAME','.nojekyll',*GENERATED)
 BASE='https://governedlogic.com'
+# The source editions' titles as the library and publication pages list them (with their September 2026 edition date).
+SOURCE_TITLES=('On the Nature of Ultimate Grounding','Governed Logic','Alpha and Omega Reasoning','Governed Intelligence','Business strategy — additional direction')
 def route(path):return '/'+path[:-10] if path.endswith('index.html') else '/'+path
 class Text(HTMLParser):
     def __init__(self):super().__init__();self.parts=[];self.skip=0;self.main=False
@@ -140,16 +142,9 @@ def llms_txt(records):
     lines+=['','## Pages','']+[f'- [{r["title"]}]({r["url"]})' for r in records if r['type']!='source']
     lines+=['','## Sources','']+[f'- [{d["name"]}]({BASE}/{d["file"]})' for d in TERMS.SOURCE_DOCS]
     return '\n'.join(lines)+'\n'
+# Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the sitemap carries no lastmod.
 def lastmod(source,url):
-    """sitemap lastmod: the page's own dateModified (existing JSON-LD), when it has one; otherwise none."""
-    for m in re.finditer(r'<script type="application/ld\+json">([\s\S]*?)</script>',source):
-        stack=[json.loads(m.group(1))]
-        while stack:
-            n=stack.pop()
-            if isinstance(n,list):stack+=n
-            elif isinstance(n,dict):
-                if n.get('url')==url and isinstance(n.get('dateModified'),str):return n['dateModified']
-                stack+=list(n.values())
+    """Kept for callers: pages carry no dates, so there is never a lastmod."""
     return None
 FONT_PRELOADS=''.join(f'<link rel="preload" href="/assets/materials/{font}" as="font" type="font/woff2" crossorigin>' for font in ('source-serif-4-latin-opsz.woff2','inter-latin-wght.woff2'))
 def anchors(source,path):
@@ -242,15 +237,14 @@ def build(destination):
         title=unescape(re.sub('<[^>]+>','',title.group(1))).strip() if title else 'Governed Logic Reasoning Systems'
         if p=='index.html':title='Governed Logic Reasoning Systems'
         records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'page','text':main_text(source),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
-    titles=['On the Nature of Ultimate Grounding','Governed Logic','Alpha and Omega Reasoning','Governed Intelligence','Business strategy — additional direction']
-    for p,title in zip(SOURCE_FILES,titles):records.append({'id':BASE+'/'+p,'title':title+' · Source edition','url':BASE+'/'+p,'path':'/'+p,'type':'source','text':title+' · September 2026','sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
+    for p,title in zip(SOURCE_FILES,SOURCE_TITLES):records.append({'id':BASE+'/'+p,'title':title+' · Source edition','url':BASE+'/'+p,'path':'/'+p,'type':'source','text':title+' · September 2026','sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
     entries=''.join(f'<article class="library-item" data-record="{r["id"]}" data-kind="{r["type"]}"><span class="eyebrow">{r["type"]}</span><h2 style="font-size:27px"><form class="gl-go" method="get" action="{r["path"]}"><button type="submit">{escape(r["title"])} →</button></form></h2><p>{escape(r["text"][:200])}…</p></article>' for r in records if r['path']!='/')
     form='<p class="lede">Explore the reasoning architecture, the research, and the original source editions.</p><form class="library-search" role="search" action="/library/"><div class="library-query"><label for="library-query">Search the library</label><input id="library-query" name="q" type="search" placeholder="A concept, title, or phrase" aria-controls="library-results"></div><div><label for="library-kind">Show</label><select id="library-kind" name="type"><option value="">All works</option><option value="concept">Concepts</option><option value="page">Pages &amp; articles</option><option value="source">Source editions</option></select></div><button id="library-clear" type="button" hidden>Clear</button></form><p id="library-search-mode">All works are available below.</p><p id="library-count" role="status"></p><p id="library-empty" hidden>No matching works. Try a different term.</p>'
     generated={'library/index.html':document('The library','library/index.html',form+'<div id="library-results">'+entries+'</div>','<script src="/assets/library.js" defer></script>'),
     'publication/index.html':document('Publication record','publication/index.html','<p class="lede">Source editions and the works they support.</p><p>The source documents retain their original September 2026 edition dates. The October 2026 articles remain separately identifiable.</p>'+entries),
     'publication/catalog.json':json.dumps({'records':records},ensure_ascii=False,indent=2),'publication/search-index.json':json.dumps({'records':records},ensure_ascii=False),
     'robots.txt':'User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',
-    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+(lambda m:'<lastmod>'+m+'</lastmod>' if m else '')(lastmod((destination/p).read_text(encoding='utf-8'),BASE+route(p)) if (destination/p).is_file() else None)+'</url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html'))+'</urlset>',
+    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+''+'</url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html'))+'</urlset>',
     'terms.jsonld':terms_jsonld(),'llms.txt':llms_txt(records),
     'feed.xml':'<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>Governed Logic publications</title><id>'+BASE+'/</id><updated>2026-10-18T00:00:00Z</updated>'+''.join('<entry><title>'+escape(r['title'])+'</title><id>'+r['id']+'</id><link href="'+r['url']+'"/><updated>2026-10-18T00:00:00Z</updated></entry>' for r in records)+'</feed>'}
     for p,value in generated.items():

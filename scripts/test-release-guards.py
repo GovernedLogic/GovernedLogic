@@ -84,10 +84,14 @@ REVIEWED_PAGE_DIGESTS = {
     "challenge/index.html": ("008e049e670c95e9726f68370a1f6106a51335bde4066c6681990623eb968814",),
     # company/index.html: same restored footer labels.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (three Thing descriptions = each section's first paragraph; Novelty name and description removed (not on the page)); replaces 83bd9692...eec8.
-    "company/index.html": ("b25a0ea5bf233493b2a5cfddedb273261159cd75b4c625c357031275f3379792",),
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
+    # "Published / modified" line is removed; replaces b25a0ea5...9792.
+    "company/index.html": ("23612b23feaeb7cd7f760b84c8fd8ca31a894690ca5f7deb23523537b268d9c1",),
     # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Organization description removed (no visible passage on this page); names = the h1 and the #evaluation h2); replaces c2316f58...bb80.
-    "research/index.html": ("54620889448bb8a84bd7e36fce5eb8331f7bf4a2bc368aec8aa41c517f0b82b7",),
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
+    # "Published / modified" line is removed; replaces 54620889...82b7.
+    "research/index.html": ("df67d1797ce39999853e63534271bed705f326871e6c4e5a562daed24428df65",),
     # about/index.html: same restored footer labels; L-BIO-1 removes the invented ending after "What governs the output?".
     "about/index.html": ("b6608ef81a67ee0dc37bc9c730a8dd26d73080f374462aeb2f5da81cfa8e497b",),
     # faq/index.html: same restored footer labels.
@@ -99,17 +103,29 @@ REVIEWED_PAGE_DIGESTS = {
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Truth DefinedTerm description = its visible h3 and p); replaces 24c631cb...0de3.
     "concepts/index.html": ("759cc2245aa0f188e318c182094429602e9c87afd9a9a7b4b0121f741b4f2154",),
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
-    "concepts/governed-logic/index.html": ("7dd18ad7c43aa092cf8d3f75bf4a950b6f9ae330e0548c17b09c26327a6578d0",),
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
+    # "Published / modified" line is removed; replaces 7dd18ad7...78d0.
+    "concepts/governed-logic/index.html": ("ded18af30b0e0fb062883f6423deec5e000bf064064793288a881af4c8fbf64a",),
     # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
-    "concepts/governed-intelligence/index.html": ("5771482fe3d80fb4cc6b9e30faf51863a145a78287beefb3ab6271c6e4fde531",),
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
+    # "Published / modified" line is removed; replaces 5771482f...e531.
+    "concepts/governed-intelligence/index.html": ("ae54685fa2db89a870c27795e3fff6e3465e67954a900179f598b370a1cb20ed",),
     # concepts/ultimate-grounding/index.html: same restored footer labels.
-    "concepts/ultimate-grounding/index.html": ("fb801b1a9cb6c4dfc87ad4f3482291e3dfec93439a9759469dc3856bbdb41a70",),
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
+    # "Published / modified" line is removed; replaces fb801b1a...1a70.
+    "concepts/ultimate-grounding/index.html": ("7287c63093d509e047e9e1daedb613461b9d8c36ef5ac784070a12171bc26573",),
     # concepts/alpha-and-omega-reasoning/index.html: same restored footer labels.
-    "concepts/alpha-and-omega-reasoning/index.html": ("f2f477ad24672009b61d307cd46f35c0b78e7d88967281d0071e8eccd5b13cba",),
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
+    # "Published / modified" line is removed; replaces f2f477ad...3cba.
+    "concepts/alpha-and-omega-reasoning/index.html": ("7abbeecebca950643acff38a1159b7763baad59124f677fa7f8f0ab631bea27c",),
     # concepts/governing-referent/index.html: same restored footer labels.
-    "concepts/governing-referent/index.html": ("8a917fea2fd4e8878cec2cac589e0a2df14f2e82ac0515e7f20185b99032443c",),
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
+    # "Published / modified" line is removed; replaces 8a917fea...443c.
+    "concepts/governing-referent/index.html": ("12c433bfe881b12149cade83703b736e2dfcc5cbfd60c989e3d51f8cfa183194",),
     # concepts/sufficient-grounding/index.html: same restored footer labels.
-    "concepts/sufficient-grounding/index.html": ("957a8840da89c30500812fd96de6c1231f4375a62ce684247b4e1c01f58e4186",),
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
+    # "Published / modified" line is removed; replaces 957a8840...4186.
+    "concepts/sufficient-grounding/index.html": ("b1b42bb1b7778db368950419c371af7915201d398479a22552d61ea9d40de435",),
     # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lead paragraph); replaces 495816e5...3c10.
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lead paragraph (= its JSON-LD description); replaces b6e89940...5a65.
@@ -768,6 +784,47 @@ class ReleaseGuardTests(unittest.TestCase):
         code, out = self.parity(site)
         self.assertEqual(code, 1)
         self.assertIn(message, out)
+
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): no page date in any form,
+    # and the source edition dates stay on /sources/ (visible and ScholarlyArticle), /library/ and /publication/.
+    def test_built_site_has_no_page_dates_and_keeps_edition_dates(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            self.assertNotIn("<lastmod>", (site / "sitemap.xml").read_text(encoding="utf-8"))
+            for path in sorted(site.rglob("*.html")):
+                html = path.read_text(encoding="utf-8")
+                self.assertNotIn("Published / modified", html, path)
+                self.assertNotIn('name="gl-date-', html, path)
+                self.assertNotIn("dateModified", html, path)
+                if path.relative_to(site).as_posix() != "sources/index.html":
+                    self.assertNotIn("datePublished", html, path)
+            sources = (site / "sources/index.html").read_text(encoding="utf-8")
+            self.assertEqual(sources.count('"datePublished": "2026-09-22"'), 4)
+            for shown in ("Paul André Couchoud · 22 September 2026", "23 September 2026 · Selected supplied text and corrections"):
+                self.assertIn(shown, sources)
+            for page in ("library/index.html", "publication/index.html"):
+                self.assertIn("Governed Logic · September 2026", (site / page).read_text(encoding="utf-8"))
+
+    def test_parity_fails_on_seeded_page_dates(self) -> None:
+        seeds = [("sitemap.xml", "/about/</loc></url>", "/about/</loc><lastmod>2026-09-24</lastmod></url>", "sitemap.xml carries a lastmod"),
+                 ("about/index.html", "</head>", '<meta name="gl-date-modified" content="2026-10-28T08:25:19-04:00"></head>', "gl-date meta on about/index.html"),
+                 ("research/index.html", '"@type": "WebPage",', '"@type": "WebPage", "dateModified": "2026-09-27",', "JSON-LD dateModified on research/index.html"),
+                 ("company/index.html", "</main>", "<dl><dt>Published / modified</dt><dd>24 September 2026</dd></dl></main>", "Visible page date line on company/index.html")]
+        for page, old, new, message in seeds:
+            with self.subTest(page=page), tempfile.TemporaryDirectory() as directory:
+                site = self.build_artifact(directory)
+                self.replace_once(site, page, old, new)
+                self.assert_parity_fails(site, message)
+
+    def test_parity_fails_on_removed_edition_date(self) -> None:
+        seeds = [("sources/index.html", '"datePublished": "2026-09-22", "url": "https://governedlogic.com/sources/01_', '"datePublished": "2026-09-23", "url": "https://governedlogic.com/sources/01_', "Source edition date missing from JSON-LD"),
+                 ("library/index.html", "Governed Logic · September 2026", "Governed Logic", "Edition date not shown on library/index.html"),
+                 ("publication/index.html", "original September 2026 edition dates", "original edition dates", "Edition-date sentence missing")]
+        for page, old, new, message in seeds:
+            with self.subTest(page=page), tempfile.TemporaryDirectory() as directory:
+                site = self.build_artifact(directory)
+                self.replace_once(site, page, old, new)
+                self.assert_parity_fails(site, message)
 
     def test_parity_passes_on_reviewed_artifact(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

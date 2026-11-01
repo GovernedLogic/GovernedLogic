@@ -14,7 +14,9 @@ Checks the built artifact against content/terms.py (the one source per term):
      page's JSON-LD description where it has one (Governor's 2:01 PM ET ruling (c));
   4. llms.txt: every link resolves to a published, non-withheld file, and its label and text are visible there;
   5. ScholarlyArticle on /sources/: name, author and date line visible in its own section, which links its file;
-  6. sitemap lastmod equals the page's own dateModified.
+  6. no page dates anywhere (sitemap lastmod, gl-date-* meta, visible "Published / modified", JSON-LD dates), except the
+     /sources/ ScholarlyArticle edition dates, which must equal the visible edition dates; edition dates still shown on
+     /sources/, /library/ and /publication/ (Paul 4:50 PM ET Nov 1, no page dates, source editions kept).
 Comparison folds typographic quotes, dashes and whitespace only (keywords also fold case: they are tags); it
 reports and never rewrites.
 
@@ -170,11 +172,35 @@ def main(root):
             if norm(want) not in sec:errors.append(f'ScholarlyArticle {d["section"]}: {want!r} not visible in its section')
         if '/'+d['file'] not in src.hrefs.get(d['section'],[]):errors.append(f'ScholarlyArticle {d["section"]}: section does not link {d["file"]}')
         if not (root/d['file']).is_file():errors.append('ScholarlyArticle file missing: '+d['file'])
-    # 6. sitemap lastmod
-    for loc,mod in re.findall(r'<url><loc>([^<]+)</loc>(?:<lastmod>([^<]+)</lastmod>)?</url>',(root/'sitemap.xml').read_text(encoding='utf-8')):
-        t=target(loc)
-        want=R.lastmod((root/t).read_text(encoding='utf-8'),loc) if (root/t).is_file() else None
-        if (mod or None)!=want:errors.append(f'sitemap lastmod for {loc}: {mod!r}, page dateModified {want!r}')
+    # 6. No page dates; source edition dates kept (Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via
+    # QA/Governor, verified)). No sitemap lastmod, no gl-date-* meta, no visible "Published / modified" line, and no
+    # JSON-LD date on any node except the /sources/ ScholarlyArticle editions, whose datePublished must be their visible
+    # edition date. The edition dates on /sources/, /library/ and /publication/ must still be shown.
+    if '<lastmod>' in (root/'sitemap.xml').read_text(encoding='utf-8'):errors.append('sitemap.xml carries a lastmod (no page dates)')
+    DATE_KEYS=('datePublished','dateModified','dateCreated','uploadDate')
+    editions={R.BASE+'/sources/#'+d['section']:d['date'] for d in R.TERMS.SOURCE_DOCS}
+    for name,pg in sorted(pages.items()):
+        if re.search(r'Published\s*/\s*modified',pg.visible,re.I):errors.append(f'Visible page date line on {name} (no page dates)')
+        raw=(root/name).read_text(encoding='utf-8')
+        for m in re.finditer(r'<meta\s+name="gl-date-[^"]*"',raw):errors.append(f'gl-date meta on {name} (no page dates)')
+        for b in pg.ld:
+            stack=[json.loads(b)]
+            while stack:
+                n=stack.pop()
+                if isinstance(n,list):stack+=n;continue
+                if not isinstance(n,dict):continue
+                stack+=list(n.values())
+                for k in DATE_KEYS:
+                    if k not in n:continue
+                    if name=='sources/index.html' and n.get('@type')=='ScholarlyArticle' and k=='datePublished' and editions.get(n.get('@id'))==n[k]:continue
+                    errors.append(f'JSON-LD {k} on {name} ({n.get("@type")} {n.get("@id","")}): no page dates')
+    found={n.get('@id'):n.get('datePublished') for b in pages['sources/index.html'].ld for n in (lambda d:d.get('@graph',[d]))(json.loads(b)) if isinstance(n,dict) and n.get('@type')=='ScholarlyArticle'}
+    for i,d in editions.items():
+        if found.get(i)!=d:errors.append(f'Source edition date missing from JSON-LD: {i} {d}')
+    for name in ('library/index.html','publication/index.html'):
+        for title in R.SOURCE_TITLES:
+            if norm(title+' · September 2026') not in pages[name].visible:errors.append(f'Edition date not shown on {name}: {title} · September 2026')
+    if norm('The source documents retain their original September 2026 edition dates.') not in pages['publication/index.html'].visible:errors.append('Edition-date sentence missing on publication/index.html')
     print(f'Parity: {len(terms)} terms, {len(pages)} pages, no allowlist')
     if errors:print('PARITY FAILED:\n'+'\n'.join('  '+e for e in errors));return 1
     print('Parity OK');return 0

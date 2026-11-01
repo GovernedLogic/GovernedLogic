@@ -126,7 +126,6 @@ def intake_fixture(root):
         ld = {"@context": "https://schema.org", "@type": "Article", "url": canonical,
               "name": "Publication intake fixture", "description": description,
               "author": {"@type": "Person", "name": "Test author"},
-              "datePublished": "2026-09-23T12:00:00Z", "dateModified": "2026-09-23T12:00:00Z",
               "isPartOf": {"@id": corpus.SITE + "/#website"}}
         source = f'''<!doctype html><html lang="en"><head><title>Publication intake fixture</title>
 <meta name="author" content="Test author"><meta name="description" content="{description}">
@@ -134,7 +133,7 @@ def intake_fixture(root):
 <meta name="gl-approval" content="isolated test fixture; never a public approval">
 <link rel="canonical" href="{canonical}"><script type="application/ld+json">{json.dumps(ld)}</script>
 </head><body><main><article><h1>Publication intake fixture</h1><p>{description}</p><p>Test author</p>
-<time datetime="2026-09-23T12:00:00Z">23 September 2026</time><a href="/concepts/">Concepts</a></article></main></body></html>'''
+<a href="/concepts/">Concepts</a></article></main></body></html>'''
         article.write_text(source, encoding="utf-8")
         draft = work / "draft-check.html"
         draft.write_text(source.replace('content="approved"', 'content="draft"').replace("Publication intake fixture", "UNPUBLISHED_DRAFT_SENTINEL"), encoding="utf-8")
@@ -143,7 +142,8 @@ def intake_fixture(root):
         generated = write_outputs(work)
         require(canonical in json.loads(generated["publication/catalog.json"])["records"][-1].get("url", "") or
                 any(record["url"] == canonical for record in json.loads(generated["publication/catalog.json"])["records"]), "Approved article missing from catalog")
-        for path in ["publication/catalog.json", "publication/search-index.json", "library/index.html", "sitemap.xml", "feed.xml", "publication/manifest.json"]:
+        # feed.xml lists only dated entries; pages carry no dates (Paul 4:50 PM ET Nov 1), so the fixture is not in it.
+        for path in ["publication/catalog.json", "publication/search-index.json", "library/index.html", "sitemap.xml", "publication/manifest.json"]:
             require(canonical.encode() in generated[path], f"Approved fixture missing from {path}")
             require(b"UNPUBLISHED_DRAFT_SENTINEL" not in generated[path], f"Draft leaked into {path}")
         require("/assets/navigation.js" not in article.read_text(), "Retired navigation returned to a new publication")
@@ -166,6 +166,19 @@ def intake_fixture(root):
             require("author" in str(error), f"Wrong missing-author error: {error}")
         else:
             raise AssertionError("Approved artifact without author was accepted")
+        # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): a page date in any
+        # form (JSON-LD, gl-date-* meta, visible "Published / modified" line) is an error.
+        for seeded in (source.replace('"isPartOf"', '"dateModified": "2026-09-23T12:00:00Z", "isPartOf"'),
+                       source.replace('<meta name="gl-type"', '<meta name="gl-date-modified" content="2026-09-23T12:00:00Z"><meta name="gl-type"'),
+                       source.replace('<p>Test author</p>', '<p>Test author</p><dl><dt>Published / modified</dt><dd>23 September 2026</dd></dl>')):
+            require(seeded != source, "Date seed did not apply")
+            article.write_text(seeded, encoding="utf-8")
+            try:
+                corpus.outputs(work)
+            except ValueError as error:
+                require("pages carry no dates" in str(error), f"Wrong page-date error: {error}")
+            else:
+                raise AssertionError("A page date was accepted")
         # Filename/canonical disagreements cannot silently overwrite a known identity.
         article.write_text(source.replace(canonical, corpus.SITE + "/other/"), encoding="utf-8")
         try:
@@ -180,7 +193,7 @@ def intake_fixture(root):
         return {"approvedIntoAllViews": True, "draftExcludedFromStage": True, "unapprovedAssetExcluded": True,
                 "metadataFailureDetected": True, "canonicalMismatchDetected": True,
                 "assetCacheInvalidation": True,
-                "deterministic": True, "removalRestoresOutputs": True, "stagedFileCountWithFixture": staged_count}
+                "deterministic": True, "pageDatesRejected": True, "removalRestoresOutputs": True, "stagedFileCountWithFixture": staged_count}
 
 
 def main():
