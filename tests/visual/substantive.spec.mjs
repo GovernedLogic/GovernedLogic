@@ -36,18 +36,19 @@ test('FAQ answers open and match machine data',async({page})=>{
 });
 test('Homepage and navigation work without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const page=await context.newPage();
- await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');await expect(page.locator('main')).toContainText('Governed Intelligence');
- await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'Governed Logic',exact:true}).click();
+ await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');await expect(page.locator('main')).toContainText('Governed Logic');
+ await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'The Framework',exact:true}).click();
  await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
 });
-test('Opening completes and leaves content usable',async({page})=>{
+// v11/design-2026-10-31 removed the homepage opening (#glIntro, .scroll-invite); its three tests are skipped, not deleted.
+test.skip('Opening completes and leaves content usable',async({page})=>{
  test.setTimeout(45000);await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/');
  await expect(page.locator('#glIntro')).toHaveCount(0,{timeout:20000});
  const invite=page.locator('.scroll-invite');
  await expect(invite).toHaveAccessibleName('See what we are building ↓');
  await invite.click();await expect(page.locator('#explore')).toBeInViewport();
 });
-test('Opening records its chronological visual sequence',async({page},info)=>{
+test.skip('Opening records its chronological visual sequence',async({page},info)=>{
  test.skip(info.project.name==='mobile-320','The opening filmstrip covers desktop and the 390-pixel mobile viewport.');
  test.setTimeout(90000);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -143,7 +144,7 @@ test('Section 01 text clears 4.5:1 over its scrim',async({page})=>{
    const L=rgb=>0.2126*lin(rgb[0])+0.7152*lin(rgb[1])+0.0722*lin(rgb[2]);
    const contrast=(a,b)=>{const x=L(a),y=L(b);const hi=Math.max(x,y),lo=Math.min(x,y);return (hi+0.05)/(lo+0.05);};
    const out=[];
-   for(const node of document.querySelectorAll('#explore h2, #explore .lede, #explore .intro-description, #explore .section-meta, #explore .prototype-status, #explore .downstream')){
+   for(const node of document.querySelectorAll('#explore h1, #explore p, #explore .gl-chain strong, #explore .gl-chain span')){
     const style=getComputedStyle(node);
     const fg=parse(style.color);const bg=parse(style.backgroundColor);
     if(!fg||!bg){out.push({text:(node.textContent||'').slice(0,40),ratio:0});continue;}
@@ -177,7 +178,7 @@ test('Phone nav stays visible at 360px',async({page})=>{
  });
  expect(metrics.summary).toBe(0);
  expect(metrics.details).toBe(0);
- expect(metrics.count).toBe(5);
+ expect(metrics.count).toBe(6);
  expect(metrics.overflow).toBe(false);
  expect(metrics.headerHeight).toBeLessThanOrEqual(88);
  expect(metrics.headerHeight).toBeGreaterThanOrEqual(44);
@@ -188,7 +189,7 @@ test('Phone nav stays visible at 360px',async({page})=>{
  }
 });
 
-test('Intro skip is immediate and the first click still lands',async({page})=>{
+test.skip('Intro skip is immediate and the first click still lands',async({page})=>{
  test.setTimeout(30000);
  await page.emulateMedia({reducedMotion:'no-preference'});
  const startTime=new Date('2026-10-18T12:00:00Z');

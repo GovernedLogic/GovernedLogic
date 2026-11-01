@@ -19,6 +19,15 @@ const EXPECTED_NAVIGATION = [
   { href: "/company/", label: "Company" },
   { href: "/research/", label: "Research" }
 ];
+// v11/design-2026-10-31: the homepage carries the approved mockup's own header.
+const HOME_NAVIGATION = [
+  { href: "/", label: "Home" },
+  { href: "/index.html#the-problem", label: "The Problem" },
+  { href: "/research/", label: "Research" },
+  { href: "/concepts/governed-logic/", label: "The Framework" },
+  { href: "/concepts/governed-intelligence/", label: "Applications" },
+  { href: "/about/", label: "About" }
+];
 
 for (const routeDefinition of ROUTES) {
   test(routeDefinition.path + " has a usable reviewed shell", async ({ page }, testInfo) => {
@@ -73,10 +82,11 @@ for (const routeDefinition of ROUTES) {
     await expect(page.getByRole("main")).toHaveCount(1);
     await expect(page.getByRole("main")).toBeVisible();
 
+    const expectedNavigation = routeDefinition.path === "/" ? HOME_NAVIGATION : EXPECTED_NAVIGATION;
     if (routeDefinition.path === "/") {
-      const openingRegion = page.getByRole("region", { name: "Governed Logic Reasoning Systems" });
-      await expect(openingRegion).toHaveCount(1);
-      await expect(openingRegion).toBeVisible();
+      // The 2026-10-31 design removes the opening region; the hero heading leads the page.
+      await expect(page.locator("#site")).toHaveCount(0);
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     }
 
     const isMobile = testInfo.project.name.startsWith("mobile-");
@@ -85,7 +95,7 @@ for (const routeDefinition of ROUTES) {
       await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
       await expect(page.locator('nav[aria-label="Primary"] details')).toHaveCount(0);
       const navButtons = page.locator('nav[aria-label="Primary"] form.gl-go > button');
-      await expect(navButtons).toHaveCount(5);
+      await expect(navButtons).toHaveCount(expectedNavigation.length);
       for (const button of await navButtons.all()) {
         await button.scrollIntoViewIfNeeded();
         await expect(button).toBeVisible();
@@ -196,7 +206,7 @@ for (const routeDefinition of ROUTES) {
             !mobile || linkMetrics.every(link => link.height >= 43.5)
         };
       },
-      { expectedNavigation: EXPECTED_NAVIGATION, mobile: isMobile }
+      { expectedNavigation, mobile: isMobile }
     );
 
     const screenshotDirectory = path.resolve(
