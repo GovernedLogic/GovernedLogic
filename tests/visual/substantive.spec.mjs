@@ -350,3 +350,21 @@ test('Labels are at least 12px and controls at least 44px',async({page})=>{
  }
  expect(problems).toEqual([]);
 });
+
+test('Every route has the shared header and no horizontal overflow at 390 and 1440',async({page})=>{
+ // v12 site-wide look (Paul, Nov 1 2026; WEB-227 SIXTH): all 20 routes carry the homepage header (header#gl-home-bar)
+ // and footer, and no route scrolls sideways at the phone or desktop width (viewports set explicitly).
+ for(const width of [390,1440]){
+  await page.setViewportSize({width,height:900});
+  for(const route of routes){
+   await page.goto(route,{waitUntil:'domcontentloaded'});
+   const m=await page.evaluate(()=>{const h=document.querySelector('header#gl-home-bar.site-bar');const r=h&&h.getBoundingClientRect();
+    return {header:!!h&&r.height>=44&&r.top<=0.5&&getComputedStyle(h).visibility!=='hidden',footer:!!document.querySelector('footer.site-footer'),
+     brand:!!(h&&h.querySelector('.site-brand img')),overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};});
+   expect(m.header,`header on ${route} at ${width}`).toBe(true);
+   expect(m.brand,`brand mark on ${route} at ${width}`).toBe(true);
+   expect(m.footer,`footer on ${route} at ${width}`).toBe(true);
+   expect(m.overflow,`horizontal overflow on ${route} at ${width}`).toBe(false);
+  }
+ }
+});
