@@ -119,7 +119,9 @@ REVIEWED_PAGE_DIGESTS = {
 # assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
 OPENING_DIGEST = "e4525a6b1741253a9ddf32a04e183588998f354f737189dab236a889f1f8c39d"
 # Header skip/current script, plus the mechanism copy button after it.
-_HEADER_SCRIPT = "56aa3c97ea8b9ef40eee9611ac9dd6f3dda62f9acd1dd9c470b1bb0c34a46fcf"
+# C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): the header script marks the current page on <a href> links and no
+# longer intercepts GET-form submits; this pin replaces 56aa3c97...6fcf.
+_HEADER_SCRIPT = "779d09d285399c8aed6371c2f708588f7fc81525fea73b75788a3d8fe91e2640"
 _COPY_SCRIPT = "84459a6d22924c85b98b5c4405cde39de751c84672c6f4b3346c54c00e84182e"
 REVIEWED_INLINE_SCRIPTS = {
     relative: (_HEADER_SCRIPT, _COPY_SCRIPT) if relative == "mechanism.html" else (_HEADER_SCRIPT,)
@@ -416,49 +418,52 @@ class ReleaseGuardTests(unittest.TestCase):
                 check_restored.check(site)
 
     def test_copy_guard_rejects_query_leaks_and_anchors(self) -> None:
+        # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): navigation is <a href>; the only form left is the library search,
+        # so the form plants move to it (was: the homepage Company GET form). The anchor plant became target=_blank.
         mutations = (
             (
-                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
-                '<form class="gl-go" method="post" action="/company/"><button type="submit">Company</button>',
+                '<form class="library-search" role="search" action="/library/">',
+                '<form class="library-search" role="search" method="post" action="/library/">',
                 "Form method must be get",
             ),
             (
-                '<button type="submit">Research</button>',
-                '<button type="submit" name="x" value="1">Research</button>',
+                '<button id="library-clear" type="button" hidden>',
+                '<button id="library-clear" type="button" name="x" value="1" hidden>',
                 "Button name or value",
             ),
             (
-                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
-                '<form class="gl-go" method="get" action="/company/"><input type="hidden" name="q" value="1"><button type="submit">Company</button>',
+                '<form class="library-search" role="search" action="/library/">',
+                '<form class="library-search" role="search" action="/library/"><input type="hidden" name="q" value="1">',
                 "Hidden input",
             ),
             (
-                '<form class="gl-go" method="get" action="/company/"><button type="submit">Company</button>',
-                '<form class="gl-go" method="get" action="/company/" target="_blank"><button type="submit">Company</button>',
+                '<form class="library-search" role="search" action="/library/">',
+                '<form class="library-search" role="search" action="/library/" target="_blank">',
                 "target=_blank",
             ),
             (
-                '<button type="submit">Research</button>',
-                '<a href="/research/">Research</a>',
-                "Unexpected anchor",
+                '<a href="/research/" class="gl-link">Research</a>',
+                '<a href="/research/" class="gl-link" target="_blank">Research</a>',
+                "Internal target=_blank",
             ),
         )
         for old, new, message in mutations:
             with self.subTest(message=message):
                 with tempfile.TemporaryDirectory() as directory:
                     site = self.build_artifact(directory)
-                    self.replace_once(site, "index.html", old, new)
+                    self.replace_once(site, "index.html" if "gl-link" in old else "library/index.html", old, new)
                     with self.assertRaisesRegex(AssertionError, message):
                         check_restored.check(site)
 
     def test_anchor_set_rejects_planted_library_about_link(self) -> None:
-        """Library listings are exactly the catalog paths. area and data-href count as anchors."""
+        """C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): links are allowed, but only to published routes and files.
+        Was: any anchor on the library failed. area and data-href are still rejected."""
         plants = (
             (
                 "library/index.html",
                 '<main class="document-main" id="content">',
-                '<main class="document-main" id="content"><a href="/about/">About Paul</a>',
-                "Unexpected anchor",
+                '<main class="document-main" id="content"><a href="/assets/opening.js">Opening</a>',
+                "Link to an unpublished or withheld path",
             ),
             (
                 "index.html",
@@ -724,25 +729,47 @@ class ReleaseGuardTests(unittest.TestCase):
                 assert_reviewed_copy(site)
 
     def test_anchor_element_fails(self) -> None:
+        # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET). Was: any <a> failed. Now each link-coverage rule must fail on a plant:
+        # a withheld path, a missing route, GET-form navigation coming back, and an orphaned page.
+        plants = (
+            ('<a href="/GOVERNEDLOGIC_COM_PRD.txt" class="gl-link">PRD</a>', "Link to an unpublished or withheld path"),
+            ('<a href="/assets/materials/earth-day.jpg" class="gl-link">Earth</a>', "Link to an unpublished or withheld path"),
+            ('<a href="/no-such-page/" class="gl-link">Nowhere</a>', "Broken link/asset"),
+            ('<form class="gl-go" method="get" action="/about/"><button type="submit">About</button></form>', "GET-form navigation remains"),
+        )
+        for plant, message in plants:
+            with self.subTest(message=message, plant=plant):
+                with tempfile.TemporaryDirectory() as directory:
+                    site = self.build_artifact(directory)
+                    self.replace_once(
+                        site,
+                        "index.html",
+                        '<main class="home-content" id="content" tabindex="-1">',
+                        '<main class="home-content" id="content" tabindex="-1">' + plant,
+                    )
+                    with self.assertRaisesRegex(AssertionError, message):
+                        check_restored.check(site)
+
+    def test_orphan_page_fails(self) -> None:
+        # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): every published page needs an inbound link.
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
-            self.replace_once(
-                site,
-                "index.html",
-                '<main class="home-content" id="content" tabindex="-1">',
-                '<main class="home-content" id="content" tabindex="-1"><a href="/about/">About Paul</a>',
-            )
-            with self.assertRaisesRegex(AssertionError, "Anchor element is not allowed"):
+            for path in site.rglob("*.html"):
+                html = path.read_text(encoding="utf-8")
+                if 'href="/faq/"' in html:
+                    path.write_text(html.replace('href="/faq/"', 'href="/"'), encoding="utf-8")
+            with self.assertRaisesRegex(AssertionError, r"Orphan page \(no inbound link\): /faq/"):
                 check_restored.check(site)
 
     def test_button_href_fails(self) -> None:
+        # C1 reversed: the plant moves to the skip button (was: the homepage Research GET-form button).
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit">Research</button>',
-                '<button type="submit" href="/research/">Research</button>',
+                '<button type="button" class="skip-link">',
+                '<button type="button" class="skip-link" href="/research/">',
             )
             with self.assertRaisesRegex(AssertionError, "Button href is not allowed"):
                 check_restored.check(site)
@@ -753,8 +780,9 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit">Research</button>',
-                '<button type="submit">Studies</button>',
+                # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): the nav label is now a link's text.
+                '<a href="/research/" class="gl-link">Research</a>',
+                '<a href="/research/" class="gl-link">Studies</a>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)
@@ -765,8 +793,9 @@ class ReleaseGuardTests(unittest.TestCase):
             self.replace_once(
                 site,
                 "index.html",
-                '<button type="submit">FAQ</button>',
-                '<button type="submit">Questions</button>',
+                # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): the footer label is now a link's text.
+                '<a href="/faq/" class="gl-link">FAQ</a>',
+                '<a href="/faq/" class="gl-link">Questions</a>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)

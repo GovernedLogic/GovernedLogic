@@ -1,3 +1,8 @@
+/* C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): navigation is ordinary <a href> links. Each link keeps the box the GET-form
+   button had: the wrapper takes the form's block display and the link takes the browser's button defaults. Zero
+   specificity (:where), so every existing rule still wins; Paul wants the links to look like the buttons, not prose links. */
+:where(span.gl-go){display:block}
+:where(a.gl-link){display:inline-block;box-sizing:border-box;width:fit-content;align-content:center;text-align:center;text-decoration:none;font:-webkit-small-control;font-size:13.3333px;letter-spacing:normal;word-spacing:normal;line-height:normal;text-transform:none;text-indent:0;text-shadow:none;color:buttontext;cursor:pointer}
 /* Homepage design, 2026-10-31 approved mockup. Provisional layout; deep blue accents, no gold.
    Desktop sizes are written in mockup pixels at 1440 wide: calc(var(--p)*N). */
 @font-face{font-family:'GL Serif';src:url('materials/source-serif-4-latin-opsz.woff2') format('woff2');font-style:normal;font-weight:200 900;font-display:swap}
@@ -17,11 +22,11 @@ body.gl-home-page .gl-arrow{width:calc(var(--p)*19);min-width:15px;height:auto;f
 :is(body.gl-home-page,body.gl-site) #gl-home-bar .site-brand small{display:block;font-family:var(--sans);font-size:max(12px,calc(var(--p)*14.5));font-weight:500;line-height:1.3;letter-spacing:.3em;text-transform:uppercase;color:#e2e7eb;white-space:nowrap}
 :is(body.gl-home-page,body.gl-site) #gl-home-bar nav{display:flex;align-items:center;height:auto;gap:calc(var(--p)*22);margin:0;padding:0;font-size:inherit;justify-self:start}
 :is(body.gl-home-page,body.gl-site) #gl-home-bar nav .gl-go{display:block}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button{position:relative;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;height:calc(var(--p)*46);padding:0;margin:0;border:0;background:none;color:#eef2f5;font:400 max(12px,calc(var(--p)*15.5))/1.2 var(--sans);letter-spacing:0;white-space:nowrap;cursor:pointer;text-decoration:none}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button[aria-current="page"]{color:var(--sky)}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button[aria-current="page"]::after{background:var(--sky)}
-:is(body.gl-home-page,body.gl-site) #gl-home-bar nav button:hover{color:#fff}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)){position:relative;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;height:calc(var(--p)*46);padding:0;margin:0;border:0;background:none;color:#eef2f5;font:400 max(12px,calc(var(--p)*15.5))/1.2 var(--sans);letter-spacing:0;white-space:nowrap;cursor:pointer;text-decoration:none}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link))::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link))[aria-current="page"]{color:var(--sky)}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link))[aria-current="page"]::after{background:var(--sky)}
+:is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)):hover{color:#fff}
 body.gl-home-page .gl-home-tools{display:flex;align-items:center;gap:calc(var(--p)*24)}
 body.gl-home-page .gl-search{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;background:none;color:#f2f5f7;cursor:pointer}
 body.gl-home-page .gl-search svg{width:calc(var(--p)*27);min-width:18px;height:auto;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round}
@@ -93,8 +98,8 @@ body.gl-home-page .gl-problem-copy .gl-go{margin-top:calc(var(--p)*25)}
 body.gl-home-page .gl-problem-links{position:relative;z-index:1;display:grid;gap:calc(var(--p)*8.5);margin:calc(var(--p)*-14) 0 0;padding:0;list-style:none;align-content:start;align-self:start}
 :is(body.gl-home-page,body.gl-site) .gl-go{margin:0}
 body.gl-home-page .gl-problem-links li{display:flex;flex-direction:column}
-body.gl-home-page .gl-problem-links button{display:flex;align-items:center;width:100%;height:calc(var(--p)*90);min-height:56px;padding:0 calc(var(--p)*26) 0 calc(var(--p)*30);background:rgba(3,14,23,.72);border:1px solid #1b3341;border-radius:calc(var(--p)*4);color:#fff;text-align:left;cursor:pointer;font:inherit}
-body.gl-home-page .gl-problem-links button:hover{border-color:#2f6f99;background:rgba(6,24,38,.85)}
+body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){display:flex;align-items:center;width:100%;height:calc(var(--p)*90);min-height:56px;padding:0 calc(var(--p)*26) 0 calc(var(--p)*30);background:rgba(3,14,23,.72);border:1px solid #1b3341;border-radius:calc(var(--p)*4);color:#fff;text-align:left;cursor:pointer;font:inherit}
+body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)):hover{border-color:#2f6f99;background:rgba(6,24,38,.85)}
 body.gl-home-page .gl-picon{width:calc(var(--p)*56);height:calc(var(--p)*56);min-width:26px;min-height:26px;flex:none;fill:none;stroke:#4fb8f0;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 body.gl-home-page .gl-ptext{display:flex;flex-direction:column;gap:calc(var(--p)*6);margin-left:calc(var(--p)*33);flex:1;min-width:0}
 body.gl-home-page .gl-ptitle{font:500 max(16px,calc(var(--p)*21))/1.2 var(--serif);font-variation-settings:'opsz' 24;color:#fff}
@@ -124,7 +129,7 @@ body.gl-home-page .gl-card-go .gl-arrow{width:calc(var(--p)*22);min-width:18px;s
 html{scroll-behavior:smooth;scroll-padding-top:110px}
 :is(body.gl-home-page,body.gl-site){margin:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 :is(body.gl-home-page,body.gl-site) img{max-width:100%}
-:is(body.gl-home-page,body.gl-site) button{font-family:inherit}
+:is(body.gl-home-page,body.gl-site) :is(button,:where(a.gl-link)){font-family:inherit}
 :is(body.gl-home-page,body.gl-site) .skip-link{position:fixed;top:-100px;left:16px;z-index:2147483640;min-height:44px;padding:12px 16px;border:0;background:#fff;color:#000;font:500 14px/1.2 var(--sans);cursor:pointer}
 :is(body.gl-home-page,body.gl-site) .skip-link:focus{top:12px}
 
@@ -134,14 +139,14 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}
 :is(body.gl-home-page,body.gl-site) .site-footer .footer-name{min-height:44px;padding:0;border:0;background:none;color:#fff;font:500 22px/1.3 var(--serif);text-align:left;cursor:pointer}
 :is(body.gl-home-page,body.gl-site) .site-footer p{margin:14px 0 0;color:#9fa9b1}
 :is(body.gl-home-page,body.gl-site) .site-footer nav{display:grid;grid-template-columns:1fr 1fr;gap:0 25px;align-content:start}
-:is(body.gl-home-page,body.gl-site) .site-footer nav button{display:flex;align-items:center;width:100%;min-height:44px;padding:0;border:0;background:none;color:#c7d0d6;font:400 14px/1.3 var(--sans);text-align:left;cursor:pointer}
-:is(body.gl-home-page,body.gl-site) .site-footer nav button:hover,:is(body.gl-home-page,body.gl-site) .site-footer .footer-name:hover{color:#56c4f2}
+:is(body.gl-home-page,body.gl-site) .site-footer nav :is(button,:where(a.gl-link)){display:flex;align-items:center;width:100%;min-height:44px;padding:0;border:0;background:none;color:#c7d0d6;font:400 14px/1.3 var(--sans);text-align:left;cursor:pointer}
+:is(body.gl-home-page,body.gl-site) .site-footer nav :is(button,:where(a.gl-link)):hover,:is(body.gl-home-page,body.gl-site) .site-footer .footer-name:hover{color:#56c4f2}
 :is(body.gl-home-page,body.gl-site) .site-footer .footer-credit{grid-column:1/-1;margin:0;padding-top:24px;border-top:1px solid #12222e;font-size:12px;color:#8e99a2}
 :is(body.gl-home-page,body.gl-site) .site-footer .footer-credit span{display:inline-block;margin-top:8px;color:#56c4f2}
 @media (max-width:600px){:is(body.gl-home-page,body.gl-site) .site-footer{grid-template-columns:1fr;gap:24px;padding:44px 22px 28px}}
 
 /* Focus */
-:is(body.gl-home-page,body.gl-site) button:focus-visible{outline:2px solid #56c4f2;outline-offset:3px}
+:is(body.gl-home-page,body.gl-site) :is(button,:where(a.gl-link)):focus-visible{outline:2px solid #56c4f2;outline-offset:3px}
 
 /* Mid widths: keep the desktop composition but stop the header from crowding */
 
@@ -189,7 +194,7 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}
   body.gl-home-page .gl-problem-copy>p:not(.gl-eyebrow){width:auto;max-width:640px;margin-top:16px!important;font-size:16px;line-height:1.65}
   body.gl-home-page .gl-problem-copy .gl-go{margin-top:24px}
   body.gl-home-page .gl-problem-links{margin-top:34px;gap:10px}
-  body.gl-home-page .gl-problem-links button{height:auto;min-height:84px;padding:16px 16px 16px 18px}
+  body.gl-home-page .gl-problem-links :is(button,:where(a.gl-link)){height:auto;min-height:84px;padding:16px 16px 16px 18px}
   body.gl-home-page .gl-picon{width:32px;height:32px}
   body.gl-home-page .gl-ptext{margin-left:18px}
   body.gl-home-page .gl-ptitle{font-size:17px}
@@ -228,7 +233,7 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}
 
 /* Header at every width: brand name, search (/library/), Company (/company/) and the CTA stay one click away
    (WEB-214, WEB-223, WEB-226). Applications was dropped by PLACEMENT_MAP (2026-11-01, WEB-227 FIFTH); About is kept (QA-4). */
-body.gl-home-page #gl-home-bar nav button.gl-hold,body.gl-home-page #gl-home-bar nav button.gl-hold:hover{color:#eef2f5;cursor:default}
+body.gl-home-page #gl-home-bar nav :is(button,:where(a.gl-link)).gl-hold,body.gl-home-page #gl-home-bar nav :is(button,:where(a.gl-link)).gl-hold:hover{color:#eef2f5;cursor:default}
 body.gl-home-page .gl-card-go.gl-hold{color:#8a97a4;cursor:default}
 /* 900-1279 (WEB-214, WEB-223, WEB-226; Round 4): one row, 72px, like the mockup. Brand, the six nav items (Company, About
    included), Search (/library/) and the CTA all sit in the row, one click each; brand, gaps and CTA are compacted. */
@@ -242,7 +247,7 @@ body.gl-home-page .gl-card-go.gl-hold{color:#8a97a4;cursor:default}
   :is(body.gl-home-page,body.gl-site) .gl-brand-text{gap:1px}
   :is(body.gl-home-page,body.gl-site) .gl-brand-name{font-size:19px}
   :is(body.gl-home-page,body.gl-site) #gl-home-bar .site-brand small{font-size:11.5px;letter-spacing:.08em}
-  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav button{height:44px;padding:0 6px;font-size:13.5px}
+  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)){height:44px;padding:0 6px;font-size:13.5px}
   body.gl-home-page .gl-bar-cta{width:auto;height:44px;padding:0 14px;font-size:13.5px;gap:8px}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:none}
 }
@@ -275,8 +280,8 @@ body.gl-home-page .gl-chime{position:fixed;z-index:60;margin:0;object-fit:contai
   body.gl-home-page .gl-bar-cta{width:auto;height:44px;padding:0 8px;gap:6px;font-size:12.5px;border-radius:4px}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:none}
   :is(body.gl-home-page,body.gl-site) #gl-home-bar nav{display:flex;grid-column:1;grid-row:2;justify-self:start;width:max-content;min-width:100%;height:44px;gap:0;padding:0 4px;justify-content:space-between}
-  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav button{justify-content:center;width:auto;height:44px;padding:0 10px;font-size:13px;line-height:1.1;white-space:nowrap;text-align:center}
-  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav button::after{left:10px;right:10px}
+  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)){justify-content:center;width:auto;height:44px;padding:0 10px;font-size:13px;line-height:1.1;white-space:nowrap;text-align:center}
+  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link))::after{left:10px;right:10px}
 }
 /* Round 4 (WEB-214, WEB-226): edge fades on the phone nav row show that it scrolls sideways. They are pinned to
    the row's edges, ignore pointers, and follow the header's own scroll: the right fade shows while more items lie
@@ -304,7 +309,7 @@ body.gl-home-page .gl-chime{position:fixed;z-index:60;margin:0;object-fit:contai
   body.gl-home-page .gl-bar-cta{width:44px;min-width:44px;padding:0;justify-content:center}
   body.gl-home-page .gl-bar-cta .gl-cta-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   body.gl-home-page .gl-bar-cta .gl-arrow{display:block;width:18px}
-  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav button{padding:0 8px}
+  :is(body.gl-home-page,body.gl-site) #gl-home-bar nav :is(button,:where(a.gl-link)){padding:0 8px}
 }
 
 /* Route to Paul's previous homepage, kept byte-as-is at /page-two/ (WEB-205, WEB-231). Below the mockup's last band. */

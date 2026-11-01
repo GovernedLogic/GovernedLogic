@@ -1,3 +1,4 @@
+// C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): navigation is <a href> links now, not GET-form buttons; selectors follow.
 import { expect, test } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
@@ -95,10 +96,10 @@ for (const routeDefinition of ROUTES) {
       await expect(openingRegion).toHaveCount(0);
       await expect(page.locator("h1")).toHaveCount(1);
       await expect(page.locator("main #explore h1.gl-hero-title")).toHaveCount(1);
-      // WEB-205/WEB-231: one GET-form button on the homepage reaches /page-two/.
-      const pageTwoForms = page.locator('main form.gl-go[method="get"][action="/page-two/"]');
+      // WEB-205/WEB-231: one link on the homepage reaches /page-two/ (a GET-form button until C1 was reversed, Nov 1).
+      const pageTwoForms = page.locator('main .gl-go > a[href="/page-two/"]');
       await expect(pageTwoForms).toHaveCount(1);
-      await expect(pageTwoForms.locator('button[type="submit"]')).toHaveText("See what we are building");
+      await expect(pageTwoForms).toHaveText("See what we are building");
       // C9/WEB-217 and WEB-218 held Applications and the Truth Governs Mathematics card. PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) drops
       // both (N7, R6-R8), so no held control remains; none may sit inside a form.
       const held = page.locator('button.gl-hold[aria-disabled="true"]');
@@ -106,8 +107,8 @@ for (const routeDefinition of ROUTES) {
       await expect(page.locator("form button.gl-hold")).toHaveCount(0);
       // WEB-223/WEB-214: /company/ and the library (Search) are one click from the header, and the brand name shows.
       const header = page.locator("header.site-bar");
-      await expect(header.locator('form.gl-go[action="/company/"] > button')).toBeVisible();
-      await expect(header.locator('form.gl-go[action="/library/"] > button')).toBeVisible();
+      await expect(header.locator('.gl-go > a[href="/company/"]')).toBeVisible();
+      await expect(header.locator('.gl-go > a[href="/library/"]')).toBeVisible();
       await expect(header.locator(".gl-brand-name")).toBeVisible();
       // D8 (WEB-214/WEB-226): "Reasoning Systems" and the CTA show at every width; below 390px the CTA is a
       // compact arrow button that keeps its accessible name.
@@ -129,7 +130,7 @@ for (const routeDefinition of ROUTES) {
       // The disclosure is gone. The five doors stay visible, each at least 44px, with no horizontal overflow.
       await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
       await expect(page.locator('nav[aria-label="Primary"] details')).toHaveCount(0);
-      const navButtons = page.locator('nav[aria-label="Primary"] form.gl-go > button');
+      const navButtons = page.locator('nav[aria-label="Primary"] .gl-go > a');
       await expect(navButtons).toHaveCount(expectedNavigation.length); // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) and QA-4 (About restored): six on the homepage
       for (const button of await navButtons.all()) {
         await button.scrollIntoViewIfNeeded();
@@ -156,7 +157,7 @@ for (const routeDefinition of ROUTES) {
         const mainElements = Array.from(document.querySelectorAll("main"));
         const navigationRect = navigation.getBoundingClientRect();
         const barRect = bar ? bar.getBoundingClientRect() : navigationRect;
-        const links = Array.from(navigation.querySelectorAll("form.gl-go > button"));
+        const links = Array.from(navigation.querySelectorAll(".gl-go > a"));
         const place = link => {
           if (!bar || bar.scrollWidth <= bar.clientWidth + 1) return;
           const before = link.getBoundingClientRect();
@@ -173,10 +174,10 @@ for (const routeDefinition of ROUTES) {
           const centerY = Math.max(0, Math.min(innerHeight - 1, rect.top + rect.height / 2));
           const hit = document.elementFromPoint(centerX, centerY);
           return {
-            href: link.closest("form")?.getAttribute("action") || "",
+            href: link.getAttribute("href") || "",
             label: normalize(link.textContent || ""),
             visible: visible(link),
-            focusable: link.matches("button") && link.tabIndex >= 0,
+            focusable: link.matches("a[href]") && link.tabIndex >= 0,
             insideViewport:
               rect.left >= -0.5
               && rect.right <= innerWidth + 0.5

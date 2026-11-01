@@ -3,7 +3,7 @@
    scripts/make_site_css.py from restored-site.css: the homepage palette (white paper, near-black ink, deep blue). */
 body.gl-site{--ink:#0b1118;--muted:#404953;--line:#d9e0e5;--accent:#105e9d;--blue:#115e9c;--green:#3d7053;--paper:#fcfcfd}
 body.gl-site{background:#f9f8f8}
-:where(body.gl-site) a:hover{color:#0b1118}
+:where(body.gl-site) a:not(.gl-link):hover{color:#0b1118}
 :where(body.gl-site) .lede,:where(body.gl-site) .lead{color:#192028}
 :where(body.gl-site) .home-content{background:#f9f8f8}
 :where(body.gl-site) .home-content p{color:#333c45}
@@ -21,26 +21,26 @@ body.gl-site{background:#f9f8f8}
 :where(body.gl-site) .work-grid article:first-child{border-top-color:#d6dde3}
 :where(body.gl-site) .research-feature .lede{color:#192028}
 :where(body.gl-site) blockquote{color:#3f596f}
-:where(body.gl-site) .reading-index>a:hover{background:#f9fafb}
-:where(body.gl-site) input,:where(body.gl-site) select,:where(body.gl-site) button{border:1px solid #d6dde3;color:#0b1118;background:#ffffff}
+:where(body.gl-site) .reading-index>a:not(.gl-link):hover{background:#f9fafb}
+:where(body.gl-site) input,:where(body.gl-site) select,:where(body.gl-site) :is(button,:where(body.gl-site) :where(a.gl-link)){border:1px solid #d6dde3;color:#0b1118;background:#ffffff}
 :where(body.gl-site) .source-edition{border:1px solid #d6dde3}
 :where(body.gl-site) .scroll-invite{color:#3f596f}
 :where(body.gl-site) .intro-caption{color:#3d4650}
 body.gl-site{--black:#f9f8f8;--bg-0:#f4f6f8;--bg-1:#eef1f4;--bg-2:#e7ebef;--line:#d6dde3;--ui-line:#d6dde3;--ink:#0c1219;--text-2:#2c353d;--text-3:#444e58;--muted:#2c353d;--accent:#125e9b;--blue:#125e9b;--paper:#eef1f4}
 :where(body.gl-site) .button{color:#f2f2f3;box-shadow:0 0 28px rgba(11,17,24,0.225)}
 :where(body.gl-site) .button:hover{color:#f2f2f3;background:#115288}
-:where(body.gl-site) .text-link,:where(body.gl-site) .work-grid article>a,:where(body.gl-site) .reading-links a,:where(body.gl-site) .concept-card,:where(body.gl-site) .reading-index>a,:where(body.gl-site) .library-item h2 a,:where(body.gl-site) .library-item-link{box-shadow:0 18px 50px rgba(9,20,32,0.096)}
+:where(body.gl-site) .text-link,:where(body.gl-site) .work-grid article>a:not(.gl-link),:where(body.gl-site) .reading-links a:not(.gl-link),:where(body.gl-site) .concept-card,:where(body.gl-site) .reading-index>a:not(.gl-link),:where(body.gl-site) .library-item h2 a:not(.gl-link),:where(body.gl-site) .library-item-link{box-shadow:0 18px 50px rgba(9,20,32,0.096)}
 :where(body.gl-site) .reasoning-exhibit{background:radial-gradient(ellipse at 50% 42%,rgba(22,82,131,0.22),transparent 62%),
     linear-gradient(180deg,#e7ebef,#f4f6f8);box-shadow:0 32px 80px rgba(9,20,32,0.135),inset 0 1px 0 rgba(11,17,24,0.03)}
-:where(body.gl-site) .source-link,:where(body.gl-site) p.source-note>a,:where(body.gl-site) dd>a.source-link{box-shadow:0 8px 24px rgba(9,20,32,0.084)}
+:where(body.gl-site) .source-link,:where(body.gl-site) p.source-note>a:not(.gl-link),:where(body.gl-site) dd>a.source-link{box-shadow:0 8px 24px rgba(9,20,32,0.084)}
 :where(body.gl-site) .scroll-invite{box-shadow:0 10px 28px rgba(9,20,32,0.105)}
-:where(body.gl-site) .work-grid article,:where(body.gl-site) .book-figure,:where(body.gl-site) .principle-field span,:where(body.gl-site) .reading-index button,:where(body.gl-site) .research-body blockquote,:where(body.gl-site) .publication-feature figure{box-shadow:0 24px 60px rgba(9,20,32,0.105),inset 0 1px 0 rgba(11,17,24,0.03)}
+:where(body.gl-site) .work-grid article,:where(body.gl-site) .book-figure,:where(body.gl-site) .principle-field span,:where(body.gl-site) .reading-index :is(button,:where(body.gl-site) :where(a.gl-link)),:where(body.gl-site) .research-body blockquote,:where(body.gl-site) .publication-feature figure{box-shadow:0 24px 60px rgba(9,20,32,0.105),inset 0 1px 0 rgba(11,17,24,0.03)}
 :where(body.gl-site).document-page{background:radial-gradient(ellipse at 100% 0%, rgba(22,82,131,0.16), transparent 38%),
     var(--bg-0)}
 :where(body.gl-site).document-page .business-section,:where(body.gl-site).document-page .provenance,:where(body.gl-site).document-page .concept-card,:where(body.gl-site).document-page details{box-shadow:0 22px 56px rgba(9,20,32,0.102), inset 0 1px 0 rgba(11,17,24,0.025)}
 :where(body.gl-site) .prototype-status:before{background:#386149}
-:where(body.gl-site) .route-bridge .gl-go>button{box-shadow:0 18px 50px rgba(9,20,32,0.096)}
-:where(body.gl-site) .library-item h2 .gl-go>button{box-shadow:0 18px 50px rgba(9,20,32,0.096)}
+:where(body.gl-site) .route-bridge .gl-go>:is(button,:where(body.gl-site) :where(a.gl-link)){box-shadow:0 18px 50px rgba(9,20,32,0.096)}
+:where(body.gl-site) .library-item h2 .gl-go>:is(button,:where(body.gl-site) :where(a.gl-link)){box-shadow:0 18px 50px rgba(9,20,32,0.096)}
 /* ---- hand-written: type, layout and fixes (kept by make_site_css.py) ---- */
 /* Type: the homepage pair, GL Serif for headings and GL Sans (Inter) for text; Cinzel and Plex retire on these pages. */
 body.gl-site{font-family:var(--sans);color:#0b1118;background:#f9f8f8}
@@ -52,9 +52,9 @@ body.gl-site main p,body.gl-site main li,body.gl-site main dd{color:#3c454e}
 body.gl-site main strong{color:#0b1118}
 body.gl-site main .eyebrow,body.gl-site main .label{font-family:var(--sans);font-weight:600;letter-spacing:.2em;color:#1b222a}
 /* Buttons used as links inside page content: homepage deep blue, 44px targets kept by restored-site.css. */
-body.gl-site main .gl-go>button:not(.button){color:#0a5a9c}
-body.gl-site main .gl-go>button:hover{color:#003059}
-body.gl-site main button:focus-visible,body.gl-site main input:focus-visible,body.gl-site main select:focus-visible,body.gl-site main summary:focus-visible{outline:2px solid #0a6fb4;outline-offset:3px}
+body.gl-site main .gl-go>:is(button,:where(a.gl-link)):not(.button){color:#0a5a9c}
+body.gl-site main .gl-go>:is(button,:where(a.gl-link)):hover{color:#003059}
+body.gl-site main :is(button,:where(a.gl-link)):focus-visible,body.gl-site main input:focus-visible,body.gl-site main select:focus-visible,body.gl-site main summary:focus-visible{outline:2px solid #0a6fb4;outline-offset:3px}
 /* Surfaces: content cards are white on the paper, with a hairline and a soft shadow, like the homepage cards. */
 body.gl-site{--bg-1:#f3f5f7;--bg-2:#ffffff}
 body.gl-site.document-page{background:#f9f8f8}
@@ -71,7 +71,7 @@ body.gl-site main .button:hover{background:#004374;color:#fff}
 /* restored-site.css still styles header.site-bar for its old wrapped phone header; undo that here so the shared
    home-bar layout from home.css holds at every width (items stay on one scrolling row below 900px). */
 body.gl-site #gl-home-bar nav .gl-go{flex:none;width:auto;min-width:0;height:auto}
-body.gl-site #gl-home-bar nav .gl-go>button{flex:none;width:auto;white-space:nowrap;box-shadow:none;border-bottom:0}
+body.gl-site #gl-home-bar nav .gl-go>:is(button,:where(a.gl-link)){flex:none;width:auto;white-space:nowrap;box-shadow:none;border-bottom:0}
 body.gl-site header#gl-home-bar{backdrop-filter:none}
 
 /* ---- v12 round 2 (QA F4, Q1, Q2; WEB-227 SIXTH): the homepage band rhythm and card treatment on every page ---- */
@@ -100,17 +100,17 @@ body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(h1,h2,h3){color:#fff}
 body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(p,li,dd,span,div,blockquote){color:#d5dce2}
 body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(.eyebrow,.label,.section-meta,.section-meta *){color:#c3ced8}
 body.gl-site :is(.gl-intro,.about-hero,.front-door) strong{color:#fff}
-body.gl-site :is(.gl-intro,.about-hero,.front-door) .gl-go>button:not(.button){color:#6cc8f0;background:transparent;border-color:transparent;box-shadow:none}
-body.gl-site :is(.gl-intro,.about-hero,.front-door) .gl-go>button:not(.button):hover{color:#fff}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) .gl-go>:is(button,:where(a.gl-link)):not(.button){color:#6cc8f0;background:transparent;border-color:transparent;box-shadow:none}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) .gl-go>:is(button,:where(a.gl-link)):not(.button):hover{color:#fff}
 body.gl-site :is(.gl-intro,.about-hero,.front-door) .button{background:linear-gradient(90deg,#00477a,#1a76bb);border-color:#1a76bb;color:#fff}
-body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(button,input,summary):focus-visible{outline-color:#6cc8f0}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(:is(button,:where(a.gl-link)),input,summary):focus-visible{outline-color:#6cc8f0}
 body.gl-site .front-door h2 .downstream{color:#6cc8f0}
 /* The sidebar starts below the band, not inside it. */
 @media(min-width:1100px){
   body.gl-site.document-page .document-main>article:has(> .gl-intro):has(> aside.provenance)>aside.provenance{grid-row:2 / span 24}
 }
 /* Cards: the homepage card (near-white, hairline, 5px corners, barely-there shadow) for sections, sidebars, lists. */
-body.gl-site :is(.business-section,.provenance,.concept-card,details.faq-item,.document-page details,.library-item,.source-entry,.work-grid article,.reading-index>.gl-go>button,.principle-field span){
+body.gl-site :is(.business-section,.provenance,.concept-card,details.faq-item,.document-page details,.library-item,.source-entry,.work-grid article,.reading-index>.gl-go>:is(button,:where(a.gl-link)),.principle-field span){
   background:#fdfdfd;border:1px solid #e3e6e9;border-radius:5px;box-shadow:0 1px 2px rgba(15,25,35,.04)}
 body.gl-site .provenance{background:#f6f8fa;border-color:#dfe5ea}
 body.gl-site :is(.library-item,.source-entry){padding:24px 28px}
@@ -122,14 +122,14 @@ body.gl-site .gl-intro>nav:not(.reading-links){display:flex;flex-wrap:wrap;gap:8
 body.gl-site .provenance dl{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
 body.gl-site .provenance dt{font-weight:600;color:#1b222a}
 body.gl-site .provenance dd{margin:0 0 12px;min-width:0;word-break:normal;overflow-wrap:anywhere;hyphens:none}
-body.gl-site .provenance .gl-go>button{word-break:normal;overflow-wrap:anywhere;hyphens:none;white-space:normal;text-align:left;height:auto;min-height:44px;
+body.gl-site .provenance .gl-go>:is(button,:where(a.gl-link)){word-break:normal;overflow-wrap:anywhere;hyphens:none;white-space:normal;text-align:left;height:auto;min-height:44px;
   background:transparent;border:0;box-shadow:none;text-shadow:none;padding:0;margin:0;color:#0a5a9c}
-body.gl-site .provenance .gl-go>button:hover{color:#003059;text-decoration:underline}
-body.gl-site .provenance .gl-go>button::before,body.gl-site .provenance .gl-go>button::after{content:none}
+body.gl-site .provenance .gl-go>:is(button,:where(a.gl-link)):hover{color:#003059;text-decoration:underline}
+body.gl-site .provenance .gl-go>:is(button,:where(a.gl-link))::before,body.gl-site .provenance .gl-go>:is(button,:where(a.gl-link))::after{content:none}
 body.gl-site details.faq-item{padding:12px 24px}
 body.gl-site details.faq-item+details.faq-item{margin-top:12px}
 /* The dark footer closes every page full width, as on the homepage (restored-site.css capped it at 1280px, and in
    the flex body that shrank it to its content). */
 body.gl-site .site-footer{max-width:none;width:100%;margin:0;box-sizing:border-box;align-self:stretch}
 /* Inside a card the title button is plain deep-blue type (no pill or shadow inside the card). */
-body.gl-site .library-item h2 .gl-go>button{background:transparent;border:0;box-shadow:none;padding:0;text-align:left;min-height:44px}
+body.gl-site .library-item h2 .gl-go>:is(button,:where(a.gl-link)){background:transparent;border:0;box-shadow:none;padding:0;text-align:left;min-height:44px}

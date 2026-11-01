@@ -12,6 +12,9 @@ SOURCE_FILES=('sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf','sources
 # assets/materials/cinzel.ttf, assets/provisional/head-artwork.webp. The files stay in the repo. Kept: governed-logic-mark.webp
 # (restored-site.css .reasoning-exhibit background), Cinzel-OFL.txt and SOURCES.txt (SOURCES.txt cites the licence).
 RETIRED_ASSETS=('assets/opening.css', 'assets/opening.js', 'assets/earth-renderer.js', 'assets/material-environment.js', 'assets/materials/earth-clouds.jpg', 'assets/materials/earth-day.jpg', 'assets/materials/earth-night.jpg', 'assets/materials/cinzel.ttf', 'assets/provisional/head-artwork.webp')
+# C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): paths no published page may link to (with RETIRED_ASSETS and anything outside
+# PUBLIC_FILES). Unpublished routes (e.g. principle pages awaiting Paul's approval) are added here until published.
+WITHHELD_LINK_TARGETS=('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json')
 ASSETS=('assets/home-chime.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png')
 GENERATED=('library/index.html','publication/index.html','publication/catalog.json','publication/search-index.json','publication/manifest.json','feed.xml','robots.txt','sitemap.xml')
 PUBLIC_FILES=(*PAGES,*SOURCE_FILES,*ASSETS,'challenge/index.json','faq/index.json','CNAME','.nojekyll',*GENERATED)
@@ -67,6 +70,18 @@ def intro_band(source):
     k=kids.index(h1);start=kids[0]['start'] if k else h1['start'];end=h1['end']
     if k+1<len(kids) and kids[k+1]['tag']=='p' and re.search(r'\b(lede|lead)\b',kids[k+1]['cls']):end=kids[k+1]['end']
     return source[:start]+'<div class="gl-intro">'+source[start:end]+'</div>'+source[end:]
+# C1 reversed (Paul, Nov 1 2026, 12:31 PM ET: "Yes normal links so Google can follow them."): every GET-form button
+# that navigated (<form class="gl-go" method="get" action=X><button type="submit">) is replaced, not supplemented, by an
+# ordinary <a href=X>. The wrapper keeps class gl-go (as a span) and the link carries class gl-link plus the button's own
+# classes and attributes, so the CSS that drew the buttons (button selectors now :is(button,:where(a.gl-link))) draws the links.
+GO_FORM=re.compile(r'<form class="gl-go([^"]*)" method="get" action="([^"]*)"><button type="submit"([^>]*)>([\s\S]*?)</button></form>')
+def links(source):
+    def one(m):
+        extra,href,attrs,inner=m.groups()
+        cls=re.search(r'\sclass="([^"]*)"',attrs)
+        attrs=re.sub(r'\sclass="[^"]*"','',attrs)
+        return f'<span class="gl-go{extra}"><a href="{href}" class="gl-link{(" "+cls.group(1)) if cls else ""}"{attrs}>{inner}</a></span>'
+    return GO_FORM.sub(one,source)
 def render(source,path):
     if path=='index.html':
         source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/home.html').read_text(encoding='utf-8').strip(),source,count=1)
@@ -93,7 +108,7 @@ def render(source,path):
     if current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
     footer=(ROOT/'components/footer.html').read_text(encoding='utf-8')
     if 'id="paul"' in source:footer=footer.replace(' id="paul"','')
-    return source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer)
+    return links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer))
 def document(title,path,body,extra=''):
     data={'@context':'https://schema.org','@type':'CollectionPage','name':title,'url':BASE+route(path),'isPartOf':{'@id':BASE+'/#website'}}
     source=f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(title)} | Governed Logic</title><meta name="description" content="Governed Logic source works, concepts, research, and publications by Paul André Couchoud."><link rel="canonical" href="{BASE+route(path)}"><meta name="robots" content="index,follow"><link rel="stylesheet" href="/assets/restored-site.css"><script type="application/ld+json">{json.dumps(data)}</script>{extra}</head><body><!--SITE_HEADER--><main class="document-main" id="content"><p class="eyebrow">GOVERNED LOGIC REASONING SYSTEMS</p><h1>{escape(title)}</h1>{body}</main><!--SITE_FOOTER--></body></html>'

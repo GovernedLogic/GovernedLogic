@@ -5,9 +5,8 @@ from urllib.parse import urljoin,urlsplit,unquote
 from urllib.request import Request,urlopen
 from urllib.error import HTTPError,URLError
 from concurrent.futures import ThreadPoolExecutor
-from collections import Counter
 import argparse,hashlib,json,re,tempfile,time
-from render_site import ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS,SOURCE_FILES,build,route,main_text,BASE
+from render_site import ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS,WITHHELD_LINK_TARGETS,SOURCE_FILES,build,route,main_text,BASE
 class Doc(HTMLParser):
     def __init__(self):
         super().__init__();self.tags=[];self.ids=[];self.refs=[];self.canonical=[];self.json=[];self.capture=None
@@ -85,16 +84,28 @@ def check(root):
             u=urlsplit(urljoin(BASE+route(p),href))
             if u.netloc in ('',urlsplit(BASE).netloc):errors.append(f'Internal target=_blank: {p} -> {href}')
     catalog=json.loads((root/'publication/catalog.json').read_text(encoding='utf-8'))
-    # No page may contain an anchor. Listings are form buttons.
-    expected_anchors={}
+    # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET: "Yes normal links so Google can follow them."). Was: no page may
+    # contain an anchor. Now link coverage: navigation is <a href> only (no GET-form navigation left), every internal
+    # href resolves to a published file (the Broken link/asset check above), nothing links to a withheld, unpublished
+    # or retired path, and every published page is linked from at least one other page (no orphans).
+    published_pages={route(p) for p in docs}
+    inbound={r:set() for r in published_pages}
     for p,d in docs.items():
         for tag,attrs in d.tags:
-            if tag=='a':errors.append('Anchor element is not allowed: '+p)
+            if tag=='form' and 'gl-go' in (attrs.get('class') or '').split():errors.append('GET-form navigation remains (C1 reversed): '+p)
             if tag=='area' and attrs.get('href') is not None:errors.append(f'Unexpected anchor area: {p} -> {attrs.get("href")}')
             if 'data-href' in attrs:errors.append(f'Unexpected anchor data-href: {p} -> {attrs.get("data-href")}')
-        got=Counter(d.anchors)
-        exp=expected_anchors.get(p, Counter())
-        if got!=exp:errors.append(f'Unexpected anchor set: {p} expected {dict(exp)} got {dict(got)}')
+        for href in d.anchors:
+            u=urlsplit(urljoin(BASE+route(p),href))
+            if u.scheme not in ('http','https'):errors.append(f'Unexpected link scheme: {p} -> {href}');continue
+            if u.netloc!=urlsplit(BASE).netloc:continue
+            target=unquote(u.path.lstrip('/'))
+            if target.endswith('/') or not target:target+='index.html'
+            if target not in PUBLIC_FILES or target in RETIRED_ASSETS or target in WITHHELD_LINK_TARGETS:errors.append(f'Link to an unpublished or withheld path: {p} -> {href}')
+            r=route(target) if target.endswith('.html') else None
+            if r in inbound and r!=route(p):inbound[r].add(route(p))
+    for r,src in sorted(inbound.items()):
+        if r!='/' and not src:errors.append('Orphan page (no inbound link): '+r)
     faq=json.loads((root/'faq/index.json').read_text(encoding='utf-8'))
     visible=main_text((root/'faq/index.html').read_text(encoding='utf-8'))
     for q in faq['mainEntity']:
