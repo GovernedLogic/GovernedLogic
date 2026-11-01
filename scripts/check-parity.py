@@ -14,7 +14,8 @@ Checks the built artifact against content/terms.py (the one source per term):
      page's JSON-LD description where it has one (Governor's 2:01 PM ET ruling (c));
   4. llms.txt: every link resolves to a published, non-withheld file, and its label and text are visible there;
   5. ScholarlyArticle on /sources/: name, author and date line visible in its own section, which links its file;
-  6. no page dates anywhere (sitemap lastmod, gl-date-* meta, visible "Published / modified", JSON-LD dates), except the
+  6. no page dates anywhere (sitemap lastmod, gl-date-* meta, dated gl-approval* meta, visible "Published / modified",
+     dated "Canonical website checklist" line, JSON-LD dates), except the
      /sources/ ScholarlyArticle edition dates, which must equal the visible edition dates; edition dates still shown on
      /sources/, /library/ and /publication/ (Paul 4:50 PM ET Nov 1, no page dates, source editions kept).
 Comparison folds typographic quotes, dashes and whitespace only (keywords also fold case: they are tags); it
@@ -178,11 +179,17 @@ def main(root):
     # edition date. The edition dates on /sources/, /library/ and /publication/ must still be shown.
     if '<lastmod>' in (root/'sitemap.xml').read_text(encoding='utf-8'):errors.append('sitemap.xml carries a lastmod (no page dates)')
     DATE_KEYS=('datePublished','dateModified','dateCreated','uploadDate')
+    PAGE_DATE=re.compile(r'(?:\d{1,2} (?:January|February|March|April|May|June|July|August|September|October|November|December) \d{4}|\d{4}-\d\d-\d\d)')
     editions={R.BASE+'/sources/#'+d['section']:d['date'] for d in R.TERMS.SOURCE_DOCS}
     for name,pg in sorted(pages.items()):
         if re.search(r'Published\s*/\s*modified',pg.visible,re.I):errors.append(f'Visible page date line on {name} (no page dates)')
         raw=(root/name).read_text(encoding='utf-8')
         for m in re.finditer(r'<meta\s+name="gl-date-[^"]*"',raw):errors.append(f'gl-date meta on {name} (no page dates)')
+        # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): no approval date in gl-approval* meta, and no dated
+        # "Canonical website checklist" line.
+        for m in re.finditer(r'<meta\s+name="(gl-approval[^"]*)"\s+content="([^"]*)"',raw):
+            if PAGE_DATE.search(m.group(2)):errors.append(f'Dated {m.group(1)} meta on {name} (no page dates)')
+        if re.search(r'Canonical website checklist\s*·\s*'+PAGE_DATE.pattern,pg.visible):errors.append(f'Dated checklist line on {name} (no page dates)')
         for b in pg.ld:
             stack=[json.loads(b)]
             while stack:

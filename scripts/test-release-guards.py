@@ -108,11 +108,13 @@ REVIEWED_PAGE_DIGESTS = {
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 7dd18ad7...78d0.
-    "concepts/governed-logic/index.html": ("ded18af30b0e0fb062883f6423deec5e000bf064064793288a881af4c8fbf64a",),
+    # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): the dated "Current website specification / Canonical website checklist · 27 September 2026" row is removed; replaces ded18af3...f64a.
+    "concepts/governed-logic/index.html": ("3455cd96941017ffb27cd09c2bb5c4c810820b393466fa6480f0111bc1e6ae95",),
     # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 5771482f...e531.
-    "concepts/governed-intelligence/index.html": ("ae54685fa2db89a870c27795e3fff6e3465e67954a900179f598b370a1cb20ed",),
+    # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): the dated "Current website specification / Canonical website checklist · 27 September 2026" row is removed; replaces ae54685f...20ed.
+    "concepts/governed-intelligence/index.html": ("aceba9443e47ddf3378d93c0be95f9975ae7420326323961b1fa9da6c1e424de",),
     # concepts/ultimate-grounding/index.html: same restored footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces fb801b1a...1a70.
@@ -812,6 +814,8 @@ class ReleaseGuardTests(unittest.TestCase):
                 self.assertNotIn("Published / modified", html, path)
                 self.assertNotIn('name="gl-date-', html, path)
                 self.assertNotIn("dateModified", html, path)
+                self.assertNotIn("Canonical website checklist ·", html, path)
+                self.assertIsNone(re.search(r'name="gl-approval[^"]*" content="[^"]*\d{4}', html), path)
                 if path.relative_to(site).as_posix() != "sources/index.html":
                     self.assertNotIn("datePublished", html, path)
             sources = (site / "sources/index.html").read_text(encoding="utf-8")
@@ -825,7 +829,10 @@ class ReleaseGuardTests(unittest.TestCase):
         seeds = [("sitemap.xml", "/about/</loc></url>", "/about/</loc><lastmod>2026-09-24</lastmod></url>", "sitemap.xml carries a lastmod"),
                  ("about/index.html", "</head>", '<meta name="gl-date-modified" content="2026-10-28T08:25:19-04:00"></head>', "gl-date meta on about/index.html"),
                  ("research/index.html", '"@type": "WebPage",', '"@type": "WebPage", "dateModified": "2026-09-27",', "JSON-LD dateModified on research/index.html"),
-                 ("company/index.html", "</main>", "<dl><dt>Published / modified</dt><dd>24 September 2026</dd></dl></main>", "Visible page date line on company/index.html")]
+                 ("company/index.html", "</main>", "<dl><dt>Published / modified</dt><dd>24 September 2026</dd></dl></main>", "Visible page date line on company/index.html"),
+                 # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): approval dates and the dated checklist line.
+                 ("research/index.html", 'approval of separated HTML pages">', 'approval of separated HTML pages · 24 September 2026">', "Dated gl-approval meta on research/index.html"),
+                 ("concepts/governed-logic/index.html", "<dt>Canonical URL</dt>", "<dt>Current website specification</dt><dd>Canonical website checklist · 27 September 2026</dd><dt>Canonical URL</dt>", "Dated checklist line on concepts/governed-logic/index.html")]
         for page, old, new, message in seeds:
             with self.subTest(page=page), tempfile.TemporaryDirectory() as directory:
                 site = self.build_artifact(directory)

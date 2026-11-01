@@ -170,7 +170,10 @@ def intake_fixture(root):
         # form (JSON-LD, gl-date-* meta, visible "Published / modified" line) is an error.
         for seeded in (source.replace('"isPartOf"', '"dateModified": "2026-09-23T12:00:00Z", "isPartOf"'),
                        source.replace('<meta name="gl-type"', '<meta name="gl-date-modified" content="2026-09-23T12:00:00Z"><meta name="gl-type"'),
-                       source.replace('<p>Test author</p>', '<p>Test author</p><dl><dt>Published / modified</dt><dd>23 September 2026</dd></dl>')):
+                       source.replace('<p>Test author</p>', '<p>Test author</p><dl><dt>Published / modified</dt><dd>23 September 2026</dd></dl>'),
+                       # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): approval dates and the dated checklist line.
+                       source.replace('content="isolated test fixture; never a public approval"', 'content="isolated test fixture; never a public approval · 27 September 2026"'),
+                       source.replace('<p>Test author</p>', '<p>Test author</p><dl><dt>Current website specification</dt><dd>Canonical website checklist · 27 September 2026</dd></dl>')):
             require(seeded != source, "Date seed did not apply")
             article.write_text(seeded, encoding="utf-8")
             try:

@@ -238,6 +238,13 @@ def load_pages(root):
                     raise ValueError(f"{path}: JSON-LD {key} on a page node; pages carry no dates")
         if re.search(r"Published\s*/\s*modified", text, re.I):
             raise ValueError(f"{path}: visible page date line; pages carry no dates")
+        # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): no approval date and no dated checklist line either.
+        page_date = r"(?:\d{1,2} (?:January|February|March|April|May|June|July|August|September|October|November|December) \d{4}|\d{4}-\d\d-\d\d)"
+        for key in [k for k in meta if k and k.startswith("gl-approval")]:
+            if re.search(page_date, meta[key] or ""):
+                raise ValueError(f"{path}: {key} meta carries a date; pages carry no dates")
+        if re.search(r"Canonical website checklist\s*·\s*" + page_date, normalized(main.text())):
+            raise ValueError(f"{path}: dated checklist line; pages carry no dates")
         description = meta.get("description", "")
         if description and normalized(description) not in text:
             if path not in LEGACY_PATHS:
