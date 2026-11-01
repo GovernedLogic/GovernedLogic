@@ -184,3 +184,6 @@ body.gl-site :is(.gl-intro,.about-hero,.home-content>section.front-door)::before
     background:url('provisional/seed-of-life.png') center/contain no-repeat;opacity:.08;pointer-events:none}
 }
 @media (prefers-reduced-motion:no-preference){body.gl-site :is(.gl-intro,.about-hero)::after{animation:gl-seed-turn 240s linear infinite}}
+/* v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET): <dfn> marks a defined term for machines only;
+   it must not change how the words render. */
+body.gl-site dfn{font-style:inherit}

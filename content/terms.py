@@ -1,0 +1,52 @@
+"""v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET; Paul's parity rule): the one source for the site's
+defined terms. render_site.py prints every machine surface from this list: the visible <dfn> markup (around words already
+on the page; rendered words do not change), the additive JSON-LD (termCode, url), /terms.jsonld and llms.txt.
+scripts/check-parity.py fails the build if any of them differs from the visible page text.
+
+Only the twelve terms the site already publishes (QA research 2026-11-01, machine-inventory candidates "In the set"),
+with their existing wording. No new terms; the defect groups and other candidates need visible definitions and Paul's
+sign-off first. A definition is either the existing content/definitions.json entry (concept pages) or the exact
+visible sentence on the page (principles, /concepts/).
+
+Fields: code (termCode: the slug the site already uses for the term), name (the term's name in the existing JSON-LD),
+page (source page), fragment (one URI per term: a fragment id on its existing page), dfn (the visible words the <dfn>
+wraps, inside the first occurrence of the definition in <main>), definition (or definition_key into definitions.json).
+"""
+BASE='https://governedlogic.com'
+SET_ID=BASE+'/concepts/#terms'
+SET_NAME='Canonical definitions'
+SET_PAGE='concepts/index.html'
+PRINCIPLES=(
+    dict(code='being',name='Being',fragment='being',dfn='Being',definition='Being is real.'),
+    dict(code='truth',name='Truth',fragment='truth',dfn='Truth',definition='Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. As a correspondence definition, truth is correspondence to one reality.'),
+    dict(code='logic',name='Logic',fragment='logic',dfn='Logic',definition='Logic is binding.'),
+    dict(code='meaning',name='Meaning',fragment='meaning',dfn='Meaning',definition='Meaning is real.'),
+    dict(code='intelligibility',name='Intelligibility',fragment='intelligibility',dfn='Intelligibility',definition='Intelligibility is real.'),
+    dict(code='obligation',name='Obligation',fragment='obligation',dfn='Obligation',definition='Obligation is real and binding.'),
+)
+CONCEPTS=(
+    dict(code='governed-logic',name='Governed Logic',dfn='Governed Logic'),
+    dict(code='governed-intelligence',name='Governed Intelligence',dfn='Governed Intelligence'),
+    dict(code='alpha-and-omega-reasoning',name='Alpha and Omega Reasoning',dfn='Alpha and Omega reasoning'),
+    dict(code='governing-referent',name='Governing referent',dfn='referent'),
+    dict(code='sufficient-grounding',name='Sufficient grounding',dfn='Sufficiency'),
+    dict(code='ultimate-grounding',name='Ultimate grounding',dfn='ultimate ground'),
+)
+# The four September 22 source PDFs on /sources/, described as ScholarlyArticle with only what that page shows: the
+# heading, the author and date line, and the file. section is the entry's existing fragment id.
+SOURCE_DOCS=(
+    dict(section='source-01',name='On the Nature of Ultimate Grounding',file='sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf',date='2026-09-22',shown='22 September 2026'),
+    dict(section='source-02',name='Governed Logic',file='sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf',date='2026-09-22',shown='22 September 2026'),
+    dict(section='source-03',name='Alpha and Omega Reasoning',file='sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf',date='2026-09-22',shown='22 September 2026'),
+    dict(section='source-04',name='Governed Intelligence',file='sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf',date='2026-09-22',shown='22 September 2026'),
+)
+
+def terms(definitions):
+    """The twelve term records, resolved: page, uri (@id), url, definition."""
+    out=[]
+    for t in PRINCIPLES:
+        out.append(dict(t,page=SET_PAGE,id=BASE+'/concepts/#'+t['fragment'],url=BASE+'/concepts/#'+t['fragment']))
+    for t in CONCEPTS:
+        page='concepts/'+t['code']+'/index.html'
+        out.append(dict(t,page=page,fragment='concept',id=BASE+'/concepts/'+t['code']+'/#concept',url=BASE+'/concepts/'+t['code']+'/',definition=definitions[t['code']]))
+    return out

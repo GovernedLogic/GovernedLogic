@@ -2,8 +2,10 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from html import escape, unescape
-import argparse, hashlib, json, re, shutil
+import argparse, hashlib, json, re, shutil, sys
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'content'))
+import terms as TERMS
 PAGES=('index.html','challenge/index.html','company/index.html','research/index.html','about/index.html','faq/index.html','concepts/index.html','concepts/governed-logic/index.html','concepts/governed-intelligence/index.html','concepts/ultimate-grounding/index.html','concepts/alpha-and-omega-reasoning/index.html','concepts/governing-referent/index.html','concepts/sufficient-grounding/index.html','mechanism.html','sources/index.html','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html','page-two/index.html')
 SOURCE_FILES=('sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf','sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf','sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf','sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf','sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt')
 # v12 round 2 (QA L1; WEB-227 SIXTH): no longer published, because nothing in the built site loads them (the homepage
@@ -16,7 +18,9 @@ RETIRED_ASSETS=('assets/opening.css', 'assets/opening.js', 'assets/earth-rendere
 # PUBLIC_FILES). Unpublished routes (e.g. principle pages awaiting Paul's approval) are added here until published.
 WITHHELD_LINK_TARGETS=('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json')
 ASSETS=('assets/home-chime.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png')
-GENERATED=('library/index.html','publication/index.html','publication/catalog.json','publication/search-index.json','publication/manifest.json','feed.xml','robots.txt','sitemap.xml')
+GENERATED=('library/index.html','publication/index.html','publication/catalog.json','publication/search-index.json','publication/manifest.json','feed.xml','robots.txt','sitemap.xml',
+# v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET; Paul's parity rule): generated from content/terms.py.
+'terms.jsonld','llms.txt')
 PUBLIC_FILES=(*PAGES,*SOURCE_FILES,*ASSETS,'challenge/index.json','faq/index.json','CNAME','.nojekyll',*GENERATED)
 BASE='https://governedlogic.com'
 def route(path):return '/'+path[:-10] if path.endswith('index.html') else '/'+path
@@ -82,6 +86,61 @@ def links(source):
         attrs=re.sub(r'\sclass="[^"]*"','',attrs)
         return f'<span class="gl-go{extra}"><a href="{href}" class="gl-link{(" "+cls.group(1)) if cls else ""}"{attrs}>{inner}</a></span>'
     return GO_FORM.sub(one,source)
+# v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET; Paul's parity rule: no hidden text, every machine
+# string identical to visible text). content/terms.py is the one source per term; from it this file prints the <dfn>
+# markup, the additive JSON-LD, /terms.jsonld and /llms.txt. scripts/check-parity.py fails on any mismatch.
+def term_records():
+    return TERMS.terms(json.loads((ROOT/'content/definitions.json').read_text(encoding='utf-8')))
+def dfn(source,path):
+    """Wrap the term's words, inside the first occurrence of its definition in <main>, in <dfn>. Markup only: the
+    rendered words do not change (site.css: dfn{font-style:inherit}). Concept pages give it id="concept", so the
+    term URI .../#concept resolves on its existing page; principles already have their article ids on /concepts/."""
+    for t in term_records():
+        if t['page']!=path:continue
+        start=source.index('<main');end=source.index('</main>',start)
+        node=next((m for m in re.finditer(r'>([^<]+)',source[start:end]) if t['definition'][:40] in m.group(1)),None)
+        if node is None:raise ValueError(f'Definition of {t["code"]} not found in <main> of {path}')
+        i=start+node.start(1)+node.group(1).index(t['dfn'])
+        tag='<dfn id="concept">' if t['fragment']=='concept' else '<dfn>'
+        source=source[:i]+tag+t['dfn']+'</dfn>'+source[i+len(t['dfn']):]
+    return source
+def machine_block(path):
+    """Additive JSON-LD (a second block; the page's existing block stays byte-identical): termCode on each term and,
+    on /concepts/, the url of each principle; on /sources/, the four source PDFs as ScholarlyArticle with only what
+    the page shows (heading, author line, date line, file)."""
+    nodes=[]
+    for t in term_records():
+        if t['page']!=path:continue
+        n={'@type':'DefinedTerm','@id':t['id'],'termCode':t['code']}
+        if path==TERMS.SET_PAGE:n['url']=t['url']
+        nodes.append(n)
+    if path=='sources/index.html':
+        for d in TERMS.SOURCE_DOCS:
+            nodes.append({'@type':'ScholarlyArticle','@id':BASE+'/sources/#'+d['section'],'name':d['name'],'author':{'@id':BASE+'/about/#paul'},'datePublished':d['date'],'url':BASE+'/'+d['file'],'encodingFormat':'application/pdf','isPartOf':{'@id':BASE+'/sources/#page'}})
+    if not nodes:return ''
+    return '<script type="application/ld+json">'+json.dumps({'@context':'https://schema.org','@graph':nodes},ensure_ascii=False)+'</script>'
+def terms_jsonld():
+    return json.dumps({'@context':'https://schema.org','@type':'DefinedTermSet','@id':TERMS.SET_ID,'name':TERMS.SET_NAME,'url':BASE+'/concepts/',
+        'hasDefinedTerm':[{'@type':'DefinedTerm','@id':t['id'],'termCode':t['code'],'name':t['name'],'description':t['definition'],'url':t['url'],'inDefinedTermSet':{'@id':TERMS.SET_ID}} for t in term_records()]},ensure_ascii=False,indent=2)+'\n'
+def llms_txt(records):
+    """llms.txt (llmstxt.org layout): the site title, the defined terms with their visible definitions, and the pages
+    by their visible h1. Nothing here is not on the page it links to."""
+    lines=['# Governed Logic Reasoning Systems','','## '+TERMS.SET_NAME,'']
+    lines+=[f'- [{t["name"]}]({t["url"]}): {t["definition"]}' for t in term_records()]
+    lines+=['','## Pages','']+[f'- [{r["title"]}]({r["url"]})' for r in records if r['type']!='source']
+    lines+=['','## Sources','']+[f'- [{d["name"]}]({BASE}/{d["file"]})' for d in TERMS.SOURCE_DOCS]
+    return '\n'.join(lines)+'\n'
+def lastmod(source,url):
+    """sitemap lastmod: the page's own dateModified (existing JSON-LD), when it has one; otherwise none."""
+    for m in re.finditer(r'<script type="application/ld\+json">([\s\S]*?)</script>',source):
+        stack=[json.loads(m.group(1))]
+        while stack:
+            n=stack.pop()
+            if isinstance(n,list):stack+=n
+            elif isinstance(n,dict):
+                if n.get('url')==url and isinstance(n.get('dateModified'),str):return n['dateModified']
+                stack+=list(n.values())
+    return None
 FONT_PRELOADS=''.join(f'<link rel="preload" href="/assets/materials/{font}" as="font" type="font/woff2" crossorigin>' for font in ('source-serif-4-latin-opsz.woff2','inter-latin-wght.woff2'))
 def render(source,path):
     if path=='index.html':
@@ -89,6 +148,7 @@ def render(source,path):
     if path=='page-two/index.html':
         source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/page-two.html').read_text(encoding='utf-8').strip(),source,count=1)
     source=definitions(source)
+    source=dfn(source,path)
     if path!='index.html':
         # v12 site-wide look (Paul, Nov 1 2026; WEB-227 SIXTH): every other page shares the homepage header, footer
         # and tokens (home.css, selectors :is(body.gl-home-page,body.gl-site)) plus site.css for page content. Style only.
@@ -113,6 +173,7 @@ def render(source,path):
     if current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
     footer=(ROOT/'components/footer.html').read_text(encoding='utf-8')
     if 'id="paul"' in source:footer=footer.replace(' id="paul"','')
+    source=source.replace('</head>',machine_block(path)+'</head>',1)
     return links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer))
 def document(title,path,body,extra=''):
     data={'@context':'https://schema.org','@type':'CollectionPage','name':title,'url':BASE+route(path),'isPartOf':{'@id':BASE+'/#website'}}
@@ -148,7 +209,8 @@ def build(destination):
     'publication/index.html':document('Publication record','publication/index.html','<p class="lede">Source editions and the works they support.</p><p>The source documents retain their original September 2026 edition dates. The October 2026 articles remain separately identifiable.</p>'+entries),
     'publication/catalog.json':json.dumps({'records':records},ensure_ascii=False,indent=2),'publication/search-index.json':json.dumps({'records':records},ensure_ascii=False),
     'robots.txt':'User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',
-    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc></url>' for p in (*PAGES,'library/index.html','publication/index.html'))+'</urlset>',
+    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+(lambda m:'<lastmod>'+m+'</lastmod>' if m else '')(lastmod((destination/p).read_text(encoding='utf-8'),BASE+route(p)) if (destination/p).is_file() else None)+'</url>' for p in (*PAGES,'library/index.html','publication/index.html'))+'</urlset>',
+    'terms.jsonld':terms_jsonld(),'llms.txt':llms_txt(records),
     'feed.xml':'<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>Governed Logic publications</title><id>'+BASE+'/</id><updated>2026-10-18T00:00:00Z</updated>'+''.join('<entry><title>'+escape(r['title'])+'</title><id>'+r['id']+'</id><link href="'+r['url']+'"/><updated>2026-10-18T00:00:00Z</updated></entry>' for r in records)+'</feed>'}
     for p,value in generated.items():
         target=destination/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(value,encoding='utf-8',newline='\n')

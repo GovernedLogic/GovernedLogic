@@ -31,6 +31,10 @@ jobs:
           python3 scripts/build_site.py --output "$site_root"
           python3 scripts/check-restored.py --root "$site_root" --artifact
           printf 'SITE_ROOT=%s\n' "$site_root" >> "$GITHUB_ENV"
+      # v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET; Paul's parity rule): fail on any mismatch
+      # between the machine layer (dfn, JSON-LD, terms.jsonld, llms.txt, sitemap lastmod) and the visible text.
+      - name: Check machine-layer parity
+        run: python3 scripts/check-parity.py "$SITE_ROOT"
       - name: Run release guards, corpus check, and origin check
         run: |
           python3 scripts/test-release-guards.py -v
