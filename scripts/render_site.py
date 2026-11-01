@@ -27,6 +27,40 @@ def definitions(source):
     for key,value in json.loads((ROOT/'content/definitions.json').read_text(encoding='utf-8')).items():
         source=source.replace('{{definition:'+key+'}}',value)
     return source
+VOID={'area','base','br','col','embed','hr','img','input','link','meta','source','track','wbr'}
+class Spans(HTMLParser):
+    """Start/end offsets of every element inside the first <main>, for intro_band()."""
+    def __init__(self,source):
+        super().__init__(convert_charrefs=False);self.src=source;self.lines=[0]
+        for m in re.finditer('\n',source):self.lines.append(m.end())
+        self.stack=[];self.items=[];self.feed(source);self.close()
+    def at(self):l,c=self.getpos();return self.lines[l-1]+c
+    def handle_starttag(self,tag,attrs):
+        start=self.at();end=start+len(self.get_starttag_text())
+        item={'tag':tag,'cls':dict(attrs).get('class') or '','start':start,'open_end':end,'end':end,'parent':self.stack[-1] if self.stack else None}
+        self.items.append(item)
+        if tag not in VOID:self.stack.append(item)
+    def handle_startendtag(self,tag,attrs):self.handle_starttag(tag,attrs);self.stack.pop() if tag not in VOID else None
+    def handle_endtag(self,tag):
+        for i in range(len(self.stack)-1,-1,-1):
+            if self.stack[i]['tag']==tag:
+                item=self.stack[i];item['end']=self.at()+len(tag)+3;del self.stack[i:];return
+def intro_band(source):
+    """v12 round 2 (F4; WEB-227 SIXTH): wrap each page's title block (what precedes the h1 in its parent, the h1, and
+    a directly following lede/lead paragraph) in <div class="gl-intro"> so site.css can set it on a dark band like the
+    homepage hero. Markup only: no text, attribute or order change. Pages whose h1 already sits in a hero section
+    (about-hero) or outside main (page-two) are left as they are; site.css styles those sections."""
+    sp=Spans(source);main=next((i for i in sp.items if i['tag']=='main'),None)
+    h1=next((i for i in sp.items if i['tag']=='h1' and main and main['start']<i['start']<main['end']),None)
+    if not h1:return source
+    a=h1['parent']
+    while a is not None and a is not main:
+        if re.search(r'\b(about-hero|front-door)\b',a['cls']):return source
+        a=a['parent']
+    parent=h1['parent'];kids=[i for i in sp.items if i['parent'] is parent]
+    k=kids.index(h1);start=kids[0]['start'] if k else h1['start'];end=h1['end']
+    if k+1<len(kids) and kids[k+1]['tag']=='p' and re.search(r'\b(lede|lead)\b',kids[k+1]['cls']):end=kids[k+1]['end']
+    return source[:start]+'<div class="gl-intro">'+source[start:end]+'</div>'+source[end:]
 def render(source,path):
     if path=='index.html':
         source=re.sub(r'<main\b[\s\S]*?</main>',lambda _: (ROOT/'content/home.html').read_text(encoding='utf-8').strip(),source,count=1)
@@ -36,6 +70,10 @@ def render(source,path):
     if path!='index.html':
         # v12 site-wide look (Paul, Nov 1 2026; WEB-227 SIXTH): every other page shares the homepage header, footer
         # and tokens (home.css, selectors :is(body.gl-home-page,body.gl-site)) plus site.css for page content. Style only.
+        source=intro_band(source)
+        # v12 round 2 (Q2; WEB-227 SIXTH): let the canonical URL in the Sources sidebar wrap after a slash instead of
+        # mid-word. <wbr> adds a break opportunity only; the button text is unchanged.
+        source=re.sub(r'(<aside class="provenance">[\s\S]*?</aside>)',lambda m: re.sub(r'(<button type="submit">)(https://[^<]+)(</button>)',lambda b: b.group(1)+'https://<wbr>'+re.sub(r'/(?=.)','/<wbr>',b.group(2)[8:])+b.group(3),m.group(1)),source)
         source=re.sub(r'<body(?: class="([^"]*)")?>',lambda m:'<body class="'+((m.group(1)+' ') if m.group(1) else '')+'gl-site">',source,count=1)
         source=source.replace('</head>','<link rel="stylesheet" href="/assets/home.css"><link rel="stylesheet" href="/assets/site.css"></head>',1)
     for sheet in ('restored-site.css','home.css','site.css'):

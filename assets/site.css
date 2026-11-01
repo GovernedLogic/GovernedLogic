@@ -73,3 +73,63 @@ body.gl-site main .button:hover{background:#004374;color:#fff}
 body.gl-site #gl-home-bar nav .gl-go{flex:none;width:auto;min-width:0;height:auto}
 body.gl-site #gl-home-bar nav .gl-go>button{flex:none;width:auto;white-space:nowrap;box-shadow:none;border-bottom:0}
 body.gl-site header#gl-home-bar{backdrop-filter:none}
+
+/* ---- v12 round 2 (QA F4, Q1, Q2; WEB-227 SIXTH): the homepage band rhythm and card treatment on every page ---- */
+/* Intro band: each page's title block (div.gl-intro from render_site.py, or the existing about/page-two hero section)
+   sits on the homepage hero's near-black field with its deep-blue glow, full bleed; the body below stays on the light
+   paper band and the dark footer closes the page, as on the homepage. */
+body.gl-site main.document-main:has(> .gl-intro,> article > .gl-intro,> .about-hero){padding-top:0}
+body.gl-site :is(.gl-intro,.about-hero,.home-content>section.front-door){position:relative;isolation:isolate;color:#d5dce2}
+/* The band bleeds past both viewport edges (body clips overflow-x), whatever column the title block sits in; the
+   deep-blue glow is pinned to the viewport's upper right, where the homepage hero carries it. */
+/* So the band can run edge to edge, <main> spans the full width and clips the bleed (overflow-x:clip, no scroll
+   container, sticky still works). Its padding reproduces the old centred column exactly: 1104px (1144px on document
+   pages from 1100px) with 48px gutters, 16px at 800px and below, 12px at 340px and below. */
+body.gl-site main.document-main{max-width:none;overflow-x:clip;padding-left:max(48px,calc((100% - 1104px) / 2));padding-right:max(48px,calc((100% - 1104px) / 2))}
+@media(min-width:1100px){body.gl-site.document-page main.document-main{padding-left:max(48px,calc((100% - 1144px) / 2));padding-right:max(48px,calc((100% - 1144px) / 2))}}
+@media(max-width:800px){body.gl-site main.document-main{padding-left:16px;padding-right:16px}}
+@media(max-width:340px){body.gl-site main.document-main{padding-left:12px;padding-right:12px}}
+body.gl-site main.home-content{overflow-x:clip}
+body.gl-site :is(.gl-intro,.about-hero,.home-content>section.front-door)::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:-100vw;right:-100vw;
+  background:radial-gradient(60vw 70vh at 84vw 22vh,rgba(10,90,156,.34),rgba(10,90,156,0) 72%) fixed,linear-gradient(#00050a,#00050a);border-bottom:1px solid #0d2233}
+body.gl-site .gl-intro{padding:clamp(48px,6vw,88px) 0 clamp(40px,5vw,72px);margin:0 0 clamp(32px,4vw,56px)}
+body.gl-site .about-hero{padding:clamp(40px,5vw,72px) 0;margin-bottom:clamp(32px,4vw,56px)}
+body.gl-site .gl-intro>:first-child{margin-top:0}
+body.gl-site .gl-intro>:last-child{margin-bottom:0}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(h1,h2,h3){color:#fff}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(p,li,dd,span,div,blockquote){color:#d5dce2}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(.eyebrow,.label,.section-meta,.section-meta *){color:#c3ced8}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) strong{color:#fff}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) .gl-go>button:not(.button){color:#6cc8f0;background:transparent;border-color:transparent;box-shadow:none}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) .gl-go>button:not(.button):hover{color:#fff}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) .button{background:linear-gradient(90deg,#00477a,#1a76bb);border-color:#1a76bb;color:#fff}
+body.gl-site :is(.gl-intro,.about-hero,.front-door) :is(button,input,summary):focus-visible{outline-color:#6cc8f0}
+body.gl-site .front-door h2 .downstream{color:#6cc8f0}
+/* The sidebar starts below the band, not inside it. */
+@media(min-width:1100px){
+  body.gl-site.document-page .document-main>article:has(> .gl-intro):has(> aside.provenance)>aside.provenance{grid-row:2 / span 24}
+}
+/* Cards: the homepage card (near-white, hairline, 5px corners, barely-there shadow) for sections, sidebars, lists. */
+body.gl-site :is(.business-section,.provenance,.concept-card,details.faq-item,.document-page details,.library-item,.source-entry,.work-grid article,.reading-index>.gl-go>button,.principle-field span){
+  background:#fdfdfd;border:1px solid #e3e6e9;border-radius:5px;box-shadow:0 1px 2px rgba(15,25,35,.04)}
+body.gl-site .provenance{background:#f6f8fa;border-color:#dfe5ea}
+body.gl-site :is(.library-item,.source-entry){padding:24px 28px}
+body.gl-site .source-entry+.source-entry,body.gl-site .library-item+.library-item{margin-top:16px}
+/* Q1: /mechanism.html opens with two buttons side by side; give them the homepage's button gap. */
+body.gl-site .gl-intro>nav:not(.reading-links){display:flex;flex-wrap:wrap;gap:8px 32px;align-items:center}
+/* Q2: Sources sidebar. Stack term over value so values get the whole width; URLs wrap only after a slash (<wbr>) and
+   never mid-word; overflow-wrap:anywhere stays as the last resort so nothing can overflow. No white glow on the link. */
+body.gl-site .provenance dl{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
+body.gl-site .provenance dt{font-weight:600;color:#1b222a}
+body.gl-site .provenance dd{margin:0 0 12px;min-width:0;word-break:normal;overflow-wrap:anywhere;hyphens:none}
+body.gl-site .provenance .gl-go>button{word-break:normal;overflow-wrap:anywhere;hyphens:none;white-space:normal;text-align:left;height:auto;min-height:44px;
+  background:transparent;border:0;box-shadow:none;text-shadow:none;padding:0;margin:0;color:#0a5a9c}
+body.gl-site .provenance .gl-go>button:hover{color:#003059;text-decoration:underline}
+body.gl-site .provenance .gl-go>button::before,body.gl-site .provenance .gl-go>button::after{content:none}
+body.gl-site details.faq-item{padding:12px 24px}
+body.gl-site details.faq-item+details.faq-item{margin-top:12px}
+/* The dark footer closes every page full width, as on the homepage (restored-site.css capped it at 1280px, and in
+   the flex body that shrank it to its content). */
+body.gl-site .site-footer{max-width:none;width:100%;margin:0;box-sizing:border-box;align-self:stretch}
+/* Inside a card the title button is plain deep-blue type (no pill or shadow inside the card). */
+body.gl-site .library-item h2 .gl-go>button{background:transparent;border:0;box-shadow:none;padding:0;text-align:left;min-height:44px}
