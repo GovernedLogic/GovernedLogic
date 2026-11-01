@@ -3,7 +3,9 @@ import { expect, test } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 
-const BASE_ORIGIN = "http://127.0.0.1:4173";
+// The suite's own origin: BASE_URL when a runner serves the artifact on a port of its own (Governor 2:16 PM ET ruling,
+// GL QA F14: a dry run must not kill another run's 4173 server), else the config's 4173 server, as in CI.
+const BASE_ORIGIN = new URL(process.env.BASE_URL || "http://127.0.0.1:4173").origin;
 const ROUTES = [
   { path: "/", slug: "home" },
   { path: "/challenge/", slug: "challenge" },
