@@ -482,11 +482,13 @@ class ReleaseGuardTests(unittest.TestCase):
                         check_restored.check(site)
 
     def test_opening_asset_altered_fails(self) -> None:
+        # v12 round 2 (QA L1; WEB-227 SIXTH): opening.js is no longer published, so the plant is now the retired
+        # file reappearing in the artifact (was: a byte appended to the published opening.js). Still must fail.
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             path = site / "assets" / "opening.js"
-            path.write_bytes(path.read_bytes() + b"\n")
-            with self.assertRaises(AssertionError):
+            path.write_bytes((ROOT / "assets" / "opening.js").read_bytes())
+            with self.assertRaisesRegex(AssertionError, "Retired asset published: assets/opening.js"):
                 check_restored.check(site)
 
     def test_reviewed_semantic_boundaries_pass_without_hashes(self) -> None:

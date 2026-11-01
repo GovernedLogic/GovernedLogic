@@ -603,29 +603,20 @@ These three destinations stay in the generated library and publication listings,
 
 ## Resources
 
-25 visitor destinations are the rows of the table above (20 pages and 5 source editions). These 25 assets are published (one, head-artwork.webp, is no longer loaded). Together that is 50 resources.
+25 visitor destinations are the rows of the table above (20 pages and 5 source editions). These 16 assets are published, each loaded by a page or stylesheet. Together that is 41 resources. v12 round 2 (QA L1) stopped publishing nine files nothing loads any more: opening.css, opening.js, earth-renderer.js, material-environment.js, cinzel.ttf, earth-day.jpg, earth-night.jpg, earth-clouds.jpg and head-artwork.webp (they stay in the repo).
 
 | Resource | How it loads |
 |---|---|
-| /assets/opening.css | stylesheet link on the homepage |
 | /assets/home.css | stylesheet link on every page (homepage design; shared header, footer and tokens elsewhere) |
 | /assets/restored-site.css | stylesheet link on every other page |
 | /assets/site.css | stylesheet link on every other page, after home.css (v12 site-wide look) |
-| /assets/opening.js | script src on the homepage; mark trace, light field, scroll invite |
-| /assets/earth-renderer.js | script src on the homepage; permanent Earth painting |
-| /assets/material-environment.js | script src on the homepage |
 | /assets/library.js | script src on /library/ |
-| /assets/materials/cinzel.ttf | @font-face in opening.css; preload on the homepage |
-| /assets/materials/ibm-plex-sans.ttf | @font-face in restored-site.css and home.css (opening caption and invite) |
+| /assets/materials/ibm-plex-sans.ttf | @font-face in restored-site.css |
 | /assets/materials/source-serif-4-latin-opsz.woff2 | @font-face in home.css; preload on the homepage |
 | /assets/materials/inter-latin-wght.woff2 | @font-face in home.css; preload on the homepage |
-| /assets/materials/earth-day.jpg | sampled by earth-renderer.js |
-| /assets/materials/earth-night.jpg | sampled by earth-renderer.js |
-| /assets/materials/earth-clouds.jpg | sampled by earth-renderer.js |
 | /assets/governed-logic-mark.webp | background in restored-site.css (no page header uses it since v12) |
 | /assets/provisional/seed-of-life.png | img in the header brand on every page (provisional) |
 | /assets/provisional/hero-geometry.svg | img and preload in the homepage hero (provisional; abstract Seed of Life geometry, Paul hero ruling, Nov 1) |
-| /assets/provisional/head-artwork.webp | published but unused since Round 6 (Paul rejected the head art, Nov 1); kept in the allowlist |
 | /assets/provisional/problem-network.webp | background in home.css, The Problem band (provisional) |
 | /assets/provisional/card-grounding.webp | img in the homepage Latest Research card (provisional) |
 | /assets/provisional/card-mathematics.webp | img in the homepage Latest Research card (provisional) |
