@@ -218,6 +218,20 @@ def main():
         if path not in regenerated and (not (root / path).is_file() or (root / path).read_bytes() != raw)
     ]
     require(not stale, "Stale outputs; run build-corpus.py: " + ", ".join(stale))
+    # v14.1 (Paul 2026-11-01 22:34; Paul 4:50 PM ET Nov 1, no page dates): the committed publication JSON carries no
+    # dates (no preparedAt, no datePublished/dateModified) and keeps its required fields (version, corpusVersion).
+    for path in ("publication/catalog.json", "publication/search-index.json", "publication/manifest.json"):
+        data = json.loads((root / path).read_text(encoding="utf-8"))
+        require("version" in data, path + ": missing version")
+        stack = [data]
+        while stack:
+            node = stack.pop()
+            if isinstance(node, list):
+                stack += node
+            elif isinstance(node, dict):
+                bad = [k for k in node if k in ("preparedAt", "datePublished", "dateModified", "dateCreated")]
+                require(not bad, f"{path}: carries a date field {bad}; publication JSON is dateless")
+                stack += list(node.values())
     again, _ = corpus.outputs(root)
     require(generated == again, "Read-only repeated generation was not deterministic")
     pages, _, _ = corpus.load_pages(root)
