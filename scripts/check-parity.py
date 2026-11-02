@@ -216,7 +216,22 @@ def main(root):
             if norm(title+' · September 2026') not in pages[name].visible:errors.append(f'Edition date not shown on {name}: {title} · September 2026')
     if norm('The source documents retain their original September 2026 edition dates.') not in pages['publication/index.html'].visible:errors.append('Edition-date sentence missing on publication/index.html')
     # 7. v14 social tags.
-    from PIL import Image
+    import struct,zlib
+    def png_info(path):
+        # Stdlib PNG reader (no Pillow on the CI runner): format, size, text chunks.
+        b=path.read_bytes()
+        if b[:8]!=b'\x89PNG\r\n\x1a\n':return None,None,{}
+        i=8;size=None;text={}
+        while i+8<=len(b):
+            ln,typ=struct.unpack('>I4s',b[i:i+8]);d=b[i+8:i+8+ln];i+=12+ln
+            if typ==b'IHDR':size=struct.unpack('>II',d[:8])
+            elif typ==b'tEXt':k,_,v=d.partition(b'\0');text[k.decode('latin-1')]=v.decode('latin-1')
+            elif typ==b'zTXt':k,_,v=d.partition(b'\0');text[k.decode('latin-1')]=zlib.decompress(v[1:]).decode('latin-1')
+            elif typ==b'iTXt':
+                k,_,r=d.partition(b'\0');cf,cm=r[0],r[1];r=r[2:];_,_,r=r.partition(b'\0');_,_,r=r.partition(b'\0')
+                text[k.decode('latin-1')]=(zlib.decompress(r) if cf else r).decode('utf-8')
+            elif typ==b'IEND':break
+        return 'PNG',size,text
     import site_layout as L
     raw_pages={p.relative_to(root).as_posix():p.read_text(encoding='utf-8') for p in root.rglob('*.html')}
     def metas(raw):
@@ -242,9 +257,9 @@ def main(root):
         if not img.startswith(R.BASE+'/'):errors.append(f'og:image on {name} is not an absolute {R.BASE} URL: {img}');continue
         f=root/img[len(R.BASE)+1:]
         if not f.is_file():errors.append(f'og:image on {name} is not published: {img}');continue
-        with Image.open(f) as im:
-            if im.format!='PNG' or im.size!=(1200,627):errors.append(f'og:image on {name} is not a 1200x627 PNG: {im.format} {im.size}')
-            if im.text.get('Title')!=h1:errors.append(f'og:image on {name} draws {im.text.get("Title")!r}, not its og:title {h1!r}')
+        fmt,size,text=png_info(f)
+        if fmt!='PNG' or size!=(1200,627):errors.append(f'og:image on {name} is not a 1200x627 PNG: {fmt} {size}')
+        if text.get('Title')!=h1:errors.append(f'og:image on {name} draws {text.get("Title")!r}, not its og:title {h1!r}')
     for a in L.ARTICLES:
         raw=raw_pages[a];h1=L.h1_text(raw)
         arts=[n for blk in re.findall(r'<script type="application/ld\+json">([\s\S]*?)</script>',raw) for n in [json.loads(blk)] if n.get('@type')=='Article']
