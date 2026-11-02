@@ -11,6 +11,41 @@ from render_site import PRINCIPLES,ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS
 V14_PAGES=('articles/index.html','the-truth-with-paul/index.html')
 TWP='the-truth-with-paul/index.html'
 TWP_COPY=('The Truth with Paul','Coming soon','Subscribe on YouTube')
+# v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band. Its captions are the video script's 8 lines, word
+# for word, and nothing else; the band adds no words to the page.
+VIDEO='/assets/video/gl-home-explainer.mp4';VIDEO_POSTER='/assets/video/gl-home-explainer-poster.webp';VIDEO_VTT='/assets/video/gl-home-explainer.en.vtt'
+VIDEO_CAPTIONS=('You exist.',
+ 'Something exists. That is our starting point. Denying existence requires an existing reality in which the denial occurs.',
+ 'A sufficient ultimate explanation cannot simply be another unexplained dependent thing. It must terminate in something that does not depend on anything else for its existence.',
+ 'That brings us to a necessary, non-contingent ground of reality.',
+ 'Reality is intelligible. Things possess identities. Propositions can correspond to reality or fail to correspond.',
+ 'Logic is not free to determine reality. Logic must remain answerable to what is true. Truth governs logic. Logic governs reasoning. Intelligence follows downstream.',
+ 'Jesus Christ of Nazareth is the Logos\u2014the ground of truth, logic, intelligibility, and moral obligation.',
+ 'A system can become more capable without becoming better grounded.')
+def video_errors(root):
+    errors=[];home=(root/'index.html').read_text(encoding='utf-8')
+    band=re.search(r'</section>\s*<section class="gl-video">([\s\S]*?)</section>\s*<section class="gl-core">',home)
+    if not band:return ['Homepage video band is not directly under the hero and before the core section']
+    b=band.group(1);v=re.search(r'<video\b([^>]*)>',b)
+    if not v or len(re.findall(r'<video\b',home))!=1:return ['Homepage video band: expected exactly one <video>']
+    va=v.group(1)
+    for need in (' controls',' playsinline','preload="metadata"',f'poster="{VIDEO_POSTER}"'):
+        if need not in va:errors.append('Homepage video lacks '+need.strip())
+    if re.search(r'\b(autoplay|loop|muted)\b',va):errors.append('Homepage video must not autoplay, loop or start muted')
+    if f'<source src="{VIDEO}" type="video/mp4">' not in b:errors.append('Homepage video source is not '+VIDEO)
+    tracks=re.findall(r'<track\b([^>]*)>',b)
+    if len(tracks)!=1 or not all(x in tracks[0] for x in ('kind="captions"','srclang="en"','label="English"',f'src="{VIDEO_VTT}"',' default')):errors.append('Homepage video needs one default English captions track: '+repr(tracks))
+    if re.sub(r'<[^>]+>','',b).strip():errors.append('Homepage video band adds words to the page: '+repr(re.sub(r'<[^>]+>','',b).strip()))
+    for f in (VIDEO,VIDEO_POSTER,VIDEO_VTT):
+        if not (root/f[1:]).is_file():errors.append('Homepage video file missing: '+f)
+    if (root/VIDEO_VTT[1:]).is_file():
+        vtt=(root/VIDEO_VTT[1:]).read_text(encoding='utf-8').split('\n')
+        times=[l for l in vtt if '-->' in l]
+        cues=[l for l in vtt if l and l!='WEBVTT' and '-->' not in l]
+        if vtt[0]!='WEBVTT' or tuple(cues)!=VIDEO_CAPTIONS or len(times)!=8:errors.append('Captions are not exactly the 8 script lines: '+repr(cues))
+        if any(not re.fullmatch(r'\d\d:\d\d:\d\d\.\d{3} --> \d\d:\d\d:\d\d\.\d{3}',t) for t in times):errors.append('Captions carry cue settings or other text on a timing line')
+    if (root/VIDEO_POSTER[1:]).is_file() and (root/VIDEO_POSTER[1:]).read_bytes()[8:12]!=b'WEBP':errors.append('Homepage video poster is not a WebP image')
+    return errors
 class Doc(HTMLParser):
     def __init__(self):
         super().__init__();self.tags=[];self.ids=[];self.refs=[];self.canonical=[];self.json=[];self.capture=None
@@ -137,6 +172,7 @@ def check(root):
     # <a href> link from another page; no other /principles/ page exists (Truth is withheld, see live()).
     principle_routes=PRINCIPLES.routes()
     for p in sorted(x for x in actual if x.startswith('principles/') and x not in principle_routes):errors.append('Unpublished principle page in the artifact: '+p)
+    errors+=video_errors(root)
     sitemap=(root/'sitemap.xml').read_text(encoding='utf-8')
     for p in V14_PAGES:
         if '<loc>'+BASE+route(p)+'</loc>' not in sitemap:errors.append('Page missing from sitemap: '+p)

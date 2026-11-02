@@ -58,6 +58,9 @@ for (const routeDefinition of ROUTES) {
       pageErrors.push(error.message);
     });
     page.on("requestfailed", request => {
+      // v14.2: with preload="metadata" Chromium reads the homepage video's header, then aborts the rest of the
+      // media fetch by design; that one abort is not a failure. The test below still requests the file in full.
+      if (request.resourceType() === "media" && request.failure()?.errorText === "net::ERR_ABORTED") return;
       if (request.url().startsWith(BASE_ORIGIN)) {
         localRequestFailures.push(request.url() + ": " + (request.failure()?.errorText || "unknown failure"));
       }
