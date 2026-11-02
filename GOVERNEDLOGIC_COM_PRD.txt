@@ -594,7 +594,7 @@ Truth governs logic.
 Logic governs reasoning.
 Intelligence is downstream.
 
-The homepage must then explain that Governed Logic Reasoning Systems is building Governed Intelligence. It must distinguish the working instruction-level prototype from the reasoning engine, API, and other engineering work still in development.
+The homepage lede is then Paul's line 441, verbatim (Paul 2026-11-02 16:36 'Yes ... remove that' (line 441); FOUNDATIONAL_ORIENTATION_FOR_RIGEL_2026-11-02.txt): “Governed Logic is a substrate-agnostic reasoning architecture developed by Paul André Couchoud in which truth governs logic, logic governs reasoning, and intelligence is downstream. Its philosophical foundation is developed in On the Nature of Ultimate Grounding. Governed Intelligence is the artificial-intelligence implementation of that architecture.” The homepage names no reasoning engine or API; nothing links to one.
 
 WEB-163
 The upstream-problem section uses a small comprehensible set of source-backed failure modes, not a laundry list. Permitted source-backed categories include fluent but insufficiently grounded assertions, failure of proposition/reality correspondence, absence of a stable governing referent, unsupported or invalid inference, contradiction, semantic drift, and representation/referent confusion. Do not claim that Governed Intelligence has already eliminated these defects experimentally.

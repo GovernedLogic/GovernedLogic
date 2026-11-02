@@ -73,6 +73,8 @@ HOMEPAGE_DIGESTS = (
     "8f9a4d92a9b04e99a68824f95c819439eb384ee6ad3aa37b434c2a6d7397b0fc",
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) this pin replaces 8f9a4d92...b0fc.
     "b37d33638e305c8022703399b23c09a7868cb7ed85f2d265fa0b7c6bab71cb30",
+    # v14.1 (Paul 2026-11-02 16:36 'Yes ... remove that'): homepage lede is Paul's line 441; this pin replaces b37d3363...cb30.
+    "48b262212c38a0fdc0827499e533e674b701bfa65d1d355bbddedce441d74f63",
 )
 # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F15): page_record now also hashes JSON-LD names and meta author, so
 # every page's current pin was re-pinned for that record change alone (no visible text, link, image, title, meta
