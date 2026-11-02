@@ -53,6 +53,10 @@ def make(title,art,serif,out):
     y=H-90-len(lines)*int(size*1.12)
     for ln in lines:d.text((72,y),ln,font=f,fill='#ffffff');y+=int(size*1.12)
     info=PngInfo();info.add_text('Title',title)
+    # v14.1 (Paul 2026-11-01 22:34; carried over): near-lossless. Each channel is rounded to a multiple of 4 (centred, at
+    # most 2/255 off), which roughly halves the files; then, where installed, `oxipng -o 4 --strip none assets/og/*.png`
+    # (lossless; keeps the Title chunk). Same 1200x627 RGB PNG.
+    base=base.convert('RGB').point(lambda v:min(255,(v&0xFC)+2) if v>=2 else v&0xFC)
     out.parent.mkdir(parents=True,exist_ok=True);base.save(out,'PNG',pnginfo=info,optimize=True)
 def main():
     import render_site as R, site_layout as L
