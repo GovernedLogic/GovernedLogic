@@ -267,9 +267,9 @@ def build(destination):
     for p in v14_pages:
         target=destination/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(links(render(v14_src[p],p)),encoding='utf-8',newline='\n')
     unlisted={'/articles/','/the-truth-with-paul/'}
-    records=[]
+    records=[];ledes={}
     for p in (*PAGES,*principle_pages,*v14_pages):
-        source=(destination/p).read_text(encoding='utf-8');title=re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)
+        source=(destination/p).read_text(encoding='utf-8');ledes[BASE+route(p)]=LAYOUT.description(source) if p!='page-two/index.html' else None;title=re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)
         title=unescape(re.sub('<[^>]+>','',title.group(1))).strip() if title else 'Governed Logic Reasoning Systems'
         if p=='index.html':title='Governed Logic Reasoning Systems'
         records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'principle' if p in principle_pages else 'page','text':main_text(LAYOUT.without_ui(source,p)),**({'description':unescape(re.search(r'<meta name="description" content="([^"]*)"',source).group(1))} if p in principle_pages else {}),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
@@ -283,8 +283,10 @@ def build(destination):
     'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+''+'</url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html',*v14_pages))+'</urlset>',
     'terms.jsonld':terms_jsonld(),'llms.txt':llms_txt(records),
     # v14 queued (WEB-227 SIXTH; Paul 4:50 PM ET Nov 1, no page dates): RSS 2.0 at the same URL, no dates. The channel
-    # description is /publication/'s visible lede.
-    'feed.xml':'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Governed Logic publications</title><link>'+BASE+'/</link><description>'+escape(DOCUMENT_DESCRIPTIONS['publication/index.html'])+'</description>'+''.join('<item><title>'+escape(r['title'])+'</title><link>'+r['url']+'</link><guid isPermaLink="true">'+r['id']+'</guid></item>' for r in records if r['type']!='principle' and r['path'] not in unlisted)+'</channel></rss>\n'}
+    # description is /publication/'s visible lede. Each item's description is its page's visible lede, verbatim (its
+    # og:description; v14.1, Vera's nit d); pages without a lede (/faq/, the source files) carry none, nor does
+    # /page-two/ (kept exactly as it was, so it gets no og:description either).
+    'feed.xml':'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Governed Logic publications</title><link>'+BASE+'/</link><description>'+escape(DOCUMENT_DESCRIPTIONS['publication/index.html'])+'</description>'+''.join('<item><title>'+escape(r['title'])+'</title><link>'+r['url']+'</link>'+('<description>'+escape(ledes[r['id']])+'</description>' if ledes.get(r['id']) else '')+'<guid isPermaLink="true">'+r['id']+'</guid></item>' for r in records if r['type']!='principle' and r['path'] not in unlisted)+'</channel></rss>\n'}
     for p,value in generated.items():
         target=destination/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(value,encoding='utf-8',newline='\n')
     manifest={'release':'substantive-restoration','files':{p:hashlib.sha256((destination/p).read_bytes()).hexdigest() for p in PUBLIC_FILES if p!='publication/manifest.json'}}

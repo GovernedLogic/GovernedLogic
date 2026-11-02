@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import re
 from pathlib import Path
 import shutil
 import tempfile
@@ -218,6 +219,47 @@ def main():
         if path not in regenerated and (not (root / path).is_file() or (root / path).read_bytes() != raw)
     ]
     require(not stale, "Stale outputs; run build-corpus.py: " + ", ".join(stale))
+    # v14.1 (Paul 2026-11-01 22:34; Paul 4:50 PM ET Nov 1, no page dates): the committed publication JSON carries no
+    # dates (no preparedAt, no datePublished/dateModified) and keeps its required fields (version, corpusVersion).
+    for path in ("publication/catalog.json", "publication/search-index.json", "publication/manifest.json"):
+        data = json.loads((root / path).read_text(encoding="utf-8"))
+        require("version" in data, path + ": missing version")
+        stack = [data]
+        while stack:
+            node = stack.pop()
+            if isinstance(node, list):
+                stack += node
+            elif isinstance(node, dict):
+                bad = [k for k in node if k in ("preparedAt", "datePublished", "dateModified", "dateCreated")]
+                require(not bad, f"{path}: carries a date field {bad}; publication JSON is dateless")
+                stack += list(node.values())
+    # v14.1 (Paul 2026-11-01 16:50, "No dates should be listed"; Grace): no date in the search index, catalog or
+    # manifest, committed or generated, except a source edition's date where its own page shows it: on /sources/, or
+    # right after a source-edition label ("Source edition ·", "working draft 0.7 ·", "Paul André Couchoud ·",
+    # "website language") as the concept pages show it; and ISO dates only inside a source file name or its anchor.
+    month = r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
+    any_date = re.compile(r"(?:\d{1,2} )?" + month + r" \d{4}|\d{4}-\d\d-\d\d")
+    edition_label = re.compile(r"(?:Source edition|working draft [\d.]+|Paul André Couchoud|website language)\s*·?\s*$")
+    identifier = re.compile(r"^(?:\S*_\d{4}-\d\d-\d\d(?:_\S*)?\.(?:pdf|txt)|\S*#paul-(?:business-)?\d{4}-\d\d-\d\d)$")
+    for label, raw in [(p, (root / p).read_bytes()) for p in ("publication/catalog.json", "publication/search-index.json", "publication/manifest.json")] + \
+                      [("generated " + p, generated[p]) for p in ("publication/catalog.json", "publication/search-index.json", "publication/manifest.json")]:
+        stack = [(json.loads(raw), None)]
+        while stack:
+            node, owner = stack.pop()
+            if isinstance(node, list):
+                stack += [(v, owner) for v in node]
+            elif isinstance(node, dict):
+                stack += [(v, node.get("path", owner)) for v in node.values()]
+            elif isinstance(node, str):
+                for m in any_date.finditer(node):
+                    token = next((t for t in node.split() if m.group(0) in t), m.group(0))
+                    if identifier.match(token.strip('",')):
+                        continue
+                    if owner in ("/sources/", "sources/index.html") and not m.group(0)[:4].isdigit():
+                        continue
+                    if not m.group(0)[:4].isdigit() and edition_label.search(node[:m.start()]):
+                        continue
+                    raise AssertionError(f"{label}: date {m.group(0)!r} in {owner}: ...{node[max(0, m.start() - 60):m.end()]}; publication JSON is dateless")
     again, _ = corpus.outputs(root)
     require(generated == again, "Read-only repeated generation was not deterministic")
     pages, _, _ = corpus.load_pages(root)

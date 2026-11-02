@@ -17,7 +17,7 @@ home=re.sub(r'<header class="site-bar">.*?</header>','<!--SITE_HEADER-->',home,f
 home=re.sub(r'<main class="site-content".*?</main>',lambda m:(ROOT/'content/home.html').read_text(encoding='utf-8'),home,flags=re.S)
 home=re.sub(r'<footer.*?</footer>','<!--SITE_FOOTER-->',home,flags=re.S)
 home=home.replace('assets/site-navigation.css','/assets/restored-site.css')
-home=home.replace('content="Governed Logic Reasoning Systems."','content="Governed Logic Reasoning Systems is building Governed Intelligence, a reasoning engine and API. Explore the architecture, prototype, research, and source works."')
+home=home.replace('content="Governed Logic Reasoning Systems."','content="Governed Logic is a substrate-agnostic reasoning architecture developed by Paul André Couchoud in which truth governs logic, logic governs reasoning, and intelligence is downstream. Its philosophical foundation is developed in On the Nature of Ultimate Grounding. Governed Intelligence is the artificial-intelligence implementation of that architecture."')
 write('index.html',home)
 
 recovered=[*sorted((ROOT/'concepts').rglob('index.html')),ROOT/'company/index.html',ROOT/'research/index.html',ROOT/'about/index.html',ROOT/'mechanism.html',ROOT/'sources/index.html']

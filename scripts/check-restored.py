@@ -63,6 +63,11 @@ def check(root):
             if main_text(source)!=' '.join(TWP_COPY):errors.append('The Truth with Paul copy is not exactly its three strings: '+repr(main_text(source)))
             if [re.sub('<[^>]+>','',x).strip() for x in re.findall(r'<h1[^>]*>([\s\S]*?)</h1>',source)]!=[TWP_COPY[0]]:errors.append('The Truth with Paul h1 is not the channel name')
             if not re.search(r'<a href="'+re.escape(TWP_URL)+r'"[^>]*>Subscribe on YouTube<',source):errors.append('Subscribe on YouTube is not a plain link to '+TWP_URL)
+        elif p=='articles/index.html':
+            # v14.1 (Vera's nit a): the index is a featured card plus the Latest rail, each live article once; its words
+            # are the articles' own titles and ledes, so it has no 45-word floor.
+            cards=re.findall(r'<h3 id="gl-(?:art-featured|rail-\d+)">([^<]*)</h3>',source)
+            if len(cards)<1 or len(cards)!=len(set(cards)):errors.append('Articles index does not list each article exactly once: '+repr(cards))
         elif len(main_text(source).split())<45:errors.append('Insufficient page content: '+p)
         for phrase in ('Substantive material remains withheld','will be linked here after publication review','Follow the Chain Challenge','<!--SITE_HEADER-->','{{definition:'):
             if phrase in source:errors.append('Placeholder or retired copy: '+p)

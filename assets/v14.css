@@ -108,9 +108,9 @@ body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>sec
 }
 }
 
-/* /articles/ (QA option A): featured card, the homepage card grid, one Latest snap rail. */
+/* /articles/ (QA option A; v14.1: no grid, each article once): featured card, one Latest snap rail. */
 body.gl-site .gl-articles .gl-featured{margin:0 0 clamp(32px,4vw,48px)}
-body.gl-site .gl-articles :is(.gl-featured,.gl-art-grid,.gl-rail-band){max-width:none;width:100%}
+body.gl-site .gl-articles :is(.gl-featured,.gl-rail-band){max-width:none;width:100%}
 body.gl-site .gl-articles .gl-featured>.gl-card{width:100%}
 body.gl-site .gl-articles .gl-card{height:auto!important}
 body.gl-site .gl-articles .gl-card h3{line-height:1.2!important}

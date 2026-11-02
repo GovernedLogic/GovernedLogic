@@ -23,7 +23,10 @@ Checks the built artifact against content/terms.py (the one source per term):
      URL of a published 1200x627 PNG whose Title text chunk (the only words drawn on it) equals og:title,
      twitter:card summary_large_image, no twitter:title/description that is not visible, no date in any og/twitter tag;
      the two articles carry Article JSON-LD whose headline and name are the h1 and whose image is the og:image;
-     /articles/ lists each live article by its own h1, card art and first paragraph.
+     /articles/ lists each live article by its own h1, card art and first paragraph, once each;
+  7b. v14.1 (Vera's nits b, c): og:description is each page's visible lede (its meta description) verbatim, absent only
+     on pages with no lede (/faq/, /articles/); twitter:title, twitter:description and twitter:image equal og;
+  7c. v14.1 (Vera's nit d): each RSS item's description is its page's visible lede verbatim.
 Comparison folds typographic quotes, dashes and whitespace only (keywords also fold case: they are tags); it
 reports and never rewrites.
 
@@ -238,6 +241,8 @@ def main(root):
         out={}
         for m in re.finditer(r'<meta\s+(?:property|name)="((?:og|twitter):[^"]+)"\s+content="([^"]*)"',raw):out.setdefault(m.group(1),[]).append(unescape(m.group(2)))
         return out
+    NO_LEDE=('faq/index.html','articles/index.html')
+    ogd={}
     for name,raw in sorted(raw_pages.items()):
         if name=='page-two/index.html':continue
         mt=metas(raw);h1=L.h1_text(raw) if name!='index.html' else 'Governed Logic Reasoning Systems'
@@ -253,6 +258,17 @@ def main(root):
         for k,vs in mt.items():
             for v in vs:
                 if PAGE_DATE.search(v) or re.search(r'\b20\d\d-\d\d-\d\d\b',v):errors.append(f'Date in {k} on {name} (no page dates)')
+        # 7b. v14.1 (Vera's nits b, c): og:description is the page's existing visible lede, verbatim: its meta description
+        # (visible per 3c). Only pages with no lede (NO_LEDE) carry none. twitter:title, twitter:description and
+        # twitter:image are exactly og:title, og:description and og:image.
+        md=[unescape(m) for m in re.findall(r'<meta name="description" content="([^"]*)"',raw)]
+        if md:
+            if mt.get('og:description')!=md[:1]:errors.append(f'og:description on {name} is not its visible lede (meta description): {mt.get("og:description")}')
+        elif name not in NO_LEDE:errors.append(f'{name} has no visible lede for og:description (not in NO_LEDE)')
+        elif 'og:description' in mt:errors.append(f'og:description on {name}, which has no visible lede')
+        for t,o in (('twitter:title','og:title'),('twitter:description','og:description'),('twitter:image','og:image')):
+            if mt.get(t,[])!=mt.get(o,[]):errors.append(f'{t} on {name} is not its {o}: {mt.get(t)} vs {mt.get(o)}')
+        ogd[R.BASE+R.route(name)]=(mt.get('og:description') or [None])[0]
         img=mt.get('og:image',[''])[0]
         if not img.startswith(R.BASE+'/'):errors.append(f'og:image on {name} is not an absolute {R.BASE} URL: {img}');continue
         f=root/img[len(R.BASE)+1:]
@@ -260,6 +276,20 @@ def main(root):
         fmt,size,text=png_info(f)
         if fmt!='PNG' or size!=(1200,627):errors.append(f'og:image on {name} is not a 1200x627 PNG: {fmt} {size}')
         if text.get('Title')!=h1:errors.append(f'og:image on {name} draws {text.get("Title")!r}, not its og:title {h1!r}')
+    # 7c. v14.1 (Vera's nit d): each RSS item's description is its page's og:description (the visible lede), verbatim;
+    # a page with no lede has an item without one.
+    feed=(root/'feed.xml').read_text(encoding='utf-8')
+    for m in re.finditer(r'<item>([\s\S]*?)</item>',feed):
+        link=re.search(r'<link>([^<]*)</link>',m.group(1)).group(1);d=re.search(r'<description>([^<]*)</description>',m.group(1))
+        d=unescape(d.group(1)) if d else None
+        if link in ogd:
+            if d!=ogd[link]:errors.append(f'feed.xml item {link}: description is not the page\'s visible lede: {d!r:.80}')
+        elif d is not None:errors.append(f'feed.xml item {link}: description on an item that is not a page')
+    # /articles/ lists each live article exactly once (Vera's nit a).
+    idx_raw=raw_pages['articles/index.html']
+    for a in L.ARTICLES:
+        n=re.findall(r'<a href="([^"]+)"[^>]*\bgl-card-go\b',idx_raw).count(L.route(a))
+        if n!=1:errors.append(f'/articles/ lists {a} {n} times (expected once)')
     for a in L.ARTICLES:
         raw=raw_pages[a];h1=L.h1_text(raw)
         arts=[n for blk in re.findall(r'<script type="application/ld\+json">([\s\S]*?)</script>',raw) for n in [json.loads(blk)] if n.get('@type')=='Article']

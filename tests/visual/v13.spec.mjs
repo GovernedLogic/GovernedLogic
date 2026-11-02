@@ -179,7 +179,7 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
     const art=[...document.querySelectorAll('main img')].some(i=>{const r=i.getBoundingClientRect();return r.width>40&&r.height>40&&r.top<innerHeight&&r.bottom>0&&i.complete&&i.naturalWidth>0;});
     const meta=k=>[...document.querySelectorAll(`meta[property="${k}"],meta[name="${k}"]`)].map(x=>x.content);
     const h1=document.querySelector('h1').textContent.replace(/\s+/g,' ').trim();
-    return {labels,tools:!!bar.querySelector('.gl-bar-cta')&&!!bar.querySelector('.gl-search'),art,h1,ogTitle:meta('og:title'),card:meta('twitter:card'),img:meta('og:image'),url:meta('og:url'),canon:document.querySelector('link[rel=canonical]').href};
+    return {labels,tools:!!bar.querySelector('.gl-bar-cta')&&!!bar.querySelector('.gl-search'),art,h1,ogTitle:meta('og:title'),card:meta('twitter:card'),img:meta('og:image'),url:meta('og:url'),tw:['title','description','image'].map(k=>JSON.stringify(meta('twitter:'+k))),og:['title','description','image'].map(k=>JSON.stringify(meta('og:'+k))),desc:meta('description'),canon:document.querySelector('link[rel=canonical]').href};
    });
    const want=['Home','The problem','Research','Governed Logic','About','Company','The Truth with Paul'];
    if(JSON.stringify(m.labels)!==JSON.stringify(want))bad.push(`${route}@${width} header ${m.labels}`);
@@ -190,6 +190,10 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
     if(JSON.stringify(m.ogTitle)!==JSON.stringify([h1]))bad.push(`${route} og:title ${m.ogTitle} != ${h1}`);
     if(JSON.stringify(m.card)!=='["summary_large_image"]')bad.push(`${route} twitter:card ${m.card}`);
     if(m.url[0]!==m.canon)bad.push(`${route} og:url ${m.url} != canonical`);
+    // v14.1 (Vera's nits b, c): twitter:title/description/image identical to og; og:description is the visible lede (meta description).
+    if(JSON.stringify(m.tw)!==JSON.stringify(m.og))bad.push(`${route} twitter ${m.tw} != og ${m.og}`);
+    if(m.og[1]!==JSON.stringify(m.desc))bad.push(`${route} og:description ${m.og[1]} != meta description`);
+    for(const d of m.desc)if(!(await page.locator('body').innerText()).replace(/\s+/g,' ').toLowerCase().includes(d.toLowerCase()))bad.push(`${route} description not visible`); // CSS uppercase eyebrows
     if(m.img.length!==1||!m.img[0].startsWith('https://governedlogic.com/assets/og/'))bad.push(`${route} og:image ${m.img}`);
     else{const r=await request.get(m.img[0].replace('https://governedlogic.com',''));const b=await r.body();
      if(!r.ok()||b.readUInt32BE(16)!==1200||b.readUInt32BE(20)!==627)bad.push(`${route} og:image not a served 1200x627 PNG`);}
@@ -199,20 +203,27 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
  await page.setViewportSize({width:1440,height:900});await page.goto('/page-two/',{waitUntil:'load'});
  const two=await page.evaluate(()=>[...document.querySelectorAll('header nav a')].map(a=>a.textContent.trim()));
  if(JSON.stringify(two)!==JSON.stringify(['Governed Logic','Ultimate Grounding','Governed Intelligence','Company','Research']))bad.push('page-two header changed: '+two);
+ // v14.1: /page-two/ is kept exactly as it was; its phone header keeps its v14 height (two 44px nav rows plus 4px at
+ // 320-599 phones, one row plus 4px at 600-899) while the other pages tighten to 132px.
+ for(const [w,hh] of [[320,136],[390,136],[600,92],[899,92]]){
+  await page.setViewportSize({width:w,height:800});await page.goto('/page-two/',{waitUntil:'load'});
+  const h=await page.evaluate(()=>Math.round(document.querySelector('header').getBoundingClientRect().height));
+  if(h!==hh)bad.push(`page-two header ${h}px at ${w} (was ${hh})`);
+ }
  expect(bad).toEqual([]);
 });
-test('v14: /articles/ is option A (featured card, three-column grid, one Latest snap rail) of the two live articles',async({page})=>{
+test('v14.1: /articles/ is a featured card and one Latest snap rail; each live article is listed once',async({page})=>{
  await page.setViewportSize({width:1440,height:900});
  await page.goto('/articles/',{waitUntil:'load'});
  const m=await page.evaluate(()=>({h1:document.querySelector('h1').textContent,featured:document.querySelectorAll('.gl-featured .gl-card').length,
-  grid:getComputedStyle(document.querySelector('.gl-art-grid .gl-cards')).gridTemplateColumns.split(' ').length,
+  grid:document.querySelectorAll('.gl-art-grid').length,
   titles:[...document.querySelectorAll('.gl-card h3')].map(h=>h.textContent.trim()),kinds:[...new Set([...document.querySelectorAll('.gl-card-kind')].map(k=>k.textContent))],
   snap:getComputedStyle(document.querySelector('.gl-rail')).scrollSnapType,rails:document.querySelectorAll('.gl-rail').length,
   hrefs:[...document.querySelectorAll('.gl-card a.gl-card-go')].map(a=>a.getAttribute('href'))}));
- expect(m.h1).toBe('Articles');expect(m.featured).toBe(1);expect(m.grid).toBe(3);expect(m.rails).toBe(1);
+ expect(m.h1).toBe('Articles');expect(m.featured).toBe(1);expect(m.grid).toBe(0);expect(m.rails).toBe(1);
  expect(m.snap).toContain('x');expect(m.kinds).toEqual(['Article']);
- expect(new Set(m.titles)).toEqual(new Set(Object.values(v14Articles)));
- expect(new Set(m.hrefs)).toEqual(new Set(Object.keys(v14Articles)));
+ expect([...m.titles].sort()).toEqual(Object.values(v14Articles).sort());
+ expect([...m.hrefs].sort()).toEqual(Object.keys(v14Articles).sort());
  for(const [route,h1] of Object.entries(v14Articles)){await page.goto(route);expect((await page.locator('h1').textContent()).trim()).toBe(h1);}
 });
 test('v14: article pages have a dark hero with art, a wide measure and a plain-link share row with Copy link',async({page,context})=>{
