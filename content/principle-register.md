@@ -141,9 +141,10 @@ PROVISIONAL RESULT OF THE LOGIC CHAIN
 
 Logic is binding on reasoning but insufficient to select truth by itself. The chain points toward a necessary rational ground that is neither conventional nor arbitrary and that must ultimately be reconciled with the grounds of being and truth.
 
-**Supporting (older prior set, optional):** governed-logic-nucleus-v0.5: Drive 1igYxSsot85y9QYefE38QxbMG72hJ8OJK (Archive); library RES-26, L17632–17633. Status: "Status: canonical working nucleus"; 09 "C-recorded"; superseded five-prior set (P1-02).
+**Supporting (older prior set, optional):** governed-logic-nucleus-v0.5: Drive 1igYxSsot85y9QYefE38QxbMG72hJ8OJK (Archive); library RES-26, L17633–17634. Status: "Status: canonical working nucleus"; 09 "C-recorded"; superseded five-prior set (P1-02).
 
-GL-P2 Logic is binding and answerable to truth.
+Logic is binding and answerable to truth.
+Inference must preserve valid relations without treating logical form as the creator of reality.
 
 _Word count of the body text above: 798._
 
@@ -308,9 +309,10 @@ PROVISIONAL RESULT OF THE INTELLIGIBILITY CHAIN
 
 Reality is genuinely intelligible at least in part, and the relation between rational order and rational apprehension points toward an ultimate ground that is itself rational rather than fundamentally alien to reason.
 
-**Supporting (older prior set, optional):** governed-logic-nucleus-v0.5: Drive 1igYxSsot85y9QYefE38QxbMG72hJ8OJK (Archive); library RES-26, L17634–17635. Status: "Status: canonical working nucleus"; 09 "C-recorded"; superseded five-prior set (P1-02).
+**Supporting (older prior set, optional):** governed-logic-nucleus-v0.5: Drive 1igYxSsot85y9QYefE38QxbMG72hJ8OJK (Archive); library RES-26, L17636–17637. Status: "Status: canonical working nucleus"; 09 "C-recorded"; superseded five-prior set (P1-02).
 
-Inference must preserve valid relations without treating logical form as the creator of reality. GL-P3
+Intelligibility is real.
+Reality has apprehensible order and can be meaningfully represented and reasoned about.
 
 _Word count of the body text above: 563._
 
@@ -389,9 +391,10 @@ PROVISIONAL RESULT OF THE OBLIGATION CHAIN
 
 If binding obligation is real, its ultimate ground cannot be mere preference, consensus, utility, survival, force, or an unexplained abstract ought. The chain points toward a personal, rational, intrinsically good, non-borrowed moral authority.
 
-**Supporting (older prior set, optional):** governed-logic-nucleus-v0.5: Drive 1igYxSsot85y9QYefE38QxbMG72hJ8OJK (Archive); library RES-26, L17636–17637. Status: "Status: canonical working nucleus"; 09 "C-recorded"; superseded five-prior set (P1-02).
+**Supporting (older prior set, optional):** governed-logic-nucleus-v0.5: Drive 1igYxSsot85y9QYefE38QxbMG72hJ8OJK (Archive); library RES-26, L17639–17640. Status: "Status: canonical working nucleus"; 09 "C-recorded"; superseded five-prior set (P1-02).
 
-Intelligibility is real. Reality has apprehensible order and can be meaningfully represented and reasoned about.
+Moral obligation is real and binding.
+Obligation is not reducible to preference, consensus, utility, survival, coercion, or descriptive regularity.
 
 _Word count of the body text above: 1305._
 
