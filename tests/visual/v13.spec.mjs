@@ -323,3 +323,33 @@ test('v14: no page dates in any page, og/twitter tag or feed (source edition lin
  expect(DATE.test(feed)).toBe(false);
  expect(bad).toEqual([]);
 });
+// v14.2 (Paul 2026-11-02 18:08 voice call; Vera's mockup apex-1440/390-video-spot): the homepage video band sits directly
+// under the hero and before the core section, ready to play: controls, no autoplay, captions on by default, its own poster.
+test('v14.2: homepage video band under the hero: centred 16:9 player, no autoplay, default English captions, poster served',async({page,request})=>{
+ const bad=[];
+ for(const [width,reduce] of [[1440,'no-preference'],[390,'reduce'],[320,'no-preference']]){
+  await page.emulateMedia({reducedMotion:reduce});
+  await page.setViewportSize({width,height:900});
+  await page.goto('/',{waitUntil:'load'});
+  await page.waitForTimeout(800);
+  const m=await page.evaluate(()=>{const band=document.querySelector('section.gl-video');const v=band&&band.querySelector('video');if(!v)return null;
+   const r=v.getBoundingClientRect();const t=v.querySelector('track');
+   return {prev:band.previousElementSibling&&band.previousElementSibling.className,next:band.nextElementSibling&&band.nextElementSibling.className,
+    autoplay:v.autoplay,paused:v.paused,muted:v.muted,controls:v.controls,preload:v.getAttribute('preload'),playsinline:v.hasAttribute('playsinline'),poster:v.getAttribute('poster'),
+    kind:t&&t.kind,srclang:t&&t.srclang,label:t&&t.label,def:t&&t.default,mode:v.textTracks[0]&&v.textTracks[0].mode,
+    w:r.width,h:r.height,left:r.left,right:innerWidth-r.right,words:band.textContent.trim(),h1:document.querySelectorAll('h1').length,
+    bg:getComputedStyle(band).backgroundImage!=='none'||getComputedStyle(band).backgroundColor};});
+  if(!m){bad.push(`${width}: no video band`);continue;}
+  if(m.prev!=='gl-hero'||m.next!=='gl-core')bad.push(`${width}: band not between hero and core (${m.prev} / ${m.next})`);
+  if(m.autoplay||!m.paused||m.muted)bad.push(`${width}: autoplay ${m.autoplay} paused ${m.paused} muted ${m.muted}`);
+  if(!m.controls||m.preload!=='metadata'||!m.playsinline)bad.push(`${width}: controls/preload/playsinline`);
+  if(m.kind!=='captions'||m.srclang!=='en'||m.label!=='English'||!m.def||m.mode!=='showing')bad.push(`${width}: captions track ${m.kind} ${m.srclang} ${m.label} ${m.def} ${m.mode}`);
+  if(m.words!=='')bad.push(`${width}: band adds words: ${m.words}`);
+  if(m.h1!==1)bad.push(`${width}: h1 count ${m.h1}`);
+  if(Math.abs(m.w/m.h-16/9)>0.02)bad.push(`${width}: player not 16:9 (${m.w}x${m.h})`);
+  if(width===1440&&(m.w>960.5||Math.abs(m.left-m.right)>1))bad.push(`1440: player ${m.w}px wide, not centred at 960 max`);
+  if(width<900&&Math.abs(m.w-width)>1)bad.push(`${width}: player ${m.w}px, not full width`);
+  for(const u of [m.poster,'/assets/video/gl-home-explainer.en.vtt','/assets/video/gl-home-explainer.mp4']){const r=await request.get(u);if(!r.ok())bad.push(`${u} ${r.status()}`);}
+ }
+ expect(bad).toEqual([]);
+});
