@@ -1,0 +1,157 @@
+/* v14 design rollout (Paul 2026-11-01 22:34 "Let's get this big push out."; QA layout assessment 2026-11-01): the
+   homepage design system on inner pages by type. Body classes come from scripts/site_layout.py: gl-v14 gl-type-<type>.
+   Layout and art only; no text. Every motion is off under prefers-reduced-motion. page-two never loads this file. */
+
+/* One header: the homepage bar (site.css set the old inner header to two columns; the homepage grid holds again). */
+@media (min-width:1280px){body.gl-site.gl-v14 header#gl-home-bar{grid-template-columns:auto 1fr auto}
+  body.gl-site.gl-v14 #gl-home-bar nav{justify-self:start;gap:calc(var(--p)*18)}
+  body.gl-site.gl-v14 .gl-brand-name{font-size:calc(var(--p)*34.6);letter-spacing:-.005em}}
+@media (min-width:900px) and (max-width:1279px){body.gl-site.gl-v14 header#gl-home-bar{grid-template-columns:auto minmax(0,1fr) auto}
+  body.gl-site.gl-v14 #gl-home-bar nav{justify-self:stretch;justify-content:space-between;gap:0;max-width:640px;margin:0 auto;width:100%}}
+@media (min-width:900px){body.gl-site.gl-v14 #gl-home-bar nav{flex-wrap:nowrap}}
+
+/* Art above the fold: the page's existing card art fills the right of the dark intro band, fading in from the text. */
+body.gl-site.gl-v14 .gl-intro>.gl-art{position:absolute;z-index:-1;top:0;bottom:0;left:48%;width:calc(52% + 50vw);height:100%;max-width:none;object-fit:cover;object-position:left center;opacity:.9;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28%);mask-image:linear-gradient(90deg,transparent 0,#000 28%);pointer-events:none}
+body.gl-site.gl-v14 .gl-intro>img.gl-art[src$=".svg"]{object-fit:contain;object-position:right center;opacity:.55}
+body.gl-site.gl-v14 .gl-intro{min-height:clamp(260px,26vw,380px);box-sizing:border-box}
+body.gl-site.gl-type-doc .gl-intro{min-height:0}
+body.gl-site.gl-type-doc .gl-intro>.gl-art{opacity:.45}
+@media (max-width:800px){
+  body.gl-site.gl-v14 .gl-intro>.gl-art{left:calc(0px - var(--spine));width:calc(100% + 2 * var(--spine));opacity:.32;-webkit-mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 100%)}
+  body.gl-site.gl-v14 .gl-intro{min-height:0}
+}
+body.gl-site.gl-type-about .about-hero{position:relative;isolation:isolate}
+body.gl-site.gl-type-about .about-hero>.gl-art{position:absolute;z-index:-1;top:0;bottom:0;right:calc(0px - var(--spine));width:60%;height:100%;object-fit:contain;object-position:right center;opacity:.35;pointer-events:none}
+
+/* Principle and concept pages: the enlarged homepage principle tile in the hero, the related-principles band. */
+body.gl-site.gl-v14 .gl-tile{display:grid;place-items:center;width:clamp(64px,8vw,120px);height:clamp(64px,8vw,120px);margin:0 0 clamp(16px,2vw,28px);border:1px solid rgba(108,200,240,.35);border-radius:8px;
+  background:radial-gradient(circle at 50% 40%,rgba(47,156,230,.22),rgba(2,11,19,.6) 70%);box-shadow:0 0 40px rgba(47,156,230,.18)}
+body.gl-site.gl-v14 .gl-tile svg{width:58%;height:58%;fill:none;stroke:#6cc8f0;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+body.gl-site.gl-v14 .gl-tile img{width:62%;height:auto}
+body.gl-site.gl-v14 .principle-nav{position:relative;isolation:isolate;display:grid!important;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px!important;margin-top:clamp(48px,6vw,88px)!important;padding:clamp(32px,4vw,56px) 0!important;border-top:0!important}
+body.gl-site.gl-v14 .principle-nav::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:-100vw;right:-100vw;background:#eef2f6}
+body.gl-site.gl-v14 .principle-nav .gl-go{display:block}
+body.gl-site.gl-v14 .principle-nav a{display:flex!important;flex-direction:column;align-items:flex-start;gap:12px;width:100%!important;height:100%;min-height:44px;padding:18px 18px 16px!important;box-sizing:border-box;background:#fdfdfd;border:1px solid #e3e6e9;border-radius:5px;color:#0b1015;text-decoration:none;text-align:left;font:600 16px/1.2 var(--sans)!important}
+body.gl-site.gl-v14 .principle-nav a:hover{border-color:#2f8fd2;color:#003059}
+body.gl-site.gl-v14 .principle-nav a[aria-current="page"]{border-color:#1e4e84;box-shadow:inset 0 -3px 0 #2f9ce6}
+body.gl-site.gl-v14 .gl-rel-icon svg,body.gl-site.gl-v14 .gl-rel-icon img{display:block;width:36px;height:36px;fill:none;stroke:#1e4e84;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+/* At 1100+ the principle page is the text column plus the related-principles panel (sticky) on the right, and the
+   enlarged tile sits at the right of the hero. */
+@media (min-width:1100px){body.gl-site.gl-type-principle .principle-main{display:grid;grid-template-columns:minmax(0,680px) minmax(240px,320px);justify-content:space-between;column-gap:64px;align-items:start}
+  body.gl-site.gl-type-principle .principle-main>.gl-intro{grid-column:1 / -1}
+  body.gl-site.gl-type-principle .principle-main>.principle-passage{grid-column:1}
+  body.gl-site.gl-type-principle .principle-main>.principle-nav{grid-column:2;grid-row:2 / span 20;position:sticky;top:calc(var(--p)*108 + 32px);grid-template-columns:1fr;margin-top:0!important;padding:0!important}
+  body.gl-site.gl-type-principle .principle-main>.principle-nav::before{content:none}
+  body.gl-site.gl-type-principle .principle-nav a{flex-direction:row!important;align-items:center;padding:10px 14px!important}
+  body.gl-site.gl-type-principle .gl-rel-icon svg,body.gl-site.gl-type-principle .gl-rel-icon img{width:28px;height:28px}
+  body.gl-site.gl-type-principle .principle-nav{gap:8px!important}
+  body.gl-site:is(.gl-type-principle,.gl-type-concept) .gl-intro>.gl-tile{position:absolute;right:clamp(0px,6vw,96px);top:50%;transform:translateY(-50%);width:clamp(140px,13vw,190px);height:clamp(140px,13vw,190px);margin:0}
+}
+
+/* Treatises: masthead bar with reading progress, sticky contents rail (drawer on phones), chapter pager. */
+body.gl-site.gl-type-treatise .gl-treatise-bar{position:sticky;top:calc(var(--p)*108);z-index:30;display:flex;align-items:center;gap:16px;min-height:48px;margin:0 calc(0px - var(--spine));padding:4px var(--spine);box-sizing:border-box;background:rgb(2,11,19);box-shadow:0 0 0 100vmax rgb(2,11,19);clip-path:inset(0 -100vmax);border-bottom:1px solid rgba(108,200,240,.18);color:#e2e7eb}
+body.gl-site.gl-type-treatise .gl-treatise-title{flex:1;min-width:0;display:flex;align-items:center;min-height:44px;color:#fff;font:500 16px/1.2 var(--serif);text-decoration:none}
+body.gl-site.gl-type-treatise .gl-toc-toggle{display:none;min-height:44px;padding:0 14px;border:1px solid #2f8fd2;border-radius:4px;background:transparent;color:#58bdf0;font:500 14px/1 var(--sans);cursor:pointer}
+body.gl-site.gl-type-treatise .gl-progress{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
+body.gl-site.gl-type-treatise .gl-progress>span{display:block;height:100%;width:100%;transform:scaleX(var(--gl-read,0));transform-origin:0 50%;background:linear-gradient(90deg,#1a76bb,#56c4f2)}
+body.gl-site.gl-type-treatise .gl-toc ol{list-style:none;margin:0;padding:0;counter-reset:ch}
+body.gl-site.gl-type-treatise .gl-toc li{counter-increment:ch;margin:0}
+body.gl-site.gl-type-treatise .gl-toc a{display:flex;gap:10px;min-height:44px;box-sizing:border-box;align-items:center;padding:6px 10px;border-left:2px solid #d3dfe9;color:#33404c;font:400 14px/1.35 var(--sans);text-decoration:none}
+body.gl-site.gl-type-treatise .gl-toc a::before{flex:none;content:counter(ch,decimal-leading-zero);color:#1e4e84;font-weight:600;font-variant-numeric:tabular-nums}
+body.gl-site.gl-type-treatise .gl-toc a:hover,body.gl-site.gl-type-treatise .gl-toc a[aria-current="true"]{border-left-color:#2f9ce6;color:#003059;background:#eef4fa}
+body.gl-site.gl-type-treatise .gl-pager{display:flex;justify-content:space-between;gap:16px;margin-top:28px;padding-top:16px;border-top:1px solid rgba(23,32,51,.12)}
+body.gl-site.gl-type-treatise .gl-pager a{display:inline-flex;align-items:center;gap:8px;min-height:44px;max-width:48%;color:#0c3b6c;font:500 14px/1.3 var(--sans);text-decoration:none}
+body.gl-site.gl-type-treatise .gl-pager a:hover{text-decoration:underline}
+body.gl-site.gl-type-treatise .gl-pager .gl-next-ch{margin-left:auto;text-align:right}
+body.gl-site.gl-type-treatise .business-section{scroll-margin-top:calc(var(--p)*108 + 64px)}
+@media (min-width:1100px){
+  body.gl-site.gl-type-treatise .document-main>article{display:grid!important;grid-template-columns:minmax(0,680px) minmax(240px,1fr)!important;column-gap:64px!important}
+  body.gl-site.gl-type-treatise .document-main>article>*{grid-column:1}
+  body.gl-site.gl-type-treatise .document-main>article>.gl-intro{grid-column:1 / -1}
+  body.gl-site.gl-type-treatise .document-main>article>.gl-toc{grid-column:2;grid-row:2 / span 40;align-self:start;position:sticky;top:calc(var(--p)*108 + 72px);max-height:calc(100vh - var(--p)*108 - 96px);overflow:auto;padding:4px 0}
+  body.gl-site.gl-type-treatise .document-main>article>aside.provenance{grid-column:1;grid-row:auto!important}
+}
+@media (max-width:1279px){body.gl-site.gl-type-treatise .gl-treatise-bar{top:72px}}
+@media (max-width:1099px){
+  body.gl-site.gl-type-treatise .gl-toc-toggle{display:inline-flex;align-items:center}
+  body.gl-site.gl-type-treatise .gl-toc{margin:0 0 32px}
+  body.gl-site.gl-type-treatise.gl-js .gl-toc{position:fixed;z-index:35;left:0;right:0;top:var(--gl-bar-bottom,120px);max-height:70vh;overflow:auto;margin:0;padding:12px var(--spine) 20px;background:#fff;box-shadow:0 18px 40px rgba(9,20,32,.25);display:none}
+  body.gl-site.gl-type-treatise.gl-js .gl-toc.gl-open{display:block}
+}
+@media (max-width:899px){body.gl-site.gl-type-treatise .gl-treatise-bar{top:0}}
+
+/* Articles: dark hero with the card art, a wide reading measure, the share row. */
+body.gl-site.gl-type-article{--measure:46rem}
+body.gl-site.gl-type-article .document-main>article{max-width:none}
+body.gl-site.gl-type-article .gl-intro{min-height:clamp(280px,30vw,420px);display:flex;flex-direction:column;justify-content:flex-end}
+body.gl-site .gl-share{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;max-width:var(--measure);margin:clamp(40px,5vw,64px) 0 0;padding-top:24px;border-top:1px solid rgba(23,32,51,.14)}
+body.gl-site .gl-share a,body.gl-site .gl-share button{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid #c9d6e2;border-radius:4px;background:#fdfdfd;color:#0c3b6c;font:500 14px/1 var(--sans);text-decoration:none;cursor:pointer}
+body.gl-site .gl-share a:hover,body.gl-site .gl-share button:hover{border-color:#2f8fd2;color:#003059}
+body.gl-site .gl-share .gl-copied{font:400 13px/1 var(--sans);color:#33404c}
+
+/* Company, research, the prototype: alternating full-bleed bands, as the homepage Problem band. */
+body.gl-site.gl-type-bands .document-main>article{display:block!important}
+body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section){position:relative;isolation:isolate;margin:0!important;padding:clamp(40px,5vw,72px) 0!important;background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;max-width:none!important}
+body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section)::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:-100vw;right:-100vw;background:#f9f8f8}
+body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section):nth-of-type(even)::before{background:#020b13;background-image:radial-gradient(90% 140% at 70% 0%,#04182a 0%,#020b13 60%)}
+body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section):nth-of-type(even) :is(h2,h3,strong){color:#fff}
+body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section):nth-of-type(even) :is(p,li,dd,dt,span,blockquote,.label){color:#d5dce2}
+body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section):nth-of-type(even) a{color:#6cc8f0}
+body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section):nth-of-type(even) :is(.panel,blockquote){background:transparent}
+@media (min-width:1100px){
+  body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section){display:flow-root;padding-left:444px!important}
+  body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section)>:is(.label,.eyebrow,h2){float:left;clear:left;width:380px;max-width:380px;margin-left:-444px}
+  body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section)>h2{margin-top:0}
+  body.gl-site.gl-type-bands :is(.document-main>article>section,.document-main>section)>:not(.label,.eyebrow,h2):first-of-type{margin-top:0}
+  body.gl-site.gl-type-bands .document-main>article>:is(aside.provenance,.reading-links){grid-row:auto!important;margin-top:clamp(40px,5vw,64px)}
+}
+}
+
+/* /articles/ (QA option A): featured card, the homepage card grid, one Latest snap rail. */
+body.gl-site .gl-articles .gl-featured{margin:0 0 clamp(32px,4vw,48px)}
+body.gl-site .gl-articles :is(.gl-featured,.gl-art-grid,.gl-rail-band){max-width:none;width:100%}
+body.gl-site .gl-articles .gl-featured>.gl-card{width:100%}
+body.gl-site .gl-articles .gl-card{height:auto!important}
+body.gl-site .gl-articles .gl-card h3{line-height:1.2!important}
+body.gl-site .gl-articles .gl-card-body>p:not(.gl-card-kind){line-height:1.55!important;max-width:none!important}
+body.gl-site .gl-articles .gl-card img{height:auto!important;aspect-ratio:867/291}
+body.gl-site .gl-articles .gl-card-featured{display:grid!important;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+body.gl-site .gl-articles .gl-card-featured img{height:100%!important;min-height:280px;aspect-ratio:auto}
+body.gl-site .gl-articles .gl-card-featured h3{font-size:clamp(26px,2.6vw,36px)!important}
+body.gl-site .gl-articles .gl-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;width:auto!important;margin:0}
+body.gl-site .gl-articles .gl-rail-band{margin-top:clamp(40px,5vw,72px)}
+body.gl-site .gl-articles .gl-rail-band h2{margin:0 0 14px;color:#1b222a;font:600 13px/1.2 var(--sans)!important;letter-spacing:.17em;text-transform:uppercase}
+body.gl-site .gl-articles .gl-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,400px);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 16px;overscroll-behavior-x:contain}
+body.gl-site .gl-articles .gl-rail>.gl-card{scroll-snap-align:start}
+@media (max-width:899px){
+  body.gl-site .gl-articles .gl-card-featured{grid-template-columns:minmax(0,1fr)}
+  body.gl-site .gl-articles .gl-card-featured img{min-height:0;height:auto!important;aspect-ratio:867/291}
+  body.gl-site .gl-articles .gl-cards{grid-template-columns:minmax(0,1fr)}
+  body.gl-site .gl-articles .gl-rail{grid-auto-columns:82%}
+}
+
+/* The Truth with Paul (Paul 2026-11-01 22:36): a coming-soon media page on a deep-blue hero. */
+body.gl-site.gl-type-media{background:#00060c}
+body.gl-site .gl-twp{display:block;padding:0!important;max-width:none!important}
+body.gl-site .gl-twp-hero{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;min-height:calc(100vh - var(--p)*108);min-height:calc(100svh - var(--p)*108);padding:clamp(56px,8vw,120px) 22px;text-align:center;
+  background:radial-gradient(70% 80% at 50% 45%,#0a4f8a 0%,#00335e 38%,#001a33 70%,#00060c 100%)}
+body.gl-site .gl-twp-geo{position:absolute;z-index:-1;left:50%;top:50%;width:min(140vw,1500px);height:auto;max-width:none;transform:translate(-50%,-50%);opacity:.55;pointer-events:none}
+body.gl-site .gl-twp-seed{position:absolute;z-index:-1;left:50%;top:50%;width:min(70vw,560px);height:auto;transform:translate(-50%,-50%);opacity:.16;filter:drop-shadow(0 0 40px rgba(86,196,242,.6));pointer-events:none;animation:gl-twp-turn 90s linear infinite}
+body.gl-site .gl-twp-copy{display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2vw,24px)}
+body.gl-site .gl-twp h1{margin:0;max-width:none!important;color:#fff;font:600 clamp(44px,8.4vw,120px)/1 var(--serif)!important;letter-spacing:-.02em;text-shadow:0 0 60px rgba(47,156,230,.45)}
+body.gl-site .gl-twp-soon{margin:0;color:#56c4f2;font:500 clamp(22px,3.4vw,44px)/1.1 var(--sans);letter-spacing:.32em;text-transform:uppercase;text-indent:.32em;animation:gl-twp-glow 3.2s ease-in-out infinite alternate}
+body.gl-site .gl-twp a.gl-twp-sub{display:inline-flex;align-items:center;gap:14px;width:auto;height:auto;margin-top:clamp(8px,1.5vw,16px);min-height:56px;padding:0 28px;border:0;border-radius:4px;background:linear-gradient(90deg,#00477a 0%,#0a6fb4 38%,#1a76bb 100%);color:#fff!important;font:500 18px/1.2 var(--sans)!important;text-decoration:none;box-shadow:0 0 28px rgba(30,140,220,.35)}
+body.gl-site .gl-twp a.gl-twp-sub:hover{box-shadow:0 0 40px rgba(86,196,242,.55)}
+body.gl-site .gl-twp a.gl-twp-sub:focus-visible{outline:2px solid #6cc8f0;outline-offset:3px}
+body.gl-site .gl-twp .gl-go{display:block}
+@keyframes gl-twp-turn{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes gl-twp-glow{from{text-shadow:0 0 0 rgba(86,196,242,0)}to{text-shadow:0 0 28px rgba(86,196,242,.75)}}
+
+@media (prefers-reduced-motion:reduce){
+  body.gl-site .gl-twp-seed,body.gl-site .gl-twp-soon{animation:none}
+  body.gl-site .gl-articles .gl-rail{scroll-behavior:auto}
+  body.gl-site.gl-type-treatise .gl-progress>span{transition:none}
+}
+html:has(body.gl-type-treatise){scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html:has(body.gl-type-treatise){scroll-behavior:auto}}

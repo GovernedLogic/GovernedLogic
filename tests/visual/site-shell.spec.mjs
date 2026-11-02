@@ -17,7 +17,8 @@ const ROUTES = [
   // WEB-205/WEB-231: Paul's previous homepage main, kept byte-as-is.
   { path: "/page-two/", slug: "page-two" }
 ];
-const EXPECTED_NAVIGATION = [
+// v14 (Paul 2026-11-01 22:34): one header everywhere. Only /page-two/ keeps its own (kept exactly as it was).
+const PAGE_TWO_NAVIGATION = [
   { href: "/concepts/governed-logic/", label: "Governed Logic" },
   { href: "/concepts/ultimate-grounding/", label: "Ultimate Grounding" },
   { href: "/concepts/governed-intelligence/", label: "Governed Intelligence" },
@@ -36,7 +37,9 @@ const HOME_NAVIGATION = [
   { href: "/research/", label: "Research" },
   { href: "/concepts/governed-logic/", label: "Governed Logic" },
   { href: "/about/", label: "About" }, // QA-4
-  { href: "/company/", label: "Company" }
+  { href: "/company/", label: "Company" },
+  // v14 (Paul 2026-11-01 22:36): The Truth with Paul, label = the channel name.
+  { href: "/the-truth-with-paul/", label: "The Truth with Paul" }
 ];
 
 for (const routeDefinition of ROUTES) {
@@ -127,7 +130,7 @@ for (const routeDefinition of ROUTES) {
 
     const isMobile = testInfo.project.name.startsWith("mobile-");
     // WEB-228/C9: the homepage header lists its own items; every other route keeps the reviewed shell.
-    const expectedNavigation = routeDefinition.path === "/" ? HOME_NAVIGATION : EXPECTED_NAVIGATION;
+    const expectedNavigation = routeDefinition.path === "/page-two/" ? PAGE_TWO_NAVIGATION : HOME_NAVIGATION;
     if (isMobile) {
       // The disclosure is gone. The five doors stay visible, each at least 44px, with no horizontal overflow.
       await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);

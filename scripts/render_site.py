@@ -6,6 +6,8 @@ import argparse, hashlib, json, re, shutil, sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'content'))
 import terms as TERMS, principles as PRINCIPLES
+sys.path.insert(0,str(ROOT/'scripts'))
+import site_layout as LAYOUT
 PAGES=('index.html','challenge/index.html','company/index.html','research/index.html','about/index.html','faq/index.html','concepts/index.html','concepts/governed-logic/index.html','concepts/governed-intelligence/index.html','concepts/ultimate-grounding/index.html','concepts/alpha-and-omega-reasoning/index.html','concepts/governing-referent/index.html','concepts/sufficient-grounding/index.html','mechanism.html','sources/index.html','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html','page-two/index.html')
 SOURCE_FILES=('sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf','sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf','sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf','sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf','sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt')
 # v12 round 2 (QA L1; WEB-227 SIXTH): no longer published, because nothing in the built site loads them (the homepage
@@ -17,13 +19,18 @@ RETIRED_ASSETS=('assets/opening.css', 'assets/opening.js', 'assets/earth-rendere
 # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): paths no published page may link to (with RETIRED_ASSETS and anything outside
 # PUBLIC_FILES). Unpublished routes (e.g. principle pages awaiting Paul's approval) are added here until published.
 WITHHELD_LINK_TARGETS=('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json',*PRINCIPLES.withheld())
-ASSETS=('assets/home-chime.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png')
+ASSETS=('assets/home-chime.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png',
+# v14 (Paul 2026-11-01 22:34 "Let's get this big push out."): the page-type layer and the og images (assets/og/, made by
+# scripts/make_og.py from each page's art and visible h1).
+'assets/v14.css','assets/v14.js',*sorted(f'assets/og/{p.name}' for p in (ROOT/'assets/og').glob('*.png')))
 GENERATED=('library/index.html','publication/index.html','publication/catalog.json','publication/search-index.json','publication/manifest.json','feed.xml','robots.txt','sitemap.xml',
 # v13 machine layer (Paul's v13 approval, Nov 1 2026, 12:30 PM ET; Paul's parity rule): generated from content/terms.py.
 'terms.jsonld','llms.txt',
 # Principle pages (Paul, Nov 1 2026, 12:31 PM ET: "I want a page for each individual principle"): routes come from the
 # data list in content/principles.py and exist only while its PUBLISH flag is on (off: text on hold; Governor, Rigel).
-*PRINCIPLES.routes())
+*PRINCIPLES.routes(),
+# v14: the articles index (QA option A) and The Truth with Paul placeholder (Paul 2026-11-01 22:36).
+'articles/index.html','the-truth-with-paul/index.html')
 PUBLIC_FILES=(*PAGES,*SOURCE_FILES,*ASSETS,'challenge/index.json','faq/index.json','CNAME','.nojekyll',*GENERATED)
 BASE='https://governedlogic.com'
 # The source editions' titles as the library and publication pages list them (with their September 2026 edition date).
@@ -73,7 +80,7 @@ def intro_band(source):
     if not h1:return source
     a=h1['parent']
     while a is not None and a is not main:
-        if re.search(r'\b(about-hero|front-door)\b',a['cls']):return source
+        if re.search(r'\b(about-hero|front-door|gl-intro|gl-twp-hero)\b',a['cls']):return source
         a=a['parent']
     parent=h1['parent'];kids=[i for i in sp.items if i['parent'] is parent]
     k=kids.index(h1);start=kids[0]['start'] if k else h1['start'];end=h1['end']
@@ -168,6 +175,8 @@ def anchors(source,path):
     elif f'"{own}#page"' in jsonld:add(r'<body\b[^>]*>','page')
     if f'"{own}#breadcrumb"' in jsonld:add(r'<nav\b[^>]*aria-label="Breadcrumb"[^>]*>','breadcrumb')
     if path==TERMS.SET_PAGE:add(r'<h1\b[^>]*>','terms')
+    # v14 Article JSON-LD (site_layout.article_jsonld): <url>#article names the article element.
+    if f'"{own}#article"' in jsonld:add(r'<article\b[^>]*>','article')
     return source
 def render(source,path):
     if path=='index.html':
@@ -188,16 +197,27 @@ def render(source,path):
         source=re.sub(r'<body(?: class="([^"]*)")?>',lambda m:'<body class="'+((m.group(1)+' ') if m.group(1) else '')+'gl-site">',source,count=1)
         # v13 CLS (QA research 2026-11-01; Paul's v13 approval, Nov 1 2026, 12:30 PM ET): inner pages preload the two
         # text fonts as the homepage does, so text lays out once instead of reflowing when the fonts arrive.
-        source=source.replace('</head>','<link rel="stylesheet" href="/assets/home.css"><link rel="stylesheet" href="/assets/site.css">'+FONT_PRELOADS+'</head>',1)
-    for sheet in ('restored-site.css','home.css','site.css'):
+        source=source.replace('</head>','<link rel="stylesheet" href="/assets/home.css"><link rel="stylesheet" href="/assets/site.css">'+('<link rel="stylesheet" href="/assets/v14.css">' if path!='page-two/index.html' else '')+FONT_PRELOADS+'</head>',1)
+        # v14 (Paul 2026-11-01 22:34): the homepage design system by page type (scripts/site_layout.py). page-two: none.
+        source=LAYOUT.apply(source,path)
+    if path!='page-two/index.html':source=LAYOUT.head_tags(source,path,LAYOUT.page_type(path))
+    for sheet in ('restored-site.css','home.css','site.css','v14.css'):
         style_version=hashlib.sha256((ROOT/'assets'/sheet).read_bytes()).hexdigest()[:12]
         source=source.replace(f'href="/assets/{sheet}"',f'href="/assets/{sheet}?v={style_version}"')
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)
     anchor=main.group(1) if main else 'content'
     header=(ROOT/'components/header.html').read_text(encoding='utf-8').replace('href="#content"',f'href="#{anchor}"')
-    if path=='index.html':header=re.sub(r'<header class="site-bar"[^>]*>[\s\S]*?</header>',lambda _: (ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip(),header,count=1)
+    # v14 one header (Paul 2026-11-01 22:34; QA layout 2026-11-01): the homepage bar on every page but page-two, which
+    # keeps its own header exactly as it was. Home is the current item only on the homepage; elsewhere the page's own
+    # nav item (if it has one) is.
     current=route(path)
-    if current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
+    if path!='page-two/index.html':
+        bar=(ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip()
+        if path!='index.html':
+            bar=bar.replace(' aria-current="page">Home<','>Home<')
+            bar=re.sub(r'(<form class="gl-go" method="get" action="'+re.escape(current)+r'"><button type="submit")>',r'\1 aria-current="page">',bar,count=1)
+        header=re.sub(r'<header class="site-bar"[^>]*>[\s\S]*?</header>',lambda _: bar,header,count=1)
+    elif current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
     footer=(ROOT/'components/footer.html').read_text(encoding='utf-8')
     if 'id="paul"' in source:footer=footer.replace(' id="paul"','')
     source=source.replace('</head>',machine_block(path)+'</head>',1)
@@ -206,6 +226,7 @@ def render(source,path):
         for slug,(href,_) in PRINCIPLES.links().items():
             if f'<article id="{slug}"><h3>' not in source:continue   # Identity, Correspondence: no heading on /concepts/
             source=re.sub(r'(<article id="'+slug+r'"><h3>)([\s\S]*?)(</h3>)',lambda m:m.group(1)+f'<span class="gl-go"><a href="{href}" class="gl-link">'+m.group(2)+'</a></span>'+m.group(3),source,count=1)
+    source=source.replace('type="application/atom+xml" href="/feed.xml"','type="application/rss+xml" href="/feed.xml"')
     return anchors(links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer)),path)
 # Governor's 2:01 PM ET ruling (c) on Paul's parity rule: a generated page's meta description is its own visible lede,
 # verbatim (was one shared sentence that appears on neither page).
@@ -239,25 +260,34 @@ def build(destination):
         for slug,entry in available:
             p=PRINCIPLES.route_path(slug);target=destination/p;target.parent.mkdir(parents=True,exist_ok=True)
             target.write_text(render(PRINCIPLES.page(slug,entry,BASE,True,available,term_ids.get(slug)),p),encoding='utf-8',newline='\n');principle_pages.append(p)
+    # v14 generated pages (Paul 2026-11-01 22:34 and 22:36): /articles/ from the two live articles' own card art, h1 and
+    # lede; /the-truth-with-paul/ placeholder. Neither is listed on /library/ or /publication/ (no visible change there).
+    v14_pages=['articles/index.html','the-truth-with-paul/index.html']
+    v14_src={'articles/index.html':LAYOUT.articles_page({a:(destination/a).read_text(encoding='utf-8') for a in LAYOUT.ARTICLES}),'the-truth-with-paul/index.html':LAYOUT.truth_with_paul_page()}
+    for p in v14_pages:
+        target=destination/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(links(render(v14_src[p],p)),encoding='utf-8',newline='\n')
+    unlisted={'/articles/','/the-truth-with-paul/'}
     records=[]
-    for p in (*PAGES,*principle_pages):
+    for p in (*PAGES,*principle_pages,*v14_pages):
         source=(destination/p).read_text(encoding='utf-8');title=re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)
         title=unescape(re.sub('<[^>]+>','',title.group(1))).strip() if title else 'Governed Logic Reasoning Systems'
         if p=='index.html':title='Governed Logic Reasoning Systems'
-        records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'principle' if p in principle_pages else 'page','text':main_text(source),**({'description':unescape(re.search(r'<meta name="description" content="([^"]*)"',source).group(1))} if p in principle_pages else {}),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
+        records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'principle' if p in principle_pages else 'page','text':main_text(LAYOUT.without_ui(source,p)),**({'description':unescape(re.search(r'<meta name="description" content="([^"]*)"',source).group(1))} if p in principle_pages else {}),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
     for p,title in zip(SOURCE_FILES,SOURCE_TITLES):records.append({'id':BASE+'/'+p,'title':title+' · Source edition','url':BASE+'/'+p,'path':'/'+p,'type':'source','text':title+' · September 2026','sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
-    entries=''.join(f'<article class="library-item" data-record="{r["id"]}" data-kind="{r["type"]}"><span class="eyebrow">{r["type"]}</span><h2 style="font-size:27px"><form class="gl-go" method="get" action="{r["path"]}"><button type="submit">{escape(r["title"])} →</button></form></h2><p>{escape(r["text"][:200])}…</p></article>' for r in records if r['path']!='/' and r['type']!='principle')
+    entries=''.join(f'<article class="library-item" data-record="{r["id"]}" data-kind="{r["type"]}"><span class="eyebrow">{r["type"]}</span><h2 style="font-size:27px"><form class="gl-go" method="get" action="{r["path"]}"><button type="submit">{escape(r["title"])} →</button></form></h2><p>{escape(r["text"][:200])}…</p></article>' for r in records if r['path']!='/' and r['type']!='principle' and r['path'] not in unlisted)
     form='<p class="lede">Explore the reasoning architecture, the research, and the original source editions.</p><form class="library-search" role="search" action="/library/"><div class="library-query"><label for="library-query">Search the library</label><input id="library-query" name="q" type="search" placeholder="A concept, title, or phrase" aria-controls="library-results"></div><div><label for="library-kind">Show</label><select id="library-kind" name="type"><option value="">All works</option><option value="concept">Concepts</option><option value="page">Pages &amp; articles</option><option value="source">Source editions</option></select></div><button id="library-clear" type="button" hidden>Clear</button></form><p id="library-search-mode">All works are available below.</p><p id="library-count" role="status"></p><p id="library-empty" hidden>No matching works. Try a different term.</p>'
     generated={'library/index.html':document('The library','library/index.html',form+'<div id="library-results">'+entries+'</div>','<script src="/assets/library.js" defer></script>'),
     'publication/index.html':document('Publication record','publication/index.html','<p class="lede">Source editions and the works they support.</p><p>The source documents retain their original September 2026 edition dates. The October 2026 articles remain separately identifiable.</p>'+entries),
     'publication/catalog.json':json.dumps({'records':records},ensure_ascii=False,indent=2),'publication/search-index.json':json.dumps({'records':records},ensure_ascii=False),
     'robots.txt':'User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',
-    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+''+'</url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html'))+'</urlset>',
+    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+''+'</url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html',*v14_pages))+'</urlset>',
     'terms.jsonld':terms_jsonld(),'llms.txt':llms_txt(records),
-    'feed.xml':'<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>Governed Logic publications</title><id>'+BASE+'/</id><updated>2026-10-18T00:00:00Z</updated>'+''.join('<entry><title>'+escape(r['title'])+'</title><id>'+r['id']+'</id><link href="'+r['url']+'"/><updated>2026-10-18T00:00:00Z</updated></entry>' for r in records if r['type']!='principle')+'</feed>'}
+    # v14 queued (WEB-227 SIXTH; Paul 4:50 PM ET Nov 1, no page dates): RSS 2.0 at the same URL, no dates. The channel
+    # description is /publication/'s visible lede.
+    'feed.xml':'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Governed Logic publications</title><link>'+BASE+'/</link><description>'+escape(DOCUMENT_DESCRIPTIONS['publication/index.html'])+'</description>'+''.join('<item><title>'+escape(r['title'])+'</title><link>'+r['url']+'</link><guid isPermaLink="true">'+r['id']+'</guid></item>' for r in records if r['type']!='principle' and r['path'] not in unlisted)+'</channel></rss>\n'}
     for p,value in generated.items():
         target=destination/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(value,encoding='utf-8',newline='\n')
-    manifest={'release':'2026-10-18-substantive-restoration','files':{p:hashlib.sha256((destination/p).read_bytes()).hexdigest() for p in PUBLIC_FILES if p!='publication/manifest.json'}}
+    manifest={'release':'substantive-restoration','files':{p:hashlib.sha256((destination/p).read_bytes()).hexdigest() for p in PUBLIC_FILES if p!='publication/manifest.json'}}
     (destination/'publication/manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
     actual={p.relative_to(destination).as_posix() for p in destination.rglob('*') if p.is_file()}
     if actual!=set(PUBLIC_FILES):raise ValueError('Artifact differs from explicit allowlist')

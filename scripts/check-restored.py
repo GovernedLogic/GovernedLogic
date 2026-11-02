@@ -6,7 +6,11 @@ from urllib.request import Request,urlopen
 from urllib.error import HTTPError,URLError
 from concurrent.futures import ThreadPoolExecutor
 import argparse,hashlib,json,re,tempfile,time
+from site_layout import TWP_URL
 from render_site import PRINCIPLES,ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS,WITHHELD_LINK_TARGETS,SOURCE_FILES,build,route,main_text,BASE
+V14_PAGES=('articles/index.html','the-truth-with-paul/index.html')
+TWP='the-truth-with-paul/index.html'
+TWP_COPY=('The Truth with Paul','Coming soon','Subscribe on YouTube')
 class Doc(HTMLParser):
     def __init__(self):
         super().__init__();self.tags=[];self.ids=[];self.refs=[];self.canonical=[];self.json=[];self.capture=None
@@ -44,7 +48,8 @@ def check(root):
     for p,digest in manifest['files'].items():
         if hashlib.sha256((root/p).read_bytes()).hexdigest()!=digest:errors.append('File changed after build: '+p)
     docs={}
-    for p in (*PAGES,'library/index.html','publication/index.html'):
+    # v14 (Paul 2026-11-01 22:34 and 22:36): /articles/ and /the-truth-with-paul/ are checked as pages too.
+    for p in (*PAGES,'library/index.html','publication/index.html',*V14_PAGES):
         source=(root/p).read_text(encoding='utf-8');d=Doc();d.feed(source);docs[p]=d
         if d.canonical!=[BASE+route(p)]:errors.append('Canonical mismatch: '+p)
         if sum(t=='main' for t,a in d.tags)!=1:errors.append('Main landmark count: '+p)
@@ -52,7 +57,13 @@ def check(root):
         if not any(t=='nav' and a.get('aria-label')=='Primary' for t,a in d.tags):errors.append('Missing primary navigation: '+p)
         if not d.json:errors.append('Missing machine data: '+p)
         if len(d.ids)!=len(set(d.ids)):errors.append('Duplicate IDs: '+p+' '+str([i for i in set(d.ids) if d.ids.count(i)>1]))
-        if len(main_text(source).split())<45:errors.append('Insufficient page content: '+p)
+        if p==TWP:
+            # The Truth with Paul placeholder (Paul 2026-11-01 22:36): exactly its three strings, the h1 the channel name,
+            # and the Subscribe button a plain link to the channel.
+            if main_text(source)!=' '.join(TWP_COPY):errors.append('The Truth with Paul copy is not exactly its three strings: '+repr(main_text(source)))
+            if [re.sub('<[^>]+>','',x).strip() for x in re.findall(r'<h1[^>]*>([\s\S]*?)</h1>',source)]!=[TWP_COPY[0]]:errors.append('The Truth with Paul h1 is not the channel name')
+            if not re.search(r'<a href="'+re.escape(TWP_URL)+r'"[^>]*>Subscribe on YouTube<',source):errors.append('Subscribe on YouTube is not a plain link to '+TWP_URL)
+        elif len(main_text(source).split())<45:errors.append('Insufficient page content: '+p)
         for phrase in ('Substantive material remains withheld','will be linked here after publication review','Follow the Chain Challenge','<!--SITE_HEADER-->','{{definition:'):
             if phrase in source:errors.append('Placeholder or retired copy: '+p)
     for p,d in docs.items():
@@ -122,6 +133,9 @@ def check(root):
     principle_routes=PRINCIPLES.routes()
     for p in sorted(x for x in actual if x.startswith('principles/') and x not in principle_routes):errors.append('Unpublished principle page in the artifact: '+p)
     sitemap=(root/'sitemap.xml').read_text(encoding='utf-8')
+    for p in V14_PAGES:
+        if '<loc>'+BASE+route(p)+'</loc>' not in sitemap:errors.append('Page missing from sitemap: '+p)
+    if 'href="/the-truth-with-paul/"' not in (root/'index.html').read_text(encoding='utf-8').split('</header>')[0]:errors.append('The Truth with Paul is not in the header nav')
     linked={}
     for path in sorted(root.rglob('*.html')):
         d=Doc();d.feed(path.read_text(encoding='utf-8'));rel=path.relative_to(root).as_posix()
@@ -160,8 +174,8 @@ def live(root,base,attempts,delay):
                 with urlopen(base.rstrip('/')+'/'+p,timeout=15) as r:errors.append('Internal file exposed: '+p)
             except HTTPError as e:
                 if e.code!=404:errors.append('Unexpected boundary status: '+p)
-        # Published principle pages must be served (200, built bytes) at their directory URL too.
-        for p in PRINCIPLES.routes():
+        # Published principle pages and the v14 pages must be served (200, built bytes) at their directory URL too.
+        for p in (*PRINCIPLES.routes(),*V14_PAGES):
             try:
                 with urlopen(Request(base.rstrip('/')+'/'+p[:-len('index.html')],headers={'Cache-Control':'no-cache'}),timeout=30) as r:
                     if r.read()!=(root/p).read_bytes():errors.append('Stale bytes: '+p[:-len('index.html')])

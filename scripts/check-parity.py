@@ -17,7 +17,13 @@ Checks the built artifact against content/terms.py (the one source per term):
   6. no page dates anywhere (sitemap lastmod, gl-date-* meta, dated gl-approval* meta, visible "Published / modified",
      dated "Canonical website checklist" line, JSON-LD dates), except the
      /sources/ ScholarlyArticle edition dates, which must equal the visible edition dates; edition dates still shown on
-     /sources/, /library/ and /publication/ (Paul 4:50 PM ET Nov 1, no page dates, source editions kept).
+     /sources/, /library/ and /publication/ (Paul 4:50 PM ET Nov 1, no page dates, source editions kept);
+  7. v14 social tags (Paul 2026-11-01 22:34; WEB-070 parity), on every page but /page-two/ (kept exactly as it was):
+     og:title is the page's visible h1 (the homepage: its brand name), og:url its canonical URL, og:image an absolute
+     URL of a published 1200x627 PNG whose Title text chunk (the only words drawn on it) equals og:title,
+     twitter:card summary_large_image, no twitter:title/description that is not visible, no date in any og/twitter tag;
+     the two articles carry Article JSON-LD whose headline and name are the h1 and whose image is the og:image;
+     /articles/ lists each live article by its own h1, card art and first paragraph.
 Comparison folds typographic quotes, dashes and whitespace only (keywords also fold case: they are tags); it
 reports and never rewrites.
 
@@ -29,6 +35,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
 import json, re, sys
+from html import unescape
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 import render_site as R
@@ -208,6 +215,48 @@ def main(root):
         for title in R.SOURCE_TITLES:
             if norm(title+' · September 2026') not in pages[name].visible:errors.append(f'Edition date not shown on {name}: {title} · September 2026')
     if norm('The source documents retain their original September 2026 edition dates.') not in pages['publication/index.html'].visible:errors.append('Edition-date sentence missing on publication/index.html')
+    # 7. v14 social tags.
+    from PIL import Image
+    import site_layout as L
+    raw_pages={p.relative_to(root).as_posix():p.read_text(encoding='utf-8') for p in root.rglob('*.html')}
+    def metas(raw):
+        out={}
+        for m in re.finditer(r'<meta\s+(?:property|name)="((?:og|twitter):[^"]+)"\s+content="([^"]*)"',raw):out.setdefault(m.group(1),[]).append(unescape(m.group(2)))
+        return out
+    for name,raw in sorted(raw_pages.items()):
+        if name=='page-two/index.html':continue
+        mt=metas(raw);h1=L.h1_text(raw) if name!='index.html' else 'Governed Logic Reasoning Systems'
+        canon=re.search(r'<link rel="canonical" href="([^"]+)"',raw)
+        for k in ('og:title','og:url','og:image','og:type','twitter:card'):
+            if len(mt.get(k,[]))!=1:errors.append(f'{k} on {name}: expected exactly one, found {len(mt.get(k,[]))}')
+        if mt.get('og:title',[None])[0]!=h1:errors.append(f'og:title on {name} is not its visible h1: {mt.get("og:title")} vs {h1!r}')
+        if not canon or mt.get('og:url',[None])[0]!=canon.group(1):errors.append(f'og:url on {name} is not its canonical URL')
+        if mt.get('twitter:card',[None])[0]!='summary_large_image':errors.append(f'twitter:card on {name} is not summary_large_image')
+        for k in ('twitter:title','twitter:description','og:image:alt'):
+            for v in mt.get(k,[]):
+                if norm(v) not in pages[name].visible:errors.append(f'{k} not visible on {name}: {v[:80]}')
+        for k,vs in mt.items():
+            for v in vs:
+                if PAGE_DATE.search(v) or re.search(r'\b20\d\d-\d\d-\d\d\b',v):errors.append(f'Date in {k} on {name} (no page dates)')
+        img=mt.get('og:image',[''])[0]
+        if not img.startswith(R.BASE+'/'):errors.append(f'og:image on {name} is not an absolute {R.BASE} URL: {img}');continue
+        f=root/img[len(R.BASE)+1:]
+        if not f.is_file():errors.append(f'og:image on {name} is not published: {img}');continue
+        with Image.open(f) as im:
+            if im.format!='PNG' or im.size!=(1200,627):errors.append(f'og:image on {name} is not a 1200x627 PNG: {im.format} {im.size}')
+            if im.text.get('Title')!=h1:errors.append(f'og:image on {name} draws {im.text.get("Title")!r}, not its og:title {h1!r}')
+    for a in L.ARTICLES:
+        raw=raw_pages[a];h1=L.h1_text(raw)
+        arts=[n for blk in re.findall(r'<script type="application/ld\+json">([\s\S]*?)</script>',raw) for n in [json.loads(blk)] if n.get('@type')=='Article']
+        if len(arts)!=1:errors.append(f'Article JSON-LD on {a}: expected one, found {len(arts)}');continue
+        n=arts[0]
+        if n.get('headline')!=h1 or n.get('name')!=h1:errors.append(f'Article headline/name on {a} is not its h1')
+        if n.get('image')!=metas(raw).get('og:image',[None])[0]:errors.append(f'Article image on {a} is not its og:image')
+        if any(k.startswith('date') for k in n):errors.append(f'Article JSON-LD on {a} carries a date (no page dates)')
+        idx=pages['articles/index.html'].visible
+        if norm(h1) not in idx:errors.append(f'/articles/ does not list {a} by its h1')
+        lede=re.search(r'<p>([\s\S]*?)</p>',raw[raw.find('</div>',raw.find('<div class="gl-intro"')):]).group(1)
+        if norm(unescape(re.sub(r'<[^>]+>','',lede))) not in idx:errors.append(f'/articles/ card for {a} does not carry its first paragraph verbatim')
     print(f'Parity: {len(terms)} terms, {len(pages)} pages, no allowlist')
     if errors:print('PARITY FAILED:\n'+'\n'.join('  '+e for e in errors));return 1
     print('Parity OK');return 0
