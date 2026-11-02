@@ -14,7 +14,9 @@ for(const route of routes){
   await expect(page.locator('main')).toHaveCount(1);await expect(page.locator('h1')).toHaveCount(1);
   if(route==='/faq/')for(const summary of await page.locator('main details summary').all())await summary.click();
   // The Truth with Paul placeholder carries exactly its three strings (Paul 2026-11-01 22:36); see its own test.
-  if(route!=='/the-truth-with-paul/')expect((await page.locator('main').innerText()).split(/\s+/).length).toBeGreaterThan(45);
+  // v14.1: /articles/ lists each article once (featured card + Latest rail), so it has no 45-word floor; check-restored
+  // and v13.spec check its cards instead.
+  if(route!=='/the-truth-with-paul/'&&route!=='/articles/')expect((await page.locator('main').innerText()).split(/\s+/).length).toBeGreaterThan(45);
   await expect(page.getByRole('navigation',{name:'Primary',exact:true})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
   const images=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.src));expect(images).toEqual([]);

@@ -124,20 +124,33 @@ def article_jsonld(path,source):
           'image':BASE+'/'+og_path(path),'url':BASE+route(path),'mainEntityOfPage':{'@id':BASE+route(path)+'#page'},
           'author':{'@id':BASE+'/about/#paul'},'publisher':{'@id':BASE+'/#organization'},'isPartOf':{'@id':BASE+'/#website'}}
     return '<script type="application/ld+json">'+json.dumps(data,ensure_ascii=False)+'</script>'
+def description(source):
+    """The page's existing visible lede, verbatim (v14.1, Vera's nits b and d; no new prose): its og:description if it
+    has one, else its meta description (both already checked visible by check-parity 3c), else None (/faq/, /articles/
+    have no lede)."""
+    for pat in (r'<meta property="og:description" content="([^"]*)">',r'<meta name="description" content="([^"]*)">'):
+        m=re.search(pat,source)
+        if m:return unescape(m.group(1))
+    return None
 def head_tags(source,path,kind):
     """og:title (the page's h1), og:type, og:url (the canonical URL), og:image (absolute; 1200x627 PNG of the page's art
-    and its h1, assets/og/), twitter:card. Replaces any earlier og:title/og:type/og:url; og:description stays as it was
-    (already checked visible by check-parity 3c). No dates."""
+    and its h1, assets/og/), og:description (the page's visible lede, description()), twitter:card, and twitter:title,
+    twitter:description and twitter:image identical to og (v14.1, Vera's nit c). No dates."""
     title=h1_text(source)
     if path=='index.html':title='Governed Logic Reasoning Systems'
     canon=re.search(r'<link rel="canonical" href="([^"]+)"',source)
     url=canon.group(1) if canon else BASE+route(path)
     source=re.sub(r'\s*<meta property="og:(?:title|type|url|image[^"]*)" content="[^"]*">','',source)
     source=re.sub(r'\s*<meta name="twitter:[a-z:]+" content="[^"]*">','',source)
+    desc=description(source)
+    source=re.sub(r'\s*<meta property="og:description" content="[^"]*">','',source)
     tags=(f'<meta property="og:title" content="{escape(title)}"><meta property="og:type" content="{"article" if kind=="article" else "website"}">'
           f'<meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}/{og_path(path)}">'
           f'<meta property="og:image:width" content="1200"><meta property="og:image:height" content="627">'
-          f'<meta name="twitter:card" content="summary_large_image">')
+          +(f'<meta property="og:description" content="{escape(desc)}">' if desc else '')+
+          f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title)}">'
+          +(f'<meta name="twitter:description" content="{escape(desc)}">' if desc else '')+
+          f'<meta name="twitter:image" content="{BASE}/{og_path(path)}">')
     return source.replace('</head>',tags+'</head>',1)
 def apply(source,path):
     """Body markup for the page's type (called after intro_band, before the header/footer are inserted)."""
@@ -185,15 +198,13 @@ def _shell(title,path,main,description=None):
             f'<link rel="canonical" href="{BASE+route(path)}"><meta name="robots" content="index,follow"><link rel="stylesheet" href="/assets/restored-site.css">'
             f'<script type="application/ld+json">{json.dumps(data,ensure_ascii=False)}</script></head><body><!--SITE_HEADER-->{main}<!--SITE_FOOTER--></body></html>')
 def articles_page(sources):
-    """/articles/ (QA option A): a featured card plus the three-column grid of homepage cards, and one Latest snap rail.
-    Only the live articles. h1 "Articles" (UI label, the index's name)."""
+    """/articles/ (QA option A): a featured card and one Latest snap rail of the other articles; each live article is
+    listed once (v14.1, Vera's nit a: the grid repeated them). h1 "Articles" (UI label, the index's name)."""
     paths=list(ARTICLES)
     feat=article_card(paths[0],sources[paths[0]],'gl-art-featured',True)
-    grid=''.join(article_card(p,sources[p],f'gl-art-{k}') for k,p in enumerate(paths[1:],1))
-    rail=''.join(article_card(p,sources[p],f'gl-rail-{k}') for k,p in enumerate(paths))
+    rail=''.join(article_card(p,sources[p],f'gl-rail-{k}') for k,p in enumerate(paths[1:],1))
     main=('<main class="document-main gl-articles" id="content"><div class="gl-intro"><h1>Articles</h1></div>'
           f'<section class="gl-featured" aria-labelledby="gl-art-featured">{feat}</section>'
-          f'<section class="gl-art-grid" aria-label="Articles"><div class="gl-cards">{grid}</div></section>'
           f'<section class="gl-rail-band" aria-labelledby="gl-latest-title"><h2 id="gl-latest-title" class="gl-eyebrow">Latest</h2><div class="gl-rail" tabindex="0" role="region" aria-labelledby="gl-latest-title">{rail}</div></section></main>')
     return _shell('Articles','articles/index.html',main)
 TWP_URL='https://www.youtube.com/@TheTruthwithPaul'
