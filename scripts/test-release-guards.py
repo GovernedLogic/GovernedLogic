@@ -161,12 +161,15 @@ REVIEWED_PAGE_DIGESTS = {
     "principles/identity/index.html": ("91838fcff5362719cacdd3abc966fa7f5804a9baa49600033d89dff8e8d27d34",),
     "principles/meaning/index.html": ("da49702c1fffb3663e829e808e39f35c901c5f7282a46be065352c40625d4997",),
     # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Inference must preserve ..." returns here; "Intelligibility is real. ..." returns to Obligation); replaces 910672b1...c3b4.
-    "principles/intelligibility/index.html": ("176258622a6690fd4b68b9c171f22fee0696827feb62fe0c09f9e4dd69cb96d1",),
+    # Paul 7:48 PM ET Nov 1 (via Governor, verified), v13.1: Supporting = library L17636-37 ("Intelligibility is real." / "Reality has apprehensible order ..."), per the corrected register; replaces 17625862...96d1.
+    "principles/intelligibility/index.html": ("51a72130de29b7f7f9946aff173d53b758494302d5883c005217dd7706c59553",),
     # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Inference must preserve ..." returns to Intelligibility); replaces 3f52c58e...41b2.
-    "principles/logic/index.html": ("71371afc86361c3e57fe8c65c0c9c56b83ca42af99a19e4f6686c761935387a8",),
+    # Paul 7:48 PM ET Nov 1 (via Governor, verified), v13.1: Supporting = library L17633-34 ("Logic is binding and answerable to truth." / "Inference must preserve ..."), per the corrected register; replaces 71371afc...87a8.
+    "principles/logic/index.html": ("3f52c58edeba83961429e8948f1118eaf219009031f140c621b5a9bf463841b2",),
     "principles/correspondence/index.html": ("4797de278721e6951b1fdd5cd9ef6b001e846371d6263c6e625c3d67a229b2b6",),
     # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Intelligibility is real. ..." returns here); replaces d01104b9...0a7c.
-    "principles/obligation/index.html": ("6c530c3ac667e3e4730fd66ec549d9fd75e049f82b1374eb2f6d1d5df57995df",),
+    # Paul 7:48 PM ET Nov 1 (via Governor, verified), v13.1: Supporting = library L17639-40 ("Moral obligation is real and binding." / "Obligation is not reducible to ..."), per the corrected register; replaces 6c530c3a...95df.
+    "principles/obligation/index.html": ("873102db018367cd6e3724930e6ef6905f68aa054ebb2fb8acd51536f9ae5a9d",),
 }
 # Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
 # assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
