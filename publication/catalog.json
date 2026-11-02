@@ -304,43 +304,6 @@
       "status": "published"
     },
     {
-      "id": "https://governedlogic.com/publication/",
-      "title": "Publication record",
-      "url": "https://governedlogic.com/publication/",
-      "path": "/publication/",
-      "type": "page",
-      "canonicalUrl": "https://governedlogic.com/publication/",
-      "sourcePath": "publication/index.html",
-      "sha256_html": "25e339965dbf35fcee28f542da408a9c26dd70d732b83514aaed7d20b0e95d57",
-      "sha256_text": "30baddd4362d1d39ccbf768aa9a635aef4578aa9b8cd9c1e6e9de94642db35d6",
-      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1",
-      "links": [
-        "https://governedlogic.com/company/",
-        "https://governedlogic.com/concepts/",
-        "https://governedlogic.com/concepts/alpha-and-omega-reasoning/",
-        "https://governedlogic.com/concepts/governed-intelligence/",
-        "https://governedlogic.com/concepts/governed-logic/",
-        "https://governedlogic.com/concepts/governing-referent/",
-        "https://governedlogic.com/concepts/sufficient-grounding/",
-        "https://governedlogic.com/concepts/ultimate-grounding/",
-        "https://governedlogic.com/feed.xml",
-        "https://governedlogic.com/mechanism.html",
-        "https://governedlogic.com/publication/catalog.json",
-        "https://governedlogic.com/publication/manifest.json",
-        "https://governedlogic.com/research/",
-        "https://governedlogic.com/sources/"
-      ],
-      "author": "Paul André Couchoud",
-      "version": "19.2-review",
-      "description": "This review separates the human experience from the canonical content architecture.",
-      "relationships": {
-        "isPartOf": {
-          "@id": "https://governedlogic.com/#website"
-        }
-      },
-      "status": "published"
-    },
-    {
       "id": "https://governedlogic.com/research/",
       "title": "Research",
       "url": "https://governedlogic.com/research/",

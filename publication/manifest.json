@@ -156,19 +156,6 @@
       "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
     },
     {
-      "url": "https://governedlogic.com/publication/",
-      "path": "publication/index.html",
-      "title": "Publication record",
-      "definition": "This review separates the human experience from the canonical content architecture.",
-      "version": "19.2-review",
-      "sources": [
-        "paul-business"
-      ],
-      "sha256_html": "25e339965dbf35fcee28f542da408a9c26dd70d732b83514aaed7d20b0e95d57",
-      "sha256_text": "30baddd4362d1d39ccbf768aa9a635aef4578aa9b8cd9c1e6e9de94642db35d6",
-      "text_hash_scope": "main element and homepage hero; decoded text nodes; block separators; NFC; whitespace collapsed; UTF-8; extractor v1"
-    },
-    {
       "url": "https://governedlogic.com/mechanism.html",
       "path": "mechanism.html",
       "title": "The Mechanism — Governed Logic",
@@ -625,19 +612,19 @@
     "catalog": "https://governedlogic.com/publication/catalog.json",
     "searchIndex": "https://governedlogic.com/publication/search-index.json",
     "library": "https://governedlogic.com/library/",
-    "recordCount": 15,
+    "recordCount": 14,
     "generatedFiles": [
       {
         "path": "library/index.html",
-        "sha256": "61972a7bab3169a9f29d1d41aaa2e4846b5bd895a8e3236e4f902254a0cf253c"
+        "sha256": "95b117c944d0f9c1f6464fd48edc86ab10fb4a6c6fe537487f3850471c26f7f3"
       },
       {
         "path": "publication/catalog.json",
-        "sha256": "cdf4f5f0d20863e2993c684d61ef6e9fcfc943b2362f8e00f4e146ce87a46c9d"
+        "sha256": "dfc66bf45fff4f723bc2106aeb0cd34e244bc98458f7c08ce6aed3e01908ca44"
       },
       {
         "path": "publication/search-index.json",
-        "sha256": "b1cbedd948df0e39a6d2f8405b4e3029c6e6d73f9712373dd7e2d9f6a6f45bf9"
+        "sha256": "d81af66a9dd9e8231cd5bbfb870bc6007d57d606b9f904e8cc09bc4c4ff5038b"
       },
       {
         "path": "feed.xml",
@@ -645,7 +632,7 @@
       },
       {
         "path": "sitemap.xml",
-        "sha256": "756f80412cc01443958bcb00c8b01860f21afb82a4cae3a95215a59319383999"
+        "sha256": "0e2f9508fd7c39b48053ceecc30e2080d60879d9267e819724d44f0c64f4aa06"
       }
     ]
   }
