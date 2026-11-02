@@ -147,8 +147,8 @@ test('Phone nav stays visible at 360px',async({page})=>{
  expect(metrics.count).toBe(7); // six linked items (PLACEMENT_MAP, QA-4) plus The Truth with Paul (Paul 2026-11-01 22:36).
  expect(metrics.overflow).toBe(false);
  // v14 (Paul 2026-11-01 22:34; QA layout 2026-11-01): the phone nav wraps onto 44px rows under the brand row instead of
- // scrolling sideways, so no word is cut off; at 360 that is two nav rows (136px).
- expect(metrics.headerHeight).toBeLessThanOrEqual(136);
+ // scrolling sideways, so no word is cut off; at 360 that is two nav rows (v14.1: 132px, no padding under them).
+ expect(metrics.headerHeight).toBeLessThanOrEqual(132);
  expect(metrics.headerHeight).toBeGreaterThanOrEqual(44);
  expect(new Set(metrics.boxes.map(box=>Math.round(box.top))).size).toBeLessThanOrEqual(2);
  for(const box of metrics.boxes){
@@ -159,9 +159,9 @@ test('Phone nav stays visible at 360px',async({page})=>{
 
 test('Phone header wraps the nav from 320 to 899: every item whole, in view and one tap away',async({page})=>{
  // v14 (Paul 2026-11-01 22:34; QA layout 2026-11-01, the 390 nav strip cut words off): at every phone width the header
- // keeps the full brand, Search (/library/) and the CTA in view, and the nav wraps onto 44px rows (three at 320, two from
- // 360) with every item whole and in view without scrolling; nothing scrolls sideways.
- for(const [width,maxH] of [[320,180],[360,136],[390,136],[600,136],[899,136]]){
+ // keeps the full brand, Search (/library/) and the CTA in view, and the nav wraps onto 44px rows (v14.1: two at every
+ // phone width, 132px; it was three at 320) with every item whole and in view without scrolling; nothing scrolls sideways.
+ for(const [width,maxH] of [[320,132],[360,132],[390,132],[600,132],[899,132]]){
   await page.setViewportSize({width,height:800});
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>{
@@ -220,8 +220,8 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
 test('Header CTA reads the N11 text and never collides with brand or Search',async({page})=>{
  // N11 (PLACEMENT_MAP, L21394; Round 5b): "Explore the research method" in full, at every width; it sets on two lines
  // at 390-599 and is the compact arrow button (same accessible name) below 390 and at 900-1099 (v14: was 900-1023).
- // v14: the phone header grows by the wrapped nav rows (three at 320, two from 360 to 899).
- const heights={320:180,360:136,390:136,414:136,440:136,899:136,900:72,1024:72,1279:72,1440:108};
+ // v14: the phone header grows by the wrapped nav rows (v14.1: two at every phone width, 132px; was 180 at 320, 136 from 360).
+ const heights={320:132,360:132,390:132,414:132,440:132,899:132,900:72,1024:72,1279:72,1440:108};
  for(const [w,hh] of Object.entries(heights)){
   const width=Number(w);
   await page.setViewportSize({width,height:900});

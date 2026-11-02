@@ -203,6 +203,13 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
  await page.setViewportSize({width:1440,height:900});await page.goto('/page-two/',{waitUntil:'load'});
  const two=await page.evaluate(()=>[...document.querySelectorAll('header nav a')].map(a=>a.textContent.trim()));
  if(JSON.stringify(two)!==JSON.stringify(['Governed Logic','Ultimate Grounding','Governed Intelligence','Company','Research']))bad.push('page-two header changed: '+two);
+ // v14.1: /page-two/ is kept exactly as it was; its phone header keeps its v14 height (two 44px nav rows plus 4px at
+ // 320-599 phones, one row plus 4px at 600-899) while the other pages tighten to 132px.
+ for(const [w,hh] of [[320,136],[390,136],[600,92],[899,92]]){
+  await page.setViewportSize({width:w,height:800});await page.goto('/page-two/',{waitUntil:'load'});
+  const h=await page.evaluate(()=>Math.round(document.querySelector('header').getBoundingClientRect().height));
+  if(h!==hh)bad.push(`page-two header ${h}px at ${w} (was ${hh})`);
+ }
  expect(bad).toEqual([]);
 });
 test('v14.1: /articles/ is a featured card and one Latest snap rail; each live article is listed once',async({page})=>{
