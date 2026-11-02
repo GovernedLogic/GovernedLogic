@@ -161,6 +161,8 @@ STRUCTURED_DATA_NAMES = {
     "/faq/": "Frequently Asked Questions",
 }
 
+# v14 queued (WEB-227 SIXTH): /concepts/governed-logic/, /concepts/governed-intelligence/,
+# /assets/gl-reasoning-systems.webp and /paul-portrait.png are published, so they left this list.
 WITHHELD_URLS = (
     "/GOVERNEDLOGIC_COM_PRD.txt",
     "/requirements.txt",
@@ -173,16 +175,12 @@ WITHHELD_URLS = (
     "/scripts/build_site.py",
     "/scripts/build-corpus.py",
     "/scripts/check-corpus.py",
-    "/concepts/governed-logic/",
-    "/concepts/governed-intelligence/",
     "/assets/origin-v17.js",
     "/assets/origin-v17.css",
     "/assets/origin-scene.json",
-    "/assets/gl-reasoning-systems.webp",
     "/assets/gl-reasoning-systems.png",
     "/assets/releases/v18.1-alignment.jpg",
     "/assets/releases/v18.2-origin.jpg",
-    "/paul-portrait.png",
 )
 
 

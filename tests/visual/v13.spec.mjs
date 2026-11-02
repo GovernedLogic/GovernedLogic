@@ -163,3 +163,152 @@ test('Principle pages: one h1 (the name), no page date, nothing clipped at 1440/
   }
  }
 });
+
+// ---- v14 design rollout (Paul 2026-11-01 22:34 "Let's get this big push out."; 22:36 "It's not a company yet") ----
+const v14Routes=[...routes.filter(r=>r!=='/page-two/'),...Object.keys(principles),'/articles/','/the-truth-with-paul/'];
+const v14Articles={'/articles/why-anything/':'Why Anything?','/articles/integrity-in-artificial-intelligence/':'Integrity in Artificial Intelligence'};
+test('v14: one header everywhere (page-two keeps its own), art above the fold, social tags equal the visible h1',async({page,request})=>{
+ test.setTimeout(240_000);
+ const bad=[];
+ for(const width of [1440,390]){
+  await page.setViewportSize({width,height:900});
+  for(const route of v14Routes){
+   await page.goto(route,{waitUntil:'load'});
+   const m=await page.evaluate(()=>{
+    const bar=document.querySelector('header#gl-home-bar');const labels=[...document.querySelectorAll('header#gl-home-bar nav a')].map(a=>a.textContent.trim());
+    const art=[...document.querySelectorAll('main img')].some(i=>{const r=i.getBoundingClientRect();return r.width>40&&r.height>40&&r.top<innerHeight&&r.bottom>0&&i.complete&&i.naturalWidth>0;});
+    const meta=k=>[...document.querySelectorAll(`meta[property="${k}"],meta[name="${k}"]`)].map(x=>x.content);
+    const h1=document.querySelector('h1').textContent.replace(/\s+/g,' ').trim();
+    return {labels,tools:!!bar.querySelector('.gl-bar-cta')&&!!bar.querySelector('.gl-search'),art,h1,ogTitle:meta('og:title'),card:meta('twitter:card'),img:meta('og:image'),url:meta('og:url'),canon:document.querySelector('link[rel=canonical]').href};
+   });
+   const want=['Home','The problem','Research','Governed Logic','About','Company','The Truth with Paul'];
+   if(JSON.stringify(m.labels)!==JSON.stringify(want))bad.push(`${route}@${width} header ${m.labels}`);
+   if(!m.tools)bad.push(`${route}@${width} header tools missing`);
+   if(!m.art)bad.push(`${route}@${width} no art above the fold`);
+   if(width===1440){
+    const h1=route==='/'?'Governed Logic Reasoning Systems':m.h1;
+    if(JSON.stringify(m.ogTitle)!==JSON.stringify([h1]))bad.push(`${route} og:title ${m.ogTitle} != ${h1}`);
+    if(JSON.stringify(m.card)!=='["summary_large_image"]')bad.push(`${route} twitter:card ${m.card}`);
+    if(m.url[0]!==m.canon)bad.push(`${route} og:url ${m.url} != canonical`);
+    if(m.img.length!==1||!m.img[0].startsWith('https://governedlogic.com/assets/og/'))bad.push(`${route} og:image ${m.img}`);
+    else{const r=await request.get(m.img[0].replace('https://governedlogic.com',''));const b=await r.body();
+     if(!r.ok()||b.readUInt32BE(16)!==1200||b.readUInt32BE(20)!==627)bad.push(`${route} og:image not a served 1200x627 PNG`);}
+   }
+  }
+ }
+ await page.setViewportSize({width:1440,height:900});await page.goto('/page-two/',{waitUntil:'load'});
+ const two=await page.evaluate(()=>[...document.querySelectorAll('header nav a')].map(a=>a.textContent.trim()));
+ if(JSON.stringify(two)!==JSON.stringify(['Governed Logic','Ultimate Grounding','Governed Intelligence','Company','Research']))bad.push('page-two header changed: '+two);
+ expect(bad).toEqual([]);
+});
+test('v14: /articles/ is option A (featured card, three-column grid, one Latest snap rail) of the two live articles',async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
+ await page.goto('/articles/',{waitUntil:'load'});
+ const m=await page.evaluate(()=>({h1:document.querySelector('h1').textContent,featured:document.querySelectorAll('.gl-featured .gl-card').length,
+  grid:getComputedStyle(document.querySelector('.gl-art-grid .gl-cards')).gridTemplateColumns.split(' ').length,
+  titles:[...document.querySelectorAll('.gl-card h3')].map(h=>h.textContent.trim()),kinds:[...new Set([...document.querySelectorAll('.gl-card-kind')].map(k=>k.textContent))],
+  snap:getComputedStyle(document.querySelector('.gl-rail')).scrollSnapType,rails:document.querySelectorAll('.gl-rail').length,
+  hrefs:[...document.querySelectorAll('.gl-card a.gl-card-go')].map(a=>a.getAttribute('href'))}));
+ expect(m.h1).toBe('Articles');expect(m.featured).toBe(1);expect(m.grid).toBe(3);expect(m.rails).toBe(1);
+ expect(m.snap).toContain('x');expect(m.kinds).toEqual(['Article']);
+ expect(new Set(m.titles)).toEqual(new Set(Object.values(v14Articles)));
+ expect(new Set(m.hrefs)).toEqual(new Set(Object.keys(v14Articles)));
+ for(const [route,h1] of Object.entries(v14Articles)){await page.goto(route);expect((await page.locator('h1').textContent()).trim()).toBe(h1);}
+});
+test('v14: article pages have a dark hero with art, a wide measure and a plain-link share row with Copy link',async({page,context})=>{
+ await context.grantPermissions(['clipboard-read','clipboard-write']);
+ for(const [route] of Object.entries(v14Articles)){
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto(route,{waitUntil:'load'});
+  const m=await page.evaluate(()=>{const share=document.querySelector('nav.gl-share');const p=document.querySelector('main article > p');
+   return {labels:[...share.querySelectorAll('a,button')].map(a=>a.textContent.trim()),hrefs:[...share.querySelectorAll('a')].map(a=>a.getAttribute('href')),
+    measure:p.getBoundingClientRect().width,third:[...document.scripts].filter(s=>s.src&&!s.src.startsWith(location.origin)).length,
+    article:JSON.parse([...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>s.textContent).find(t=>t.includes('"Article"'))),
+    band:getComputedStyle(document.querySelector('.gl-intro'),'::before').backgroundImage};});
+  expect(m.labels).toEqual(['LinkedIn','Reddit','X','Copy link']);
+  const url=encodeURIComponent('https://governedlogic.com'+route);
+  expect(m.hrefs[0]).toBe(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
+  expect(m.hrefs[1].startsWith(`https://www.reddit.com/submit?url=${url}&title=`)).toBe(true);
+  expect(m.hrefs[2].startsWith(`https://x.com/intent/post?url=${url}&text=`)).toBe(true);
+  expect(m.measure).toBeGreaterThanOrEqual(700);expect(m.measure).toBeLessThanOrEqual(780);
+  expect(m.third).toBe(0);
+  expect(m.article.headline).toBe(v14Articles[route]);expect(Object.keys(m.article).some(k=>k.startsWith('date'))).toBe(false);
+  await page.getByRole('button',{name:'Copy link'}).click();
+  await expect(page.locator('.gl-share .gl-copied')).toHaveText('Copied');
+  expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe('https://governedlogic.com'+route);
+ }
+});
+test('v14: treatises are micro-sites (masthead, sticky contents rail or drawer, reading progress, chapter pager)',async({page})=>{
+ for(const route of ['/concepts/ultimate-grounding/','/concepts/governed-logic/']){
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto(route,{waitUntil:'load'});
+  const h2=await page.evaluate(()=>[...document.querySelectorAll('main section.business-section[id]')].map(s=>[s.id,s.querySelector('h2').textContent.replace(/\s+/g,' ').trim()]));
+  const toc=await page.evaluate(()=>[...document.querySelectorAll('#gl-toc a')].map(a=>[a.getAttribute('href').slice(1),a.textContent.replace(/\s+/g,' ').trim()]));
+  expect(toc).toEqual(h2);
+  expect(await page.locator('.gl-pager').count()).toBe(h2.length);
+  for(const href of await page.locator('.gl-pager a').evaluateAll(as=>as.map(a=>a.getAttribute('href'))))expect(h2.map(x=>'#'+x[0])).toContain(href);
+  const p0=await page.evaluate(()=>+getComputedStyle(document.querySelector('.gl-progress>span')).getPropertyValue('--gl-read')||0);
+  await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight/2));await page.waitForTimeout(150);
+  const mid=await page.evaluate(()=>{const r=document.getElementById('gl-toc').getBoundingClientRect();const bar=document.querySelector('.gl-treatise-bar').getBoundingClientRect();
+   return {read:+document.querySelector('.gl-progress>span').style.getPropertyValue('--gl-read'),toc:r.top>=0&&r.top<innerHeight,bar:bar.top>=0&&bar.top<200,current:document.querySelectorAll('#gl-toc a[aria-current="true"]').length};});
+  expect(mid.read).toBeGreaterThan(p0);expect(mid.toc).toBe(true);expect(mid.bar).toBe(true);expect(mid.current).toBe(1);
+  await page.setViewportSize({width:390,height:844});
+  await page.goto(route,{waitUntil:'load'});
+  await expect(page.locator('#gl-toc')).toBeHidden();
+  await page.getByRole('button',{name:'Contents'}).click();
+  await expect(page.locator('#gl-toc')).toBeVisible();
+  await expect(page.getByRole('button',{name:'Contents'})).toHaveAttribute('aria-expanded','true');
+  await page.locator('#gl-toc a').nth(1).click();
+  await expect(page.locator('#gl-toc')).toBeHidden();
+  expect(page.url()).toContain('#'+h2[1][0]);
+ }
+});
+test('v14: principle and concept pages carry the enlarged principle tile and the related-principles band',async({page})=>{
+ for(const route of [...Object.keys(principles),'/concepts/governing-referent/','/concepts/sufficient-grounding/','/concepts/governed-intelligence/','/concepts/alpha-and-omega-reasoning/']){
+  for(const width of [1440,390]){
+   await page.setViewportSize({width,height:900});await page.goto(route,{waitUntil:'load'});
+   const m=await page.evaluate(()=>{const t=document.querySelector('.gl-intro .gl-tile').getBoundingClientRect();
+    return {tile:Math.round(t.width),inView:t.top<innerHeight,band:[...document.querySelectorAll('nav.principle-nav a')].map(a=>a.textContent.trim()),icons:document.querySelectorAll('nav.principle-nav .gl-rel-icon').length,
+     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};});
+   expect(m.tile,`${route}@${width}`).toBeGreaterThanOrEqual(64);expect(m.inView).toBe(true);
+   expect(m.band).toEqual(Object.values(principles));expect(m.icons).toBe(7);expect(m.overflow).toBe(false);
+  }
+ }
+});
+test('v14: The Truth with Paul is a coming-soon media page: three strings, one h1, a plain Subscribe link, motion only without reduced motion',async({page})=>{
+ for(const width of [1440,390,320]){
+  await page.setViewportSize({width,height:900});await page.goto('/the-truth-with-paul/',{waitUntil:'load'});
+  const m=await page.evaluate(()=>{const a=document.querySelector('main a');const hero=document.querySelector('.gl-twp-hero');
+   return {text:document.querySelector('main').innerText.replace(/\s+/g,' ').trim(),h1:[...document.querySelectorAll('h1')].map(h=>h.textContent),href:a.getAttribute('href'),label:a.textContent.trim(),tag:a.tagName,
+    bg:getComputedStyle(hero).backgroundImage,heroH:hero.getBoundingClientRect().height,btn:a.getBoundingClientRect(),anim:[getComputedStyle(document.querySelector('.gl-twp-seed')).animationName,getComputedStyle(document.querySelector('.gl-twp-soon')).animationName],
+    imgs:[...document.querySelectorAll('main img')].map(i=>i.getAttribute('src')),overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
+    current:document.querySelector('header nav a[href="/the-truth-with-paul/"]').getAttribute('aria-current')};});
+  expect(m.text.toLowerCase()).toBe('the truth with paul coming soon subscribe on youtube');
+  expect(m.h1).toEqual(['The Truth with Paul']);
+  expect(m.tag).toBe('A');expect(m.href).toBe('https://www.youtube.com/@TheTruthwithPaul');expect(m.label).toBe('Subscribe on YouTube');
+  expect(m.bg).toContain('radial-gradient');expect(m.btn.height).toBeGreaterThanOrEqual(44);expect(m.btn.bottom).toBeLessThanOrEqual(900);
+  expect(m.anim).toEqual(['none','none']);
+  expect(m.imgs).toEqual(['/assets/provisional/hero-geometry.svg','/assets/provisional/seed-of-life.png']);
+  expect(m.overflow).toBe(false);expect(m.current).toBe('page');
+ }
+ await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/the-truth-with-paul/');
+ expect(await page.evaluate(()=>getComputedStyle(document.querySelector('.gl-twp-seed')).animationName)).toBe('gl-twp-turn');
+});
+test('v14: no page dates in any page, og/twitter tag or feed (source edition lines excepted); feed.xml is RSS 2.0',async({page,request})=>{
+ const DATE=/\b\d{1,2} (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}\b|\b20\d\d-\d\d-\d\d\b/;
+ const editionPages=['/sources/','/library/','/publication/'];
+ const bad=[];
+ for(const route of v14Routes){
+  await page.goto(route,{waitUntil:'domcontentloaded'});
+  const m=await page.evaluate(()=>({metas:[...document.querySelectorAll('meta[property^="og:"],meta[name^="twitter:"]')].map(x=>x.content).join(' '),
+   // The Sources and version box (aside.provenance) cites source editions by their edition date; it is kept as it was.
+   lines:[...document.querySelectorAll('main p,main dd,main li,main span')].filter(e=>!e.closest('aside.provenance')).map(e=>e.textContent.replace(/\s+/g,' ').trim())}));
+  if(DATE.test(m.metas))bad.push(`${route} date in og/twitter`);
+  if(!editionPages.includes(route))for(const l of m.lines)if(DATE.test(l)&&!/Source edition|·\s*\d{1,2} \w+ \d{4}\s*·|September 2026 ·|Business strategy/.test(l))bad.push(`${route}: ${l.slice(0,80)}`);
+ }
+ const feed=await (await request.get('/feed.xml')).text();
+ expect(feed.startsWith('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>')).toBe(true);
+ expect(/<(pubDate|lastBuildDate|updated|dc:date)>/.test(feed)).toBe(false);
+ expect(DATE.test(feed)).toBe(false);
+ expect(bad).toEqual([]);
+});

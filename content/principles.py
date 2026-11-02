@@ -9,12 +9,13 @@ Words come only from it, verbatim, in its order. Register headers (sources, Driv
 counts, MISSING notes) stay build-side and are never rendered. Each page's title and single h1 is the principle's name
 (the register's section heading). Nothing MISSING in the register is filled.
 
-One build-side correction, applied to the register's own words and nothing else (CODES below): the "GL-P2"/"GL-P3"
-codes in two Supporting passages are stripped (codes only). The Supporting passages stay exactly where the register
-puts them (Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): "Put the Supporting lines back as the register had
-them."): "GL-P2 Logic is binding and answerable to truth." under Logic, "Inference must preserve ... GL-P3" under
-Intelligibility, and "Intelligibility is real. Reality has apprehensible order ..." under Obligation. (3c40dbd had moved
-the last two to Logic and Intelligibility per the nucleus v0.5 table, library L17632-17637; that move is reverted.)
+One build-side correction (CODES below): any "GL-P<n>" code at the start or end of a Supporting passage is stripped
+(codes only). The corrected register (Paul 7:48 PM ET Nov 1 (via Governor, verified)) already carries none, so the strip
+is a no-op kept as a guard. The Supporting passages stay exactly where the register puts them (MOVES is empty), each
+under its own principle, library RES-26: Logic "Logic is binding and answerable to truth." and "Inference must
+preserve valid relations ..." (L17633-17634); Intelligibility "Intelligibility is real." and "Reality has
+apprehensible order ..." (L17636-17637); Obligation "Moral obligation is real and binding." and "Obligation is not
+reducible to ..." (L17639-17640).
 
 Every slug in SETS that is not in the published set (Truth) is a withheld link target: nothing may link to it, it is
 not built, and the live probe requires it to 404.

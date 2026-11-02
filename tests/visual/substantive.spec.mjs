@@ -3,7 +3,9 @@ import {test,expect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
-const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/'];
+const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/',
+ // v14 (Paul 2026-11-01 22:34 and 22:36): the articles index and The Truth with Paul placeholder.
+ '/articles/','/the-truth-with-paul/'];
 // WEB-205/WEB-231: '/page-two/' keeps Paul's previous homepage main reachable.
 for(const route of routes){
  test(`${route} substantive content and usable layout`,async({page},info)=>{
@@ -11,7 +13,8 @@ for(const route of routes){
   const response=await page.goto(route,{waitUntil:'networkidle'});expect(response.ok()).toBeTruthy();
   await expect(page.locator('main')).toHaveCount(1);await expect(page.locator('h1')).toHaveCount(1);
   if(route==='/faq/')for(const summary of await page.locator('main details summary').all())await summary.click();
-  expect((await page.locator('main').innerText()).split(/\s+/).length).toBeGreaterThan(45);
+  // The Truth with Paul placeholder carries exactly its three strings (Paul 2026-11-01 22:36); see its own test.
+  if(route!=='/the-truth-with-paul/')expect((await page.locator('main').innerText()).split(/\s+/).length).toBeGreaterThan(45);
   await expect(page.getByRole('navigation',{name:'Primary',exact:true})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
   const images=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.src));expect(images).toEqual([]);
@@ -139,11 +142,11 @@ test('Phone nav stays visible at 360px',async({page})=>{
  });
  expect(metrics.summary).toBe(0);
  expect(metrics.details).toBe(0);
- expect(metrics.count).toBe(6); // C9/WEB-217/WEB-223; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) drops Applications; QA-4 restores About: six linked items; Company kept.
+ expect(metrics.count).toBe(7); // six linked items (PLACEMENT_MAP, QA-4) plus The Truth with Paul (Paul 2026-11-01 22:36).
  expect(metrics.overflow).toBe(false);
- // D8 (WEB-214/WEB-223/WEB-226): the phone header is two 44px rows, brand/search/CTA over one nav row that scrolls
- // sideways inside the header, so it stays at 88px or less.
- expect(metrics.headerHeight).toBeLessThanOrEqual(88);
+ // v14 (Paul 2026-11-01 22:34; QA layout 2026-11-01): the phone nav wraps onto 44px rows under the brand row instead of
+ // scrolling sideways, so no word is cut off; at 360 that is two nav rows (136px).
+ expect(metrics.headerHeight).toBeLessThanOrEqual(136);
  expect(metrics.headerHeight).toBeGreaterThanOrEqual(44);
  expect(new Set(metrics.boxes.map(box=>Math.round(box.top))).size).toBeLessThanOrEqual(2);
  for(const box of metrics.boxes){
@@ -152,24 +155,28 @@ test('Phone nav stays visible at 360px',async({page})=>{
  }
 });
 
-test('Phone header is 88px or less from 320 to 899 with every item one tap away',async({page})=>{
- // D8 (WEB-214/WEB-223/WEB-226): at every phone width the header keeps the full brand, Search (/library/) and the CTA in
- // view, stays at or under 88px, and scrolling the header (not the page) brings Company into view.
- for(const width of [320,360,390,600,899]){
+test('Phone header wraps the nav from 320 to 899: every item whole, in view and one tap away',async({page})=>{
+ // v14 (Paul 2026-11-01 22:34; QA layout 2026-11-01, the 390 nav strip cut words off): at every phone width the header
+ // keeps the full brand, Search (/library/) and the CTA in view, and the nav wraps onto 44px rows (three at 320, two from
+ // 360) with every item whole and in view without scrolling; nothing scrolls sideways.
+ for(const [width,maxH] of [[320,180],[360,136],[390,136],[600,136],[899,136]]){
   await page.setViewportSize({width,height:800});
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');
    const inView=el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth+0.5&&r.top>=0&&r.bottom<=bar.getBoundingClientRect().bottom+0.5;};
    const fixed=['.gl-brand-name','.site-brand small','.gl-go > a[href="/library/"]','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel)));
-   const company=bar.querySelector('.gl-go > a[href="/company/"]');
-   company.scrollIntoView({block:'nearest',inline:'nearest'});
-   return {h:bar.getBoundingClientRect().height,fixed,company:inView(company),fixedAfter:['.gl-brand-name','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel))),pageX:scrollX,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+   const items=[...bar.querySelectorAll('nav .gl-go > a')];
+   const whole=items.filter(a=>!(inView(a)&&a.scrollWidth<=a.clientWidth+1)).map(a=>a.textContent.trim());
+   const hit=items.filter(a=>{const r=a.getBoundingClientRect();return !a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}).map(a=>a.textContent.trim());
+   return {h:bar.getBoundingClientRect().height,fixed,whole,hit,count:items.length,scroll:bar.scrollWidth>bar.clientWidth+1,pageX:scrollX,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
-  expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(88);
+  expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(maxH);
   expect(m.fixed,`brand, subline, search and CTA in view at ${width}`).toEqual([true,true,true,true]);
-  expect(m.company,`Company in view at ${width}`).toBe(true);
-  expect(m.fixedAfter,`brand and CTA stay pinned at ${width}`).toEqual([true,true]);
+  expect(m.count).toBe(7);
+  expect(m.whole,`nav items cut off or out of view at ${width}`).toEqual([]);
+  expect(m.hit,`nav items not clickable at ${width}`).toEqual([]);
+  expect(m.scroll,`header scrolls sideways at ${width}`).toBe(false);
   expect(m.pageX).toBe(0);
   expect(m.overflow).toBe(false);
  }
@@ -196,7 +203,7 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(72);
-  expect(m.count).toBe(9); // PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) and QA-4: brand, six nav items (About restored), Search, CTA.
+  expect(m.count).toBe(10); // brand, seven nav items (About restored, QA-4; The Truth with Paul, Paul 2026-11-01 22:36), Search, CTA.
   expect(m.ordered,`one row, no overlap at ${width}`).toBe(true);
   expect(m.inView,`every header item in view at ${width}`).toBe(true);
   expect(m.tall).toBe(true);
@@ -210,8 +217,9 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
 
 test('Header CTA reads the N11 text and never collides with brand or Search',async({page})=>{
  // N11 (PLACEMENT_MAP, L21394; Round 5b): "Explore the research method" in full, at every width; it sets on two lines
- // at 390-599 and is the compact arrow button (same accessible name) below 390 and at 900-1023.
- const heights={320:88,360:88,390:88,414:88,440:88,899:88,900:72,1024:72,1279:72,1440:108};
+ // at 390-599 and is the compact arrow button (same accessible name) below 390 and at 900-1099 (v14: was 900-1023).
+ // v14: the phone header grows by the wrapped nav rows (three at 320, two from 360 to 899).
+ const heights={320:180,360:136,390:136,414:136,440:136,899:136,900:72,1024:72,1279:72,1440:108};
  for(const [w,hh] of Object.entries(heights)){
   const width=Number(w);
   await page.setViewportSize({width,height:900});
@@ -270,30 +278,16 @@ test('Homepage buttons hold their text at every width',async({page})=>{
  }
 });
 
-test('Phone nav edge fade follows the header scroll',async({page})=>{
- // Round 4 (WEB-214, WEB-226): the right-edge fade shows while the phone nav has more items to the right and is gone at
- // the scroll end; it never takes pointer events, and a nav that fits shows no fade.
- const fade=async(left)=>page.evaluate(async(x)=>{const bar=document.querySelector('header#gl-home-bar');if(x!==null)bar.scrollLeft=x;
-  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-  const a=getComputedStyle(bar,'::after'),b=getComputedStyle(bar,'::before');
-  return {right:+a.opacity,left:+b.opacity,events:a.pointerEvents,scrolls:bar.scrollWidth>bar.clientWidth+1,h:bar.getBoundingClientRect().height};},left);
- await page.setViewportSize({width:320,height:800});
- await page.goto('/',{waitUntil:'domcontentloaded'});
- const start=await fade(null);
- expect(start.scrolls).toBe(true);
- expect(start.h).toBeLessThanOrEqual(88);
- expect(start.events).toBe('none');
- expect(start.right).toBeGreaterThan(0.9);
- expect(start.left).toBeLessThan(0.1);
- const end=await fade(99999);
- expect(end.right).toBeLessThan(0.1);
- expect(end.left).toBeGreaterThan(0.9);
- await page.setViewportSize({width:899,height:800});
- await page.goto('/',{waitUntil:'domcontentloaded'});
- const fits=await fade(null);
- expect(fits.scrolls).toBe(false);
- expect(fits.right).toBeLessThan(0.1);
- expect(fits.left).toBeLessThan(0.1);
+test('Phone nav does not scroll sideways and shows no edge fade',async({page})=>{
+ // v14 (Paul 2026-11-01 22:34): the wrapped phone nav replaces the sideways-scrolling row (Round 4, WEB-214, WEB-226),
+ // so its edge fades are gone: no header scroll range and no fade pseudo-element at 320, 390 or 899, on any page type.
+ for(const route of ['/','/about/','/concepts/ultimate-grounding/','/the-truth-with-paul/'])for(const width of [320,390,899]){
+  await page.setViewportSize({width,height:800});
+  await page.goto(route,{waitUntil:'domcontentloaded'});
+  const m=await page.evaluate(()=>{const bar=document.querySelector('header#gl-home-bar');const a=getComputedStyle(bar,'::after'),b=getComputedStyle(bar,'::before');
+   return {scrolls:bar.scrollWidth>bar.clientWidth+1,after:a.content==='none'||a.display==='none'||+a.opacity===0,before:b.content==='none'||b.display==='none'||+b.opacity===0};});
+  expect(m,`${route} at ${width}`).toEqual({scrolls:false,after:true,before:true});
+ }
 });
 
 // WEB-215 + Paul's C8 ruling (2026-11-01): "Intro skip is immediate and the first click still lands" is removed with the
@@ -326,7 +320,7 @@ test('Labels are at least 12px and controls at least 44px',async({page})=>{
  const problems=[];
  for(const width of [320,390,1440]){
   await page.setViewportSize({width,height:900});
-  for(const route of ['/','/about/','/concepts/governed-logic/','/publication/']){
+  for(const route of ['/','/about/','/concepts/governed-logic/','/publication/','/articles/','/articles/why-anything/','/the-truth-with-paul/','/principles/logic/','/company/']){
    await page.goto(route,{waitUntil:'domcontentloaded'});
    const found=await page.evaluate(()=>{
     const bad=[];
@@ -341,6 +335,7 @@ test('Labels are at least 12px and controls at least 44px',async({page})=>{
     for(const node of document.querySelectorAll('a,button')){
      const style=getComputedStyle(node);
      if(style.display==='none'||style.visibility==='hidden')continue;
+     if(!node.getClientRects().length)continue; // not rendered (inside the closed v14 treatise contents drawer)
      const rect=node.getBoundingClientRect();
      if(rect.width<43.5||rect.height<43.5)bad.push(`target ${Math.round(rect.width)}x${Math.round(rect.height)} ${(node.textContent||node.getAttribute('aria-label')||'').trim().slice(0,40)}`);
     }
@@ -377,7 +372,7 @@ test('Inner pages: dark title band, full-width footer, Sources sidebar and butto
  // two buttons atop /mechanism.html are at least 8px apart (QA v12-cc71761 T1: CSS gap is 32px across, 8px when wrapped), and Sources-sidebar URLs never overflow or break mid-word.
  for(const width of [390,1440]){
   await page.setViewportSize({width,height:900});
-  for(const route of routes.filter(r=>r!=='/')){
+  for(const route of routes.filter(r=>r!=='/'&&r!=='/the-truth-with-paul/')){ // The Truth with Paul: its own deep-blue hero (v14 test)
    await page.goto(route,{waitUntil:'load'});await page.waitForTimeout(300);
    const m=await page.evaluate(()=>{
     const h1=document.querySelector('h1');const band=h1.closest('.gl-intro,.about-hero')||document.querySelector('main .front-door');
