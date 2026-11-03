@@ -1059,14 +1059,19 @@ class ReleaseGuardTests(unittest.TestCase):
             path = site / relative
             path.write_text(path.read_text(encoding="utf-8") + text, encoding="utf-8")
         js, css = "assets/home-signature.js", "assets/home-signature.css"
+        tag = '<script src="/assets/home-signature.js?v=' + hashlib.sha256((ROOT / js).read_bytes()).hexdigest()[:8] + '" defer></script>'
         cases = [
             (lambda site: (site / "assets/home-chime.js").write_text("", encoding="utf-8"), r"Logo fly-up script published"),
-            (lambda site: self.replace_once(site, "index.html", '<script src="/assets/home-signature.js" defer></script>', '<script src="/assets/home-signature.js" defer></script><script src="/assets/home-chime.js" defer></script>'), r"Logo fly-up referenced: index\.html"),
-            (lambda site: self.replace_once(site, "index.html", '<script src="/assets/home-signature.js" defer></script>', '<link rel="preload" href="/assets/provisional/hero-geometry.svg" as="image"><script src="/assets/home-signature.js" defer></script>'), r"still preloads the hero Seed of Life"),
+            (lambda site: self.replace_once(site, "index.html", tag, tag + '<script src="/assets/home-chime.js" defer></script>'), r"Logo fly-up referenced: index\.html"),
+            (lambda site: self.replace_once(site, "index.html", tag, '<link rel="preload" href="/assets/provisional/hero-geometry.svg" as="image">' + tag), r"still preloads the hero Seed of Life"),
             (lambda site: self.replace_once(site, "index.html", '<div class="gl-hero-art" aria-hidden="true"></div>', '<div class="gl-hero-art" aria-hidden="true"><img src="/assets/provisional/hero-geometry.svg" alt="" width="1004" height="894"></div>'), r"must be empty"),
             (lambda site: self.replace_once(site, "index.html", '<div class="gl-hero-art" aria-hidden="true"></div>', ''), r"expected exactly one div\.gl-hero-art"),
-            (lambda site: self.replace_once(site, "index.html", '<script src="/assets/home-signature.js" defer></script>', ''), r"does not load the signature script"),
+            (lambda site: self.replace_once(site, "index.html", tag, ''), r"does not load the signature script"),
             (lambda site: self.replace_once(site, "about/index.html", '</head>', '<script src="/assets/home-signature.js" defer></script></head>'), r"Signature loaded outside the homepage: about/index\.html"),
+            (lambda site: self.replace_once(site, "index.html", tag, '<script src="/assets/home-signature.js" defer></script>'), r"signature script is not /assets/home-signature\.js\?v="),
+            (lambda site: append(site, js, "\n"), r"signature script is not /assets/home-signature\.js\?v="),
+            (lambda site: self.replace_once(site, css, "--gl-warm-line:rgba(215,181,126,.6);", ""), r":root does not declare the gold default --gl-warm-line"),
+            (lambda site: self.replace_once(site, css, "box-shadow:0 0 0 1px var(--gl-warm),", "box-shadow:"), r"Signature does not use --gl-warm,"),
             (lambda site: append(site, js, "/*" + "x" * 3000 + "*/"), r"over 3000"),
             (lambda site: self.replace_once(site, js, "setAttribute('aria-hidden','true')", "setAttribute('role','img')"), r"SVG is not aria-hidden"),
             (lambda site: self.replace_once(site, js, "if(run){try{if(sessionStorage.getItem('gl-sig'))run=false;else sessionStorage.setItem('gl-sig','1');}catch(e){}}", ""), r"once per session"),

@@ -49,7 +49,10 @@ def video_errors(root):
 # signature field, and the signature (home-signature.js and .css) loads on the homepage only. Its colours are custom
 # properties, its motion sits inside prefers-reduced-motion: no-preference, and class gl-cool swaps the warm set.
 SIG_JS='assets/home-signature.js';SIG_CSS='assets/home-signature.css';SIG_JS_MAX=3000
+# SPEC.md line 107: gl-cool swaps the four warm values. The gold defaults are declared in :root too.
 COOL={'--gl-warm':'#9cc8ff','--gl-warm-ink':'#1657c2','--gl-warm-glow':'rgba(200,225,255,.9)','--gl-warm-line':'rgba(111,178,255,.6)'}
+WARM={'--gl-warm':'#d7b57e','--gl-warm-ink':'#8a5f1f','--gl-warm-glow':'rgba(255,226,170,.9)','--gl-warm-line':'rgba(215,181,126,.6)'}
+WARM_USED=('--gl-warm','--gl-warm-line','--gl-warm-glow')
 def _blocks(css,head):
     """(start,end) of every block whose prelude matches head, braces balanced."""
     out=[]
@@ -73,7 +76,9 @@ def signature_errors(root):
     elif art[0][1].strip() or 'aria-hidden="true"' not in art[0][0]:errors.append('Homepage signature field div.gl-hero-art must be empty and aria-hidden in the built HTML')
     hero=re.search(r'<section class="gl-hero"[\s\S]*?</section>',home)
     if hero and re.search(r'<(img|svg|picture)\b[^>]*(hero-geometry|seed-of-life)',hero.group(0)):errors.append('Homepage hero still shows a Seed of Life')
-    if len(re.findall(r'<script src="/assets/home-signature\.js" defer></script>',home))!=1:errors.append('Homepage does not load the signature script once (defer)')
+    js_url='/'+SIG_JS+'?v='+(hashlib.sha256((root/SIG_JS).read_bytes()).hexdigest()[:8] if (root/SIG_JS).is_file() else 'missing')
+    if len(re.findall(r'<script src="/assets/home-signature\.js[^"]*" defer></script>',home))!=1:errors.append('Homepage does not load the signature script once (defer)')
+    elif f'<script src="{js_url}" defer></script>' not in home:errors.append('Homepage signature script is not '+js_url+' (stale or missing ?v= key)')
     if len(re.findall(r'<link rel="stylesheet" href="/assets/home-signature\.css\?v=[0-9a-f]{12}">',home))!=1:errors.append('Homepage does not load the signature stylesheet once')
     for f in sorted(root.rglob('*.html')):
         rel=f.relative_to(root).as_posix()
@@ -95,6 +100,11 @@ def signature_errors(root):
     cool=[css[a:b] for a,b in _blocks(css,r':root\.gl-cool\s*\{')]
     for k,v in COOL.items():
         if not cool or not re.search(re.escape(k)+r'\s*:\s*'+re.escape(v)+r'\s*[;}]',cool[0]):errors.append(f'Cool switch :root.gl-cool does not set {k}: {v}')
+    gold=[css[a:b] for a,b in _blocks(css,r':root\s*\{')]
+    for k,v in WARM.items():
+        if not gold or not re.search(re.escape(k)+r'\s*:\s*'+re.escape(v)+r'\s*[;}]',gold[0]):errors.append(f':root does not declare the gold default {k}: {v}')
+    for k in WARM_USED:
+        if 'var('+k+')' not in _cut(css,roots):errors.append(f'Signature does not use {k}, so gl-cool would not reach it')
     rest=_cut(css,roots+_blocks(css,r'@keyframes\s+[\w-]+\s*\{'))
     if re.search(r'#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(',rest):errors.append('Signature stylesheet hard-codes a colour outside :root (use a custom property)')
     motion=_blocks(css,r'@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*\{')

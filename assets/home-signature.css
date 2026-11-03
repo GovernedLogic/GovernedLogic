@@ -1,8 +1,10 @@
 /* Homepage signature (concept 3 of the visual refresh spec, section 6). Homepage only. The fly-up and the hero Seed of
    Life are gone, and div.gl-hero-art keeps its size as the signature field. Every colour comes from a custom property
-   so later tokens can replace them in one place. Add class gl-cool on <html> for the cool only accent. All motion sits
+   so later tokens can replace them in one place. Add class gl-cool on <html> for the cool only accent (SPEC.md line 107:
+   it swaps the four warm values). The signature uses --gl-warm, --gl-warm-line and --gl-warm-glow. --gl-warm-ink is the
+   spec's text on light value and has no use here yet. All motion sits
    inside prefers-reduced-motion: no-preference, plays once (home-signature.js sets body.gl-sig-run) and ends still. */
-:root{--gl-warm:#d7b57e;--gl-warm-ink:#8a5f1f;--gl-warm-glow:rgba(255,226,170,.9);
+:root{--gl-warm:#d7b57e;--gl-warm-ink:#8a5f1f;--gl-warm-glow:rgba(255,226,170,.9);--gl-warm-line:rgba(215,181,126,.6);
   --gl-sig-field:rgba(42,114,230,.24);--gl-sig-line:rgba(111,178,255,.38);--gl-sig-node:#9cc8ff;--gl-sig-src:#fff;
   --gl-sig-point:#fff;--gl-sig-halo:rgba(111,178,255,.55);--gl-sig-axis-mid:rgba(111,178,255,.75);--gl-sig-axis-end:rgba(111,178,255,.25);
   --gl-sig-rest:rgba(111,178,255,.35);--gl-sig-gutter:rgba(111,178,255,.55);--gl-sig-gutter-glow:rgba(111,178,255,.45);--gl-sig-head:#fff;
@@ -16,9 +18,9 @@ body.gl-home-page .gl-sig circle{fill:var(--gl-sig-node)}
 body.gl-home-page .gl-sig circle.gl-sig-src{fill:var(--gl-sig-src)}
 /* The axis: one true vertical through the chain, with the point of light (truth) at its top. */
 body.gl-home-page .gl-chain::before{content:"";position:absolute;left:calc(var(--p)*-46);top:calc(var(--p)*-36);bottom:calc(var(--p)*-10);width:1px;pointer-events:none;
-  background:linear-gradient(180deg,var(--gl-warm-glow),var(--gl-sig-axis-mid) 40%,var(--gl-sig-axis-end));transform-origin:50% 0}
+  background:linear-gradient(180deg,var(--gl-warm-glow),var(--gl-warm-line) 14%,var(--gl-sig-axis-mid) 40%,var(--gl-sig-axis-end));transform-origin:50% 0}
 body.gl-home-page .gl-chain::after{content:"";position:absolute;left:calc(var(--p)*-46 - 4px);top:calc(var(--p)*-40);width:9px;height:9px;border-radius:50%;pointer-events:none;
-  background:var(--gl-sig-point);box-shadow:0 0 6px 2px var(--gl-warm-glow),0 0 24px 6px var(--gl-sig-halo)}
+  background:var(--gl-sig-point);box-shadow:0 0 0 1px var(--gl-warm),0 0 6px 2px var(--gl-warm-glow),0 0 24px 6px var(--gl-sig-halo)}
 body.gl-home-page .gl-chain strong{text-shadow:0 0 18px var(--gl-sig-rest)}
 @media (max-width:900px){
   body.gl-home-page .gl-chain::before{left:-14px;top:-18px;bottom:-6px}
@@ -41,10 +43,12 @@ body.gl-home-page .gl-chain strong{text-shadow:0 0 18px var(--gl-sig-rest)}
   /* Step 5: light leaves the last link and runs out through the network to every edge. */
   body.gl-home-page.gl-sig-run .gl-sig line{stroke-dasharray:1;stroke-dashoffset:1;animation:gl-edge 700ms var(--gl-ease) forwards;animation-delay:var(--d)}
   body.gl-home-page.gl-sig-run .gl-sig circle{opacity:0;transform-box:fill-box;transform-origin:center;animation:gl-node 600ms var(--gl-ease-lift) forwards;animation-delay:var(--d)}
-  /* Step 6: a line of light in the left margin grows with scroll, 901px and up, where it crosses no text or video. */
+  /* Step 6: a line of light in the left margin grows with scroll, 901px and up. It sits half way between the frame edge
+     and the spine (--spine already includes --frame), so it crosses no text or video at any width, and it stays under
+     the sticky header (z-index 40) so it never draws over the header or the logo. */
   @supports (animation-timeline:scroll()){
     @media (min-width:901px){
-      body.gl-home-page::after{content:"";position:fixed;z-index:40;left:calc(var(--frame) + var(--spine) / 2);top:0;width:2px;height:100vh;pointer-events:none;
+      body.gl-home-page::after{content:"";position:fixed;z-index:39;left:calc((var(--frame) + var(--spine)) / 2);top:0;width:2px;height:100vh;pointer-events:none;
         background:linear-gradient(180deg,transparent 0,var(--gl-sig-gutter) 12%,var(--gl-sig-gutter) 92%,var(--gl-sig-head) 100%);box-shadow:0 0 12px var(--gl-sig-gutter-glow);
         transform-origin:50% 0;animation:gl-grow linear both;animation-timeline:scroll(root)}
     }

@@ -209,6 +209,9 @@ def render(source,path):
     for sheet in ('restored-site.css','home.css','site.css','v14.css','home-signature.css'):
         style_version=hashlib.sha256((ROOT/'assets'/sheet).read_bytes()).hexdigest()[:12]
         source=source.replace(f'href="/assets/{sheet}"',f'href="/assets/{sheet}?v={style_version}"')
+    # The signature script gets the media-style cache key: ?v=<first 8 hex of its sha256>.
+    for script in ('home-signature.js',):
+        source=source.replace(f'src="/assets/{script}"',f'src="/assets/{script}?v={hashlib.sha256((ROOT/"assets"/script).read_bytes()).hexdigest()[:8]}"')
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)
     anchor=main.group(1) if main else 'content'
     header=(ROOT/'components/header.html').read_text(encoding='utf-8').replace('href="#content"',f'href="#{anchor}"')

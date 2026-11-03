@@ -489,9 +489,46 @@ test('Signature: gl-cool on <html> swaps the four warm values, gold is the defau
  await page.goto('/',{waitUntil:'load'});
  const read=()=>page.evaluate(()=>{const s=getComputedStyle(document.documentElement);return ['--gl-warm','--gl-warm-ink','--gl-warm-glow','--gl-warm-line'].map(k=>s.getPropertyValue(k).trim());});
  expect(await page.evaluate(()=>document.documentElement.classList.contains('gl-cool'))).toBe(false);
- expect(await read()).toEqual(['#d7b57e','#8a5f1f','rgba(255,226,170,.9)','']);
+ expect(await read()).toEqual(['#d7b57e','#8a5f1f','rgba(255,226,170,.9)','rgba(215,181,126,.6)']);
  await page.evaluate(()=>document.documentElement.classList.add('gl-cool'));
  expect(await read()).toEqual(['#9cc8ff','#1657c2','rgba(200,225,255,.9)','rgba(111,178,255,.6)']);
  const glow=await page.evaluate(()=>getComputedStyle(document.querySelector('.gl-chain'),'::after').boxShadow);
  expect(glow).toContain('rgba(200, 225, 255, 0.9)');
+});
+const lineState=()=>{const a=getComputedStyle(document.body,'::after');const left=parseFloat(a.left),right=left+parseFloat(a.width);
+   const hits=[];
+   for(const e of document.querySelectorAll('main :is(h1,p,a,button,h2,li),footer :is(h1,p,a,button,h2,li),main video')){
+    const cs=getComputedStyle(e);if(cs.visibility==='hidden'||cs.display==='none')continue;
+    const r=e.getBoundingClientRect();if(r.width<1||r.height<1)continue;
+    if(r.left<right&&r.right>left)hits.push(`${e.tagName.toLowerCase()}.${e.className} ${Math.round(r.left)}-${Math.round(r.right)}`);}
+   const hdr=document.querySelector('header#gl-home-bar'),hz=+getComputedStyle(hdr).zIndex,lz=+a.zIndex;
+   const b=getComputedStyle(document.body);const bodyContext=b.position!=='static'&&b.zIndex!=='auto'||b.isolation==='isolate'||b.transform!=='none'||+b.opacity<1;
+   return {content:a.content,left,right,hits,hz,lz,bodyContext,hdrH:hdr.getBoundingClientRect().height};};
+test('Signature: the margin line stays in the margin at 1440, 1920 and 2560, left of all text and the video, and under the header',async({page})=>{
+ // QA pre-gate B1: the line sits half way between the frame edge and the spine and never crosses Paul's copy, the video
+ // or the sticky header, at any desktop width.
+ test.setTimeout(120_000);
+ const bad=[];
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ for(const width of [1440,1920,2560]){
+  await page.setViewportSize({width,height:1000});
+  await page.goto('/',{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
+  const m=await page.evaluate(lineState);
+  if(m.content==='none'){bad.push(`${width}: no margin line`);continue;}
+  if(m.hits.length)bad.push(`${width}: line at ${m.left}-${m.right}px crosses ${m.hits.length}: ${m.hits.slice(0,6).join(', ')}`);
+  if(!(m.lz<m.hz)||m.bodyContext)bad.push(`${width}: line z-index ${m.lz} is not under the header (${m.hz})`);
+  // Pixels: the header with and without the line, scrolled to mid page so the line is drawn under the header's band.
+  await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight/2));await page.waitForTimeout(300);
+  const clip={x:Math.max(0,Math.floor(m.left)-8),y:0,width:24,height:Math.ceil(m.hdrH)};
+  const withLine=await page.screenshot({clip,animations:'disabled'});
+  await page.addStyleTag({content:'body.gl-home-page::after{visibility:hidden!important}'});
+  const without=await page.screenshot({clip,animations:'disabled'});
+  if(!withLine.equals(without))bad.push(`${width}: the line draws over the header`);
+ }
+ // Planted fault: the old formula (--frame counted twice) must make this check fail at 1920.
+ await page.setViewportSize({width:1920,height:1000});await page.goto('/',{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
+ await page.addStyleTag({content:'body.gl-home-page::after{left:calc(var(--frame) + var(--spine) / 2)!important}'});
+ const planted=await page.evaluate(lineState);
+ expect(planted.hits.length,'old margin line formula must cross the copy at 1920').toBeGreaterThan(0);
+ expect(bad).toEqual([]);
 });
