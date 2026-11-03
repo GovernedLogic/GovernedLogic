@@ -20,9 +20,9 @@ RETIRED_ASSETS=('assets/opening.css', 'assets/opening.js', 'assets/earth-rendere
 # PUBLIC_FILES). Unpublished routes (e.g. principle pages awaiting Paul's approval) are added here until published.
 WITHHELD_LINK_TARGETS=('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json',*PRINCIPLES.withheld())
 ASSETS=('assets/home-chime.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png',
-# v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band: the 72-second video (720p H.264/AAC, faststart),
-# its poster (the video's own 'You exist.' frame) and its English captions (the script's 8 lines, word for word).
-'assets/video/gl-home-explainer.mp4','assets/video/gl-home-explainer-poster.webp','assets/video/gl-home-explainer.en.vtt',
+# v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band: the video (720p H.264/AAC, faststart) and its
+# poster (the video's own 'You exist.' frame). v14.3 (Grace relay 8:42 AM Nov 3, Paul voice call): no caption file.
+'assets/video/gl-home-explainer.mp4','assets/video/gl-home-explainer-poster.webp',
 # v14 (Paul 2026-11-01 22:34 "Let's get this big push out."): the page-type layer and the og images (assets/og/, made by
 # scripts/make_og.py from each page's art and visible h1).
 'assets/v14.css','assets/v14.js',*sorted(f'assets/og/{p.name}' for p in (ROOT/'assets/og').glob('*.png')))

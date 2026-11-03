@@ -325,8 +325,9 @@ test('v14: no page dates in any page, og/twitter tag or feed (source edition lin
  expect(bad).toEqual([]);
 });
 // v14.2 (Paul 2026-11-02 18:08 voice call; Vera's mockup apex-1440/390-video-spot): the homepage video band sits directly
-// under the hero and before the core section, ready to play: controls, no autoplay, captions available (off by default since v14.2.1), its own poster.
-test('v14.2: homepage video band under the hero: centred 16:9 player, no autoplay, English captions offered not default, named by the h1, poster served',async({page,request})=>{
+// under the hero and before the core section, ready to play: controls, no autoplay, its own poster. v14.3 (Grace relay
+// 8:42 AM Nov 3, Paul voice call): no captions; the video has no text tracks.
+test('v14.2: homepage video band under the hero: centred 16:9 player, no autoplay, no text tracks, named by the h1, poster served',async({page,request})=>{
  const bad=[];
  for(const [width,reduce] of [[1440,'no-preference'],[390,'reduce'],[320,'no-preference']]){
   await page.emulateMedia({reducedMotion:reduce});
@@ -335,10 +336,10 @@ test('v14.2: homepage video band under the hero: centred 16:9 player, no autopla
   await page.waitForTimeout(800);
   await page.waitForFunction(()=>{const v=document.querySelector('section.gl-video video');return !v||v.readyState>=1;});
   const m=await page.evaluate(()=>{const band=document.querySelector('section.gl-video');const v=band&&band.querySelector('video');if(!v)return null;
-   const r=v.getBoundingClientRect();const t=v.querySelector('track');
+   const r=v.getBoundingClientRect();
    return {prev:band.previousElementSibling&&band.previousElementSibling.className,next:band.nextElementSibling&&band.nextElementSibling.className,
-    src:v.querySelector('source').getAttribute('src'),vtt:t&&t.getAttribute('src'),duration:v.duration,autoplay:v.autoplay,paused:v.paused,muted:v.muted,controls:v.controls,preload:v.getAttribute('preload'),playsinline:v.hasAttribute('playsinline'),poster:v.getAttribute('poster'),
-    kind:t&&t.kind,srclang:t&&t.srclang,label:t&&t.label,def:t&&t.default,defAttr:t&&t.hasAttribute('default'),mode:v.textTracks[0]&&v.textTracks[0].mode,
+    src:v.querySelector('source').getAttribute('src'),duration:v.duration,autoplay:v.autoplay,paused:v.paused,muted:v.muted,controls:v.controls,preload:v.getAttribute('preload'),playsinline:v.hasAttribute('playsinline'),poster:v.getAttribute('poster'),
+    tracks:v.querySelectorAll('track').length,textTracks:v.textTracks.length,
     named:(v.getAttribute('aria-labelledby')||'').split(/\s+/).filter(Boolean).map(id=>{const e=document.getElementById(id);return e?e.textContent.trim():'#missing:'+id;}).join(' '),
     namedBy:(()=>{const e=document.getElementById(v.getAttribute('aria-labelledby')||'');return e&&e.tagName;})(),ariaLabel:v.hasAttribute('aria-label'),title:v.hasAttribute('title'),
     w:r.width,h:r.height,left:r.left,right:innerWidth-r.right,words:band.textContent.trim(),h1:document.querySelectorAll('h1').length,
@@ -347,8 +348,7 @@ test('v14.2: homepage video band under the hero: centred 16:9 player, no autopla
   if(m.prev!=='gl-hero'||m.next!=='gl-core')bad.push(`${width}: band not between hero and core (${m.prev} / ${m.next})`);
   if(m.autoplay||!m.paused||m.muted)bad.push(`${width}: autoplay ${m.autoplay} paused ${m.paused} muted ${m.muted}`);
   if(!m.controls||m.preload!=='metadata'||!m.playsinline)bad.push(`${width}: controls/preload/playsinline`);
-  // v14.2.1 (Grace relay 6:56 PM Nov 2): the words are burned into the video, so captions are offered but off by default.
-  if(m.kind!=='captions'||m.srclang!=='en'||m.label!=='English'||m.def||m.defAttr||m.mode==='showing')bad.push(`${width}: captions track ${m.kind} ${m.srclang} ${m.label} default=${m.def} mode=${m.mode}`);
+  if(m.tracks!==0||m.textTracks!==0)bad.push(`${width}: video has ${m.tracks} <track> / ${m.textTracks} text tracks; expected none`);
   if(m.named!=='Governed Logic Reasoning Systems'||m.namedBy!=='H1'||m.ariaLabel||m.title)bad.push(`${width}: video name "${m.named}" via ${m.namedBy}`);
   if(m.words!=='')bad.push(`${width}: band adds words: ${m.words}`);
   if(m.h1!==1)bad.push(`${width}: h1 count ${m.h1}`);
@@ -357,7 +357,7 @@ test('v14.2: homepage video band under the hero: centred 16:9 player, no autopla
   if(width<900&&Math.abs(m.w-width)>1)bad.push(`${width}: player ${m.w}px, not full width`);
   // v14.2.2 (Grace relay 7:23 PM Nov 2): media at cache-busted URLs path?v=<first 8 hex of the file's sha256>.
   // v14.2.3 (Grace relay 8:16 AM Nov 3): v3 voice media, 116.666667s by ffprobe.
-  const want={[m.poster]:'/assets/video/gl-home-explainer-poster.webp',[m.vtt]:'/assets/video/gl-home-explainer.en.vtt',[m.src]:'/assets/video/gl-home-explainer.mp4'};
+  const want={[m.poster]:'/assets/video/gl-home-explainer-poster.webp',[m.src]:'/assets/video/gl-home-explainer.mp4'};
   for(const [u,path] of Object.entries(want)){
    if(!new RegExp('^'+path.replace(/\./g,'\\.')+'\\?v=[0-9a-f]{8}$').test(u))bad.push(`${width}: ${u} is not ${path}?v=<8 hex>`);
    const r=await request.get(u);if(!r.ok()){bad.push(`${u} ${r.status()}`);continue;}

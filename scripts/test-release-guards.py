@@ -997,17 +997,17 @@ class ReleaseGuardTests(unittest.TestCase):
                 with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(AssertionError, message):
                     check_restored.check(site)
 
-    # v14.2 (Paul 2026-11-02 18:08 voice call; v14.2.1 Grace relay 6:56 PM Nov 2: captions off by default, named by the h1): the homepage video band is ready to play, never autoplays, and its
-    # captions are exactly the script's lines (10 since v14.2.2, Grace relay 7:23 PM Nov 2), at ?v=<sha256[:8]> URLs.
+    # v14.2 (Paul 2026-11-02 18:08 voice call; v14.2.1 Grace relay 6:56 PM Nov 2: named by the h1): the homepage video band is
+    # ready to play, never autoplays, and its media sit at ?v=<sha256[:8]> URLs (v14.2.2). v14.3 (Grace relay 8:42 AM Nov 3,
+    # Paul voice call): no captions, so a <track> or a .vtt coming back must fail.
     def test_homepage_video_guards(self) -> None:
         import contextlib, io
-        vtt = "assets/video/gl-home-explainer.en.vtt"
         cases = [
             (lambda site: self.replace_once(site, "index.html", '<video controls playsinline', '<video autoplay muted controls playsinline'), r"must not autoplay"),
-            (lambda site: self.replace_once(site, "index.html", '"></video>', '" default></video>'), r"must not be on by default"),
+            (lambda site: self.replace_once(site, "index.html", '"></video>', '"><track kind="captions" srclang="en" label="English" src="/assets/video/gl-home-explainer.en.vtt"></video>'), r"must have no <track> element"),
+            (lambda site: (site / "assets/video/gl-home-explainer.en.vtt").write_text("WEBVTT\n", encoding="utf-8"), r"No \.vtt may be published or referenced"),
             (lambda site: self.replace_once(site, "index.html", ' aria-labelledby="organization"', ''), r'named by aria-labelledby="organization" only'),
             (lambda site: self.replace_once(site, "index.html", ' aria-labelledby="organization"', ' aria-labelledby="organization" aria-label="Video"'), r'named by aria-labelledby="organization" only'),
-            (lambda site: self.replace_once(site, vtt, "You exist.", "You exist. Watch now."), r"Captions are not exactly the 10 script lines"),
             # v14.2.2: replaced media without a new ?v= is a stale cache-busting URL.
             (lambda site: (site / "assets/video/gl-home-explainer.mp4").write_bytes(b"replaced"), r"Homepage video source is not /assets/video/gl-home-explainer\.mp4\?v=[0-9a-f]{8}"),
             (lambda site: self.replace_once(site, "index.html", ".webp?v=44763991", ".webp"), r"Homepage video lacks poster"),
