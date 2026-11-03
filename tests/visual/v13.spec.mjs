@@ -2,6 +2,7 @@
 // Paul's parity rule, and link coverage (C1 reversed, Paul 12:31 PM ET). Each test sets its own viewports, so it runs
 // once (desktop-1440 project).
 import {test,expect} from '@playwright/test';
+import {createHash} from 'node:crypto';
 const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/'];
 // Principle pages, set B (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)). No Truth page.
 const principles={'/principles/being/':'Being','/principles/identity/':'Identity','/principles/meaning/':'Meaning','/principles/intelligibility/':'Intelligibility','/principles/logic/':'Logic','/principles/correspondence/':'Correspondence','/principles/obligation/':'Obligation'};
@@ -332,10 +333,11 @@ test('v14.2: homepage video band under the hero: centred 16:9 player, no autopla
   await page.setViewportSize({width,height:900});
   await page.goto('/',{waitUntil:'load'});
   await page.waitForTimeout(800);
+  await page.waitForFunction(()=>{const v=document.querySelector('section.gl-video video');return !v||v.readyState>=1;});
   const m=await page.evaluate(()=>{const band=document.querySelector('section.gl-video');const v=band&&band.querySelector('video');if(!v)return null;
    const r=v.getBoundingClientRect();const t=v.querySelector('track');
    return {prev:band.previousElementSibling&&band.previousElementSibling.className,next:band.nextElementSibling&&band.nextElementSibling.className,
-    autoplay:v.autoplay,paused:v.paused,muted:v.muted,controls:v.controls,preload:v.getAttribute('preload'),playsinline:v.hasAttribute('playsinline'),poster:v.getAttribute('poster'),
+    src:v.querySelector('source').getAttribute('src'),vtt:t&&t.getAttribute('src'),duration:v.duration,autoplay:v.autoplay,paused:v.paused,muted:v.muted,controls:v.controls,preload:v.getAttribute('preload'),playsinline:v.hasAttribute('playsinline'),poster:v.getAttribute('poster'),
     kind:t&&t.kind,srclang:t&&t.srclang,label:t&&t.label,def:t&&t.default,defAttr:t&&t.hasAttribute('default'),mode:v.textTracks[0]&&v.textTracks[0].mode,
     named:(v.getAttribute('aria-labelledby')||'').split(/\s+/).filter(Boolean).map(id=>{const e=document.getElementById(id);return e?e.textContent.trim():'#missing:'+id;}).join(' '),
     namedBy:(()=>{const e=document.getElementById(v.getAttribute('aria-labelledby')||'');return e&&e.tagName;})(),ariaLabel:v.hasAttribute('aria-label'),title:v.hasAttribute('title'),
@@ -353,7 +355,13 @@ test('v14.2: homepage video band under the hero: centred 16:9 player, no autopla
   if(Math.abs(m.w/m.h-16/9)>0.02)bad.push(`${width}: player not 16:9 (${m.w}x${m.h})`);
   if(width===1440&&(m.w>960.5||Math.abs(m.left-m.right)>1))bad.push(`1440: player ${m.w}px wide, not centred at 960 max`);
   if(width<900&&Math.abs(m.w-width)>1)bad.push(`${width}: player ${m.w}px, not full width`);
-  for(const u of [m.poster,'/assets/video/gl-home-explainer.en.vtt','/assets/video/gl-home-explainer.mp4']){const r=await request.get(u);if(!r.ok())bad.push(`${u} ${r.status()}`);}
+  // v14.2.2 (Grace relay 7:23 PM Nov 2): v2 media (119.168s) at cache-busted URLs path?v=<first 8 hex of the file's sha256>.
+  const want={[m.poster]:'/assets/video/gl-home-explainer-poster.webp',[m.vtt]:'/assets/video/gl-home-explainer.en.vtt',[m.src]:'/assets/video/gl-home-explainer.mp4'};
+  for(const [u,path] of Object.entries(want)){
+   if(!new RegExp('^'+path.replace(/\./g,'\\.')+'\\?v=[0-9a-f]{8}$').test(u))bad.push(`${width}: ${u} is not ${path}?v=<8 hex>`);
+   const r=await request.get(u);if(!r.ok()){bad.push(`${u} ${r.status()}`);continue;}
+   const hex=createHash('sha256').update(await r.body()).digest('hex').slice(0,8);if(!u.endsWith('?v='+hex))bad.push(`${width}: ${u} serves sha256 ${hex}`);}
+  if(Math.abs(m.duration-119.168)>0.05)bad.push(`${width}: video duration ${m.duration}, expected 119.168s`);
  }
  expect(bad).toEqual([]);
 });
