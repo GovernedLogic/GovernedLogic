@@ -11,21 +11,11 @@ from render_site import PRINCIPLES,ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS
 V14_PAGES=('articles/index.html','the-truth-with-paul/index.html')
 TWP='the-truth-with-paul/index.html'
 TWP_COPY=('The Truth with Paul','Coming soon','Subscribe on YouTube')
-# v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band. Its captions are the video script's lines, word
-# for word, and nothing else; the band adds no words to the page.
-# v14.2.2 (Grace relay 7:23 PM Nov 2, Paul 7:08 PM approval): v2 media, 10 script lines; each URL carries ?v=<first 8 hex
-# of that file's own sha256>, so a changed file always gets a new URL.
-VIDEO='/assets/video/gl-home-explainer.mp4';VIDEO_POSTER='/assets/video/gl-home-explainer-poster.webp';VIDEO_VTT='/assets/video/gl-home-explainer.en.vtt'
-VIDEO_CAPTIONS=('You exist.',
- 'Start there. \u201cI exist.\u201d For that statement even to mean anything, being is real, words have meaning, and reality must be intelligible.',
- 'Identity is binding. A thing is what it is. Contradictions cannot both be true in the same respect at the same time. Time is real. And our representations must remain answerable to what they represent.',
- 'Truth is correspondence with reality. Logic cannot create truth or adjudicate reality. Logic must answer to what is true.',
- 'Truth should govern logic. Logic should govern reasoning. Intelligence is downstream.',
- 'Now ask the deeper question: what grounds being, truth, meaning, intelligibility, identity, logic, correspondence, and binding moral obligation? A halt is not a sufficient ground. An unexplained dependent thing cannot explain the reality upon which it still depends.',
- 'Follow that chain to its sufficient, non-contingent ground: the Logos. The Word. Jesus Christ, the Logos, the visible image of the invisible God, the one through whom all things were made and in whom all things hold together.',
- 'Governed Logic is the substrate-agnostic reasoning architecture that follows from reality itself. It applies to human reasoning and machine reasoning alike. Governed Intelligence is its artificial-intelligence instantiation.',
- 'A machine can become more capable without becoming more truthful. More intelligence does not repair an upstream failure of reasoning.',
- 'Govern the logic. Keep reasoning answerable to truth. Follow the chain.')
+# v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band; it adds no words to the page.
+# v14.2.2 (Grace relay 7:23 PM Nov 2, Paul 7:08 PM approval): each media URL carries ?v=<first 8 hex of that file's own
+# sha256>, so a changed file always gets a new URL.
+# v14.3 (Grace relay 8:42 AM Nov 3, Paul voice call): the video has no captions: no <track> and no .vtt in the build.
+VIDEO='/assets/video/gl-home-explainer.mp4';VIDEO_POSTER='/assets/video/gl-home-explainer-poster.webp'
 def video_url(root,path):
     """The cache-busted URL for a video file: path?v=<first 8 hex of its sha256>."""
     f=root/path[1:]
@@ -41,23 +31,16 @@ def video_errors(root):
         if need not in va:errors.append('Homepage video lacks '+need.strip())
     if re.search(r'\b(autoplay|loop|muted)\b',va):errors.append('Homepage video must not autoplay, loop or start muted')
     if f'<source src="{video_url(root,VIDEO)}" type="video/mp4">' not in b:errors.append('Homepage video source is not '+video_url(root,VIDEO))
-    tracks=re.findall(r'<track\b([^>]*)>',b)
-    # v14.2.1 (Grace relay 6:56 PM Nov 2): the words are burned into the video, so captions are offered, never on by default.
-    if len(tracks)!=1 or not all(x in tracks[0] for x in ('kind="captions"','srclang="en"','label="English"',f'src="{video_url(root,VIDEO_VTT)}"')):errors.append('Homepage video needs one English captions track: '+repr(tracks))
-    elif re.search(r'\sdefault\b',tracks[0]):errors.append('Homepage captions track must not be on by default (the words are in the video)')
+    if re.search(r'<track\b',home):errors.append('Homepage video must have no <track> element (no captions since v14.3)')
+    vtts=sorted(str(f.relative_to(root)) for f in root.rglob('*') if f.is_file() and (f.suffix.lower()=='.vtt' or (f.suffix=='.html' and re.search(r'\.vtt\b',f.read_text(encoding='utf-8',errors='replace')))))
+    if vtts:errors.append('No .vtt may be published or referenced (no captions since v14.3): '+', '.join(vtts))
     # The player's accessible name is the hero h1, by reference: no aria-label, no new words.
     h1=re.findall(r'<h1\b([^>]*)>([\s\S]*?)</h1>',home)
     if 'aria-labelledby="organization"' not in va or 'aria-label=' in va or 'title=' in va:errors.append('Homepage video must be named by aria-labelledby="organization" only')
     if len(h1)!=1 or not re.search(r'\sid="organization"',h1[0][0]) or re.sub(r'<[^>]+>','',h1[0][1]).strip()!='Governed Logic Reasoning Systems':errors.append('Homepage video name target is not the hero h1 "Governed Logic Reasoning Systems"')
     if re.sub(r'<[^>]+>','',b).strip():errors.append('Homepage video band adds words to the page: '+repr(re.sub(r'<[^>]+>','',b).strip()))
-    for f in (VIDEO,VIDEO_POSTER,VIDEO_VTT):
+    for f in (VIDEO,VIDEO_POSTER):
         if not (root/f[1:]).is_file():errors.append('Homepage video file missing: '+f)
-    if (root/VIDEO_VTT[1:]).is_file():
-        vtt=(root/VIDEO_VTT[1:]).read_text(encoding='utf-8').split('\n')
-        times=[l for l in vtt if '-->' in l]
-        cues=[l for l in vtt if l and l!='WEBVTT' and '-->' not in l]
-        if vtt[0]!='WEBVTT' or tuple(cues)!=VIDEO_CAPTIONS or len(times)!=len(VIDEO_CAPTIONS):errors.append(f'Captions are not exactly the {len(VIDEO_CAPTIONS)} script lines: '+repr(cues))
-        if any(not re.fullmatch(r'\d\d:\d\d:\d\d\.\d{3} --> \d\d:\d\d:\d\d\.\d{3}',t) for t in times):errors.append('Captions carry cue settings or other text on a timing line')
     if (root/VIDEO_POSTER[1:]).is_file() and (root/VIDEO_POSTER[1:]).read_bytes()[8:12]!=b'WEBP':errors.append('Homepage video poster is not a WebP image')
     return errors
 class Doc(HTMLParser):
