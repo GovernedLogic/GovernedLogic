@@ -19,7 +19,9 @@ RETIRED_ASSETS=('assets/opening.css', 'assets/opening.js', 'assets/earth-rendere
 # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): paths no published page may link to (with RETIRED_ASSETS and anything outside
 # PUBLIC_FILES). Unpublished routes (e.g. principle pages awaiting Paul's approval) are added here until published.
 WITHHELD_LINK_TARGETS=('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json',*PRINCIPLES.withheld())
-ASSETS=('assets/home-chime.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png',
+# Visual refresh, structural part: the homepage signature (home-signature.js and its stylesheet, homepage only) replaces
+# the logo fly-up (home-chime.js, removed). home.css and site.css stay byte-identical because /page-two/ loads them.
+ASSETS=('assets/home-signature.js','assets/home-signature.css','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png',
 # v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band: the video (720p H.264/AAC, faststart) and its
 # poster (the video's own 'You exist.' frame). v14.3 (Grace relay 8:42 AM Nov 3, Paul voice call): no caption file.
 'assets/video/gl-home-explainer.mp4','assets/video/gl-home-explainer-poster.webp',
@@ -204,7 +206,7 @@ def render(source,path):
         # v14 (Paul 2026-11-01 22:34): the homepage design system by page type (scripts/site_layout.py). page-two: none.
         source=LAYOUT.apply(source,path)
     if path!='page-two/index.html':source=LAYOUT.head_tags(source,path,LAYOUT.page_type(path))
-    for sheet in ('restored-site.css','home.css','site.css','v14.css'):
+    for sheet in ('restored-site.css','home.css','site.css','v14.css','home-signature.css'):
         style_version=hashlib.sha256((ROOT/'assets'/sheet).read_bytes()).hexdigest()[:12]
         source=source.replace(f'href="/assets/{sheet}"',f'href="/assets/{sheet}?v={style_version}"')
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)

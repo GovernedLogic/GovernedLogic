@@ -77,6 +77,10 @@ HOMEPAGE_DIGESTS = (
     "48b262212c38a0fdc0827499e533e674b701bfa65d1d355bbddedce441d74f63",
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; this pin replaces 48b26221...4f63.
     "0fa6c918f51fb789348cc4ebd934c5ba7b9ba723d024e488a62157868e3bda15",
+    # Visual refresh, structural part: hero Seed of Life and fly-up removed (Paul, first hand). The hero img
+    # /assets/provisional/hero-geometry.svg is the only change in the record (its preload and the home-chime.js tag
+    # are not recorded). Text, links, title, meta, Open Graph and JSON-LD are unchanged. This pin replaces 0fa6c918...da15.
+    "09f382636c48b9634159568e913993e9b9ac84f179d5895c1a27a0d7ac49e387",
 )
 # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F15): page_record now also hashes JSON-LD names and meta author, so
 # every page's current pin was re-pinned for that record change alone (no visible text, link, image, title, meta
@@ -1013,6 +1017,86 @@ class ReleaseGuardTests(unittest.TestCase):
             (lambda site: self.replace_once(site, "index.html", ".webp?v=44763991", ".webp"), r"Homepage video lacks poster"),
             (lambda site: self.replace_once(site, "index.html", '<section class="gl-video"><video', '<section class="gl-video"><h2>Watch</h2><video'), r"adds words to the page"),
             (lambda site: (site / "assets/video/gl-home-explainer-poster.webp").write_bytes(b"not an image"), r"poster is not a WebP image"),
+        ]
+        for seed, message in cases:
+            with self.subTest(message=message), tempfile.TemporaryDirectory() as directory:
+                site = self.build_artifact(directory)
+                seed(site)
+                with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(AssertionError, message):
+                    check_restored.check(site)
+
+    # Visual refresh, structural part: guarded attributes on the existing homepage video (one mp4 source, width and
+    # height), and a media swap at the same path is the new file plus one ?v= edit in content/home.html.
+    def test_homepage_video_guarded_attributes(self) -> None:
+        import contextlib, io
+        cases = [
+            (lambda site: self.replace_once(site, "index.html", ' width="1280" height="720"', ''), r"Homepage video lacks width"),
+            (lambda site: self.replace_once(site, "index.html", ' height="720"', ''), r"Homepage video lacks height"),
+            (lambda site: self.replace_once(site, "index.html", ' type="video/mp4"></video>', ' type="video/mp4"><source src="/assets/video/gl-home-explainer.mp4" type="video/mp4"></video>'), r"exactly one <source>"),
+            (lambda site: self.replace_once(site, "index.html", '<video controls playsinline', '<video playsinline'), r"Homepage video lacks controls"),
+        ]
+        for seed, message in cases:
+            with self.subTest(message=message), tempfile.TemporaryDirectory() as directory:
+                site = self.build_artifact(directory)
+                seed(site)
+                with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(AssertionError, message):
+                    check_restored.check(site)
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            home = (site / "index.html").read_text(encoding="utf-8")
+            old = check_restored.video_url(site, check_restored.VIDEO)
+            (site / "assets/video/gl-home-explainer.mp4").write_bytes(b"a later cut of the video")
+            new = check_restored.video_url(site, check_restored.VIDEO)
+            self.assertEqual(home.count(old), 1)
+            (site / "index.html").write_text(home.replace(old, new), encoding="utf-8")
+            self.assertEqual(check_restored.video_errors(site), [])
+
+    # Visual refresh, structural part: no fly-up, no hero Seed of Life, the empty signature field, the signature on the
+    # homepage only, colours as custom properties, motion only without reduced motion, and the gl-cool switch.
+    def test_signature_guards(self) -> None:
+        import contextlib, io
+        def append(site: Path, relative: str, text: str) -> None:
+            path = site / relative
+            path.write_text(path.read_text(encoding="utf-8") + text, encoding="utf-8")
+        js, css = "assets/home-signature.js", "assets/home-signature.css"
+        cases = [
+            (lambda site: (site / "assets/home-chime.js").write_text("", encoding="utf-8"), r"Logo fly-up script published"),
+            (lambda site: self.replace_once(site, "index.html", '<script src="/assets/home-signature.js" defer></script>', '<script src="/assets/home-signature.js" defer></script><script src="/assets/home-chime.js" defer></script>'), r"Logo fly-up referenced: index\.html"),
+            (lambda site: self.replace_once(site, "index.html", '<script src="/assets/home-signature.js" defer></script>', '<link rel="preload" href="/assets/provisional/hero-geometry.svg" as="image"><script src="/assets/home-signature.js" defer></script>'), r"still preloads the hero Seed of Life"),
+            (lambda site: self.replace_once(site, "index.html", '<div class="gl-hero-art" aria-hidden="true"></div>', '<div class="gl-hero-art" aria-hidden="true"><img src="/assets/provisional/hero-geometry.svg" alt="" width="1004" height="894"></div>'), r"must be empty"),
+            (lambda site: self.replace_once(site, "index.html", '<div class="gl-hero-art" aria-hidden="true"></div>', ''), r"expected exactly one div\.gl-hero-art"),
+            (lambda site: self.replace_once(site, "index.html", '<script src="/assets/home-signature.js" defer></script>', ''), r"does not load the signature script"),
+            (lambda site: self.replace_once(site, "about/index.html", '</head>', '<script src="/assets/home-signature.js" defer></script></head>'), r"Signature loaded outside the homepage: about/index\.html"),
+            (lambda site: append(site, js, "/*" + "x" * 3000 + "*/"), r"over 3000"),
+            (lambda site: self.replace_once(site, js, "setAttribute('aria-hidden','true')", "setAttribute('role','img')"), r"SVG is not aria-hidden"),
+            (lambda site: self.replace_once(site, js, "if(run){try{if(sessionStorage.getItem('gl-sig'))run=false;else sessionStorage.setItem('gl-sig','1');}catch(e){}}", ""), r"once per session"),
+            (lambda site: self.replace_once(site, js, "art.appendChild(svg);", "svg.style.color='#ff0000';art.appendChild(svg);"), r"script hard-codes a colour"),
+            (lambda site: self.replace_once(site, js, "art.appendChild(svg);", "art.appendChild(svg);art.insertAdjacentText('beforeend','Truth');"), r"may add words"),
+            (lambda site: self.replace_once(site, js, "art.appendChild(svg);", "art.appendChild(svg);setInterval(build,4000);"), r"must not loop"),
+            (lambda site: self.replace_once(site, css, "fill:var(--gl-sig-node)", "fill:#9cc8ff"), r"stylesheet hard-codes a colour"),
+            (lambda site: self.replace_once(site, css, "--gl-warm-glow:rgba(200,225,255,.9)", "--gl-warm-glow:rgba(255,226,170,.9)"), r"gl-cool does not set --gl-warm-glow"),
+            (lambda site: append(site, css, "body.gl-home-page .gl-chain li{animation:gl-align 1.2s both}"), r"outside prefers-reduced-motion"),
+            (lambda site: append(site, css, "@media (prefers-reduced-motion:no-preference){body.gl-home-page .gl-sig circle{animation:gl-node 600ms infinite}}"), r"must not loop"),
+            (lambda site: append(site, css, 'body.gl-home-page .gl-hero-art::after{content:"Truth"}'), r"adds words"),
+        ]
+        for seed, message in cases:
+            with self.subTest(message=message), tempfile.TemporaryDirectory() as directory:
+                site = self.build_artifact(directory)
+                seed(site)
+                with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(AssertionError, message):
+                    check_restored.check(site)
+
+    # /page-two/ is frozen: its HTML (with its stylesheet ?v= values) and every file it loads match the d1ba24d build.
+    def test_page_two_frozen_guards(self) -> None:
+        import contextlib, io
+        def append(site: Path, relative: str, text: str) -> None:
+            path = site / relative
+            path.write_text(path.read_text(encoding="utf-8") + text, encoding="utf-8")
+        cases = [
+            (lambda site: append(site, "assets/home.css", "\n/* edit */\n"), r"/page-two/ is frozen, but assets/home\.css differs"),
+            (lambda site: append(site, "assets/site.css", "\n"), r"/page-two/ is frozen, but assets/site\.css differs"),
+            (lambda site: (site / "assets/provisional/grain.png").write_bytes(b"x"), r"/page-two/ is frozen, but assets/provisional/grain\.png differs"),
+            (lambda site: self.replace_once(site, "page-two/index.html", "</head>", '<link rel="stylesheet" href="/assets/v14.css"></head>'), r"/page-two/ is frozen, but (assets/v14\.css|page-two/index\.html) differs"),
         ]
         for seed, message in cases:
             with self.subTest(message=message), tempfile.TemporaryDirectory() as directory:

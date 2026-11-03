@@ -1,0 +1,59 @@
+/* Homepage signature (concept 3 of the visual refresh spec, section 6). Homepage only. The fly-up and the hero Seed of
+   Life are gone, and div.gl-hero-art keeps its size as the signature field. Every colour comes from a custom property
+   so later tokens can replace them in one place. Add class gl-cool on <html> for the cool only accent. All motion sits
+   inside prefers-reduced-motion: no-preference, plays once (home-signature.js sets body.gl-sig-run) and ends still. */
+:root{--gl-warm:#d7b57e;--gl-warm-ink:#8a5f1f;--gl-warm-glow:rgba(255,226,170,.9);
+  --gl-sig-field:rgba(42,114,230,.24);--gl-sig-line:rgba(111,178,255,.38);--gl-sig-node:#9cc8ff;--gl-sig-src:#fff;
+  --gl-sig-point:#fff;--gl-sig-halo:rgba(111,178,255,.55);--gl-sig-axis-mid:rgba(111,178,255,.75);--gl-sig-axis-end:rgba(111,178,255,.25);
+  --gl-sig-rest:rgba(111,178,255,.35);--gl-sig-gutter:rgba(111,178,255,.55);--gl-sig-gutter-glow:rgba(111,178,255,.45);--gl-sig-head:#fff;
+  --gl-ease:cubic-bezier(.2,.7,.2,1);--gl-ease-lift:cubic-bezier(.34,1.36,.64,1)}
+:root.gl-cool{--gl-warm:#9cc8ff;--gl-warm-ink:#1657c2;--gl-warm-glow:rgba(200,225,255,.9);--gl-warm-line:rgba(111,178,255,.6)}
+body.gl-home-page .gl-hero-art{overflow:hidden}
+body.gl-home-page .gl-hero-art::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(closest-side at 69% 50%,var(--gl-sig-field),transparent)}
+body.gl-home-page .gl-sig{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+body.gl-home-page .gl-sig line{stroke:var(--gl-sig-line);stroke-width:1}
+body.gl-home-page .gl-sig circle{fill:var(--gl-sig-node)}
+body.gl-home-page .gl-sig circle.gl-sig-src{fill:var(--gl-sig-src)}
+/* The axis: one true vertical through the chain, with the point of light (truth) at its top. */
+body.gl-home-page .gl-chain::before{content:"";position:absolute;left:calc(var(--p)*-46);top:calc(var(--p)*-36);bottom:calc(var(--p)*-10);width:1px;pointer-events:none;
+  background:linear-gradient(180deg,var(--gl-warm-glow),var(--gl-sig-axis-mid) 40%,var(--gl-sig-axis-end));transform-origin:50% 0}
+body.gl-home-page .gl-chain::after{content:"";position:absolute;left:calc(var(--p)*-46 - 4px);top:calc(var(--p)*-40);width:9px;height:9px;border-radius:50%;pointer-events:none;
+  background:var(--gl-sig-point);box-shadow:0 0 6px 2px var(--gl-warm-glow),0 0 24px 6px var(--gl-sig-halo)}
+body.gl-home-page .gl-chain strong{text-shadow:0 0 18px var(--gl-sig-rest)}
+@media (max-width:900px){
+  body.gl-home-page .gl-chain::before{left:-14px;top:-18px;bottom:-6px}
+  body.gl-home-page .gl-chain::after{left:-18px;top:-22px}
+}
+@media (max-width:379px){
+  body.gl-home-page .gl-hero-art{aspect-ratio:2/1}
+  body.gl-home-page .gl-chain::before,body.gl-home-page .gl-chain::after{content:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  /* Steps 1 to 4: the point appears, the words settle onto the axis, the axis draws down, each word is lit in turn. */
+  body.gl-home-page.gl-sig-run .gl-chain li{animation:gl-align 1.2s var(--gl-ease) both;animation-delay:calc(var(--i) * 140ms)}
+  body.gl-home-page.gl-sig-run .gl-chain li:nth-child(1){--i:0;--dx:-14px}
+  body.gl-home-page.gl-sig-run .gl-chain li:nth-child(2){--i:1;--dx:11px}
+  body.gl-home-page.gl-sig-run .gl-chain li:nth-child(3){--i:2;--dx:-8px}
+  body.gl-home-page.gl-sig-run .gl-chain li:nth-child(4){--i:3;--dx:13px}
+  body.gl-home-page.gl-sig-run .gl-chain::after{animation:gl-point .9s var(--gl-ease) both}
+  body.gl-home-page.gl-sig-run .gl-chain::before{animation:gl-draw 1.1s var(--gl-ease) .55s both}
+  body.gl-home-page.gl-sig-run .gl-chain li strong{animation:gl-lit 900ms var(--gl-ease) both;animation-delay:calc(800ms + var(--i) * 220ms)}
+  /* Step 5: light leaves the last link and runs out through the network to every edge. */
+  body.gl-home-page.gl-sig-run .gl-sig line{stroke-dasharray:1;stroke-dashoffset:1;animation:gl-edge 700ms var(--gl-ease) forwards;animation-delay:var(--d)}
+  body.gl-home-page.gl-sig-run .gl-sig circle{opacity:0;transform-box:fill-box;transform-origin:center;animation:gl-node 600ms var(--gl-ease-lift) forwards;animation-delay:var(--d)}
+  /* Step 6: a line of light in the left margin grows with scroll, 901px and up, where it crosses no text or video. */
+  @supports (animation-timeline:scroll()){
+    @media (min-width:901px){
+      body.gl-home-page::after{content:"";position:fixed;z-index:40;left:calc(var(--frame) + var(--spine) / 2);top:0;width:2px;height:100vh;pointer-events:none;
+        background:linear-gradient(180deg,transparent 0,var(--gl-sig-gutter) 12%,var(--gl-sig-gutter) 92%,var(--gl-sig-head) 100%);box-shadow:0 0 12px var(--gl-sig-gutter-glow);
+        transform-origin:50% 0;animation:gl-grow linear both;animation-timeline:scroll(root)}
+    }
+  }
+}
+@keyframes gl-align{from{transform:translateX(var(--dx,0));opacity:.55}to{transform:none;opacity:1}}
+@keyframes gl-point{from{transform:scale(.2);opacity:0}60%{transform:scale(1.5);opacity:1}to{transform:scale(1);opacity:1}}
+@keyframes gl-draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes gl-lit{0%{text-shadow:0 0 0 transparent}40%{text-shadow:0 0 16px var(--gl-warm-glow)}100%{text-shadow:0 0 18px var(--gl-sig-rest)}}
+@keyframes gl-edge{to{stroke-dashoffset:0}}
+@keyframes gl-node{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes gl-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
