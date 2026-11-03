@@ -11,17 +11,25 @@ from render_site import PRINCIPLES,ROOT,PAGES,PUBLIC_FILES,ASSETS,RETIRED_ASSETS
 V14_PAGES=('articles/index.html','the-truth-with-paul/index.html')
 TWP='the-truth-with-paul/index.html'
 TWP_COPY=('The Truth with Paul','Coming soon','Subscribe on YouTube')
-# v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band. Its captions are the video script's 8 lines, word
+# v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band. Its captions are the video script's lines, word
 # for word, and nothing else; the band adds no words to the page.
+# v14.2.2 (Grace relay 7:23 PM Nov 2, Paul 7:08 PM approval): v2 media, 10 script lines; each URL carries ?v=<first 8 hex
+# of that file's own sha256>, so a changed file always gets a new URL.
 VIDEO='/assets/video/gl-home-explainer.mp4';VIDEO_POSTER='/assets/video/gl-home-explainer-poster.webp';VIDEO_VTT='/assets/video/gl-home-explainer.en.vtt'
 VIDEO_CAPTIONS=('You exist.',
- 'Something exists. That is our starting point. Denying existence requires an existing reality in which the denial occurs.',
- 'A sufficient ultimate explanation cannot simply be another unexplained dependent thing. It must terminate in something that does not depend on anything else for its existence.',
- 'That brings us to a necessary, non-contingent ground of reality.',
- 'Reality is intelligible. Things possess identities. Propositions can correspond to reality or fail to correspond.',
- 'Logic is not free to determine reality. Logic must remain answerable to what is true. Truth governs logic. Logic governs reasoning. Intelligence follows downstream.',
- 'Jesus Christ of Nazareth is the Logos\u2014the ground of truth, logic, intelligibility, and moral obligation.',
- 'A system can become more capable without becoming better grounded.')
+ 'Start there. \u201cI exist.\u201d For that statement even to mean anything, being is real, words have meaning, and reality must be intelligible.',
+ 'Identity is binding. A thing is what it is. Contradictions cannot both be true in the same respect at the same time. Time is real. And our representations must remain answerable to what they represent.',
+ 'Truth is correspondence with reality. Logic cannot create truth or adjudicate reality. Logic must answer to what is true.',
+ 'Truth should govern logic. Logic should govern reasoning. Intelligence is downstream.',
+ 'Now ask the deeper question: what grounds being, truth, meaning, intelligibility, identity, logic, correspondence, and binding moral obligation? A halt is not a sufficient ground. An unexplained dependent thing cannot explain the reality upon which it still depends.',
+ 'Follow that chain to its sufficient, non-contingent ground: the Logos. The Word. Jesus Christ, the Logos, the visible image of the invisible God, the one through whom all things were made and in whom all things hold together.',
+ 'Governed Logic is the substrate-agnostic reasoning architecture that follows from reality itself. It applies to human reasoning and machine reasoning alike. Governed Intelligence is its artificial-intelligence instantiation.',
+ 'A machine can become more capable without becoming more truthful. More intelligence does not repair an upstream failure of reasoning.',
+ 'Govern the logic. Keep reasoning answerable to truth. Follow the chain.')
+def video_url(root,path):
+    """The cache-busted URL for a video file: path?v=<first 8 hex of its sha256>."""
+    f=root/path[1:]
+    return path+'?v='+(hashlib.sha256(f.read_bytes()).hexdigest()[:8] if f.is_file() else 'missing')
 def video_errors(root):
     errors=[];home=(root/'index.html').read_text(encoding='utf-8')
     band=re.search(r'</section>\s*<section class="gl-video">([\s\S]*?)</section>\s*<section class="gl-core">',home)
@@ -29,13 +37,13 @@ def video_errors(root):
     b=band.group(1);v=re.search(r'<video\b([^>]*)>',b)
     if not v or len(re.findall(r'<video\b',home))!=1:return ['Homepage video band: expected exactly one <video>']
     va=v.group(1)
-    for need in (' controls',' playsinline','preload="metadata"',f'poster="{VIDEO_POSTER}"'):
+    for need in (' controls',' playsinline','preload="metadata"',f'poster="{video_url(root,VIDEO_POSTER)}"'):
         if need not in va:errors.append('Homepage video lacks '+need.strip())
     if re.search(r'\b(autoplay|loop|muted)\b',va):errors.append('Homepage video must not autoplay, loop or start muted')
-    if f'<source src="{VIDEO}" type="video/mp4">' not in b:errors.append('Homepage video source is not '+VIDEO)
+    if f'<source src="{video_url(root,VIDEO)}" type="video/mp4">' not in b:errors.append('Homepage video source is not '+video_url(root,VIDEO))
     tracks=re.findall(r'<track\b([^>]*)>',b)
     # v14.2.1 (Grace relay 6:56 PM Nov 2): the words are burned into the video, so captions are offered, never on by default.
-    if len(tracks)!=1 or not all(x in tracks[0] for x in ('kind="captions"','srclang="en"','label="English"',f'src="{VIDEO_VTT}"')):errors.append('Homepage video needs one English captions track: '+repr(tracks))
+    if len(tracks)!=1 or not all(x in tracks[0] for x in ('kind="captions"','srclang="en"','label="English"',f'src="{video_url(root,VIDEO_VTT)}"')):errors.append('Homepage video needs one English captions track: '+repr(tracks))
     elif re.search(r'\sdefault\b',tracks[0]):errors.append('Homepage captions track must not be on by default (the words are in the video)')
     # The player's accessible name is the hero h1, by reference: no aria-label, no new words.
     h1=re.findall(r'<h1\b([^>]*)>([\s\S]*?)</h1>',home)
@@ -48,7 +56,7 @@ def video_errors(root):
         vtt=(root/VIDEO_VTT[1:]).read_text(encoding='utf-8').split('\n')
         times=[l for l in vtt if '-->' in l]
         cues=[l for l in vtt if l and l!='WEBVTT' and '-->' not in l]
-        if vtt[0]!='WEBVTT' or tuple(cues)!=VIDEO_CAPTIONS or len(times)!=8:errors.append('Captions are not exactly the 8 script lines: '+repr(cues))
+        if vtt[0]!='WEBVTT' or tuple(cues)!=VIDEO_CAPTIONS or len(times)!=len(VIDEO_CAPTIONS):errors.append(f'Captions are not exactly the {len(VIDEO_CAPTIONS)} script lines: '+repr(cues))
         if any(not re.fullmatch(r'\d\d:\d\d:\d\d\.\d{3} --> \d\d:\d\d:\d\d\.\d{3}',t) for t in times):errors.append('Captions carry cue settings or other text on a timing line')
     if (root/VIDEO_POSTER[1:]).is_file() and (root/VIDEO_POSTER[1:]).read_bytes()[8:12]!=b'WEBP':errors.append('Homepage video poster is not a WebP image')
     return errors
