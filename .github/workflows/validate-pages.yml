@@ -43,7 +43,7 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           # QA v12-live-187fdb4 G2: check the scripts that are published, not the retired copies (L1).
-          node --check assets/home-chime.js
+          node --check assets/home-signature.js
           node --check assets/library.js
           node --check assets/v14.js
           node --check tests/visual/playwright.config.mjs

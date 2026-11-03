@@ -294,28 +294,23 @@ test('Phone nav does not scroll sideways and shows no edge fade',async({page})=>
 
 // WEB-215 + Paul's C8 ruling (2026-11-01): "Intro skip is immediate and the first click still lands" is removed with the
 // opening overlay (#glIntro) and its scroll invite.
-test('Logo chime never blocks content, plays once, and is skipped under reduced motion',async({page})=>{
- // Paul, 2026-11-01 (C8, WEB-215; WEB-227 FIFTH): a short logo chime replaces the old opening. Under reduced motion
- // there is none; otherwise it is aria-hidden, takes no pointer events, the hero h1 is visible at load and the first
- // click lands, and it does not replay in the same session.
- await page.goto('/',{waitUntil:'domcontentloaded'});
- await page.waitForTimeout(300);
- await expect(page.locator('.gl-chime')).toHaveCount(0);
- await page.emulateMedia({reducedMotion:'no-preference'});
- await page.goto('/',{waitUntil:'domcontentloaded'});
- const chime=page.locator('.gl-chime');
- await expect(chime).toHaveCount(1);
- await expect(chime).toHaveAttribute('aria-hidden','true');
- await expect(chime).toHaveCSS('pointer-events','none');
- await expect(page.locator('h1')).toHaveCount(1);
- await expect(page.locator('#explore h1.gl-hero-title')).toBeInViewport();
- const cta=page.locator('#explore .gl-actions .gl-go > a[href="/research/"]');
- expect(await cta.evaluate(b=>{const r=b.getBoundingClientRect();return b.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));})).toBe(true);
- await cta.click();
- await expect(page).toHaveURL(/\/research\/\??$/);
- await page.goto('/',{waitUntil:'domcontentloaded'});
- await page.waitForTimeout(300);
- await expect(page.locator('.gl-chime')).toHaveCount(0);
+test('No logo fly-up: no .gl-chime ever, the hero h1 is visible at load and the first click lands',async({page})=>{
+ // Visual refresh, structural part (Paul, first hand: no fly-up): home-chime.js is removed. With and without reduced
+ // motion there is never a .gl-chime element, the hero h1 is in view at load, and the first click on the hero action lands.
+ for(const motion of ['reduce','no-preference']){
+  await page.emulateMedia({reducedMotion:motion});
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  await expect(page.locator('.gl-chime')).toHaveCount(0);
+  await expect(page.locator('h1')).toHaveCount(1);
+  await expect(page.locator('#explore h1.gl-hero-title')).toBeInViewport();
+  await page.waitForTimeout(400);
+  await expect(page.locator('.gl-chime')).toHaveCount(0);
+  const cta=page.locator('#explore .gl-actions .gl-go > a[href="/research/"]');
+  expect(await cta.evaluate(b=>{const r=b.getBoundingClientRect();return b.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));}),motion).toBe(true);
+  await cta.click();
+  await expect(page).toHaveURL(/\/research\/\??$/);
+ }
+ expect(await page.evaluate(()=>[...document.scripts].some(s=>/home-chime/.test(s.src)))).toBe(false);
 });
 test('Labels are at least 12px and controls at least 44px',async({page})=>{
  test.setTimeout(180000);

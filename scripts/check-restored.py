@@ -27,10 +27,11 @@ def video_errors(root):
     b=band.group(1);v=re.search(r'<video\b([^>]*)>',b)
     if not v or len(re.findall(r'<video\b',home))!=1:return ['Homepage video band: expected exactly one <video>']
     va=v.group(1)
-    for need in (' controls',' playsinline','preload="metadata"',f'poster="{video_url(root,VIDEO_POSTER)}"'):
+    for need in (' controls',' playsinline','preload="metadata"',f'poster="{video_url(root,VIDEO_POSTER)}"',' width="1280"',' height="720"'):
         if need not in va:errors.append('Homepage video lacks '+need.strip())
     if re.search(r'\b(autoplay|loop|muted)\b',va):errors.append('Homepage video must not autoplay, loop or start muted')
     if f'<source src="{video_url(root,VIDEO)}" type="video/mp4">' not in b:errors.append('Homepage video source is not '+video_url(root,VIDEO))
+    if len(re.findall(r'<source\b',b))!=1:errors.append('Homepage video must have exactly one <source>')
     if re.search(r'<track\b',home):errors.append('Homepage video must have no <track> element (no captions since v14.3)')
     vtts=sorted(str(f.relative_to(root)) for f in root.rglob('*') if f.is_file() and (f.suffix.lower()=='.vtt' or (f.suffix=='.html' and re.search(r'\.vtt\b',f.read_text(encoding='utf-8',errors='replace')))))
     if vtts:errors.append('No .vtt may be published or referenced (no captions since v14.3): '+', '.join(vtts))
@@ -43,6 +44,111 @@ def video_errors(root):
         if not (root/f[1:]).is_file():errors.append('Homepage video file missing: '+f)
     if (root/VIDEO_POSTER[1:]).is_file() and (root/VIDEO_POSTER[1:]).read_bytes()[8:12]!=b'WEBP':errors.append('Homepage video poster is not a WebP image')
     return errors
+# Visual refresh, structural part (Paul, first hand: no mid-page Seed of Life, no fly-up): the logo fly-up
+# (home-chime.js) is gone, the hero Seed of Life <img> and its preload are gone, div.gl-hero-art stays empty as the
+# signature field, and the signature (home-signature.js and .css) loads on the homepage only. Its colours are custom
+# properties, its motion sits inside prefers-reduced-motion: no-preference, and class gl-cool swaps the warm set.
+SIG_JS='assets/home-signature.js';SIG_CSS='assets/home-signature.css';SIG_JS_MAX=3000
+# SPEC.md line 107: gl-cool swaps the four warm values. The gold defaults are declared in :root too.
+COOL={'--gl-warm':'#9cc8ff','--gl-warm-ink':'#1657c2','--gl-warm-glow':'rgba(200,225,255,.9)','--gl-warm-line':'rgba(111,178,255,.6)'}
+WARM={'--gl-warm':'#d7b57e','--gl-warm-ink':'#8a5f1f','--gl-warm-glow':'rgba(255,226,170,.9)','--gl-warm-line':'rgba(215,181,126,.6)'}
+WARM_USED=('--gl-warm','--gl-warm-line','--gl-warm-glow')
+def _blocks(css,head):
+    """(start,end) of every block whose prelude matches head, braces balanced."""
+    out=[]
+    for m in re.finditer(head,css):
+        i=css.index('{',m.start());depth=0
+        for j in range(i,len(css)):
+            depth+=css[j]=='{';depth-=css[j]=='}'
+            if depth==0:out.append((m.start(),j+1));break
+    return out
+def _cut(css,spans):
+    for a,b in sorted(spans,reverse=True):css=css[:a]+css[b:]
+    return css
+def signature_errors(root):
+    errors=[];home=(root/'index.html').read_text(encoding='utf-8')
+    if (root/'assets/home-chime.js').exists():errors.append('Logo fly-up script published: assets/home-chime.js')
+    for f in sorted(root.rglob('*.html')):
+        if re.search(r'home-chime|gl-chime',f.read_text(encoding='utf-8')):errors.append('Logo fly-up referenced: '+f.relative_to(root).as_posix())
+    if re.search(r'<link\b[^>]*rel="preload"[^>]*hero-geometry\.svg',home):errors.append('Homepage still preloads the hero Seed of Life')
+    art=re.findall(r'<div class="gl-hero-art"([^>]*)>([\s\S]*?)</div>',home)
+    if len(art)!=1:errors.append('Homepage signature field: expected exactly one div.gl-hero-art')
+    elif art[0][1].strip() or 'aria-hidden="true"' not in art[0][0]:errors.append('Homepage signature field div.gl-hero-art must be empty and aria-hidden in the built HTML')
+    hero=re.search(r'<section class="gl-hero"[\s\S]*?</section>',home)
+    if hero and re.search(r'<(img|svg|picture)\b[^>]*(hero-geometry|seed-of-life)',hero.group(0)):errors.append('Homepage hero still shows a Seed of Life')
+    js_url='/'+SIG_JS+'?v='+(hashlib.sha256((root/SIG_JS).read_bytes()).hexdigest()[:8] if (root/SIG_JS).is_file() else 'missing')
+    if len(re.findall(r'<script src="/assets/home-signature\.js[^"]*" defer></script>',home))!=1:errors.append('Homepage does not load the signature script once (defer)')
+    elif f'<script src="{js_url}" defer></script>' not in home:errors.append('Homepage signature script is not '+js_url+' (stale or missing ?v= key)')
+    if len(re.findall(r'<link rel="stylesheet" href="/assets/home-signature\.css\?v=[0-9a-f]{12}">',home))!=1:errors.append('Homepage does not load the signature stylesheet once')
+    for f in sorted(root.rglob('*.html')):
+        rel=f.relative_to(root).as_posix()
+        if rel!='index.html' and 'home-signature' in f.read_text(encoding='utf-8'):errors.append('Signature loaded outside the homepage: '+rel)
+    js=(root/SIG_JS).read_bytes() if (root/SIG_JS).is_file() else b''
+    if not js:errors.append('Signature script missing: '+SIG_JS)
+    elif len(js)>SIG_JS_MAX:errors.append(f'Signature script is {len(js)} bytes, over {SIG_JS_MAX}')
+    else:
+        t=js.decode('utf-8')
+        for need,why in (("setAttribute('aria-hidden','true')",'its SVG is not aria-hidden'),("sessionStorage",'it does not play once per session'),("prefers-reduced-motion: no-preference",'it ignores reduced motion')):
+            if need not in t:errors.append('Signature script: '+why)
+        if re.search(r'#[0-9a-fA-F]{3,8}\b|rgba?\(',t):errors.append('Signature script hard-codes a colour (colours belong to CSS custom properties)')
+        if re.search(r'textContent|innerHTML|innerText|createTextNode|insertAdjacent',t):errors.append('Signature script may add words to the page')
+        if re.search(r'setInterval|requestAnimationFrame|\binfinite\b',t):errors.append('Signature script must not loop')
+    css=(root/SIG_CSS).read_text(encoding='utf-8') if (root/SIG_CSS).is_file() else ''
+    if not css:errors.append('Signature stylesheet missing: '+SIG_CSS);return errors
+    css=re.sub(r'/\*[\s\S]*?\*/','',css)
+    roots=_blocks(css,r':root(?:\.gl-cool)?\s*\{')
+    cool=[css[a:b] for a,b in _blocks(css,r':root\.gl-cool\s*\{')]
+    for k,v in COOL.items():
+        if not cool or not re.search(re.escape(k)+r'\s*:\s*'+re.escape(v)+r'\s*[;}]',cool[0]):errors.append(f'Cool switch :root.gl-cool does not set {k}: {v}')
+    gold=[css[a:b] for a,b in _blocks(css,r':root\s*\{')]
+    for k,v in WARM.items():
+        if not gold or not re.search(re.escape(k)+r'\s*:\s*'+re.escape(v)+r'\s*[;}]',gold[0]):errors.append(f':root does not declare the gold default {k}: {v}')
+    for k in WARM_USED:
+        if 'var('+k+')' not in _cut(css,roots):errors.append(f'Signature does not use {k}, so gl-cool would not reach it')
+    rest=_cut(css,roots+_blocks(css,r'@keyframes\s+[\w-]+\s*\{'))
+    if re.search(r'#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(',rest):errors.append('Signature stylesheet hard-codes a colour outside :root (use a custom property)')
+    motion=_blocks(css,r'@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*\{')
+    if re.search(r'\banimation(-name)?\s*:\s*(?!none)',_cut(css,motion)):errors.append('Signature animation outside prefers-reduced-motion: no-preference')
+    if re.search(r'\binfinite\b',css):errors.append('Signature stylesheet must not loop')
+    if re.search(r'content\s*:\s*"[^"]',css):errors.append('Signature stylesheet adds words (content)')
+    return errors
+# /page-two/ is frozen: its built HTML and every file it loads (stylesheets with their ?v= values, images, fonts and the
+# files those stylesheets reference) stay byte-identical to the d1ba24d build.
+PAGE_TWO_BYTES={'page-two/index.html':'2a43aa839c89cbae22760d5d521cf6f9bde325909241218f94daa34c0a1b0bf6',
+    'assets/governed-logic-mark.webp':'7498a49a67a36f6dfcbe87ecba5262df2d8904f71cae9b4250fa449f31d7469c',
+    'assets/home.css':'1af20a24a1b5836fdac5b70ba1b249c7aaf7893144c56b1c010a7d566b18a710',
+    'assets/materials/ibm-plex-sans.ttf':'160f6c6ae5cd9426005fe12c60f202243aeedba9a2002ff150368aac9d75d9eb',
+    'assets/materials/inter-latin-wght.woff2':'3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62',
+    'assets/materials/source-serif-4-latin-opsz.woff2':'f2ea9c12d2fe9bd3a9589b02ad2c0909da88f30938c91adc838c4f4098f9f9e0',
+    'assets/provisional/grain.png':'af219d0072d73fd88c23ee263c3bf26d99b6dcc7636ef19b64acc1f4390e754e',
+    'assets/provisional/problem-network.webp':'a1ec26c2bf20a96b1c0f0a39da3d2e90f34342531236e2155005b624b1e33eea',
+    'assets/provisional/seed-of-life.png':'168a65a80aef7635e3c7217df42d81f5e6665f09936fd70984184e595fb1bdff',
+    'assets/restored-site.css':'06b90c3646f9b879ae13b08e9f7bb83cda89b82efe90cd5a20b774906ea2372d',
+    'assets/site.css':'37343039c5d081ed9ed9afd237447d6135c0a30a8a6c42778805798f54acb004',
+    'assets/the-groundless-machine.webp':'25558336437765d16d44267c380f0852b8efe0ecd3ad1ed17dfd5e3e3345cbe5',
+    'paul-portrait.png':'47cdf400e9c924b27a0f2d98df03f69c7bb4dc2b9f89f1c3b2d5a6b0499087e8'}
+def page_two_files(root):
+    """Every local file /page-two/ loads, followed through stylesheets: path -> sha256 (or 'missing')."""
+    seen={};todo=['page-two/index.html']
+    while todo:
+        p=todo.pop()
+        if p in seen:continue
+        f=root/p
+        if not f.is_file():seen[p]='missing';continue
+        b=f.read_bytes();seen[p]=hashlib.sha256(b).hexdigest()
+        if p.endswith('.html'):
+            for r in re.findall(r'<(?:link|script|img|source|video)\b[^>]*?\s(?:href|src|poster)="([^"]+)"',b.decode('utf-8')):
+                u=urlsplit(r)
+                if not u.netloc and u.path.startswith('/'):todo.append(unquote(u.path.lstrip('/')))
+        elif p.endswith('.css'):
+            base=p.rsplit('/',1)[0]
+            for r in re.findall(r"url\(['\"]?([^'\")]+)['\"]?\)",b.decode('utf-8')):
+                if r.startswith('data:') or '//' in r:continue
+                todo.append(r.lstrip('/') if r.startswith('/') else Path(base,r).as_posix())
+    return seen
+def page_two_errors(root):
+    got=page_two_files(root)
+    return [f'/page-two/ is frozen, but {p} differs from the d1ba24d build' for p in sorted(set(got)|set(PAGE_TWO_BYTES)) if got.get(p)!=PAGE_TWO_BYTES.get(p)]
 class Doc(HTMLParser):
     def __init__(self):
         super().__init__();self.tags=[];self.ids=[];self.refs=[];self.canonical=[];self.json=[];self.capture=None
@@ -170,6 +276,8 @@ def check(root):
     principle_routes=PRINCIPLES.routes()
     for p in sorted(x for x in actual if x.startswith('principles/') and x not in principle_routes):errors.append('Unpublished principle page in the artifact: '+p)
     errors+=video_errors(root)
+    errors+=signature_errors(root)
+    errors+=page_two_errors(root)
     sitemap=(root/'sitemap.xml').read_text(encoding='utf-8')
     for p in V14_PAGES:
         if '<loc>'+BASE+route(p)+'</loc>' not in sitemap:errors.append('Page missing from sitemap: '+p)
