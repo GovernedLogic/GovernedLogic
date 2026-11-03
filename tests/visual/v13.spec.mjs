@@ -355,13 +355,14 @@ test('v14.2: homepage video band under the hero: centred 16:9 player, no autopla
   if(Math.abs(m.w/m.h-16/9)>0.02)bad.push(`${width}: player not 16:9 (${m.w}x${m.h})`);
   if(width===1440&&(m.w>960.5||Math.abs(m.left-m.right)>1))bad.push(`1440: player ${m.w}px wide, not centred at 960 max`);
   if(width<900&&Math.abs(m.w-width)>1)bad.push(`${width}: player ${m.w}px, not full width`);
-  // v14.2.2 (Grace relay 7:23 PM Nov 2): v2 media (119.168s) at cache-busted URLs path?v=<first 8 hex of the file's sha256>.
+  // v14.2.2 (Grace relay 7:23 PM Nov 2): media at cache-busted URLs path?v=<first 8 hex of the file's sha256>.
+  // v14.2.3 (Grace relay 8:16 AM Nov 3): v3 voice media, 116.666667s by ffprobe.
   const want={[m.poster]:'/assets/video/gl-home-explainer-poster.webp',[m.vtt]:'/assets/video/gl-home-explainer.en.vtt',[m.src]:'/assets/video/gl-home-explainer.mp4'};
   for(const [u,path] of Object.entries(want)){
    if(!new RegExp('^'+path.replace(/\./g,'\\.')+'\\?v=[0-9a-f]{8}$').test(u))bad.push(`${width}: ${u} is not ${path}?v=<8 hex>`);
    const r=await request.get(u);if(!r.ok()){bad.push(`${u} ${r.status()}`);continue;}
    const hex=createHash('sha256').update(await r.body()).digest('hex').slice(0,8);if(!u.endsWith('?v='+hex))bad.push(`${width}: ${u} serves sha256 ${hex}`);}
-  if(Math.abs(m.duration-119.168)>0.05)bad.push(`${width}: video duration ${m.duration}, expected 119.168s`);
+  if(Math.abs(m.duration-116.666667)>0.05)bad.push(`${width}: video duration ${m.duration}, expected 116.666667s`);
  }
  expect(bad).toEqual([]);
 });

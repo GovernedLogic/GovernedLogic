@@ -1010,7 +1010,7 @@ class ReleaseGuardTests(unittest.TestCase):
             (lambda site: self.replace_once(site, vtt, "You exist.", "You exist. Watch now."), r"Captions are not exactly the 10 script lines"),
             # v14.2.2: replaced media without a new ?v= is a stale cache-busting URL.
             (lambda site: (site / "assets/video/gl-home-explainer.mp4").write_bytes(b"replaced"), r"Homepage video source is not /assets/video/gl-home-explainer\.mp4\?v=[0-9a-f]{8}"),
-            (lambda site: self.replace_once(site, "index.html", ".webp?v=41ae9fdb", ".webp"), r"Homepage video lacks poster"),
+            (lambda site: self.replace_once(site, "index.html", ".webp?v=44763991", ".webp"), r"Homepage video lacks poster"),
             (lambda site: self.replace_once(site, "index.html", '<section class="gl-video"><video', '<section class="gl-video"><h2>Watch</h2><video'), r"adds words to the page"),
             (lambda site: (site / "assets/video/gl-home-explainer-poster.webp").write_bytes(b"not an image"), r"poster is not a WebP image"),
         ]
