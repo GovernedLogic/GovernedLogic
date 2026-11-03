@@ -997,14 +997,16 @@ class ReleaseGuardTests(unittest.TestCase):
                 with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(AssertionError, message):
                     check_restored.check(site)
 
-    # v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band is ready to play, never autoplays, and its
+    # v14.2 (Paul 2026-11-02 18:08 voice call; v14.2.1 Grace relay 6:56 PM Nov 2: captions off by default, named by the h1): the homepage video band is ready to play, never autoplays, and its
     # captions are exactly the script's 8 lines.
     def test_homepage_video_guards(self) -> None:
         import contextlib, io
         vtt = "assets/video/gl-home-explainer.en.vtt"
         cases = [
             (lambda site: self.replace_once(site, "index.html", '<video controls playsinline', '<video autoplay muted controls playsinline'), r"must not autoplay"),
-            (lambda site: self.replace_once(site, "index.html", 'label="English" src="/assets/video/gl-home-explainer.en.vtt" default>', 'label="English" src="/assets/video/gl-home-explainer.en.vtt">'), r"one default English captions track"),
+            (lambda site: self.replace_once(site, "index.html", 'label="English" src="/assets/video/gl-home-explainer.en.vtt">', 'label="English" src="/assets/video/gl-home-explainer.en.vtt" default>'), r"must not be on by default"),
+            (lambda site: self.replace_once(site, "index.html", ' aria-labelledby="organization"', ''), r'named by aria-labelledby="organization" only'),
+            (lambda site: self.replace_once(site, "index.html", ' aria-labelledby="organization"', ' aria-labelledby="organization" aria-label="Video"'), r'named by aria-labelledby="organization" only'),
             (lambda site: self.replace_once(site, vtt, "You exist.", "You exist. Watch now."), r"Captions are not exactly the 8 script lines"),
             (lambda site: self.replace_once(site, "index.html", '<section class="gl-video"><video', '<section class="gl-video"><h2>Watch</h2><video'), r"adds words to the page"),
             (lambda site: (site / "assets/video/gl-home-explainer-poster.webp").write_bytes(b"not an image"), r"poster is not a WebP image"),

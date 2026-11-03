@@ -34,7 +34,13 @@ def video_errors(root):
     if re.search(r'\b(autoplay|loop|muted)\b',va):errors.append('Homepage video must not autoplay, loop or start muted')
     if f'<source src="{VIDEO}" type="video/mp4">' not in b:errors.append('Homepage video source is not '+VIDEO)
     tracks=re.findall(r'<track\b([^>]*)>',b)
-    if len(tracks)!=1 or not all(x in tracks[0] for x in ('kind="captions"','srclang="en"','label="English"',f'src="{VIDEO_VTT}"',' default')):errors.append('Homepage video needs one default English captions track: '+repr(tracks))
+    # v14.2.1 (Grace relay 6:56 PM Nov 2): the words are burned into the video, so captions are offered, never on by default.
+    if len(tracks)!=1 or not all(x in tracks[0] for x in ('kind="captions"','srclang="en"','label="English"',f'src="{VIDEO_VTT}"')):errors.append('Homepage video needs one English captions track: '+repr(tracks))
+    elif re.search(r'\sdefault\b',tracks[0]):errors.append('Homepage captions track must not be on by default (the words are in the video)')
+    # The player's accessible name is the hero h1, by reference: no aria-label, no new words.
+    h1=re.findall(r'<h1\b([^>]*)>([\s\S]*?)</h1>',home)
+    if 'aria-labelledby="organization"' not in va or 'aria-label=' in va or 'title=' in va:errors.append('Homepage video must be named by aria-labelledby="organization" only')
+    if len(h1)!=1 or not re.search(r'\sid="organization"',h1[0][0]) or re.sub(r'<[^>]+>','',h1[0][1]).strip()!='Governed Logic Reasoning Systems':errors.append('Homepage video name target is not the hero h1 "Governed Logic Reasoning Systems"')
     if re.sub(r'<[^>]+>','',b).strip():errors.append('Homepage video band adds words to the page: '+repr(re.sub(r'<[^>]+>','',b).strip()))
     for f in (VIDEO,VIDEO_POSTER,VIDEO_VTT):
         if not (root/f[1:]).is_file():errors.append('Homepage video file missing: '+f)
