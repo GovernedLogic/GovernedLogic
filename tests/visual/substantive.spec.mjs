@@ -3,7 +3,7 @@ import {test,expect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
-const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/',
+const routes=['/','/challenge/','/company/','/research/','/about/','/the-treatises/','/ai-safety/','/mimicry/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/',
  // v14 (Paul 2026-11-01 22:34 and 22:36): the articles index and The Truth with Paul placeholder.
  '/articles/','/the-truth-with-paul/'];
 // WEB-205/WEB-231: '/page-two/' keeps Paul's previous homepage main reachable.
@@ -35,7 +35,7 @@ test('Library searches restored full text',async({page})=>{
  await expect(page.locator('#library-search-mode')).toContainText('exact text');
  await expect(page.locator('.library-item:visible')).not.toHaveCount(0);
  await page.getByLabel('Search the library').fill('zzzznomatchzzzz');await expect(page.locator('#library-empty')).toBeVisible();
- await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(22); // WEB-205/WEB-231: the library lists /page-two/.
+ await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(25); // WEB-205/WEB-231: the library lists /page-two/. Overnight 2026-11-10: The Treatises, AI Safety, Mimicry.
 });
 test('FAQ answers open and match machine data',async({page})=>{
  await page.goto('/faq/');await page.getByText('What exists today?',{exact:true}).click();

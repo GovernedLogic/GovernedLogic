@@ -81,6 +81,10 @@ HOMEPAGE_DIGESTS = (
     # /assets/provisional/hero-geometry.svg is the only change in the record (its preload and the home-chime.js tag
     # are not recorded). Text, links, title, meta, Open Graph and JSON-LD are unchanged. This pin replaces 0fa6c918...da15.
     "09f382636c48b9634159568e913993e9b9ac84f179d5895c1a27a0d7ac49e387",
+    # Overnight launch staging 2026-11-10: homepage opens with the approved problem and claim, plus the seed, stack, placeholders, and entry links. This pin replaces 09f38263...e387.
+    "cf2848967beec1f2896fda143fe68efafd0632a0029f894a94dce3083d321a99",
+    # Paul 6:40 AM ET Nov 11 2026 by voice: first homepage placeholder becomes "Governed Logic is a substrate-agnostic reasoning architecture."; the other two become Coming soon; older core tiles and the four-level hero chain are removed. This pin replaces cf284896...1a99.
+    "2b94248c167a2428a6789739846c71075c74404658aa924c1d3c8f7be4eaeedc",
 )
 # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F15): page_record now also hashes JSON-LD names and meta author, so
 # every page's current pin was re-pinned for that record change alone (no visible text, link, image, title, meta
@@ -107,11 +111,14 @@ REVIEWED_PAGE_DIGESTS = {
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 54620889...82b7.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces df67d179...df65.
-    "research/index.html": ("3809a73123d7f389cb6119edb92fec62a0555633ebb187b783af9131ca0eed38",),
+    # Paul 6:40 AM ET Nov 11 2026 by voice: method states "This is how the claims are tested, not the claims themselves." This pin replaces 3809a731...eed38.
+    "research/index.html": ("7ed951cd78fda898d84e4bfd5759d19f6158d48e9b31448bc204bedf2c257fe0",),
     # about/index.html: same restored footer labels; L-BIO-1 removes the invented ending after "What governs the output?".
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces b6608ef8...497b.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 7d85b8ac...b9f2.
-    "about/index.html": ("288c45eaadab5d51839aa3fbd58a02ba9f9a49b85e4a23f9c25b3de51e1b028d",),
+    # Overnight launch staging 2026-11-10: visible AWAITING PAUL'S COPY placeholder for the narrative bio. Existing approved bio is unchanged. This pin replaces 288c45ea...028d.
+    # Paul 6:40 AM ET Nov 11 2026 by voice: placeholder becomes Coming soon; About bio merged into narrative paragraphs, words unchanged. This pin replaces 47467f6e...5a0e.
+    "about/index.html": ("88eb8f0364bd98c75921d3621470041c3a3b7182d201489b4f1404fd087e86f3",),
     # faq/index.html: same restored footer labels.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description removed (the page has no lead or intro passage)); replaces 0cf2535c...f1bb.
     # Paul's parity rule, Governor's 2:01 PM ET ruling (c); Site Manager's 2:11 PM ET decision (Nov 1 2026): FAQ meta description
@@ -186,14 +193,18 @@ REVIEWED_PAGE_DIGESTS = {
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 278bac4a...3927.
     # v14 (Paul 2026-11-01 22:34): footer Articles link and the one header; listing text unchanged (v14 navigation is left out of record text); replaces fb62da91...b185.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 3e4d006b...dd4f.
-    "library/index.html": ("a6349985e4ea2a0cbbbd10efa084418088a5468e8b1633308107d83573b69a61",),
+    # Overnight launch staging 2026-11-10: library lists The Treatises, AI Safety, and Mimicry. This pin replaces a6349985...9a61.
+    # Paul 6:40 AM ET Nov 11 2026 by voice: About excerpt now shows Coming soon in place of the old placeholder. This pin replaces 74371cf5...e5a9.
+    "library/index.html": ("fa2b60e6552c96e6d7b42c478281f6ce3ed155b446927107712a59aeec752ace",),
     # publication/index.html: generated page picks up the restored footer labels.
     # publication/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 7d942e16...b218.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 0bfe3a8b...4080.
     # v14 (Paul 2026-11-01 22:34): footer Articles link and the one header; listing text unchanged (v14 navigation is left out of record text); replaces 51f56ac0...1fb7.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 055804fc...e4e5.
-    "publication/index.html": ("d420af842d029f1ea698e40005e63be2a1d969758fa57c501b9e67f7d37ed1fa",),
+    # Overnight launch staging 2026-11-10: publication record lists The Treatises, AI Safety, and Mimicry. This pin replaces d420af84...d1fa.
+    # Paul 6:40 AM ET Nov 11 2026 by voice: About excerpt now shows Coming soon in place of the old placeholder. This pin replaces 1162928a...917c3.
+    "publication/index.html": ("b8e4f2d0e66c8d812177e6f90bc27b08be3fbeb30f655163c58f1fb6d374607c",),
     # Principle pages, set B (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)): register text
     # verbatim (content/principle-register.md) with the documented code strip (content/principles.py); Supporting passages
     # where the register has them (Paul 5:29 PM ET Nov 1 (via QA/Governor, verified)).
@@ -223,6 +234,13 @@ REVIEWED_PAGE_DIGESTS = {
     # v14 (Paul 2026-11-01 22:34 "Let's get this big push out."; 22:36 "It's not a company yet"): new page, pinned at first build.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 29cfff75...8d3a.
     "the-truth-with-paul/index.html": ("eaf3a91c4f1f3c83cf292597e3385c80a518921b70b6c4df4aca5645df40736b",),
+    # Overnight launch staging 2026-11-10: new pages from the approved handoff listed lines.
+    # Paul 6:40 AM ET Nov 11 2026 by voice: placeholder becomes Coming soon. This pin replaces b7c9e87f...8d2d.
+    "the-treatises/index.html": ("fd154974b55bc6627a3110ca49af101d383c59a2332ef2c70f9002cac1660be5",),
+    # Paul 6:40 AM ET Nov 11 2026 by voice: placeholder becomes Coming soon. This pin replaces 597bc2ac...849c.
+    "ai-safety/index.html": ("0b5a250a604fc82179336b0543f9e9451729c907ca91048f77c5a5319ef8dc43",),
+    # Paul 6:40 AM ET Nov 11 2026 by voice: placeholder becomes Coming soon. This pin replaces 1b73cd43...2647.
+    "mimicry/index.html": ("7723cbd4b05bddf82b07b0a548ba733cb9b82060e4f5c1ec6cd0b43075d4e822",),
 }
 # Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
 # assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
@@ -581,8 +599,8 @@ class ReleaseGuardTests(unittest.TestCase):
                 "target=_blank",
             ),
             (
-                '<a href="/research/" class="gl-link">Research</a>',
-                '<a href="/research/" class="gl-link" target="_blank">Research</a>',
+                '<a href="/research/" class="gl-link">Research</a></span><span class="gl-go"><a href="/concepts/governed-logic/" class="gl-link">Governed Logic</a>',
+                '<a href="/research/" class="gl-link" target="_blank">Research</a></span><span class="gl-go"><a href="/concepts/governed-logic/" class="gl-link">Governed Logic</a>',
                 "Internal target=_blank",
             ),
         )
@@ -1245,8 +1263,8 @@ class ReleaseGuardTests(unittest.TestCase):
                 site,
                 "index.html",
                 # C1 reversed (Paul, Nov 1 2026, 12:31 PM ET): the nav label is now a link's text.
-                '<a href="/research/" class="gl-link">Research</a>',
-                '<a href="/research/" class="gl-link">Studies</a>',
+                '<a href="/research/" class="gl-link">Research</a></span><span class="gl-go"><a href="/concepts/governed-logic/" class="gl-link">Governed Logic</a>',
+                '<a href="/research/" class="gl-link">Studies</a></span><span class="gl-go"><a href="/concepts/governed-logic/" class="gl-link">Governed Logic</a>',
             )
             with self.assertRaisesRegex(AssertionError, "Unreviewed page copy differs"):
                 assert_reviewed_copy(site)

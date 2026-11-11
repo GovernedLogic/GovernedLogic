@@ -61,3 +61,15 @@ body.gl-home-page .gl-chain strong{text-shadow:0 0 18px var(--gl-sig-rest)}
 @keyframes gl-edge{to{stroke-dashoffset:0}}
 @keyframes gl-node{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
 @keyframes gl-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+/* Overnight launch staging 2026-11-10: the approved problem paragraph is taller than the old lede. At the narrowest phone width that would put the hero actions below the first screen. Keep document order as problem, title, actions on wider screens. On phones at or below 389px put the actions above the title so the first click still lands. */
+@media (max-width:389px){
+  body.gl-home-page .gl-hero-copy{display:flex;flex-direction:column}
+  body.gl-home-page .gl-hero-copy .gl-hero-lede{order:1}
+  body.gl-home-page .gl-hero-copy .gl-actions{order:2}
+  body.gl-home-page .gl-hero-copy .gl-hero-title{order:3}
+}
+
+/* Overnight launch staging 2026-11-10: #the-seed sits after the hero and before the video. Inset it to the existing spine so the margin line stays clear, use the paper token, and let the entry actions wrap so five navy buttons keep a 44px target without a list. */
+body.gl-home-page .gl-seed{padding:calc(var(--p)*41) calc(var(--frame) + var(--p)*34) calc(var(--p)*48) calc(var(--frame) + max(22px, calc(var(--p)*73)));height:auto;background:var(--paper)}
+body.gl-home-page .gl-seed .gl-actions{flex-wrap:wrap}

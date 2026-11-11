@@ -91,13 +91,15 @@ test('Link coverage: every page and the seven principle pages reachable by ordin
 // GL QA F1 on 0ee4a0f (v13 regression): the hero chain label "INTELLIGENCE" was clipped from 920 to 1200px (24px at
 // 1024). Every width from 900 to 1280, 1px apart, plus 1024 named: no chain label may overflow its box, a clipping
 // ancestor or the viewport.
+// Paul 6:40 AM ET Nov 11 2026 by voice: the older four-level hero chain is gone. The same clipping rule now covers
+// the remaining five-level stack in #the-seed.
 test('Homepage hero chain labels are never clipped, 900 to 1280px',async({page})=>{
  test.setTimeout(120_000);
  await page.setViewportSize({width:1024,height:900});await page.goto('/',{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
  for(let width=900;width<=1280;width++){
   await page.setViewportSize({width,height:900});
   // The text itself (a Range over the label), not the label's box: a block box may be wider than its words.
-  const bad=await page.evaluate(()=>{const out=[];const rg=document.createRange();for(const e of document.querySelectorAll('.gl-chain li > *')){rg.selectNodeContents(e);const r=rg.getBoundingClientRect();
+  const bad=await page.evaluate(()=>{const out=[];const rg=document.createRange();for(const e of document.querySelectorAll('#the-seed ol li')){rg.selectNodeContents(e);const r=rg.getBoundingClientRect();
    if(e.scrollWidth>e.clientWidth+1)out.push(`${e.textContent.trim()} overflows its box`);
    if(r.right>innerWidth+0.5)out.push(`${e.textContent.trim()} ends at ${r.right.toFixed(1)} past the viewport`);
    for(let a=e.parentElement;a;a=a.parentElement){const cs=getComputedStyle(a);if(cs.overflowX!=='visible'){const ar=a.getBoundingClientRect();
@@ -113,9 +115,10 @@ test('Homepage hero chain labels are never clipped, 900 to 1280px',async({page})
 test('Type: homepage and Sources card titles at 187fdb4 sizes; inner pages on the seven-step scale',async({page})=>{
  test.setTimeout(120_000);
  const home={
-  1440:{'#gl-home-bar nav a':'15.5px','.gl-hero-title':'81px','.gl-hero-lede':'20.8px','.gl-chain strong':'17.5px','.gl-core h2':'51.5px','.gl-core-copy>p:not(.gl-eyebrow)':'20.5px','.gl-principles h3':'21px','.gl-problem h2':'52px','.gl-ptitle':'21px','.gl-card-kind':'13px','.gl-card h3':'24.5px','.site-footer .footer-name':'22px'},
-  1024:{'#gl-home-bar nav a':'13.5px','.gl-hero-title':'57.6px','.gl-hero-lede':'15px','.gl-chain strong':'12.4444px','.gl-core h2':'36.6222px','.gl-core-copy>p:not(.gl-eyebrow)':'15px','.gl-principles h3':'16px','.gl-problem h2':'36.9778px','.gl-ptitle':'16px','.gl-card-kind':'12px','.gl-card h3':'17.4222px','.site-footer .footer-name':'22px'},
-  390:{'#gl-home-bar nav a':'13px','.gl-hero-title':'40.56px','.gl-hero-lede':'16px','.gl-chain strong':'12px','.gl-core h2':'32.76px','.gl-core-copy>p:not(.gl-eyebrow)':'16px','.gl-principles h3':'17px','.gl-problem h2':'32.76px','.gl-ptitle':'17px','.gl-card-kind':'12px','.gl-card h3':'20px','.site-footer .footer-name':'22px'}};
+  // Paul 6:40 AM ET Nov 11 2026 by voice: .gl-chain strong and .gl-principles h3 pins removed with those elements.
+  1440:{'#gl-home-bar nav a':'15.5px','.gl-hero-title':'81px','.gl-hero-lede':'20.8px','.gl-core h2':'51.5px','.gl-core-copy>p:not(.gl-eyebrow)':'20.5px','.gl-problem h2':'52px','.gl-ptitle':'21px','.gl-card-kind':'13px','.gl-card h3':'24.5px','.site-footer .footer-name':'22px'},
+  1024:{'#gl-home-bar nav a':'13.5px','.gl-hero-title':'57.6px','.gl-hero-lede':'15px','.gl-core h2':'36.6222px','.gl-core-copy>p:not(.gl-eyebrow)':'15px','.gl-problem h2':'36.9778px','.gl-ptitle':'16px','.gl-card-kind':'12px','.gl-card h3':'17.4222px','.site-footer .footer-name':'22px'},
+  390:{'#gl-home-bar nav a':'13px','.gl-hero-title':'40.56px','.gl-hero-lede':'16px','.gl-core h2':'32.76px','.gl-core-copy>p:not(.gl-eyebrow)':'16px','.gl-problem h2':'32.76px','.gl-ptitle':'17px','.gl-card-kind':'12px','.gl-card h3':'20px','.site-footer .footer-name':'22px'}};
  for(const [width,pins] of Object.entries(home)){
   await page.setViewportSize({width:+width,height:900});await page.goto('/',{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
   const got=await page.evaluate(s=>Object.fromEntries(s.map(x=>[x,(e=>e?getComputedStyle(e).fontSize:null)(document.querySelector('body.gl-home-page '+x))])),Object.keys(pins));
@@ -178,8 +181,13 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
    const m=await page.evaluate(()=>{
     const bar=document.querySelector('header#gl-home-bar');const labels=[...document.querySelectorAll('header#gl-home-bar nav a')].map(a=>a.textContent.trim());
     // The homepage's art is the signature field (its Seed of Life img is removed): its aria-hidden svg, drawn and in view.
+    // Paul 6:40 AM ET Nov 11 2026 by voice: older hero chain removed, so the signature script does not draw an SVG.
+    // The sized .gl-hero-art field itself is then the homepage art above the fold.
     const sig=document.querySelector('body.gl-home-page #explore .gl-hero-art > svg.gl-sig[aria-hidden="true"]');const sr=sig&&sig.getBoundingClientRect();
+    const field=document.querySelector('body.gl-home-page #explore .gl-hero-art');const fr=field&&field.getBoundingClientRect();
+    const homeField=!!fr&&fr.width>40&&fr.height>40&&fr.top<innerHeight&&fr.bottom>0;
     const art=[...document.querySelectorAll('main img')].some(i=>{const r=i.getBoundingClientRect();return r.width>40&&r.height>40&&r.top<innerHeight&&r.bottom>0&&i.complete&&i.naturalWidth>0;})
+     || homeField
      ||(!!sr&&sr.width>40&&sr.height>40&&sr.top<innerHeight&&sr.bottom>0&&sig.querySelectorAll('circle').length>0);
     const meta=k=>[...document.querySelectorAll(`meta[property="${k}"],meta[name="${k}"]`)].map(x=>x.content);
     const h1=document.querySelector('h1').textContent.replace(/\s+/g,' ').trim();
@@ -348,7 +356,8 @@ test('v14.2: homepage video band under the hero: centred 16:9 player, no autopla
     w:r.width,h:r.height,left:r.left,right:innerWidth-r.right,words:band.textContent.trim(),h1:document.querySelectorAll('h1').length,
     bg:getComputedStyle(band).backgroundImage!=='none'||getComputedStyle(band).backgroundColor};});
   if(!m){bad.push(`${width}: no video band`);continue;}
-  if(m.prev!=='gl-hero'||m.next!=='gl-core')bad.push(`${width}: band not between hero and core (${m.prev} / ${m.next})`);
+  // Overnight launch 2026-11-10: #the-seed sits after the hero, so the video follows the seed and still precedes .gl-core. The player itself is unchanged.
+  if(m.prev!=='gl-seed'||m.next!=='gl-core')bad.push(`${width}: band not after the seed and before core (${m.prev} / ${m.next})`);
   if(m.autoplay||!m.paused||m.muted)bad.push(`${width}: autoplay ${m.autoplay} paused ${m.paused} muted ${m.muted}`);
   if(!m.controls||m.preload!=='metadata'||!m.playsinline)bad.push(`${width}: controls/preload/playsinline`);
   if(m.tracks!==0||m.textTracks!==0)bad.push(`${width}: video has ${m.tracks} <track> / ${m.textTracks} text tracks; expected none`);
@@ -383,9 +392,11 @@ const sigState=()=>{const art=document.querySelector('#explore .gl-hero-art');co
  // watermarks are band styling, left for the next spec.
  const own=document.getAnimations().filter(a=>{const t=a.effect&&a.effect.target;return t&&(t===document.body||!!t.closest('#explore'));});
  const docAnims=own.filter(a=>!a.timeline||a.timeline.constructor.name==='DocumentTimeline');
- const ax=getComputedStyle(document.querySelector('.gl-chain'),'::before'),pt=getComputedStyle(document.querySelector('.gl-chain'),'::after');
+ const chain=document.querySelector('.gl-chain');
+ const ax=chain?getComputedStyle(chain,'::before'):{content:'none',display:'none'};
+ const pt=chain?getComputedStyle(chain,'::after'):{content:'none',display:'none'};
  const r=art.getBoundingClientRect();
- return {run:document.body.classList.contains('gl-sig-run'),svgs:svgs.length,hidden:[...svgs].every(s=>s.getAttribute('aria-hidden')==='true'),
+ return {chain:!!chain,run:document.body.classList.contains('gl-sig-run'),svgs:svgs.length,hidden:[...svgs].every(s=>s.getAttribute('aria-hidden')==='true'),
   artKids:art.children.length,artText:art.textContent,imgs:art.querySelectorAll('img').length,
   running:docAnims.filter(a=>a.playState==='running').length,infinite:own.filter(a=>a.effect&&a.effect.getTiming().iterations===Infinity).length,
   axis:ax.content!=='none'&&ax.display!=='none',point:pt.content!=='none'&&pt.display!=='none',
@@ -407,25 +418,27 @@ test('Signature: hero Seed of Life gone, field keeps its size, plays once per se
   await page.goto('/',{waitUntil:'load'});
   const first=await page.evaluate(sigState);
   const p=Math.min(1,width/1440),[ew,eh]=want[width];
+  // Paul 6:40 AM ET Nov 11 2026 by voice: the older four-level hero chain is gone. The signature script exits when
+  // .gl-chain is absent, so the field stays empty. Size, no extra words, and no Seed of Life still hold.
   if(width===1440?(Math.abs(first.w-ew*p)>1||Math.abs(first.h-eh*p)>1):(Math.abs(first.w-ew)>1||Math.abs(first.h-eh)>1))bad.push(`${width}: field ${first.w}x${first.h}, expected ${ew}x${eh}`);
-  if(!first.run)bad.push(`${width}: first load in a session did not play`);
-  if(first.svgs!==1||!first.hidden||first.artKids!==1||first.artText!==''||first.imgs!==0)bad.push(`${width}: field holds ${first.artKids} children, ${first.svgs} svg, hidden ${first.hidden}, ${first.imgs} img`);
+  if(first.chain)bad.push(`${width}: older hero chain is still present`);
+  if(first.run)bad.push(`${width}: signature played without a hero chain`);
+  if(first.svgs!==0||first.artKids!==0||first.artText!==''||first.imgs!==0)bad.push(`${width}: field holds ${first.artKids} children, ${first.svgs} svg, ${first.imgs} img`);
   if(first.preload||first.chime||first.h1!==1)bad.push(`${width}: preload ${first.preload} chime ${first.chime} h1 ${first.h1}`);
-  if(first.body!==text0)bad.push(`${width}: visible text changed while the signature runs`);
+  if(first.body!==text0)bad.push(`${width}: visible text changed while the signature script ran`);
   if(first.infinite)bad.push(`${width}: ${first.infinite} looping animations`);
   await page.waitForTimeout(SIG_DONE);
   const end=await page.evaluate(sigState);
   if(end.running)bad.push(`${width}: ${end.running} animations still running after ${SIG_DONE}ms`);
-  if(!end.lit)bad.push(`${width}: network not fully lit at the end`);
-  if(width>379&&(!end.axis||!end.point))bad.push(`${width}: axis or point missing at the end`);
-  if(end.body!==text0)bad.push(`${width}: visible text changed after the signature`);
+  if(end.chain||end.run||end.svgs!==0)bad.push(`${width}: signature appeared after wait (chain ${end.chain}, run ${end.run}, svgs ${end.svgs})`);
+  if(end.body!==text0)bad.push(`${width}: visible text changed after the signature wait`);
   await page.goto('/',{waitUntil:'load'});
   const again=await page.evaluate(sigState);
-  if(again.run||again.running||again.svgs!==1||!again.lit)bad.push(`${width}: second load in the session moved (run ${again.run}, running ${again.running}, lit ${again.lit})`);
+  if(again.chain||again.run||again.running||again.svgs!==0)bad.push(`${width}: second load in the session moved (chain ${again.chain}, run ${again.run}, running ${again.running}, svgs ${again.svgs})`);
   await page.emulateMedia({reducedMotion:'reduce'});await page.evaluate(()=>sessionStorage.clear());
   await page.goto('/',{waitUntil:'load'});
   const still=await page.evaluate(sigState);
-  if(still.run||still.running||still.svgs!==1||!still.lit||(width>379&&(!still.axis||!still.point)))bad.push(`${width}: reduced motion is not the end still (run ${still.run}, running ${still.running}, lit ${still.lit})`);
+  if(still.chain||still.run||still.running||still.svgs!==0)bad.push(`${width}: reduced motion is not the empty still field (chain ${still.chain}, run ${still.run}, running ${still.running}, svgs ${still.svgs})`);
   if(await page.evaluate(()=>sessionStorage.getItem('gl-sig')))bad.push(`${width}: reduced motion used up the session play`);
  }
  expect(bad).toEqual([]);
@@ -436,7 +449,7 @@ test('Signature: plays once and carries on if sessionStorage throws, no JS still
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/',{waitUntil:'load'});
  const m=await page.evaluate(sigState);
- expect(m.run).toBe(true);expect(m.svgs).toBe(1);expect(errors).toEqual([]);
+ expect(m.chain).toBe(false);expect(m.run).toBe(false);expect(m.svgs).toBe(0);expect(errors).toEqual([]);
  await page.waitForTimeout(SIG_DONE);
  expect((await page.evaluate(sigState)).running).toBe(0);
  const ctx=await browser.newContext({javaScriptEnabled:false,reducedMotion:'no-preference'});
@@ -446,10 +459,11 @@ test('Signature: plays once and carries on if sessionStorage throws, no JS still
    await q.setViewportSize({width,height:900});
    await q.goto(new URL('/',page.url()).href,{waitUntil:'load'});
    const n=await q.evaluate(()=>{const art=document.querySelector('#explore .gl-hero-art');const r=art.getBoundingClientRect();const c=document.querySelector('.gl-chain');
-    return {kids:art.children.length,h:r.height,axis:getComputedStyle(c,'::before').content!=='none',point:getComputedStyle(c,'::after').content!=='none',words:[...c.querySelectorAll('strong')].map(s=>s.textContent),run:document.body.classList.contains('gl-sig-run')};});
+    const seed=[...document.querySelectorAll('#the-seed ol li')].map(s=>s.textContent.trim());
+    return {kids:art.children.length,h:r.height,chain:!!c,seed,run:document.body.classList.contains('gl-sig-run')};});
    expect(n.kids,`${width}`).toBe(0);expect(n.h,`${width}`).toBeGreaterThan(100);expect(n.run).toBe(false);
-   expect(n.words).toEqual(['Truth','Logic','Reasoning','Intelligence']);
-   if(width>379){expect(n.axis,`${width} axis`).toBe(true);expect(n.point,`${width} point`).toBe(true);}
+   expect(n.chain,`${width} older hero chain`).toBe(false);
+   expect(n.seed).toEqual(['Ground','Truth','Logic','Reasoning','Intelligence']);
   }
  }finally{await ctx.close();}
 });
@@ -492,8 +506,8 @@ test('Signature: gl-cool on <html> swaps the four warm values, gold is the defau
  expect(await read()).toEqual(['#d7b57e','#8a5f1f','rgba(255,226,170,.9)','rgba(215,181,126,.6)']);
  await page.evaluate(()=>document.documentElement.classList.add('gl-cool'));
  expect(await read()).toEqual(['#9cc8ff','#1657c2','rgba(200,225,255,.9)','rgba(111,178,255,.6)']);
- const glow=await page.evaluate(()=>getComputedStyle(document.querySelector('.gl-chain'),'::after').boxShadow);
- expect(glow).toContain('rgba(200, 225, 255, 0.9)');
+ // Paul 6:40 AM ET Nov 11 2026 by voice: no .gl-chain remains to host the ::after glow. The four tokens above still swap.
+ expect(await page.evaluate(()=>document.querySelector('.gl-chain'))).toBeNull();
 });
 const lineState=()=>{const a=getComputedStyle(document.body,'::after');const left=parseFloat(a.left),right=left+parseFloat(a.width);
    const hits=[];
