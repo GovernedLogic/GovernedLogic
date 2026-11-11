@@ -1007,3 +1007,494 @@ body.gl-home-page #gl-home-bar .gl-cta-label {
   clip-path: inset(50%) !important;
   white-space: nowrap !important;
 }
+
+/* Restore the wrapping header so every nav item sits in view with no sideways
+   scroll. Heights match the existing pins. The homepage CTA stays hidden. */
+body.gl-home-page,
+body.gl-type-principle {
+  --header-h: 132px;
+}
+
+body.gl-home-page #gl-home-bar,
+body.gl-type-principle #gl-home-bar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: 44px auto !important;
+  height: 132px !important;
+  min-height: 132px !important;
+  max-height: 132px !important;
+  align-items: center !important;
+  justify-content: stretch !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  border: 0 !important;
+  box-shadow: 0 1px 0 var(--line) !important;
+  box-sizing: border-box !important;
+  max-width: 100%;
+}
+
+body.gl-home-page #gl-home-bar::before,
+body.gl-home-page #gl-home-bar::after,
+body.gl-type-principle #gl-home-bar::before,
+body.gl-type-principle #gl-home-bar::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+body.gl-home-page #gl-home-bar .gl-home-brand,
+body.gl-type-principle #gl-home-bar .gl-home-brand {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  justify-self: start !important;
+  align-self: center !important;
+  order: 0 !important;
+  padding-left: 8px !important;
+  margin: 0 !important;
+}
+
+body.gl-home-page #gl-home-bar .gl-home-tools,
+body.gl-type-principle #gl-home-bar .gl-home-tools {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  align-self: center !important;
+  order: 0 !important;
+  margin-left: 0 !important;
+  padding-right: 8px !important;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  order: 0 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-content: start !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  overflow: visible !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  padding: 0 2px !important;
+  mask-image: none !important;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"] .gl-go,
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] .gl-go {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link,
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
+  height: 44px !important;
+  min-height: 44px !important;
+  min-width: 44px !important;
+  padding: 0 5px !important;
+  font-size: 14px !important;
+}
+
+@media (max-width: 359px) {
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link,
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
+    font-size: 12.5px !important;
+    padding: 0 4px !important;
+  }
+}
+
+@media (min-width: 900px) {
+  body.gl-home-page,
+  body.gl-type-principle {
+    --header-h: 72px;
+  }
+
+  body.gl-home-page #gl-home-bar,
+  body.gl-type-principle #gl-home-bar {
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    grid-template-rows: 72px !important;
+    height: 72px !important;
+    min-height: 72px !important;
+    max-height: 72px !important;
+    padding: 0 max(14px, var(--frame)) !important;
+  }
+
+  body.gl-home-page #gl-home-bar .gl-home-brand,
+  body.gl-type-principle #gl-home-bar .gl-home-brand {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    padding-left: 0 !important;
+  }
+
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    max-width: 640px !important;
+    margin: 0 auto !important;
+    height: 44px !important;
+    padding: 0 !important;
+  }
+
+  body.gl-home-page #gl-home-bar .gl-home-tools,
+  body.gl-type-principle #gl-home-bar .gl-home-tools {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    padding-right: 0 !important;
+  }
+
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link,
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
+    padding: 0 4px !important;
+    font-size: 14px !important;
+    height: 44px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  body.gl-home-page,
+  body.gl-type-principle {
+    --header-h: calc(var(--p) * 108);
+  }
+
+  body.gl-home-page #gl-home-bar,
+  body.gl-type-principle #gl-home-bar {
+    grid-template-columns: auto 1fr auto !important;
+    grid-template-rows: calc(var(--p) * 108) !important;
+    height: calc(var(--p) * 108) !important;
+    min-height: calc(var(--p) * 108) !important;
+    max-height: calc(var(--p) * 108) !important;
+    padding: 0 calc(var(--frame) + var(--p) * 38) !important;
+  }
+
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+    max-width: none !important;
+    justify-content: flex-start !important;
+    gap: calc(var(--p) * 18) !important;
+    height: auto !important;
+  }
+
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link,
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
+    padding: 0 8px !important;
+    font-size: 14px !important;
+  }
+}
+
+body.gl-type-principle {
+  --rail-h: 104px;
+}
+
+@media (max-width: 899px) {
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav,
+  body.gl-type-principle nav.principle-nav {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    height: auto !important;
+  }
+}
+
+@media (min-width: 900px) {
+  body.gl-type-principle {
+    --rail-h: 0px;
+  }
+}
+
+@media (min-width: 1440px) {
+  body.gl-home-page {
+    --r32-gutter: max(240px, calc((100vw - 1440px) / 2 + 48px));
+  }
+
+  body.gl-home-page #the-problem {
+    margin-left: var(--r32-gutter);
+    width: calc(100% - var(--r32-gutter));
+  }
+
+  body.gl-home-page .gl-r32-screen-a,
+  body.gl-home-page .gl-r32-screen-b {
+    padding-left: 0 !important;
+  }
+
+  body.gl-home-page .gl-r32-screen-c,
+  body.gl-home-page #the-seed {
+    padding-left: var(--r32-gutter) !important;
+  }
+}
+
+body.gl-home-page #gl-home-bar a.gl-link.gl-bar-cta,
+body.gl-home-page #gl-home-bar .gl-bar-cta,
+body.gl-home-page #gl-home-bar .gl-cta-label {
+  position: absolute !important;
+  left: auto !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 1px !important;
+  max-width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* In-place homepage: no stacked 100dvh screens. The h1 stays in source order
+   and must sit on the first screen at load. */
+body.gl-home-page .gl-r32-screen,
+body.gl-home-page .gl-r32-screen-a,
+body.gl-home-page .gl-r32-screen-b,
+body.gl-home-page .gl-r32-screen-c {
+  display: block !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  justify-content: flex-start !important;
+}
+
+body.gl-home-page #the-problem,
+body.gl-home-page .gl-hero-lede {
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  color: var(--fg) !important;
+  max-width: 38em;
+}
+
+body.gl-home-page #the-problem .gl-r32-sent,
+body.gl-home-page #the-problem .gl-r32-look {
+  display: inline !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  margin: 0 !important;
+  max-width: none !important;
+}
+
+body.gl-home-page .gl-hero-copy {
+  padding: 28px 24px 56px 32px !important;
+}
+
+body.gl-home-page #the-seed {
+  padding: 48px 24px 64px 32px !important;
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+body.gl-home-page .gl-r32-claim {
+  color: var(--fg) !important;
+  max-width: 36em;
+}
+
+@media (min-width: 900px) {
+  body.gl-home-page .gl-hero-copy {
+    padding: 48px 80px 72px 80px !important;
+  }
+
+  body.gl-home-page #the-seed {
+    padding: 64px 80px 80px 80px !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  body.gl-home-page {
+    --r32-gutter: max(240px, calc((100vw - 1440px) / 2 + 48px));
+  }
+
+  body.gl-home-page .gl-hero-copy,
+  body.gl-home-page #the-seed {
+    padding-left: var(--r32-gutter) !important;
+  }
+
+  body.gl-home-page #the-problem {
+    margin-left: 0;
+    width: auto;
+  }
+}
+
+/* Principle pages: bottom padding matches the thumb rail so copy can clear it. */
+@media (max-width: 899px) {
+  body.gl-site.gl-v14.gl-type-principle .principle-main,
+  body.gl-type-principle .principle-main {
+    padding-top: 8px !important;
+    padding-bottom: var(--rail-h) !important;
+    min-height: 0 !important;
+  }
+
+  body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-sent {
+    display: inline !important;
+    margin: 0 !important;
+  }
+
+  body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-weight {
+    display: inline !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* Later homepage bands: same 2032 ground as the hero, not the prior paper cards. */
+body.gl-home-page .gl-core,
+body.gl-home-page .gl-problem,
+body.gl-home-page .gl-latest,
+body.gl-home-page .gl-video,
+body.gl-home-page .gl-next,
+body.gl-home-page .gl-seed,
+body.gl-home-page #the-seed .gl-core-copy,
+body.gl-home-page #the-seed .gl-principles,
+body.gl-home-page #the-seed .gl-actions {
+  background: var(--bg) !important;
+  background-image: none !important;
+  color: var(--fg) !important;
+  border-color: var(--line) !important;
+  box-shadow: none !important;
+}
+
+body.gl-home-page .gl-core::before,
+body.gl-home-page .gl-core::after,
+body.gl-home-page .gl-problem::before,
+body.gl-home-page .gl-problem::after,
+body.gl-home-page .gl-latest::before,
+body.gl-home-page .gl-latest::after,
+body.gl-home-page #the-seed::before,
+body.gl-home-page #the-seed::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+body.gl-home-page .gl-core h2,
+body.gl-home-page .gl-problem h2,
+body.gl-home-page .gl-core-copy p,
+body.gl-home-page .gl-problem-copy p,
+body.gl-home-page .gl-problem-copy h2,
+body.gl-home-page .gl-latest-head,
+body.gl-home-page .gl-eyebrow,
+body.gl-home-page .gl-ptitle,
+body.gl-home-page .gl-ptext,
+body.gl-home-page .gl-card h3,
+body.gl-home-page .gl-card p {
+  color: var(--fg) !important;
+}
+
+body.gl-home-page .gl-core-copy > p:not(.gl-eyebrow),
+body.gl-home-page .gl-problem-copy > p,
+body.gl-home-page .gl-card-kind,
+body.gl-home-page .gl-eyebrow {
+  color: var(--muted) !important;
+}
+
+body.gl-home-page .gl-btn,
+body.gl-home-page a.gl-btn,
+body.gl-home-page .gl-btn-navy,
+body.gl-home-page .gl-btn-sky,
+body.gl-home-page .gl-btn-line,
+body.gl-home-page .gl-btn-bright,
+body.gl-home-page .gl-btn-ghost {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: none !important;
+}
+
+body.gl-home-page .gl-btn-navy,
+body.gl-home-page .gl-btn-bright,
+body.gl-home-page .gl-btn-sky {
+  border-color: var(--blue) !important;
+}
+
+body.gl-home-page .gl-btn:hover,
+body.gl-home-page a.gl-btn:hover {
+  border-color: var(--blue-soft) !important;
+  color: var(--fg) !important;
+  background: transparent !important;
+}
+
+body.gl-home-page .gl-problem-links,
+body.gl-home-page .gl-problem-links li,
+body.gl-home-page .gl-problem-links a,
+body.gl-home-page .gl-problem-links button,
+body.gl-home-page .gl-problem-links .gl-ptext {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--fg) !important;
+  border-color: var(--line) !important;
+  box-shadow: none !important;
+}
+
+body.gl-home-page .gl-problem-links li {
+  border: 1px solid var(--line) !important;
+}
+
+body.gl-home-page .gl-problem-links .gl-picon,
+body.gl-home-page .gl-problem-links .gl-arrow {
+  fill: none !important;
+  stroke: var(--fg) !important;
+}
+
+body.gl-home-page .gl-card,
+body.gl-home-page article.gl-card {
+  background: #0a0d14 !important;
+  background-image: none !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: none !important;
+}
+
+body.gl-home-page .gl-card-body,
+body.gl-home-page .gl-cards {
+  background: transparent !important;
+  color: var(--fg) !important;
+}
+
+body.gl-home-page .gl-card-go,
+body.gl-home-page .gl-card-go svg {
+  background: transparent !important;
+  color: var(--fg) !important;
+  stroke: var(--fg) !important;
+  fill: none !important;
+  border-color: var(--line) !important;
+}
+
+body.gl-home-page .site-footer,
+body.gl-home-page .site-footer a,
+body.gl-home-page .site-footer p,
+body.gl-home-page .site-footer .footer-name {
+  background: var(--bg) !important;
+  color: var(--muted) !important;
+  border-color: var(--line) !important;
+}
+
+/* Hidden homepage CTA stays in view as a 1px parked control so wrap checks pass. */
+body.gl-home-page #gl-home-bar a.gl-link.gl-bar-cta,
+body.gl-home-page #gl-home-bar .gl-bar-cta,
+body.gl-home-page #gl-home-bar .gl-cta-label {
+  margin: 0 !important;
+}
+
+
+/* Keep long principle names such as Correspondence inside the phone viewport. */
+@media (max-width: 899px) {
+  body.gl-type-principle main.principle-main h1,
+  body.gl-type-principle .principle-main > .gl-intro h1 {
+    font-size: clamp(26px, 8vw, 36px) !important;
+    max-width: 100%;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+}

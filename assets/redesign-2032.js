@@ -49,62 +49,37 @@
 
   function setupHome() {
     var problem = document.querySelector("#the-problem");
-    if (!problem || problem.querySelector(".gl-r32-screen")) return;
-    var original = problem.textContent;
-    var parts = splitSentences(original);
-    if (!parts || parts.length !== 5) return;
+    if (problem && !problem.querySelector(".gl-r32-sent, .gl-r32-look")) {
+      var original = problem.textContent;
+      var parts = splitSentences(original);
+      if (parts && parts.length === 5) {
+        problem.textContent = "";
+        parts.forEach(function (part, i) {
+          var span = document.createElement("span");
+          span.className = "gl-r32-sent gl-r32-reveal gl-r32-in";
+          span.textContent = i < parts.length - 1 ? part + " " : part;
+          problem.appendChild(span);
+        });
+        if (problem.textContent !== original) {
+          problem.textContent = original;
+        }
+      }
+      problem.classList.add("gl-r32-reveal", "gl-r32-in");
+    }
 
-    var screenA = document.createElement("span");
-    screenA.className = "gl-r32-screen gl-r32-screen-a";
-    var look = document.createElement("span");
-    look.className = "gl-r32-look gl-r32-reveal gl-r32-in";
-    look.textContent = parts[0] + " ";
-    screenA.appendChild(look);
-
-    var screenB = document.createElement("span");
-    screenB.className = "gl-r32-screen gl-r32-screen-b";
-    parts.slice(1).forEach(function (part, i) {
-      var span = document.createElement("span");
-      span.className = "gl-r32-sent gl-r32-reveal";
-      span.textContent = part;
-      screenB.appendChild(span);
-      if (i < parts.length - 2) screenB.appendChild(document.createTextNode(" "));
-    });
-
-    if (screenA.textContent + screenB.textContent !== original) return;
-
-    problem.textContent = "";
-    problem.appendChild(screenA);
-    problem.appendChild(screenB);
-
-    var copy = document.querySelector(".gl-hero-copy");
     var title = document.querySelector("h1.gl-hero-title");
+    if (title) title.classList.add("gl-r32-reveal", "gl-r32-in");
+
     var actions = document.querySelector("#explore .gl-actions");
+    if (actions) actions.classList.add("gl-r32-reveal", "gl-r32-in");
+
     var claim = document.querySelector("#the-seed > .gl-core-copy:first-of-type p");
-    var arch = null;
-    document.querySelectorAll("#the-seed .gl-core-copy p").forEach(function (p) {
-      if (p.textContent.trim() === "Governed Logic is a substrate-agnostic reasoning architecture.") arch = p;
-    });
-    if (!copy || !title || !actions) return;
+    if (claim) claim.classList.add("gl-r32-claim", "gl-r32-reveal");
 
-    var screenC = document.createElement("div");
-    screenC.className = "gl-r32-screen gl-r32-screen-c";
-    if (claim) {
-      claim.classList.add("gl-r32-claim", "gl-r32-reveal");
-      screenC.appendChild(claim);
-    }
-    title.classList.add("gl-r32-reveal");
-    screenC.appendChild(title);
-    if (arch) {
-      arch.classList.add("gl-r32-arch", "gl-r32-reveal");
-      screenC.appendChild(arch);
-    }
-    actions.classList.add("gl-r32-reveal");
-    screenC.appendChild(actions);
-    copy.appendChild(screenC);
-
-    document.querySelectorAll("#the-seed > .gl-core-copy").forEach(function (block) {
-      if (!block.textContent.trim()) block.setAttribute("hidden", "");
+    document.querySelectorAll("#the-seed .gl-core-copy p").forEach(function (el) {
+      if (el.textContent.trim() === "Governed Logic is a substrate-agnostic reasoning architecture.") {
+        el.classList.add("gl-r32-arch", "gl-r32-reveal");
+      }
     });
   }
 
