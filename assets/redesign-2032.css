@@ -1,0 +1,1009 @@
+/* 2032 visual pass for the homepage and principle pages.
+   Tokens follow the followthechain palette without glow or circuitry. */
+
+body.gl-home-page,
+body.gl-type-principle {
+  --bg: #03050A;
+  --fg: #F2EFE6;
+  --muted: #C4BDB0;
+  --blue: #2D73C1;
+  --blue-soft: #78BDEA;
+  --blue-deep: #1C5194;
+  --focus: #28B1FF;
+  --line: rgba(242,239,230,.14);
+  --look-x: 0;
+  --look-y: 0;
+  --progress: 0;
+  --header-h: 108px;
+  --rail-h: 62px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+:root:has(>body.gl-home-page),
+:root:has(>body.gl-type-principle) {
+  background: #03050A;
+  scroll-padding-top: 0;
+}
+
+:root:has(>body.gl-home-page) {
+  scroll-snap-type: y proximity;
+}
+
+body.gl-home-page a:focus-visible,
+body.gl-home-page button:focus-visible,
+body.gl-home-page summary:focus-visible,
+body.gl-type-principle a:focus-visible,
+body.gl-type-principle button:focus-visible,
+body.gl-type-principle summary:focus-visible {
+  outline: 2px solid #28B1FF;
+  outline-offset: 3px;
+}
+
+body.gl-home-page .gl-r32-sight,
+body.gl-type-principle .gl-r32-sight {
+  position: fixed;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  z-index: 4;
+  pointer-events: none;
+  background: rgba(242,239,230,.1);
+  transform: translateX(calc(var(--look-x) * 5px));
+}
+
+body.gl-home-page .gl-r32-sight > i,
+body.gl-type-principle .gl-r32-sight > i {
+  display: block;
+  width: 100%;
+  height: calc(var(--progress) * 100%);
+  background: var(--blue);
+}
+
+body.gl-home-page #gl-home-bar,
+body.gl-type-principle #gl-home-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  gap: 0;
+  padding: 10px 16px 0 20px;
+  background: var(--bg);
+  background-image: none;
+  box-shadow: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+body.gl-home-page #gl-home-bar .gl-home-brand,
+body.gl-type-principle #gl-home-bar .gl-home-brand {
+  order: 1;
+}
+
+body.gl-home-page #gl-home-bar .site-brand,
+body.gl-type-principle #gl-home-bar .site-brand,
+body.gl-home-page #gl-home-bar .site-brand:is(button,a.gl-link),
+body.gl-type-principle #gl-home-bar .site-brand:is(button,a.gl-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+body.gl-home-page #gl-home-bar .site-brand img,
+body.gl-type-principle #gl-home-bar .site-brand img {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  min-height: 22px;
+  margin: 0;
+  object-fit: contain;
+}
+
+body.gl-home-page #gl-home-bar .gl-brand-name,
+body.gl-type-principle #gl-home-bar .gl-brand-name {
+  display: block;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+body.gl-home-page #gl-home-bar .gl-brand-text small,
+body.gl-type-principle #gl-home-bar .gl-brand-text small,
+body.gl-home-page #gl-home-bar .site-brand small,
+body.gl-type-principle #gl-home-bar .site-brand small {
+  display: block;
+  margin-top: 1px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+body.gl-home-page #gl-home-bar .gl-home-tools,
+body.gl-type-principle #gl-home-bar .gl-home-tools {
+  order: 2;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+body.gl-home-page #gl-home-bar .gl-search,
+body.gl-type-principle #gl-home-bar .gl-search,
+body.gl-home-page #gl-home-bar a.gl-search,
+body.gl-type-principle #gl-home-bar a.gl-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  color: var(--fg);
+  background: none;
+  border: 0;
+}
+
+body.gl-home-page #gl-home-bar .gl-search svg,
+body.gl-type-principle #gl-home-bar .gl-search svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+body.gl-home-page #gl-home-bar .gl-bar-cta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+  order: 3;
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 4px 0 0;
+  padding: 0 0 10px;
+  -webkit-overflow-scrolling: touch;
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent);
+  justify-self: stretch;
+  height: auto;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"]::-webkit-scrollbar,
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"]::-webkit-scrollbar {
+  display: none;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link,
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
+  flex: 0 0 auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  height: auto;
+  padding: 8px 12px;
+  margin: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link:hover,
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link:hover,
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link[aria-current="page"],
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link[aria-current="page"] {
+  color: var(--fg);
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link[aria-current="page"],
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link[aria-current="page"] {
+  box-shadow: inset 0 -2px 0 var(--blue);
+}
+
+body.gl-home-page .gl-hero-art {
+  display: none;
+}
+
+body.gl-home-page .gl-hero {
+  display: block;
+  position: relative;
+  height: auto;
+  min-height: 0;
+  width: auto;
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  background-image: none;
+  color: var(--fg);
+}
+
+body.gl-home-page .gl-hero::before,
+body.gl-home-page .gl-hero::after {
+  content: none;
+  display: none;
+}
+
+body.gl-home-page .gl-hero-copy {
+  display: block;
+  position: relative;
+  z-index: 2;
+  width: auto;
+  max-width: none;
+  padding: 0;
+}
+
+body.gl-home-page #the-problem {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  max-width: none;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+body.gl-home-page .gl-r32-screen {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: calc(var(--header-h) + 12px) 24px 48px 32px;
+  scroll-snap-align: start;
+}
+
+body.gl-home-page .gl-r32-look {
+  display: block;
+  margin: 0;
+  max-width: 16em;
+  font-family: var(--serif);
+  font-size: clamp(28px, 8vw, 36px);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -.02em;
+  color: var(--fg);
+}
+
+body.gl-home-page .gl-r32-screen-b .gl-r32-sent {
+  display: block;
+  margin: 0 0 18px;
+  max-width: 28em;
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+body.gl-home-page .gl-r32-screen-b .gl-r32-sent:last-child {
+  margin-bottom: 0;
+}
+
+body.gl-home-page .gl-r32-screen-c .gl-r32-claim,
+body.gl-home-page .gl-r32-screen-c #the-seed > .gl-core-copy:first-of-type p,
+body.gl-home-page .gl-r32-claim {
+  margin: 0 0 28px;
+  max-width: 16em;
+  font-family: var(--serif);
+  font-size: clamp(26px, 7.2vw, 38px);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -.02em;
+  color: var(--fg);
+}
+
+body.gl-home-page .gl-hero-title,
+body.gl-home-page h1.gl-hero-title {
+  margin: 0 0 12px;
+  width: auto;
+  max-width: 18em;
+  font-family: var(--serif);
+  font-size: clamp(22px, 6vw, 30px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  color: var(--fg);
+}
+
+body.gl-home-page .gl-r32-arch {
+  margin: 0 0 28px;
+  max-width: 24em;
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+body.gl-home-page #explore .gl-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 0;
+}
+
+body.gl-home-page #explore .gl-actions a.gl-link,
+body.gl-home-page #explore .gl-actions a.gl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 18px;
+  color: var(--fg);
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.2;
+  background: transparent;
+  border: 1px solid var(--line);
+  box-shadow: none;
+  border-radius: 0;
+}
+
+body.gl-home-page #explore .gl-actions a.gl-btn-bright {
+  border-color: var(--blue);
+}
+
+body.gl-home-page #explore .gl-actions a.gl-link:hover,
+body.gl-home-page #explore .gl-actions a.gl-btn:hover {
+  border-color: var(--blue-soft);
+}
+
+body.gl-home-page #explore .gl-actions .gl-arrow {
+  width: 16px;
+  height: 10px;
+  margin-left: 8px;
+  stroke: currentColor;
+  fill: none;
+}
+
+body.gl-home-page #the-seed {
+  padding: 48px 24px 64px 32px;
+  background: transparent;
+  color: var(--fg);
+}
+
+body.gl-home-page #the-seed .gl-principles li p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--fg);
+}
+
+body.gl-home-page #the-seed .gl-core-copy p {
+  color: var(--fg);
+}
+
+body.gl-type-principle img.gl-art,
+body.gl-type-principle div.gl-tile {
+  display: none !important;
+}
+
+body.gl-site.gl-v14.gl-type-principle .principle-main,
+body.gl-type-principle .principle-main {
+  display: block;
+  padding: calc(var(--header-h) + 8px) 24px calc(var(--rail-h) + 28px + env(safe-area-inset-bottom, 0px)) 32px;
+  background: transparent;
+  color: var(--fg);
+}
+
+body.gl-type-principle .gl-intro {
+  display: block;
+  margin: 0;
+  padding: 0 0 12px;
+  background: transparent;
+  border: 0;
+  min-height: 0;
+}
+
+body.gl-type-principle .gl-intro h1,
+body.gl-type-principle .principle-main > .gl-intro h1,
+body.gl-type-principle main.principle-main h1 {
+  margin: 4px 0 10px;
+  padding: 0;
+  max-width: 12em;
+  font-family: var(--serif);
+  font-size: clamp(48px, 16vw, 72px);
+  font-weight: 500;
+  line-height: .92;
+  letter-spacing: -.035em;
+  color: var(--fg);
+}
+
+body.gl-type-principle .principle-passage {
+  max-width: 32em;
+}
+
+body.gl-type-principle .principle-passage p {
+  margin: 0 0 16px;
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--fg);
+}
+
+body.gl-type-principle .principle-passage:first-of-type p:first-child,
+body.gl-type-principle .principle-passage:first-of-type .gl-r32-sent:first-child {
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+body[data-principle="identity"] .principle-main {
+  padding-top: calc(var(--header-h) + 28px);
+}
+
+body[data-principle="identity"] .principle-passage:first-of-type {
+  margin-top: 24px;
+}
+
+body[data-principle="identity"] .principle-passage:first-of-type .gl-r32-sent {
+  display: block;
+  margin: 0 0 28px;
+}
+
+body[data-principle="identity"] .principle-passage:first-of-type .gl-r32-sent:first-child {
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-weight {
+  color: var(--fg);
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+body[data-principle="intelligibility"] .principle-passage:first-of-type .gl-r32-sent {
+  display: block;
+  margin: 0 0 16px;
+}
+
+body[data-principle="obligation"] .principle-passage:first-of-type .gl-r32-sent {
+  display: block;
+  margin: 0 0 16px;
+}
+
+body[data-principle="obligation"] .principle-passage:first-of-type .gl-r32-if {
+  margin: 18px 0 0;
+}
+
+body.gl-type-principle .gl-r32-triad {
+  margin: 28px 0 0;
+  max-width: 16em;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--fg);
+}
+
+body.gl-type-principle .principle-passage h2 {
+  margin: 48px 0 18px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: clamp(22px, 6vw, 28px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--fg);
+}
+
+body.gl-site.gl-v14.gl-type-principle .principle-main > .principle-nav,
+body.gl-type-principle nav.principle-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 25;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0;
+  width: auto;
+  margin: 0;
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+  background: var(--bg);
+  border: 0;
+  border-top: 1px solid var(--line);
+  grid-column: auto;
+  grid-row: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+body.gl-type-principle nav.principle-nav::before {
+  content: none;
+}
+
+body.gl-type-principle nav.principle-nav .gl-rel-icon {
+  display: none !important;
+}
+
+body.gl-type-principle nav.principle-nav a.gl-link,
+body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 6px 10px;
+  color: var(--muted);
+  text-decoration: none;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.2;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  white-space: nowrap;
+}
+
+body.gl-type-principle nav.principle-nav a.gl-link .gl-rel-name {
+  display: block;
+  white-space: nowrap;
+}
+
+body.gl-type-principle nav.principle-nav a.gl-link:hover,
+body.gl-type-principle nav.principle-nav a.gl-link[aria-current="page"] {
+  color: var(--fg);
+}
+
+body.gl-type-principle nav.principle-nav a.gl-link[aria-current="page"] {
+  box-shadow: inset 0 2px 0 var(--blue);
+}
+
+body.gl-home-page .gl-r32-reveal,
+body.gl-type-principle .gl-r32-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+body.gl-home-page .gl-r32-reveal.gl-r32-in,
+body.gl-type-principle .gl-r32-reveal.gl-r32-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+@media (min-width: 900px) {
+  body.gl-home-page,
+  body.gl-type-principle {
+    --header-h: 72px;
+    --rail-h: 0px;
+  }
+
+  body.gl-home-page .gl-r32-sight,
+  body.gl-type-principle .gl-r32-sight {
+    left: 28px;
+  }
+
+  body.gl-home-page #gl-home-bar,
+  body.gl-type-principle #gl-home-bar {
+    flex-wrap: nowrap;
+    gap: 22px;
+    padding: 10px 48px;
+  }
+
+  body.gl-home-page #gl-home-bar .gl-home-brand,
+  body.gl-type-principle #gl-home-bar .gl-home-brand {
+    order: 1;
+  }
+
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+    order: 2;
+    flex: 1 1 auto;
+    margin: 0;
+    padding: 0;
+    mask-image: none;
+  }
+
+  body.gl-home-page #gl-home-bar .gl-home-tools,
+  body.gl-type-principle #gl-home-bar .gl-home-tools {
+    order: 3;
+    margin-left: auto;
+  }
+
+  body.gl-home-page .gl-r32-screen {
+    padding: 72px 80px 80px 240px;
+  }
+
+  body.gl-home-page .gl-r32-look {
+    font-size: 44px;
+    max-width: 18em;
+  }
+
+  body.gl-home-page .gl-r32-claim {
+    font-size: 42px;
+  }
+
+  body.gl-home-page .gl-hero-title,
+  body.gl-home-page h1.gl-hero-title {
+    font-size: 32px;
+  }
+
+  body.gl-home-page #explore .gl-actions {
+    flex-direction: row;
+  }
+
+  body.gl-home-page #the-seed {
+    padding: 64px 80px 80px 240px;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle .principle-main,
+  body.gl-type-principle .principle-main {
+    display: block;
+    grid-template-columns: none;
+    padding: calc(var(--header-h) + 28px) 80px 80px 240px;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle .principle-main > .gl-intro,
+  body.gl-site.gl-v14.gl-type-principle .principle-main > .principle-passage,
+  body.gl-site.gl-v14.gl-type-principle .principle-main > .principle-nav {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle .principle-main > .principle-nav,
+  body.gl-type-principle nav.principle-nav {
+    position: fixed;
+    left: 48px;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    width: 160px;
+    transform: translateY(-50%);
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  body.gl-type-principle nav.principle-nav a.gl-link,
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link {
+    justify-content: flex-start;
+    min-height: 44px;
+    padding: 8px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  body.gl-type-principle nav.principle-nav a.gl-link[aria-current="page"] {
+    box-shadow: inset 2px 0 0 var(--blue);
+    padding-left: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  :root:has(>body.gl-home-page),
+  :root:has(>body.gl-type-principle) {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  body.gl-home-page .gl-r32-reveal,
+  body.gl-home-page .gl-r32-reveal.gl-r32-in,
+  body.gl-type-principle .gl-r32-reveal,
+  body.gl-type-principle .gl-r32-reveal.gl-r32-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  body.gl-home-page .gl-r32-sight,
+  body.gl-type-principle .gl-r32-sight {
+    transform: none;
+  }
+}
+
+
+body.gl-home-page main.home-content,
+body.gl-home-page .gl-hero,
+body.gl-home-page .gl-hero-copy,
+body.gl-home-page .gl-r32-screen,
+body.gl-type-principle main.principle-main {
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+body.gl-home-page .gl-hero {
+  overflow: visible !important;
+}
+
+body.gl-home-page .gl-hero .gl-hero-title {
+  font-size: clamp(22px, 6vw, 30px) !important;
+  color: var(--fg) !important;
+  line-height: 1.15 !important;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+  width: max-content !important;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"] .gl-go,
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] .gl-go {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+}
+
+body.gl-home-page #gl-home-bar .gl-bar-cta,
+body.gl-home-page #gl-home-bar a.gl-bar-cta {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.gl-site.gl-v14.gl-type-principle .gl-intro {
+  min-height: 0 !important;
+  padding: 0 0 12px !important;
+  margin: 0 !important;
+  background: none !important;
+}
+
+body.gl-site.gl-v14.gl-type-principle .gl-intro::before,
+body.gl-site.gl-v14.gl-type-principle .gl-intro::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+  background: none !important;
+}
+
+body.gl-type-principle .principle-passage,
+body.gl-type-principle .principle-passage p,
+body.gl-type-principle .principle-passage h2,
+body.gl-type-principle main.principle-main h1 {
+  color: var(--fg) !important;
+}
+
+body.gl-site.gl-v14.gl-type-principle nav.principle-nav {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+  z-index: 25 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  grid-template-columns: none !important;
+  gap: 0 !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+  background: var(--bg) !important;
+  border: 0 !important;
+  border-top: 1px solid var(--line) !important;
+  isolation: auto !important;
+  transform: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none;
+}
+
+body.gl-site.gl-v14.gl-type-principle nav.principle-nav::before,
+body.gl-site.gl-v14.gl-type-principle nav.principle-nav::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 6px 10px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: var(--muted) !important;
+  font: 400 12px/1.2 var(--sans) !important;
+  box-shadow: none !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link:hover,
+body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link[aria-current="page"] {
+  color: var(--fg) !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link[aria-current="page"] {
+  box-shadow: inset 0 2px 0 var(--blue) !important;
+}
+
+@media (min-width: 900px) {
+  body.gl-home-page .gl-hero .gl-hero-title {
+    font-size: 32px !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav {
+    left: 48px !important;
+    right: auto !important;
+    top: 50% !important;
+    bottom: auto !important;
+    width: 160px !important;
+    transform: translateY(-50%) !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link {
+    justify-content: flex-start !important;
+    min-height: 44px !important;
+    padding: 8px 0 !important;
+    font-size: 14px !important;
+    text-align: left !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link[aria-current="page"] {
+    box-shadow: inset 2px 0 0 var(--blue) !important;
+    padding-left: 12px !important;
+  }
+}
+
+
+body.gl-home-page #gl-home-bar,
+body.gl-type-principle #gl-home-bar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 40 !important;
+  overflow: visible !important;
+  background: var(--bg) !important;
+  background-image: none !important;
+}
+
+body.gl-home-page #explore .gl-actions,
+body.gl-home-page #explore .gl-actions.gl-r32-reveal {
+  flex: none !important;
+  flex-grow: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+}
+
+body.gl-home-page #explore .gl-actions .gl-go {
+  display: block !important;
+  margin: 0 !important;
+  flex: none !important;
+  width: auto !important;
+}
+
+body.gl-type-principle main.principle-main {
+  min-height: calc(100dvh - var(--header-h));
+}
+
+body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-sent {
+  display: block;
+  margin: 0 0 16px;
+}
+
+body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-weight {
+  margin-top: 22px;
+}
+
+
+:root:has(>body.gl-home-page),
+:root:has(>body.gl-type-principle),
+body.gl-home-page,
+body.gl-type-principle {
+  overflow-x: clip;
+}
+
+body.gl-home-page #gl-home-bar,
+body.gl-type-principle #gl-home-bar {
+  max-width: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none;
+}
+
+body.gl-home-page #gl-home-bar::-webkit-scrollbar,
+body.gl-type-principle #gl-home-bar::-webkit-scrollbar {
+  display: none;
+}
+
+body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+  min-width: max-content !important;
+  max-width: none;
+  width: max-content !important;
+  overflow: visible !important;
+}
+
+body.gl-home-page #gl-home-bar a.gl-link.gl-bar-cta,
+body.gl-home-page #gl-home-bar .gl-bar-cta,
+body.gl-home-page #gl-home-bar .gl-cta-label {
+  position: absolute !important;
+  left: auto !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 1px !important;
+  max-width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
