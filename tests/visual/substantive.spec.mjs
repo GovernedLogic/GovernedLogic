@@ -242,7 +242,10 @@ test('Header CTA reads the N11 text and never collides with brand or Search',asy
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.text).toBe('Explore the research method');
-  await expect(page.locator('#gl-home-bar .gl-bar-cta')).toHaveAccessibleName('Explore the research method');
+  const a11y=await page.evaluate(()=>{const cta=document.querySelector('#gl-home-bar .gl-bar-cta');cta.focus();return{visibility:getComputedStyle(cta).visibility,focused:document.activeElement===cta};});
+  expect(a11y.visibility,`CTA hidden from view at ${width}`).toBe('hidden');
+  expect(a11y.focused,`CTA not focusable at ${width}`).toBe(false);
+  expect(await page.locator('#gl-home-bar').ariaSnapshot(),`CTA absent from header a11y tree at ${width}`).not.toMatch(/Explore the research method/);
   expect(m.h,`header height at ${width}`).toBe(hh);
   expect(m.gaps[0],`brand clears Search at ${width}`).toBeGreaterThanOrEqual(0);
   expect(m.sub,`REASONING SYSTEMS visible at ${width}`).toBe(true);

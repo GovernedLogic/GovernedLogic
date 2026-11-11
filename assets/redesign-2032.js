@@ -117,6 +117,38 @@
     document.querySelectorAll("main.principle-main h1, .principle-passage:first-of-type .gl-r32-reveal").forEach(function (el) {
       el.classList.add("gl-r32-in");
     });
+
+    syncPrincipleRail();
+    window.addEventListener("resize", syncPrincipleRail);
+  }
+
+  function syncPrincipleRail() {
+    var rail = document.querySelector("nav.principle-nav");
+    var first = document.querySelector(".principle-passage:first-of-type");
+    if (!rail) return;
+    if (window.matchMedia("(min-width: 900px)").matches) {
+      body.style.removeProperty("--rail-h");
+      if (first) first.style.minHeight = "";
+      return;
+    }
+    var h = Math.ceil(rail.getBoundingClientRect().height);
+    if (h > 0) body.style.setProperty("--rail-h", h + "px");
+    if (first) {
+      first.style.minHeight = "";
+      first.classList.remove("gl-r32-fit");
+      var top = first.getBoundingClientRect().top + window.scrollY;
+      var minH = Math.max(0, window.innerHeight - top);
+      first.style.minHeight = minH + "px";
+      if (window.scrollY <= 1) {
+        var bottom = 0;
+        first.querySelectorAll("h1, h2, h3, p, li, span").forEach(function (el) {
+          if (!el.textContent.trim()) return;
+          var box = el.getBoundingClientRect();
+          if (box.height) bottom = Math.max(bottom, box.bottom);
+        });
+        if (bottom > rail.getBoundingClientRect().top + 1) first.classList.add("gl-r32-fit");
+      }
+    }
   }
 
   function setLook(x, y) {

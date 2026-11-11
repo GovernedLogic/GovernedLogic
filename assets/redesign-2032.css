@@ -1196,7 +1196,9 @@ body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
 }
 
 body.gl-type-principle {
-  --rail-h: 104px;
+  /* Two wrapping 44px rows + 6px paddings + 1px top border + safe-area.
+     JS overwrites this with the measured box height after layout. */
+  --rail-h: calc(101px + env(safe-area-inset-bottom, 0px));
 }
 
 @media (max-width: 899px) {
@@ -1326,13 +1328,24 @@ body.gl-home-page .gl-r32-claim {
   }
 }
 
-/* Principle pages: bottom padding matches the thumb rail so copy can clear it. */
+/* Principle pages: reserve the thumb rail's full rendered height.
+   padding-bottom clears the rail at scroll end (including safe-area via --rail-h).
+   The first passage grows to the viewport bottom so later copy (chapter titles,
+   footer) starts below the fold instead of painting under the rail. */
 @media (max-width: 899px) {
   body.gl-site.gl-v14.gl-type-principle .principle-main,
   body.gl-type-principle .principle-main {
     padding-top: 8px !important;
     padding-bottom: var(--rail-h) !important;
     min-height: 0 !important;
+  }
+
+  body.gl-type-principle .principle-passage:first-of-type {
+    min-height: calc(100dvh - var(--header-h) - 64px);
+  }
+
+  body.gl-type-principle .site-footer {
+    padding-bottom: calc(var(--rail-h) + 28px);
   }
 
   body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-sent {
@@ -1343,6 +1356,66 @@ body.gl-home-page .gl-r32-claim {
   body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-weight {
     display: inline !important;
     margin-top: 0 !important;
+  }
+
+  /* Obligation's first passage is the one block tall enough to overflow the rail.
+     Keep the three If beats and the triad; tighten only the phone measure. */
+  body[data-principle="obligation"] .principle-passage:first-of-type p,
+  body[data-principle="obligation"] .principle-passage:first-of-type p:first-child,
+  body[data-principle="obligation"] .principle-passage:first-of-type .gl-r32-sent,
+  body[data-principle="obligation"] .principle-passage:first-of-type .gl-r32-sent:first-child {
+    font-size: 15px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 8px;
+  }
+
+  body[data-principle="obligation"] .principle-passage:first-of-type .gl-r32-sent {
+    display: block;
+    margin: 0 0 6px;
+  }
+
+  body[data-principle="obligation"] .principle-passage:first-of-type .gl-r32-if {
+    margin: 8px 0 0;
+  }
+
+  body[data-principle="obligation"] .gl-r32-triad {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 18px;
+    line-height: 1.3;
+    max-width: none;
+  }
+
+  body.gl-type-principle .principle-passage:first-of-type.gl-r32-fit p,
+  body.gl-type-principle .principle-passage:first-of-type.gl-r32-fit p:first-child,
+  body.gl-type-principle .principle-passage:first-of-type.gl-r32-fit .gl-r32-sent,
+  body.gl-type-principle .principle-passage:first-of-type.gl-r32-fit .gl-r32-sent:first-child {
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+  }
+
+  body.gl-type-principle .principle-passage:first-of-type.gl-r32-fit .gl-r32-weight {
+    font-size: 17px !important;
+    line-height: 1.3 !important;
+  }
+}
+
+@media (max-width: 359px) {
+  body[data-principle="meaning"] .principle-passage:first-of-type p,
+  body[data-principle="meaning"] .principle-passage:first-of-type p:first-child,
+  body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-sent,
+  body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-sent:first-child,
+  body[data-principle="logic"] .principle-passage:first-of-type p,
+  body[data-principle="logic"] .principle-passage:first-of-type p:first-child,
+  body[data-principle="logic"] .principle-passage:first-of-type .gl-r32-sent,
+  body[data-principle="logic"] .principle-passage:first-of-type .gl-r32-sent:first-child {
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+  }
+
+  body[data-principle="meaning"] .principle-passage:first-of-type .gl-r32-weight {
+    font-size: 17px !important;
+    line-height: 1.3 !important;
   }
 }
 
@@ -1497,4 +1570,11 @@ body.gl-home-page #gl-home-bar .gl-cta-label {
     word-break: normal;
     hyphens: none;
   }
+}
+
+/* Homepage duplicate header CTA: removed from tab order and accessibility tree (Vera ruling 11:36 ET). */
+body.gl-home-page #gl-home-bar a.gl-link.gl-bar-cta,
+body.gl-home-page #gl-home-bar .gl-bar-cta,
+body.gl-home-page #gl-home-bar .gl-cta-label {
+  visibility: hidden !important;
 }
