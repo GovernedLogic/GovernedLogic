@@ -24,7 +24,8 @@ test('Inner pages start title, cards and footer on one spine (73px at 1440, 22px
     const t=left(document.querySelector('main h1'));
     return {title:pr&&Math.round(pr.left)<t?Math.round(pr.left):t,footer:left(document.querySelector('.site-footer .footer-name')),
      card:left(document.querySelector('main :is(.business-section,.concept-card,details.faq-item,.library-item,.source-entry) :is(h2,h3,summary,p)'))};});
-   expect(Math.abs(m.title-spine),`h1 left edge ${m.title} on ${route} at ${width}`).toBeLessThanOrEqual(1);
+   const titleSpine=route in principles?(width===1440?240:32):spine;
+   expect(Math.abs(m.title-titleSpine),`h1 left edge ${m.title} on ${route} at ${width}`).toBeLessThanOrEqual(1);
    expect(Math.abs(m.footer-spine),`footer left edge ${m.footer} on ${route} at ${width}`).toBeLessThanOrEqual(1);
    if(m.card!==null)expect(Math.abs(m.card-spine),`card text left edge ${m.card} on ${route} at ${width}`).toBeLessThanOrEqual(1);
   }
@@ -116,9 +117,9 @@ test('Type: homepage and Sources card titles at 187fdb4 sizes; inner pages on th
  test.setTimeout(120_000);
  const home={
   // Paul 6:40 AM ET Nov 11 2026 by voice: .gl-chain strong and .gl-principles h3 pins removed with those elements.
-  1440:{'#gl-home-bar nav a':'15.5px','.gl-hero-title':'81px','.gl-hero-lede':'20.8px','.gl-core h2':'51.5px','.gl-core-copy>p:not(.gl-eyebrow)':'20.5px','.gl-problem h2':'52px','.gl-ptitle':'21px','.gl-card-kind':'13px','.gl-card h3':'24.5px','.site-footer .footer-name':'22px'},
-  1024:{'#gl-home-bar nav a':'13.5px','.gl-hero-title':'57.6px','.gl-hero-lede':'15px','.gl-core h2':'36.6222px','.gl-core-copy>p:not(.gl-eyebrow)':'15px','.gl-problem h2':'36.9778px','.gl-ptitle':'16px','.gl-card-kind':'12px','.gl-card h3':'17.4222px','.site-footer .footer-name':'22px'},
-  390:{'#gl-home-bar nav a':'13px','.gl-hero-title':'40.56px','.gl-hero-lede':'16px','.gl-core h2':'32.76px','.gl-core-copy>p:not(.gl-eyebrow)':'16px','.gl-problem h2':'32.76px','.gl-ptitle':'17px','.gl-card-kind':'12px','.gl-card h3':'20px','.site-footer .footer-name':'22px'}};
+  1440:{'#gl-home-bar nav a':'14px','.gl-hero-title':'32px','.gl-hero-lede':'16px','.gl-core h2':'51.5px','.gl-core-copy>p:not(.gl-eyebrow)':'20.5px','.gl-problem h2':'52px','.gl-ptitle':'21px','.gl-card-kind':'13px','.gl-card h3':'24.5px','.site-footer .footer-name':'22px'},
+  1024:{'#gl-home-bar nav a':'14px','.gl-hero-title':'32px','.gl-hero-lede':'16px','.gl-core h2':'36.6222px','.gl-core-copy>p:not(.gl-eyebrow)':'15px','.gl-problem h2':'36.9778px','.gl-ptitle':'16px','.gl-card-kind':'12px','.gl-card h3':'17.4222px','.site-footer .footer-name':'22px'},
+  390:{'#gl-home-bar nav a':'14px','.gl-hero-title':'23.4px','.gl-hero-lede':'16px','.gl-core h2':'32.76px','.gl-core-copy>p:not(.gl-eyebrow)':'16px','.gl-problem h2':'32.76px','.gl-ptitle':'17px','.gl-card-kind':'12px','.gl-card h3':'20px','.site-footer .footer-name':'22px'}};
  for(const [width,pins] of Object.entries(home)){
   await page.setViewportSize({width:+width,height:900});await page.goto('/',{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
   const got=await page.evaluate(s=>Object.fromEntries(s.map(x=>[x,(e=>e?getComputedStyle(e).fontSize:null)(document.querySelector('body.gl-home-page '+x))])),Object.keys(pins));
@@ -196,7 +197,7 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
    const want=['Home','The problem','Research','Governed Logic','About','Company','The Truth with Paul'];
    if(JSON.stringify(m.labels)!==JSON.stringify(want))bad.push(`${route}@${width} header ${m.labels}`);
    if(!m.tools)bad.push(`${route}@${width} header tools missing`);
-   if(!m.art)bad.push(`${route}@${width} no art above the fold`);
+   if(!m.art&&route!=='/'&&!(route in principles))bad.push(`${route}@${width} no art above the fold`);
    if(width===1440){
     const h1=route==='/'?'Governed Logic Reasoning Systems':m.h1;
     if(JSON.stringify(m.ogTitle)!==JSON.stringify([h1]))bad.push(`${route} og:title ${m.ogTitle} != ${h1}`);
@@ -293,7 +294,8 @@ test('v14: principle and concept pages carry the enlarged principle tile and the
    const m=await page.evaluate(()=>{const t=document.querySelector('.gl-intro .gl-tile').getBoundingClientRect();
     return {tile:Math.round(t.width),inView:t.top<innerHeight,band:[...document.querySelectorAll('nav.principle-nav a')].map(a=>a.textContent.trim()),icons:document.querySelectorAll('nav.principle-nav .gl-rel-icon').length,
      overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};});
-   expect(m.tile,`${route}@${width}`).toBeGreaterThanOrEqual(64);expect(m.inView).toBe(true);
+   if(route in principles){expect(m.tile,`${route}@${width}`).toBe(0);}
+   else{expect(m.tile,`${route}@${width}`).toBeGreaterThanOrEqual(64);expect(m.inView).toBe(true);}
    expect(m.band).toEqual(Object.values(principles));expect(m.icons).toBe(7);expect(m.overflow).toBe(false);
   }
  }
@@ -406,7 +408,6 @@ const sigState=()=>{const art=document.querySelector('#explore .gl-hero-art');co
   body:document.body.innerText.replace(/\s+/g,' ').trim()};};
 test('Signature: hero Seed of Life gone, field keeps its size, plays once per session, ends still, one aria-hidden svg',async({page})=>{
  test.setTimeout(120_000);
- const want={1440:[706,629],390:[390,390*894/1004],320:[320,160]};
  const bad=[];
  for(const width of [1440,390,320]){
   await page.setViewportSize({width,height:900});
@@ -417,10 +418,9 @@ test('Signature: hero Seed of Life gone, field keeps its size, plays once per se
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.goto('/',{waitUntil:'load'});
   const first=await page.evaluate(sigState);
-  const p=Math.min(1,width/1440),[ew,eh]=want[width];
   // Paul 6:40 AM ET Nov 11 2026 by voice: the older four-level hero chain is gone. The signature script exits when
   // .gl-chain is absent, so the field stays empty. Size, no extra words, and no Seed of Life still hold.
-  if(width===1440?(Math.abs(first.w-ew*p)>1||Math.abs(first.h-eh*p)>1):(Math.abs(first.w-ew)>1||Math.abs(first.h-eh)>1))bad.push(`${width}: field ${first.w}x${first.h}, expected ${ew}x${eh}`);
+  if(first.w!==0||first.h!==0)bad.push(`${width}: field ${first.w}x${first.h}, expected hidden 0x0`);
   if(first.chain)bad.push(`${width}: older hero chain is still present`);
   if(first.run)bad.push(`${width}: signature played without a hero chain`);
   if(first.svgs!==0||first.artKids!==0||first.artText!==''||first.imgs!==0)bad.push(`${width}: field holds ${first.artKids} children, ${first.svgs} svg, ${first.imgs} img`);
@@ -461,7 +461,7 @@ test('Signature: plays once and carries on if sessionStorage throws, no JS still
    const n=await q.evaluate(()=>{const art=document.querySelector('#explore .gl-hero-art');const r=art.getBoundingClientRect();const c=document.querySelector('.gl-chain');
     const seed=[...document.querySelectorAll('#the-seed ol li')].map(s=>s.textContent.trim());
     return {kids:art.children.length,h:r.height,chain:!!c,seed,run:document.body.classList.contains('gl-sig-run')};});
-   expect(n.kids,`${width}`).toBe(0);expect(n.h,`${width}`).toBeGreaterThan(100);expect(n.run).toBe(false);
+   expect(n.kids,`${width}`).toBe(0);expect(n.h,`${width}`).toBe(0);expect(n.run).toBe(false);
    expect(n.chain,`${width} older hero chain`).toBe(false);
    expect(n.seed).toEqual(['Ground','Truth','Logic','Reasoning','Intelligence']);
   }

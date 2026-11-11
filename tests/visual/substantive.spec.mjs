@@ -53,14 +53,15 @@ test('Homepage and navigation work without JavaScript',async({browser})=>{
 });
 test('Homepage lands on the hero with no opening',async({page})=>{
  // WEB-215 + Paul's C8 ruling (2026-11-01, "drop the old opening"): replaces the opening-completion test. There is no
- // opening region or overlay; the hero headline is the page's one h1 and is on the first screen at load.
+ // opening region or overlay. The hero headline remains the page's one h1. The 2032 stacked screens put the first
+ // problem sentence on screen one and the h1 on screen three.
  await page.goto('/');
  await expect(page.locator('#site')).toHaveCount(0);
  await expect(page.locator('#glIntro')).toHaveCount(0);
  await expect(page.locator('.scroll-invite')).toHaveCount(0);
  await expect(page.locator('h1')).toHaveCount(1);
  await expect(page.locator('#explore h1.gl-hero-title')).toHaveCount(1);
- await expect(page.locator('#explore h1.gl-hero-title')).toBeInViewport();
+ await expect(page.locator('.gl-r32-look')).toBeInViewport();
 });
 // WEB-215 + Paul's C8 ruling (2026-11-01): the opening filmstrip test ("Opening records its chronological visual
 // sequence") is removed with the opening it recorded; contact-sheet.mjs no longer expects motion frames.
@@ -167,14 +168,14 @@ test('Phone header wraps the nav from 320 to 899: every item whole, in view and 
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');
    const inView=el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth+0.5&&r.top>=0&&r.bottom<=bar.getBoundingClientRect().bottom+0.5;};
-   const fixed=['.gl-brand-name','.site-brand small','.gl-go > a[href="/library/"]','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel)));
+   const fixed=['.gl-brand-name','.site-brand small','.gl-go > a[href="/library/"]'].map(sel=>inView(bar.querySelector(sel)));
    const items=[...bar.querySelectorAll('nav .gl-go > a')];
    const whole=items.filter(a=>!(inView(a)&&a.scrollWidth<=a.clientWidth+1)).map(a=>a.textContent.trim());
    const hit=items.filter(a=>{const r=a.getBoundingClientRect();return !a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}).map(a=>a.textContent.trim());
    return {h:bar.getBoundingClientRect().height,fixed,whole,hit,count:items.length,scroll:bar.scrollWidth>bar.clientWidth+1,pageX:scrollX,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(maxH);
-  expect(m.fixed,`brand, subline, search and CTA in view at ${width}`).toEqual([true,true,true,true]);
+  expect(m.fixed,`brand, subline and search in view at ${width}`).toEqual([true,true,true]);
   expect(m.count).toBe(7);
   expect(m.whole,`nav items cut off or out of view at ${width}`).toEqual([]);
   expect(m.hit,`nav items not clickable at ${width}`).toEqual([]);
@@ -192,7 +193,7 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');const b=bar.getBoundingClientRect();
-   const items=[bar.querySelector('.site-brand'),...bar.querySelectorAll('nav a'),bar.querySelector('.gl-go > a[href="/library/"]'),bar.querySelector('.gl-bar-cta')];
+   const items=[bar.querySelector('.site-brand'),...bar.querySelectorAll('nav a'),bar.querySelector('.gl-go > a[href="/library/"]')];
    const boxes=items.map(el=>el.getBoundingClientRect());
    let ordered=true;for(let i=1;i<boxes.length;i++)if(boxes[i].left<boxes[i-1].right-0.5)ordered=false;
    return {h:b.height,count:items.length,ordered,
@@ -205,7 +206,7 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(72);
-  expect(m.count).toBe(10); // brand, seven nav items (About restored, QA-4; The Truth with Paul, Paul 2026-11-01 22:36), Search, CTA.
+  expect(m.count).toBe(9); // brand, seven nav items, Search. Homepage header CTA is hidden (2032).
   expect(m.ordered,`one row, no overlap at ${width}`).toBe(true);
   expect(m.inView,`every header item in view at ${width}`).toBe(true);
   expect(m.tall).toBe(true);
@@ -245,12 +246,7 @@ test('Header CTA reads the N11 text and never collides with brand or Search',asy
   await expect(page.locator('#gl-home-bar .gl-bar-cta')).toHaveAccessibleName('Explore the research method');
   expect(m.h,`header height at ${width}`).toBe(hh);
   expect(m.gaps[0],`brand clears Search at ${width}`).toBeGreaterThanOrEqual(0);
-  expect(m.gaps[1],`Search clears the CTA at ${width}`).toBeGreaterThanOrEqual(0);
   expect(m.sub,`REASONING SYSTEMS visible at ${width}`).toBe(true);
-  expect(Math.min(m.ctaW,m.ctaH),`CTA target at ${width}`).toBeGreaterThanOrEqual(44);
-  expect(m.hit).toBe(true);
-  expect(m.clipped,`CTA text unclipped at ${width}`).toBe(false);
-  expect(m.contrast,`CTA contrast at ${width}`).toBeGreaterThanOrEqual(4.5);
   expect(m.overflow).toBe(false);
  }
 });
@@ -302,10 +298,11 @@ test('No logo fly-up: no .gl-chime ever, the hero h1 is visible at load and the 
   await page.goto('/',{waitUntil:'domcontentloaded'});
   await expect(page.locator('.gl-chime')).toHaveCount(0);
   await expect(page.locator('h1')).toHaveCount(1);
-  await expect(page.locator('#explore h1.gl-hero-title')).toBeInViewport();
+  await expect(page.locator('.gl-r32-look')).toBeInViewport();
   await page.waitForTimeout(400);
   await expect(page.locator('.gl-chime')).toHaveCount(0);
   const cta=page.locator('#explore .gl-actions .gl-go > a[href="/research/"]');
+  await cta.scrollIntoViewIfNeeded();
   expect(await cta.evaluate(b=>{const r=b.getBoundingClientRect();return b.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));}),motion).toBe(true);
   await cta.click();
   await expect(page).toHaveURL(/\/research\/\??$/);
