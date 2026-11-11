@@ -121,8 +121,16 @@ for (const routeDefinition of ROUTES) {
       // D8 (WEB-214/WEB-226): "Reasoning Systems" and the CTA show at every width; below 390px the CTA is a
       // compact arrow button that keeps its accessible name.
       await expect(header.locator(".site-brand small")).toBeVisible();
-      await expect(header.locator(".gl-bar-cta")).toBeVisible();
-      await expect(header.locator(".gl-bar-cta")).toHaveAccessibleName("Explore the research method"); // N11 (PLACEMENT_MAP, L21394; Round 5b)
+      // Homepage header CTA is hidden from view, tab order, and the a11y tree (Vera ruling).
+      await expect(header.locator(".gl-bar-cta")).toHaveCount(1);
+      const ctaState = await header.locator(".gl-bar-cta").evaluate(el => {
+        el.focus();
+        return { visibility: getComputedStyle(el).visibility, focused: document.activeElement === el, text: el.textContent.replace(/\s+/g, " ").trim() };
+      });
+      expect(ctaState.text).toBe("Explore the research method");
+      expect(ctaState.visibility).toBe("hidden");
+      expect(ctaState.focused).toBe(false);
+      expect(await header.ariaSnapshot()).not.toMatch(/Explore the research method/);
     }
 
     if (routeDefinition.path === "/page-two/") {

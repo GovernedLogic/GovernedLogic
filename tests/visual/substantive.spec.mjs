@@ -192,7 +192,7 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');const b=bar.getBoundingClientRect();
-   const items=[bar.querySelector('.site-brand'),...bar.querySelectorAll('nav a'),bar.querySelector('.gl-go > a[href="/library/"]'),bar.querySelector('.gl-bar-cta')];
+   const items=[bar.querySelector('.site-brand'),...bar.querySelectorAll('nav a'),bar.querySelector('.gl-go > a[href="/library/"]')];
    const boxes=items.map(el=>el.getBoundingClientRect());
    let ordered=true;for(let i=1;i<boxes.length;i++)if(boxes[i].left<boxes[i-1].right-0.5)ordered=false;
    return {h:b.height,count:items.length,ordered,
@@ -205,7 +205,7 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(72);
-  expect(m.count).toBe(10); // brand, seven nav items (About restored, QA-4; The Truth with Paul, Paul 2026-11-01 22:36), Search, CTA.
+  expect(m.count).toBe(9); // brand, seven nav items, Search. Homepage header CTA is hidden (2032).
   expect(m.ordered,`one row, no overlap at ${width}`).toBe(true);
   expect(m.inView,`every header item in view at ${width}`).toBe(true);
   expect(m.tall).toBe(true);
@@ -242,15 +242,13 @@ test('Header CTA reads the N11 text and never collides with brand or Search',asy
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.text).toBe('Explore the research method');
-  await expect(page.locator('#gl-home-bar .gl-bar-cta')).toHaveAccessibleName('Explore the research method');
+  const a11y=await page.evaluate(()=>{const cta=document.querySelector('#gl-home-bar .gl-bar-cta');cta.focus();return{visibility:getComputedStyle(cta).visibility,focused:document.activeElement===cta};});
+  expect(a11y.visibility,`CTA hidden from view at ${width}`).toBe('hidden');
+  expect(a11y.focused,`CTA not focusable at ${width}`).toBe(false);
+  expect(await page.locator('#gl-home-bar').ariaSnapshot(),`CTA absent from header a11y tree at ${width}`).not.toMatch(/Explore the research method/);
   expect(m.h,`header height at ${width}`).toBe(hh);
   expect(m.gaps[0],`brand clears Search at ${width}`).toBeGreaterThanOrEqual(0);
-  expect(m.gaps[1],`Search clears the CTA at ${width}`).toBeGreaterThanOrEqual(0);
   expect(m.sub,`REASONING SYSTEMS visible at ${width}`).toBe(true);
-  expect(Math.min(m.ctaW,m.ctaH),`CTA target at ${width}`).toBeGreaterThanOrEqual(44);
-  expect(m.hit).toBe(true);
-  expect(m.clipped,`CTA text unclipped at ${width}`).toBe(false);
-  expect(m.contrast,`CTA contrast at ${width}`).toBeGreaterThanOrEqual(4.5);
   expect(m.overflow).toBe(false);
  }
 });
