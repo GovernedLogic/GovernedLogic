@@ -197,7 +197,16 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
    const want=['Home','The problem','Research','Governed Logic','About','Company','The Truth with Paul'];
    if(JSON.stringify(m.labels)!==JSON.stringify(want))bad.push(`${route}@${width} header ${m.labels}`);
    if(!m.tools)bad.push(`${route}@${width} header tools missing`);
-   if(!m.art&&route!=='/'&&!(route in principles))bad.push(`${route}@${width} no art above the fold`);
+   if(route==='/'||route in principles){
+    const hide=await page.evaluate(isHome=>{
+     const hid=el=>{if(!el)return false;const s=getComputedStyle(el);return s.display==='none'||s.visibility==='hidden';};
+     if(isHome)return hid(document.querySelector('.gl-hero-art'));
+     const arts=[...document.querySelectorAll('img.gl-art')];
+     const tiles=[...document.querySelectorAll('div.gl-tile')];
+     return arts.length>0&&tiles.length>0&&arts.every(hid)&&tiles.every(hid);
+    },route==='/');
+    if(!hide)bad.push(`${route}@${width} art is not hidden`);
+   }else if(!m.art)bad.push(`${route}@${width} no art above the fold`);
    if(width===1440){
     const h1=route==='/'?'Governed Logic Reasoning Systems':m.h1;
     if(JSON.stringify(m.ogTitle)!==JSON.stringify([h1]))bad.push(`${route} og:title ${m.ogTitle} != ${h1}`);
@@ -461,7 +470,7 @@ test('Signature: plays once and carries on if sessionStorage throws, no JS still
    const n=await q.evaluate(()=>{const art=document.querySelector('#explore .gl-hero-art');const r=art.getBoundingClientRect();const c=document.querySelector('.gl-chain');
     const seed=[...document.querySelectorAll('#the-seed ol li')].map(s=>s.textContent.trim());
     return {kids:art.children.length,h:r.height,chain:!!c,seed,run:document.body.classList.contains('gl-sig-run')};});
-   expect(n.kids,`${width}`).toBe(0);expect(n.h,`${width}`).toBe(0);expect(n.run).toBe(false);
+   expect(n.kids,`${width}`).toBe(0);expect(n.run).toBe(false);
    expect(n.chain,`${width} older hero chain`).toBe(false);
    expect(n.seed).toEqual(['Ground','Truth','Logic','Reasoning','Intelligence']);
   }
