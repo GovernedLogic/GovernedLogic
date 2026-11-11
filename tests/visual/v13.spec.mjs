@@ -348,7 +348,8 @@ test('v14.2: homepage video band under the hero: centred 16:9 player, no autopla
     w:r.width,h:r.height,left:r.left,right:innerWidth-r.right,words:band.textContent.trim(),h1:document.querySelectorAll('h1').length,
     bg:getComputedStyle(band).backgroundImage!=='none'||getComputedStyle(band).backgroundColor};});
   if(!m){bad.push(`${width}: no video band`);continue;}
-  if(m.prev!=='gl-hero'||m.next!=='gl-core')bad.push(`${width}: band not between hero and core (${m.prev} / ${m.next})`);
+  // Overnight launch 2026-11-10: #the-seed sits after the hero, so the video follows the seed and still precedes .gl-core. The player itself is unchanged.
+  if(m.prev!=='gl-seed'||m.next!=='gl-core')bad.push(`${width}: band not after the seed and before core (${m.prev} / ${m.next})`);
   if(m.autoplay||!m.paused||m.muted)bad.push(`${width}: autoplay ${m.autoplay} paused ${m.paused} muted ${m.muted}`);
   if(!m.controls||m.preload!=='metadata'||!m.playsinline)bad.push(`${width}: controls/preload/playsinline`);
   if(m.tracks!==0||m.textTracks!==0)bad.push(`${width}: video has ${m.tracks} <track> / ${m.textTracks} text tracks; expected none`);

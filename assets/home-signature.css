@@ -69,3 +69,7 @@ body.gl-home-page .gl-chain strong{text-shadow:0 0 18px var(--gl-sig-rest)}
   body.gl-home-page .gl-hero-copy .gl-actions{order:2}
   body.gl-home-page .gl-hero-copy .gl-hero-title{order:3}
 }
+
+/* Overnight launch staging 2026-11-10: #the-seed sits after the hero and before the video. Inset it to the existing spine so the margin line stays clear, use the paper token, and let the entry actions wrap so five navy buttons keep a 44px target without a list. */
+body.gl-home-page .gl-seed{padding:calc(var(--p)*41) calc(var(--frame) + var(--p)*34) calc(var(--p)*48) calc(var(--frame) + max(22px, calc(var(--p)*73)));height:auto;background:var(--paper)}
+body.gl-home-page .gl-seed .gl-actions{flex-wrap:wrap}

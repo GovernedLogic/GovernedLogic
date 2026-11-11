@@ -82,7 +82,7 @@ HOMEPAGE_DIGESTS = (
     # are not recorded). Text, links, title, meta, Open Graph and JSON-LD are unchanged. This pin replaces 0fa6c918...da15.
     "09f382636c48b9634159568e913993e9b9ac84f179d5895c1a27a0d7ac49e387",
     # Overnight launch staging 2026-11-10: homepage opens with the approved problem and claim, plus the seed, stack, placeholders, and entry links. This pin replaces 09f38263...e387.
-    "a22169c56248471675ad83e07dd845adafca726d07dbdd21d9a2db229f6a3408",
+    "cf2848967beec1f2896fda143fe68efafd0632a0029f894a94dce3083d321a99",
 )
 # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F15): page_record now also hashes JSON-LD names and meta author, so
 # every page's current pin was re-pinned for that record change alone (no visible text, link, image, title, meta
