@@ -51,8 +51,13 @@ def art_img(path,cls='gl-art'):
     return f'<img class="{cls}" src="{P}{a}" alt="" width="{w}" height="{h}" decoding="async" fetchpriority="high">'
 # The homepage's principle tiles (content/home.html), by name; principles without a homepage tile use the Seed of Life.
 def _home():return (ROOT/'content/home.html').read_text(encoding='utf-8')
+# Paul 6:40 AM ET Nov 11 2026 by voice: older homepage principle tiles removed.
+# Those tiles were the scrape source for other pages' icons. Keep the SVGs here so
+# principle and concept pages still receive the same icons through tile() and related_band().
+PRINCIPLE_ICONS = {'Being': '<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 4 34 12v16L20 36 6 28V12Z"/><path d="M6 12l14 8 14-8M20 20v16"/></svg>', 'Logic': '<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="20" cy="9" r="4.5"/><circle cx="8" cy="30" r="4.5"/><circle cx="32" cy="30" r="4.5"/><path d="M17.7 12.9 10.3 26.1M22.3 12.9l7.4 13.2M12.5 30h15"/></svg>', 'Meaning': '<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M10 4h14l8 8v24H10Z"/><path d="M24 4v8h8M15 19h12M15 25h12M15 31h8"/></svg>', 'Intelligibility': '<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 7c-2-3-8-3-9.5.5C6.5 8 5 12 6.5 15 4 17 4 22 6.5 24 5 28 8 32 12 32c1 3 5.5 4 8 1.5V7Z"/><path d="M20 7c2-3 8-3 9.5.5 4 .5 5.5 4.5 4 7.5 2.5 2 2.5 7 0 9 1.5 4-1.5 8-5.5 8-1 3-5.5 4-8 1.5"/><path d="M20 12h-4l-2-3M20 19h-6l-3 3M20 26h-4l-2 3M20 15h5l2-3M20 22h6l3 3M20 29h4"/></svg>', 'Obligation': '<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 5v29M12 36h16M8 10h24M20 5v5"/><path d="M8 10 3 22h10ZM32 10l-5 12h10Z"/><path d="M3 22a5 3.5 0 0 0 10 0M27 22a5 3.5 0 0 0 10 0"/></svg>'}
 def principle_icons():
-    return {m.group(2):m.group(1) for m in re.finditer(r'<li>(<svg viewBox="0 0 40 40"[\s\S]*?</svg>)<div><h3>([^<]+)</h3>',_home())}
+    found={m.group(2):m.group(1) for m in re.finditer(r'<li>(<svg viewBox="0 0 40 40"[\s\S]*?</svg>)<div><h3>([^<]+)</h3>',_home())}
+    return found or PRINCIPLE_ICONS
 def problem_icons():
     return {m.group(1):m.group(2) for m in re.finditer(r'action="([^"]+)"><button type="submit"><svg class="gl-picon" (viewBox="0 0 40 40"[\s\S]*?</svg>)',_home())}
 SEED=f'<img src="{P}seed-of-life.png" alt="" width="244" height="248">'
