@@ -200,12 +200,24 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
    if(route==='/'||route in principles){
     const hide=await page.evaluate(isHome=>{
      const hid=el=>{if(!el)return false;const s=getComputedStyle(el);return s.display==='none'||s.visibility==='hidden';};
-     if(isHome)return hid(document.querySelector('.gl-hero-art'));
+     if(isHome){
+      // Paul 2026-11-11 night: the empty signature field stays hidden. The brand banner replaces it
+      // above the fold and must actually paint (alt, decoded pixels, and a real box).
+      const art=document.querySelector('.gl-hero-art');
+      const banner=document.querySelector('.gl-brand-hero img');
+      const box=banner&&banner.getBoundingClientRect();
+      const shown=!!banner
+        && banner.getAttribute('alt')==='Governed Logic Reasoning Systems'
+        && banner.complete && banner.naturalWidth>=640
+        && !!box && box.width>200 && box.height>80 && box.top<innerHeight && box.bottom>0
+        && getComputedStyle(banner).display!=='none' && getComputedStyle(banner).visibility!=='hidden';
+      return hid(art) && art && art.childElementCount===0 && shown;
+     }
      const arts=[...document.querySelectorAll('img.gl-art')];
      const tiles=[...document.querySelectorAll('div.gl-tile')];
      return arts.length>0&&tiles.length>0&&arts.every(hid)&&tiles.every(hid);
     },route==='/');
-    if(!hide)bad.push(`${route}@${width} art is not hidden`);
+    if(!hide)bad.push(`${route}@${width} dated art is not hidden, or the brand banner is not showing`);
    }else if(!m.art)bad.push(`${route}@${width} no art above the fold`);
    if(width===1440){
     const h1=route==='/'?'Governed Logic Reasoning Systems':m.h1;
@@ -314,19 +326,22 @@ test('v14: The Truth with Paul is a coming-soon media page: three strings, one h
   await page.setViewportSize({width,height:900});await page.goto('/the-truth-with-paul/',{waitUntil:'load'});
   const m=await page.evaluate(()=>{const a=document.querySelector('main a');const hero=document.querySelector('.gl-twp-hero');
    return {text:document.querySelector('main').innerText.replace(/\s+/g,' ').trim(),h1:[...document.querySelectorAll('h1')].map(h=>h.textContent),href:a.getAttribute('href'),label:a.textContent.trim(),tag:a.tagName,
-    bg:getComputedStyle(hero).backgroundImage,heroH:hero.getBoundingClientRect().height,btn:a.getBoundingClientRect(),anim:[getComputedStyle(document.querySelector('.gl-twp-seed')).animationName,getComputedStyle(document.querySelector('.gl-twp-soon')).animationName],
-    imgs:[...document.querySelectorAll('main img')].map(i=>i.getAttribute('src')),overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
+    bg:getComputedStyle(hero).backgroundImage,heroH:hero.getBoundingClientRect().height,btn:a.getBoundingClientRect(),anim:[getComputedStyle(document.querySelector('.gl-twp-banner'),'::after').animationName,getComputedStyle(document.querySelector('.gl-twp-soon')).animationName],
+    imgs:[...document.querySelectorAll('main img')].map(i=>i.getAttribute('src')),alt:document.querySelector('main img').getAttribute('alt'),banner:document.querySelector('.gl-twp-banner img').getBoundingClientRect(),overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
     current:document.querySelector('header nav a[href="/the-truth-with-paul/"]').getAttribute('aria-current')};});
   expect(m.text.toLowerCase()).toBe('the truth with paul coming soon subscribe on youtube');
   expect(m.h1).toEqual(['The Truth with Paul']);
   expect(m.tag).toBe('A');expect(m.href).toBe('https://www.youtube.com/@TheTruthwithPaul');expect(m.label).toBe('Subscribe on YouTube');
   expect(m.bg).toContain('radial-gradient');expect(m.btn.height).toBeGreaterThanOrEqual(44);expect(m.btn.bottom).toBeLessThanOrEqual(900);
   expect(m.anim).toEqual(['none','none']);
-  expect(m.imgs).toEqual(['/assets/provisional/hero-geometry.svg','/assets/provisional/seed-of-life.png']);
+  expect(m.imgs).toEqual(['/assets/brand/twp-banner-1440.jpg']);
+  expect(m.alt).toBe('THE TRUTH WITH PAUL. JESUS. REASONING. ARTIFICIAL INTELLIGENCE. THE LOGOS. THE LOGIC. THE LAB. THE LABYRINTH.');
+  expect(m.banner.width).toBeGreaterThan(200);
+  expect(m.banner.top).toBeLessThan(900);
   expect(m.overflow).toBe(false);expect(m.current).toBe('page');
  }
  await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/the-truth-with-paul/');
- expect(await page.evaluate(()=>getComputedStyle(document.querySelector('.gl-twp-seed')).animationName)).toBe('gl-twp-turn');
+ expect(await page.evaluate(()=>getComputedStyle(document.querySelector('.gl-twp-banner'),'::after').animationName)).toBe('gl-twp-sweep');
 });
 test('v14: no page dates in any page, og/twitter tag or feed (source edition lines excepted); feed.xml is RSS 2.0',async({page,request})=>{
  const DATE=/\b\d{1,2} (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}\b|\b20\d\d-\d\d-\d\d\b/;

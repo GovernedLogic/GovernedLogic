@@ -187,7 +187,11 @@ def main(root):
     # QA/Governor, verified)). No sitemap lastmod, no gl-date-* meta, no visible "Published / modified" line, and no
     # JSON-LD date on any node except the /sources/ ScholarlyArticle editions, whose datePublished must be their visible
     # edition date. The edition dates on /sources/, /library/ and /publication/ must still be shown.
-    if '<lastmod>' in (root/'sitemap.xml').read_text(encoding='utf-8'):errors.append('sitemap.xml carries a lastmod (no page dates)')
+    sm=(root/'sitemap.xml').read_text(encoding='utf-8')
+    locs=re.findall(r'<loc>([^<]+)</loc>',sm)
+    mods=re.findall(r'<lastmod>([^<]*)</lastmod>',sm)
+    # Paul 2026-11-11: one release lastmod on every public URL. Visible page dates stay forbidden.
+    if len(locs)!=len(mods) or any(m!=R.SITEMAP_LASTMOD for m in mods):errors.append('sitemap lastmod must be '+R.SITEMAP_LASTMOD+' on every public URL')
     DATE_KEYS=('datePublished','dateModified','dateCreated','uploadDate')
     PAGE_DATE=re.compile(r'(?:\d{1,2} (?:January|February|March|April|May|June|July|August|September|October|November|December) \d{4}|\d{4}-\d\d-\d\d)')
     editions={R.BASE+'/sources/#'+d['section']:d['date'] for d in R.TERMS.SOURCE_DOCS}

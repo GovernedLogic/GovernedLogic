@@ -128,7 +128,9 @@ def article_jsonld(path,source):
     data={'@context':'https://schema.org','@type':'Article','@id':BASE+route(path)+'#article','headline':title,'name':title,
           'image':BASE+'/'+og_path(path),'url':BASE+route(path),'mainEntityOfPage':{'@id':BASE+route(path)+'#page'},
           'author':{'@id':BASE+'/about/#paul'},'publisher':{'@id':BASE+'/#organization'},'isPartOf':{'@id':BASE+'/#website'}}
-    return '<script type="application/ld+json">'+json.dumps(data,ensure_ascii=False)+'</script>'
+    person={'@context':'https://schema.org','@type':'Person','@id':BASE+'/about/#paul','name':'Paul André Couchoud','url':BASE+'/about/#paul'}
+    return ('<script type="application/ld+json">'+json.dumps(data,ensure_ascii=False)+'</script>'
+            +'<script type="application/ld+json">'+json.dumps(person,ensure_ascii=False)+'</script>')
 def description(source):
     """The page's existing visible lede, verbatim (v14.1, Vera's nits b and d; no new prose): its og:description if it
     has one, else its meta description (both already checked visible by check-parity 3c), else None (/faq/, /articles/
@@ -182,6 +184,8 @@ def apply(source,path):
     elif kind in ('bands','doc','articles'):
         source=_in_intro(source,art_img(path))
     if kind in ('treatise','article'):
+        if '<meta name="author"' not in source:
+            source=source.replace('</head>','<meta name="author" content="Paul André Couchoud"></head>',1)
         source=source.replace('</head>','<script src="/assets/v14.js" defer></script></head>',1)
     if kind=='article':source=source.replace('</head>',article_jsonld(path,source)+'</head>',1)
     return source
@@ -217,11 +221,14 @@ def truth_with_paul_page():
     """The Truth with Paul placeholder (Paul 2026-11-01 22:36, "put something cool like come in soon but make it
     awesome"): deep-blue hero, the channel name as the one h1, "Coming soon", and a plain link "Subscribe on YouTube".
     Those three strings are the page's only copy. Art: the homepage hero geometry and Seed of Life (existing, approved)."""
+    # Paul's direct banner (1983x793). Alt is the banner's own visible titles, not new page copy.
+    twp_alt='THE TRUTH WITH PAUL. JESUS. REASONING. ARTIFICIAL INTELLIGENCE. THE LOGOS. THE LOGIC. THE LAB. THE LABYRINTH.'
     main=('<main class="gl-twp" id="content"><section class="gl-twp-hero">'
-          f'<img class="gl-twp-geo" src="{P}hero-geometry.svg" alt="" width="1200" height="900" fetchpriority="high">'
-          f'<img class="gl-twp-seed" src="{P}seed-of-life.png" alt="" width="244" height="248">'
+          '<picture class="gl-twp-banner"><source type="image/webp" srcset="/assets/brand/twp-banner-960.webp 960w, /assets/brand/twp-banner-1440.webp 1440w, /assets/brand/twp-banner-1920.webp 1920w" sizes="100vw">'
+          f'<img src="/assets/brand/twp-banner-1440.jpg" alt="{twp_alt}" width="1983" height="793" fetchpriority="high"></picture>'
           '<div class="gl-twp-copy"><h1>The Truth with Paul</h1><p class="gl-twp-soon">Coming soon</p>'
-          f'<span class="gl-go"><a href="{TWP_URL}" class="gl-link gl-btn gl-btn-bright gl-twp-sub" rel="noopener">Subscribe on YouTube{ARROW}</a></span></div></section></main>')
+          f'<span class="gl-go"><a href="{TWP_URL}" class="gl-link gl-btn gl-btn-bright gl-twp-sub" rel="noopener">Subscribe on YouTube{ARROW}</a></span></div></section>'
+          '<script src="/assets/brand-hold.js" defer></script></main>')
     return _shell('The Truth with Paul','the-truth-with-paul/index.html',main,'Coming soon')
 def without_ui(source,path):
     """The page without the v14 navigation added by this module (treatise masthead, contents, pager, share row; the

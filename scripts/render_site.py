@@ -21,7 +21,7 @@ RETIRED_ASSETS=('assets/opening.css', 'assets/opening.js', 'assets/earth-rendere
 WITHHELD_LINK_TARGETS=('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json',*PRINCIPLES.withheld())
 # Visual refresh, structural part: the homepage signature (home-signature.js and its stylesheet, homepage only) replaces
 # the logo fly-up (home-chime.js, removed). home.css and site.css stay byte-identical because /page-two/ loads them.
-ASSETS=('assets/home-signature.js','assets/home-signature.css','assets/redesign-2032.css','assets/redesign-2032.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png',
+ASSETS=('assets/home-signature.js','assets/home-signature.css','assets/redesign-2032.css','assets/redesign-2032.js','assets/brand/gl-banner-640.webp','assets/brand/gl-banner-960.webp','assets/brand/gl-banner-1440.webp','assets/brand/gl-banner-1920.webp','assets/brand/gl-banner-1440.jpg','assets/brand/favicon.png','assets/brand/gl-logo.webp','assets/brand/twp-banner-960.webp','assets/brand/twp-banner-1440.webp','assets/brand/twp-banner-1920.webp','assets/brand/twp-banner-1440.jpg','assets/brand/groundless-machine.webp','assets/brand-hold.js','assets/brand-chrome.css','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png',
 # v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band: the video (720p H.264/AAC, faststart) and its
 # poster (the video's own 'You exist.' frame). v14.3 (Grace relay 8:42 AM Nov 3, Paul voice call): no caption file.
 'assets/video/gl-home-explainer.mp4','assets/video/gl-home-explainer-poster.webp',
@@ -152,16 +152,21 @@ def llms_txt(records):
     lines=['# Governed Logic Reasoning Systems','','## '+TERMS.SET_NAME,'']
     lines+=[f'- [{t["name"]}]({t["url"]}): {t["definition"]}' for t in term_records()]
     lines+=['','## Pages','']+[f'- [{r["title"]}]({r["url"]})' for r in records if r['type'] not in ('source','principle')]
+    # The library and the publication record are generated after this list is built. Their titles are the
+    # visible h1s already on those pages. Nothing withheld is added.
+    lines+=['- [The library]('+BASE+'/library/)','- [Publication record]('+BASE+'/publication/)']
     principles=[r for r in records if r['type']=='principle']
     # Published principle pages (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)): name (the
     # page's h1) and the page's own description (its first visible sentence).
     if principles:lines+=['','## Principles','']+[f'- [{r["title"]}]({r["url"]}): {r["description"]}' for r in principles]
     lines+=['','## Sources','']+[f'- [{d["name"]}]({BASE}/{d["file"]})' for d in TERMS.SOURCE_DOCS]
     return '\n'.join(lines)+'\n'
-# Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the sitemap carries no lastmod.
+# Paul approved a sitemap lastmod on 2026-11-11 (whole-site bar W4/W8). It is one release date for every
+# public URL, not a per-page publication date. Visible page dates stay absent.
+SITEMAP_LASTMOD='2026-11-11'
 def lastmod(source,url):
-    """Kept for callers: pages carry no dates, so there is never a lastmod."""
-    return None
+    """Sitemap lastmod only. Callers that want a page date still get none."""
+    return SITEMAP_LASTMOD
 FONT_PRELOADS=''.join(f'<link rel="preload" href="/assets/materials/{font}" as="font" type="font/woff2" crossorigin>' for font in ('source-serif-4-latin-opsz.woff2','inter-latin-wght.woff2'))
 def anchors(source,path):
     """Governor's 2:01 PM ET ruling (a) on Paul's parity rule: no JSON-LD @id or url may point at a missing anchor.
@@ -208,7 +213,9 @@ def render(source,path):
     if path!='page-two/index.html':source=LAYOUT.head_tags(source,path,LAYOUT.page_type(path))
     if path=='index.html' or path.startswith('principles/'):
         source=source.replace('</head>','<link rel="stylesheet" href="/assets/redesign-2032.css"><script src="/assets/redesign-2032.js" defer></script></head>',1)
-    for sheet in ('restored-site.css','home.css','site.css','v14.css','home-signature.css','redesign-2032.css'):
+    if path!='mechanism.html':
+        source=source.replace('</head>','<link rel="stylesheet" href="/assets/brand-chrome.css"></head>',1)
+    for sheet in ('restored-site.css','home.css','site.css','v14.css','home-signature.css','redesign-2032.css','brand-chrome.css'):
         style_version=hashlib.sha256((ROOT/'assets'/sheet).read_bytes()).hexdigest()[:12]
         source=source.replace(f'href="/assets/{sheet}"',f'href="/assets/{sheet}?v={style_version}"')
     # The signature script gets the media-style cache key: ?v=<first 8 hex of its sha256>.
@@ -226,6 +233,9 @@ def render(source,path):
         if path!='index.html':
             bar=bar.replace(' aria-current="page">Home<','>Home<')
             bar=re.sub(r'(<form class="gl-go" method="get" action="'+re.escape(current)+r'"><button type="submit")>',r'\1 aria-current="page">',bar,count=1)
+        # mechanism.html waits for Paul's Q8. Keep its header mark on the previous seed.
+        if path=='mechanism.html':
+            bar=bar.replace('/assets/brand/gl-logo.webp','/assets/provisional/seed-of-life.png').replace('width="256" height="256"','width="244" height="248"')
         header=re.sub(r'<header class="site-bar"[^>]*>[\s\S]*?</header>',lambda _: bar,header,count=1)
     elif current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
     footer=(ROOT/'components/footer.html').read_text(encoding='utf-8')
@@ -237,7 +247,10 @@ def render(source,path):
             if f'<article id="{slug}"><h3>' not in source:continue   # Identity, Correspondence: no heading on /concepts/
             source=re.sub(r'(<article id="'+slug+r'"><h3>)([\s\S]*?)(</h3>)',lambda m:m.group(1)+f'<span class="gl-go"><a href="{href}" class="gl-link">'+m.group(2)+'</a></span>'+m.group(3),source,count=1)
     source=source.replace('type="application/atom+xml" href="/feed.xml"','type="application/rss+xml" href="/feed.xml"')
-    return anchors(links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer)),path)
+    source=links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer))
+    if 'rel="icon"' not in source:
+        source=source.replace('</head>','<link rel="icon" href="/assets/brand/favicon.png" type="image/png"></head>',1)
+    return anchors(source,path)
 # Governor's 2:01 PM ET ruling (c) on Paul's parity rule: a generated page's meta description is its own visible lede,
 # verbatim (was one shared sentence that appears on neither page).
 DOCUMENT_DESCRIPTIONS={'library/index.html':'Explore the reasoning architecture, the research, and the original source editions.',
@@ -290,7 +303,7 @@ def build(destination):
     'publication/index.html':document('Publication record','publication/index.html','<p class="lede">Source editions and the works they support.</p><p>The source documents retain their original September 2026 edition dates. The October 2026 articles remain separately identifiable.</p>'+entries),
     'publication/catalog.json':json.dumps({'records':records},ensure_ascii=False,indent=2),'publication/search-index.json':json.dumps({'records':records},ensure_ascii=False),
     'robots.txt':'User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',
-    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+''+'</url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html',*v14_pages))+'</urlset>',
+    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc><lastmod>'+SITEMAP_LASTMOD+'</lastmod></url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html',*v14_pages))+'</urlset>',
     'terms.jsonld':terms_jsonld(),'llms.txt':llms_txt(records),
     # v14 queued (WEB-227 SIXTH; Paul 4:50 PM ET Nov 1, no page dates): RSS 2.0 at the same URL, no dates. The channel
     # description is /publication/'s visible lede. Each item's description is its page's visible lede, verbatim (its

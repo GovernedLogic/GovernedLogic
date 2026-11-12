@@ -134,12 +134,17 @@ body.gl-site .gl-articles .gl-rail>.gl-card{scroll-snap-align:start}
 /* The Truth with Paul (Paul 2026-11-01 22:36): a coming-soon media page on a deep-blue hero. */
 body.gl-site.gl-type-media{background:#00060c}
 body.gl-site .gl-twp{display:block;padding:0!important;max-width:none!important}
-body.gl-site .gl-twp-hero{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;min-height:calc(100vh - var(--p)*108);min-height:calc(100svh - var(--p)*108);padding:clamp(56px,8vw,120px) 22px;text-align:center;
+body.gl-site .gl-twp-hero{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;align-items:center;min-height:0;padding:0 0 48px;text-align:center;
   background:radial-gradient(70% 80% at 50% 45%,#0a4f8a 0%,#00335e 38%,#001a33 70%,#00060c 100%)}
-body.gl-site .gl-twp-geo{position:absolute;z-index:-1;left:50%;top:50%;width:min(140vw,1500px);height:auto;max-width:none;transform:translate(-50%,-50%);opacity:.55;pointer-events:none}
-body.gl-site .gl-twp-seed{position:absolute;z-index:-1;left:50%;top:50%;width:min(70vw,560px);height:auto;transform:translate(-50%,-50%);opacity:.16;filter:drop-shadow(0 0 40px rgba(86,196,242,.6));pointer-events:none;animation:gl-twp-turn 90s linear infinite}
+body.gl-site .gl-twp-banner{position:relative;display:block;width:100%;height:auto;overflow:hidden;background:#03050a;line-height:0}
+body.gl-site .gl-twp-banner img{display:block;width:100%;height:auto;object-fit:contain;object-position:center}
+@media (prefers-reduced-motion:no-preference){
+  body.gl-site .gl-twp-banner::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 32%,rgba(190,220,255,.28) 50%,transparent 68%);transform:translateX(-60%);animation:gl-twp-sweep 2.6s ease-in-out infinite}
+}
+@keyframes gl-twp-sweep{to{transform:translateX(60%)}}
+html.gl-hold-motion body.gl-site .gl-twp-banner::after,html.gl-hold-motion body.gl-site .gl-twp-soon{animation-play-state:paused!important}
 body.gl-site .gl-twp-copy{display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2vw,24px)}
-body.gl-site .gl-twp h1{margin:0;max-width:none!important;color:#fff;font:600 clamp(44px,8.4vw,120px)/1 var(--serif)!important;letter-spacing:-.02em;text-shadow:0 0 60px rgba(47,156,230,.45)}
+body.gl-site .gl-twp h1{margin:0;max-width:none!important;color:#fff;font:600 clamp(32px,4vw,48px)/1 var(--serif)!important;letter-spacing:-.02em;text-shadow:0 0 28px rgba(47,156,230,.55)}
 body.gl-site .gl-twp-soon{margin:0;color:#56c4f2;font:500 clamp(22px,3.4vw,44px)/1.1 var(--sans);letter-spacing:.32em;text-transform:uppercase;text-indent:.32em;animation:gl-twp-glow 3.2s ease-in-out infinite alternate}
 body.gl-site .gl-twp a.gl-twp-sub{display:inline-flex;align-items:center;gap:14px;width:auto;height:auto;margin-top:clamp(8px,1.5vw,16px);min-height:56px;padding:0 28px;border:0;border-radius:4px;background:linear-gradient(90deg,#00477a 0%,#0a6fb4 38%,#1a76bb 100%);color:#fff!important;font:500 18px/1.2 var(--sans)!important;text-decoration:none;box-shadow:0 0 28px rgba(30,140,220,.35)}
 body.gl-site .gl-twp a.gl-twp-sub:hover{box-shadow:0 0 40px rgba(86,196,242,.55)}
@@ -149,7 +154,8 @@ body.gl-site .gl-twp .gl-go{display:block}
 @keyframes gl-twp-glow{from{text-shadow:0 0 0 rgba(86,196,242,0)}to{text-shadow:0 0 28px rgba(86,196,242,.75)}}
 
 @media (prefers-reduced-motion:reduce){
-  body.gl-site .gl-twp-seed,body.gl-site .gl-twp-soon{animation:none}
+  body.gl-site .gl-twp-banner::after{animation:none!important;content:none}
+  body.gl-site .gl-twp-soon{animation:none!important}
   body.gl-site .gl-articles .gl-rail{scroll-behavior:auto}
   body.gl-site.gl-type-treatise .gl-progress>span{transition:none}
 }

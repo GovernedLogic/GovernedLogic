@@ -214,13 +214,17 @@
     }
   }
 
-  document.addEventListener("visibilitychange", function () {
+  function holdMotion() {
     hidden = document.hidden;
+    document.documentElement.classList.toggle("gl-hold-motion", hidden || reduced);
     if (hidden) {
       if (raf) cancelAnimationFrame(raf);
       raf = 0;
     } else if (!reduced) {
       raf = requestAnimationFrame(tick);
     }
-  });
+  }
+
+  document.addEventListener("visibilitychange", holdMotion);
+  holdMotion();
 })();

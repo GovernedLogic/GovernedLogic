@@ -33,7 +33,7 @@ const PAGE_TWO_NAVIGATION = [
 // (MOCKUP-PROVISIONAL, not on 64bf60f: QA-8) and the existing /about/ page so /about/ stays one click away at every width (QA-4, WEB-223).
 const HOME_NAVIGATION = [
   { href: "/", label: "Home" },
-  { href: "/index.html#the-problem", label: "The problem" },
+  { href: "/#the-problem", label: "The problem" },
   { href: "/research/", label: "Research" },
   { href: "/concepts/governed-logic/", label: "Governed Logic" },
   { href: "/about/", label: "About" }, // QA-4

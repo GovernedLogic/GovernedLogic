@@ -85,12 +85,18 @@ HOMEPAGE_DIGESTS = (
     "cf2848967beec1f2896fda143fe68efafd0632a0029f894a94dce3083d321a99",
     # Paul 6:40 AM ET Nov 11 2026 by voice: first homepage placeholder becomes "Governed Logic is a substrate-agnostic reasoning architecture."; the other two become Coming soon; older core tiles and the four-level hero chain are removed. This pin replaces cf284896...1a99.
     "2b94248c167a2428a6789739846c71075c74404658aa924c1d3c8f7be4eaeedc",
+    # Brand banner 2026-11-11 (Paul): the record adds the banner image and its alt, which is the existing h1.
+    # Header mark is assets/brand/gl-logo.webp (Paul's spirograph). Visible words are otherwise unchanged.
+    "a978a21dc825cd4250591d968154659f8a445995dda2388315f018cd4a9e2490",
 )
+
 # Governor 2:16 PM ET ruling (Nov 1 2026; GL QA F15): page_record now also hashes JSON-LD names and meta author, so
 # every page's current pin was re-pinned for that record change alone (no visible text, link, image, title, meta
 # description, Open Graph or JSON-LD description changed). Older homepage variants above stay listed as history; they
 # were pinned under the earlier record and do not match the new one.
 REVIEWED_PAGE_DIGESTS = {
+    # Brand header 2026-11-11: the shared header image is assets/brand/gl-logo.webp (Paul's spirograph).
+    # That src is the only change on pages whose pin moved for the mark alone.
     # v12 site-wide look (Paul, Nov 1 2026: "the rest of the site needs to be updated to match the look and feel";
     # WEB-227 SIXTH): every pin below except the homepage was re-pinned once because the shared header's brand
     # image moves from /assets/governed-logic-mark.webp to the homepage mark /assets/provisional/seed-of-life.png.
@@ -99,95 +105,95 @@ REVIEWED_PAGE_DIGESTS = {
     # challenge/index.html: footer labels restored. The brand aria-label Governed Logic home is restored, so every page digest moved.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 008e049e...8814.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 600fd1fe...fbaf.
-    "challenge/index.html": ("1aa46373d8d940857c6319f2c8de8fc1355961f55f2356d527176870c4d887c3",),
+    "challenge/index.html": ("b6ccfbd00fad20fa3179959ef8a33e42a74de205b9c64419c5e2b822dd53fb44",),
     # company/index.html: same restored footer labels.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (three Thing descriptions = each section's first paragraph; Novelty name and description removed (not on the page)); replaces 83bd9692...eec8.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces b25a0ea5...9792.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 23612b23...d9c1.
-    "company/index.html": ("5a216ec9b020e3d1617c4f53b23a7da031b3a7f97a86a5c2e1d16d4bc821e7f8",),
+    "company/index.html": ("cc3ac483761826c3a580769ee896e314abc5e4be6ce0ab4b5de5ccea7bcf29ab",),
     # research/index.html: footer labels restored, plus the Why Anything? and Integrity buttons outside main.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Organization description removed (no visible passage on this page); names = the h1 and the #evaluation h2); replaces c2316f58...bb80.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 54620889...82b7.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces df67d179...df65.
     # Paul 6:40 AM ET Nov 11 2026 by voice: method states "This is how the claims are tested, not the claims themselves." This pin replaces 3809a731...eed38.
-    "research/index.html": ("7ed951cd78fda898d84e4bfd5759d19f6158d48e9b31448bc204bedf2c257fe0",),
+    "research/index.html": ("a52af5fbd0c985b162f1a26843861d06a436e4a381e18ac5dbf2174526027660",),
     # about/index.html: same restored footer labels; L-BIO-1 removes the invented ending after "What governs the output?".
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces b6608ef8...497b.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 7d85b8ac...b9f2.
     # Overnight launch staging 2026-11-10: visible AWAITING PAUL'S COPY placeholder for the narrative bio. Existing approved bio is unchanged. This pin replaces 288c45ea...028d.
     # Paul 6:40 AM ET Nov 11 2026 by voice: placeholder becomes Coming soon; About bio merged into narrative paragraphs, words unchanged. This pin replaces 47467f6e...5a0e.
-    "about/index.html": ("88eb8f0364bd98c75921d3621470041c3a3b7182d201489b4f1404fd087e86f3",),
+    "about/index.html": ("705cdf82eb72504b274563d8ebbef122c64674bd3efd61ebe27b4aaf9f1ebd15",),
     # faq/index.html: same restored footer labels.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description removed (the page has no lead or intro passage)); replaces 0cf2535c...f1bb.
     # Paul's parity rule, Governor's 2:01 PM ET ruling (c); Site Manager's 2:11 PM ET decision (Nov 1 2026): FAQ meta description
     # removed (no visible sentence fits it; nothing invented); replaces 16c09af5...ff0c.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 0881cf79...6852.
-    "faq/index.html": ("05fe3990768ee97a1d251433d20618a827a3a4b63a2ade5b4c60045f2f12e3e9",),
+    "faq/index.html": ("57c7768b60f261a7b8c055d2234ce23781baa877e50eccf84e6682e376edeb0d",),
     # concepts/index.html: footer labels restored, plus the Alpha and Omega Reasoning button outside main.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (Truth DefinedTerm description = its visible h3 and p); replaces 24c631cb...0de3.
     # Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified): the five principle headings that
     # have a published page (Logic, Being, Meaning, Intelligibility, Obligation) link to it; markup only, words
     # unchanged; Truth stays unlinked. Replaces 759cc224...2154.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces bdffef82...9cac.
-    "concepts/index.html": ("d390108365ac4708a3925ed8eb35d686c5c0051e1a7a0d2a7678168bc8dd2ec1",),
+    "concepts/index.html": ("f1fe0b1de583a4af14df4739a007f22b6c01c9a1c92b0efe1400100c2a0eb4c1",),
     # concepts/governed-logic/index.html: Public prototype form restored, plus the footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 7dd18ad7...78d0.
     # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): the dated "Current website specification / Canonical website checklist · 27 September 2026" row is removed; replaces ded18af3...f64a.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 3455cd96...ae95.
-    "concepts/governed-logic/index.html": ("8fa4047875730fced51895be36ce418bd546b2c9abc4342267f7cf688d92be9a",),
+    "concepts/governed-logic/index.html": ("0cd3ef7038e60607c6157154bbf15c979b13a53bd7fe8427f119f116b4a092c0",),
     # concepts/governed-intelligence/index.html: both prototype forms restored, plus the footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 5771482f...e531.
     # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): the dated "Current website specification / Canonical website checklist · 27 September 2026" row is removed; replaces ae54685f...20ed.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces aceba944...24de.
-    "concepts/governed-intelligence/index.html": ("6cbee63a47844b33f3929d25c3dea48cbe09d4d44f40269d8d47d272ccf20872",),
+    "concepts/governed-intelligence/index.html": ("122270c44ff1568d2911936b34f1ada5c6011378f92b0cd3b2ee427bf5b62517",),
     # concepts/ultimate-grounding/index.html: same restored footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces fb801b1a...1a70.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 7287c630...6573.
-    "concepts/ultimate-grounding/index.html": ("4cdccb9e39fedb7cfb498a466903399825db0187cf7421f83e6358e63b3fab48",),
+    "concepts/ultimate-grounding/index.html": ("92688f52e9db15dd65fb576124ac7b728a16e6f335ab8d35c696679ed6ec3431",),
     # concepts/alpha-and-omega-reasoning/index.html: same restored footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces f2f477ad...3cba.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 7abbeece...a27c.
-    "concepts/alpha-and-omega-reasoning/index.html": ("6a6624bf8653ccb9ec90f04e46a2b7eba6bb349631cd70fa933cd3f50ef821f7",),
+    "concepts/alpha-and-omega-reasoning/index.html": ("191744bf70f843822d98e587a7708e7f11fdbd88541feaaeaa89ace9f8d11cf0",),
     # concepts/governing-referent/index.html: same restored footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 8a917fea...443c.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 12c433bf...3194.
-    "concepts/governing-referent/index.html": ("0c650a5dfe6944756e101230d585940fcc92275491645fa2d0ec89b92f8d4790",),
+    "concepts/governing-referent/index.html": ("a02d9cceec83ab72b3bc570701f814ff625e99aae855b6498908a3db8fde4464",),
     # concepts/sufficient-grounding/index.html: same restored footer labels.
     # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the visible
     # "Published / modified" line is removed; replaces 957a8840...4186.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces b1b42bb1...e435.
-    "concepts/sufficient-grounding/index.html": ("a6d45394919bd75ff1450a29f38490ea25b849e17e598c4a88f05792d236e908",),
+    "concepts/sufficient-grounding/index.html": ("51eb56bb35e2318373742729278c871a373677c29a073a7143ceda1637b55a29",),
     # mechanism.html: same restored footer labels. In-body anchors stay / and #copy.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lead paragraph); replaces 495816e5...3c10.
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lead paragraph (= its JSON-LD description); replaces b6e89940...5a65.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 13448644...557d.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces cb3fa39f...57d0.
-    "mechanism.html": ("3a5068fcf394cde56067d181be6f0fa4f4e75593599cc65bcbd10b54463c3e81",),
+    "mechanism.html": ("adcc41de143563bccd030d4d2c375f137f957b7e1355090a4df6c89f2ee71cfa",),
     # sources/index.html: same restored footer labels.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 6286a2fd...0c6e.
-    "sources/index.html": ("163070376e4b40c6281906255171c87206cb705370d25e9c27b8f2714595e7c7",),
+    "sources/index.html": ("a68f320a368d465ce8d83313107befc7810b7190001be4ad0f06c2d33ba488b9",),
     # articles/why-anything/index.html: same restored footer labels.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 014f1ebd...8e05.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces f2f1103b...0e94.
-    "articles/why-anything/index.html": ("3161f0b43cb8bbefe6be782932a88f7589062cf205b054ac600c1d5ea3fde531",),
+    "articles/why-anything/index.html": ("258d8aa12bcd1e954a894e1602318a526e7c57252739fb503500501c159a2824",),
     # articles/integrity-in-artificial-intelligence/index.html: same restored footer labels.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 83aa7f26...8131.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces af8848a7...61eb.
-    "articles/integrity-in-artificial-intelligence/index.html": ("2228c460c6b52923f634fa1ec22e4b6f7dd62053ad07c6190655b88788466a99",),
+    "articles/integrity-in-artificial-intelligence/index.html": ("dba255c7f2d975d3a2a6a99354522c7bbe0e71d35df5fcc243ec5dc57e14d90a",),
     # library/index.html: generated page picks up the restored footer labels.
     # page-two/index.html (WEB-205, WEB-231; shell and injection as in RL-FTC-1 3c768d4): the
     # 64bf60f homepage main, byte-identical, in its own shell.
     # Paul's parity rule (Nov 1 2026) via Governor's 1:51 PM ET relay: JSON-LD aligned verbatim to the visible text (WebPage description = the lede); replaces 9a386e37...f5d0.
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede (= its JSON-LD description); replaces 71804557...2489.
     # v14 (Paul 2026-11-01 22:34): page-two keeps its own header; only the shared footer gains the Articles link; replaces c674f328...3faf.
-    "page-two/index.html": ("fee5369d0f6f537857c8d8cefeef8a5f2b4e6051fb78cb9a1dcc172a4baad4ef",),
+    "page-two/index.html": ("c4585d495e28bbdd633224e3aa5cf1466667809a22c3abaef4474151b8a9b38d",),
     # library/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 86061a5c...6e0e.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 278bac4a...3927.
@@ -195,7 +201,7 @@ REVIEWED_PAGE_DIGESTS = {
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 3e4d006b...dd4f.
     # Overnight launch staging 2026-11-10: library lists The Treatises, AI Safety, and Mimicry. This pin replaces a6349985...9a61.
     # Paul 6:40 AM ET Nov 11 2026 by voice: About excerpt now shows Coming soon in place of the old placeholder. This pin replaces 74371cf5...e5a9.
-    "library/index.html": ("fa2b60e6552c96e6d7b42c478281f6ce3ed155b446927107712a59aeec752ace",),
+    "library/index.html": ("744c1c97c10c5172a34bfcb5fec131bddef5ffd2a4857be3ac3826e797e9421a",),
     # publication/index.html: generated page picks up the restored footer labels.
     # publication/index.html: generated page gains the /page-two/ entry (WEB-205, WEB-231).
     # Governor's 2:01 PM ET rulings on Paul's parity rule (Nov 1 2026), ruling (c): meta description = the page's visible lede; replaces 7d942e16...b218.
@@ -204,43 +210,43 @@ REVIEWED_PAGE_DIGESTS = {
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 055804fc...e4e5.
     # Overnight launch staging 2026-11-10: publication record lists The Treatises, AI Safety, and Mimicry. This pin replaces d420af84...d1fa.
     # Paul 6:40 AM ET Nov 11 2026 by voice: About excerpt now shows Coming soon in place of the old placeholder. This pin replaces 1162928a...917c3.
-    "publication/index.html": ("b8e4f2d0e66c8d812177e6f90bc27b08be3fbeb30f655163c58f1fb6d374607c",),
+    "publication/index.html": ("3c8fe69eaad002924860eeaad76f12e6da6628da4446a6e4190f361bbeade95b",),
     # Principle pages, set B (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)): register text
     # verbatim (content/principle-register.md) with the documented code strip (content/principles.py); Supporting passages
     # where the register has them (Paul 5:29 PM ET Nov 1 (via QA/Governor, verified)).
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 3e40ad19...afb5.
-    "principles/being/index.html": ("d0069a43ad157ae6f807720016ea4b9ddcc376e0b75607506c18cad5d71855d4",),
+    "principles/being/index.html": ("bb0579677546a242f0e2a66607460ae752933eb1ffcfedf61ebf7ee821004a38",),
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 91838fcf...7d34.
-    "principles/identity/index.html": ("56a624cdb695307dc26da029245c83b1c9f424b72e91ed50edf9601fc7511715",),
+    "principles/identity/index.html": ("79a392f60a058f0cd281a51a2b676247315389212961e77ceadf83683fe45524",),
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces da49702c...4997.
-    "principles/meaning/index.html": ("46f08d5179dd4f206bc936e33649a63fda881c62db3db145ee82be9efceb70d2",),
+    "principles/meaning/index.html": ("507edb6c7ad2cf5bc45ba1a28baf48bee4e0b02bed3e8ab5807c5eed80f047c9",),
     # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Inference must preserve ..." returns here; "Intelligibility is real. ..." returns to Obligation); replaces 910672b1...c3b4.
     # Paul 7:48 PM ET Nov 1 (via Governor, verified), v13.1: Supporting = library L17636-37 ("Intelligibility is real." / "Reality has apprehensible order ..."), per the corrected register; replaces 17625862...96d1.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 51a72130...9553.
-    "principles/intelligibility/index.html": ("a289a6c2bbfa3ffc2e4f2ac9d0ed5ed460cde2f539cfb5dc03e0c71c43cbe2eb",),
+    "principles/intelligibility/index.html": ("355f57395ea0235fae697f2203512411726b6ae8d358fc4469ec671e008a8bb5",),
     # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Inference must preserve ..." returns to Intelligibility); replaces 3f52c58e...41b2.
     # Paul 7:48 PM ET Nov 1 (via Governor, verified), v13.1: Supporting = library L17633-34 ("Logic is binding and answerable to truth." / "Inference must preserve ..."), per the corrected register; replaces 71371afc...87a8.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 3f52c58e...41b2.
-    "principles/logic/index.html": ("19ce765f194d482cd53394c5f4401713698e875dd9ab0d5206043f38f650ea85",),
+    "principles/logic/index.html": ("1fbc6ca0f5d29e62158953fc13f8034dd90e990a0c8f4777bb7f75ce04b9fc93",),
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 4797de27...b2b6.
-    "principles/correspondence/index.html": ("203e959768425060c222ab8baac9ff328896ffc56b4c95fd3d16410f7b953ba1",),
+    "principles/correspondence/index.html": ("14ee706d4da0929e3cd3bd4689f9369a6be5fc17ff8fed496bf537e61bef82e5",),
     # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): Supporting back as the register has it ("Intelligibility is real. ..." returns here); replaces d01104b9...0a7c.
     # Paul 7:48 PM ET Nov 1 (via Governor, verified), v13.1: Supporting = library L17639-40 ("Moral obligation is real and binding." / "Obligation is not reducible to ..."), per the corrected register; replaces 6c530c3a...95df.
     # v14 (Paul 2026-11-01 22:34 and 22:36): one header (homepage bar, The Truth with Paul nav item), footer Articles link, og/twitter tags, page-type art/tiles/bands; /company/ also loses four 'company' words (22:36) replaces 873102db...5a9d.
-    "principles/obligation/index.html": ("eeb24bab7242cdab8e1945e9551cf92d32baf9fa26ada9dc9415922b55cd247e",),
+    "principles/obligation/index.html": ("8c8f41122c8af9d3cbe2e4ae78258c7e1b51234236babbb63b89e27495677698",),
     # v14 (Paul 2026-11-01 22:34 "Let's get this big push out."; 22:36 "It's not a company yet"): new page, pinned at first build.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 6c58e8ca...ada8.
-    "articles/index.html": ("357bdee410659de0303cb7df77d7634376bf72e8093fa95c5e82889e3ac04186",),
+    "articles/index.html": ("377b2f41368d4afb8ba9c55cde6a66f02aa4e82d1d817bc38f142774a131efa9",),
     # v14 (Paul 2026-11-01 22:34 "Let's get this big push out."; 22:36 "It's not a company yet"): new page, pinned at first build.
     # v14.1 (Paul 2026-11-01 22:34; Vera's nits): og:description and twitter tags; /articles/ lists each article once; replaces 29cfff75...8d3a.
-    "the-truth-with-paul/index.html": ("eaf3a91c4f1f3c83cf292597e3385c80a518921b70b6c4df4aca5645df40736b",),
+    "the-truth-with-paul/index.html": ("4d27b672e77eec39d7b8a7036304d384110e2b0dc0f693948fd403c668a94662",),
     # Overnight launch staging 2026-11-10: new pages from the approved handoff listed lines.
     # Paul 6:40 AM ET Nov 11 2026 by voice: placeholder becomes Coming soon. This pin replaces b7c9e87f...8d2d.
-    "the-treatises/index.html": ("fd154974b55bc6627a3110ca49af101d383c59a2332ef2c70f9002cac1660be5",),
+    "the-treatises/index.html": ("80bc4ee1292d65054fac2c96d8ce16fcdf847ca6523e17b6a46f16d3be43cee1",),
     # Paul 6:40 AM ET Nov 11 2026 by voice: placeholder becomes Coming soon. This pin replaces 597bc2ac...849c.
-    "ai-safety/index.html": ("0b5a250a604fc82179336b0543f9e9451729c907ca91048f77c5a5319ef8dc43",),
+    "ai-safety/index.html": ("657b8557a5da0da62acc5973c7ef6f2d36ff9c8264ec9a42690ae36fc82acf7b",),
     # Paul 6:40 AM ET Nov 11 2026 by voice: placeholder becomes Coming soon. This pin replaces 1b73cd43...2647.
-    "mimicry/index.html": ("7723cbd4b05bddf82b07b0a548ba733cb9b82060e4f5c1ec6cd0b43075d4e822",),
+    "mimicry/index.html": ("0ccbdecb3c9373005a550b3fe2d6266516e1395d82ee7192a86c6d4fc28eab64",),
 }
 # Retired by WEB-215 + Paul's C8 ruling (2026-11-01): the homepage has no opening region, and
 # assert_reviewed_copy now rejects any. Kept for the record of the reviewed 64bf60f opening.
@@ -882,7 +888,9 @@ class ReleaseGuardTests(unittest.TestCase):
     def test_built_site_has_no_page_dates_and_keeps_edition_dates(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
-            self.assertNotIn("<lastmod>", (site / "sitemap.xml").read_text(encoding="utf-8"))
+            sitemap = (site / "sitemap.xml").read_text(encoding="utf-8")
+            self.assertEqual(sitemap.count("<lastmod>2026-11-11</lastmod>"), sitemap.count("<loc>"))
+            self.assertNotIn("<lastmod>2026-09-24</lastmod>", sitemap)
             for path in sorted(site.rglob("*.html")):
                 html = path.read_text(encoding="utf-8")
                 self.assertNotIn("Published / modified", html, path)
@@ -900,7 +908,7 @@ class ReleaseGuardTests(unittest.TestCase):
                 self.assertIn("Governed Logic · September 2026", (site / page).read_text(encoding="utf-8"))
 
     def test_parity_fails_on_seeded_page_dates(self) -> None:
-        seeds = [("sitemap.xml", "/about/</loc></url>", "/about/</loc><lastmod>2026-09-24</lastmod></url>", "sitemap.xml carries a lastmod"),
+        seeds = [("sitemap.xml", "<loc>https://governedlogic.com/about/</loc><lastmod>2026-11-11</lastmod>", "<loc>https://governedlogic.com/about/</loc><lastmod>2026-09-24</lastmod>", "sitemap lastmod must be 2026-11-11"),
                  ("about/index.html", "</head>", '<meta name="gl-date-modified" content="2026-10-28T08:25:19-04:00"></head>', "gl-date meta on about/index.html"),
                  ("research/index.html", '"@type": "WebPage",', '"@type": "WebPage", "dateModified": "2026-09-27",', "JSON-LD dateModified on research/index.html"),
                  ("company/index.html", "</main>", "<dl><dt>Published / modified</dt><dd>24 September 2026</dd></dl></main>", "Visible page date line on company/index.html"),
@@ -1009,7 +1017,7 @@ class ReleaseGuardTests(unittest.TestCase):
             (lambda site: self.replace_once(site, twp, '<p class="gl-twp-soon">Coming soon</p>', '<p class="gl-twp-soon">Coming soon</p><p>New episodes every week.</p>'), r"The Truth with Paul copy is not exactly its three strings"),
             (lambda site: self.replace_once(site, twp, 'href="https://www.youtube.com/@TheTruthwithPaul"', 'href="https://www.youtube.com/@SomeoneElse"'), r"Subscribe on YouTube is not a plain link"),
             (lambda site: self.replace_once(site, twp, "<h1>The Truth with Paul</h1>", "<h1>The Truth</h1>"), r"The Truth with Paul h1 is not the channel name"),
-            (lambda site: self.replace_once(site, "sitemap.xml", "<url><loc>https://governedlogic.com/the-truth-with-paul/</loc></url>", ""), r"Page missing from sitemap: the-truth-with-paul/index\.html"),
+            (lambda site: self.replace_once(site, "sitemap.xml", "<url><loc>https://governedlogic.com/the-truth-with-paul/</loc><lastmod>2026-11-11</lastmod></url>", ""), r"Page missing from sitemap: the-truth-with-paul/index\.html"),
             (lambda site: self.replace_once(site, "index.html", '<span class="gl-go"><a href="/the-truth-with-paul/" class="gl-link">The Truth with Paul</a></span>', ""), r"The Truth with Paul is not in the header nav"),
         ]
         for seed, message in cases:

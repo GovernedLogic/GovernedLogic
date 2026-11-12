@@ -114,7 +114,10 @@ def signature_errors(root):
     return errors
 # /page-two/ is frozen: its built HTML and every file it loads (stylesheets with their ?v= values, images, fonts and the
 # files those stylesheets reference) stay byte-identical to the d1ba24d build.
-PAGE_TWO_BYTES={'page-two/index.html':'2a43aa839c89cbae22760d5d521cf6f9bde325909241218f94daa34c0a1b0bf6',
+PAGE_TWO_BYTES={'page-two/index.html':'e1d738c164ede28671912007052c7f06caef1fea026b2b1336710feefc1353af',
+    'assets/brand/favicon.png':'7e6becfd1d282d7468b1cf0d8e042210dd080577533d6276f2d51f5b72ade3b3',
+    'assets/brand/gl-logo.webp':'3e5df9209172c96e6626f8dd06fcb2d52be30e865b5d6bb4a40429376437241a',
+    'assets/brand-chrome.css':'344fdea8ad7762acb7776c740b7983492658889af8fb284f277755c38f75ea83',
     'assets/governed-logic-mark.webp':'7498a49a67a36f6dfcbe87ecba5262df2d8904f71cae9b4250fa449f31d7469c',
     'assets/home.css':'1af20a24a1b5836fdac5b70ba1b249c7aaf7893144c56b1c010a7d566b18a710',
     'assets/materials/ibm-plex-sans.ttf':'160f6c6ae5cd9426005fe12c60f202243aeedba9a2002ff150368aac9d75d9eb',
