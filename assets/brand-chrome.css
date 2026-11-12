@@ -38,6 +38,8 @@ body.gl-home-page {
 }
 
 @media (max-width: 899px) {
+  /* Drawer only after the inline script marks that JavaScript ran. Without it the menu stays visible.
+     The 64px bar itself stays the lower-specificity rule so inner pages keep the non-scrolling header. */
   #gl-home-bar:has(.gl-nav-toggle) {
     display: flex;
     flex-wrap: nowrap;
@@ -48,17 +50,17 @@ body.gl-home-page {
     box-sizing: border-box;
   }
 
-  #gl-home-bar:has(.gl-nav-toggle) .gl-nav-toggle {
+  html.gl-js #gl-home-bar:has(.gl-nav-toggle) .gl-nav-toggle {
     display: inline-flex;
     order: 2;
     margin-left: auto;
   }
 
-  #gl-home-bar:has(.gl-nav-toggle) .gl-home-tools {
+  html.gl-js #gl-home-bar:has(.gl-nav-toggle) .gl-home-tools {
     order: 3;
   }
 
-  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
+  html.gl-js #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
     position: fixed;
     z-index: 45;
     top: 64px;
@@ -82,13 +84,13 @@ body.gl-home-page {
     pointer-events: none;
   }
 
-  body.gl-nav-open #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
+  html.gl-js body.gl-nav-open #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
     transform: none;
     visibility: visible;
     pointer-events: auto;
   }
 
-  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] a.gl-link {
+  html.gl-js #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] a.gl-link {
     display: flex;
     align-items: center;
     min-height: 44px;
@@ -126,5 +128,999 @@ body.gl-home-page {
 @media (prefers-reduced-motion: no-preference) {
   #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
     transition: transform .28s ease, visibility .28s ease;
+  }
+}
+
+/* Dark 2032 body on every page that loads this file. /page-two/ does not, so its freeze stays.
+   !important beats body.gl-site.document-page in site.css. */
+body.gl-site,
+body.gl-site.document-page,
+body.gl-site.gl-v14,
+body.gl-home-page,
+body.gl-site main,
+body.gl-site .document-main,
+body.gl-site .home-content,
+body.gl-site article,
+body.gl-site section,
+body.gl-home-page main.home-content {
+  background-color: #03050A !important;
+  color: #F2EFE6;
+}
+
+/* One reading family on the dark field. These beat the light-page ink colors in site.css.
+   Sizes stay on the seven-step scale (12, 14, 16, 20, 24, 40, 64). /page-two/ does not load this file. */
+body.gl-site {
+  --gl-ink: #F4F1E8;
+  --gl-link: #C5E4FF;
+  --gl-panel: #10192A;
+  --gl-line: rgba(126, 196, 255, .4);
+  --gl-space: 16px;
+}
+
+body.gl-site main :is(h2, h3, h4, p, li, dd, dt, blockquote, figcaption, label, summary, span, .lede, .lead, .eyebrow, .label, strong, small) {
+  color: var(--gl-ink) !important;
+}
+
+body.gl-site main h1,
+body.gl-site.gl-v14 main h1,
+body.gl-type-principle main.principle-main h1 {
+  color: #fff !important;
+}
+
+body.gl-site main :is(a, button) {
+  color: var(--gl-link) !important;
+}
+
+body.gl-site main :is(.provenance, p.provenance, aside.provenance, .gl-share, .concept-card, .library-item, .source-entry, details.faq-item, .gl-card) {
+  background: var(--gl-panel) !important;
+  color: var(--gl-ink) !important;
+  border-color: var(--gl-line) !important;
+}
+
+body.gl-site .gl-share :is(a, button) {
+  background: var(--gl-panel) !important;
+  color: var(--gl-ink) !important;
+  border: 1px solid var(--gl-line) !important;
+}
+
+body.gl-site .gl-toc a,
+body.gl-site main .gl-go > a.gl-link {
+  color: var(--gl-link) !important;
+}
+
+body.gl-site main :is(section, article, .business-section, .source-entry, .library-item, details.faq-item):not(.about-hero):not(.gl-intro)::before {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+body.gl-site nav.principle-nav .gl-principle-level-2 {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(126, 196, 255, .45);
+}
+
+body.gl-site .principle-nav a,
+body.gl-site .principle-nav .gl-rel-name {
+  color: var(--gl-ink) !important;
+  background: var(--gl-panel) !important;
+}
+
+body.gl-site :is(.library-search, .library-search label, input, select) {
+  background: var(--gl-panel) !important;
+  color: var(--gl-ink) !important;
+  border-color: var(--gl-line) !important;
+}
+
+body.gl-site button.gl-copy,
+body.gl-site .gl-share button,
+body.gl-site main button:not(.gl-nav-toggle) {
+  background: var(--gl-panel) !important;
+  color: var(--gl-ink) !important;
+  border-color: var(--gl-line) !important;
+}
+
+body.gl-site .reading-links {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin: 8px 0 28px !important;
+}
+
+@media (min-width: 1440px) {
+  body.gl-site main h1 { font-size: 40px !important; line-height: 1.15 !important; }
+  body.gl-site main h2 { font-size: 40px !important; line-height: 1.2 !important; }
+  body.gl-site main .source-entry h2 { font-size: 56px !important; }
+  body.gl-site main h3 { font-size: 24px !important; line-height: 1.25 !important; }
+  body.gl-site main :is(p, li, dd) { font-size: 16px !important; line-height: 1.5 !important; }
+  body.gl-site main :is(.lede, .lead) { font-size: 20px !important; }
+  body.gl-site main :is(.eyebrow, .label) { font-size: 12px !important; letter-spacing: .12em !important; }
+}
+
+body.gl-site :where(a:not(.gl-link)) {
+  color: #9ecfff;
+}
+
+body.gl-site :where(.business-section, .provenance, .concept-card, details.faq-item, .library-item, .source-entry, .work-grid article, .reading-index > .gl-go > a, .principle-field span, .gl-card) {
+  background: #0c1424;
+  color: #F2EFE6;
+  border-color: rgba(126, 196, 255, .35);
+}
+
+/* /concepts/ reading cards were still #fdfdfd. The family body is the dark field. */
+body.gl-site .concept-card,
+body.gl-site .concept-card :is(h2, h3, p, span) {
+  background-color: #0c1424 !important;
+  color: #F2EFE6 !important;
+  border-color: rgba(126, 196, 255, .35) !important;
+}
+
+body.gl-site .concept-card :is(a, button) {
+  background: transparent !important;
+  color: #9ecfff !important;
+}
+
+html.gl-hold-motion :is(body.gl-home-page, body.gl-site) .site-footer::after,
+html.gl-hold-motion body.gl-home-page .gl-problem::after {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(body.gl-home-page, body.gl-site) .site-footer::after,
+  body.gl-home-page .gl-problem::after {
+    animation: none !important;
+  }
+}
+
+#gl-home-bar .gl-nav-toggle {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  box-sizing: border-box !important;
+  flex: 0 0 44px !important;
+}
+
+#gl-home-bar nav[aria-label="Primary"] a.gl-link {
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+body.gl-site #gl-home-bar .site-brand {
+  gap: 14px !important;
+  margin-right: 24px !important;
+}
+
+body.gl-site #gl-home-bar .site-brand img {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+
+/* Heroes: words stack in normal flow. From 900px the art is parked in the reserved right column, not under the words.
+   /page-two/ does not load this file. */
+body.gl-site:not(.gl-type-principle) .gl-intro {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  padding: 16px 0 !important;
+  box-sizing: border-box !important;
+}
+
+body.gl-site:not(.gl-type-principle) .gl-intro > .gl-art {
+  position: relative !important;
+  display: block !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: min(100%, 640px) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: 320px !important;
+  margin: 16px 0 0 !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  opacity: 1 !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+body.gl-site:not(.gl-type-principle) .gl-intro > :not(.gl-art):not(.gl-tile) {
+  position: relative !important;
+  max-width: 68ch;
+  margin-top: 0 !important;
+  margin-bottom: 8px !important;
+}
+
+body.gl-site.gl-type-concept .gl-intro > .gl-tile {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: clamp(64px, 8vw, 120px) !important;
+  height: clamp(64px, 8vw, 120px) !important;
+  margin: 0 0 16px !important;
+}
+
+@media (min-width: 900px) {
+  body.gl-site.gl-type-concept .gl-intro > .gl-tile {
+    position: absolute !important;
+    top: 24px !important;
+    right: 0 !important;
+    width: 160px !important;
+    height: 160px !important;
+    margin: 0 !important;
+  }
+}
+
+@media (min-width: 900px) {
+  body.gl-site.gl-v14:is(.gl-type-bands, .gl-type-doc, .gl-type-article) main.document-main > article {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  body.gl-site:not(.gl-type-principle) .gl-intro {
+    padding-right: min(44%, 540px) !important;
+    min-height: calc(100dvh - 160px) !important;
+  }
+
+  body.gl-site:not(.gl-type-principle) .gl-intro > .gl-art {
+    position: absolute !important;
+    top: 16px !important;
+    right: 0 !important;
+    bottom: 16px !important;
+    left: auto !important;
+    width: min(40%, 500px) !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+  }
+}
+
+/* First screen at 1440 and 1920. */
+@media (min-width: 1440px) {
+
+  body.gl-type-article main article > p {
+    width: 740px;
+    max-width: 740px;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle main.principle-main {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    min-height: calc(100dvh - 120px) !important;
+    padding: 16px 40px 36px 240px !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle .principle-main > :not(.principle-nav) {
+    max-width: 60ch;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle .gl-intro {
+    min-height: 0 !important;
+    padding-top: 8px !important;
+  }
+
+  body.gl-type-principle #gl-home-bar {
+    gap: 16px 36px !important;
+  }
+
+  body.gl-type-principle #gl-home-bar .gl-home-brand {
+    margin-right: 28px !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle main.principle-main {
+    display: grid !important;
+    grid-template-columns: minmax(0, 60ch) minmax(220px, 1fr) !important;
+    column-gap: 36px !important;
+    align-items: start !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle .principle-main > :not(.principle-nav) {
+    grid-column: 1 !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle main.principle-main::after {
+    content: "";
+    grid-column: 1;
+    min-height: min(380px, 42vh);
+    margin-top: 12px;
+    background: url("/assets/brand/gl-logo.webp") center / contain no-repeat;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    grid-column: 2 !important;
+    grid-row: 1 / span 24 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    align-self: start !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 8px !important;
+    background: none !important;
+    border: 0 !important;
+    overflow: visible !important;
+    z-index: 1 !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link {
+    width: auto !important;
+    height: auto !important;
+    min-height: 44px !important;
+    max-height: none !important;
+    flex: 0 0 auto !important;
+    align-self: stretch !important;
+    justify-content: flex-start !important;
+    white-space: normal !important;
+    box-sizing: border-box !important;
+    background: #10192A !important;
+    color: #F4F1E8 !important;
+    border: 1px solid rgba(126, 196, 255, .4) !important;
+  }
+
+  body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link:last-child {
+    grid-column: auto !important;
+  }
+}
+
+/* The nine: one ground, then six domains, then two first principles. Spacing and size only. */
+body.gl-home-page #the-seed > .gl-principles:nth-child(2) ul {
+  grid-template-columns: minmax(0, 40rem) !important;
+  justify-content: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+body.gl-home-page #the-seed > .gl-principles:nth-child(2) li {
+  min-height: 88px !important;
+  justify-content: center !important;
+  text-align: center;
+}
+
+body.gl-home-page #the-seed > .gl-principles:nth-child(3) {
+  margin-top: 28px !important;
+}
+
+body.gl-home-page #the-seed > .gl-principles:nth-child(3) ul {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+body.gl-home-page #the-seed > .gl-principles:nth-child(4) {
+  max-width: 40rem;
+  margin: 36px auto 0 !important;
+  padding-top: 24px !important;
+  border-top: 1px solid rgba(126, 196, 255, .4);
+}
+
+body.gl-home-page #the-seed > .gl-principles:nth-child(4) ul {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+@media (min-width: 900px) {
+  body.gl-home-page #the-seed > .gl-principles:nth-child(3) ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+body.gl-site details.faq-item {
+  display: block !important;
+  position: relative !important;
+  margin-top: 0 !important;
+  margin-bottom: 12px !important;
+}
+
+body.gl-site details.faq-item > * {
+  position: static !important;
+}
+
+body.gl-site details.faq-item:not([open]) > :not(summary) {
+  display: none !important;
+}
+
+/* Principle phone header: the menu button is the last flex item. The research
+   control is parked, as on the homepage, so the button stays inside 320, 390 and 768. */
+@media (max-width: 899px) {
+  html.gl-js body.gl-type-principle #gl-home-bar {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 8px !important;
+    gap: 4px !important;
+    overflow: hidden !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .gl-home-brand {
+    order: 1 !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .site-brand {
+    gap: 8px !important;
+    margin-right: 0 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .site-brand img {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .gl-brand-text {
+    min-width: 0 !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .site-brand small {
+    letter-spacing: 0.04em !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .gl-home-tools {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    position: static !important;
+    left: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .gl-bar-cta {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    clip-path: inset(50%) !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .gl-nav-toggle {
+    order: 3 !important;
+    flex: 0 0 44px !important;
+    margin: 0 !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
+}
+
+@media (max-width: 389px) {
+  html.gl-js body.gl-type-principle #gl-home-bar {
+    padding: 0 4px !important;
+    gap: 2px !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .site-brand {
+    gap: 6px !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .site-brand img {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+  }
+
+  html.gl-js body.gl-type-principle #gl-home-bar .site-brand small {
+    letter-spacing: 0 !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  body.gl-site .gl-intro {
+    min-height: calc(100vh - 140px);
+    min-height: calc(100dvh - 140px);
+  }
+
+  body.gl-site #library-results,
+  body.gl-site .library-results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 28px;
+  }
+}
+
+/* Vera's 75860ad gate, item 2 (Grace scoping): the principle nav shows the six domains in level order, then Identity
+   one level below. The level-2 rule matched both the level group and Identity's own link wrapper, which drew two
+   empty boxes. Now only an indent and a gap mark the lower level. No labels. */
+body.gl-site nav.principle-nav .gl-principle-level-2,
+body.gl-site nav.principle-nav > .gl-principle-level-2 > .gl-go.gl-principle-level-2 {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+  border: 0 !important;
+  background: none !important;
+}
+
+html body.gl-site.gl-v14 main nav.principle-nav {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+html body.gl-site.gl-v14 main nav.principle-nav::before {
+  background: #050b16 !important;
+  border-top: 1px solid rgba(126, 196, 255, .28);
+}
+
+html body.gl-site.gl-v14 main nav.principle-nav > .gl-principle-level {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html body.gl-site.gl-v14 main nav.principle-nav > .gl-principle-level-2 {
+  padding-left: clamp(24px, 4vw, 48px) !important;
+}
+
+html body.gl-site.gl-v14 main nav.principle-nav > .gl-principle-level > .gl-go {
+  display: block;
+  min-width: 0;
+}
+
+/* Principle pages below 900px: the nav sits in the flow after the text, two names per row, Identity indented below.
+   It was a fixed panel that covered the lower third of a phone screen. */
+@media (max-width: 899px) {
+  html body.gl-site.gl-v14.gl-type-principle main nav.principle-nav {
+    position: static !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: auto !important;
+    margin: 40px 0 0 !important;
+    padding: 24px 0 32px !important;
+    transform: none !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-top: 1px solid rgba(126, 196, 255, .28) !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main nav.principle-nav > .gl-principle-level {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main nav.principle-nav > .gl-principle-level-2 {
+    padding-left: 24px !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main nav.principle-nav a.gl-link {
+    justify-content: flex-start !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+    color: #F4F1E8 !important;
+    background: #10192A !important;
+    border: 1px solid rgba(126, 196, 255, .4) !important;
+  }
+}
+
+/* Principle pages at 1100 and wider: the nav is the right-hand panel, one name per row, Identity indented. */
+@media (min-width: 1100px) {
+  html body.gl-site.gl-v14.gl-type-principle main nav.principle-nav > .gl-principle-level {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main nav.principle-nav > .gl-principle-level-2 {
+    padding-left: 24px !important;
+  }
+}
+
+/* Vera's 75860ad gate, item 4 (Grace scoping): principle pages read in a wider column with no empty left margin,
+   and the lede is set in the body font. Styling only. */
+html body.gl-type-principle main.principle-main .principle-passage p,
+html body.gl-type-principle main.principle-main .principle-passage .gl-r32-sent,
+html body.gl-type-principle main.principle-main .principle-passage .gl-r32-weight {
+  font-family: var(--sans, "Inter", system-ui, sans-serif) !important;
+}
+
+html body.gl-type-principle main.principle-main .principle-passage:first-of-type p:first-child,
+html body.gl-type-principle main.principle-main .principle-passage:first-of-type p:first-child .gl-r32-sent,
+html body.gl-type-principle main.principle-main .principle-passage:first-of-type .gl-r32-weight {
+  font-size: 20px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+}
+
+@media (min-width: 1100px) {
+  html body.gl-site.gl-v14.gl-type-principle main.principle-main {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 280px) !important;
+    column-gap: clamp(48px, 5vw, 88px) !important;
+    align-content: start !important;
+    align-items: start !important;
+    width: 100% !important;
+    max-width: 1240px !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+    padding: 32px 48px 72px !important;
+    box-sizing: border-box !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main.principle-main > :not(.principle-nav) {
+    grid-column: 1 !important;
+    max-width: 76ch !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main.principle-main .principle-passage {
+    max-width: 72ch !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main.principle-main .principle-passage :is(p, h2) {
+    max-width: none !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main.principle-main::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-principle main.principle-main > nav.principle-nav {
+    grid-column: 2 !important;
+    grid-row: 1 / span 40 !important;
+    position: sticky !important;
+    top: 104px !important;
+    align-self: start !important;
+  }
+}
+
+@media (min-width: 1100px) {
+  html body.gl-site.gl-v14.gl-type-principle nav.principle-nav a.gl-link {
+    padding: 10px 14px !important;
+  }
+}
+
+/* Vera's 75860ad gate, item 4 (Grace scoping): the first screens stop reading as one template, the same orb on empty
+   dark space. From 900px each page family takes its own composition, set against the brand banner where it helps.
+   Structure and styling only, with art the site already ships (the banner, the card art, the hero geometry). */
+@media (min-width: 900px) {
+  html body.gl-site.gl-v14:not(.gl-type-principle) main .gl-intro {
+    min-height: 0 !important;
+  }
+
+  /* Floor: the banner's lit floor under the title band. Its words stay above the crop. */
+  html body.gl-site.gl-v14:is(.gl-page-library, .gl-page-publication, .gl-page-sources, .gl-page-the-argument, .gl-page-articles, .gl-page-research, .gl-page-mechanism) main .gl-intro {
+    padding: 72px 0 112px !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-library, .gl-page-publication, .gl-page-sources, .gl-page-the-argument, .gl-page-articles, .gl-page-research, .gl-page-mechanism) main .gl-intro::before {
+    background:
+      linear-gradient(180deg, #00050a 0%, rgba(0, 5, 10, .72) 38%, rgba(0, 5, 10, .18) 100%),
+      url("/assets/brand/gl-banner-1920.webp") center bottom / auto 330% no-repeat,
+      #00050a !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-library, .gl-page-publication, .gl-page-sources, .gl-page-the-argument, .gl-page-articles) main .gl-intro > .gl-art {
+    display: none !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-library, .gl-page-publication, .gl-page-sources, .gl-page-the-argument, .gl-page-articles) main .gl-intro {
+    padding-right: 0 !important;
+  }
+
+  /* Centered: research and the mechanism set the title on the axis of the floor, the card art as a strip below it. */
+  html body.gl-site.gl-v14:is(.gl-page-research, .gl-page-mechanism) main .gl-intro {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding-right: 0 !important;
+    padding-bottom: 72px !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-research, .gl-page-mechanism) main .gl-intro > :not(.gl-art) {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-research, .gl-page-mechanism) main .gl-intro .reading-links {
+    justify-content: center !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-research, .gl-page-mechanism) main .gl-intro > .gl-art {
+    order: 10 !important;
+    position: relative !important;
+    inset: auto !important;
+    width: min(100%, 880px) !important;
+    height: 200px !important;
+    max-height: none !important;
+    margin: 32px auto 0 !important;
+    object-fit: cover !important;
+    border: 1px solid rgba(126, 196, 255, .28) !important;
+  }
+
+  /* Medallion: a compact masthead, the hero geometry as a small seal on the right. */
+  html body.gl-site.gl-v14:is(.gl-page-faq, .gl-page-challenge, .gl-page-concepts) main .gl-intro {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-height: 296px !important;
+    padding: 40px 260px 40px 0 !important;
+    border-bottom: 1px solid rgba(126, 196, 255, .22);
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-faq, .gl-page-challenge, .gl-page-concepts) main .gl-intro > .gl-art {
+    position: absolute !important;
+    top: 50% !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 200px !important;
+    height: 200px !important;
+    max-height: none !important;
+    transform: translateY(-50%) !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(126, 196, 255, .35) !important;
+    box-shadow: 0 0 64px rgba(47, 156, 230, .25) !important;
+  }
+
+  /* Split: the art leads on the left, the words sit to its right. */
+  html body.gl-site.gl-v14:is(.gl-page-ai-safety, .gl-page-company) main .gl-intro {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-height: 400px !important;
+    padding: 48px 0 48px min(46%, 560px) !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-ai-safety, .gl-page-company) main .gl-intro > .gl-art {
+    position: absolute !important;
+    top: 32px !important;
+    bottom: 32px !important;
+    left: 0 !important;
+    right: auto !important;
+    width: min(40%, 500px) !important;
+    height: calc(100% - 64px) !important;
+    max-height: none !important;
+    transform: none !important;
+    object-fit: contain !important;
+  }
+
+  html body.gl-site.gl-v14.gl-page-company main .gl-intro > .gl-art {
+    object-fit: cover !important;
+    border: 1px solid rgba(126, 196, 255, .28) !important;
+  }
+
+  /* Strip: concept pages run their card art as a band under the definition, the concept's tile set on its edge. */
+  html body.gl-site.gl-v14.gl-type-concept main .gl-intro {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 56px 0 48px !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-concept main .gl-intro > .gl-art {
+    order: 10 !important;
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: 180px !important;
+    max-height: none !important;
+    margin: 32px 0 0 !important;
+    object-fit: cover !important;
+    border: 1px solid rgba(126, 196, 255, .28) !important;
+  }
+
+  html body.gl-site.gl-v14.gl-type-concept main .gl-intro > .gl-tile {
+    top: auto !important;
+    bottom: 76px !important;
+    right: 40px !important;
+    width: 128px !important;
+    height: 128px !important;
+    z-index: 2 !important;
+    background: #0c1424 !important;
+  }
+
+  /* Cover: the treatises and the two articles put their card art behind the title, faded into the field. */
+  html body.gl-site.gl-v14:is(.gl-type-treatise, .gl-type-article):not(.gl-page-the-argument) main .gl-intro {
+    padding: 112px 40% 72px 0 !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-type-treatise, .gl-type-article):not(.gl-page-the-argument) main .gl-intro > .gl-art {
+    position: absolute !important;
+    z-index: -1 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: auto !important;
+    right: calc(50% - 50vw) !important;
+    width: 70vw !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    transform: none !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    opacity: .7 !important;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%) !important;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 45%) !important;
+  }
+
+  /* Seal on the left: the mimicry page mirrors the medallion masthead. */
+  html body.gl-site.gl-v14.gl-page-mimicry main .gl-intro {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-height: 296px !important;
+    padding: 40px 0 40px 260px !important;
+    border-bottom: 1px solid rgba(126, 196, 255, .22);
+  }
+
+  html body.gl-site.gl-v14.gl-page-mimicry main .gl-intro > .gl-art {
+    position: absolute !important;
+    top: 50% !important;
+    left: 0 !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 200px !important;
+    height: 200px !important;
+    max-height: none !important;
+    transform: translateY(-50%) !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(126, 196, 255, .35) !important;
+    box-shadow: 0 0 64px rgba(47, 156, 230, .25) !important;
+  }
+
+  /* Diptych: the treatises hub pairs the two treatises' own card art on the right. */
+  html body.gl-site.gl-v14.gl-page-the-treatises main .gl-intro {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-height: 340px !important;
+    padding: 48px 52% 48px 0 !important;
+  }
+
+  html body.gl-site.gl-v14.gl-page-the-treatises main .gl-intro > .gl-art {
+    display: none !important;
+  }
+
+  html body.gl-site.gl-v14.gl-page-the-treatises main .gl-intro::after {
+    content: "";
+    position: absolute;
+    top: 48px;
+    bottom: 48px;
+    right: 0;
+    width: 48%;
+    background:
+      url("/assets/provisional/card-grounding.webp") left top / 100% calc(50% - 8px) no-repeat,
+      url("/assets/provisional/card-framework.webp") left bottom / 100% calc(50% - 8px) no-repeat;
+    border-left: 1px solid rgba(126, 196, 255, .28);
+    left: auto !important;
+    height: auto !important;
+    z-index: 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+    aspect-ratio: auto !important;
+    animation: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    pointer-events: none;
+  }
+}
+
+/* The same families below 900px, so phones do not open on one large orb either. */
+@media (max-width: 899px) {
+  html body.gl-site.gl-v14:is(.gl-page-library, .gl-page-publication, .gl-page-sources, .gl-page-the-argument, .gl-page-articles) main .gl-intro > .gl-art {
+    display: none !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-library, .gl-page-publication, .gl-page-sources, .gl-page-the-argument, .gl-page-articles, .gl-page-research, .gl-page-mechanism) main .gl-intro {
+    padding-bottom: 72px !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-library, .gl-page-publication, .gl-page-sources, .gl-page-the-argument, .gl-page-articles, .gl-page-research, .gl-page-mechanism) main .gl-intro::before {
+    background:
+      linear-gradient(180deg, #00050a 0%, rgba(0, 5, 10, .78) 45%, rgba(0, 5, 10, .25) 100%),
+      url("/assets/brand/gl-banner-960.webp") center bottom / auto 260% no-repeat,
+      #00050a !important;
+  }
+
+  html body.gl-site.gl-v14:is(.gl-page-faq, .gl-page-challenge, .gl-page-concepts, .gl-page-mimicry) main .gl-intro > .gl-art {
+    width: 112px !important;
+    height: 112px !important;
+    max-height: none !important;
+    margin: 0 0 16px !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(126, 196, 255, .35) !important;
+    box-shadow: 0 0 40px rgba(47, 156, 230, .25) !important;
+  }
+
+  html body.gl-site.gl-v14.gl-page-ai-safety main .gl-intro > .gl-art {
+    max-height: 200px !important;
+  }
+
+  html body.gl-site.gl-v14.gl-page-the-treatises main .gl-intro > .gl-art {
+    display: none !important;
+  }
+
+  html body.gl-site.gl-v14.gl-page-the-treatises main .gl-intro::after {
+    content: "";
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-top: 68%;
+    margin-top: 16px;
+    background:
+      url("/assets/provisional/card-grounding.webp") left top / 100% calc(50% - 4px) no-repeat,
+      url("/assets/provisional/card-framework.webp") left bottom / 100% calc(50% - 4px) no-repeat;
+    opacity: 1;
+    z-index: 0;
+    animation: none;
+  }
+}
+
+/* Paul 8:38 AM ET Nov 12 2026: the ground at the top and Time beside Identity, both unlinked plain labels. They sit
+   in the same boxes as the links, with no underline and a quieter border, so they read as names, not links. */
+html body.gl-site main nav.principle-nav .gl-principle-label {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  font: 600 14px/1.2 var(--sans, "Inter", system-ui, sans-serif);
+  color: #F4F1E8 !important;
+  background: #0a1220;
+  border: 1px solid rgba(126, 196, 255, .22);
+  text-decoration: none;
+}
+
+html body.gl-site.gl-v14 main nav.principle-nav > .gl-principle-ground {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+@media (min-width: 1100px) {
+  html body.gl-site.gl-v14.gl-type-principle main nav.principle-nav > .gl-principle-level-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }

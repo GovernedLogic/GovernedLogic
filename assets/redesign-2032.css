@@ -1642,9 +1642,16 @@ body.gl-home-page .gl-brand-hero img {
 }
 
 html.gl-hold-motion body.gl-home-page .gl-brand-hero::after,
+html.gl-sweep-done body.gl-home-page .gl-brand-hero::after,
 html.gl-hold-motion body.gl-home-page #gl-home-bar .site-brand img,
 html.gl-hold-motion body.gl-type-principle #gl-home-bar .site-brand img {
   animation-play-state: paused !important;
+}
+
+html.gl-sweep-done body.gl-home-page .gl-brand-hero::after {
+  animation: none !important;
+  content: none !important;
+  display: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2039,8 +2046,8 @@ html.gl-hold-motion .gl-brand-life i {
 }
 
 @media (max-width: 899px) {
-  body.gl-home-page #gl-home-bar:has(.gl-nav-toggle),
-  body.gl-type-principle #gl-home-bar:has(.gl-nav-toggle) {
+  html.gl-js body.gl-home-page #gl-home-bar:has(.gl-nav-toggle),
+  html.gl-js body.gl-type-principle #gl-home-bar:has(.gl-nav-toggle) {
     display: flex !important;
     flex-wrap: nowrap !important;
     align-items: center !important;
@@ -2050,15 +2057,15 @@ html.gl-hold-motion .gl-brand-life i {
     grid-template-rows: 64px !important;
   }
 
-  body.gl-home-page #gl-home-bar .gl-nav-toggle,
-  body.gl-type-principle #gl-home-bar .gl-nav-toggle {
+  html.gl-js body.gl-home-page #gl-home-bar .gl-nav-toggle,
+  html.gl-js body.gl-type-principle #gl-home-bar .gl-nav-toggle {
     display: inline-flex !important;
     order: 2;
     margin-left: auto;
   }
 
-  body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
-  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+  html.gl-js body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+  html.gl-js body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
     position: fixed !important;
     z-index: 45 !important;
     top: 64px !important;
@@ -2086,18 +2093,81 @@ html.gl-hold-motion .gl-brand-life i {
     pointer-events: none;
   }
 
-  body.gl-nav-open.gl-home-page #gl-home-bar nav[aria-label="Primary"],
-  body.gl-nav-open.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+  html.gl-js body.gl-nav-open.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+  html.gl-js body.gl-nav-open.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
     transform: none !important;
     visibility: visible !important;
     pointer-events: auto !important;
   }
 
-  body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link,
-  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
+  html.gl-js body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link,
+  html.gl-js body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
     width: 100% !important;
     justify-content: flex-start !important;
     min-height: 44px !important;
+  }
+}
+
+/* Buttons grow to their label so the text stays inside the box at 320, 390, and 1440. */
+body.gl-home-page :is(.gl-btn, a.gl-btn, .gl-problem-links button, .gl-problem-links a.gl-link) {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 44px !important;
+  white-space: normal !important;
+}
+
+body.gl-home-page .gl-problem-links :is(button, a.gl-link) {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+body.gl-home-page .gl-actions {
+  flex-wrap: wrap !important;
+  max-width: 100%;
+}
+
+body.gl-home-page .gl-actions .gl-go {
+  max-width: 100%;
+  min-width: 0;
+}
+
+body.gl-home-page #the-seed a {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* The full-width bands start their copy left of the spine, so the halfway margin
+   line (36.5px at 1440) crosses it. Keep the 2px line in the outer margin. */
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 901px) {
+    body.gl-home-page::after {
+      left: 12px;
+    }
+  }
+}
+
+body.gl-home-page .gl-brand-hero {
+  min-height: 180px;
+  height: max(var(--banner-h), 180px);
+}
+
+/* Problem titles wrap 1, 2, 2, 1 at the pinned 21px size, on the full-width band. */
+@media (min-width: 1440px) {
+  body.gl-home-page .gl-problem {
+    display: grid !important;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(520px, 1.1fr) !important;
+    width: 100% !important;
+    max-width: none !important;
+    column-gap: 28px !important;
+  }
+
+  body.gl-home-page .gl-ptext {
+    flex: 0 1 450px !important;
+    max-width: 450px !important;
   }
 }
 

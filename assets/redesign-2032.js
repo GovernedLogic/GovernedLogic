@@ -73,7 +73,7 @@
     var actions = document.querySelector("#explore .gl-actions");
     if (actions) actions.classList.add("gl-r32-reveal", "gl-r32-in");
 
-    document.querySelectorAll("#the-seed, .gl-core, .gl-problem, .gl-latest, .gl-next").forEach(function (el) {
+    document.querySelectorAll(".gl-problem, .gl-latest, .gl-next").forEach(function (el) {
       el.classList.add("gl-r32-below");
     });
 
@@ -205,6 +205,12 @@
   }
 
   function addLife() {
+    if (isHome) {
+      try {
+        if (sessionStorage.getItem("gl-brand-sweep")) root.classList.add("gl-sweep-done");
+        else if (!reduced) sessionStorage.setItem("gl-brand-sweep", "1");
+      } catch (e) {}
+    }
     if (reduced || !isHome || document.querySelector(".gl-brand-life")) return;
     var banner = document.querySelector(".gl-brand-hero");
     if (!banner) return;
