@@ -115,7 +115,7 @@ The notation is conventional. The binding relation is not merely conventional.
 
 WHY THREE: Why can logic not simply be left as a brute abstract structure?
 
-It can be proposed as such, and the proposal deserves serious treatment. Necessary logical relations may appear to require no causal explanation in the ordinary sense. But calling them “brute” does not yet explain why reality is answerable to them, why rational minds can apprehend them, or whether they are independent co-ultimates beside being, truth, meaning, intelligibility, and obligation.
+Coming soon
 
 The logic chain by itself may therefore arrive at a necessary rational structure without yet deciding whether that structure is personal, impersonal, abstract, or identical with the ultimate ground discovered by the other chains.
 
@@ -127,7 +127,7 @@ A proposed ultimate ground must be compatible with rationality and non-contradic
 
 WHY FIVE: What makes the ground of logic ultimate?
 
-If logic is grounded in a deeper rational order, the deeper rational order is more ultimate. If logic is an independent eternal abstract realm, then the treatise must ask how that realm relates to being, truth, meaning, intelligibility, and obligation. If those relations themselves are brute, the account has merely relocated the halt.
+Coming soon
 
 An ultimate ground of logic must therefore either be identical with, or sufficiently unified with, the ultimate ground of the other domains such that logical necessity is not left as an unexplained co-eternal external constraint.
 

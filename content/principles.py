@@ -84,21 +84,36 @@ def heading(p):
     """A chapter or step heading line of the treatise (all capitals, or "WHY ONE: ...?"): an h2, words unchanged."""
     letters=re.sub(r'[^A-Za-z]','',p)
     return bool(letters) and (letters.isupper() or re.match(r'WHY [A-Z]+:',p) is not None)
+# Paul 8:38 AM ET Nov 12 2026: in the section headings the em dash becomes " | ". Headings only, no other word change.
+def heading_text(p):return p.replace(' \u2014 ',' | ')
 def body(entry):
     html=[]
     for b in entry['blocks']:
-        html.append('<section class="principle-passage">'+''.join(('<h2>' if heading(p) else '<p>')+escape(p,quote=False)+('</h2>' if heading(p) else '</p>') for p in b['paragraphs'])+'</section>')
+        html.append('<section class="principle-passage">'+''.join(('<h2>'+escape(heading_text(p),quote=False)+'</h2>') if heading(p) else ('<p>'+escape(p,quote=False)+'</p>') for p in b['paragraphs'])+'</section>')
     return ''.join(html)
 def description(entry):
     """The page's meta/og/JSON-LD description: the first sentence of its first passage, verbatim (visible on the page)."""
     first=entry['blocks'][0]['paragraphs'][0]
     m=re.match(r'(.+?[.!?])(?:\s|$)',first)
     return m.group(1) if m else first
+# Audit batch 2: six domains, then Identity one level below. No label words. Time and the ground have no pages.
+# Paul 8:38 AM ET Nov 12 2026: the ground "Jesus Christ the Logos" at the top and Time beside Identity on the bottom
+# level, both unlinked plain labels, as the homepage shows Time. Three levels: ground, the six, Identity and Time.
+NAV_LEVELS=(('ground',),('being','meaning','logic','intelligibility','obligation','correspondence'),('identity','time'))
+LABELS={'ground':'Jesus Christ the Logos','time':'Time'}
 def nav(slug,base_entries):
     """Ordinary links among the published principle pages, by name only (Identity and Correspondence have no /concepts/
     heading to carry their link)."""
-    items=''.join(f'<span class="gl-go"><a href="/{route_path(s)[:-10]}" class="gl-link"'+(' aria-current="page"' if s==slug else '')+f'>{escape(NAMES[s])}</a></span>' for s,_ in base_entries)
-    return f'<nav class="principle-nav" aria-label="Principles">{items}</nav>'
+    published={s for s,_ in base_entries}
+    def item(s, level):
+        if s in LABELS:return f'<span class="gl-principle-label">{escape(LABELS[s])}</span>'
+        if s not in published:return ''
+        klass='gl-go gl-principle-level-2' if level==3 else 'gl-go'
+        return f'<span class="{klass}"><a href="/{route_path(s)[:-10]}" class="gl-link"'+(' aria-current="page"' if s==slug else '')+f'>{escape(NAMES[s])}</a></span>'
+    # Classes: gl-principle-ground (the ground), gl-principle-level-1 (the six), gl-principle-level-2 (Identity and Time).
+    names={1:'gl-principle-ground',2:'gl-principle-level gl-principle-level-1',3:'gl-principle-level gl-principle-level-2'}
+    levels=''.join(f'<div class="{"gl-principle-level " if i==1 else ""}{names[i]}">{"".join(item(s, i) for s in slugs)}</div>' for i,slugs in enumerate(NAV_LEVELS,1))
+    return f'<nav class="principle-nav" aria-label="Principles">{levels}</nav>'
 def page(slug,entry,base,published,entries=(),term_id=None):
     import json
     url=base+'/'+route_path(slug)[:-10]
