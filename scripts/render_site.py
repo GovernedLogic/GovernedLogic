@@ -2,7 +2,7 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from html import escape, unescape
-import argparse, hashlib, json, re, shutil, subprocess, sys
+import argparse, hashlib, json, re, shutil, sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'content'))
 import terms as TERMS, principles as PRINCIPLES
@@ -130,7 +130,7 @@ def dfn(source,path):
 def machine_block(path):
     """Additive JSON-LD (a second block; the page's existing block stays byte-identical): termCode on each term and,
     on /concepts/, the url of each principle; on /sources/, the four source PDFs as ScholarlyArticle with only what
-    the page shows (heading, author line, date line, file)."""
+    the page shows (heading, author line, file). No date fields."""
     nodes=[]
     for t in term_records():
         if t['page']!=path:continue
@@ -140,7 +140,7 @@ def machine_block(path):
         nodes.append(n)
     if path=='sources/index.html':
         for d in TERMS.SOURCE_DOCS:
-            nodes.append({'@type':'ScholarlyArticle','@id':BASE+'/sources/#'+d['section'],'name':d['name'],'author':{'@id':BASE+'/about/#paul'},'datePublished':d['date'],'url':BASE+'/'+d['file'],'encodingFormat':'application/pdf','isPartOf':{'@id':BASE+'/sources/#page'}})
+            nodes.append({'@type':'ScholarlyArticle','@id':BASE+'/sources/#'+d['section'],'name':d['name'],'author':{'@id':BASE+'/about/#paul'},'url':BASE+'/'+d['file'],'encodingFormat':'application/pdf','isPartOf':{'@id':BASE+'/sources/#page'}})
     if not nodes:return ''
     return '<script type="application/ld+json">'+json.dumps({'@context':'https://schema.org','@graph':nodes},ensure_ascii=False)+'</script>'
 def terms_jsonld():
@@ -161,23 +161,6 @@ def llms_txt(records):
     if principles:lines+=['','## Principles','']+[f'- [{r["title"]}]({r["url"]}): {r["description"]}' for r in principles]
     lines+=['','## Sources','']+[f'- [{d["name"]}]({BASE}/{d["file"]})' for d in TERMS.SOURCE_DOCS]
     return '\n'.join(lines)+'\n'
-def source_paths(page):
-    """Repo files whose latest commit dates this public page. Shared chrome is not a page source."""
-    if page=='index.html':return ('index.html','content/home.html')
-    if page.startswith('principles/') and page.endswith('/index.html'):
-        return ('content/principle-register.md','components/principle.html','content/principles.py')
-    if page in ('library/index.html','publication/index.html'):return ('scripts/render_site.py',)
-    if page=='articles/index.html':
-        return ('scripts/site_layout.py','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html')
-    if page=='the-truth-with-paul/index.html':return ('scripts/site_layout.py',)
-    return (page,)
-def git_lastmod(page):
-    """YYYY-MM-DD of the latest commit that touches this page's source. Sitemap only."""
-    paths=source_paths(page)
-    out=subprocess.check_output(['git','log','-1','--format=%cs','--',*paths],cwd=ROOT,text=True).strip()
-    if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',out):
-        raise RuntimeError('No git commit date for '+page+' from '+', '.join(paths))
-    return out
 FONT_PRELOADS=''.join(f'<link rel="preload" href="/assets/materials/{font}" as="font" type="font/woff2" crossorigin>' for font in ('source-serif-4-latin-opsz.woff2','inter-latin-wght.woff2'))
 def anchors(source,path):
     """Governor's 2:01 PM ET ruling (a) on Paul's parity rule: no JSON-LD @id or url may point at a missing anchor.
@@ -332,7 +315,7 @@ def build(destination):
     'publication/index.html':document('Publication record','publication/index.html','<p class="lede">Source editions and the works they support.</p><p>The source documents retain their original edition dates. The articles remain separately identifiable.</p><div id="library-results">'+editions+book+'</div>',book_ld),
     'publication/catalog.json':json.dumps({'records':records},ensure_ascii=False,indent=2),'publication/search-index.json':json.dumps({'records':records},ensure_ascii=False),
     'robots.txt':'User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',
-    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc><lastmod>'+git_lastmod(p)+'</lastmod></url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html',*v14_pages))+'</urlset>',
+    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc></url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html',*v14_pages))+'</urlset>',
     'terms.jsonld':terms_jsonld(),'llms.txt':llms_txt(records),
     # v14 queued (WEB-227 SIXTH; Paul 4:50 PM ET Nov 1, no page dates): RSS 2.0 at the same URL, no dates. The channel
     # description is /publication/'s visible lede. Each item's description is its page's visible lede, verbatim (its

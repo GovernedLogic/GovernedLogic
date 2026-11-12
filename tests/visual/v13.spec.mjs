@@ -88,9 +88,8 @@ test('Link coverage: every page and the seven principle pages reachable by ordin
  for(const p of Object.keys(principles))expect(sitemap.includes(`<loc>https://governedlogic.com${p}</loc>`),`${p} in sitemap`).toBe(true);
  for(const p of withheldPrinciples)expect(sitemap.includes(p),`${p} absent from sitemap`).toBe(false);
  const locs=[...sitemap.matchAll(/<loc>/g)];
- const mods=[...sitemap.matchAll(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g)];
  expect(locs.length,'33 public URLs').toBe(33);
- expect(mods.length,'sitemap lastmod on every URL, and only there').toBe(33);
+ expect(sitemap.includes('<lastmod>'),'no lastmod in sitemap').toBe(false);
 });
 
 // GL QA F1 on 0ee4a0f (v13 regression): the hero chain label "INTELLIGENCE" was clipped from 920 to 1200px (24px at
@@ -331,19 +330,24 @@ test('v14: The Truth with Paul is a coming-soon media page: three strings, one h
 test('v14: no page dates in any page, og/twitter tag or feed (source edition lines excepted); feed.xml is RSS 2.0',async({page,request})=>{
  const DATE=/\b\d{1,2} (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}\b|\b20\d\d-\d\d-\d\d\b/;
  const editionPages=['/sources/','/library/','/publication/'];
+ const dateKeys=/"datePublished"|"dateModified"|"dateCreated"|"uploadDate"/;
  const bad=[];
  for(const route of v14Routes){
   await page.goto(route,{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>({metas:[...document.querySelectorAll('meta[property^="og:"],meta[name^="twitter:"]')].map(x=>x.content).join(' '),
-   // The Sources and version box (aside.provenance) cites source editions by their edition date; it is kept as it was.
-   lines:[...document.querySelectorAll('main p,main dd,main li,main span')].filter(e=>!e.closest('aside.provenance')).map(e=>e.textContent.replace(/\s+/g,' ').trim())}));
+   // Visible date text, if any, is reported rather than rewritten. JSON-LD date fields must be absent.
+   lines:[...document.querySelectorAll('main p,main dd,main li,main span')].filter(e=>!e.closest('aside.provenance')).map(e=>e.textContent.replace(/\s+/g,' ').trim()),
+   ld:[...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>s.textContent)}));
   if(DATE.test(m.metas))bad.push(`${route} date in og/twitter`);
   if(!editionPages.includes(route))for(const l of m.lines)if(DATE.test(l)&&!/Source edition|·\s*\d{1,2} \w+ \d{4}\s*·|September 2026 ·|Business strategy/.test(l))bad.push(`${route}: ${l.slice(0,80)}`);
+  for(const s of m.ld)if(dateKeys.test(s))bad.push(`${route} JSON-LD date`);
  }
  const feed=await (await request.get('/feed.xml')).text();
  expect(feed.startsWith('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>')).toBe(true);
  expect(/<(pubDate|lastBuildDate|updated|dc:date)>/.test(feed)).toBe(false);
  expect(DATE.test(feed)).toBe(false);
+ const terms=await (await request.get('/terms.jsonld')).text();
+ expect(dateKeys.test(terms),'no JSON-LD dates in terms.jsonld').toBe(false);
  expect(bad).toEqual([]);
 });
 // v14.2 (Paul 2026-11-02 18:08 voice call; Vera's mockup apex-1440/390-video-spot): the homepage video band sits directly

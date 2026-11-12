@@ -1074,30 +1074,31 @@ class ReleaseGuardTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn(message, out)
 
-    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): no visible page date,
-    # and the source edition dates stay on /sources/ (visible and ScholarlyArticle), /library/ and /publication/.
-    # Paul 2026-11-12: sitemap <lastmod> is allowed, one per URL, backed by git. Pages stay dateless.
+    # Paul 4:50 PM ET Nov 1, no page dates, source editions kept as files (via QA/Governor, verified): no visible
+    # page date. Sitemap <lastmod> is absent. JSON-LD date fields are absent site-wide, including /sources/.
     def test_built_site_has_no_page_dates_and_keeps_edition_dates(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             site = self.build_artifact(directory)
             sitemap = (site / "sitemap.xml").read_text(encoding="utf-8")
             locs = re.findall(r"<loc>([^<]+)</loc>", sitemap)
-            mods = re.findall(r"<lastmod>(\d{4}-\d{2}-\d{2})</lastmod>", sitemap)
             self.assertEqual(len(locs), 33)
-            self.assertEqual(len(mods), 33)
-            self.assertEqual(sitemap.count("<lastmod>"), 33)
+            self.assertNotIn("<lastmod>", sitemap)
+            self.assertEqual(sitemap.count("<lastmod>"), 0)
+            for path in sorted(site.rglob("*")):
+                if not path.is_file() or path.suffix.lower() not in {".html", ".json", ".jsonld", ".xml", ".txt"}:
+                    continue
+                text = path.read_text(encoding="utf-8")
+                self.assertNotIn("<lastmod>", text, path)
+                self.assertNotIn("dateModified", text, path)
+                self.assertNotIn("datePublished", text, path)
+                self.assertNotIn("dateCreated", text, path)
+                self.assertNotIn("uploadDate", text, path)
             for path in sorted(site.rglob("*.html")):
                 html = path.read_text(encoding="utf-8")
                 self.assertNotIn("Published / modified", html, path)
-                self.assertNotIn("<lastmod>", html, path)
                 self.assertNotIn('name="gl-date-', html, path)
-                self.assertNotIn("dateModified", html, path)
                 self.assertNotIn("Canonical website checklist ·", html, path)
                 self.assertIsNone(re.search(r'name="gl-approval[^"]*" content="[^"]*\d{4}', html), path)
-                if path.relative_to(site).as_posix() != "sources/index.html":
-                    self.assertNotIn("datePublished", html, path)
-            sources = (site / "sources/index.html").read_text(encoding="utf-8")
-            self.assertEqual(sources.count('"datePublished": "2026-09-22"'), 4)
             month = re.compile(r"\b\d{1,2} (?:January|February|March|April|May|June|July|August|September|October|November|December)(?: \d{4})?\b|\b(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(?: \d{4})?\b|\b(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{4}\b")
             for path in sorted(site.rglob("*.html")):
                 raw = path.read_text(encoding="utf-8")
@@ -1110,11 +1111,11 @@ class ReleaseGuardTests(unittest.TestCase):
                 self.assertIsNone(bare, f"Visible date on {path.relative_to(site)}: {bare.group(0) if bare else ''}")
 
     def test_parity_fails_on_seeded_page_dates(self) -> None:
-        about_date = render_site.git_lastmod("about/index.html")
-        seeds = [("sitemap.xml", f"<loc>https://governedlogic.com/about/</loc><lastmod>{about_date}</lastmod>", "<loc>https://governedlogic.com/about/</loc><lastmod>1999-01-01</lastmod>", "sitemap lastmod for about/index.html is 1999-01-01"),
+        seeds = [("sitemap.xml", "<loc>https://governedlogic.com/about/</loc>", "<loc>https://governedlogic.com/about/</loc><lastmod>1999-01-01</lastmod>", "sitemap.xml carries a lastmod"),
                  ("about/index.html", "</head>", "<lastmod>2026-09-24</lastmod></head>", "<lastmod> on about/index.html"),
                  ("about/index.html", "</head>", '<meta name="gl-date-modified" content="2026-10-28T08:25:19-04:00"></head>', "gl-date meta on about/index.html"),
                  ("research/index.html", '"@type": "WebPage",', '"@type": "WebPage", "dateModified": "2026-09-27",', "JSON-LD dateModified on research/index.html"),
+                 ("sources/index.html", '"url": "https://governedlogic.com/sources/01_', '"datePublished": "2026-09-22", "url": "https://governedlogic.com/sources/01_', "JSON-LD datePublished on sources/index.html"),
                  ("company/index.html", "</main>", "<dl><dt>Published / modified</dt><dd>24 September 2026</dd></dl></main>", "Visible page date line on company/index.html"),
                  # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): approval dates and the dated checklist line.
                  ("research/index.html", 'approval of separated HTML pages">', 'approval of separated HTML pages · 24 September 2026">', "Dated gl-approval meta on research/index.html"),
@@ -1126,8 +1127,7 @@ class ReleaseGuardTests(unittest.TestCase):
                 self.assert_parity_fails(site, message)
 
     def test_parity_fails_on_removed_edition_date(self) -> None:
-        seeds = [("sources/index.html", '"datePublished": "2026-09-22", "url": "https://governedlogic.com/sources/01_', '"datePublished": "2026-09-23", "url": "https://governedlogic.com/sources/01_', "Source edition date missing from JSON-LD"),
-                 ("about/index.html", "</main>", "<p>Noted 12 November 2026.</p></main>", "Visible date on about/index.html"),
+        seeds = [("about/index.html", "</main>", "<p>Noted 12 November 2026.</p></main>", "Visible date on about/index.html"),
                  ("about/index.html", "</main>", "<p>Noted 2026-11-12.</p></main>", "Visible date on about/index.html"),
                  ("concepts/ultimate-grounding/index.html", "<h2>Coming soon</h2>", "<h2>Coming soon</h2><p>working draft 0.7 · 26 September 2026</p>", "Visible date on concepts/ultimate-grounding/index.html"),
                  ("publication/index.html", "The source documents retain their original edition dates.", "The source documents retain their original edition dates. September 2026.", "Visible date on publication/index.html")]
@@ -1223,7 +1223,7 @@ class ReleaseGuardTests(unittest.TestCase):
             (lambda site: self.replace_once(site, twp, '<p class="gl-twp-soon">Coming soon</p>', '<p class="gl-twp-soon">Coming soon</p><p>New episodes every week.</p>'), r"The Truth with Paul copy is not exactly its three strings"),
             (lambda site: self.replace_once(site, twp, 'href="https://www.youtube.com/@TheTruthwithPaul"', 'href="https://www.youtube.com/@SomeoneElse"'), r"Subscribe on YouTube is not a plain link"),
             (lambda site: self.replace_once(site, twp, "<h1>The Truth with Paul</h1>", "<h1>The Truth</h1>"), r"The Truth with Paul h1 is not the channel name"),
-            (lambda site: self.replace_once(site, "sitemap.xml", "<url><loc>https://governedlogic.com/the-truth-with-paul/</loc><lastmod>" + render_site.git_lastmod("the-truth-with-paul/index.html") + "</lastmod></url>", ""), r"Page missing from sitemap: the-truth-with-paul/index\.html"),
+            (lambda site: self.replace_once(site, "sitemap.xml", "<url><loc>https://governedlogic.com/the-truth-with-paul/</loc></url>", ""), r"Page missing from sitemap: the-truth-with-paul/index\.html"),
             (lambda site: self.replace_once(site, "index.html", '<span class="gl-go"><a href="/the-truth-with-paul/" class="gl-link">The Truth with Paul</a></span>', ""), r"The Truth with Paul is not in the footer"),
         ]
         for seed, message in cases:
