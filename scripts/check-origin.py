@@ -547,9 +547,43 @@ def publication_boundary_checks(parser: DocumentParser, route: str) -> None:
         )
 
 
+
+JSONLD_DATE_KEYS = ("datePublished", "dateModified", "dateCreated", "uploadDate")
+
+
+def jsonld_date_checks(site_root: Path) -> None:
+    # JSON-LD date fields are absent site-wide, including /sources/.
+    for relative in PUBLIC_FILES:
+        path = site_root / relative
+        if not path.is_file() or path.suffix.lower() not in {".html", ".json", ".jsonld"}:
+            continue
+        raw = path.read_text(encoding="utf-8")
+        blocks = []
+        if path.suffix.lower() in {".json"} or relative.endswith(".jsonld"):
+            try:
+                blocks.append(json.loads(raw))
+            except json.JSONDecodeError:
+                continue
+        for match in re.finditer(r'<script type="application/ld\+json">([\s\S]*?)</script>', raw):
+            blocks.append(json.loads(match.group(1)))
+        for block in blocks:
+            stack = [block]
+            while stack:
+                node = stack.pop()
+                if isinstance(node, list):
+                    stack += node
+                    continue
+                if not isinstance(node, dict):
+                    continue
+                stack += list(node.values())
+                for key in JSONLD_DATE_KEYS:
+                    require(key not in node, f"JSON-LD {key} on {relative} (no page dates)")
+
+
 def local_checks(site_root: Path, exact_artifact: bool) -> None:
     missing = [relative for relative in PUBLIC_FILES if not (site_root / relative).is_file()]
     require(not missing, "Missing public files: " + ", ".join(missing))
+    jsonld_date_checks(site_root)
 
     if exact_artifact:
         actual = {

@@ -180,6 +180,31 @@ class Doc(HTMLParser):
     def handle_endtag(self,tag):
         if tag=='form':self._form=None
         if tag=='script' and self.capture is not None:self.json.append(json.loads(self.capture));self.capture=None
+JSONLD_DATE_KEYS=('datePublished','dateModified','dateCreated','uploadDate')
+def jsonld_date_errors(root):
+    """Fail if any published JSON-LD object carries a date field."""
+    errors=[]
+    for path in sorted(root.rglob('*')):
+        if not path.is_file() or path.suffix.lower() not in ('.html','.json','.jsonld'):continue
+        rel=path.relative_to(root).as_posix()
+        raw=path.read_text(encoding='utf-8')
+        blocks=[]
+        if path.suffix.lower() in ('.json','.jsonld') or rel.endswith('.jsonld'):
+            try:blocks.append(json.loads(raw))
+            except json.JSONDecodeError:pass
+        for m in re.finditer(r'<script type="application/ld\+json">([\s\S]*?)</script>',raw):
+            try:blocks.append(json.loads(m.group(1)))
+            except json.JSONDecodeError:errors.append('Invalid JSON-LD on '+rel)
+        for b in blocks:
+            stack=[b]
+            while stack:
+                n=stack.pop()
+                if isinstance(n,list):stack+=n;continue
+                if not isinstance(n,dict):continue
+                stack+=list(n.values())
+                for k in JSONLD_DATE_KEYS:
+                    if k in n:errors.append(f'JSON-LD {k} on {rel} (no page dates)')
+    return errors
 def check(root):
     errors=[]
     actual={p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()}
@@ -281,6 +306,8 @@ def check(root):
     errors+=signature_errors(root)
     errors+=page_two_errors(root)
     sitemap=(root/'sitemap.xml').read_text(encoding='utf-8')
+    if '<lastmod>' in sitemap:errors.append('sitemap.xml carries a lastmod (no page dates)')
+    errors+=jsonld_date_errors(root)
     for p in V14_PAGES:
         if '<loc>'+BASE+route(p)+'</loc>' not in sitemap:errors.append('Page missing from sitemap: '+p)
     if 'href="/the-truth-with-paul/"' not in (root/'index.html').read_text(encoding='utf-8').split('<footer',1)[-1]:errors.append('The Truth with Paul is not in the footer')

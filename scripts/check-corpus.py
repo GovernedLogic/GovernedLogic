@@ -220,7 +220,8 @@ def main():
     ]
     require(not stale, "Stale outputs; run build-corpus.py: " + ", ".join(stale))
     # v14.1 (Paul 2026-11-01 22:34; Paul 4:50 PM ET Nov 1, no page dates): the committed publication JSON carries no
-    # dates (no preparedAt, no datePublished/dateModified) and keeps its required fields (version, corpusVersion).
+    # dates (no preparedAt, no datePublished/dateModified/dateCreated) and keeps its required fields (version, corpusVersion).
+    # JSON-LD date fields are absent site-wide.
     for path in ("publication/catalog.json", "publication/search-index.json", "publication/manifest.json"):
         data = json.loads((root / path).read_text(encoding="utf-8"))
         require("version" in data, path + ": missing version")

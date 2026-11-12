@@ -16,8 +16,8 @@ Checks the built artifact against content/terms.py (the one source per term):
   5. ScholarlyArticle on /sources/: name and author visible in its own section, which links its file
      (the visible filename line is removed; the file and its URL stay);
   6. no visible date on any page (Paul 2026-11-12, 6:33 AM ET, "Dates off."), including month dates and bare ISO
-     dates. A filename that contains an ISO date is file identity. Sitemap <lastmod> stays, one YYYY-MM-DD per URL,
-     the latest git commit that touches that page's source. JSON-LD datePublished on the source editions stays.
+     dates. A filename that contains an ISO date is file identity. Sitemap <lastmod> is absent. JSON-LD date fields
+     (datePublished, dateModified, dateCreated, uploadDate) are absent site-wide.
   7. v14 social tags (Paul 2026-11-01 22:34; WEB-070 parity), on every page but /page-two/ (kept exactly as it was):
      og:title is the page's visible h1 (the homepage: its brand name), og:url its canonical URL, og:image an absolute
      URL of a published 1200x627 PNG whose Title text chunk (the only words drawn on it) equals og:title,
@@ -191,30 +191,23 @@ def main(root):
         if '/'+d['file'] not in src.hrefs.get(d['section'],[]):errors.append(f'ScholarlyArticle {d["section"]}: section does not link {d["file"]}')
         if not (root/d['file']).is_file():errors.append('ScholarlyArticle file missing: '+d['file'])
     # 6. No visible dates on any page (Paul, 2026-11-12, 6:33 AM ET: "Dates off.").
-    # Sitemap <lastmod> stays, and JSON-LD datePublished on the source editions stays. A <lastmod> in any page fails.
+    # Sitemap <lastmod> is absent. JSON-LD date fields are absent site-wide. A <lastmod> anywhere fails.
     sm=(root/'sitemap.xml').read_text(encoding='utf-8')
-    pairs=re.findall(r'<url><loc>([^<]+)</loc><lastmod>([^<]*)</lastmod></url>',sm)
     locs=re.findall(r'<loc>([^<]+)</loc>',sm)
-    if len(locs)!=33 or len(pairs)!=len(locs) or sm.count('<lastmod>')!=len(locs):
-        errors.append('sitemap lastmod must be present on all 33 URLs and nowhere else in the sitemap')
-    for url,date in pairs:
-        rel=url[len(R.BASE):].lstrip('/')
-        page='index.html' if rel in ('','/') else rel if rel.endswith('.html') else rel.rstrip('/')+'/index.html'
-        try:backed=R.git_lastmod(page)
-        except RuntimeError as e:errors.append(str(e));continue
-        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',date) or date!=backed:
-            errors.append(f'sitemap lastmod for {page} is {date}, git backs {backed}')
+    if len(locs)!=33:
+        errors.append('sitemap must list exactly 33 URLs')
+    if '<lastmod>' in sm:
+        errors.append('sitemap.xml carries a lastmod (no page dates)')
     DATE_KEYS=('datePublished','dateModified','dateCreated','uploadDate')
     MONTHS=r'January|February|March|April|May|June|July|August|September|October|November|December'
     PAGE_DATE=re.compile(rf'(?:(?:\d{{1,2}} )?(?:{MONTHS}) \d{{4}}|(?:{MONTHS}) \d{{1,2}}|\d{{1,2}} (?:{MONTHS})|\d{{4}}-\d\d-\d\d)')
-    editions={R.BASE+'/sources/#'+d['section']:d['date'] for d in R.TERMS.SOURCE_DOCS}
     for name,pg in sorted(pages.items()):
         if re.search(r'Published\s*/\s*modified',pg.visible,re.I):errors.append(f'Visible page date line on {name} (no page dates)')
         # A filename token may carry an ISO date (source PDFs). A bare ISO date, or any month date, is visible.
         scrubbed=strip_filename_dates(pg.visible)
         if PAGE_DATE.search(scrubbed):errors.append(f'Visible date on {name}: {PAGE_DATE.search(scrubbed).group(0)}')
         raw=(root/name).read_text(encoding='utf-8')
-        if '<lastmod>' in raw:errors.append(f'<lastmod> on {name} (sitemap only)')
+        if '<lastmod>' in raw:errors.append(f'<lastmod> on {name} (no page dates)')
         for m in re.finditer(r'<meta\s+name="gl-date-[^"]*"',raw):errors.append(f'gl-date meta on {name} (no page dates)')
         # Paul 5:29 PM ET Nov 1 (via QA/Governor, verified): no approval date in gl-approval* meta, and no dated
         # "Canonical website checklist" line.
@@ -230,11 +223,7 @@ def main(root):
                 stack+=list(n.values())
                 for k in DATE_KEYS:
                     if k not in n:continue
-                    if name=='sources/index.html' and n.get('@type')=='ScholarlyArticle' and k=='datePublished' and editions.get(n.get('@id'))==n[k]:continue
                     errors.append(f'JSON-LD {k} on {name} ({n.get("@type")} {n.get("@id","")}): no page dates')
-    found={n.get('@id'):n.get('datePublished') for b in pages['sources/index.html'].ld for n in (lambda d:d.get('@graph',[d]))(json.loads(b)) if isinstance(n,dict) and n.get('@type')=='ScholarlyArticle'}
-    for i,d in editions.items():
-        if found.get(i)!=d:errors.append(f'Source edition date missing from JSON-LD: {i} {d}')
     if norm('The source documents retain their original edition dates.') not in pages['publication/index.html'].visible:errors.append('Edition sentence missing on publication/index.html')
     # Audit batch 2: no list of the six that still includes Truth.
     SIX_TRUTH=re.compile(r'being\.\s*truth\.\s*logic\.\s*meaning\.\s*intelligibility\.\s*obligation|being,\s*truth,\s*logic,\s*meaning,\s*intelligibility,\s*(?:and\s+)?obligation',re.I)
