@@ -37,7 +37,8 @@ const HOME_NAVIGATION = [
   { href: "/ai-safety/", label: "AI Safety" },
   { href: "/mimicry/", label: "Mimicry" },
   { href: "/research/", label: "Research" },
-  { href: "/about/", label: "About" }
+  { href: "/about/", label: "About" },
+  { href: "https://followthechain.net/", label: "Follow the chain" }
 ];
 
 for (const routeDefinition of ROUTES) {
@@ -89,6 +90,15 @@ for (const routeDefinition of ROUTES) {
     });
     await page.locator("header.site-bar").scrollIntoViewIfNeeded();
 
+    const isMobile = testInfo.project.name.startsWith("mobile-");
+    const toggle = page.locator("#gl-home-bar .gl-nav-toggle");
+    const drawer = isMobile && (await toggle.count()) > 0;
+    if (drawer) {
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+      await toggle.click();
+      await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    }
+
     const primaryNavigation = page.locator('nav[aria-label="Primary"]');
     await expect(primaryNavigation).toHaveCount(1);
     await expect(primaryNavigation).toBeVisible();
@@ -111,24 +121,18 @@ for (const routeDefinition of ROUTES) {
       const held = page.locator('button.gl-hold[aria-disabled="true"]');
       await expect(held).toHaveCount(0);
       await expect(page.locator("form button.gl-hold")).toHaveCount(0);
-      // WEB-223/WEB-214: /company/ and the library (Search) are one click from the header, and the brand name shows.
+      // Company is footer-only (Paul, 2026-11-12). Search stays in the header.
       const header = page.locator("header.site-bar");
-      await expect(header.locator('.gl-go > a[href="/company/"]')).toBeVisible();
+      await expect(header.locator('nav[aria-label="Primary"] a[href="/company/"]')).toHaveCount(0);
+      await expect(page.locator('footer.site-footer a[href="/company/"]')).toBeVisible();
+      await expect(page.locator('footer.site-footer a[href="/company/"]')).toHaveText("Organization");
       await expect(header.locator('.gl-go > a[href="/library/"]')).toBeVisible();
       await expect(header.locator(".gl-brand-name")).toBeVisible();
       // D8 (WEB-214/WEB-226): "Reasoning Systems" and the CTA show at every width; below 390px the CTA is a
       // compact arrow button that keeps its accessible name.
       await expect(header.locator(".site-brand small")).toBeVisible();
-      // Homepage header CTA is hidden from view, tab order, and the a11y tree (Vera ruling).
-      await expect(header.locator(".gl-bar-cta")).toHaveCount(1);
-      const ctaState = await header.locator(".gl-bar-cta").evaluate(el => {
-        el.focus();
-        return { visibility: getComputedStyle(el).visibility, focused: document.activeElement === el, text: el.textContent.replace(/\s+/g, " ").trim() };
-      });
-      expect(ctaState.text).toBe("Explore the research method");
-      expect(ctaState.visibility).toBe("hidden");
-      expect(ctaState.focused).toBe(false);
-      expect(await header.ariaSnapshot()).not.toMatch(/Explore the research method/);
+      // Audit batch 1: the header "Explore the research method" button is not approved. The homepage main buttons stay.
+      await expect(header.locator(".gl-bar-cta")).toHaveCount(0);
     }
 
     if (routeDefinition.path === "/page-two/") {
@@ -137,7 +141,6 @@ for (const routeDefinition of ROUTES) {
       await expect(page.locator("main.home-content #explore")).toHaveCount(1);
     }
 
-    const isMobile = testInfo.project.name.startsWith("mobile-");
     // WEB-228/C9: the homepage header lists its own items; every other route keeps the reviewed shell.
     const expectedNavigation = routeDefinition.path === "/page-two/" ? PAGE_TWO_NAVIGATION : HOME_NAVIGATION;
     if (isMobile) {
@@ -171,6 +174,7 @@ for (const routeDefinition of ROUTES) {
         const mainElements = Array.from(document.querySelectorAll("main"));
         const navigationRect = navigation.getBoundingClientRect();
         const barRect = bar ? bar.getBoundingClientRect() : navigationRect;
+        const host = navigationRect;
         const links = Array.from(navigation.querySelectorAll(".gl-go > a"));
         const place = link => {
           if (!bar || bar.scrollWidth <= bar.clientWidth + 1) return;
@@ -183,7 +187,7 @@ for (const routeDefinition of ROUTES) {
         const linkMetrics = links.map(link => {
           place(link);
           const rect = link.getBoundingClientRect();
-          const host = bar ? bar.getBoundingClientRect() : navigationRect;
+          const hostBox = host;
           const centerX = Math.max(0, Math.min(innerWidth - 1, rect.left + rect.width / 2));
           const centerY = Math.max(0, Math.min(innerHeight - 1, rect.top + rect.height / 2));
           const hit = document.elementFromPoint(centerX, centerY);
@@ -198,10 +202,10 @@ for (const routeDefinition of ROUTES) {
               && rect.top >= -0.5
               && rect.bottom <= innerHeight + 0.5,
             insideNavigation:
-              rect.left >= host.left - 0.5
-              && rect.right <= host.right + 0.5
-              && rect.top >= host.top - 0.5
-              && rect.bottom <= host.bottom + 0.5,
+              rect.left >= hostBox.left - 0.5
+              && rect.right <= hostBox.right + 0.5
+              && rect.top >= hostBox.top - 0.5
+              && rect.bottom <= hostBox.bottom + 0.5,
             centerHit: hit === link || link.contains(hit),
             height: rect.height,
             width: rect.width,
@@ -300,6 +304,15 @@ for (const routeDefinition of ROUTES) {
       expect(link.insideViewport, "navigation link " + index + " must fit the viewport").toBe(true);
       expect(link.insideNavigation, "navigation link " + index + " must fit the navigation").toBe(true);
       expect(link.centerHit, "navigation link " + index + " must win its center hit test").toBe(true);
+    }
+    if (drawer) {
+      await page.keyboard.press("Escape");
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+      await expect(primaryNavigation).toBeHidden();
+      await toggle.click();
+      await expect(toggle).toHaveAttribute("aria-expanded", "true");
+      await toggle.click();
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
     }
 
     expect(blockedRequests, "the page must not request non-loopback resources").toEqual([]);

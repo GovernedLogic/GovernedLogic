@@ -3,7 +3,7 @@
 // once (desktop-1440 project).
 import {test,expect} from '@playwright/test';
 import {createHash} from 'node:crypto';
-const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/'];
+const routes=['/','/challenge/','/company/','/research/','/about/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/the-argument/','/page-two/','/library/','/publication/'];
 // Principle pages, set B (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)). No Truth page.
 const principles={'/principles/being/':'Being','/principles/identity/':'Identity','/principles/meaning/':'Meaning','/principles/intelligibility/':'Intelligibility','/principles/logic/':'Logic','/principles/correspondence/':'Correspondence','/principles/obligation/':'Obligation'};
 const withheldPrinciples=['/principles/truth/'];
@@ -86,7 +86,10 @@ test('Link coverage: every page and the seven principle pages reachable by ordin
  const sitemap=await (await request.get('/sitemap.xml')).text();
  for(const p of Object.keys(principles))expect(sitemap.includes(`<loc>https://governedlogic.com${p}</loc>`),`${p} in sitemap`).toBe(true);
  for(const p of withheldPrinciples)expect(sitemap.includes(p),`${p} absent from sitemap`).toBe(false);
- expect(sitemap.includes('<lastmod>'),'no page dates (Paul 4:50 PM ET Nov 1)').toBe(false);
+ const locs=[...sitemap.matchAll(/<loc>/g)];
+ const mods=[...sitemap.matchAll(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g)];
+ expect(locs.length,'33 public URLs').toBe(33);
+ expect(mods.length,'sitemap lastmod on every URL, and only there').toBe(33);
 });
 
 // GL QA F1 on 0ee4a0f (v13 regression): the hero chain label "INTELLIGENCE" was clipped from 920 to 1200px (24px at
@@ -192,9 +195,9 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
      ||(!!sr&&sr.width>40&&sr.height>40&&sr.top<innerHeight&&sr.bottom>0&&sig.querySelectorAll('circle').length>0);
     const meta=k=>[...document.querySelectorAll(`meta[property="${k}"],meta[name="${k}"]`)].map(x=>x.content);
     const h1=document.querySelector('h1').textContent.replace(/\s+/g,' ').trim();
-    return {labels,tools:!!bar.querySelector('.gl-bar-cta')&&!!bar.querySelector('.gl-search'),art,h1,ogTitle:meta('og:title'),card:meta('twitter:card'),img:meta('og:image'),url:meta('og:url'),tw:['title','description','image'].map(k=>JSON.stringify(meta('twitter:'+k))),og:['title','description','image'].map(k=>JSON.stringify(meta('og:'+k))),desc:meta('description'),canon:document.querySelector('link[rel=canonical]').href};
+    return {labels,tools:!!bar.querySelector('.gl-search'),art,h1,ogTitle:meta('og:title'),card:meta('twitter:card'),img:meta('og:image'),url:meta('og:url'),tw:['title','description','image'].map(k=>JSON.stringify(meta('twitter:'+k))),og:['title','description','image'].map(k=>JSON.stringify(meta('og:'+k))),desc:meta('description'),canon:document.querySelector('link[rel=canonical]').href};
    });
-   const want=['Home','The Treatises','AI Safety','Mimicry','Research','About'];
+   const want=['Home','The Treatises','AI Safety','Mimicry','Research','About','Follow the chain'];
    if(JSON.stringify(m.labels)!==JSON.stringify(want))bad.push(`${route}@${width} header ${m.labels}`);
    if(!m.tools)bad.push(`${route}@${width} header tools missing`);
    if(route==='/'||route in principles){
@@ -254,8 +257,9 @@ test('v14.1: /articles/ is a featured card and one Latest snap rail; each live a
   titles:[...document.querySelectorAll('.gl-card h3')].map(h=>h.textContent.trim()),kinds:[...new Set([...document.querySelectorAll('.gl-card-kind')].map(k=>k.textContent))],
   snap:getComputedStyle(document.querySelector('.gl-rail')).scrollSnapType,rails:document.querySelectorAll('.gl-rail').length,
   hrefs:[...document.querySelectorAll('.gl-card a.gl-card-go')].map(a=>a.getAttribute('href'))}));
- expect(m.h1).toBe('Articles');expect(m.featured).toBe(1);expect(m.grid).toBe(0);expect(m.rails).toBe(1);
- expect(m.snap).toContain('x');expect(m.kinds).toEqual(['Article']);
+  expect(m.h1).toBe('Articles');expect(m.featured).toBe(1);expect(m.grid).toBe(0);expect(m.rails).toBe(1);
+  expect(m.snap).toContain('x');expect(m.kinds).toEqual([]);
+  expect(await page.locator('#gl-latest-title').count()).toBe(0);
  expect([...m.titles].sort()).toEqual(Object.values(v14Articles).sort());
  expect([...m.hrefs].sort()).toEqual(Object.keys(v14Articles).sort());
  for(const [route,h1] of Object.entries(v14Articles)){await page.goto(route);expect((await page.locator('h1').textContent()).trim()).toBe(h1);}
@@ -265,22 +269,15 @@ test('v14: article pages have a dark hero with art, a wide measure and a plain-l
  for(const [route] of Object.entries(v14Articles)){
   await page.setViewportSize({width:1440,height:900});
   await page.goto(route,{waitUntil:'load'});
-  const m=await page.evaluate(()=>{const share=document.querySelector('nav.gl-share');const p=document.querySelector('main article > p');
-   return {labels:[...share.querySelectorAll('a,button')].map(a=>a.textContent.trim()),hrefs:[...share.querySelectorAll('a')].map(a=>a.getAttribute('href')),
+  const m=await page.evaluate(()=>{const p=document.querySelector('main article > p');
+   return {share:document.querySelectorAll('nav.gl-share').length,
     measure:p.getBoundingClientRect().width,third:[...document.scripts].filter(s=>s.src&&!s.src.startsWith(location.origin)).length,
     article:JSON.parse([...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>s.textContent).find(t=>t.includes('"Article"'))),
     band:getComputedStyle(document.querySelector('.gl-intro'),'::before').backgroundImage};});
-  expect(m.labels).toEqual(['LinkedIn','Reddit','X','Copy link']);
-  const url=encodeURIComponent('https://governedlogic.com'+route);
-  expect(m.hrefs[0]).toBe(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
-  expect(m.hrefs[1].startsWith(`https://www.reddit.com/submit?url=${url}&title=`)).toBe(true);
-  expect(m.hrefs[2].startsWith(`https://x.com/intent/post?url=${url}&text=`)).toBe(true);
+  expect(m.share).toBe(0);
   expect(m.measure).toBeGreaterThanOrEqual(700);expect(m.measure).toBeLessThanOrEqual(780);
   expect(m.third).toBe(0);
   expect(m.article.headline).toBe(v14Articles[route]);expect(Object.keys(m.article).some(k=>k.startsWith('date'))).toBe(false);
-  await page.getByRole('button',{name:'Copy link'}).click();
-  await expect(page.locator('.gl-share .gl-copied')).toHaveText('Copied');
-  expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe('https://governedlogic.com'+route);
  }
 });
 test('v14: treatises are micro-sites (masthead, sticky contents rail or drawer, reading progress, chapter pager)',async({page})=>{
@@ -288,24 +285,11 @@ test('v14: treatises are micro-sites (masthead, sticky contents rail or drawer, 
   await page.setViewportSize({width:1440,height:900});
   await page.goto(route,{waitUntil:'load'});
   const h2=await page.evaluate(()=>[...document.querySelectorAll('main section.business-section[id]')].map(s=>[s.id,s.querySelector('h2').textContent.replace(/\s+/g,' ').trim()]));
-  const toc=await page.evaluate(()=>[...document.querySelectorAll('#gl-toc a')].map(a=>[a.getAttribute('href').slice(1),a.textContent.replace(/\s+/g,' ').trim()]));
-  expect(toc).toEqual(h2);
-  expect(await page.locator('.gl-pager').count()).toBe(h2.length);
-  for(const href of await page.locator('.gl-pager a').evaluateAll(as=>as.map(a=>a.getAttribute('href'))))expect(h2.map(x=>'#'+x[0])).toContain(href);
-  const p0=await page.evaluate(()=>+getComputedStyle(document.querySelector('.gl-progress>span')).getPropertyValue('--gl-read')||0);
-  await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight/2));await page.waitForTimeout(150);
-  const mid=await page.evaluate(()=>{const r=document.getElementById('gl-toc').getBoundingClientRect();const bar=document.querySelector('.gl-treatise-bar').getBoundingClientRect();
-   return {read:+document.querySelector('.gl-progress>span').style.getPropertyValue('--gl-read'),toc:r.top>=0&&r.top<innerHeight,bar:bar.top>=0&&bar.top<200,current:document.querySelectorAll('#gl-toc a[aria-current="true"]').length};});
-  expect(mid.read).toBeGreaterThan(p0);expect(mid.toc).toBe(true);expect(mid.bar).toBe(true);expect(mid.current).toBe(1);
-  await page.setViewportSize({width:390,height:844});
-  await page.goto(route,{waitUntil:'load'});
-  await expect(page.locator('#gl-toc')).toBeHidden();
-  await page.getByRole('button',{name:'Contents'}).click();
-  await expect(page.locator('#gl-toc')).toBeVisible();
-  await expect(page.getByRole('button',{name:'Contents'})).toHaveAttribute('aria-expanded','true');
-  await page.locator('#gl-toc a').nth(1).click();
-  await expect(page.locator('#gl-toc')).toBeHidden();
-  expect(page.url()).toContain('#'+h2[1][0]);
+  expect(h2.length).toBeGreaterThan(0);
+  expect(await page.locator('#gl-toc').count()).toBe(0);
+  expect(await page.locator('.gl-pager').count()).toBe(0);
+  expect(await page.locator('.gl-toc-toggle').count()).toBe(0);
+  expect(await page.locator('.gl-treatise-bar').count()).toBe(0);
  }
 });
 test('v14: principle and concept pages carry the enlarged principle tile and the related-principles band',async({page})=>{
@@ -317,7 +301,7 @@ test('v14: principle and concept pages carry the enlarged principle tile and the
      overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};});
    if(route in principles){expect(m.tile,`${route}@${width}`).toBe(0);}
    else{expect(m.tile,`${route}@${width}`).toBeGreaterThanOrEqual(64);expect(m.inView).toBe(true);}
-   expect(m.band).toEqual(Object.values(principles));expect(m.icons).toBe(7);expect(m.overflow).toBe(false);
+   expect(m.band).toEqual(['Being','Meaning','Logic','Intelligibility','Obligation','Correspondence','Identity']);expect(m.icons).toBe(7);expect(m.overflow).toBe(false);
   }
  }
 });

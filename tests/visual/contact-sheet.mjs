@@ -1,4 +1,3 @@
-import { chromium } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -71,6 +70,9 @@ for (const project of MOTION_PROJECTS) {
 }
 
 await mkdir(outputRoot, { recursive: true });
+// npm ci is later in CI than `node --check` of this file, and this step still runs when an earlier
+// step failed and skipped the install. Load Playwright only when the sheets are actually rendered.
+const { chromium } = await import("@playwright/test");
 const browser = await chromium.launch({ headless: true, ...(process.env.CHROMIUM_BIN ? { executablePath: process.env.CHROMIUM_BIN } : {}) });
 try {
   const page = await browser.newPage({
