@@ -194,7 +194,7 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
     const h1=document.querySelector('h1').textContent.replace(/\s+/g,' ').trim();
     return {labels,tools:!!bar.querySelector('.gl-bar-cta')&&!!bar.querySelector('.gl-search'),art,h1,ogTitle:meta('og:title'),card:meta('twitter:card'),img:meta('og:image'),url:meta('og:url'),tw:['title','description','image'].map(k=>JSON.stringify(meta('twitter:'+k))),og:['title','description','image'].map(k=>JSON.stringify(meta('og:'+k))),desc:meta('description'),canon:document.querySelector('link[rel=canonical]').href};
    });
-   const want=['Home','The problem','Research','Governed Logic','About','Company','The Truth with Paul'];
+   const want=['Home','The Treatises','AI Safety','Mimicry','Research','About','Follow the chain'];
    if(JSON.stringify(m.labels)!==JSON.stringify(want))bad.push(`${route}@${width} header ${m.labels}`);
    if(!m.tools)bad.push(`${route}@${width} header tools missing`);
    if(route==='/'||route in principles){
@@ -328,7 +328,7 @@ test('v14: The Truth with Paul is a coming-soon media page: three strings, one h
    return {text:document.querySelector('main').innerText.replace(/\s+/g,' ').trim(),h1:[...document.querySelectorAll('h1')].map(h=>h.textContent),href:a.getAttribute('href'),label:a.textContent.trim(),tag:a.tagName,
     bg:getComputedStyle(hero).backgroundImage,heroH:hero.getBoundingClientRect().height,btn:a.getBoundingClientRect(),anim:[getComputedStyle(document.querySelector('.gl-twp-banner'),'::after').animationName,getComputedStyle(document.querySelector('.gl-twp-soon')).animationName],
     imgs:[...document.querySelectorAll('main img')].map(i=>i.getAttribute('src')),alt:document.querySelector('main img').getAttribute('alt'),banner:document.querySelector('.gl-twp-banner img').getBoundingClientRect(),overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
-    current:document.querySelector('header nav a[href="/the-truth-with-paul/"]').getAttribute('aria-current')};});
+    current:!!document.querySelector('header nav a[href="/the-truth-with-paul/"]')};});
   expect(m.text.toLowerCase()).toBe('the truth with paul coming soon subscribe on youtube');
   expect(m.h1).toEqual(['The Truth with Paul']);
   expect(m.tag).toBe('A');expect(m.href).toBe('https://www.youtube.com/@TheTruthwithPaul');expect(m.label).toBe('Subscribe on YouTube');
@@ -338,7 +338,7 @@ test('v14: The Truth with Paul is a coming-soon media page: three strings, one h
   expect(m.alt).toBe('THE TRUTH WITH PAUL. JESUS. REASONING. ARTIFICIAL INTELLIGENCE. THE LOGOS. THE LOGIC. THE LAB. THE LABYRINTH.');
   expect(m.banner.width).toBeGreaterThan(200);
   expect(m.banner.top).toBeLessThan(900);
-  expect(m.overflow).toBe(false);expect(m.current).toBe('page');
+  expect(m.overflow).toBe(false);expect(m.current).toBe(false);
  }
  await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/the-truth-with-paul/');
  expect(await page.evaluate(()=>getComputedStyle(document.querySelector('.gl-twp-banner'),'::after').animationName)).toBe('gl-twp-sweep');

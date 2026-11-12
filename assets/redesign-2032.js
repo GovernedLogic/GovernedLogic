@@ -73,6 +73,10 @@
     var actions = document.querySelector("#explore .gl-actions");
     if (actions) actions.classList.add("gl-r32-reveal", "gl-r32-in");
 
+    document.querySelectorAll("#the-seed, .gl-core, .gl-problem, .gl-latest, .gl-next").forEach(function (el) {
+      el.classList.add("gl-r32-below");
+    });
+
     var claim = document.querySelector("#the-seed > .gl-core-copy:first-of-type p");
     if (claim) claim.classList.add("gl-r32-claim", "gl-r32-reveal");
 
@@ -187,7 +191,7 @@
   }
 
   function reveal() {
-    var nodes = document.querySelectorAll(".gl-r32-reveal");
+    var nodes = document.querySelectorAll(".gl-r32-below");
     if (reduced || !("IntersectionObserver" in window)) {
       nodes.forEach(function (el) { el.classList.add("gl-r32-in"); });
       return;
@@ -200,9 +204,35 @@
     nodes.forEach(function (el) { io.observe(el); });
   }
 
+  function addLife() {
+    if (reduced || !isHome || document.querySelector(".gl-brand-life")) return;
+    var banner = document.querySelector(".gl-brand-hero");
+    if (!banner) return;
+    var life = document.createElement("div");
+    life.className = "gl-brand-life";
+    life.setAttribute("aria-hidden", "true");
+    ["gl-brand-pulse", "gl-brand-grid", "gl-brand-bits"].forEach(function (name) {
+      var bit = document.createElement("i");
+      bit.className = name;
+      life.appendChild(bit);
+    });
+    document.body.appendChild(life);
+    function place() {
+      var r = banner.getBoundingClientRect();
+      life.style.top = (r.top + window.scrollY) + "px";
+      life.style.height = r.height + "px";
+      var shift = Math.max(-8, Math.min(8, window.scrollY * 0.03));
+      life.style.setProperty("--parallax", shift.toFixed(2) + "px");
+    }
+    place();
+    window.addEventListener("scroll", place, { passive: true });
+    window.addEventListener("resize", place);
+  }
+
   addSight();
   if (isHome) setupHome();
   if (isPrinciple) setupPrinciples();
+  addLife();
   reveal();
   progress();
   window.addEventListener("scroll", progress, { passive: true });

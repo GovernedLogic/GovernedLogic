@@ -33,13 +33,12 @@ const PAGE_TWO_NAVIGATION = [
 // (MOCKUP-PROVISIONAL, not on 64bf60f: QA-8) and the existing /about/ page so /about/ stays one click away at every width (QA-4, WEB-223).
 const HOME_NAVIGATION = [
   { href: "/", label: "Home" },
-  { href: "/#the-problem", label: "The problem" },
+  { href: "/the-treatises/", label: "The Treatises" },
+  { href: "/ai-safety/", label: "AI Safety" },
+  { href: "/mimicry/", label: "Mimicry" },
   { href: "/research/", label: "Research" },
-  { href: "/concepts/governed-logic/", label: "Governed Logic" },
-  { href: "/about/", label: "About" }, // QA-4
-  { href: "/company/", label: "Company" },
-  // v14 (Paul 2026-11-01 22:36): The Truth with Paul, label = the channel name.
-  { href: "/the-truth-with-paul/", label: "The Truth with Paul" }
+  { href: "/about/", label: "About" },
+  { href: "/challenge/", label: "Follow the chain" }
 ];
 
 for (const routeDefinition of ROUTES) {

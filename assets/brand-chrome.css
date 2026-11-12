@@ -1,5 +1,10 @@
-/* Shared family chrome for every page except mechanism.html.
-   Gold is reserved for /the-truth-with-paul/. Wordmarks stay solid. */
+/* Shared family chrome, including mechanism.html.
+   Gold stays on /the-truth-with-paul/ only. Wordmarks stay solid. */
+body.gl-site,
+body.gl-home-page {
+  background-color: #03050A;
+  color: #F2EFE6;
+}
 #gl-home-bar .gl-brand-name,
 #gl-home-bar .site-brand small {
   color: #f2efe6;
@@ -8,17 +13,118 @@
   -webkit-text-fill-color: currentColor;
 }
 
-#gl-home-bar nav a.gl-link {
-  font-weight: 600;
+#gl-home-bar:has(.gl-nav-toggle) .gl-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(126, 196, 255, .55);
+  border-radius: 10px;
+  background: rgba(8, 18, 36, .72);
+  color: #f2efe6;
+  box-shadow: 0 0 16px rgba(45, 115, 193, .35);
 }
 
-#gl-home-bar nav a.gl-link[aria-current="page"] {
-  color: #f2efe6;
-  text-shadow: 0 0 12px rgba(120, 189, 234, .85);
-  box-shadow: inset 0 -2px 0 #7ec8ff;
+#gl-home-bar:has(.gl-nav-toggle) .gl-nav-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
 }
 
-#gl-home-bar nav a.gl-link:hover {
-  color: #f2efe6;
-  text-shadow: 0 0 14px rgba(120, 189, 234, .95);
+@media (max-width: 899px) {
+  #gl-home-bar:has(.gl-nav-toggle) {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 64px;
+    min-height: 64px;
+    max-height: 64px;
+    box-sizing: border-box;
+  }
+
+  #gl-home-bar:has(.gl-nav-toggle) .gl-nav-toggle {
+    display: inline-flex;
+    order: 2;
+    margin-left: auto;
+  }
+
+  #gl-home-bar:has(.gl-nav-toggle) .gl-home-tools {
+    order: 3;
+  }
+
+  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
+    position: fixed;
+    z-index: 45;
+    top: 64px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    width: auto;
+    max-height: calc(100dvh - 64px);
+    margin: 0;
+    padding: 12px;
+    overflow: auto;
+    background: rgba(4, 10, 22, .94);
+    border-bottom: 1px solid rgba(126, 196, 255, .45);
+    box-shadow: 0 28px 48px rgba(0, 0, 0, .45);
+    backdrop-filter: blur(16px);
+    transform: translateY(-12px);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  body.gl-nav-open #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] a.gl-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 14px;
+    font-weight: 600;
+  }
+}
+
+@media (min-width: 900px) {
+  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
+    background: rgba(8, 18, 36, .55);
+    border: 1px solid rgba(126, 196, 255, .4);
+    border-radius: 999px;
+    box-shadow: 0 0 22px rgba(45, 115, 193, .28), inset 0 1px 0 rgba(255, 255, 255, .14);
+    backdrop-filter: blur(12px);
+  }
+
+  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] a.gl-link {
+    font-weight: 600;
+  }
+
+  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] a.gl-link:hover {
+    color: #f2efe6;
+    text-shadow: 0 0 14px rgba(120, 189, 234, .95);
+  }
+
+  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] a.gl-link[aria-current="page"] {
+    color: #f2efe6;
+    text-shadow: 0 0 12px rgba(120, 189, 234, .85);
+    box-shadow: inset 0 -2px 0 #7ec8ff;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #gl-home-bar:has(.gl-nav-toggle) nav[aria-label="Primary"] {
+    transition: transform .28s ease, visibility .28s ease;
+  }
 }

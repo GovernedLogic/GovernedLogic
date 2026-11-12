@@ -1714,13 +1714,21 @@ body.gl-home-page h1.gl-hero-title {
   background: #03050A;
 }
 
-body.gl-home-page .gl-r32-reveal,
-body.gl-home-page .gl-r32-reveal.gl-r32-in,
-body.gl-type-principle .gl-r32-reveal,
-body.gl-type-principle .gl-r32-reveal.gl-r32-in {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
+body.gl-home-page .gl-r32-below {
+  opacity: 0;
+}
+
+body.gl-home-page .gl-r32-below.gl-r32-in {
+  opacity: 1;
+  transition: opacity .7s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.gl-home-page .gl-r32-below,
+  body.gl-home-page .gl-r32-below.gl-r32-in {
+    opacity: 1;
+    transition: none;
+  }
 }
 
 body.gl-home-page #the-seed {
@@ -1896,5 +1904,215 @@ body.gl-home-page article.gl-card {
 @media (min-width: 900px) {
   body.gl-type-principle .principle-passage {
     max-width: 72ch !important;
+  }
+}
+
+/* Full-bleed banner. The old hero left-padding was leaving a dark band. */
+body.gl-home-page .gl-hero {
+  display: block !important;
+  height: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+body.gl-home-page .gl-brand-hero,
+body.gl-home-page .gl-brand-hero picture,
+body.gl-home-page .gl-brand-hero img {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+body.gl-home-page h1.gl-hero-title {
+  color: #f4f7fb !important;
+  text-shadow: 0 0 22px rgba(150, 196, 255, .55);
+  background: none !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: #f4f7fb !important;
+}
+
+body.gl-home-page #explore .gl-actions a.gl-btn-bright {
+  background: linear-gradient(90deg, #00477a 0%, #0a6fb4 42%, #1a76bb 100%) !important;
+  border: 0 !important;
+  color: #fff !important;
+  box-shadow: 0 0 28px rgba(45, 140, 220, .45) !important;
+}
+
+body.gl-home-page #explore .gl-actions a.gl-btn-ghost {
+  background: rgba(8, 18, 36, .72) !important;
+  border: 1px solid rgba(126, 196, 255, .75) !important;
+  color: #f2efe6 !important;
+  box-shadow: inset 0 0 18px rgba(45, 115, 193, .28), 0 0 16px rgba(45, 115, 193, .2) !important;
+}
+
+body.gl-home-page #the-seed .gl-principles li,
+body.gl-home-page #the-seed .gl-principles li p,
+body.gl-home-page #the-seed .gl-principles li div {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+@media (min-width: 1440px) {
+  body.gl-home-page #the-seed .gl-principles ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+.gl-brand-life {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gl-brand-life .gl-brand-pulse,
+.gl-brand-life .gl-brand-grid,
+.gl-brand-life .gl-brand-bits {
+  position: absolute;
+  pointer-events: none;
+}
+
+.gl-brand-life .gl-brand-pulse {
+  left: 50%;
+  top: 46%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(190, 225, 255, .55), rgba(45, 140, 220, .05) 68%, transparent 72%);
+  transform: translate(-50%, -50%);
+}
+
+.gl-brand-life .gl-brand-grid {
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 46px, rgba(126, 196, 255, .16) 46px 47px);
+  transform: translateX(var(--parallax, 0));
+}
+
+.gl-brand-life .gl-brand-bits {
+  inset: -20% 0;
+  background-image: radial-gradient(circle, rgba(180, 220, 255, .85) 0 1px, transparent 1.6px);
+  background-size: 72px 48px;
+  opacity: .55;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gl-brand-life .gl-brand-pulse {
+    animation: gl-brand-pulse 2.4s ease-in-out infinite;
+  }
+
+  .gl-brand-life .gl-brand-grid {
+    animation: gl-brand-drift 9s linear infinite;
+  }
+
+  .gl-brand-life .gl-brand-bits {
+    animation: gl-brand-bits 14s linear infinite;
+  }
+}
+
+@keyframes gl-brand-pulse {
+  50% { opacity: .35; transform: translate(-50%, -50%) scale(1.18); }
+}
+
+@keyframes gl-brand-drift {
+  to { background-position: 140px 0; }
+}
+
+@keyframes gl-brand-bits {
+  to { transform: translateY(-36px); }
+}
+
+html.gl-hold-motion .gl-brand-life i {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gl-brand-life {
+    display: none !important;
+  }
+}
+
+@media (max-width: 899px) {
+  body.gl-home-page #gl-home-bar:has(.gl-nav-toggle),
+  body.gl-type-principle #gl-home-bar:has(.gl-nav-toggle) {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    height: 64px !important;
+    min-height: 64px !important;
+    max-height: 64px !important;
+    grid-template-rows: 64px !important;
+  }
+
+  body.gl-home-page #gl-home-bar .gl-nav-toggle,
+  body.gl-type-principle #gl-home-bar .gl-nav-toggle {
+    display: inline-flex !important;
+    order: 2;
+    margin-left: auto;
+  }
+
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+    position: fixed !important;
+    z-index: 45 !important;
+    top: 64px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: calc(100dvh - 64px) !important;
+    margin: 0 !important;
+    padding: 12px !important;
+    overflow: auto !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    background: rgba(4, 10, 22, .94) !important;
+    border-bottom: 1px solid rgba(126, 196, 255, .45);
+    box-shadow: 0 28px 48px rgba(0, 0, 0, .45);
+    transform: translateY(-12px);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  body.gl-nav-open.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+  body.gl-nav-open.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"] a.gl-link,
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] a.gl-link {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    min-height: 44px !important;
+  }
+}
+
+@media (min-width: 900px) {
+  body.gl-home-page #gl-home-bar .gl-nav-toggle,
+  body.gl-type-principle #gl-home-bar .gl-nav-toggle {
+    display: none !important;
+  }
+
+  body.gl-home-page #gl-home-bar nav[aria-label="Primary"],
+  body.gl-type-principle #gl-home-bar nav[aria-label="Primary"] {
+    background: rgba(8, 18, 36, .55) !important;
+    border: 1px solid rgba(126, 196, 255, .4) !important;
+    border-radius: 999px;
+    box-shadow: 0 0 22px rgba(45, 115, 193, .28), inset 0 1px 0 rgba(255, 255, 255, .14) !important;
+    backdrop-filter: blur(12px);
   }
 }
