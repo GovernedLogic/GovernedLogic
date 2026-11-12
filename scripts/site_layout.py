@@ -38,6 +38,7 @@ def page_type(path):
     if path in BANDS:return 'bands'
     if path=='about/index.html':return 'about'
     if path in DOCS:return 'doc'
+    if path=='the-argument/index.html':return 'article'
     if path.startswith('concepts/'):return 'concept'
     return 'doc'
 def route(path):return '/'+path[:-10] if path.endswith('index.html') else '/'+path
@@ -163,7 +164,8 @@ def apply(source,path):
     """Body markup for the page's type (called after intro_band, before the header/footer are inserted)."""
     kind=page_type(path)
     if kind is None:return source
-    source=re.sub(r'<body class="([^"]*)"',lambda m:f'<body class="{m.group(1)} gl-v14 gl-type-{kind}"',source,count=1)
+    # Vera's 75860ad gate, item 4: a per-page class so the first screens can take different compositions (CSS only).
+    source=re.sub(r'<body class="([^"]*)"',lambda m:f'<body class="{m.group(1)} gl-v14 gl-type-{kind} gl-page-{og_slug(path)}"',source,count=1)
     if kind in ('principle','concept'):
         name=h1_text(source)
         icon=tile(name) if kind=='principle' else tile(href=route(path))
@@ -175,10 +177,12 @@ def apply(source,path):
             source=source.replace('</main>',nav+'</main>',1)
         source=related_band(source)
     elif kind=='treatise':
-        source=_in_intro(source,art_img(path));source=treatise(source,path)
-    elif kind=='article':
+        # Audit batch 1: the contents bar, Contents button, chapter list and prev/next links are not approved.
+        # The section headings stay.
         source=_in_intro(source,art_img(path))
-        source=source.replace('</article></main>',share_row(path,h1_text(source))+'</article></main>',1)
+    elif kind=='article':
+        # Audit batch 1: the share row (LinkedIn, Reddit, X, Copy link) is not approved.
+        source=_in_intro(source,art_img(path))
     elif kind=='about':
         source=source.replace('<section class="about-hero">','<section class="about-hero">'+art_img(path),1)
     elif kind in ('bands','doc','articles'):
@@ -198,7 +202,7 @@ def article_card(path,source,ident,featured=False):
     lede=re.search(r'<p>([\s\S]*?)</p>',source[i:]).group(1)
     a=art_for(path);w,h=SIZES[a]
     return (f'<article class="gl-card{" gl-card-featured" if featured else ""}"><img src="{P}{a}" alt="" width="{w}" height="{h}" loading="lazy">'
-            f'<div class="gl-card-body"><p class="gl-card-kind">Article</p><h3 id="{ident}">{escape(title,quote=False)}</h3><p>{lede}</p>'
+            f'<div class="gl-card-body"><h3 id="{ident}">{escape(title,quote=False)}</h3><p>{lede}</p>'
             f'<form class="gl-go" method="get" action="{route(path)}"><button type="submit" class="gl-card-go" aria-labelledby="{ident}">{ARROW}</button></form></div></article>')
 def _shell(title,path,main,description=None):
     data={'@context':'https://schema.org','@type':'CollectionPage' if path=='articles/index.html' else 'WebPage','@id':BASE+route(path)+'#page','name':title,'url':BASE+route(path),'isPartOf':{'@id':BASE+'/#website'}}
@@ -213,8 +217,8 @@ def articles_page(sources):
     feat=article_card(paths[0],sources[paths[0]],'gl-art-featured',True)
     rail=''.join(article_card(p,sources[p],f'gl-rail-{k}') for k,p in enumerate(paths[1:],1))
     main=('<main class="document-main gl-articles" id="content"><div class="gl-intro"><h1>Articles</h1></div>'
-          f'<section class="gl-featured" aria-labelledby="gl-art-featured">{feat}</section>'
-          f'<section class="gl-rail-band" aria-labelledby="gl-latest-title"><h2 id="gl-latest-title" class="gl-eyebrow">Latest</h2><div class="gl-rail" tabindex="0" role="region" aria-labelledby="gl-latest-title">{rail}</div></section></main>')
+          f'<section class="gl-featured">{feat}</section>'
+          f'<section class="gl-rail-band"><div class="gl-rail" tabindex="0" role="region">{rail}</div></section></main>')
     return _shell('Articles','articles/index.html',main)
 TWP_URL='https://www.youtube.com/@TheTruthwithPaul'
 def truth_with_paul_page():
