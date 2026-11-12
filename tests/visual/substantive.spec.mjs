@@ -3,7 +3,7 @@ import {test,expect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
-const routes=['/','/challenge/','/company/','/research/','/about/','/the-treatises/','/ai-safety/','/mimicry/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/page-two/','/library/','/publication/',
+const routes=['/','/challenge/','/company/','/research/','/about/','/the-treatises/','/ai-safety/','/mimicry/','/faq/','/concepts/','/concepts/governed-logic/','/concepts/governed-intelligence/','/concepts/ultimate-grounding/','/concepts/alpha-and-omega-reasoning/','/concepts/governing-referent/','/concepts/sufficient-grounding/','/mechanism.html','/sources/','/articles/why-anything/','/articles/integrity-in-artificial-intelligence/','/the-argument/','/page-two/','/library/','/publication/',
  // v14 (Paul 2026-11-01 22:34 and 22:36): the articles index and The Truth with Paul placeholder.
  '/articles/','/the-truth-with-paul/'];
 // WEB-205/WEB-231: '/page-two/' keeps Paul's previous homepage main reachable.
@@ -17,13 +17,29 @@ for(const route of routes){
   // v14.1: /articles/ lists each article once (featured card + Latest rail), so it has no 45-word floor; check-restored
   // and v13.spec check its cards instead.
   if(route!=='/the-truth-with-paul/'&&route!=='/articles/')expect((await page.locator('main').innerText()).split(/\s+/).length).toBeGreaterThan(45);
+  const mobile=info.project.name.startsWith('mobile-');
+  const toggle=page.locator('#gl-home-bar .gl-nav-toggle');
+  const drawer=mobile&&await toggle.count();
+  if(drawer){
+   await expect(toggle).toHaveAttribute('aria-expanded','false');
+   await toggle.click();
+   await expect(toggle).toHaveAttribute('aria-expanded','true');
+  }
   await expect(page.getByRole('navigation',{name:'Primary',exact:true})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();
   const images=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.src));expect(images).toEqual([]);
   const headings=await page.locator('main h1,main h2,main h3').evaluateAll(nodes=>nodes.filter(n=>n.scrollWidth>n.clientWidth+1).map(n=>n.textContent));expect(headings).toEqual([]);
   await expect(page.locator('nav[aria-label="Primary"] summary')).toHaveCount(0);
   const links=page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link');
+  if(drawer){
+   expect(await links.evaluateAll(as=>as.map(a=>a.getAttribute('href')))).toEqual(['/','/the-treatises/','/ai-safety/','/mimicry/','/research/','/about/','https://followthechain.net/']);
+  }
   for(const link of await links.all()){await link.scrollIntoViewIfNeeded();const box=await link.boundingBox();expect(box.height).toBeGreaterThanOrEqual(43);expect(box.x).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(page.viewportSize().width+1);}
+  if(drawer){
+   await page.keyboard.press('Escape');
+   await expect(toggle).toHaveAttribute('aria-expanded','false');
+   await expect(page.getByRole('navigation',{name:'Primary',exact:true})).toBeHidden();
+  }
   if(route==='/')await page.locator('#explore').scrollIntoViewIfNeeded();
   const dir=path.resolve('visual-qa/screenshots',info.project.name);await mkdir(dir,{recursive:true});
   await page.screenshot({path:path.join(dir,route==='/'?'home.png':route.slice(1).replace(/\/$/,'').replaceAll('/','-')+'.png'),fullPage:true});
@@ -35,7 +51,7 @@ test('Library searches restored full text',async({page})=>{
  await expect(page.locator('#library-search-mode')).toContainText('exact text');
  await expect(page.locator('.library-item:visible')).not.toHaveCount(0);
  await page.getByLabel('Search the library').fill('zzzznomatchzzzz');await expect(page.locator('#library-empty')).toBeVisible();
- await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(25); // WEB-205/WEB-231: the library lists /page-two/. Overnight 2026-11-10: The Treatises, AI Safety, Mimicry.
+ await page.getByRole('button',{name:'Clear',exact:true}).click();await expect(page.locator('.library-item:visible')).toHaveCount(26); // WEB-205/WEB-231: the library lists /page-two/. Overnight 2026-11-10: The Treatises, AI Safety, Mimicry. Paul 2026-11-11: The Groundless Machine.
 });
 test('FAQ answers open and match machine data',async({page})=>{
  await page.goto('/faq/');await page.getByText('What exists today?',{exact:true}).click();
@@ -48,8 +64,8 @@ test('Homepage and navigation work without JavaScript',async({browser})=>{
  await page.locator('main .gl-go > a[href="/page-two/"]').click();await expect(page).toHaveURL(/\/page-two\/\??$/);await expect(page.locator('main')).toContainText('Governed Intelligence');
  // WEB-228/C9; PLACEMENT_MAP 2026-11-01 (WEB-227 FIFTH) (N6): the homepage header names /concepts/governed-logic/ 'Governed Logic' (L21431).
  await page.goto((process.env.BASE_URL || 'http://127.0.0.1:4173')+'/');
- await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Governed Logic',exact:true}).click();
- await expect(page.locator('h1')).toHaveText('Governed Logic');await context.close();
+ await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'The Treatises',exact:true}).click();
+ await expect(page.locator('h1')).toHaveText('The Treatises');await context.close();
 });
 test('Homepage lands on the hero with no opening',async({page})=>{
  // WEB-215 + Paul's C8 ruling (2026-11-01, "drop the old opening"): replaces the opening-completion test. There is no
@@ -144,16 +160,27 @@ test('Phone nav stays visible at 360px',async({page})=>{
  });
  expect(metrics.summary).toBe(0);
  expect(metrics.details).toBe(0);
- expect(metrics.count).toBe(7); // six linked items (PLACEMENT_MAP, QA-4) plus The Truth with Paul (Paul 2026-11-01 22:36).
+ expect(metrics.count).toBe(7); // Home, The Treatises, AI Safety, Mimicry, Research, About, Follow the chain.
  expect(metrics.overflow).toBe(false);
- // v14 (Paul 2026-11-01 22:34; QA layout 2026-11-01): the phone nav wraps onto 44px rows under the brand row instead of
- // scrolling sideways, so no word is cut off; at 360 that is two nav rows (v14.1: 132px, no padding under them).
- expect(metrics.headerHeight).toBeLessThanOrEqual(132);
+ // Phone nav is a drawer (2026-11-11). Closed header is one 64px row. Open it and every target is at least 44px.
+ expect(metrics.headerHeight).toBeLessThanOrEqual(64);
  expect(metrics.headerHeight).toBeGreaterThanOrEqual(44);
- expect(new Set(metrics.boxes.map(box=>Math.round(box.top))).size).toBeLessThanOrEqual(2);
- for(const box of metrics.boxes){
-  expect(box.h).toBeGreaterThanOrEqual(44);
-  expect(box.w).toBeGreaterThanOrEqual(44);
+ const toggle=page.locator('#gl-home-bar .gl-nav-toggle');
+ await expect(toggle).toBeVisible();
+ const toggleBox=await toggle.boundingBox();
+ expect(toggleBox.height).toBeGreaterThanOrEqual(44);
+ expect(toggleBox.width).toBeGreaterThanOrEqual(44);
+ await toggle.click();
+ const open=await page.evaluate(()=>{
+  const buttons=[...document.querySelectorAll('nav[aria-label="Primary"] .gl-go > a')];
+  return {overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
+   boxes:buttons.map(button=>{const r=button.getBoundingClientRect();return {w:r.width,h:r.height,name:(button.textContent||'').trim()};})};
+ });
+ expect(open.overflow).toBe(false);
+ expect(open.boxes).toHaveLength(7);
+ for(const box of open.boxes){
+  expect(box.h,box.name).toBeGreaterThanOrEqual(44);
+  expect(box.w,box.name).toBeGreaterThanOrEqual(44);
  }
 });
 
@@ -161,26 +188,34 @@ test('Phone header wraps the nav from 320 to 899: every item whole, in view and 
  // v14 (Paul 2026-11-01 22:34; QA layout 2026-11-01, the 390 nav strip cut words off): at every phone width the header
  // keeps the full brand, Search (/library/) and the CTA in view, and the nav wraps onto 44px rows (v14.1: two at every
  // phone width, 132px; it was three at 320) with every item whole and in view without scrolling; nothing scrolls sideways.
- for(const [width,maxH] of [[320,132],[360,132],[390,132],[600,132],[899,132]]){
+ for(const [width,maxH] of [[320,64],[360,64],[390,64],[600,64],[899,64]]){
   await page.setViewportSize({width,height:800});
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');
    const inView=el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth+0.5&&r.top>=0&&r.bottom<=bar.getBoundingClientRect().bottom+0.5;};
-   const fixed=['.gl-brand-name','.site-brand small','.gl-go > a[href="/library/"]','.gl-bar-cta'].map(sel=>inView(bar.querySelector(sel)));
-   const items=[...bar.querySelectorAll('nav .gl-go > a')];
-   const whole=items.filter(a=>!(inView(a)&&a.scrollWidth<=a.clientWidth+1)).map(a=>a.textContent.trim());
-   const hit=items.filter(a=>{const r=a.getBoundingClientRect();return !a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}).map(a=>a.textContent.trim());
-   return {h:bar.getBoundingClientRect().height,fixed,whole,hit,count:items.length,scroll:bar.scrollWidth>bar.clientWidth+1,pageX:scrollX,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+   const fixed=['.gl-brand-name','.site-brand small','.gl-go > a[href="/library/"]'].map(sel=>inView(bar.querySelector(sel)));
+   return {h:bar.getBoundingClientRect().height,fixed,cta:bar.querySelectorAll('.gl-bar-cta').length,scroll:bar.scrollWidth>bar.clientWidth+1,pageX:scrollX,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(maxH);
-  expect(m.fixed,`brand, subline, search and CTA in view at ${width}`).toEqual([true,true,true,true]);
-  expect(m.count).toBe(7);
-  expect(m.whole,`nav items cut off or out of view at ${width}`).toEqual([]);
-  expect(m.hit,`nav items not clickable at ${width}`).toEqual([]);
+  expect(m.fixed,`brand, subline and search in view at ${width}`).toEqual([true,true,true]);
+  expect(m.cta,`header research button removed at ${width}`).toBe(0);
   expect(m.scroll,`header scrolls sideways at ${width}`).toBe(false);
   expect(m.pageX).toBe(0);
   expect(m.overflow).toBe(false);
+  await page.locator('#gl-home-bar .gl-nav-toggle').click();
+  const open=await page.evaluate(()=>{
+   const items=[...document.querySelectorAll('#gl-home-bar nav .gl-go > a')];
+   const whole=items.filter(a=>{const r=a.getBoundingClientRect();return !(r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth+0.5&&a.scrollWidth<=a.clientWidth+1);}).map(a=>a.textContent.trim());
+   const hit=items.filter(a=>{const r=a.getBoundingClientRect();return !a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}).map(a=>a.textContent.trim());
+   const current=[...items].filter(a=>a.getAttribute('aria-current')==='page').map(a=>a.textContent.trim());
+   return {whole,hit,count:items.length,current,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
+  });
+  expect(open.count,`nav count at ${width}`).toBe(7);
+  expect(open.whole,`nav items cut off at ${width}`).toEqual([]);
+  expect(open.hit,`nav items not clickable at ${width}`).toEqual([]);
+  expect(open.current,`only the current page is active at ${width}`).toEqual(['Home']);
+  expect(open.overflow).toBe(false);
  }
 });
 
@@ -199,8 +234,8 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
     inView:boxes.every(r=>r.left>=0&&r.right<=innerWidth+0.5&&r.top>=b.top-0.5&&r.bottom<=b.bottom+0.5),
     tall:boxes.slice(1).every(r=>r.height>=43.5&&r.width>=43.5),
     hit:items.every(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}),
-    company:!!bar.querySelector('nav .gl-go > a[href="/company/"]'),
-    cta:bar.querySelector('.gl-bar-cta').textContent.trim(),
+    company:!!bar.querySelector('nav .gl-go > a[href="/about/"]'),
+    cta:bar.querySelectorAll('.gl-bar-cta').length,
     scroll:bar.scrollWidth>bar.clientWidth+1,
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
@@ -211,7 +246,7 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
   expect(m.tall).toBe(true);
   expect(m.hit,`every header item clickable at ${width}`).toBe(true);
   expect(m.company).toBe(true);
-  expect(m.cta).toBe('Explore the research method'); // N11 (PLACEMENT_MAP, L21394; Round 5b)
+  expect(m.cta).toBe(0);
   expect(m.scroll).toBe(false);
   expect(m.overflow).toBe(false);
  }
@@ -221,33 +256,25 @@ test('Header CTA reads the N11 text and never collides with brand or Search',asy
  // N11 (PLACEMENT_MAP, L21394; Round 5b): "Explore the research method" in full, at every width; it sets on two lines
  // at 390-599 and is the compact arrow button (same accessible name) below 390 and at 900-1099 (v14: was 900-1023).
  // v14: the phone header grows by the wrapped nav rows (v14.1: two at every phone width, 132px; was 180 at 320, 136 from 360).
- const heights={320:132,360:132,390:132,414:132,440:132,899:132,900:72,1024:72,1279:72,1440:108};
+ const heights={320:64,360:64,390:64,414:64,440:64,899:64,900:72,1024:72,1279:72,1440:108};
  for(const [w,hh] of Object.entries(heights)){
   const width=Number(w);
   await page.setViewportSize({width,height:900});
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(()=>{
    const bar=document.querySelector('header#gl-home-bar');
-   const brand=bar.querySelector('.site-brand'),search=bar.querySelector('.gl-go > a[href="/library/"]'),cta=bar.querySelector('.gl-bar-cta');
-   const [b,s,c]=[brand,search,cta].map(el=>el.getBoundingClientRect());
+   const brand=bar.querySelector('.site-brand'),search=bar.querySelector('.gl-go > a[href="/library/"]');
+   const [b,s]=[brand,search].map(el=>el.getBoundingClientRect());
    const sub=bar.querySelector('.site-brand small'),sr=sub.getBoundingClientRect(),ss=getComputedStyle(sub);
-   const lum=x=>{const v=x.match(/[\d.]+/g).slice(0,3).map(n=>{n/=255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4});return .2126*v[0]+.7152*v[1]+.0722*v[2]};
-   const fg=lum(getComputedStyle(cta).color),bg=lum(getComputedStyle(bar).backgroundColor);
-   return {h:Math.round(bar.getBoundingClientRect().height),text:cta.textContent.replace(/\s+/g,' ').trim(),
-    gaps:[s.left-b.right,c.left-s.right],ctaW:c.width,ctaH:c.height,
-    hit:cta.contains(document.elementFromPoint(c.left+c.width/2,c.top+c.height/2)),
-    sub:ss.display!=='none'&&ss.visibility!=='hidden'&&sr.width>0&&sr.right<=s.left,
-    clipped:cta.querySelector('.gl-cta-label').getBoundingClientRect().width>2&&(cta.scrollWidth>cta.clientWidth+1||cta.scrollHeight>cta.clientHeight+1),
-    contrast:(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05),
+   return {h:Math.round(bar.getBoundingClientRect().height),cta:bar.querySelectorAll('.gl-bar-cta').length,
+    gap:s.left-b.right,
+    sub:ss.display!=='none'&&ss.visibility!=='hidden'&&sr.width>0&&sr.right<=s.left+0.5,
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
-  expect(m.text).toBe('Explore the research method');
-  const a11y=await page.evaluate(()=>{const cta=document.querySelector('#gl-home-bar .gl-bar-cta');cta.focus();return{visibility:getComputedStyle(cta).visibility,focused:document.activeElement===cta};});
-  expect(a11y.visibility,`CTA hidden from view at ${width}`).toBe('hidden');
-  expect(a11y.focused,`CTA not focusable at ${width}`).toBe(false);
-  expect(await page.locator('#gl-home-bar').ariaSnapshot(),`CTA absent from header a11y tree at ${width}`).not.toMatch(/Explore the research method/);
+  expect(m.cta,`header research button absent at ${width}`).toBe(0);
+  expect(await page.locator('main').getByText('Explore the research method').count(),`homepage research button at ${width}`).toBeGreaterThan(0);
   expect(m.h,`header height at ${width}`).toBe(hh);
-  expect(m.gaps[0],`brand clears Search at ${width}`).toBeGreaterThanOrEqual(0);
+  expect(m.gap,`brand clears Search at ${width}`).toBeGreaterThanOrEqual(0);
   expect(m.sub,`REASONING SYSTEMS visible at ${width}`).toBe(true);
   expect(m.overflow).toBe(false);
  }
@@ -262,7 +289,7 @@ test('Homepage buttons hold their text at every width',async({page})=>{
   const bad=await page.evaluate(()=>{
    const out=[];
    for(const b of document.querySelectorAll('header#gl-home-bar button, main button, header#gl-home-bar a.gl-link, main a.gl-link')){
-    const r=b.getBoundingClientRect();if(!r.width||b.closest('.site-brand')||b.matches('.site-brand'))continue;
+    const r=b.getBoundingClientRect();if(!r.width||b.closest('.site-brand')||b.matches('.site-brand')||b.classList.contains('gl-nav-toggle'))continue;
     const label=b.querySelector('.gl-cta-label');if(label&&label.getBoundingClientRect().width<=2)continue; // compact CTA: label is visually hidden on purpose
     const range=document.createRange();range.selectNodeContents(b);const t=range.getBoundingClientRect();
     if(b.scrollWidth>b.clientWidth+1||b.scrollHeight>b.clientHeight+1||t.left<r.left-0.5||t.right>r.right+0.5||t.top<r.top-0.5||t.bottom>r.bottom+0.5)

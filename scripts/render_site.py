@@ -2,13 +2,13 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from html import escape, unescape
-import argparse, hashlib, json, re, shutil, sys
+import argparse, hashlib, json, re, shutil, subprocess, sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'content'))
 import terms as TERMS, principles as PRINCIPLES
 sys.path.insert(0,str(ROOT/'scripts'))
 import site_layout as LAYOUT
-PAGES=('index.html','challenge/index.html','company/index.html','research/index.html','about/index.html','the-treatises/index.html','ai-safety/index.html','mimicry/index.html','faq/index.html','concepts/index.html','concepts/governed-logic/index.html','concepts/governed-intelligence/index.html','concepts/ultimate-grounding/index.html','concepts/alpha-and-omega-reasoning/index.html','concepts/governing-referent/index.html','concepts/sufficient-grounding/index.html','mechanism.html','sources/index.html','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html','page-two/index.html')
+PAGES=('index.html','challenge/index.html','company/index.html','research/index.html','about/index.html','the-treatises/index.html','ai-safety/index.html','mimicry/index.html','faq/index.html','concepts/index.html','concepts/governed-logic/index.html','concepts/governed-intelligence/index.html','concepts/ultimate-grounding/index.html','concepts/alpha-and-omega-reasoning/index.html','concepts/governing-referent/index.html','concepts/sufficient-grounding/index.html','mechanism.html','sources/index.html','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html','the-argument/index.html','page-two/index.html')
 SOURCE_FILES=('sources/01_Ultimate_Grounding_2026-09-22_172847_EDT.pdf','sources/02_Governed_Logic_2026-09-22_172847_EDT.pdf','sources/03_Alpha_and_Omega_Reasoning_2026-09-22_172847_EDT.pdf','sources/04_Governed_Intelligence_2026-09-22_172847_EDT.pdf','sources/GovernedLogic_Business_Strategy_Addendum_v1_2026-09-23.txt')
 # v12 round 2 (QA L1; WEB-227 SIXTH): no longer published, because nothing in the built site loads them (the homepage
 # dropped the Earth opening under C8/WEB-215 and the head art under Paul's Nov 1 hero ruling): assets/opening.css,
@@ -21,7 +21,7 @@ RETIRED_ASSETS=('assets/opening.css', 'assets/opening.js', 'assets/earth-rendere
 WITHHELD_LINK_TARGETS=('GOVERNEDLOGIC_COM_PRD.txt','scripts/restore_content.py','components/header.html','recovery-provenance.json',*PRINCIPLES.withheld())
 # Visual refresh, structural part: the homepage signature (home-signature.js and its stylesheet, homepage only) replaces
 # the logo fly-up (home-chime.js, removed). home.css and site.css stay byte-identical because /page-two/ loads them.
-ASSETS=('assets/home-signature.js','assets/home-signature.css','assets/redesign-2032.css','assets/redesign-2032.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png',
+ASSETS=('assets/home-signature.js','assets/home-signature.css','assets/redesign-2032.css','assets/redesign-2032.js','assets/brand/gl-banner-640.webp','assets/brand/gl-banner-960.webp','assets/brand/gl-banner-1440.webp','assets/brand/gl-banner-1920.webp','assets/brand/gl-banner-1440.jpg','assets/brand/favicon.png','assets/brand/gl-logo.webp','assets/brand/twp-banner-960.webp','assets/brand/twp-banner-1440.webp','assets/brand/twp-banner-1920.webp','assets/brand/twp-banner-1440.jpg','assets/brand/groundless-machine.webp','assets/brand-hold.js','assets/brand-chrome.css','assets/brand-nav.js','assets/restored-site.css','assets/site.css','assets/library.js','assets/materials/Cinzel-OFL.txt','assets/materials/IBM-Plex-OFL.txt','assets/materials/ibm-plex-sans.ttf','assets/materials/SOURCES.txt','assets/governed-logic-mark.webp','assets/home.css','assets/materials/source-serif-4-latin-opsz.woff2','assets/materials/inter-latin-wght.woff2','assets/materials/SourceSerif4-OFL.txt','assets/materials/Inter-OFL.txt','assets/provisional/seed-of-life.png','assets/provisional/grain.png','assets/provisional/hero-geometry.svg','assets/provisional/card-grounding.webp','assets/provisional/card-mathematics.webp','assets/provisional/card-framework.webp','assets/provisional/problem-network.webp','assets/gl-reasoning-systems.webp','assets/the-groundless-machine.webp','paul-portrait.png',
 # v14.2 (Paul 2026-11-02 18:08 voice call): the homepage video band: the video (720p H.264/AAC, faststart) and its
 # poster (the video's own 'You exist.' frame). v14.3 (Grace relay 8:42 AM Nov 3, Paul voice call): no caption file.
 'assets/video/gl-home-explainer.mp4','assets/video/gl-home-explainer-poster.webp',
@@ -121,7 +121,7 @@ def dfn(source,path):
     for t in term_records():
         if t['page']!=path:continue
         start=source.index('<main');end=source.index('</main>',start)
-        node=next((m for m in re.finditer(r'>([^<]+)',source[start:end]) if t['definition'][:40] in m.group(1)),None)
+        node=next((m for m in re.finditer(r'>([^<]+)',source[start:end]) if t['definition'][:40] in m.group(1) and t['dfn'] in m.group(1)),None)
         if node is None:raise ValueError(f'Definition of {t["code"]} not found in <main> of {path}')
         i=start+node.start(1)+node.group(1).index(t['dfn'])
         tag='<dfn id="concept">' if t['fragment']=='concept' else '<dfn>'
@@ -152,16 +152,32 @@ def llms_txt(records):
     lines=['# Governed Logic Reasoning Systems','','## '+TERMS.SET_NAME,'']
     lines+=[f'- [{t["name"]}]({t["url"]}): {t["definition"]}' for t in term_records()]
     lines+=['','## Pages','']+[f'- [{r["title"]}]({r["url"]})' for r in records if r['type'] not in ('source','principle')]
+    # The library and the publication record are generated after this list is built. Their titles are the
+    # visible h1s already on those pages. Nothing withheld is added.
+    lines+=['- [The library]('+BASE+'/library/)','- [Publication record]('+BASE+'/publication/)']
     principles=[r for r in records if r['type']=='principle']
     # Published principle pages (Paul 4:48 PM ET Nov 1, set B, publish as written (via Governor, verified)): name (the
     # page's h1) and the page's own description (its first visible sentence).
     if principles:lines+=['','## Principles','']+[f'- [{r["title"]}]({r["url"]}): {r["description"]}' for r in principles]
     lines+=['','## Sources','']+[f'- [{d["name"]}]({BASE}/{d["file"]})' for d in TERMS.SOURCE_DOCS]
     return '\n'.join(lines)+'\n'
-# Paul 4:50 PM ET Nov 1, no page dates, source editions kept (via QA/Governor, verified): the sitemap carries no lastmod.
-def lastmod(source,url):
-    """Kept for callers: pages carry no dates, so there is never a lastmod."""
-    return None
+def source_paths(page):
+    """Repo files whose latest commit dates this public page. Shared chrome is not a page source."""
+    if page=='index.html':return ('index.html','content/home.html')
+    if page.startswith('principles/') and page.endswith('/index.html'):
+        return ('content/principle-register.md','components/principle.html','content/principles.py')
+    if page in ('library/index.html','publication/index.html'):return ('scripts/render_site.py',)
+    if page=='articles/index.html':
+        return ('scripts/site_layout.py','articles/why-anything/index.html','articles/integrity-in-artificial-intelligence/index.html')
+    if page=='the-truth-with-paul/index.html':return ('scripts/site_layout.py',)
+    return (page,)
+def git_lastmod(page):
+    """YYYY-MM-DD of the latest commit that touches this page's source. Sitemap only."""
+    paths=source_paths(page)
+    out=subprocess.check_output(['git','log','-1','--format=%cs','--',*paths],cwd=ROOT,text=True).strip()
+    if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',out):
+        raise RuntimeError('No git commit date for '+page+' from '+', '.join(paths))
+    return out
 FONT_PRELOADS=''.join(f'<link rel="preload" href="/assets/materials/{font}" as="font" type="font/woff2" crossorigin>' for font in ('source-serif-4-latin-opsz.woff2','inter-latin-wght.woff2'))
 def anchors(source,path):
     """Governor's 2:01 PM ET ruling (a) on Paul's parity rule: no JSON-LD @id or url may point at a missing anchor.
@@ -208,11 +224,16 @@ def render(source,path):
     if path!='page-two/index.html':source=LAYOUT.head_tags(source,path,LAYOUT.page_type(path))
     if path=='index.html' or path.startswith('principles/'):
         source=source.replace('</head>','<link rel="stylesheet" href="/assets/redesign-2032.css"><script src="/assets/redesign-2032.js" defer></script></head>',1)
-    for sheet in ('restored-site.css','home.css','site.css','v14.css','home-signature.css','redesign-2032.css'):
+    # /page-two/ stays the d1ba24d build except the favicon link Paul asked to restore.
+    if path=='page-two/index.html' and 'rel="icon"' not in source:
+        source=source.replace('</head>','<link rel="icon" href="/assets/brand/favicon.png" type="image/png"></head>',1)
+    if path!='page-two/index.html':
+        source=source.replace('</head>','<link rel="stylesheet" href="/assets/brand-chrome.css"><script src="/assets/brand-nav.js" defer></script></head>',1)
+    for sheet in ('restored-site.css','home.css','site.css','v14.css','home-signature.css','redesign-2032.css','brand-chrome.css'):
         style_version=hashlib.sha256((ROOT/'assets'/sheet).read_bytes()).hexdigest()[:12]
         source=source.replace(f'href="/assets/{sheet}"',f'href="/assets/{sheet}?v={style_version}"')
     # The signature script gets the media-style cache key: ?v=<first 8 hex of its sha256>.
-    for script in ('home-signature.js','redesign-2032.js'):
+    for script in ('home-signature.js','redesign-2032.js','brand-nav.js'):
         source=source.replace(f'src="/assets/{script}"',f'src="/assets/{script}?v={hashlib.sha256((ROOT/"assets"/script).read_bytes()).hexdigest()[:8]}"')
     main=re.search(r'<main\b[^>]*\bid="([^"]+)"',source)
     anchor=main.group(1) if main else 'content'
@@ -221,14 +242,20 @@ def render(source,path):
     # keeps its own header exactly as it was. Home is the current item only on the homepage; elsewhere the page's own
     # nav item (if it has one) is.
     current=route(path)
-    if path!='page-two/index.html':
-        bar=(ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip()
+    if path=='page-two/index.html':
+        header=(ROOT/'components/page-two-header.html').read_text(encoding='utf-8').replace('href="#content"',f'href="#{anchor}"')
+        if current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
+        footer=(ROOT/'components/page-two-footer.html').read_text(encoding='utf-8')
+    else:
         if path!='index.html':
+            bar=(ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip()
             bar=bar.replace(' aria-current="page">Home<','>Home<')
             bar=re.sub(r'(<form class="gl-go" method="get" action="'+re.escape(current)+r'"><button type="submit")>',r'\1 aria-current="page">',bar,count=1)
-        header=re.sub(r'<header class="site-bar"[^>]*>[\s\S]*?</header>',lambda _: bar,header,count=1)
-    elif current!='/':header=header.replace(f'href="{current}"',f'href="{current}" aria-current="page"')
-    footer=(ROOT/'components/footer.html').read_text(encoding='utf-8')
+            header=re.sub(r'<header class="site-bar"[^>]*>[\s\S]*?</header>',lambda _: bar,header,count=1)
+        else:
+            bar=(ROOT/'components/home-bar.html').read_text(encoding='utf-8').strip()
+            header=re.sub(r'<header class="site-bar"[^>]*>[\s\S]*?</header>',lambda _: bar,header,count=1)
+        footer=(ROOT/'components/footer.html').read_text(encoding='utf-8')
     if 'id="paul"' in source:footer=footer.replace(' id="paul"','')
     source=source.replace('</head>',machine_block(path)+'</head>',1)
     if path==TERMS.SET_PAGE:
@@ -237,7 +264,10 @@ def render(source,path):
             if f'<article id="{slug}"><h3>' not in source:continue   # Identity, Correspondence: no heading on /concepts/
             source=re.sub(r'(<article id="'+slug+r'"><h3>)([\s\S]*?)(</h3>)',lambda m:m.group(1)+f'<span class="gl-go"><a href="{href}" class="gl-link">'+m.group(2)+'</a></span>'+m.group(3),source,count=1)
     source=source.replace('type="application/atom+xml" href="/feed.xml"','type="application/rss+xml" href="/feed.xml"')
-    return anchors(links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer)),path)
+    source=links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer))
+    if path!='page-two/index.html' and 'rel="icon"' not in source:
+        source=source.replace('</head>','<link rel="icon" href="/assets/brand/favicon.png" type="image/png"></head>',1)
+    return anchors(source,path)
 # Governor's 2:01 PM ET ruling (c) on Paul's parity rule: a generated page's meta description is its own visible lede,
 # verbatim (was one shared sentence that appears on neither page).
 DOCUMENT_DESCRIPTIONS={'library/index.html':'Explore the reasoning architecture, the research, and the original source editions.',
@@ -276,21 +306,33 @@ def build(destination):
     v14_src={'articles/index.html':LAYOUT.articles_page({a:(destination/a).read_text(encoding='utf-8') for a in LAYOUT.ARTICLES}),'the-truth-with-paul/index.html':LAYOUT.truth_with_paul_page()}
     for p in v14_pages:
         target=destination/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(links(render(v14_src[p],p)),encoding='utf-8',newline='\n')
-    unlisted={'/articles/','/the-truth-with-paul/'}
+    unlisted={'/articles/','/the-truth-with-paul/','/the-argument/'}
     records=[];ledes={}
     for p in (*PAGES,*principle_pages,*v14_pages):
         source=(destination/p).read_text(encoding='utf-8');ledes[BASE+route(p)]=LAYOUT.description(source) if p!='page-two/index.html' else None;title=re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)
         title=unescape(re.sub('<[^>]+>','',title.group(1))).strip() if title else 'Governed Logic Reasoning Systems'
         if p=='index.html':title='Governed Logic Reasoning Systems'
-        records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'principle' if p in principle_pages else 'page','text':main_text(LAYOUT.without_ui(source,p)),**({'description':unescape(re.search(r'<meta name="description" content="([^"]*)"',source).group(1))} if p in principle_pages else {}),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
-    for p,title in zip(SOURCE_FILES,SOURCE_TITLES):records.append({'id':BASE+'/'+p,'title':title+' · Source edition','url':BASE+'/'+p,'path':'/'+p,'type':'source','text':title+' · September 2026','sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
-    entries=''.join(f'<article class="library-item" data-record="{r["id"]}" data-kind="{r["type"]}"><span class="eyebrow">{r["type"]}</span><h2 style="font-size:27px"><form class="gl-go" method="get" action="{r["path"]}"><button type="submit">{escape(r["title"])} →</button></form></h2><p>{escape(r["text"][:200])}…</p></article>' for r in records if r['path']!='/' and r['type']!='principle' and r['path'] not in unlisted)
+        body=main_text(LAYOUT.without_ui(source,p))
+        # Indexed text must not carry a six-with-Truth list. /page-two/ itself stays frozen.
+        for phrase in ('Being. Truth. Logic. Meaning. Intelligibility. Obligation.','Being Truth Logic Meaning Intelligibility Obligation'):
+            body=body.replace(phrase,' ')
+        records.append({'id':BASE+route(p),'title':title,'url':BASE+route(p),'path':route(p),'type':'concept' if p.startswith('concepts/') else 'principle' if p in principle_pages else 'page','text':body,**({'description':unescape(re.search(r'<meta name="description" content="([^"]*)"',source).group(1))} if p in principle_pages else {}),'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
+    for p,title in zip(SOURCE_FILES,SOURCE_TITLES):records.append({'id':BASE+'/'+p,'title':title+' · Source edition','url':BASE+'/'+p,'path':'/'+p,'type':'source','text':title,'sha256':hashlib.sha256((destination/p).read_bytes()).hexdigest()})
+    # Paul 8:38 AM ET Nov 12 2026: the five source cards show their full text, with no ellipsis.
+    def card(r):
+        return f'<article class="library-item" data-record="{r["id"]}" data-kind="{r["type"]}"><span class="eyebrow">{r["type"]}</span><h2 style="font-size:27px"><form class="gl-go" method="get" action="{r["path"]}"><button type="submit">{escape(r["title"])} →</button></form></h2><p>{escape(r["text"]) if r["type"]=="source" else escape(r["text"][:200])+"…"}</p></article>'
+    listed=lambda r:r['path']!='/' and r['type']!='principle' and r['path'] not in unlisted
+    entries=''.join(card(r) for r in records if listed(r))
+    editions=''.join(card(r) for r in records if r['type']=='source')
+    # The Groundless Machine already lives on /page-two/. These are its existing title, subtitle and author.
+    book=('''<article class="library-item gl-book" data-record="https://governedlogic.com/page-two/" data-kind="page"><img src="/assets/brand/groundless-machine.webp" alt="The Groundless Machine: The Hidden Flaw Beneath Modern AI, by Paul André Couchoud" width="800" height="1200" loading="lazy"><span class="eyebrow">page</span><h2 style="font-size:27px"><form class="gl-go" method="get" action="/page-two/"><button type="submit">The Groundless Machine →</button></form></h2><p>The Hidden Flaw Beneath Modern AI</p><p>Paul André Couchoud</p></article>''')
+    book_ld='<script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"The Groundless Machine","alternativeHeadline":"The Hidden Flaw Beneath Modern AI","author":{"@type":"Person","@id":"https://governedlogic.com/about/#paul","name":"Paul André Couchoud"},"image":"https://governedlogic.com/assets/brand/groundless-machine.webp"}</script>'
     form='<p class="lede">Explore the reasoning architecture, the research, and the original source editions.</p><form class="library-search" role="search" action="/library/"><div class="library-query"><label for="library-query">Search the library</label><input id="library-query" name="q" type="search" placeholder="A concept, title, or phrase" aria-controls="library-results"></div><div><label for="library-kind">Show</label><select id="library-kind" name="type"><option value="">All works</option><option value="concept">Concepts</option><option value="page">Pages &amp; articles</option><option value="source">Source editions</option></select></div><button id="library-clear" type="button" hidden>Clear</button></form><p id="library-search-mode">All works are available below.</p><p id="library-count" role="status"></p><p id="library-empty" hidden>No matching works. Try a different term.</p>'
-    generated={'library/index.html':document('The library','library/index.html',form+'<div id="library-results">'+entries+'</div>','<script src="/assets/library.js" defer></script>'),
-    'publication/index.html':document('Publication record','publication/index.html','<p class="lede">Source editions and the works they support.</p><p>The source documents retain their original September 2026 edition dates. The October 2026 articles remain separately identifiable.</p>'+entries),
+    generated={'library/index.html':document('The library','library/index.html',form+'<div id="library-results">'+entries+book+'</div>','<script src="/assets/library.js" defer></script>'+book_ld),
+    'publication/index.html':document('Publication record','publication/index.html','<p class="lede">Source editions and the works they support.</p><p>The source documents retain their original edition dates. The articles remain separately identifiable.</p><div id="library-results">'+editions+book+'</div>',book_ld),
     'publication/catalog.json':json.dumps({'records':records},ensure_ascii=False,indent=2),'publication/search-index.json':json.dumps({'records':records},ensure_ascii=False),
     'robots.txt':'User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',
-    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc>'+''+'</url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html',*v14_pages))+'</urlset>',
+    'sitemap.xml':'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+BASE+route(p)+'</loc><lastmod>'+git_lastmod(p)+'</lastmod></url>' for p in (*PAGES,*principle_pages,'library/index.html','publication/index.html',*v14_pages))+'</urlset>',
     'terms.jsonld':terms_jsonld(),'llms.txt':llms_txt(records),
     # v14 queued (WEB-227 SIXTH; Paul 4:50 PM ET Nov 1, no page dates): RSS 2.0 at the same URL, no dates. The channel
     # description is /publication/'s visible lede. Each item's description is its page's visible lede, verbatim (its

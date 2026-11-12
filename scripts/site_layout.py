@@ -38,6 +38,7 @@ def page_type(path):
     if path in BANDS:return 'bands'
     if path=='about/index.html':return 'about'
     if path in DOCS:return 'doc'
+    if path=='the-argument/index.html':return 'article'
     if path.startswith('concepts/'):return 'concept'
     return 'doc'
 def route(path):return '/'+path[:-10] if path.endswith('index.html') else '/'+path
@@ -128,7 +129,9 @@ def article_jsonld(path,source):
     data={'@context':'https://schema.org','@type':'Article','@id':BASE+route(path)+'#article','headline':title,'name':title,
           'image':BASE+'/'+og_path(path),'url':BASE+route(path),'mainEntityOfPage':{'@id':BASE+route(path)+'#page'},
           'author':{'@id':BASE+'/about/#paul'},'publisher':{'@id':BASE+'/#organization'},'isPartOf':{'@id':BASE+'/#website'}}
-    return '<script type="application/ld+json">'+json.dumps(data,ensure_ascii=False)+'</script>'
+    person={'@context':'https://schema.org','@type':'Person','@id':BASE+'/about/#paul','name':'Paul André Couchoud','url':BASE+'/about/#paul'}
+    return ('<script type="application/ld+json">'+json.dumps(data,ensure_ascii=False)+'</script>'
+            +'<script type="application/ld+json">'+json.dumps(person,ensure_ascii=False)+'</script>')
 def description(source):
     """The page's existing visible lede, verbatim (v14.1, Vera's nits b and d; no new prose): its og:description if it
     has one, else its meta description (both already checked visible by check-parity 3c), else None (/faq/, /articles/
@@ -161,7 +164,8 @@ def apply(source,path):
     """Body markup for the page's type (called after intro_band, before the header/footer are inserted)."""
     kind=page_type(path)
     if kind is None:return source
-    source=re.sub(r'<body class="([^"]*)"',lambda m:f'<body class="{m.group(1)} gl-v14 gl-type-{kind}"',source,count=1)
+    # Vera's 75860ad gate, item 4: a per-page class so the first screens can take different compositions (CSS only).
+    source=re.sub(r'<body class="([^"]*)"',lambda m:f'<body class="{m.group(1)} gl-v14 gl-type-{kind} gl-page-{og_slug(path)}"',source,count=1)
     if kind in ('principle','concept'):
         name=h1_text(source)
         icon=tile(name) if kind=='principle' else tile(href=route(path))
@@ -173,15 +177,19 @@ def apply(source,path):
             source=source.replace('</main>',nav+'</main>',1)
         source=related_band(source)
     elif kind=='treatise':
-        source=_in_intro(source,art_img(path));source=treatise(source,path)
-    elif kind=='article':
+        # Audit batch 1: the contents bar, Contents button, chapter list and prev/next links are not approved.
+        # The section headings stay.
         source=_in_intro(source,art_img(path))
-        source=source.replace('</article></main>',share_row(path,h1_text(source))+'</article></main>',1)
+    elif kind=='article':
+        # Audit batch 1: the share row (LinkedIn, Reddit, X, Copy link) is not approved.
+        source=_in_intro(source,art_img(path))
     elif kind=='about':
         source=source.replace('<section class="about-hero">','<section class="about-hero">'+art_img(path),1)
     elif kind in ('bands','doc','articles'):
         source=_in_intro(source,art_img(path))
     if kind in ('treatise','article'):
+        if '<meta name="author"' not in source:
+            source=source.replace('</head>','<meta name="author" content="Paul André Couchoud"></head>',1)
         source=source.replace('</head>','<script src="/assets/v14.js" defer></script></head>',1)
     if kind=='article':source=source.replace('</head>',article_jsonld(path,source)+'</head>',1)
     return source
@@ -194,7 +202,7 @@ def article_card(path,source,ident,featured=False):
     lede=re.search(r'<p>([\s\S]*?)</p>',source[i:]).group(1)
     a=art_for(path);w,h=SIZES[a]
     return (f'<article class="gl-card{" gl-card-featured" if featured else ""}"><img src="{P}{a}" alt="" width="{w}" height="{h}" loading="lazy">'
-            f'<div class="gl-card-body"><p class="gl-card-kind">Article</p><h3 id="{ident}">{escape(title,quote=False)}</h3><p>{lede}</p>'
+            f'<div class="gl-card-body"><h3 id="{ident}">{escape(title,quote=False)}</h3><p>{lede}</p>'
             f'<form class="gl-go" method="get" action="{route(path)}"><button type="submit" class="gl-card-go" aria-labelledby="{ident}">{ARROW}</button></form></div></article>')
 def _shell(title,path,main,description=None):
     data={'@context':'https://schema.org','@type':'CollectionPage' if path=='articles/index.html' else 'WebPage','@id':BASE+route(path)+'#page','name':title,'url':BASE+route(path),'isPartOf':{'@id':BASE+'/#website'}}
@@ -209,19 +217,22 @@ def articles_page(sources):
     feat=article_card(paths[0],sources[paths[0]],'gl-art-featured',True)
     rail=''.join(article_card(p,sources[p],f'gl-rail-{k}') for k,p in enumerate(paths[1:],1))
     main=('<main class="document-main gl-articles" id="content"><div class="gl-intro"><h1>Articles</h1></div>'
-          f'<section class="gl-featured" aria-labelledby="gl-art-featured">{feat}</section>'
-          f'<section class="gl-rail-band" aria-labelledby="gl-latest-title"><h2 id="gl-latest-title" class="gl-eyebrow">Latest</h2><div class="gl-rail" tabindex="0" role="region" aria-labelledby="gl-latest-title">{rail}</div></section></main>')
+          f'<section class="gl-featured">{feat}</section>'
+          f'<section class="gl-rail-band"><div class="gl-rail" tabindex="0" role="region">{rail}</div></section></main>')
     return _shell('Articles','articles/index.html',main)
 TWP_URL='https://www.youtube.com/@TheTruthwithPaul'
 def truth_with_paul_page():
     """The Truth with Paul placeholder (Paul 2026-11-01 22:36, "put something cool like come in soon but make it
     awesome"): deep-blue hero, the channel name as the one h1, "Coming soon", and a plain link "Subscribe on YouTube".
     Those three strings are the page's only copy. Art: the homepage hero geometry and Seed of Life (existing, approved)."""
+    # Paul's direct banner (1983x793). Alt is the banner's own visible titles, not new page copy.
+    twp_alt='THE TRUTH WITH PAUL. JESUS. REASONING. ARTIFICIAL INTELLIGENCE. THE LOGOS. THE LOGIC. THE LAB. THE LABYRINTH.'
     main=('<main class="gl-twp" id="content"><section class="gl-twp-hero">'
-          f'<img class="gl-twp-geo" src="{P}hero-geometry.svg" alt="" width="1200" height="900" fetchpriority="high">'
-          f'<img class="gl-twp-seed" src="{P}seed-of-life.png" alt="" width="244" height="248">'
+          '<picture class="gl-twp-banner"><source type="image/webp" srcset="/assets/brand/twp-banner-960.webp 960w, /assets/brand/twp-banner-1440.webp 1440w, /assets/brand/twp-banner-1920.webp 1920w" sizes="100vw">'
+          f'<img src="/assets/brand/twp-banner-1440.jpg" alt="{twp_alt}" width="1983" height="793" fetchpriority="high"></picture>'
           '<div class="gl-twp-copy"><h1>The Truth with Paul</h1><p class="gl-twp-soon">Coming soon</p>'
-          f'<span class="gl-go"><a href="{TWP_URL}" class="gl-link gl-btn gl-btn-bright gl-twp-sub" rel="noopener">Subscribe on YouTube{ARROW}</a></span></div></section></main>')
+          f'<span class="gl-go"><a href="{TWP_URL}" class="gl-link gl-btn gl-btn-bright gl-twp-sub" rel="noopener">Subscribe on YouTube{ARROW}</a></span></div></section>'
+          '<script src="/assets/brand-hold.js" defer></script></main>')
     return _shell('The Truth with Paul','the-truth-with-paul/index.html',main,'Coming soon')
 def without_ui(source,path):
     """The page without the v14 navigation added by this module (treatise masthead, contents, pager, share row; the

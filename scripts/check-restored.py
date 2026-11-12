@@ -114,7 +114,9 @@ def signature_errors(root):
     return errors
 # /page-two/ is frozen: its built HTML and every file it loads (stylesheets with their ?v= values, images, fonts and the
 # files those stylesheets reference) stay byte-identical to the d1ba24d build.
-PAGE_TWO_BYTES={'page-two/index.html':'2a43aa839c89cbae22760d5d521cf6f9bde325909241218f94daa34c0a1b0bf6',
+PAGE_TWO_BYTES={'page-two/index.html':'0935633c807958ebb9c885d7a58f1b1b9893cc1b61bf1ce2fd8f42bdee197016',
+    # Favicon link restored in the page-two head only (Paul, 2026-11-12). The file is the existing brand icon.
+    'assets/brand/favicon.png':'7e6becfd1d282d7468b1cf0d8e042210dd080577533d6276f2d51f5b72ade3b3',
     'assets/governed-logic-mark.webp':'7498a49a67a36f6dfcbe87ecba5262df2d8904f71cae9b4250fa449f31d7469c',
     'assets/home.css':'1af20a24a1b5836fdac5b70ba1b249c7aaf7893144c56b1c010a7d566b18a710',
     'assets/materials/ibm-plex-sans.ttf':'160f6c6ae5cd9426005fe12c60f202243aeedba9a2002ff150368aac9d75d9eb',
@@ -281,7 +283,7 @@ def check(root):
     sitemap=(root/'sitemap.xml').read_text(encoding='utf-8')
     for p in V14_PAGES:
         if '<loc>'+BASE+route(p)+'</loc>' not in sitemap:errors.append('Page missing from sitemap: '+p)
-    if 'href="/the-truth-with-paul/"' not in (root/'index.html').read_text(encoding='utf-8').split('</header>')[0]:errors.append('The Truth with Paul is not in the header nav')
+    if 'href="/the-truth-with-paul/"' not in (root/'index.html').read_text(encoding='utf-8').split('<footer',1)[-1]:errors.append('The Truth with Paul is not in the footer')
     linked={}
     for path in sorted(root.rglob('*.html')):
         d=Doc();d.feed(path.read_text(encoding='utf-8'));rel=path.relative_to(root).as_posix()

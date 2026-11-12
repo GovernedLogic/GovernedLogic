@@ -3,7 +3,7 @@ defined terms. render_site.py prints every machine surface from this list: the v
 on the page; rendered words do not change), the additive JSON-LD (termCode, url), /terms.jsonld and llms.txt.
 scripts/check-parity.py fails the build if any of them differs from the visible page text.
 
-Only the twelve terms the site already publishes (QA research 2026-11-01, machine-inventory candidates "In the set"),
+Only the terms the site already publishes (QA research 2026-11-01, machine-inventory candidates "In the set"),
 with their existing wording. No new terms; the defect groups and other candidates need visible definitions and Paul's
 sign-off first. A definition is either the existing content/definitions.json entry (concept pages) or the exact
 visible sentence on the page (principles, /concepts/).
@@ -16,14 +16,9 @@ BASE='https://governedlogic.com'
 SET_ID=BASE+'/concepts/#terms'
 SET_NAME='Canonical definitions'
 SET_PAGE='concepts/index.html'
-PRINCIPLES=(
-    dict(code='being',name='Being',fragment='being',dfn='Being',definition='Being is real.'),
-    dict(code='truth',name='Truth',fragment='truth',dfn='Truth',definition='Truth is binary and non-negotiable, grounded in Jesus Christ the Logos. As a correspondence definition, truth is correspondence to one reality.'),
-    dict(code='logic',name='Logic',fragment='logic',dfn='Logic',definition='Logic is binding.'),
-    dict(code='meaning',name='Meaning',fragment='meaning',dfn='Meaning',definition='Meaning is real.'),
-    dict(code='intelligibility',name='Intelligibility',fragment='intelligibility',dfn='Intelligibility',definition='Intelligibility is real.'),
-    dict(code='obligation',name='Obligation',fragment='obligation',dfn='Obligation',definition='Obligation is real and binding.'),
-)
+# Grace scoping of Vera's 75860ad gate (V1225, V1226): the six-article list on /concepts/ is now the single Coming soon,
+# so no principle term is defined there and none is printed on any machine surface.
+PRINCIPLES=()
 CONCEPTS=(
     dict(code='governed-logic',name='Governed Logic',dfn='Governed Logic'),
     dict(code='governed-intelligence',name='Governed Intelligence',dfn='Governed Intelligence'),
@@ -44,7 +39,7 @@ SOURCE_DOCS=(
 )
 
 def terms(definitions):
-    """The twelve term records, resolved: page, uri (@id), url, definition."""
+    """The term records, resolved: page, uri (@id), url, definition."""
     out=[]
     for t in PRINCIPLES:
         out.append(dict(t,page=SET_PAGE,id=BASE+'/concepts/#'+t['fragment'],url=BASE+'/concepts/#'+t['fragment']))
