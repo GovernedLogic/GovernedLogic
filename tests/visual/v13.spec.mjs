@@ -24,7 +24,8 @@ test('Inner pages start title, cards and footer on one spine (73px at 1440, 22px
     const t=left(document.querySelector('main h1'));
     return {title:pr&&Math.round(pr.left)<t?Math.round(pr.left):t,footer:left(document.querySelector('.site-footer .footer-name')),
      card:left(document.querySelector('main :is(.business-section,.concept-card,details.faq-item,.library-item,.source-entry) :is(h2,h3,summary,p)'))};});
-   const titleSpine=route in principles?(width===1440?240:32):spine;
+   // Vera's 75860ad gate, item 4: principle pages sit on the site spine at 1440 (the 240px left margin is gone).
+   const titleSpine=route in principles&&width!==1440?32:spine;
    expect(Math.abs(m.title-titleSpine),`h1 left edge ${m.title} on ${route} at ${width}`).toBeLessThanOrEqual(1);
    expect(Math.abs(m.footer-spine),`footer left edge ${m.footer} on ${route} at ${width}`).toBeLessThanOrEqual(1);
    if(m.card!==null)expect(Math.abs(m.card-spine),`card text left edge ${m.card} on ${route} at ${width}`).toBeLessThanOrEqual(1);
@@ -47,7 +48,7 @@ test('Late web fonts do not shift layout: CLS below 0.1',async({page})=>{
 test('Machine layer matches the visible text (terms.jsonld, dfn, llms.txt)',async({page,request})=>{
  test.setTimeout(120_000);
  const set=await (await request.get('/terms.jsonld')).json();
- expect(set['@type']).toBe('DefinedTermSet');expect(set.hasDefinedTerm.length).toBe(12);
+ expect(set['@type']).toBe('DefinedTermSet');expect(set.hasDefinedTerm.length).toBe(6); // V1225, V1226: the six principle terms left /concepts/ with its list.
  for(const t of set.hasDefinedTerm){
   const u=new URL(t['@id']);await page.goto(u.pathname,{waitUntil:'domcontentloaded'});
   const m=await page.evaluate(([frag,code])=>{const target=document.getElementById(frag);const d=frag==='concept'?document.getElementById('concept'):target&&target.querySelector('dfn');
