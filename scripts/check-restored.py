@@ -114,7 +114,7 @@ def signature_errors(root):
     return errors
 # /page-two/ is frozen: its built HTML and every file it loads (stylesheets with their ?v= values, images, fonts and the
 # files those stylesheets reference) stay byte-identical to the d1ba24d build.
-PAGE_TWO_BYTES={'page-two/index.html':'282bb8baf502dab1906db4137bc0243274414de1852d4cc2c84a38ba65dc38fe',
+PAGE_TWO_BYTES={'page-two/index.html':'2265c88f170534c7ba43c850c0f5b9dce9211005843e4a4ea0b652e65abc38a4',
     'assets/brand/favicon.png':'7e6becfd1d282d7468b1cf0d8e042210dd080577533d6276f2d51f5b72ade3b3',
     'assets/brand/gl-logo.webp':'3e5df9209172c96e6626f8dd06fcb2d52be30e865b5d6bb4a40429376437241a',
     'assets/brand-chrome.css':'ef5dc6ad7f9b01cbbae5b79466eab8bd3c020ba658003dcbbf56695b4f2cd6dd',

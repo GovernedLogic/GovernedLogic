@@ -144,7 +144,7 @@ test('Phone nav stays visible at 360px',async({page})=>{
  });
  expect(metrics.summary).toBe(0);
  expect(metrics.details).toBe(0);
- expect(metrics.count).toBe(7); // six linked items (PLACEMENT_MAP, QA-4) plus The Truth with Paul (Paul 2026-11-01 22:36).
+ expect(metrics.count).toBe(6); // Home, The Treatises, AI Safety, Mimicry, Research, About.
  expect(metrics.overflow).toBe(false);
  // Phone nav is a drawer (2026-11-11). Closed header is one 64px row. Open it and every target is at least 44px.
  expect(metrics.headerHeight).toBeLessThanOrEqual(64);
@@ -161,7 +161,7 @@ test('Phone nav stays visible at 360px',async({page})=>{
    boxes:buttons.map(button=>{const r=button.getBoundingClientRect();return {w:r.width,h:r.height,name:(button.textContent||'').trim()};})};
  });
  expect(open.overflow).toBe(false);
- expect(open.boxes).toHaveLength(7);
+ expect(open.boxes).toHaveLength(6);
  for(const box of open.boxes){
   expect(box.h,box.name).toBeGreaterThanOrEqual(44);
   expect(box.w,box.name).toBeGreaterThanOrEqual(44);
@@ -194,7 +194,7 @@ test('Phone header wraps the nav from 320 to 899: every item whole, in view and 
    const current=[...items].filter(a=>a.getAttribute('aria-current')==='page').map(a=>a.textContent.trim());
    return {whole,hit,count:items.length,current,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
-  expect(open.count,`nav count at ${width}`).toBe(7);
+  expect(open.count,`nav count at ${width}`).toBe(6);
   expect(open.whole,`nav items cut off at ${width}`).toEqual([]);
   expect(open.hit,`nav items not clickable at ${width}`).toEqual([]);
   expect(open.current,`only the current page is active at ${width}`).toEqual(['Home']);
@@ -217,13 +217,13 @@ test('Mid-width header is one row of 72px or less from 900 to 1279',async({page}
     inView:boxes.every(r=>r.left>=0&&r.right<=innerWidth+0.5&&r.top>=b.top-0.5&&r.bottom<=b.bottom+0.5),
     tall:boxes.slice(1).every(r=>r.height>=43.5&&r.width>=43.5),
     hit:items.every(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));}),
-    company:!!bar.querySelector('nav .gl-go > a[href="/challenge/"]'),
+    company:!!bar.querySelector('nav .gl-go > a[href="/about/"]'),
     cta:bar.querySelector('.gl-bar-cta').textContent.trim(),
     scroll:bar.scrollWidth>bar.clientWidth+1,
     overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1};
   });
   expect(m.h,`header height at ${width}`).toBeLessThanOrEqual(72);
-  expect(m.count).toBe(9); // brand, seven nav items, Search. Homepage header CTA is hidden (2032).
+  expect(m.count).toBe(8); // brand, six nav items, Search. Homepage header CTA is hidden (2032).
   expect(m.ordered,`one row, no overlap at ${width}`).toBe(true);
   expect(m.inView,`every header item in view at ${width}`).toBe(true);
   expect(m.tall).toBe(true);

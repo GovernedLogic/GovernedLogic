@@ -37,8 +37,7 @@ const HOME_NAVIGATION = [
   { href: "/ai-safety/", label: "AI Safety" },
   { href: "/mimicry/", label: "Mimicry" },
   { href: "/research/", label: "Research" },
-  { href: "/about/", label: "About" },
-  { href: "/challenge/", label: "Follow the chain" }
+  { href: "/about/", label: "About" }
 ];
 
 for (const routeDefinition of ROUTES) {

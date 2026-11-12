@@ -194,7 +194,7 @@ test('v14: one header everywhere (page-two keeps its own), art above the fold, s
     const h1=document.querySelector('h1').textContent.replace(/\s+/g,' ').trim();
     return {labels,tools:!!bar.querySelector('.gl-bar-cta')&&!!bar.querySelector('.gl-search'),art,h1,ogTitle:meta('og:title'),card:meta('twitter:card'),img:meta('og:image'),url:meta('og:url'),tw:['title','description','image'].map(k=>JSON.stringify(meta('twitter:'+k))),og:['title','description','image'].map(k=>JSON.stringify(meta('og:'+k))),desc:meta('description'),canon:document.querySelector('link[rel=canonical]').href};
    });
-   const want=['Home','The Treatises','AI Safety','Mimicry','Research','About','Follow the chain'];
+   const want=['Home','The Treatises','AI Safety','Mimicry','Research','About'];
    if(JSON.stringify(m.labels)!==JSON.stringify(want))bad.push(`${route}@${width} header ${m.labels}`);
    if(!m.tools)bad.push(`${route}@${width} header tools missing`);
    if(route==='/'||route in principles){
