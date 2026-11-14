@@ -250,7 +250,11 @@ def render(source,path):
     source=links(source.replace('<!--SITE_HEADER-->',header).replace('<!--SITE_FOOTER-->',footer))
     if path!='page-two/index.html' and 'rel="icon"' not in source:
         source=source.replace('</head>','<link rel="icon" href="/assets/brand/favicon.png" type="image/png"></head>',1)
+    # P0-3 (rebuild brief 2026-11-13): authoring notes (Handoff:, TODO, FIXME comments) stay in the source files and
+    # never reach deployed HTML. The visible text around them is unchanged. /page-two/ is frozen and has none.
+    if path!='page-two/index.html':source=AUTHOR_NOTE.sub('',source)
     return anchors(source,path)
+AUTHOR_NOTE=re.compile(r'<!--(?:(?!-->)[\s\S])*?\b(?:Handoff:|TODO|FIXME)(?:(?!-->)[\s\S])*-->')
 # Governor's 2:01 PM ET ruling (c) on Paul's parity rule: a generated page's meta description is its own visible lede,
 # verbatim (was one shared sentence that appears on neither page).
 DOCUMENT_DESCRIPTIONS={'library/index.html':'Explore the reasoning architecture, the research, and the original source editions.',
