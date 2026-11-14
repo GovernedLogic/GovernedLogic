@@ -612,8 +612,11 @@ body.gl-type-principle nav.principle-nav a.gl-link[aria-current="page"] {
   box-shadow: inset 0 2px 0 var(--blue);
 }
 
-body.gl-home-page .gl-r32-reveal,
-body.gl-type-principle .gl-r32-reveal {
+/* P0-1: content is visible by default. Only after redesign-2032.js has armed its observer
+   (html.gl-r32-armed) does a not yet revealed element start hidden, so no JS, a script error
+   or reduced motion all leave every word readable. */
+html.gl-r32-armed body.gl-home-page .gl-r32-reveal:not(.gl-r32-in),
+html.gl-r32-armed body.gl-type-principle .gl-r32-reveal:not(.gl-r32-in) {
   opacity: 0;
   transform: translateY(12px);
 }
@@ -1721,7 +1724,7 @@ body.gl-home-page h1.gl-hero-title {
   background: #03050A;
 }
 
-body.gl-home-page .gl-r32-below {
+html.gl-r32-armed body.gl-home-page .gl-r32-below:not(.gl-r32-in) {
   opacity: 0;
 }
 

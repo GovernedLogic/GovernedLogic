@@ -191,17 +191,40 @@
   }
 
   function reveal() {
-    var nodes = document.querySelectorAll(".gl-r32-below");
+    // P0-1: every element that can start hidden is observed, not only .gl-r32-below.
+    var nodes = Array.prototype.slice.call(document.querySelectorAll(".gl-r32-below, .gl-r32-reveal:not(.gl-r32-in)"));
+    function show(el) { el.classList.add("gl-r32-in"); }
     if (reduced || !("IntersectionObserver" in window)) {
-      nodes.forEach(function (el) { el.classList.add("gl-r32-in"); });
+      nodes.forEach(show);
       return;
+    }
+    var pending = nodes.filter(function (el) { return !el.classList.contains("gl-r32-in"); });
+    function sweep() {
+      // Anything at or above the bottom of the viewport is shown, so a jump (anchor, back/forward,
+      // restored scroll, keyboard End) never leaves text hidden above the reader.
+      var limit = window.innerHeight || document.documentElement.clientHeight;
+      pending = pending.filter(function (el) {
+        if (el.getBoundingClientRect().top < limit) { show(el); return false; }
+        return true;
+      });
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) entry.target.classList.add("gl-r32-in");
+        if (entry.isIntersecting || entry.boundingClientRect.top < 0) show(entry.target);
       });
-    }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
-    nodes.forEach(function (el) { io.observe(el); });
+    }, { threshold: 0.01, rootMargin: "0px 0px -4% 0px" });
+    pending.forEach(function (el) { io.observe(el); });
+    var queued = false;
+    function onMove() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; sweep(); });
+    }
+    window.addEventListener("scroll", onMove, { passive: true });
+    window.addEventListener("hashchange", sweep);
+    window.addEventListener("pageshow", sweep);
+    sweep();
+    root.classList.add("gl-r32-armed");
   }
 
   function addLife() {

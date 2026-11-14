@@ -559,3 +559,33 @@ test('Signature: the margin line stays in the margin at 1440, 1920 and 2560, lef
  expect(planted.hits.length,'old margin line formula must cross the copy at 1920').toBeGreaterThan(0);
  expect(bad).toEqual([]);
 });
+// P0-1 (rebuild brief 2026-11-13): no substantive heading, paragraph, list item or sentence span may remain at
+// opacity 0 after load and scroll, with JS and motion, with JS off and with reduced motion, at 1280 and 390.
+// Animation is progressive enhancement only. A jump straight to the end (anchor, End key, restored scroll) must
+// leave nothing hidden above the reader either.
+const hiddenText=()=>{const out=[];document.querySelectorAll('main h1, main h2, main h3, main h4, main p, main li, main blockquote, main .gl-r32-sent').forEach(el=>{
+  if(!el.textContent.trim())return;const b=el.getBoundingClientRect();if(!b.width&&!b.height)return;
+  let n=el,op=1;while(n&&n.nodeType===1){const cs=getComputedStyle(n);if(cs.visibility==='hidden'||cs.display==='none')return;op*=parseFloat(cs.opacity);n=n.parentElement;}
+  if(op<0.05)out.push(el.tagName+': '+el.textContent.trim().slice(0,50));});return out;};
+// Scrolls from the test side: page timers do not run with JS off.
+const stepScroll=async page=>{const h=await page.evaluate(()=>document.documentElement.scrollHeight);for(let y=0;y<=h;y+=450){await page.evaluate(y=>scrollTo(0,y),y);await page.waitForTimeout(25);}await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));await page.waitForTimeout(900);};
+test('P0-1: principle and homepage text is never left at opacity 0 (JS and motion, no JS, reduced motion; 1280 and 390)',async({browser})=>{
+ test.setTimeout(480_000);
+ const bad=[];const pages=['/',...Object.keys(principles)];
+ const modes=[{name:'js+motion',js:true,rm:'no-preference'},{name:'no-js',js:false,rm:'no-preference'},{name:'reduced',js:true,rm:'reduce'}];
+ for(const m of modes)for(const width of [1280,390]){
+  const ctx=await browser.newContext({javaScriptEnabled:m.js,reducedMotion:m.rm,viewport:{width,height:width<900?844:900}});const page=await ctx.newPage();
+  for(const p of pages){
+   await page.goto(p,{waitUntil:'load'});await stepScroll(page);
+   const h=await page.evaluate(hiddenText);if(h.length)bad.push(`${m.name} ${width} ${p}: ${h.length} at opacity 0, e.g. ${h[0]}`);
+   if(m.js){await page.goto(p,{waitUntil:'load'});await page.waitForTimeout(300);await page.keyboard.press('End');await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));await page.waitForTimeout(900);
+    const j=await page.evaluate(hiddenText);if(j.length)bad.push(`${m.name} ${width} ${p} jump to end: ${j.length} at opacity 0, e.g. ${j[0]}`);}
+  }
+  await ctx.close();
+ }
+ // Planted fault: the probe must see text forced to opacity 0.
+ const ctx=await browser.newContext({reducedMotion:'no-preference',viewport:{width:1280,height:900}});const page=await ctx.newPage();
+ await page.goto('/principles/being/',{waitUntil:'load'});await page.addStyleTag({content:'.principle-passage p{opacity:0!important}'});
+ expect((await page.evaluate(hiddenText)).length,'planted opacity 0 must be detected').toBeGreaterThan(0);await ctx.close();
+ expect(bad).toEqual([]);
+});
