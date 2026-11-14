@@ -716,6 +716,20 @@ check_restored = importlib.util.module_from_spec(RESTORED_SPEC)
 RESTORED_SPEC.loader.exec_module(check_restored)
 
 
+# P0-3 (rebuild brief 2026-11-13): no authoring note ships. "Handoff:", "TODO" and "FIXME" may not appear anywhere in
+# the deployed text files (HTML, scripts, styles, feeds, machine data). The visible "Coming soon" text is not touched.
+AUTHOR_NOTE = re.compile(r"Handoff:|\bTODO\b|\bFIXME\b")
+TEXT_SUFFIXES = {".html", ".js", ".mjs", ".css", ".xml", ".txt", ".json", ".jsonld", ".svg", ".webmanifest", ".vtt"}
+
+
+def assert_no_author_notes(site: Path) -> None:
+    for path in sorted(site.rglob("*")):
+        if path.is_file() and path.suffix in TEXT_SUFFIXES:
+            hit = AUTHOR_NOTE.search(path.read_text(encoding="utf-8", errors="replace"))
+            if hit:
+                raise AssertionError(f"Authoring note in deployed file: {path.relative_to(site).as_posix()}: {hit.group(0)}")
+
+
 class ReleaseGuardTests(unittest.TestCase):
     def build_artifact(self, directory: str) -> Path:
         site = Path(directory) / "site"
@@ -1456,6 +1470,25 @@ class ReleaseGuardTests(unittest.TestCase):
                     path.write_text(html.replace('href="/faq/"', 'href="/"'), encoding="utf-8")
             with self.assertRaisesRegex(AssertionError, r"Orphan page \(no inbound link\): /faq/"):
                 check_restored.check(site)
+
+    def test_no_author_notes_ship(self) -> None:
+        # P0-3: the built site carries no Handoff/TODO/FIXME note, and each planted note fails.
+        with tempfile.TemporaryDirectory() as directory:
+            site = self.build_artifact(directory)
+            assert_no_author_notes(site)
+            for relative, old, new in (
+                ("index.html", "</main>", "<!-- Handoff: planted --></main>"),
+                ("about/index.html", "</main>", "<!-- TODO planted --></main>"),
+                ("assets/brand-chrome.css", "", "/* FIXME planted */"),
+            ):
+                with self.subTest(relative=relative):
+                    with tempfile.TemporaryDirectory() as again:
+                        planted = self.build_artifact(again)
+                        target = planted / relative
+                        text = target.read_text(encoding="utf-8")
+                        target.write_text(text.replace(old, new, 1) if old else new + text, encoding="utf-8")
+                        with self.assertRaisesRegex(AssertionError, "Authoring note in deployed file: " + re.escape(relative)):
+                            assert_no_author_notes(planted)
 
     def test_button_href_fails(self) -> None:
         # C1 reversed: the plant moves to the skip button (was: the homepage Research GET-form button).
